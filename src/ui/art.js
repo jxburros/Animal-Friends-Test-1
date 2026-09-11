@@ -366,7 +366,69 @@ function studyBackdrop(study, grand) {
   if (study === 'Botany') return botanyBackdrop(grand);
   if (study === 'Commerce') return commerceBackdrop(grand);
   if (study === 'Civics') return civicsBackdrop(grand, true);
+  if (study === 'Crafts') return craftsBackdrop(grand);
+  if (study === 'Lore') return loreBackdrop(grand);
   return sky('#e6e6ee', 60) + ground('#cfc7d9', 60);
+}
+
+
+function workbench(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><rect x="-26" y="-6" width="52" height="7" fill="#b98653" stroke="${INK}" stroke-width="1.6"/><rect x="-22" y="1" width="5" height="16" fill="#a9713f" stroke="${INK}" stroke-width="1.4"/><rect x="17" y="1" width="5" height="16" fill="#a9713f" stroke="${INK}" stroke-width="1.4"/><path d="M-14 -6 L-2 -16 L2 -12 L-10 -6 Z" fill="#d9d2c2" stroke="${INK}" stroke-width="1.3"/><rect x="6" y="-13" width="14" height="7" rx="1.6" fill="#8ea6c9" stroke="${INK}" stroke-width="1.3"/></g>`;
+}
+function anvilHammer(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><path d="M-12 -4 L12 -4 L8 2 L10 8 L-10 8 L-8 2 Z" fill="#6f6a72" stroke="${INK}" stroke-width="1.6"/><path d="M6 -12 L18 -20" stroke="#8a5a34" stroke-width="2.6" stroke-linecap="round"/><rect x="14" y="-26" width="10" height="7" rx="1.6" fill="#6f6a72" stroke="${INK}" stroke-width="1.4"/></g>`;
+}
+function toolPegboard(x, y, w) {
+  let t = `<rect x="${x}" y="${y}" width="${w}" height="22" rx="2" fill="#c9a97a" stroke="${INK}" stroke-width="1.6"/>`;
+  t += `<path d="M${x + 11} ${y + 7} L${x + 11} ${y + 18}" stroke="#8a5a34" stroke-width="2.2"/><rect x="${x + 6}" y="${y + 4}" width="11" height="5" rx="1.4" fill="#6f6a72" stroke="${INK}" stroke-width="1.1"/>`;
+  const sx = x + w / 2 - 8;
+  t += `<path d="M${sx} ${y + 6} L${sx + 20} ${y + 10} L${sx + 20} ${y + 14} L${sx} ${y + 12} Z" fill="#d9d2c2" stroke="${INK}" stroke-width="1.1"/>`;
+  for (let i = 0; i < 5; i++) t += `<path d="M${sx + 2 + i * 4} ${y + 12} l2 3 l2 -2.6" stroke="${INK}" stroke-width="0.9" fill="none"/>`;
+  t += `<circle cx="${x + w - 13}" cy="${y + 11}" r="6.4" fill="none" stroke="#b98653" stroke-width="2.6"/><circle cx="${x + w - 13}" cy="${y + 11}" r="3" fill="none" stroke="#b98653" stroke-width="2"/>`;
+  return t;
+}
+function craftsBackdrop(grand) {
+  let s = sky(grand ? '#f0dcbb' : '#eddfc6', 62);
+  for (let x = 6; x < 160; x += 22) s += `<line x1="${x}" y1="0" x2="${x}" y2="62" stroke="#d9c09a" stroke-width="1.6" opacity="0.7"/>`;
+  s += toolPegboard(96, 8, 56);
+  s += ground('#caa876', 62);
+  s += `<rect x="0" y="60" width="160" height="3" fill="#a9835a"/>`;
+  s += workbench(26, 74, 0.95);
+  if (grand) {
+    s += anvilHammer(140, 82, 0.95);
+    s += bunting(20, 4, 70, [GOLD, '#c0473f', PLUM]);
+  } else {
+    s += crate(142, 86, 0.7);
+  }
+  for (let i = 0; i < 6; i++) s += `<circle cx="${12 + i * 26}" cy="${92 + (i % 2) * 3}" r="1.6" fill="#b08d5f"/>`;
+  return s;
+}
+
+function bookRow(x, y, w, h = 14) {
+  let t = '';
+  const colors = ['#c0473f', '#4d8a4d', PLUM, GOLD, '#5578a0'];
+  for (let i = 0, px = x; px < x + w - 4; i++, px += 6) {
+    const bh = h - (i % 3) * 2;
+    t += `<rect x="${px}" y="${y + (h - bh)}" width="4.6" height="${bh}" fill="${colors[i % colors.length]}" stroke="${INK}" stroke-width="0.9"/>`;
+  }
+  return t;
+}
+function loreBackdrop(grand) {
+  const skyC = grand ? '#3b3358' : '#efe6d3';
+  let s = sky(skyC, 62);
+  for (const [x, w] of [[4, 44], [112, 44]]) {
+    s += `<rect x="${x}" y="2" width="${w}" height="60" fill="${grand ? '#4a4068' : '#c9a97a'}" stroke="${INK}" stroke-width="1.8"/>`;
+    s += bookRow(x + 4, 6, w - 8) + bookRow(x + 4, 26, w - 8) + bookRow(x + 4, 46, w - 8);
+  }
+  if (grand) {
+    s += starDot(80, 14, 1.1, '#fff3c2') + starDot(66, 26, 0.8, '#fff3c2') + starDot(94, 24, 0.8, '#fff3c2');
+    s += moon(80, 16, 9, '#f5eecb', skyC);
+  }
+  s += ground(grand ? '#4a3f55' : '#b9945f', 62);
+  s += `<rect x="0" y="60" width="160" height="3" fill="#8a6a3a"/>`;
+  s += `<rect x="26" y="86" width="108" height="12" rx="5" fill="${grand ? '#6f4a6a' : '#a9566a'}" stroke="${INK}" stroke-width="1.4" opacity="0.9"/>`;
+  s += lanternProp(18, 78, 1.2, true) + lanternProp(144, 78, 1.2, grand);
+  return s;
 }
 
 /* ---------- character figure ---------- */
@@ -504,6 +566,24 @@ const CHARACTER_CARDS = {
   pp_hazel_2: () => characterScene('Raccoon', 'Commerce', true, { topHat: true, hatColor: '#2c2430' }, (cx, cy) => coinPurse(cx + 42, cy + 24, 1)),
   pp_rowan_1: () => characterScene('Fox', 'Commerce', false, { visor: '#8ecae6' }, (cx, cy) => papersInk(cx + 42, cy + 24, 0.85)),
   pp_rowan_2: () => characterScene('Fox', 'Civics', true, { medal: true, sash: GOLD }, (cx, cy) => shieldProp(cx + 44, cy + 18, 1)),
+  // ---- Bramble & Bristle ----
+  br_bramble_1: () => characterScene('Hedgehog', 'Crafts', false, { cap: '#5c9a55' }, (cx, cy) => anvilHammer(cx + 42, cy + 20, 0.75)),
+  br_bramble_2: () => characterScene('Hedgehog', 'Crafts', true, { apron: '#a9713f', visor: '#8ea6c9' }, (cx, cy) => workbench(cx + 44, cy + 22, 0.75)),
+  br_thistle_1: () => characterScene('Badger', 'Agriculture', false, { strawHat: true, hatBand: '#4d8a4d' }, (cx, cy) => wheatSheaf(cx + 42, cy + 22, 0.8)),
+  br_thistle_2: () => characterScene('Badger', 'Agriculture', false, { kerchief: '#c0473f', bag: '#8a5a34' }, (cx, cy) => hayBale(cx + 44, cy + 24, 0.7)),
+  br_quill_1: () => characterScene('Hedgehog', 'Agriculture', false, { apron: '#e8c46a' }, (cx, cy) => basketBerries(cx + 42, cy + 24, 0.85)),
+  br_quill_2: () => characterScene('Hedgehog', 'Agriculture', true, { sash: GOLD, medal: true }, (cx, cy) => wheatSheaf(cx + 44, cy + 20, 1)),
+  br_moss_1: () => characterScene('Badger', 'Crafts', false, { cap: '#8a5a34' }, (cx, cy) => trowel(cx - 44, cy + 22, 0.8) + crate(cx + 42, cy + 26, 0.7)),
+  br_moss_2: () => characterScene('Badger', 'Crafts', true, { sash: PLUM, collar: PLUM }, (cx, cy) => blueprintScroll(cx + 44, cy + 20, 0.9)),
+  // ---- Ripple & Rune ----
+  rr_pip_1: () => characterScene('Squirrel', 'Lore', false, {}, (cx, cy) => openBook(cx + 42, cy + 24, 1)),
+  rr_pip_2: () => characterScene('Squirrel', 'Lore', false, { glasses: true, collar: PLUM }, (cx, cy) => scroll(cx + 44, cy + 22, 0.8)),
+  rr_willow_1: () => characterScene('Otter', 'Commerce', false, { kerchief: '#3f6fb5' }, (cx, cy) => crate(cx + 42, cy + 26, 0.75)),
+  rr_willow_2: () => characterScene('Otter', 'Commerce', true, { cap: '#2c2430', collar: GOLD }, (cx, cy) => coinPurse(cx + 44, cy + 24, 1)),
+  rr_tansy_1: () => characterScene('Otter', 'Lore', false, {}, (cx, cy) => lanternProp(cx + 42, cy + 12, 1.3)),
+  rr_tansy_2: () => characterScene('Otter', 'Lore', true, { glasses: true, sash: PLUM }, (cx, cy) => openBook(cx + 44, cy + 22, 1.1)),
+  rr_acorn_1: () => characterScene('Squirrel', 'Commerce', false, { visor: '#e8a1b0' }, (cx, cy) => stallGoods(cx + 42, cy + 22, 0.8)),
+  rr_acorn_2: () => characterScene('Squirrel', 'Commerce', true, { topHat: true, hatColor: '#2c2430' }, (cx, cy) => coinShape(cx + 40, cy + 18, 5) + coinShape(cx + 48, cy + 24, 5) + coinShape(cx + 40, cy + 28, 5)),
 };
 
 /* ---------- event scenes ---------- */
@@ -586,6 +666,73 @@ function crowdDots(x, y, w) {
   return s2;
 }
 
+
+/* ---------- expansion props: river borough, workshop, library ---------- */
+function riverBand(y, h = 26, color = '#8ec6e0', dark = '#6fa9c6') {
+  let t = `<rect x="0" y="${y}" width="160" height="${h}" fill="${color}"/>`;
+  for (let i = 0; i < 5; i++) t += `<path d="M${i * 34 - 6} ${y + 6 + (i % 2) * 9} q8 -4 16 0 q8 4 16 0" stroke="${dark}" stroke-width="1.8" fill="none"/>`;
+  return t;
+}
+function rowBoat(x, y, s = 1, color = '#a9713f') {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><path d="M-20 0 Q0 12 20 0 L16 -6 L-16 -6 Z" fill="${color}" stroke="${INK}" stroke-width="1.8"/><rect x="-8" y="-6" width="16" height="3" fill="#8a5a34"/><path d="M2 -6 L2 -22" stroke="#8a5a34" stroke-width="2.2"/><path d="M2 -22 Q14 -18 2 -10 Z" fill="${CREAM}" stroke="${INK}" stroke-width="1.3"/></g>`;
+}
+function millWheel(x, y, r = 16) {
+  let t = `<circle cx="${x}" cy="${y}" r="${r}" fill="#c9a97a" stroke="${INK}" stroke-width="2"/><circle cx="${x}" cy="${y}" r="${r * 0.3}" fill="#8a5a34" stroke="${INK}" stroke-width="1.4"/>`;
+  for (let i = 0; i < 8; i++) {
+    const a = (i * 45) * Math.PI / 180;
+    t += `<line x1="${x}" y1="${y}" x2="${x + r * Math.cos(a)}" y2="${y + r * Math.sin(a)}" stroke="${INK}" stroke-width="1.6"/>`;
+  }
+  return t;
+}
+function standingStone(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><path d="M-11 8 L-8 -26 Q0 -32 8 -26 L11 8 Z" fill="#b9b2a9" stroke="${INK}" stroke-width="2"/><path d="M-4 -18 L4 -18 M-4 -10 L4 -10 M-3 -2 L3 -2" stroke="#8a8279" stroke-width="1.6"/></g>`;
+}
+function beaconFire(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><path d="M-12 6 L12 6 L8 -4 L-8 -4 Z" fill="#8a5a34" stroke="${INK}" stroke-width="1.6"/><path d="M0 -30 Q10 -16 6 -6 Q0 -12 -6 -6 Q-10 -16 0 -30 Z" fill="#f0b429" stroke="${INK}" stroke-width="1.4"/><path d="M0 -20 Q4 -13 0 -7 Q-4 -13 0 -20 Z" fill="#fff3c2"/></g>`;
+}
+function hedgeRow(x, y, w, color = '#4d8a4d') {
+  let t = `<rect x="${x}" y="${y}" width="${w}" height="16" rx="7" fill="${color}" stroke="${INK}" stroke-width="1.8"/>`;
+  for (let i = 0; i < Math.round(w / 12); i++) t += `<path d="M${x + 6 + i * 12} ${y} l-3 -7 l6 0 z" fill="${color}" stroke="${INK}" stroke-width="1.2"/>`;
+  return t;
+}
+function runeStones(x, y, s = 1) {
+  let t = '';
+  const glyphs = ['M0 -5 L0 5 M0 -2 L3.4 -5 M0 2 L-3.4 5', 'M-3 -5 L3 5 M3 -5 L-3 5', 'M-3 -4 L0 0 L-3 4 M3 -4 L0 0 L3 4'];
+  for (let i = 0; i < 3; i++) {
+    t += `<g transform="translate(${(i - 1) * 15} ${(i % 2) * 4})"><rect x="-7" y="-8" width="14" height="16" rx="4" fill="#d9d2c2" stroke="${INK}" stroke-width="1.5"/><path d="${glyphs[i]}" stroke="${PLUM}" stroke-width="1.6" fill="none"/></g>`;
+  }
+  return `<g transform="translate(${x} ${y}) scale(${s})">${t}</g>`;
+}
+function acornShape(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="0" cy="3" rx="7" ry="9" fill="#c9915a" stroke="${INK}" stroke-width="1.5"/><path d="M-9 -4 Q0 -13 9 -4 Z" fill="#8a5a34" stroke="${INK}" stroke-width="1.4"/><path d="M0 -13 L0 -17" stroke="${INK}" stroke-width="1.4"/></g>`;
+}
+function crossedHammers(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><g transform="rotate(30)"><rect x="-1.6" y="-14" width="3.2" height="26" fill="#8a5a34" stroke="${INK}" stroke-width="1"/><rect x="-7" y="-19" width="14" height="8" rx="2" fill="#6f6a72" stroke="${INK}" stroke-width="1.3"/></g><g transform="rotate(-30)"><rect x="-1.6" y="-14" width="3.2" height="26" fill="#8a5a34" stroke="${INK}" stroke-width="1"/><rect x="-7" y="-19" width="14" height="8" rx="2" fill="#6f6a72" stroke="${INK}" stroke-width="1.3"/></g></g>`;
+}
+function stoneBlocks(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><rect x="-20" y="-2" width="20" height="12" fill="#c3bdb6" stroke="${INK}" stroke-width="1.6"/><rect x="1" y="-2" width="16" height="12" fill="#b9b2a9" stroke="${INK}" stroke-width="1.6"/><rect x="-12" y="-14" width="18" height="12" fill="#cfc9c2" stroke="${INK}" stroke-width="1.6"/><path d="M10 -14 L20 -22" stroke="#8a5a34" stroke-width="2.2"/><path d="M20 -22 l5 -3 l-2 6 z" fill="#d9d2c2" stroke="${INK}" stroke-width="1.1"/></g>`;
+}
+function lanternRow(x, y, w, n = 5, lit = true) {
+  let t = '';
+  for (let i = 0; i < n; i++) {
+    const px = x + (w / (n - 1)) * i;
+    t += `<line x1="${px}" y1="${y}" x2="${px}" y2="${y + 22}" stroke="#6a5a48" stroke-width="2.4"/>${lanternProp(px, y, 1.1, lit)}`;
+  }
+  return t;
+}
+function barnFrame(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><path d="M-30 10 L-30 -12 L0 -28 L30 -12 L30 10" fill="none" stroke="#b98653" stroke-width="4" stroke-linejoin="round"/><path d="M-30 -12 L30 -12 M-16 10 L-16 -20 M16 10 L16 -20 M0 10 L0 -28" stroke="#c9a97a" stroke-width="3"/></g>`;
+}
+function jarShelf(x, y, w) {
+  let t = `<rect x="${x}" y="${y}" width="${w}" height="4" fill="#a9713f" stroke="${INK}" stroke-width="1.3"/>`;
+  const colors = ['#e8c46a', '#c0473f', '#5c9a55', '#c78a2f'];
+  for (let i = 0; i < Math.floor(w / 16); i++) {
+    t += `<rect x="${x + 5 + i * 16}" y="${y - 14}" width="11" height="14" rx="2" fill="${colors[i % 4]}" stroke="${INK}" stroke-width="1.3"/>`;
+    t += `<rect x="${x + 4 + i * 16}" y="${y - 17}" width="13" height="4" rx="1.4" fill="#d9d2c2" stroke="${INK}" stroke-width="1.1"/>`;
+  }
+  return t;
+}
+
 const EVENT_CARDS = {
   bb_community_garden: () => {
     let s = sky('#bfe3f6', 58) + ground('#8fbf5a', 58);
@@ -657,6 +804,82 @@ const EVENT_CARDS = {
     s += marketStallsRow(10, 72, 140);
     s += bunting(10, 14, 140, [GOLD, '#c0473f', PLUM]);
     s += crowdDots(20, 92, 120);
+    return wrapScene(s);
+  },
+  br_barn_raising: () => {
+    let s = sky('#bfe3f6', 60) + sun(132, 18, 10) + ground('#8fbf5a', 60);
+    s += barnFrame(80, 66, 1.25);
+    s += crate(20, 84, 0.8) + anvilHammer(138, 84, 0.85);
+    return wrapScene(s);
+  },
+  br_mended_fences: () => {
+    let s = sky('#ffe6c2', 58) + hillsRow(48, '#a9cf7c', 0.9) + ground('#8fbf5a', 58);
+    s += fenceRow(14, 84, 132);
+    s += anvilHammer(112, 82, 0.8);
+    s += flowerBedRow(24, 92, 60, 1);
+    return wrapScene(s);
+  },
+  br_winter_stores: () => {
+    let s = sky('#cfc4d6', 58) + ground('#a9835a', 58);
+    s += jarShelf(14, 40, 132);
+    s += barrel(30, 88, 1) + crate(70, 86, 0.9) + barrel(120, 88, 1);
+    s += lanternProp(146, 26, 1.2);
+    return wrapScene(s);
+  },
+  br_workshop_swap: () => wrapScene(craftsBackdrop(false) + pawExchange(88, 72, 1.4)),
+  br_hedgerow_guard: () => {
+    let s = sky('#3b3358', 62);
+    s += moon(128, 18, 11, '#f5eecb', '#3b3358') + starDot(24, 14, 1) + starDot(60, 22, 0.8);
+    s += ground('#2f4a35', 62);
+    s += hedgeRow(6, 68, 148);
+    s += lanternProp(80, 58, 1.4);
+    return wrapScene(s);
+  },
+  br_tool_lending: () => {
+    let s = craftsBackdrop(false);
+    s += noticeBoardPapers(112, 78, 0.9);
+    s += crossedHammers(80, 62, 1);
+    return wrapScene(s);
+  },
+  rr_river_market: () => {
+    let s = sky('#ffe1b8', 48) + ground('#d9b98a', 48) + riverBand(74, 26);
+    s += marketStallsRow(10, 66, 140);
+    s += rowBoat(120, 86, 0.9);
+    s += bunting(12, 10, 136, [GOLD, '#c0473f', PLUM]);
+    return wrapScene(s);
+  },
+  rr_told_by_lamplight: () => {
+    let s = loreBackdrop(true);
+    s += openBook(80, 72, 1.7);
+    s += lanternProp(80, 46, 1.6);
+    return wrapScene(s);
+  },
+  rr_acorn_cache: () => {
+    let s = sky('#f7dcb0', 58) + hillsRow(46, '#c9a05a', 0.9) + ground('#b9945f', 58);
+    s += `<path d="M60 96 L60 52 Q60 40 80 40 Q100 40 100 52 L100 96 Z" fill="#8a5a34" stroke="${INK}" stroke-width="2"/>`;
+    s += `<ellipse cx="80" cy="64" rx="13" ry="15" fill="#4a3323"/>`;
+    s += acornShape(80, 64, 0.9) + acornShape(34, 86, 1) + acornShape(126, 88, 1.1) + acornShape(48, 92, 0.8);
+    return wrapScene(s);
+  },
+  rr_rune_reading: () => {
+    let s = loreBackdrop(true);
+    s += `<rect x="42" y="72" width="76" height="8" rx="2" fill="#8a5a34" stroke="${INK}" stroke-width="1.6"/>`;
+    s += runeStones(80, 64, 1.1);
+    s += lanternProp(126, 56, 1.1);
+    return wrapScene(s);
+  },
+  rr_ferry_charter: () => {
+    let s = sky('#bfe3f6', 46) + ground('#8fbf5a', 46) + riverBand(60, 40);
+    s += `<path d="M0 60 L160 60" stroke="#6fa9c6" stroke-width="2"/>`;
+    s += rowBoat(80, 80, 1.4);
+    s += scroll(28, 34, 0.9) + waxSeal(44, 40, 0.8);
+    return wrapScene(s);
+  },
+  rr_hushed_agreement: () => {
+    let s = loreBackdrop(false);
+    s += chairsFacing(80, 76, 1.1);
+    s += pawExchange(80, 62, 1.1);
+    s += whisperLines(24, 40, 1) + whisperLines(136, 46, 1);
     return wrapScene(s);
   },
 };
@@ -957,6 +1180,112 @@ const MARKET_CARDS = {
     s += clockTower(80, 52, 1.5);
     return wrapScene(s);
   },
+  mk_towpath: () => {
+    let s = sky('#cfe9f5', 46) + ground('#9fc46a', 46) + riverBand(66, 34);
+    s += `<path d="M0 62 L160 62" stroke="#8a6a3a" stroke-width="5"/><path d="M0 58 Q40 52 80 58 Q120 64 160 56" stroke="#c9a97a" stroke-width="2.4" fill="none"/>`;
+    s += rowBoat(104, 84, 0.95);
+    s += fenceRow(6, 56, 60);
+    return wrapScene(s);
+  },
+  mk_lamplighters_round: () => {
+    let s = sky('#3b3358', 60);
+    s += starDot(20, 12, 1) + starDot(140, 16, 0.9) + moon(80, 14, 8, '#f5eecb', '#3b3358');
+    s += cobbleGround(60, '#4a4257', '#5c5468');
+    s += lanternRow(18, 30, 124, 5, true);
+    return wrapScene(s);
+  },
+  mk_seed_exchange: () => {
+    let s = sky('#eaf7ef', 58) + ground('#caa876', 58);
+    s += `<rect x="20" y="66" width="120" height="8" fill="#a9713f" stroke="${INK}" stroke-width="1.6"/>`;
+    s += seedPacket(44, 58, 1.6, '#e8c46a') + seedPacket(80, 56, 1.6, '#c0473f') + seedPacket(116, 58, 1.6, '#5c9a55');
+    s += seedJars(80, 88, 0.8);
+    return wrapScene(s);
+  },
+  mk_river_ferry: () => {
+    let s = sky('#bfe3f6', 44) + sun(30, 16, 9) + ground('#9fc46a', 44) + riverBand(58, 42);
+    s += rowBoat(80, 82, 1.5);
+    s += coinShape(132, 66, 5) + coinShape(140, 74, 5);
+    return wrapScene(s);
+  },
+  mk_toolshed: () => {
+    let s = craftsBackdrop(false);
+    s += anvilHammer(104, 82, 1);
+    s += crossedHammers(130, 30, 0.9);
+    return wrapScene(s);
+  },
+  mk_common_pasture: () => {
+    let s = sky('#bfe3f6', 54) + hillsRow(44, '#a9cf7c', 0.9) + ground('#8fbf5a', 54);
+    s += fenceRow(8, 78, 144);
+    s += hayBale(44, 88, 1) + hayBale(116, 90, 0.85);
+    s += flowerBedRow(20, 96, 70, 1);
+    return wrapScene(s);
+  },
+  mk_story_circle: () => {
+    let s = sky('#4a3d6b', 60) + starDot(28, 14, 1) + starDot(120, 12, 0.9);
+    s += ground('#5c4a3a', 60);
+    s += beaconFire(80, 84, 0.75);
+    s += openBook(30, 80, 1.1) + chairsFacing(126, 78, 0.8);
+    return wrapScene(s);
+  },
+  mk_harvest_fair: () => {
+    let s = sky('#f7e2a6', 56) + sun(132, 18, 11, '#ffcf5c') + ground('#c69a3a', 56);
+    s += bunting(10, 12, 140, [GOLD, '#c0473f', PLUM]);
+    s += wheatSheaf(28, 84, 1.2) + hayBale(80, 86, 1.1) + wheatSheaf(132, 84, 1.2);
+    return wrapScene(s);
+  },
+  mk_guild_hall: () => {
+    let s = civicsBackdrop(true, true);
+    s += `<rect x="46" y="40" width="68" height="36" rx="3" fill="#e8d9ae" stroke="${INK}" stroke-width="2"/>`;
+    s += crossedHammers(80, 58, 1.2);
+    return wrapScene(s);
+  },
+  mk_night_watch: () => {
+    let s = sky('#372a4d', 60) + starDot(24, 12, 1) + starDot(136, 18, 0.9);
+    s += cobbleGround(60, '#463a56', '#564a68');
+    s += `<rect x="86" y="34" width="56" height="34" fill="#4a3d55" stroke="${INK}" stroke-width="1.8"/><polygon points="80,34 114,14 148,34" fill="#5c4a6a" stroke="${INK}" stroke-width="1.8"/>`;
+    s += `<rect x="104" y="48" width="20" height="20" rx="2" fill="#ffe27a" stroke="${INK}" stroke-width="1.5"/>`;
+    s += lanternProp(46, 58, 1.9) + fenceRow(10, 86, 60);
+    s += pawPrint(70, 90, 0.8, '#5c5068');
+    return wrapScene(s);
+  },
+  mk_watermill: () => {
+    let s = sky('#cfe9f5', 46) + ground('#9fc46a', 46) + riverBand(64, 36);
+    s += `<rect x="26" y="30" width="54" height="42" fill="#c9a97a" stroke="${INK}" stroke-width="2"/><polygon points="20,30 53,10 86,30" fill="#a9566a" stroke="${INK}" stroke-width="2"/>`;
+    s += millWheel(104, 62, 20);
+    return wrapScene(s);
+  },
+  mk_ledger_audit: () => {
+    let s = loreBackdrop(false);
+    s += `<rect x="34" y="70" width="92" height="8" rx="2" fill="#8a5a34" stroke="${INK}" stroke-width="1.6"/>`;
+    s += papersInk(70, 60, 1.1) + magnifyGlassButterfly(112, 56, 1);
+    return wrapScene(s);
+  },
+  mk_masons_yard: () => {
+    let s = sky('#e9e2f7', 58) + cobbleGround(58);
+    s += stoneBlocks(76, 80, 1.2);
+    s += crate(24, 86, 0.8) + standingStone(136, 78, 0.8);
+    return wrapScene(s);
+  },
+  mk_festival_parade: () => {
+    let s = sky('#ffd9a0', 56) + ground('#d9b98a', 56);
+    s += bunting(6, 10, 148, [GOLD, PLUM, '#c0473f']);
+    s += confetti(80, 140);
+    s += barrel(46, 84, 1) + barrel(80, 86, 1.1) + crate(116, 84, 0.9);
+    return wrapScene(s);
+  },
+  mk_boundary_stone: () => {
+    let s = sky('#ffe6c2', 54) + hillsRow(44, '#a9cf7c', 0.85) + ground('#8fbf5a', 54);
+    s += standingStone(80, 82, 1.5);
+    s += fenceRow(6, 74, 46) + fenceRow(112, 74, 44);
+    return wrapScene(s);
+  },
+  mk_beacon_hill: () => {
+    let s = sky('#2f2a4a', 58) + starDot(22, 12, 1.1) + starDot(48, 24, 0.8) + starDot(132, 16, 1);
+    s += hillsRow(48, '#3f3a55', 1);
+    s += ground('#332e4a', 58);
+    s += beaconFire(80, 70, 1.5);
+    return wrapScene(s);
+  },
 };
 
 /* ---------- dispatch + fallbacks ---------- */
@@ -1029,6 +1358,12 @@ const ICONS = {
   Mouse: () => `<circle cx="10" cy="12" r="5" fill="currentColor"/><circle cx="5" cy="7" r="3" fill="currentColor"/><circle cx="15" cy="7" r="3" fill="currentColor"/>`,
   Raccoon: () => `<circle cx="10" cy="12" r="5.4" fill="currentColor"/><polygon points="5,7 7,2 9,7" fill="currentColor"/><polygon points="15,7 13,2 11,7" fill="currentColor"/>`,
   Fox: () => `<circle cx="10" cy="12" r="5" fill="currentColor"/><polygon points="4,7 6,1 9,7" fill="currentColor"/><polygon points="16,7 14,1 11,7" fill="currentColor"/>`,
+  Hedgehog: () => `<circle cx="10" cy="13" r="5" fill="currentColor"/><path d="M3 11 L5 4 L8 8 L10 2 L12 8 L15 4 L17 11 Z" fill="currentColor"/>`,
+  Badger: () => `<circle cx="10" cy="12" r="5.4" fill="currentColor"/><circle cx="5" cy="6" r="2.6" fill="currentColor"/><circle cx="15" cy="6" r="2.6" fill="currentColor"/><rect x="8.6" y="7" width="2.8" height="10" fill="#fff" opacity="0.85"/>`,
+  Otter: () => `<circle cx="10" cy="12" r="5.4" fill="currentColor"/><circle cx="5.4" cy="7" r="2.4" fill="currentColor"/><circle cx="14.6" cy="7" r="2.4" fill="currentColor"/><path d="M4 12 L1 11 M4 14 L1 15 M16 12 L19 11 M16 14 L19 15" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>`,
+  Squirrel: () => `<circle cx="8" cy="12" r="5" fill="currentColor"/><polygon points="4,7 5,2 8,6" fill="currentColor"/><polygon points="12,7 11,2 8,6" fill="currentColor"/><path d="M13 17 Q19 15 18 8 Q17 3 13 4 Q16 7 15 11 Q14 14 12 14 Z" fill="currentColor"/>`,
+  Crafts: () => `<rect x="9" y="7" width="2.4" height="11" rx="1" fill="currentColor"/><rect x="4" y="2" width="12" height="5" rx="1.5" fill="currentColor"/>`,
+  Lore: () => `<path d="M2 5 Q10 1 10 5 L10 16 Q10 12 2 16 Z" fill="currentColor"/><path d="M18 5 Q10 1 10 5 L10 16 Q10 12 18 16 Z" fill="currentColor" opacity="0.72"/>`,
   Agriculture: () => `<line x1="10" y1="18" x2="10" y2="6" stroke="currentColor" stroke-width="1.6"/><g fill="currentColor"><ellipse cx="10" cy="6" rx="1.6" ry="3"/><ellipse cx="7" cy="9" rx="1.6" ry="3" transform="rotate(-30 7 9)"/><ellipse cx="13" cy="9" rx="1.6" ry="3" transform="rotate(30 13 9)"/><ellipse cx="7" cy="13" rx="1.6" ry="3" transform="rotate(-30 7 13)"/><ellipse cx="13" cy="13" rx="1.6" ry="3" transform="rotate(30 13 13)"/></g>`,
   Botany: () => `<path d="M10 18 V9" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M10 9 Q3 8 3 2 Q10 3 10 9Z" fill="currentColor"/><path d="M10 9 Q17 8 17 2 Q10 3 10 9Z" fill="currentColor"/>`,
   Commerce: () => `<line x1="10" y1="2" x2="10" y2="16" stroke="currentColor" stroke-width="1.6"/><line x1="4" y1="6" x2="16" y2="6" stroke="currentColor" stroke-width="1.6"/><path d="M4 6 L1.5 12 A3 3 0 0 0 6.5 12 Z" fill="currentColor"/><path d="M16 6 L13.5 12 A3 3 0 0 0 18.5 12 Z" fill="currentColor"/><rect x="7" y="16" width="6" height="2" fill="currentColor"/>`,

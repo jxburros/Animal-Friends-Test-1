@@ -13,7 +13,7 @@ import { cardArtSVG, cardBackSVG, iconSVG } from './art.js';
 import * as fx from './fx.js';
 import * as choreo from './choreo.js';
 
-export const SPECIES_TO_KIND = { Rabbit: 'rabbit', Mouse: 'mouse', Raccoon: 'raccoon', Fox: 'fox' };
+export { SPECIES_KIND as SPECIES_TO_KIND } from './art.js';
 const PHASES = ['start', 'resources', 'ready', 'actions', 'end'];
 const PHASE_LABEL = { start: 'Start', resources: 'Resources', ready: 'Ready', actions: 'Actions', end: 'End' };
 

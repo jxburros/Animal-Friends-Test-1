@@ -1,0 +1,34 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="src/ui/styles.css">
+<style>body{background:#f6ecd6}
+.row{display:flex;flex-wrap:wrap;gap:10px;padding:10px}
+.cell{text-align:center;font:11px sans-serif}
+.artbox{width:104px;height:58px;border:1px solid #333;overflow:hidden;background:#e9f3e4}
+.artbox svg{width:100%;height:100%;display:block}
+.big{width:184px;height:92px}
+.landing svg{width:104px;height:104px;background:#fff}
+</style></head><body>
+<h3>Landing page style (animalSVG)</h3>
+<div class="row landing" id="landing"></div>
+<h3>Card art boxes (cardArtSVG) - small 104x58</h3>
+<div class="row" id="small"></div>
+<h3>Card art boxes - large 184x92</h3>
+<div class="row" id="large"></div>
+<script type="module">
+import { animalSVG, ANIMALS, cardArtSVG } from './src/ui/art.js';
+const set = await (await fetch('spec/starter_card_set.json')).json();
+for (const k of Object.keys(ANIMALS)) {
+  const d=document.createElement('div'); d.className='cell';
+  d.innerHTML = animalSVG(k) + '<div>'+k+'</div>';
+  document.getElementById('landing').appendChild(d);
+}
+for (const [target,cls] of [['small',''],['large',' big']]) {
+  for (const c of set.cards) {
+    const d=document.createElement('div'); d.className='cell';
+    d.innerHTML = '<div class="artbox'+cls+'">'+cardArtSVG(c)+'</div><div>'+c.id+'</div>';
+    document.getElementById(target).appendChild(d);
+  }
+}
+window.__cells = set.cards.map(c => ({id:c.id, svg:cardArtSVG(c)}));
+window.__ready = true;
+</script></body></html>
