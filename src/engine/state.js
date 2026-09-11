@@ -33,9 +33,39 @@ export function nextUid(state) {
   return state.uidCounter;
 }
 
-function makePlayer(state, index, name, deckId) {
-  const deck = state.set.decksById[deckId];
-  if (!deck) throw new Error(`Unknown deck ${deckId}`);
+/**
+ * Resolve a deck reference: either the id of a deck in the set, or a deck object
+ * `{ id?, name?, list: { cardId: count } }` built by a player in the deck builder.
+ */
+export function resolveDeck(set, ref) {
+  if (ref && typeof ref === 'object') {
+    if (!ref.list || typeof ref.list !== 'object') throw new Error('Custom deck needs a card list');
+    for (const cardId of Object.keys(ref.list)) {
+      if (!set.cardsById[cardId]) throw new Error(`Unknown card id ${cardId} in deck`);
+    }
+    return { id: ref.id || 'custom', name: ref.name || 'Custom Deck', ...ref };
+  }
+  const deck = set.decksById[ref];
+  if (!deck) throw new Error(`Unknown deck ${ref}`);
+  return deck;
+}
+
+/**
+ * Build the Market Deck. `spec` is either a plain array of card ids (fixed deck) or
+ * `{ always, pool, poolSize }`: every `always` card plus a random `poolSize` of `pool`,
+ * so the deck keeps one size while the Capital City pool varies from game to game.
+ */
+export function buildMarketDeck(state, spec) {
+  if (Array.isArray(spec)) return spec.slice();
+  const always = (spec.always || []).slice();
+  const pool = shuffle(state, (spec.pool || []).slice());
+  const want = spec.poolSize === undefined ? pool.length : Math.min(spec.poolSize, pool.length);
+  return always.concat(pool.slice(0, want));
+}
+
+function makePlayer(state, index, name, deckRef) {
+  const deck = resolveDeck(state.set, deckRef);
+  const deckId = deck.id;
   const cards = [];
   for (const [cardId, count] of Object.entries(deck.list)) {
     for (let i = 0; i < count; i++) cards.push({ uid: nextUid(state), cardId });
@@ -45,6 +75,7 @@ function makePlayer(state, index, name, deckId) {
     index,
     name,
     deckId,
+    deckName: deck.name || deckId,
     deck: cards,
     hand: [],
     town: [], // character stacks
@@ -69,7 +100,8 @@ export function freshTurnCounters() {
  * Create a new game.
  * @param rules  parsed spec/game.json
  * @param set    parsed spec/starter_card_set.json (indexed or raw)
- * @param opts   { seed, decks:[deckId, deckId], names:[..] }
+ * @param opts   { seed, decks:[deckRef, deckRef], names:[..] } — a deckRef is a deck id from the set
+ *               or a `{ id?, name?, list }` object (see resolveDeck), so a player can bring a custom deck.
  */
 export function createGame(rules, set, opts = {}) {
   const indexed = set.cardsById ? set : indexSet(set);
@@ -101,10 +133,10 @@ export function createGame(rules, set, opts = {}) {
       if (c) p.hand.push(c);
     }
   });
-  state.market.deck = shuffle(state, indexed.marketDeck.slice());
+  state.market.deck = shuffle(state, buildMarketDeck(state, indexed.marketDeck));
   refillCity(state);
   state.phase = 'start';
-  log(state, null, `A new game of ${indexed.name} begins. ${names[0]} plays ${indexed.decksById[deckIds[0]].name}; ${names[1]} plays ${indexed.decksById[deckIds[1]].name}.`, { kind: 'gameStart' });
+  log(state, null, `A new game of ${indexed.name} begins. ${names[0]} plays ${state.players[0].deckName}; ${names[1]} plays ${state.players[1].deckName}.`, { kind: 'gameStart' });
   return state;
 }
 

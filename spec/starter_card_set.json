@@ -6,13 +6,19 @@
     "Rabbit",
     "Mouse",
     "Raccoon",
-    "Fox"
+    "Fox",
+    "Hedgehog",
+    "Badger",
+    "Otter",
+    "Squirrel"
   ],
   "studies": [
     "Agriculture",
     "Botany",
     "Civics",
-    "Commerce"
+    "Commerce",
+    "Crafts",
+    "Lore"
   ],
   "decks": [
     {
@@ -71,6 +77,64 @@
         "pp_rumor_control": 2,
         "pp_fair_hearing": 2,
         "pp_market_day": 2
+      }
+    },
+    {
+      "id": "bramble-bristle",
+      "name": "Bramble & Bristle",
+      "blurb": "Hedgehogs and Badgers of Crafts and Agriculture: steady shifts, protection from Unemployment, and friends brought back to work.",
+      "species": [
+        "Hedgehog",
+        "Badger"
+      ],
+      "studies": [
+        "Crafts",
+        "Agriculture"
+      ],
+      "list": {
+        "br_bramble_1": 3,
+        "br_bramble_2": 2,
+        "br_thistle_1": 3,
+        "br_thistle_2": 2,
+        "br_quill_1": 2,
+        "br_quill_2": 2,
+        "br_moss_1": 2,
+        "br_moss_2": 2,
+        "br_barn_raising": 2,
+        "br_mended_fences": 2,
+        "br_winter_stores": 2,
+        "br_workshop_swap": 2,
+        "br_hedgerow_guard": 2,
+        "br_tool_lending": 2
+      }
+    },
+    {
+      "id": "ripple-rune",
+      "name": "Ripple & Rune",
+      "blurb": "Otters and Squirrels of Lore and Commerce: deck sculpting, Market Deck peeks and bids that pay you back.",
+      "species": [
+        "Otter",
+        "Squirrel"
+      ],
+      "studies": [
+        "Lore",
+        "Commerce"
+      ],
+      "list": {
+        "rr_pip_1": 3,
+        "rr_pip_2": 2,
+        "rr_willow_1": 3,
+        "rr_willow_2": 2,
+        "rr_tansy_1": 2,
+        "rr_tansy_2": 2,
+        "rr_acorn_1": 2,
+        "rr_acorn_2": 2,
+        "rr_river_market": 2,
+        "rr_told_by_lamplight": 2,
+        "rr_acorn_cache": 2,
+        "rr_rune_reading": 2,
+        "rr_ferry_charter": 2,
+        "rr_hushed_agreement": 2
       }
     }
   ],
@@ -896,7 +960,7 @@
       "name": "Statue of Patience",
       "virtue": "Patience",
       "cost": 3,
-      "text": "Your Masters enter play with one fewer orientation delay (they enter Busy instead of at 180\u00b0).",
+      "text": "Your Masters enter play with one fewer orientation delay (they enter Busy instead of at 180°).",
       "flavor": "Moss grows on its shoulders, and it does not mind one bit.",
       "abilities": [
         {
@@ -1253,33 +1317,1147 @@
         "value": 1,
         "expires": "untilUsed"
       }
+    },
+    {
+      "id": "br_bramble_1",
+      "type": "character",
+      "name": "Bramble",
+      "title": "Tinker",
+      "job": "Tinker",
+      "species": "Hedgehog",
+      "study": "Crafts",
+      "cost": 0,
+      "shift": {
+        "delay": 1,
+        "output": 1
+      },
+      "text": "Recruit: if you have another Crafts Character, gain 1 Supply.",
+      "flavor": "Bramble can mend anything, given string, wax and an afternoon.",
+      "abilities": [
+        {
+          "trigger": "onRecruit",
+          "condition": {
+            "otherCharacterInTown": {
+              "study": "Crafts"
+            }
+          },
+          "effect": {
+            "do": "gainSupply",
+            "amount": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "br_bramble_2",
+      "type": "character",
+      "name": "Bramble",
+      "title": "Master Joiner",
+      "job": "Master Joiner",
+      "species": "Hedgehog",
+      "study": "Crafts",
+      "cost": 4,
+      "shift": {
+        "delay": 2,
+        "output": 4
+      },
+      "text": "Upgrades Bramble. The first shift you complete each turn produces 1 extra Supply.",
+      "flavor": "Every beam in the new town hall fits without a single nail.",
+      "abilities": [
+        {
+          "trigger": "onShiftCompleted",
+          "oncePerTurn": true,
+          "effect": {
+            "do": "gainSupply",
+            "amount": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "br_thistle_1",
+      "type": "character",
+      "name": "Thistle",
+      "title": "Field Hand",
+      "job": "Field Hand",
+      "species": "Badger",
+      "study": "Agriculture",
+      "cost": 2,
+      "shift": {
+        "delay": 2,
+        "output": 2
+      },
+      "text": "When Thistle becomes upright, gain 1 Supply.",
+      "flavor": "Up before the lanterns, home after the moon.",
+      "abilities": [
+        {
+          "trigger": "onReady",
+          "effect": {
+            "do": "gainSupply",
+            "amount": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "br_thistle_2",
+      "type": "character",
+      "name": "Thistle",
+      "title": "Grange Warden",
+      "job": "Grange Warden",
+      "species": "Badger",
+      "study": "Agriculture",
+      "cost": 3,
+      "shift": {
+        "delay": 2,
+        "output": 3
+      },
+      "text": "Upgrades Thistle. Busy: rehire a Character from your Unemployment for 1 less Supply.",
+      "flavor": "Nobody is left standing outside the grange in Thistle’s season.",
+      "abilities": [
+        {
+          "trigger": "busy",
+          "effect": {
+            "do": "rehire",
+            "discount": 1,
+            "optional": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "br_quill_1",
+      "type": "character",
+      "name": "Quill",
+      "title": "Orchard Keeper",
+      "job": "Orchard Keeper",
+      "species": "Hedgehog",
+      "study": "Agriculture",
+      "cost": 2,
+      "shift": {
+        "delay": 1,
+        "output": 2
+      },
+      "text": "When Quill starts a shift, draw 1 card, then discard 1 card.",
+      "flavor": "She prunes the orchard the way other folk tidy a bookshelf.",
+      "abilities": [
+        {
+          "trigger": "onShiftStarted",
+          "condition": {
+            "self": true
+          },
+          "effect": {
+            "do": "seq",
+            "steps": [
+              {
+                "do": "draw",
+                "count": 1
+              },
+              {
+                "do": "discard",
+                "count": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "br_quill_2",
+      "type": "character",
+      "name": "Quill",
+      "title": "Harvest Steward",
+      "job": "Harvest Steward",
+      "species": "Hedgehog",
+      "study": "Agriculture",
+      "cost": 5,
+      "shift": {
+        "delay": 2,
+        "output": 5
+      },
+      "text": "Upgrades Quill. Your Masters arrive one turn sooner.",
+      "flavor": "Quill has the whole harvest planned before the first frost lifts.",
+      "foil": true,
+      "abilities": [
+        {
+          "trigger": "passive",
+          "key": "masterDelayMinus1"
+        }
+      ]
+    },
+    {
+      "id": "br_moss_1",
+      "type": "character",
+      "name": "Moss",
+      "title": "Toolsmith",
+      "job": "Toolsmith",
+      "species": "Badger",
+      "study": "Crafts",
+      "cost": 2,
+      "shift": {
+        "delay": 1,
+        "output": 2
+      },
+      "text": "Recruit: your next rehire costs 2 less Supply.",
+      "flavor": "A good tool, Moss says, is a favour you lend to tomorrow.",
+      "abilities": [
+        {
+          "trigger": "onRecruit",
+          "effect": {
+            "do": "addMod",
+            "key": "rehireDiscount",
+            "value": 2,
+            "expires": "untilUsed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "br_moss_2",
+      "type": "character",
+      "name": "Moss",
+      "title": "Bridgewright",
+      "job": "Bridgewright",
+      "species": "Badger",
+      "study": "Crafts",
+      "cost": 5,
+      "shift": {
+        "delay": 3,
+        "output": 6
+      },
+      "text": "Upgrades Moss. Busy: ready one of your Characters.",
+      "flavor": "Three boroughs, one river, and Moss’s stubborn arches between them.",
+      "foil": true,
+      "abilities": [
+        {
+          "trigger": "busy",
+          "effect": {
+            "do": "readyCharacter",
+            "count": 1,
+            "optional": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "br_barn_raising",
+      "type": "event",
+      "name": "Barn Raising",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "study": "Crafts",
+          "count": 2
+        }
+      ],
+      "text": "Requires two Crafts Characters. Gain 2 Supply and ready one of your Characters.",
+      "flavor": "The whole borough turns up; the roof is on by supper.",
+      "effect": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "gainSupply",
+            "amount": 2
+          },
+          {
+            "do": "readyCharacter",
+            "count": 1,
+            "optional": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "br_mended_fences",
+      "type": "event",
+      "name": "Mended Fences",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "species": "Badger",
+          "count": 1
+        }
+      ],
+      "text": "Requires a Badger. Rehire a Character from your Unemployment for 1 less Supply and draw 1 card.",
+      "flavor": "A quiet apology, a new rail, and the gate swings true again.",
+      "effect": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "rehire",
+            "discount": 1,
+            "optional": true
+          },
+          {
+            "do": "draw",
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "br_winter_stores",
+      "type": "event",
+      "name": "Winter Stores",
+      "kind": "limited",
+      "duration": 2,
+      "cost": 0,
+      "requires": [
+        {
+          "study": "Agriculture",
+          "count": 1
+        }
+      ],
+      "text": "Requires an Agriculture Character. Limited 2: at the start of your turn, gain 1 Supply.",
+      "flavor": "Root cellars full, shelves labelled, and nobody hungry in the thaw.",
+      "abilities": [
+        {
+          "trigger": "onTurnStart",
+          "effect": {
+            "do": "gainSupply",
+            "amount": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "br_workshop_swap",
+      "type": "event",
+      "name": "Workshop Swap",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "study": "Crafts",
+          "count": 1
+        },
+        {
+          "species": "Hedgehog",
+          "count": 1
+        }
+      ],
+      "text": "Requires a Crafts Character and a Hedgehog. Draw 2 cards, then discard 1 card. Your next recruit costs 1 less.",
+      "flavor": "Everyone leaves with someone else’s half-finished project.",
+      "effect": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "draw",
+            "count": 2
+          },
+          {
+            "do": "discard",
+            "count": 1
+          },
+          {
+            "do": "addMod",
+            "key": "recruitDiscount",
+            "value": 1,
+            "expires": "nextTurnStart",
+            "consumable": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "br_hedgerow_guard",
+      "type": "event",
+      "name": "Hedgerow Guard",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "species": "Hedgehog",
+          "count": 1
+        }
+      ],
+      "text": "Requires a Hedgehog. Until your next turn, your Characters cannot be sent to Unemployment and opponent effects cannot make you discard or lose Supply.",
+      "flavor": "Spines out, lanterns lit, and the hedgerow keeps its own.",
+      "effect": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "addMod",
+            "key": "unemploymentShield",
+            "value": 1,
+            "expires": "nextTurnStart"
+          },
+          {
+            "do": "addMod",
+            "key": "lossShield",
+            "value": 99,
+            "expires": "nextTurnStart"
+          }
+        ]
+      }
+    },
+    {
+      "id": "br_tool_lending",
+      "type": "event",
+      "name": "Tool Lending Day",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "study": "Crafts",
+          "count": 1
+        }
+      ],
+      "text": "Requires a Crafts Character. Ready one of your Characters.",
+      "flavor": "Borrow the plane, return the plane, and stay for tea.",
+      "effect": {
+        "do": "readyCharacter",
+        "count": 1,
+        "optional": true
+      }
+    },
+    {
+      "id": "rr_pip_1",
+      "type": "character",
+      "name": "Pip",
+      "title": "Story Collector",
+      "job": "Story Collector",
+      "species": "Squirrel",
+      "study": "Lore",
+      "cost": 0,
+      "shift": {
+        "delay": 1,
+        "output": 1
+      },
+      "text": "Recruit: look at the top two cards of the Market Deck.",
+      "flavor": "Pip trades in rumours, and pays in better ones.",
+      "abilities": [
+        {
+          "trigger": "onRecruit",
+          "effect": {
+            "do": "peekMarketDeck",
+            "count": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "rr_pip_2",
+      "type": "character",
+      "name": "Pip",
+      "title": "Archivist",
+      "job": "Archivist",
+      "species": "Squirrel",
+      "study": "Lore",
+      "cost": 3,
+      "shift": {
+        "delay": 2,
+        "output": 3
+      },
+      "text": "Upgrades Pip. When Pip becomes upright, you may return an Event from your Town Dump to your hand.",
+      "flavor": "Nothing is ever really lost; it is only filed somewhere clever.",
+      "abilities": [
+        {
+          "trigger": "onReady",
+          "effect": {
+            "do": "eventFromDumpToHand",
+            "optional": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "rr_willow_1",
+      "type": "character",
+      "name": "Willow",
+      "title": "Ferry Trader",
+      "job": "Ferry Trader",
+      "species": "Otter",
+      "study": "Commerce",
+      "cost": 1,
+      "shift": {
+        "delay": 2,
+        "output": 2
+      },
+      "text": "When Willow starts a shift, gain 1 Supply.",
+      "flavor": "She is paid twice: once in coin, once in gossip from the far bank.",
+      "abilities": [
+        {
+          "trigger": "onShiftStarted",
+          "condition": {
+            "self": true
+          },
+          "effect": {
+            "do": "gainSupply",
+            "amount": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "rr_willow_2",
+      "type": "character",
+      "name": "Willow",
+      "title": "Harbourmaster",
+      "job": "Harbourmaster",
+      "species": "Otter",
+      "study": "Commerce",
+      "cost": 4,
+      "shift": {
+        "delay": 2,
+        "output": 4
+      },
+      "text": "Upgrades Willow. Whenever you gain a non-Statue Capital City card, gain 2 Supply.",
+      "flavor": "Every crate on the quay has already been counted by Willow.",
+      "abilities": [
+        {
+          "trigger": "onGainMarketCard",
+          "condition": {
+            "nonStatue": true
+          },
+          "effect": {
+            "do": "gainSupply",
+            "amount": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "rr_tansy_1",
+      "type": "character",
+      "name": "Tansy",
+      "title": "Lamplighter",
+      "job": "Lamplighter",
+      "species": "Otter",
+      "study": "Lore",
+      "cost": 2,
+      "shift": {
+        "delay": 1,
+        "output": 2
+      },
+      "text": "When Tansy becomes upright, look at the top three cards of your deck and put them back in any order.",
+      "flavor": "She knows which street will want light before the dusk does.",
+      "abilities": [
+        {
+          "trigger": "onReady",
+          "effect": {
+            "do": "reorderDeckTop",
+            "count": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "rr_tansy_2",
+      "type": "character",
+      "name": "Tansy",
+      "title": "Loremaster",
+      "job": "Loremaster",
+      "species": "Otter",
+      "study": "Lore",
+      "cost": 5,
+      "shift": {
+        "delay": 2,
+        "output": 5
+      },
+      "text": "Upgrades Tansy. At the start of your turn, draw 1 card, then discard 1 card.",
+      "flavor": "Tansy reads the town the way a river reads its own banks.",
+      "foil": true,
+      "abilities": [
+        {
+          "trigger": "onTurnStart",
+          "effect": {
+            "do": "seq",
+            "steps": [
+              {
+                "do": "draw",
+                "count": 1
+              },
+              {
+                "do": "discard",
+                "count": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "rr_acorn_1",
+      "type": "character",
+      "name": "Acorn",
+      "title": "Stall Runner",
+      "job": "Stall Runner",
+      "species": "Squirrel",
+      "study": "Commerce",
+      "cost": 2,
+      "shift": {
+        "delay": 1,
+        "output": 2
+      },
+      "text": "While Acorn is upright, your first bid each turn counts as 1 higher.",
+      "flavor": "Acorn can be at three stalls at once, and usually is.",
+      "abilities": [
+        {
+          "trigger": "passive",
+          "key": "firstBidPlus1",
+          "requiresUpright": true
+        }
+      ]
+    },
+    {
+      "id": "rr_acorn_2",
+      "type": "character",
+      "name": "Acorn",
+      "title": "Guild Broker",
+      "job": "Guild Broker",
+      "species": "Squirrel",
+      "study": "Commerce",
+      "cost": 5,
+      "shift": {
+        "delay": 3,
+        "output": 6
+      },
+      "text": "Upgrades Acorn. When an opponent challenges one of your purchases, gain 2 Supply and draw 1 card.",
+      "flavor": "Every challenge is just another fee, politely collected.",
+      "foil": true,
+      "abilities": [
+        {
+          "trigger": "onChallengedByOpponent",
+          "effect": {
+            "do": "seq",
+            "steps": [
+              {
+                "do": "gainSupply",
+                "amount": 2
+              },
+              {
+                "do": "draw",
+                "count": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "rr_river_market",
+      "type": "event",
+      "name": "River Market",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "study": "Commerce",
+          "count": 1
+        }
+      ],
+      "text": "Requires a Commerce Character. Gain 2 Supply and draw 1 card.",
+      "flavor": "Barges tie up two deep and the whole bank smells of hot pastry.",
+      "effect": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "gainSupply",
+            "amount": 2
+          },
+          {
+            "do": "draw",
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "rr_told_by_lamplight",
+      "type": "event",
+      "name": "Told by Lamplight",
+      "kind": "limited",
+      "duration": 2,
+      "cost": 0,
+      "requires": [
+        {
+          "study": "Lore",
+          "count": 1
+        }
+      ],
+      "text": "Requires a Lore Character. Limited 2: at the start of your turn, look at the top two cards of your deck and put them back in any order.",
+      "flavor": "The story goes long, and everyone stays for the end of it.",
+      "abilities": [
+        {
+          "trigger": "onTurnStart",
+          "effect": {
+            "do": "reorderDeckTop",
+            "count": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "rr_acorn_cache",
+      "type": "event",
+      "name": "Acorn Cache",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "species": "Squirrel",
+          "count": 1
+        }
+      ],
+      "text": "Requires a Squirrel. Gain 2 Supply and your next recruit costs 1 less.",
+      "flavor": "Buried last autumn, remembered — mostly — this spring.",
+      "effect": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "gainSupply",
+            "amount": 2
+          },
+          {
+            "do": "addMod",
+            "key": "recruitDiscount",
+            "value": 1,
+            "expires": "nextTurnStart",
+            "consumable": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "rr_rune_reading",
+      "type": "event",
+      "name": "Rune Reading",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "study": "Lore",
+          "count": 1
+        },
+        {
+          "species": "Otter",
+          "count": 1
+        }
+      ],
+      "text": "Requires a Lore Character and an Otter. Draw 3 cards, then discard 2 cards, and look at the top card of the Market Deck.",
+      "flavor": "The stones say: fortune, and also, mind the third step.",
+      "effect": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "draw",
+            "count": 3
+          },
+          {
+            "do": "discard",
+            "count": 2
+          },
+          {
+            "do": "peekMarketDeck",
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "rr_ferry_charter",
+      "type": "event",
+      "name": "Ferry Charter",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "species": "Otter",
+          "count": 1
+        }
+      ],
+      "text": "Requires an Otter. Ready one of your Characters; a working Character finishes its shift.",
+      "flavor": "Signed, stamped, and away before the ink is dry.",
+      "effect": {
+        "do": "readyCharacter",
+        "count": 1,
+        "optional": true
+      }
+    },
+    {
+      "id": "rr_hushed_agreement",
+      "type": "event",
+      "name": "Hushed Agreement",
+      "kind": "limited",
+      "duration": 2,
+      "cost": 0,
+      "requires": [
+        {
+          "study": "Commerce",
+          "count": 1
+        },
+        {
+          "study": "Lore",
+          "count": 1
+        }
+      ],
+      "text": "Requires a Commerce Character and a Lore Character. Limited 2: your challenge bids win ties.",
+      "flavor": "No shouting, no banners — just two paws shaken behind the archive.",
+      "abilities": [
+        {
+          "trigger": "passive",
+          "key": "winTiesAsChallenger"
+        }
+      ]
+    },
+    {
+      "id": "mk_towpath",
+      "type": "market",
+      "name": "Towpath",
+      "cost": 1,
+      "disposal": "cityDump",
+      "text": "Gain 2 Supply.",
+      "flavor": "A good path, a patient rope, and the barge comes home.",
+      "onGain": {
+        "do": "gainSupply",
+        "amount": 2
+      }
+    },
+    {
+      "id": "mk_lamplighters_round",
+      "type": "market",
+      "name": "Lamplighter's Round",
+      "cost": 1,
+      "disposal": "cityDump",
+      "text": "Look at the top three cards of your deck and put them back in any order.",
+      "flavor": "Every lamp lit in order, and the order is never an accident.",
+      "onGain": {
+        "do": "reorderDeckTop",
+        "count": 3
+      }
+    },
+    {
+      "id": "mk_seed_exchange",
+      "type": "market",
+      "name": "Seed Exchange",
+      "cost": 1,
+      "disposal": "cityDump",
+      "text": "Draw 2 cards, then discard 1 card.",
+      "flavor": "Two handfuls in, one handful out, and everyone plants something new.",
+      "onGain": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "draw",
+            "count": 2
+          },
+          {
+            "do": "discard",
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "mk_river_ferry",
+      "type": "market",
+      "name": "River Ferry",
+      "cost": 2,
+      "disposal": "cityDump",
+      "text": "Gain 2 Supply and draw 1 card.",
+      "flavor": "Tuppence a crossing, and the news is thrown in free.",
+      "onGain": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "gainSupply",
+            "amount": 2
+          },
+          {
+            "do": "draw",
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "mk_toolshed",
+      "type": "market",
+      "name": "Shared Toolshed",
+      "cost": 2,
+      "disposal": "cityDump",
+      "text": "The next shift you complete produces 1 extra Supply, and you draw 1 card.",
+      "flavor": "Sign the slate, take the saw, bring it back sharp.",
+      "onGain": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "addMod",
+            "key": "shiftBonus",
+            "value": 1,
+            "expires": "untilUsed"
+          },
+          {
+            "do": "draw",
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "mk_common_pasture",
+      "type": "market",
+      "name": "Common Pasture",
+      "cost": 2,
+      "disposal": "cityDump",
+      "text": "Rehire a Character costing 2 or less from your Unemployment for free; it enters upright.",
+      "flavor": "There is always room on the common for one more pair of paws.",
+      "onGain": {
+        "do": "rehire",
+        "free": true,
+        "filter": {
+          "maxCost": 2
+        },
+        "optional": true
+      }
+    },
+    {
+      "id": "mk_story_circle",
+      "type": "market",
+      "name": "Story Circle",
+      "cost": 2,
+      "disposal": "cityDump",
+      "text": "Put an Event from your Town Dump on the bottom of your deck and draw 1 card.",
+      "flavor": "Told once more, a little truer, and back into the pile it goes.",
+      "onGain": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "eventFromDumpToDeckBottom",
+            "optional": true
+          },
+          {
+            "do": "draw",
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "mk_harvest_fair",
+      "type": "market",
+      "name": "Harvest Fair",
+      "cost": 3,
+      "disposal": "cityDump",
+      "text": "Gain 5 Supply. Your opponent gains 1 Supply.",
+      "flavor": "Ribbons for the marrows, and nobody goes home empty-pawed.",
+      "onGain": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "gainSupply",
+            "amount": 5
+          },
+          {
+            "do": "opponentGainSupply",
+            "amount": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "mk_guild_hall",
+      "type": "market",
+      "name": "Guild Hall",
+      "cost": 3,
+      "disposal": "cityDump",
+      "text": "Recruit a Character costing 2 or less from your hand for free; it enters Busy.",
+      "flavor": "Apprentices sworn in beneath the old crossed hammers.",
+      "onGain": {
+        "do": "recruitFromHand",
+        "filter": {
+          "maxCost": 2
+        },
+        "free": true,
+        "orientation": 270,
+        "optional": true
+      }
+    },
+    {
+      "id": "mk_night_watch",
+      "type": "market",
+      "name": "Night Watch",
+      "cost": 3,
+      "disposal": "cityDump",
+      "text": "Until your next turn, your Characters cannot be sent to Unemployment.",
+      "flavor": "Two lanterns, one route, and a very determined badger.",
+      "onGain": {
+        "do": "addMod",
+        "key": "unemploymentShield",
+        "value": 1,
+        "expires": "nextTurnStart"
+      }
+    },
+    {
+      "id": "mk_watermill",
+      "type": "market",
+      "name": "Watermill",
+      "cost": 3,
+      "disposal": "cityDump",
+      "text": "Gain 2 Supply, and the next shift you complete produces 2 extra Supply.",
+      "flavor": "The wheel turns whether or not anyone is watching it.",
+      "onGain": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "gainSupply",
+            "amount": 2
+          },
+          {
+            "do": "addMod",
+            "key": "shiftBonus",
+            "value": 2,
+            "expires": "untilUsed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mk_ledger_audit",
+      "type": "market",
+      "name": "Ledger Audit",
+      "cost": 4,
+      "disposal": "cityDump",
+      "text": "Draw 2 cards. Your opponent puts a card from their hand on top of their deck.",
+      "flavor": "Column by column, until the awkward entry surfaces.",
+      "onGain": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "draw",
+            "count": 2
+          },
+          {
+            "do": "opponentTopdeckFromHand"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mk_masons_yard",
+      "type": "market",
+      "name": "Mason's Yard",
+      "cost": 4,
+      "disposal": "cityDump",
+      "text": "Ready one of your Characters.",
+      "flavor": "Dust, chisels, and the patient shaping of a town.",
+      "onGain": {
+        "do": "readyCharacter",
+        "count": 1,
+        "optional": true
+      }
+    },
+    {
+      "id": "mk_festival_parade",
+      "type": "market",
+      "name": "Festival Parade",
+      "cost": 4,
+      "disposal": "cityDump",
+      "text": "Gain 3 Supply and draw 2 cards.",
+      "flavor": "Drums down the high street and bunting on every rail.",
+      "onGain": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "gainSupply",
+            "amount": 3
+          },
+          {
+            "do": "draw",
+            "count": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "mk_boundary_stone",
+      "type": "market",
+      "name": "Old Boundary Stone",
+      "cost": 5,
+      "disposal": "outOfPlay",
+      "text": "Send an opponent's Character with cost 3 or less to Unemployment. Goes Out of Play. (Cannot target a Character that has not yet been upright on its owner's turn.)",
+      "flavor": "Older than the charter, and far less willing to argue.",
+      "onGain": {
+        "do": "unemployOpponentCharacter",
+        "maxCost": 3,
+        "optional": true
+      }
+    },
+    {
+      "id": "mk_beacon_hill",
+      "type": "market",
+      "name": "Beacon Hill",
+      "cost": 5,
+      "disposal": "cityDump",
+      "text": "Gain 3 Supply and ready two of your Characters.",
+      "flavor": "Light it and three boroughs answer before the hour is out.",
+      "foil": true,
+      "onGain": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "gainSupply",
+            "amount": 3
+          },
+          {
+            "do": "readyCharacter",
+            "count": 2,
+            "optional": true
+          }
+        ]
+      }
     }
   ],
-  "marketDeck": [
-    "st_kindness",
-    "st_curiosity",
-    "st_courage",
-    "st_patience",
-    "st_generosity",
-    "st_ingenuity",
-    "st_community",
-    "st_harmony",
-    "st_joy",
-    "mk_town_charter",
-    "mk_festival_grant",
-    "mk_emergency_reserve",
-    "mk_mayors_seal",
-    "mk_library_annex",
-    "mk_quiet_mediation",
-    "mk_poachers_pardon",
-    "mk_town_bell",
-    "mk_supply_depot",
-    "mk_public_gardens",
-    "mk_courier_network",
-    "mk_community_kitchen",
-    "mk_appeal_board",
-    "mk_scrap_yard",
-    "mk_town_archives",
-    "mk_town_clock"
-  ]
+  "marketDeck": {
+    "$comment": "Every Statue is always in the Market Deck; `poolSize` Capital City cards are drawn at random from `pool` each game, so the deck keeps its 25-card shape while the display varies between games. A plain array of card ids is still accepted.",
+    "always": [
+      "st_kindness",
+      "st_curiosity",
+      "st_courage",
+      "st_patience",
+      "st_generosity",
+      "st_ingenuity",
+      "st_community",
+      "st_harmony",
+      "st_joy"
+    ],
+    "pool": [
+      "mk_town_charter",
+      "mk_festival_grant",
+      "mk_emergency_reserve",
+      "mk_mayors_seal",
+      "mk_library_annex",
+      "mk_quiet_mediation",
+      "mk_poachers_pardon",
+      "mk_town_bell",
+      "mk_supply_depot",
+      "mk_public_gardens",
+      "mk_courier_network",
+      "mk_community_kitchen",
+      "mk_appeal_board",
+      "mk_scrap_yard",
+      "mk_town_archives",
+      "mk_town_clock",
+      "mk_towpath",
+      "mk_lamplighters_round",
+      "mk_seed_exchange",
+      "mk_river_ferry",
+      "mk_toolshed",
+      "mk_common_pasture",
+      "mk_story_circle",
+      "mk_harvest_fair",
+      "mk_guild_hall",
+      "mk_night_watch",
+      "mk_watermill",
+      "mk_ledger_audit",
+      "mk_masons_yard",
+      "mk_festival_parade",
+      "mk_boundary_stone",
+      "mk_beacon_hill"
+    ],
+    "poolSize": 16
+  }
 }

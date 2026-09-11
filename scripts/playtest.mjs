@@ -2,7 +2,10 @@
 // Batch playtest runner for Animal Friends TCG.
 //
 //   node scripts/playtest.mjs [--games N] [--seed S] [--p0 heuristic|random] [--p1 heuristic|random]
-//                             [--decks bb,pp|pp,bb|alternate] [--verbose] [--aggression A]
+//                             [--decks <a>,<b>|alternate|all] [--verbose] [--aggression A]
+//
+// Deck names may be full ids (burrow-bloom) or short aliases (bb, pp, br, rr). `alternate` swaps the
+// first two decks between seats; `all` rotates through every ordered pair of decks in the set.
 //
 // Also exports runPlaytest(opts) -> stats object, for use from tests.
 
@@ -14,9 +17,15 @@ import { makeHeuristicAgent } from '../src/ai/heuristic.js';
 const rules = JSON.parse(fs.readFileSync(new URL('../spec/game.json', import.meta.url)));
 const set = JSON.parse(fs.readFileSync(new URL('../spec/starter_card_set.json', import.meta.url)));
 
-const DECK_ALIAS = { bb: 'burrow-bloom', pp: 'paws-papers', 'burrow-bloom': 'burrow-bloom', 'paws-papers': 'paws-papers' };
-const DECK_SHORT = { 'burrow-bloom': 'bb', 'paws-papers': 'pp' };
-const MARKET_NAMES = new Map(set.marketDeck.map((id) => [set.cards.find((c) => c.id === id).name, id]));
+const DECK_IDS = set.decks.map((d) => d.id);
+const SHORT_ALIAS = { bb: 'burrow-bloom', pp: 'paws-papers', br: 'bramble-bristle', rr: 'ripple-rune' };
+const DECK_ALIAS = { ...SHORT_ALIAS, ...Object.fromEntries(DECK_IDS.map((id) => [id, id])) };
+// Stats are keyed by deck id; the pairings cycle through every ordered pair of distinct decks.
+const DECK_PAIRS = DECK_IDS.flatMap((a) => DECK_IDS.filter((b) => b !== a).map((b) => [a, b]));
+const MARKET_POOL = set.cards.filter((c) => c.type === 'statue' || c.type === 'market').map((c) => c.id);
+const MARKET_NAMES = new Map(MARKET_POOL.map((id) => [set.cards.find((c) => c.id === id).name, id]));
+const zeroByDeck = () => Object.fromEntries(DECK_IDS.map((id) => [id, 0]));
+const zeroBySlot = () => Object.fromEntries(DECK_IDS.map((id) => [id, [0, 0]]));
 const CARD_BY_ID = new Map(set.cards.map((c) => [c.id, c]));
 const DECK_CARD_IDS = new Map(set.decks.map((d) => [d.id, Object.keys(d.list)]));
 
@@ -62,9 +71,9 @@ function mineLog(state, stats, decks) {
       rest = rest.replace(/\s*\([^)]*\)$/, '');
       const cardId = MARKET_NAMES.get(rest);
       if (!cardId) continue;
-      const rec = stats.gains.get(cardId) || { total: 0, byDeck: { bb: 0, pp: 0 } };
+      const rec = stats.gains.get(cardId) || { total: 0, byDeck: zeroByDeck() };
       rec.total++;
-      rec.byDeck[DECK_SHORT[decks[pi]]]++;
+      rec.byDeck[decks[pi]]++;
       stats.gains.set(cardId, rec);
     }
     // "Purchase of <Card> resolves: <ann> bid N, <ch> bid M[ (tie)]. <winner> wins."
@@ -89,9 +98,9 @@ export async function runPlaytest(opts = {}) {
     config: { games, seed: baseSeed, p0: p0Kind, p1: p1Kind, decks: deckMode },
     winsBySlot: [0, 0],
     draws: 0,
-    winsByDeck: { bb: 0, pp: 0 },
-    gamesByDeckSlot: { bb: [0, 0], pp: [0, 0] }, // deck -> games played in slot 0/1
-    winsByDeckSlot: { bb: [0, 0], pp: [0, 0] },
+    winsByDeck: zeroByDeck(),
+    gamesByDeckSlot: zeroBySlot(), // deck -> games played in slot 0/1
+    winsByDeckSlot: zeroBySlot(),
     turns: [],
     turnCapGames: 0,
     statueGames: 0,
@@ -111,10 +120,11 @@ export async function runPlaytest(opts = {}) {
   const t0 = Date.now();
   for (let g = 0; g < games; g++) {
     let decks;
-    if (deckMode === 'alternate') decks = g % 2 === 0 ? ['burrow-bloom', 'paws-papers'] : ['paws-papers', 'burrow-bloom'];
+    if (deckMode === 'all') decks = DECK_PAIRS[g % DECK_PAIRS.length];
+    else if (deckMode === 'alternate') decks = g % 2 === 0 ? [DECK_IDS[0], DECK_IDS[1]] : [DECK_IDS[1], DECK_IDS[0]];
     else {
-      const parts = String(deckMode).split(',').map((s) => DECK_ALIAS[s.trim()]).filter(Boolean);
-      decks = parts.length === 2 ? parts : ['burrow-bloom', 'paws-papers'];
+      const parts = String(deckMode).split(',').map((x) => DECK_ALIAS[x.trim()]).filter(Boolean);
+      decks = parts.length === 2 ? parts : [DECK_IDS[0], DECK_IDS[1]];
     }
     const seed = baseSeed + g;
     const state = createGame(rules, set, { seed, decks, names: ['P0', 'P1'] });
@@ -132,10 +142,10 @@ export async function runPlaytest(opts = {}) {
     if (state.winner === null) stats.draws++;
     else {
       stats.winsBySlot[state.winner]++;
-      stats.winsByDeck[DECK_SHORT[decks[state.winner]]]++;
-      stats.winsByDeckSlot[DECK_SHORT[decks[state.winner]]][state.winner]++;
+      stats.winsByDeck[decks[state.winner]]++;
+      stats.winsByDeckSlot[decks[state.winner]][state.winner]++;
     }
-    for (let pi = 0; pi < 2; pi++) stats.gamesByDeckSlot[DECK_SHORT[decks[pi]]][pi]++;
+    for (let pi = 0; pi < 2; pi++) stats.gamesByDeckSlot[decks[pi]][pi]++;
 
     stats.turns.push(state.turnNumber);
     if (state.result === 'turnLimit') stats.turnCapGames++;
@@ -162,8 +172,10 @@ export async function runPlaytest(opts = {}) {
     winRateSlot0: stats.winsBySlot[0] / games,
     winRateSlot1: stats.winsBySlot[1] / games,
     drawRate: stats.draws / games,
-    winRateBB: stats.winsByDeck.bb / games,
-    winRatePP: stats.winsByDeck.pp / games,
+    winRateByDeck: Object.fromEntries(DECK_IDS.map((id) => {
+      const played = stats.gamesByDeckSlot[id][0] + stats.gamesByDeckSlot[id][1];
+      return [id, played ? stats.winsByDeck[id] / played : 0];
+    })),
     avgTurns: mean(stats.turns),
     medianTurns: median(stats.turns),
     turnCapRate: stats.turnCapGames / games,
@@ -191,8 +203,9 @@ function report(stats, { verbose = false } = {}) {
   L.push(`  P0 (${stats.config.p0}): ${stats.winsBySlot[0]}/${g}  ${pct(stats.winsBySlot[0], g)}`);
   L.push(`  P1 (${stats.config.p1}): ${stats.winsBySlot[1]}/${g}  ${pct(stats.winsBySlot[1], g)}`);
   L.push(`  draws:              ${stats.draws}  ${pct(stats.draws, g)}`);
-  for (const d of ['bb', 'pp']) {
+  for (const d of DECK_IDS) {
     const played = stats.gamesByDeckSlot[d][0] + stats.gamesByDeckSlot[d][1];
+    if (!played) continue;
     L.push(`  deck ${d}: ${stats.winsByDeck[d]}/${played}  ${pct(stats.winsByDeck[d], played)}`
       + `  (as P0 ${stats.winsByDeckSlot[d][0]}/${stats.gamesByDeckSlot[d][0]}, as P1 ${stats.winsByDeckSlot[d][1]}/${stats.gamesByDeckSlot[d][1]})`);
   }
@@ -211,15 +224,16 @@ function report(stats, { verbose = false } = {}) {
     + `   announcements: ${s.avgAnnouncements.toFixed(1)}   challenges: ${s.avgChallenges.toFixed(1)}`);
   L.push(`  contested purchases: ${stats.contested} (${(stats.contested / g).toFixed(2)}/game); challenger won ${pct(stats.challengerWins, stats.contested)}`);
   L.push('');
-  L.push('MARKET CARDS GAINED (count, bb/pp)');
-  const gainRows = set.marketDeck.map((id) => {
-    const rec = stats.gains.get(id) || { total: 0, byDeck: { bb: 0, pp: 0 } };
+  L.push('CAPITAL CITY CARDS GAINED (count, then by deck)');
+  const gainRows = MARKET_POOL.map((id) => {
+    const rec = stats.gains.get(id) || { total: 0, byDeck: zeroByDeck() };
     return { id, name: CARD_BY_ID.get(id).name, type: CARD_BY_ID.get(id).type, ...rec };
-  });
+  }).filter((r) => r.total > 0);
   for (const kind of ['statue', 'market']) {
     L.push(`  -- ${kind === 'statue' ? 'Statues' : 'Other Market cards'} --`);
     for (const r of gainRows.filter((r) => r.type === kind).sort((a, b) => b.total - a.total)) {
-      L.push(`    ${r.name.padEnd(22)} ${String(r.total).padStart(4)}  (${(r.total / g).toFixed(2)}/game)  bb ${r.byDeck.bb} / pp ${r.byDeck.pp}`);
+      const byDeck = DECK_IDS.filter((id) => r.byDeck[id]).map((id) => `${id} ${r.byDeck[id]}`).join(' / ');
+      L.push(`    ${r.name.padEnd(22)} ${String(r.total).padStart(4)}  (${(r.total / g).toFixed(2)}/game)  ${byDeck}`);
     }
   }
   L.push('');

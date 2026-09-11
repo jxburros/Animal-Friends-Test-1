@@ -13,6 +13,13 @@
     "capitalCitySize": 5,
     "secondPlayerBonusCards": 1
   },
+  "deckbuilding": {
+    "$comment": "Prototype decision: the Deck Workshop lets a player build any 30-card deck from the Character and Event catalogue. Copy and Character limits keep a custom deck playable — a deck of pure Events could never pay its own requirements.",
+    "deckSize": 30,
+    "maxCopiesPerCard": 3,
+    "minCharacters": 12,
+    "maxEvents": 18
+  },
   "victory": {
     "statueTotal": 9,
     "statuesToWin": 5,

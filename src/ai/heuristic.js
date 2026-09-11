@@ -123,6 +123,25 @@ function marketCardValue(state, pi, d) {
     case 'mk_town_archives': return p.dump.some((c) => (def(state, c.cardId) || {}).type === 'event') ? 2.0 : 0.3;
     case 'mk_town_clock': return 2.6;
     case 'mk_emergency_reserve': return 0.8;
+    case 'mk_towpath': return 2.0;
+    case 'mk_lamplighters_round': return 1.2;
+    case 'mk_seed_exchange': return 2.2;
+    case 'mk_river_ferry': return 3.2;
+    case 'mk_toolshed': return 2.6;
+    case 'mk_common_pasture': return p.unemployment.some((c) => (def(state, c.cardId) || { cost: 9 }).cost <= 2) ? 3.0 : 0.3;
+    case 'mk_story_circle': return p.dump.some((c) => (def(state, c.cardId) || {}).type === 'event') ? 2.2 : 0.8;
+    case 'mk_harvest_fair': return 5.0; // 5 Supply, minus a small gift to the rival
+    case 'mk_guild_hall': return p.hand.some((c) => {
+      const cd = def(state, c.cardId);
+      return cd && cd.type === 'character' && cd.cost <= 2;
+    }) ? 4.0 : 0.3;
+    case 'mk_night_watch': return 1.6;
+    case 'mk_watermill': return 4.0;
+    case 'mk_ledger_audit': return 3.4;
+    case 'mk_masons_yard': return 3.0;
+    case 'mk_festival_parade': return 5.0;
+    case 'mk_boundary_stone': return o.town.some((st) => (stackTop(state, st) || { cost: 9 }).cost <= 3) ? 3.4 : 0.4;
+    case 'mk_beacon_hill': return 5.5;
     default: return 1.5;
   }
 }
@@ -147,6 +166,18 @@ function eventValue(state, pi, d) {
     case 'pp_rumor_control': return 2.0;
     case 'pp_fair_hearing': return unemployed ? 3.0 : -3.0; // otherwise it only feeds the opponent
     case 'pp_market_day': return 2.6;
+    case 'br_barn_raising': return 4.4;
+    case 'br_mended_fences': return unemployed ? 4.0 : 0.8;
+    case 'br_winter_stores': return 3.2;
+    case 'br_workshop_swap': return 3.0;
+    case 'br_hedgerow_guard': return 1.8;
+    case 'br_tool_lending': return 3.4; // readying a working Character cashes its shift
+    case 'rr_river_market': return 4.0;
+    case 'rr_told_by_lamplight': return 2.2;
+    case 'rr_acorn_cache': return 3.4;
+    case 'rr_rune_reading': return 3.0;
+    case 'rr_ferry_charter': return 4.2;
+    case 'rr_hushed_agreement': return 2.8;
     default: return 2.0;
   }
 }
@@ -265,9 +296,23 @@ function scoreAction(state, ctx, a, agg, out, P) {
       }
       if (d.id === 'pp_rowan_2') {
         // Unemployment shield: only when the opponent actually has the tools to use it.
-        const threat = state.market.city.some((id) => ['mk_poachers_pardon', 'mk_scrap_yard'].includes(id));
+        const threat = state.market.city.some((id) => ['mk_poachers_pardon', 'mk_scrap_yard', 'mk_boundary_stone'].includes(id));
         out.why = 'unemployment shield';
         return threat ? 4 : -1;
+      }
+      if (d.id === 'br_moss_2') {
+        // Readying cashes a shift in progress, so it is only worth Moss's own tempo when
+        // there is a working (or stuck) Character to free.
+        const best = p.town.filter((st) => st.uid !== a.charUid && (st.shift || st.orientation !== 0))
+          .reduce((acc, st) => Math.max(acc, stackRate(state, st) * (st.shift ? 3 : 1.5)), 0);
+        out.why = 'busy to ready a Character';
+        return best > 0 ? best - stackRate(state, findStack(state, ctx.pi, a.charUid)) * 2 : -1;
+      }
+      if (d.id === 'br_thistle_2') {
+        const cheapest = p.unemployment.reduce((acc, c) => Math.min(acc, (def(state, c.cardId) || { cost: 99 }).cost), 99);
+        const affordable = cheapest < 99 && Math.max(0, cheapest - 1) <= p.supply;
+        out.why = 'busy to rehire';
+        return affordable ? 3.5 : -1;
       }
       return -1;
     }

@@ -10,6 +10,17 @@ const state = createGame(rules, set, { seed: 42, decks: ['burrow-bloom', 'paws-p
 await playGame(state, [agent0, agent1]);          // runs to completion; state.winner = 0 | 1 | null, state.result
 ```
 
+## Decks and the Market Deck
+
+`createGame(rules, set, { seed, decks, names })` — each entry of `decks` is either a deck id from the set or a
+deck object `{ id?, name?, list: { cardId: count } }` (`resolveDeck`), which is how the Deck Workshop plays a
+custom deck. `deckProblems(rules, set, list)` returns the deck's legality problems as player-facing sentences
+(empty array = legal); `deckRules(rules)` exposes the limits from `spec/game.json` `deckbuilding`.
+
+`set.marketDeck` is either a plain array of card ids or `{ always, pool, poolSize }`: `buildMarketDeck` deals
+every `always` card plus a seeded random `poolSize` of `pool`, so the Market Deck keeps one size while its
+contents vary per game.
+
 ## Agents
 
 An agent is `{ name, choose(state, playerIndex, request) }` returning a value or a Promise. Requests:
