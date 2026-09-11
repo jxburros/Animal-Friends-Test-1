@@ -1,0 +1,289 @@
+# Animal Friends TCG — Current Design Reference
+
+**Status:** living design reference and playable-prototype guide  
+**Current prototype set:** *Animal Friends: First Boroughs* (`AF-STARTER-01`)  
+**Authoritative implementation sources:** `spec/game.json` and `spec/starter_card_set.json`  
+**Last consolidated:** September 11, 2026
+
+This document gathers the decisions, rules, design principles, and current prototype content for **Animal Friends TCG**. It distinguishes between rules implemented in the playtest, agreed design direction, and items still to be designed. It is not yet a final, player-facing rulebook.
+
+## 1. The game at a glance
+
+*Animal Friends TCG* is a competitive, two-player town-building trading card game. Each player is the **Mayor** of a rival town populated by cute animal workers. Mayors recruit Characters, send them on work shifts to create **Supply**, play Events, and compete over a shared market called the **Capital City**.
+
+The core victory objective is visible and simple: gain a strict majority of the game's **Statues** (Victory cards). The current starter set has nine Statues, so a player wins by controlling five.
+
+The intended feel is cute, whimsical, animal-centered, and lightly strange—visually in the neighborhood of *Twisted Cryptid*, Drew Brockington's work, and *Flamecraft*. Its strategic tension comes from deciding whether an available worker should work, help buy or bid for a Capital City card, satisfy an Event requirement, or use a Character ability.
+
+## 2. Product and design pillars
+
+The game is meant to be competitive without turning into a lockout experience.
+
+- **Build a town, not a prison.** Player-deck cards should primarily improve their controller's town. Direct denial is limited.
+- **Shared disruption is healthier.** Broad disruption should usually come from the shared Capital City and affect both players equally, rewarding preparation rather than repeatedly targeting one opponent.
+- **No recurring lockouts.** Cards and loops must not prevent a player from meaningfully playing the game, especially by repeatedly sending freshly played Characters to Unemployment.
+- **Every strong Character gets a chance.** A Character should normally have an opportunity to act at least once before an opponent can remove it.
+- **Deep, but natural.** The board state should communicate the important information; the game should not depend on hidden scoring or heavy bookkeeping.
+- **A loss should still be satisfying.** Building an appealing town and accomplishing a personal plan should feel worthwhile even when another Mayor wins the statues.
+
+Animal identity should be easy to read and original. Broad traits are welcome when they create useful game play; **Big** is a proposed example for feats that require physical scale. Raccoons naturally support sly or thieving effects, while bears can suggest strength or carrying capacity. Do not build identities that resemble existing characters or intellectual property too closely.
+
+## 3. Components and game areas
+
+### Players and decks
+
+The current rules specify exactly **two** players, each with a private player deck and a public town. The *First Boroughs* starter prototype gives each player a 30-card deck, starts each at 6 Supply and five cards in hand, and uses a shared 25-card Market Deck.
+
+### Areas
+
+| Area | Owner | Purpose |
+| --- | --- | --- |
+| Player Deck | Player | Private deck containing that player's Characters and Events. |
+| Hand | Player | Cards available to recruit or play. |
+| Your Town | Player | Active Characters, ongoing Events, and acquired Statues/effects. |
+| Town Dump | Player | That player's discard pile, including discarded Events and removed layers of a Character stack. |
+| Unemployment | Player | Public holding area for disrupted Characters; they are inactive until rehired. |
+| Victory Row | Player | The public area for a player's acquired Statues. |
+| Capital City | Shared | Five face-up Market cards contested by both players. |
+| City Dump | Shared | Used Market cards, which can later be recycled into the market. |
+| Out of Play | Shared | Market cards that explicitly remove themselves permanently. |
+
+## 4. Card types and identities
+
+### Characters
+
+Characters are animal workers recruited from a player's own deck. A Character has a name, job, species, area of study, Supply cost (0–5), work-shift delay and output, plus possible abilities.
+
+- **Species** and **area of study** are the main mechanical identity keys. Cards can reward, require, target, recruit, or disrupt them.
+- **Job** is primarily flavor and worldbuilding.
+- Some Characters have recruitment triggers, persistent effects, Busy abilities, or effects tied to the Capital City, Events, shifts, Unemployment, or Statues.
+
+### Events
+
+Events replaced the earlier Location and Action concepts. They live in player decks, never in the shared Market Deck.
+
+- **Instant Events** resolve and then go to their owner's Town Dump.
+- **Limited Events** remain in a player's town for their stated duration before going to the Town Dump.
+- An Event can be free, cost Supply, or require one or more upright Characters. Supported requirement patterns include an upright Character, a trait count, species count, area-of-study count, and Supply.
+- To meet a Character requirement, the selected upright Characters become Busy. This makes Events part of the same worker-allocation puzzle as shifts and bids.
+
+### Market cards and Statues
+
+The shared Market Deck contains ordinary **Market** cards and **Statues**. They are gained through the delayed purchase-and-bidding system. Ordinary Market cards provide effects and usually go to the City Dump after use; Statues remain in their controller's Victory Row and count toward victory.
+
+## 5. Supply, readiness, and delayed availability
+
+### Supply
+
+Supply is the game's core resource. It pays for recruiting, rehiring from Unemployment, Capital City purchases and bids, and card effects. Work shifts are the main source, supplemented by card effects and the once-per-turn resource choice.
+
+### Orientation and Busy
+
+The game uses card orientation—not generic turn counters—to display availability and arrival delay.
+
+- An **upright** Character (0°) is ready and can act.
+- A **Busy** Character is rotated clockwise to 270° and cannot act.
+- At the start of its owner's turn, every non-upright Character rotates clockwise by one quarter turn: 180° → 270° → 0°.
+- A Character must be upright to work, announce a purchase, challenge a purchase, activate a Busy ability, or satisfy an Event requirement.
+
+This implementation supersedes older notes that used general turn counters. The exact physical card-rotation convention remains an open presentation decision, but the rules data use the orientation values above.
+
+### Rank and arrival delay
+
+| Rank | Supply cost | Entry orientation | Practical result |
+| --- | ---: | --- | --- |
+| Apprentice | 0–1 | Upright | Can act immediately. |
+| Journeyman | 2–3 | Busy / 270° | Becomes ready at the start of its owner's next turn. |
+| Master | 4–5 | 180° | Takes two owner-turn orientation advances to become ready. |
+
+Rehired Characters return from Unemployment **upright** after their full Supply cost is paid. This is an explicit current rule.
+
+## 6. Turn flow and actions
+
+Each turn has five phases: **Start**, **Resources**, **Ready**, **Actions**, and **End**. In the prototype, resolving a pending Capital City purchase happens before the active player makes their resource choice; then their resource choice and ready advance lead into Actions.
+
+1. **Start:** resolve a Capital City card that this player won from a pending purchase, if applicable.
+2. **Resources:** choose one: draw one card, or gain two Supply.
+3. **Ready:** advance all non-upright Characters one clockwise orientation step. Characters that reach upright become available.
+4. **Actions:** recruit Characters, work shifts, play Events, announce a Capital City purchase, challenge an opponent's purchase, return a Character from Unemployment, and use applicable effects.
+5. **End:** reduce the remaining time on the active player's work shifts and Limited Events. Completed shifts produce their Supply; expired Limited Events go to the Town Dump.
+
+### Working shifts
+
+All Characters can work. To start a shift, make an upright Character Busy. Its card defines a shift delay and Supply output. At the end of each of its owner's turns, the shift's remaining delay decreases; when it reaches zero, the Character produces its listed Supply. This creates a timing tradeoff: workers create money, but cannot simultaneously hold the Capital City or fuel an Event.
+
+## 7. Recruiting, upgrades, transfers, and Unemployment
+
+### Recruiting
+
+Recruit a Character from hand by paying its Supply cost and putting it into town at the orientation dictated by its rank. Recruitment abilities may trigger when it enters. The current prototype also contains effects that reduce a recruitment cost or recruit a cost-0 Character exceptionally.
+
+### Upgrades
+
+Higher-cost versions of the same named Character can upgrade a lower-cost version in town.
+
+- The new version must have the same name and a higher cost.
+- Pay only the difference between the new cost and the current version's cost.
+- Place the new card as the new top of that Character's stack.
+
+This supports recurring residents progressing through their careers.
+
+### Transfers
+
+Characters with the same name and the same cost can be **Transferred**. This concept is retained, but its exact effect is still undefined and must not be treated as a complete rule.
+
+### Unemployment
+
+Effects can send a Character from town to Unemployment. A Character there cannot work, become Busy, go to the Capital City, or otherwise function as an active town Character.
+
+To rehire one, pay its full printed Supply cost and return it to town upright. Effects can create specific discounts or exceptions.
+
+If a stacked Character is sent to Unemployment:
+
+1. The top card goes to its owner's Town Dump.
+2. The card immediately beneath it goes to Unemployment.
+3. Any further cards beneath that go to the Town Dump.
+
+Thus, disruption knocks an upgraded resident down to the preceding version rather than preserving the entire stack.
+
+## 8. Capital City: delayed purchases and bids
+
+Five Market cards are displayed in the Capital City. It is deliberately a contested market, not a private shop.
+
+### Announcing a purchase
+
+During Actions, choose an upright Character, make it Busy, select an available Capital City card, and announce a bid at least equal to that card's listed cost. The card remains in the Capital City as a pending purchase until the announcer's next turn.
+
+### Challenging
+
+On their own turn before the pending purchase resolves, the opponent may make an upright Character Busy and make a challenge bid. Only one challenge is permitted. The challenger must normally bid more than the announcer; ties go to the original announcer. A special effect can allow a challenger to win ties.
+
+When the announcer's next turn starts:
+
+- the higher bidder wins;
+- only the winner pays their committed bid;
+- the winner gains and resolves the card before their resource choice;
+- a tied bid goes to the announcer unless an effect says otherwise.
+
+Cards and abilities can protect an announcement from challenges, cancel a challenge, modify bids, or respond to a challenge. A player can also bid simply to deny an opponent a disruptive card, even if they do not plan to use it.
+
+### Market refresh and disposal
+
+When the Capital City is empty, deal five cards from the Market Deck. If that deck is empty, shuffle eligible City Dump cards back into it first. Cards in use and cards Out of Play are not returned. Ordinary used Market cards normally enter the City Dump; cards that say they go Out of Play do not cycle back.
+
+## 9. Statues, victory, theft, and the endgame
+
+Statues are visible Victory cards that remain in the controller's Victory Row. The total number of Statues should always be odd so that the goal is obvious. The current starter set has nine; control of five is a strict majority and wins.
+
+Statues are not automatically safe. Expensive theft or return effects can interfere with Victory Rows, but must include a significant cost, requirement, restriction, or drawback. A player may **not** steal the final opponent Statue in a way that immediately gives them the winning majority. This boundary prevents the game ending purely through taking an opponent's last needed Statue.
+
+## 10. Current starter set: First Boroughs
+
+The prototype uses two 30-card player decks and a 25-card Capital City deck (nine Statues and sixteen other Market cards).
+
+### Burrow & Bloom
+
+**Identity:** Rabbits and Mice; Agriculture and Botany. Its cards lean toward efficient shifts, recruiting, growth, recovery, and Event synergy.
+
+| Character | Cost | Job / study | Shift | Notable effect |
+| --- | ---: | --- | --- | --- |
+| Clover, Seedling Helper | 0 | Rabbit; Agriculture | 1 → 1 Supply | On recruit, with another Agriculture Character: draw 1, discard 1. |
+| Clover, Community Gardener | 3 | Rabbit; Botany | 2 → 3 | Upgrade Clover; helps another Agriculture Character ready next turn. |
+| Mabel, Seed Keeper | 1 | Mouse; Agriculture | 1 → 1 | First Agriculture-requiring Event each turn gains 1 Supply. |
+| Mabel, Horticulturist | 4 | Mouse; Botany | 2 → 4 | Upgrade Mabel; Busy to reduce the next Event requirement by one Character. |
+| Poppy, Postmaster | 1 | Rabbit; Civics | 2 → 2 | Rewards a market announcement made with Poppy as the only ready Rabbit. |
+| Poppy, Civic Planner | 5 | Rabbit; Civics | 3 → 5 | Upgrade Poppy; tied market bids can win as though announced. |
+| Fern, Forager | 2 | Mouse; Botany | 1 → 2 | On ready, may put an Event from Town Dump on deck bottom. |
+| Fern, Ecologist | 5 | Mouse; Botany | 2 → 5 | Upgrade Fern; first global Event each turn also gives 1 Supply. |
+
+Its Events are **Community Garden** (Agriculture → gain 3 Supply), **Seed Swap** (Rabbit + Mouse → draw 2, discard 1), **Patient Harvest** (Botany, Limited 2: first shift each turn +1 Supply), **Neighborhood Watch** (Civics → rehire at a discount), **Blooming Confidence** (two Rabbits → ready one Character and draw), and **Welcome Wagon** (Mouse → recruit a cost-0 Character from hand Busy).
+
+### Paws & Papers
+
+**Identity:** Raccoons and Foxes; Commerce and Civics. Its cards lean toward market contests, card flow, and controlled disruption.
+
+| Character | Cost | Job / study | Shift | Notable effect |
+| --- | ---: | --- | --- | --- |
+| Patch, Recycling Scout | 0 | Raccoon; Commerce | 1 → 1 Supply | On recruit, reorder the top two deck cards. |
+| Patch, Town Auditor | 3 | Raccoon; Civics | 2 → 3 | Upgrade Patch; draw when an opponent challenges your purchase. |
+| Juniper, Messenger | 1 | Fox; Civics | 1 → 2 | When working, can move 1 Supply into an open bid. |
+| Juniper, Diplomat | 4 | Fox; Civics | 2 → 4 | Upgrade Juniper; blocks an opponent increasing a pending bid that turn. |
+| Hazel, Market Vendor | 2 | Raccoon; Commerce | 1 → 2 | First market announcement each turn is easier to fund while upright. |
+| Hazel, Merchant | 5 | Raccoon; Commerce | 2 → 6 | Upgrade Hazel; draw when gaining a non-Statue Market card. |
+| Rowan, Records Clerk | 2 | Fox; Commerce | 2 → 3 | Gains Supply when an Event sends a Character to Unemployment. |
+| Rowan, Ombudsperson | 5 | Fox; Civics | 3 → 6 | Upgrade Rowan; Busy to prevent a global Unemployment effect. |
+
+Its Events are **Open Ledger** (Commerce → gain 2 Supply and inspect the Market Deck top card), **Paper Trail** (Raccoon + Fox → draw 2; opponent puts a hand card on deck top), **Civic Rally** (Civics, Limited 2: first market bid each turn is +1), **Rumor Control** (Fox → cancel a global discard or Supply-loss effect), **Fair Hearing** (two Civics → free rehire; opponent gains 2 Supply), and **Market Day** (Commerce, Limited 2: first purchase announcement each turn draws 1).
+
+### Statues
+
+| Statue | Cost | Current prototype effect |
+| --- | ---: | --- |
+| Kindness | 2 | If you have the fewest Characters in Unemployment, gain 1 Supply. |
+| Curiosity | 2 | On gain, draw 2 then discard 1. |
+| Courage | 3 | First challenge bid each game costs 1 less. |
+| Patience | 3 | Masters enter with one fewer orientation delay. |
+| Generosity | 4 | On gain, give opponent 1 Supply to draw 2. |
+| Ingenuity | 4 | Once per turn, reduce an Event's Character requirement by one. |
+| Community | 5 | With at least three species, first completed shift each turn gains +1 Supply. |
+| Harmony | 5 | On a tied bid, ready one Character at the start of your next turn. |
+| Joy | 5 | On gain, ready up to two Apprentices. |
+
+### Other Capital City cards
+
+| Card | Cost | Current prototype effect |
+| --- | ---: | --- |
+| Town Charter | 1 | First recruited Character before your next turn costs 1 less. |
+| Festival Grant | 2 | Gain 4 Supply; goes to City Dump. |
+| Emergency Reserve | 2 | Prevent up to 3 Supply loss; goes Out of Play. |
+| Mayor's Seal | 3 | Next purchase announcement cannot be challenged. |
+| Library Annex | 3 | Draw 3, discard 1. |
+| Quiet Mediation | 4 | Cancel a pending challenge; announcer's bid stays open. |
+| Poacher's Pardon | 5 | Send an opponent Character to Unemployment; discard two cards. |
+| Town Bell | 1 | Ready an Apprentice. |
+| Supply Depot | 2 | Gain 3 Supply. |
+| Public Gardens | 2 | Next completed shift gains +2 Supply. |
+| Courier Network | 3 | Reorder the top five cards of your deck. |
+| Community Kitchen | 3 | Rehire a cost-1 Character upright. |
+| Appeal Board | 4 | Rehire one Character for 2 less Supply. |
+| Scrap Yard | 4 | Discard a card to send a cost-2-or-less opponent Character to Unemployment. |
+| Town Archives | 5 | Return an Event from Town Dump to hand; goes Out of Play. |
+| Town Clock | 5 | Advance all your Characters one orientation step next turn. |
+
+## 11. Digital achievements
+
+Digital achievements are a future companion-app or player-profile feature, **not match scoring**. They can celebrate collection and town-building goals—such as fielding five Raccoons (*Five Finger Mafia*, working name) or completing a culinary profession cluster—and encourage experimenting with deck combinations. Do not make a large, hidden achievement list part of winning a tabletop match. If achievements ever influence a match, the list must remain small, public, and simple.
+
+## 12. Still open or deliberately draft
+
+These details need decisions before this can become a finished rulebook:
+
+- The exact physical rotation convention and player-facing explanation of orientation.
+- The exact Transfer effect.
+- Card schema details for shift outputs/delays and Limited Event duration as the broader card pool grows.
+- Starting-deck composition, starting hand, and Market Deck composition outside the current prototype.
+- The permanent Statue total for the retail game (it must remain odd).
+- The full definition and presentation of **Big** and any other broad traits; whether cards show both broad and specific animal labels.
+- A complete card-design guardrail for disruption of newly played Characters.
+- Further prototypes for free Events, animal-combination Events, global shared-market Events, and high-cost theft.
+- Any final rules for Statue theft, return, protection, and edge cases beyond the final-statue restriction.
+
+## 13. Terminology
+
+| Term | Meaning |
+| --- | --- |
+| **Mayor** | A player, controller of one town. |
+| **Supply** | The core resource used for recruiting, rehiring, bids, and effects. |
+| **Busy** | A Character rotated clockwise to show it cannot currently act. |
+| **Ready / upright** | A Character at 0° orientation that may act. |
+| **Apprentice / Journeyman / Master** | Cost-based Character ranks: 0–1 / 2–3 / 4–5 Supply. |
+| **Work shift** | A Busy action that produces Supply after the Character's listed delay. |
+| **Capital City** | The shared five-card contested market. |
+| **Town Dump / City Dump** | A player's discard pile / the shared discard pile for used Market cards. |
+| **Unemployment** | Public inactive zone for disrupted Characters. |
+| **Statue** | A Victory card; a strict majority wins. |
+| **Transfer** | Same-name, same-cost Character interaction; exact effect is still draft. |
+
+## 14. Source and precedence notes
+
+The project contains earlier documentation that used generic turn counters and described some rules more broadly. The current structured rules explicitly reject generic counters in favor of orientation-only delays, confirm ready return from Unemployment, set a two-player model, and codify the anti-lockout policy. When sources conflict, use the current structured specification and executable playtest behavior as the stronger source; treat older prose as historical design context.

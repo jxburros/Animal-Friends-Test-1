@@ -1,0 +1,81 @@
+{
+  "$comment": "Authoritative rules constants for the Animal Friends TCG prototype. Read by src/engine. Section numbers refer to docs/ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md.",
+  "id": "AF-RULES-01",
+  "name": "Animal Friends TCG",
+  "setId": "AF-STARTER-01",
+  "players": 2,
+  "setup": {
+    "deckSize": 30,
+    "startingSupply": 6,
+    "secondPlayerBonusSupply": 1,
+    "startingHand": 5,
+    "marketDeckSize": 25,
+    "capitalCitySize": 5
+  },
+  "victory": {
+    "statueTotal": 9,
+    "statuesToWin": 5,
+    "rule": "strict majority of Statues",
+    "forbidStealingFinalStatue": true
+  },
+  "orientation": {
+    "upright": 0,
+    "busy": 270,
+    "masterEntry": 180,
+    "advanceOrder": [180, 270, 0],
+    "$comment": "Section 5: non-upright Characters rotate clockwise one quarter turn at the start of their owner's turn: 180 -> 270 -> 0."
+  },
+  "ranks": {
+    "apprentice": { "minCost": 0, "maxCost": 1, "entryOrientation": 0 },
+    "journeyman": { "minCost": 2, "maxCost": 3, "entryOrientation": 270 },
+    "master": { "minCost": 4, "maxCost": 5, "entryOrientation": 180 }
+  },
+  "phases": ["start", "resources", "ready", "actions", "end"],
+  "resources": {
+    "choices": { "draw": { "cards": 1 }, "supply": { "amount": 2 } }
+  },
+  "shifts": {
+    "$comment": "A working Character stays Busy for its full delay: it does not advance orientation at Ready while a shift is in progress. The shift produces Supply at the End phase in which its remaining delay reaches 0; the Character readies normally afterwards. An effect that readies a working Character completes its shift immediately.",
+    "blocksReadyWhileInProgress": true,
+    "readyEffectCompletesShift": true
+  },
+  "market": {
+    "$comment": "Section 8. Refill only when the Capital City is empty. Reshuffle the City Dump into the Market Deck when the Market Deck is empty; cards in use and Out of Play never return.",
+    "refillWhenEmpty": true,
+    "minimumBidIsCardCost": true,
+    "oneChallengePerPurchase": true,
+    "tiesGoToAnnouncer": true,
+    "bidsAreEscrowed": true,
+    "pendingResolvesAtAnnouncerStart": true
+  },
+  "unemployment": {
+    "rehireCostsFullPrintedCost": true,
+    "rehiredEntersUpright": true,
+    "stackKnockdown": "top card to Town Dump, next card to Unemployment, rest to Town Dump",
+    "protectNewCharacters": true,
+    "$comment": "Anti-lockout guardrail (Section 2 / 12): a Character that has not yet been upright during one of its owner's turns cannot be targeted by an opponent's Unemployment effect."
+  },
+  "upgrades": {
+    "sameNameHigherCost": true,
+    "payDifference": true,
+    "keepsOrientation": true,
+    "triggersRecruitAbilities": true
+  },
+  "deckOut": {
+    "$comment": "Not specified in the design reference; prototype decision.",
+    "shuffleTownDumpIntoDeck": true
+  },
+  "simulation": {
+    "maxTurnsPerPlayer": 40,
+    "$comment": "Safety cap for automated playtests; a game that reaches the cap is scored by Statue count, then Supply."
+  },
+  "assumptions": [
+    "Second player starts with one extra Supply (setup.secondPlayerBonusSupply) to offset going second.",
+    "A player may have several pending purchases at once (one per Capital City card); each may receive at most one challenge.",
+    "Committed bids are escrowed when announced or challenged and refunded to the loser.",
+    "Upgrading keeps the stack's current orientation and re-triggers the new card's recruit abilities.",
+    "Readying a Character that is mid-shift completes the shift at once.",
+    "Reactive abilities (Rowan, Ombudsperson; Rumor Control; Emergency Reserve) are implemented as shields set on your own turn that last until your next turn starts.",
+    "When the player deck is empty, the Town Dump is shuffled into it."
+  ]
+}
