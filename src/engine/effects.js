@@ -111,7 +111,7 @@ export async function discard(state, pi, n, { byOpponent = false } = {}) {
 
 export function makeStack(state, pi, cardInst, orientation) {
   const p = state.players[pi];
-  const s = { uid: nextUid(state), cards: [cardInst], orientation, shift: null, enteredTurn: state.turnNumber, hasBeenUpright: orientation === UPRIGHT, readyNextTurn: false };
+  const s = { uid: nextUid(state), cards: [cardInst], orientation, shift: null, enteredTurn: state.turnNumber, hasBeenUpright: orientation === UPRIGHT, readyNextTurn: false, lockedBid: null };
   p.town.push(s);
   return s;
 }
@@ -131,6 +131,7 @@ export async function completeShift(state, pi, stack) {
 }
 
 export async function readyStack(state, pi, stack, why = '') {
+  if (stack.lockedBid) return; // pledged to an open auction; nothing frees it but the auction ending
   if (stack.shift && state.rules.shifts.readyEffectCompletesShift) await completeShift(state, pi, stack);
   stack.shift = null;
   stack.orientation = UPRIGHT;
@@ -193,6 +194,27 @@ export async function gainMarketCard(state, pi, cardId, why = '') {
   state.market.turnsSinceGain = 0;
   await fireHook(state, 'onGainMarketCard', { player: pi, cardId, nonStatue: def.type !== 'statue' });
   refillCity(state);
+  await flushReveals(state);
+}
+
+// ---------- disruptions ----------
+/**
+ * Resolve every Disruption that has been dealt into the Capital City since the last flush. A Disruption
+ * is never bought: it hits both towns the moment it is revealed and then goes to the City Dump.
+ * Callers refill the display first, so this runs after `refillCity`.
+ */
+export async function flushReveals(state) {
+  const m = state.market;
+  let resolved = 0;
+  while (m.revealQueue.length) {
+    const cardId = m.revealQueue.shift();
+    const def = cardDef(state, cardId);
+    log(state, null, `${def.name} sweeps through both towns: ${def.text}`, { kind: 'disruption', cardId });
+    await runEffect(state, 0, def.onReveal, { sourceCardId: cardId, global: true });
+    m.cityDump.push(cardId);
+    resolved++;
+  }
+  return resolved;
 }
 
 // ---------- hooks ----------
@@ -239,6 +261,8 @@ function conditionHolds(state, pi, src, cond, ctx) {
     if (!ev || !(ev.requires || []).some((r) => r.study === cond.eventRequiresStudy)) return false;
   }
   if (cond.nonStatue && !ctx.nonStatue) return false;
+  if (cond.statue && ctx.nonStatue !== false) return false;
+  if (cond.handAtLeast !== undefined && p.hand.length < cond.handAtLeast) return false;
   if (cond.unemploymentNotMoreThanOpponent && p.unemployment.length > opp.unemployment.length) return false;
   if (cond.minSpeciesInTown && speciesInTown(state, pi).size < cond.minSpeciesInTown) return false;
   return true;
@@ -287,7 +311,7 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       log(state, pi, `${p.name} gains an ongoing effect: ${eff.key} (${eff.value}).`, { kind: 'mod', player: pi, key: eff.key, value: eff.value });
       return;
     case 'readyCharacter': {
-      const opts = p.town.filter((s) => s.orientation !== UPRIGHT && matchesFilter(state, s, eff.filter));
+      const opts = p.town.filter((s) => s.orientation !== UPRIGHT && !s.lockedBid && matchesFilter(state, s, eff.filter));
       if (!opts.length) return;
       const max = Math.min(eff.count || 1, opts.length);
       const chosen = await ask(state, pi, { kind: 'pick', reason: 'ready', from: 'town', options: opts.map((s) => stackOpt(state, s)), min: eff.optional ? 0 : Math.min(1, max), max });
@@ -298,7 +322,7 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       const f = { ...(eff.filter || {}) };
       const notSelf = f.notSelf;
       delete f.notSelf;
-      const opts = p.town.filter((s) => matchesFilter(state, s, f) && !(notSelf && s.uid === ctx.stackUid) && (s.orientation !== UPRIGHT || s.shift));
+      const opts = p.town.filter((s) => matchesFilter(state, s, f) && !s.lockedBid && !(notSelf && s.uid === ctx.stackUid) && (s.orientation !== UPRIGHT || s.shift));
       if (!opts.length) return;
       const chosen = await ask(state, pi, { kind: 'pick', reason: 'readyNextTurn', from: 'town', options: opts.map((s) => stackOpt(state, s)), min: eff.optional ? 0 : 1, max: 1 });
       for (const uid of chosen) {
@@ -399,9 +423,47 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       await unemployStack(state, oi, findStack(state, oi, chosen[0]), { byEffect: true, sourcePi: pi });
       return;
     }
+    // ---- shared shocks (Disruption cards): these always hit both towns, whoever is active ----
+    case 'allCharactersToUnemployment': {
+      for (const pl of state.players) {
+        for (const s of pl.town.slice()) await unemployStack(state, pl.index, s, { byEffect: true, sourcePi: null });
+      }
+      return;
+    }
+    case 'endAllShifts': {
+      for (const pl of state.players) {
+        for (const s of pl.town) {
+          if (!s.shift) continue;
+          s.shift = null;
+          log(state, pl.index, `${topCard(state, s).name}'s shift is abandoned unfinished.`, { kind: 'shiftDone', player: pl.index, uid: s.uid, output: 0 });
+        }
+      }
+      return;
+    }
+    case 'everyoneLosesSupply':
+      for (const pl of state.players) loseSupply(state, pl.index, eff.amount);
+      return;
+    case 'everyoneGainsSupply':
+      for (const pl of state.players) gainSupply(state, pl.index, eff.amount, ctx.sourceCardId ? cardDef(state, ctx.sourceCardId).name : '');
+      return;
+    case 'everyoneDraws':
+      for (const pl of state.players) draw(state, pl.index, eff.count, ctx.sourceCardId ? cardDef(state, ctx.sourceCardId).name : '');
+      return;
+    case 'everyoneDiscardsDownTo':
+      for (const pl of state.players) await discard(state, pl.index, Math.max(0, pl.hand.length - eff.count));
+      return;
+    case 'blockNextReady':
+      for (const pl of state.players) {
+        pl.mods.push({ key: 'skipNextAdvance', value: 1, expires: 'untilUsed', source: ctx.sourceCardId || null });
+        log(state, pl.index, `${pl.name}'s Characters will not advance at the next Ready.`, { kind: 'mod', player: pl.index, key: 'skipNextAdvance', value: 1 });
+      }
+      return;
+    case 'everyoneRehiresFree':
+      for (const pl of state.players) await runEffect(state, pl.index, { do: 'rehire', free: true, optional: true }, ctx);
+      return;
     case 'raiseOwnBid': {
       if (hasPassive(state, oi, 'blockOpponentBidRaise')) return;
-      const own = state.market.pending.filter((pd) => pd.announcer === pi || (pd.challenge && pd.challenge.player === pi));
+      const own = state.market.pending.filter((pd) => pd.high === pi); // top up an auction you are currently winning
       if (!own.length || p.supply < eff.amount) return;
       const ok = await ask(state, pi, { kind: 'confirm', reason: 'raiseBid', default: true, options: own.map((pd) => ({ uid: pd.id, cardId: pd.cardId })) });
       if (!ok) return;
@@ -409,11 +471,8 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       const pd = own.find((x) => x.id === chosen[0]);
       p.supply -= eff.amount;
       p.escrow += eff.amount;
-      if (pd.announcer === pi) pd.bid += eff.amount;
-      else {
-        pd.challenge.bid += eff.amount;
-        pd.challenge.paid += eff.amount;
-      }
+      pd.committed[pi] += eff.amount;
+      pd.bid += eff.amount;
       log(state, pi, `${p.name} raises the bid on ${cardDef(state, pd.cardId).name} by ${eff.amount}.`, { kind: 'raiseBid', player: pi, cardId: pd.cardId, amount: eff.amount });
       return;
     }

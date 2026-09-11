@@ -103,25 +103,57 @@ export function minBidFor(state, pi, cardId) {
 }
 export function bidBonus(state, pi) {
   const p = state.players[pi];
-  return p.turn.bids === 0 && hasPassive(state, pi, 'firstBidPlus1') ? 1 : 0;
+  if (p.turn.bids !== 0) return 0;
+  let bonus = hasPassive(state, pi, 'firstBidPlus1') ? 1 : 0;
+  if (hasPassive(state, opponentOf(pi), 'opponentFirstBidPlus1')) bonus += 1; // Statue of Courage's burden
+  return bonus;
 }
-export function challengeMinBid(state, pi, pending) {
-  const annEff = pending.bid + pending.bonus;
+
+/**
+ * Lowest bid that takes the lead in `pending` away from its current high bidder. The required step
+ * grows as the auction wears on, so a long bidding war converges instead of trading single Supply
+ * for the rest of the game.
+ */
+export function raiseIncrement(state, pending) {
+  const per = state.rules.market.auction?.incrementGrowsEveryNRounds || 0;
+  return 1 + (per ? Math.floor((pending.rounds.length - 1) / per) : 0);
+}
+export function raiseMinBid(state, pi, pending) {
+  const standing = pending.bid + pending.bonus;
   const winsTies = hasPassive(state, pi, 'winTiesAsChallenger');
-  const bonus = bidBonus(state, pi);
-  return Math.max(0, (winsTies ? annEff : annEff + 1) - bonus);
+  return Math.max(0, (winsTies ? standing : standing + raiseIncrement(state, pending)) - bidBonus(state, pi));
 }
-export function challengePayment(state, pi, bid) {
-  return Math.max(0, bid - getMod(state.players[pi], 'challengeDiscount'));
+
+/** Supply this player must hand over now to stand at `bid`: they have already escrowed their earlier bids. */
+export function raisePayment(state, pi, pending, bid) {
+  const owed = bid - (pending.committed[pi] || 0);
+  return Math.max(0, owed - getMod(state.players[pi], 'challengeDiscount'));
 }
+
+/** What a losing bidder actually forfeits of their escrow (the rest is refunded). */
+export function forfeitOf(state, pi, escrowed) {
+  if (escrowed <= 0) return 0;
+  if (hasPassive(state, pi, 'losingBidsPayFull')) return escrowed; // Statue of Harmony's burden
+  const a = state.rules.market.auction || {};
+  const num = a.losingBidForfeitNumerator ?? 1;
+  const den = a.losingBidForfeitDenominator ?? 2;
+  const raw = (escrowed * num) / den;
+  return a.losingBidForfeitRounding === 'down' ? Math.floor(raw) : Math.ceil(raw);
+}
+
+export function eventCost(state, pi, def) {
+  return (def.cost || 0) + (hasPassive(state, pi, 'eventCostPlus1') ? 1 : 0); // Statue of Ingenuity's burden
+}
+
 export function rehireCost(state, pi, cardId) {
-  return Math.max(0, cardDef(state, cardId).cost - getMod(state.players[pi], 'rehireDiscount'));
+  const discount = getMod(state.players[pi], 'rehireDiscount')
+    + (hasPassive(state, opponentOf(pi), 'opponentRehireDiscount') ? 1 : 0); // Statue of Kindness's burden
+  return Math.max(0, cardDef(state, cardId).cost - discount);
 }
 
 // ---------- legal actions ----------
 export function legalActions(state, pi) {
   const p = state.players[pi];
-  const oi = opponentOf(pi);
   const acts = [{ type: 'endTurn' }];
   if (state.phase !== 'actions' || state.active !== pi || state.winner !== null) return acts;
   const seen = new Set();
@@ -150,9 +182,10 @@ export function legalActions(state, pi) {
     const def = cardDef(state, c.cardId);
     if (def.type !== 'event' || seen.has('e' + c.cardId)) continue;
     seen.add('e' + c.cardId);
-    if ((def.cost || 0) > p.supply) continue;
+    const cost = eventCost(state, pi, def);
+    if (cost > p.supply) continue;
     const assign = findEventAssignment(state, pi, def, waive);
-    if (assign) acts.push({ type: 'playEvent', cardUid: c.uid, cardId: c.cardId, characters: assign.map((s) => s.uid), cost: def.cost || 0 });
+    if (assign) acts.push({ type: 'playEvent', cardUid: c.uid, cardId: c.cardId, characters: assign.map((s) => s.uid), cost });
   }
   // announce purchases
   const pendingIds = new Set(state.market.pending.map((pd) => pd.cardId));
@@ -163,13 +196,14 @@ export function legalActions(state, pi) {
     if (minBid > p.supply) continue;
     for (const s of uprights) acts.push({ type: 'announce', cardId, charUid: s.uid, bid: minBid, minBid, maxBid: p.supply });
   }
-  // challenge
+  // raise an auction someone else is currently winning — as often as you can pay for it
   for (const pd of state.market.pending) {
-    if (pd.announcer !== oi || pd.challenge || pd.unchallengeable) continue;
-    const minBid = challengeMinBid(state, pi, pd);
-    const pay = challengePayment(state, pi, minBid);
+    if (pd.high === pi || pd.unchallengeable) continue;
+    const minBid = raiseMinBid(state, pi, pd);
+    const pay = raisePayment(state, pi, pd, minBid);
     if (pay > p.supply) continue;
-    for (const s of uprights) acts.push({ type: 'challenge', pendingId: pd.id, cardId: pd.cardId, charUid: s.uid, bid: minBid, minBid, maxBid: p.supply + (minBid - pay) });
+    const maxBid = minBid + (p.supply - pay);
+    for (const s of uprights) acts.push({ type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: s.uid, bid: minBid, minBid, maxBid });
   }
   // rehire
   for (const c of p.unemployment) {
@@ -185,7 +219,6 @@ export function legalActions(state, pi) {
 // ---------- apply ----------
 export async function applyAction(state, pi, a) {
   const p = state.players[pi];
-  const oi = opponentOf(pi);
   if (state.phase !== 'actions' || state.active !== pi) throw new Error('Not in actions phase');
   state.actionCount++;
   switch (a.type) {
@@ -216,6 +249,7 @@ export async function applyAction(state, pi, a) {
       } else {
         let orientation = entryOrientation(state.rules, def.cost);
         if (orientation === state.rules.orientation.masterEntry && hasPassive(state, pi, 'masterDelayMinus1')) orientation = BUSY;
+        if (orientation === UPRIGHT && hasPassive(state, pi, 'apprenticeEntersBusy')) orientation = BUSY; // Statue of Patience's burden
         s = makeStack(state, pi, c, orientation);
         log(state, pi, `${p.name} recruits ${def.name}, ${def.title} (${def.species}, ${def.study}) for ${cost} Supply; enters at ${orientation}°.`, { kind: 'recruit', player: pi, uid: s.uid, cardUid: c.uid, cardId: def.id, cost, upgrade: false, orientation });
       }
@@ -248,7 +282,8 @@ export async function applyAction(state, pi, a) {
       if (idx < 0) throw new Error('Card not in hand');
       const def = cardDef(state, p.hand[idx].cardId);
       if (def.type !== 'event') throw new Error('Not an event');
-      if ((def.cost || 0) > p.supply) throw new Error('Cannot afford');
+      const cost = eventCost(state, pi, def);
+      if (cost > p.supply) throw new Error('Cannot afford');
       const stacks = (a.characters || []).map((uid) => findStack(state, pi, uid));
       if (stacks.some((s) => !s || !canAct(s))) throw new Error('Chosen Characters must be upright');
       if (new Set(a.characters || []).size !== (a.characters || []).length) throw new Error('Duplicate Characters');
@@ -262,7 +297,7 @@ export async function applyAction(state, pi, a) {
         waived -= fromMod;
         if (waived > 0) p.turn.ingenuityUsed = true;
       }
-      p.supply -= def.cost || 0;
+      p.supply -= cost;
       const [c] = p.hand.splice(idx, 1);
       for (const s of stacks) s.orientation = BUSY;
       p.stats.eventsPlayed++;
@@ -290,7 +325,15 @@ export async function applyAction(state, pi, a) {
       p.supply -= bid;
       p.escrow += bid;
       const bonus = bidBonus(state, pi);
-      const pd = { id: nextUid(state), cardId: a.cardId, announcer: pi, bid, bonus, charUid: s.uid, challenge: null, unchallengeable: false, turnAnnounced: state.turnNumber };
+      const pd = {
+        id: nextUid(state), cardId: a.cardId, announcer: pi, high: pi, bid, bonus,
+        committed: [0, 0], chars: [[], []], rounds: [], unchallengeable: false,
+        turnAnnounced: state.turnNumber, lastBidTurn: state.turnNumber,
+      };
+      pd.committed[pi] = bid;
+      pd.chars[pi].push(s.uid);
+      s.lockedBid = pd.id; // committed to the auction: it will not ready until the bidding is over
+      pd.rounds.push({ player: pi, bid, bonus, turn: state.turnNumber });
       if (hasMod(p, 'unchallengeable')) {
         consumeMod(p, 'unchallengeable');
         pd.unchallengeable = true;
@@ -300,36 +343,44 @@ export async function applyAction(state, pi, a) {
       p.turn.announcements++;
       p.turn.bids++;
       p.stats.announcements++;
-      log(state, pi, `${p.name} announces a purchase of ${cardDef(state, a.cardId).name} with ${topCard(state, s).name}, bidding ${bid}${bonus ? ` (+${bonus})` : ''}${pd.unchallengeable ? ' (cannot be challenged)' : ''}.`, { kind: 'announce', player: pi, cardId: a.cardId, uid: s.uid, bid, bonus });
+      log(state, pi, `${p.name} announces a purchase of ${cardDef(state, a.cardId).name} with ${topCard(state, s).name}, bidding ${bid}${bonus ? ` (+${bonus})` : ''}${pd.unchallengeable ? ' (cannot be raised against)' : ''}.`, { kind: 'announce', player: pi, cardId: a.cardId, uid: s.uid, bid, bonus });
       await fireHook(state, 'onAnnounce', { player: pi, stackUid: s.uid, uprightSpeciesSnapshot: snapshot, pendingId: pd.id });
       return false;
     }
-    case 'challenge': {
+    case 'raise': {
       const pd = state.market.pending.find((x) => x.id === a.pendingId);
-      if (!pd || pd.announcer !== oi) throw new Error('No such purchase to challenge');
-      if (pd.challenge || pd.unchallengeable) throw new Error('Cannot challenge');
+      if (!pd) throw new Error('No such auction');
+      if (pd.high === pi) throw new Error('You are already the high bidder');
+      if (pd.unchallengeable) throw new Error('This auction cannot be raised against');
       const s = findStack(state, pi, a.charUid);
-      if (!s || !canAct(s)) throw new Error('Character cannot challenge');
-      const minBid = challengeMinBid(state, pi, pd);
+      if (!s || !canAct(s)) throw new Error('Character cannot bid');
+      const minBid = raiseMinBid(state, pi, pd);
       const bid = Math.floor(a.bid ?? minBid);
-      const pay = challengePayment(state, pi, bid);
-      if (bid < minBid || pay > p.supply) throw new Error('Invalid challenge bid');
+      const pay = raisePayment(state, pi, pd, bid);
+      if (bid < minBid || pay > p.supply) throw new Error('Invalid bid');
       s.orientation = BUSY;
       p.stats.challenges++;
-      const bonus = bidBonus(state, pi);
       p.turn.bids++;
-      const o = state.players[oi];
+      const bonus = bidBonus(state, pi);
+      const o = state.players[pd.high];
       if (hasMod(o, 'cancelNextChallenge')) {
         consumeMod(o, 'cancelNextChallenge');
-        log(state, pi, `${p.name} challenges ${cardDef(state, pd.cardId).name}, but the challenge is cancelled by Quiet Mediation.`, { kind: 'challenge', player: pi, cardId: pd.cardId, uid: s.uid, bid, cancelled: true });
+        log(state, pi, `${p.name} bids on ${cardDef(state, pd.cardId).name}, but the raise is cancelled by Quiet Mediation.`, { kind: 'raise', player: pi, cardId: pd.cardId, uid: s.uid, bid, cancelled: true });
         return false;
       }
       if (getMod(p, 'challengeDiscount')) consumeMod(p, 'challengeDiscount');
       p.supply -= pay;
       p.escrow += pay;
-      pd.challenge = { player: pi, bid, paid: pay, bonus, charUid: s.uid, winsTies: hasPassive(state, pi, 'winTiesAsChallenger') };
-      log(state, pi, `${p.name} challenges the purchase of ${cardDef(state, pd.cardId).name} with ${topCard(state, s).name}, bidding ${bid}${pd.challenge.bonus ? ` (+${pd.challenge.bonus})` : ''}.`, { kind: 'challenge', player: pi, cardId: pd.cardId, uid: s.uid, bid, bonus, cancelled: false });
-      await fireHook(state, 'onChallengedByOpponent', { player: oi, pendingId: pd.id });
+      pd.committed[pi] += pay;
+      pd.chars[pi].push(s.uid);
+      s.lockedBid = pd.id;
+      pd.high = pi;
+      pd.bid = bid;
+      pd.bonus = bonus;
+      pd.lastBidTurn = state.turnNumber;
+      pd.rounds.push({ player: pi, bid, bonus, turn: state.turnNumber });
+      log(state, pi, `${p.name} outbids ${o.name} for ${cardDef(state, pd.cardId).name} with ${topCard(state, s).name}, bidding ${bid}${bonus ? ` (+${bonus})` : ''} (round ${pd.rounds.length}).`, { kind: 'raise', player: pi, cardId: pd.cardId, uid: s.uid, bid, bonus, round: pd.rounds.length, cancelled: false });
+      await fireHook(state, 'onChallengedByOpponent', { player: opponentOf(pi), pendingId: pd.id });
       return false;
     }
     case 'rehire': {

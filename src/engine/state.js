@@ -51,6 +51,22 @@ export function resolveDeck(set, ref) {
 }
 
 /**
+ * Resolve a Market Deck reference: an id from `set.marketDecks`, a deck object, or nothing
+ * (the first listed deck, falling back to the legacy single `set.marketDeck` field).
+ */
+export function resolveMarketDeck(set, ref) {
+  const decks = set.marketDecks || (set.marketDeck ? [set.marketDeck] : []);
+  if (ref && typeof ref === 'object') return ref;
+  if (ref) {
+    const found = decks.find((d) => d.id === ref);
+    if (!found) throw new Error(`Unknown market deck ${ref}`);
+    return found;
+  }
+  if (!decks.length) throw new Error('The card set defines no Market Deck');
+  return decks[0];
+}
+
+/**
  * Build the Market Deck. `spec` is either a plain array of card ids (fixed deck) or
  * `{ always, pool, poolSize }`: every `always` card plus a random `poolSize` of `pool`,
  * so the deck keeps one size while the Capital City pool varies from game to game.
@@ -100,8 +116,9 @@ export function freshTurnCounters() {
  * Create a new game.
  * @param rules  parsed spec/game.json
  * @param set    parsed spec/starter_card_set.json (indexed or raw)
- * @param opts   { seed, decks:[deckRef, deckRef], names:[..] } — a deckRef is a deck id from the set
- *               or a `{ id?, name?, list }` object (see resolveDeck), so a player can bring a custom deck.
+ * @param opts   { seed, decks:[deckRef, deckRef], names:[..], market } — a deckRef is a deck id from the set
+ *               or a `{ id?, name?, list }` object (see resolveDeck), so a player can bring a custom deck;
+ *               `market` selects the shared Market Deck from `set.marketDecks` (default: the first one).
  */
 export function createGame(rules, set, opts = {}) {
   const indexed = set.cardsById ? set : indexSet(set);
@@ -116,7 +133,7 @@ export function createGame(rules, set, opts = {}) {
     active: 0,
     phase: 'setup',
     players: [],
-    market: { deck: [], city: [], cityDump: [], outOfPlay: [], pending: [], turnsSinceGain: 0 },
+    market: { deckId: null, deckName: '', deck: [], city: [], cityDump: [], outOfPlay: [], pending: [], revealQueue: [], turnsSinceGain: 0 },
     log: [],
     winner: null,
     result: null,
@@ -133,10 +150,18 @@ export function createGame(rules, set, opts = {}) {
       if (c) p.hand.push(c);
     }
   });
-  state.market.deck = shuffle(state, buildMarketDeck(state, indexed.marketDeck));
+  const marketDeck = resolveMarketDeck(indexed, opts.market);
+  state.market.deckId = marketDeck.id || 'market';
+  state.market.deckName = marketDeck.name || state.market.deckId;
+  state.market.deck = shuffle(state, buildMarketDeck(state, marketDeck));
   refillCity(state);
+  // A Disruption dealt during setup has nothing to disrupt yet, so it is set aside unresolved.
+  if (state.rules.market.disruptions?.skipDuringSetup) {
+    const setAside = state.market.revealQueue.splice(0);
+    state.market.cityDump.push(...setAside);
+  }
   state.phase = 'start';
-  log(state, null, `A new game of ${indexed.name} begins. ${names[0]} plays ${state.players[0].deckName}; ${names[1]} plays ${state.players[1].deckName}.`, { kind: 'gameStart' });
+  log(state, null, `A new game of ${indexed.name} begins in the ${state.market.deckName} market. ${names[0]} plays ${state.players[0].deckName}; ${names[1]} plays ${state.players[1].deckName}.`, { kind: 'gameStart', market: state.market.deckId });
   return state;
 }
 
@@ -158,18 +183,27 @@ export function sweepStaleCity(state) {
   return true;
 }
 
+/**
+ * Deal the Capital City back up to full. A Disruption never takes a display slot: it is queued in
+ * `market.revealQueue` for `flushReveals` to resolve against both towns, and dealing continues past it.
+ */
 export function refillCity(state) {
   const m = state.market;
   const target = state.rules.setup.capitalCitySize;
   if (m.city.length >= target) return false;
   const added = [];
-  while (m.city.length < target) {
+  let guard = 0;
+  while (m.city.length < target && guard++ < 200) {
     if (m.deck.length === 0) {
       if (m.cityDump.length === 0) break;
       m.deck = shuffle(state, m.cityDump.splice(0));
       log(state, null, 'The City Dump is shuffled back into the Market Deck.', { kind: 'reshuffleMarket' });
     }
     const id = m.deck.shift();
+    if (cardDef(state, id).type === 'disruption') {
+      m.revealQueue.push(id);
+      continue;
+    }
     m.city.push(id);
     added.push(id);
   }

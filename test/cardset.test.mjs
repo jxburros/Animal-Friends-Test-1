@@ -13,23 +13,29 @@ const EFFECTS = new Set([
   'readyCharacter', 'readyNextTurn', 'rehire', 'recruitFromHand', 'reorderDeckTop',
   'eventFromDumpToDeckBottom', 'eventFromDumpToHand', 'peekMarketDeck', 'opponentTopdeckFromHand',
   'unemployOpponentCharacter', 'raiseOwnBid',
+  // shared shocks, used by Disruption cards
+  'allCharactersToUnemployment', 'endAllShifts', 'everyoneLosesSupply', 'everyoneGainsSupply',
+  'everyoneDraws', 'everyoneDiscardsDownTo', 'blockNextReady', 'everyoneRehiresFree',
 ]);
 const TRIGGERS = new Set([
-  'passive', 'busy', 'onRecruit', 'onTurnStart', 'onReady', 'onShiftStarted', 'onShiftCompleted',
+  'passive', 'busy', 'onRecruit', 'onTurnStart', 'onTurnEnd', 'onReady', 'onShiftStarted', 'onShiftCompleted',
   'onEventPlayed', 'onAnnounce', 'onChallengedByOpponent', 'onGainMarketCard', 'onCharacterUnemployed',
   'onTiedBid',
 ]);
 const PASSIVE_KEYS = new Set([
   'blockOpponentBidRaise', 'firstAnnounceMinBidMinus1', 'firstBidPlus1', 'winTiesAsChallenger',
   'masterDelayMinus1', 'eventCharReductionPerTurn',
+  // Statue burdens
+  'opponentRehireDiscount', 'opponentFirstBidPlus1', 'apprenticeEntersBusy', 'eventCostPlus1',
+  'resourceSupplyMinus1', 'losingBidsPayFull',
 ]);
 const MOD_KEYS = new Set([
   'recruitDiscount', 'challengeDiscount', 'rehireDiscount', 'shiftBonus', 'extraAdvance', 'lossShield',
-  'unemploymentShield', 'unchallengeable', 'cancelNextChallenge', 'eventCharReduction',
+  'unemploymentShield', 'unchallengeable', 'cancelNextChallenge', 'eventCharReduction', 'skipNextAdvance',
 ]);
 const CONDITIONS = new Set([
   'self', 'announcerIsSelf', 'onlyUprightOfSpecies', 'otherCharacterInTown', 'eventRequiresStudy',
-  'nonStatue', 'unemploymentNotMoreThanOpponent', 'minSpeciesInTown',
+  'nonStatue', 'statue', 'handAtLeast', 'unemploymentNotMoreThanOpponent', 'minSpeciesInTown',
 ]);
 
 const byType = (t) => SET.cards.filter((c) => c.type === t);
@@ -50,7 +56,7 @@ test('card set', async (t) => {
     for (const c of SET.cards) {
       assert.ok(!seen.has(c.id), `duplicate card id ${c.id}`);
       seen.add(c.id);
-      assert.ok(['character', 'event', 'statue', 'market'].includes(c.type), `${c.id}: bad type ${c.type}`);
+      assert.ok(['character', 'event', 'statue', 'market', 'disruption'].includes(c.type), `${c.id}: bad type ${c.type}`);
       assert.ok(c.name, `${c.id}: no name`);
       assert.ok(c.text, `${c.id}: no rules text`);
     }
@@ -83,6 +89,7 @@ test('card set', async (t) => {
     for (const c of SET.cards) {
       if (c.effect) walkEffect(c.effect, `${c.id}.effect`);
       if (c.onGain) walkEffect(c.onGain, `${c.id}.onGain`);
+      if (c.onReveal) walkEffect(c.onReveal, `${c.id}.onReveal`);
       for (const [i, ab] of (c.abilities || []).entries()) {
         const where = `${c.id}.abilities[${i}]`;
         assert.ok(TRIGGERS.has(ab.trigger), `${where}: unknown trigger "${ab.trigger}"`);
@@ -105,19 +112,34 @@ test('card set', async (t) => {
     }
   });
 
-  await t.test('Capital City pool and Statues make a Market Deck of the printed size', () => {
-    const spec = SET.marketDeck;
+  await t.test('every Market Deck holds all nine Statues and a pool of its printed size', () => {
     const ids = new Set(SET.cards.map((c) => c.id));
-    const all = Array.isArray(spec) ? spec : [...spec.always, ...spec.pool];
-    for (const id of all) assert.ok(ids.has(id), `Market Deck references unknown card ${id}`);
-    const state = { rng: seedRng(7) };
-    const deck = buildMarketDeck(state, spec);
-    assert.equal(deck.length, RULES.setup.marketDeckSize, 'Market Deck size');
     const statues = byType('statue').map((c) => c.id);
-    for (const id of statues) assert.ok(deck.includes(id), `Statue ${id} must always be in the Market Deck`);
-    // different seeds pick different Capital City cards
-    const other = buildMarketDeck({ rng: seedRng(99) }, spec);
-    assert.equal(other.length, deck.length);
+    assert.ok(SET.marketDecks.length >= 3, 'three Market Decks to choose from');
+    for (const spec of SET.marketDecks) {
+      for (const id of [...spec.always, ...spec.pool]) assert.ok(ids.has(id), `${spec.id} references unknown card ${id}`);
+      assert.equal(new Set(spec.pool).size, spec.pool.length, `${spec.id}: a card appears twice in the pool`);
+      const deck = buildMarketDeck({ rng: seedRng(7) }, spec);
+      assert.equal(deck.length, statues.length + spec.poolSize, `${spec.id}: Market Deck size`);
+      for (const id of statues) assert.ok(deck.includes(id), `${spec.id}: Statue ${id} must always be in the Market Deck`);
+      assert.equal(buildMarketDeck({ rng: seedRng(99) }, spec).length, deck.length);
+    }
+  });
+
+  await t.test('Disruptions resolve on reveal and are never bought', () => {
+    for (const c of byType('disruption')) {
+      assert.ok(c.onReveal, `${c.id}: a Disruption needs an onReveal effect`);
+      assert.ok(!c.onGain, `${c.id}: a Disruption is never gained`);
+    }
+    assert.ok(byType('disruption').length >= 1, 'the set defines Disruption cards');
+  });
+
+  await t.test('every Statue carries a boon and a burden', () => {
+    for (const c of byType('statue')) {
+      assert.ok(c.burden, `${c.id}: no burden`);
+      assert.ok(c.onGain || (c.abilities || []).some((ab) => !ab.burden), `${c.id}: no boon`);
+      assert.ok((c.abilities || []).some((ab) => ab.burden), `${c.id}: burden text with nothing enforcing it`);
+    }
   });
 });
 

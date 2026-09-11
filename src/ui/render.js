@@ -125,15 +125,15 @@ export function scheduleRender() {
 // unconditionally would swap card elements out from under an in-flight click or animation.
 function computeSignature() {
   if (!state) return '';
-  const pend = state.market.pending.map((pd) => `${pd.id}:${pd.bid}:${pd.challenge ? pd.challenge.bid : ''}`).join(',');
+  const pend = state.market.pending.map((pd) => `${pd.id}:${pd.high}:${pd.bid}:${pd.rounds.length}`).join(',');
   const p0 = state.players[0];
   const p1 = state.players[1];
   return [
     state.log.length, state.active, state.phase, state.winner, state.turnNumber,
     pending ? pending.request.kind : '', wizard ? `${wizard.kind}:${wizard.step}:${(wizard.selected || []).join('-')}` : '',
     p0.supply, p1.supply, p0.hand.length, p1.hand.length, p0.town.length, p1.town.length,
-    p0.town.map((s) => `${s.uid}:${s.orientation}:${s.shift ? s.shift.remaining : ''}`).join(','),
-    p1.town.map((s) => `${s.uid}:${s.orientation}:${s.shift ? s.shift.remaining : ''}`).join(','),
+    p0.town.map((s) => `${s.uid}:${s.orientation}:${s.shift ? s.shift.remaining : ''}:${s.lockedBid || ''}`).join(','),
+    p1.town.map((s) => `${s.uid}:${s.orientation}:${s.shift ? s.shift.remaining : ''}:${s.lockedBid || ''}`).join(','),
     state.market.city.join(','), pend,
   ].join('|');
 }
@@ -224,12 +224,17 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
     body.appendChild(h('div', { class: 'title' }, 'Victory Statue'));
     traits.appendChild(h('span', { class: 'trait' }, [icon('statue'), `Virtue of ${def.virtue || def.name}`]));
     body.appendChild(traits);
+  } else if (def.type === 'disruption') {
+    body.appendChild(h('div', { class: 'title' }, 'Disruption'));
+    traits.appendChild(h('span', { class: 'trait' }, [icon('market'), 'Strikes both towns on reveal']));
+    body.appendChild(traits);
   } else if (def.type === 'market') {
     body.appendChild(h('div', { class: 'title' }, 'Capital City card'));
     traits.appendChild(h('span', { class: 'trait' }, [icon(def.disposal === 'outOfPlay' ? 'dump' : 'market'), def.disposal === 'outOfPlay' ? 'Goes Out of Play' : 'Returns to the City Dump']));
     body.appendChild(traits);
   }
   body.appendChild(h('div', { class: 'rules' }, def.text || ''));
+  if (def.burden) body.appendChild(h('div', { class: 'burden' }, def.burden));
   if (def.flavor) body.appendChild(h('div', { class: 'flavor' }, def.flavor));
   face.appendChild(body);
   if (def.foil) {
@@ -246,13 +251,14 @@ export function buildCardBack({ mini = false } = {}) {
 
 function buildStackEl(stack, { clickable = false, selected = false, onClick = null } = {}) {
   const def = topCard(state, stack);
-  const wrap = h('div', { class: `stack${clickable ? ' clickable' : ''}${selected ? ' selected' : ''}${stack.shift ? ' working' : ''}`, 'data-key': `stack:${stack.uid}` });
+  const wrap = h('div', { class: `stack${clickable ? ' clickable' : ''}${selected ? ' selected' : ''}${stack.shift ? ' working' : ''}${stack.lockedBid ? ' bidding' : ''}`, 'data-key': `stack:${stack.uid}` });
   const flip = h('div', { class: `stack-flip orient-${stack.orientation}` });
   flip.appendChild(buildCardFace(def));
   if (stack.cards.length > 1) flip.appendChild(h('div', { class: 'stack-under' }));
   wrap.appendChild(flip);
   const badges = h('div', { class: 'stack-badges' });
-  if (stack.shift) badges.appendChild(h('div', { class: 'badge shift' }, [icon('shift'), `${stack.shift.remaining} → `, icon('supply'), `${stack.shift.output}`]));
+  if (stack.lockedBid) badges.appendChild(h('div', { class: 'badge bidding' }, [icon('market'), 'Pledged to a bid']));
+  else if (stack.shift) badges.appendChild(h('div', { class: 'badge shift' }, [icon('shift'), `${stack.shift.remaining} → `, icon('supply'), `${stack.shift.output}`]));
   else if (stack.orientation === 270) badges.appendChild(h('div', { class: 'badge busy' }, 'Busy'));
   else if (stack.orientation === 180) badges.appendChild(h('div', { class: 'badge busy' }, 'Arriving'));
   if (stack.readyNextTurn) badges.appendChild(h('div', { class: 'badge ready' }, 'ready next turn'));
@@ -330,7 +336,7 @@ function pushMulti(map, key, val) {
 function groupActionOptions(options) {
   const g = {
     byHandRecruit: new Map(), byCharWork: new Map(), byCharAbility: new Map(),
-    byCharAnnounce: new Map(), byCharChallenge: new Map(), byEventCard: new Map(),
+    byCharAnnounce: new Map(), byCharRaise: new Map(), byEventCard: new Map(),
     byUnemploymentCard: new Map(), endTurn: null,
   };
   for (const o of options) {
@@ -340,7 +346,7 @@ function groupActionOptions(options) {
       case 'work': g.byCharWork.set(o.charUid, o); break;
       case 'ability': g.byCharAbility.set(o.charUid, o); break;
       case 'announce': pushMulti(g.byCharAnnounce, o.charUid, o); break;
-      case 'challenge': pushMulti(g.byCharChallenge, o.charUid, o); break;
+      case 'raise': pushMulti(g.byCharRaise, o.charUid, o); break;
       case 'playEvent': pushMulti(g.byEventCard, o.cardUid, o); break;
       case 'rehire': g.byUnemploymentCard.set(o.cardUid, o); break;
       default: break;
@@ -459,17 +465,17 @@ function openCharacterPopover(stack, groups, anchorEl) {
         },
       }, 'Announce a purchase…'));
     }
-    const challengeOpts = groups.byCharChallenge.get(stack.uid);
-    if (challengeOpts && challengeOpts.length) {
+    const raiseOpts = groups.byCharRaise.get(stack.uid);
+    if (raiseOpts && raiseOpts.length) {
       actions.appendChild(h('button', {
         onclick: () => {
           hidePopoverUI();
-          wizard = { step: 'choosePending', kind: 'challenge', charUid: stack.uid, options: challengeOpts };
+          wizard = { step: 'choosePending', kind: 'raise', charUid: stack.uid, options: raiseOpts };
           scheduleRender();
         },
-      }, 'Challenge a pending purchase…'));
+      }, 'Outbid an auction…'));
     }
-    if (!work && !ability && !announceOpts && !challengeOpts) actions.appendChild(h('div', { class: 'modal-sub' }, 'Nothing to do right now.'));
+    if (!work && !ability && !announceOpts && !raiseOpts) actions.appendChild(h('div', { class: 'modal-sub' }, 'Nothing to do right now.'));
     pop.appendChild(actions);
   });
 }
@@ -564,7 +570,7 @@ function renderCapitalCity() {
   el.innerHTML = '';
   const head = h('div', { class: 'cc-head' });
   head.appendChild(h('div', { class: 'cc-title' }, [icon('market'), 'The Capital City']));
-  head.appendChild(h('div', { class: 'cc-sub' }, 'A contested market: announce with an upright Character, and your rival may challenge once.'));
+  head.appendChild(h('div', { class: 'cc-sub' }, `A contested market (${state.market.deckName}): announce with an upright Character, then outbid each other until one Mayor lets it go. Every bid pledges another animal until the auction ends.`));
   const piles = h('div', { class: 'cc-piles' });
   piles.appendChild(pileChip('marketdeck', 'Market Deck', state.market.deck.length));
   piles.appendChild(pileChip('citydump', 'City Dump', state.market.cityDump.length, 'dump'));
@@ -588,23 +594,27 @@ function renderCapitalCity() {
     }
     slot.appendChild(face);
     if (pd) {
-      const ann = state.players[pd.announcer];
-      const mine = pd.announcer === humanIndex;
+      const leader = state.players[pd.high];
+      const mine = pd.high === humanIndex;
       const info = h('div', { class: `pending-info ${mine ? 'you' : 'rival'}`, 'data-key': `pend:${cardId}` });
-      info.appendChild(h('div', { class: 'pi-line pi-bid' }, [icon('supply'), `${mine ? 'You bid' : `${ann.name} bids`} ${pd.bid}${pd.bonus ? ` +${pd.bonus}` : ''}`]));
-      if (pd.challenge) {
-        const ch = state.players[pd.challenge.player];
-        info.appendChild(h('div', { class: 'pi-line pi-challenge' }, `Challenged: ${pd.challenge.player === humanIndex ? 'you bid' : `${ch.name} bids`} ${pd.challenge.bid}${pd.challenge.bonus ? ` +${pd.challenge.bonus}` : ''}`));
-      } else if (pd.unchallengeable) {
-        info.appendChild(h('div', { class: 'pi-line' }, 'Cannot be challenged'));
+      info.appendChild(h('div', { class: 'pi-line pi-bid' }, [icon('supply'), `${mine ? 'You lead at' : `${leader.name} leads at`} ${pd.bid}${pd.bonus ? ` +${pd.bonus}` : ''}`]));
+      if (pd.rounds.length > 1) {
+        info.appendChild(h('div', { class: 'pi-line pi-challenge' }, `${pd.rounds.length} bids — ${pd.chars[humanIndex].length} of your animals pledged`));
+      }
+      const stake = pd.committed[humanIndex];
+      if (stake && !mine) {
+        info.appendChild(h('div', { class: 'pi-line pi-forfeit' }, `You forfeit ${Math.ceil(stake / 2)} of ${stake} if you let it go`));
+      }
+      if (pd.unchallengeable) {
+        info.appendChild(h('div', { class: 'pi-line' }, 'Cannot be outbid'));
       } else {
-        info.appendChild(h('div', { class: 'pi-line' }, `Resolves on ${mine ? 'your' : `${ann.name}'s`} next turn`));
+        info.appendChild(h('div', { class: 'pi-line' }, mine ? 'Yours unless your rival answers' : `Outbid it before ${leader.name}'s next turn`));
       }
       if (wizard && wizard.step === 'choosePending') {
         const opt = wizard.options.find((o) => o.pendingId === pd.id);
         if (opt) {
           info.classList.add('clickable');
-          info.addEventListener('click', (e) => { e.stopPropagation(); openBidPopover(opt, 'Challenge', e.currentTarget); });
+          info.addEventListener('click', (e) => { e.stopPropagation(); openBidPopover(opt, 'Outbid', e.currentTarget); });
         }
       }
       slot.appendChild(info);
@@ -626,8 +636,8 @@ function renderActionBar(actionGroups) {
     bar.appendChild(h('button', { onclick: () => { wizard = null; scheduleRender(); } }, 'Cancel'));
     return bar;
   }
-  if (wizard && (wizard.kind === 'announce' || wizard.kind === 'challenge')) {
-    bar.appendChild(h('div', { class: 'ab-text' }, wizard.kind === 'announce' ? 'Click a Capital City card to announce your purchase…' : 'Click a pending purchase in the Capital City to challenge it…'));
+  if (wizard && (wizard.kind === 'announce' || wizard.kind === 'raise')) {
+    bar.appendChild(h('div', { class: 'ab-text' }, wizard.kind === 'announce' ? 'Click a Capital City card to announce your purchase…' : 'Click an auction in the Capital City to outbid it…'));
     bar.appendChild(h('button', { onclick: () => { wizard = null; scheduleRender(); } }, 'Cancel'));
     return bar;
   }
@@ -732,7 +742,7 @@ function renderTownPanel(pi, elId) {
       }
     } else if (isHuman && !wizard && actionGroups) {
       const hasOpt = actionGroups.byCharWork.has(s.uid) || actionGroups.byCharAbility.has(s.uid)
-        || actionGroups.byCharAnnounce.has(s.uid) || actionGroups.byCharChallenge.has(s.uid);
+        || actionGroups.byCharAnnounce.has(s.uid) || actionGroups.byCharRaise.has(s.uid);
       if (hasOpt) {
         clickable = true;
         onClick = (e) => { e.stopPropagation(); openCharacterPopover(s, actionGroups, e.currentTarget); };

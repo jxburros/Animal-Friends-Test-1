@@ -72,15 +72,23 @@ describe('on-gain effects', () => {
     assert.equal(apps.filter((s) => s.orientation === UPRIGHT).length, 2);
   });
 
-  test('Statue of Generosity: give the opponent 1 Supply and draw 2', async () => {
+  test('Statue of Generosity: give the opponent 1 Supply and draw 2, then pay its burden on the same gain', async () => {
     const state = newGame();
     const oppBefore = state.players[1].supply;
     const handBefore = state.players[0].hand.length;
     const meBefore = state.players[0].supply;
     await gainMarketCard(state, 0, 'st_generosity', 'test');
-    assert.equal(state.players[1].supply, oppBefore + 1);
+    assert.equal(state.players[1].supply, oppBefore + 1 + 2, 'the boon gives 1 and the burden a further 2 for this very Statue');
     assert.equal(state.players[0].supply, meBefore - 1, "giving costs the giver 1 (it's a transfer, not free)");
     assert.equal(state.players[0].hand.length, handBefore + 2);
+  });
+
+  test("Statue of Generosity's burden pays the opponent again for every later Statue", async () => {
+    const state = newGame();
+    giveStatue(state, 0, 'st_generosity');
+    const oppBefore = state.players[1].supply;
+    await gainMarketCard(state, 0, 'st_patience', 'test');
+    assert.equal(state.players[1].supply, oppBefore + 2);
   });
 });
 

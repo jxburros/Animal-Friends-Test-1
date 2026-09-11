@@ -3,7 +3,7 @@
 **Status:** living design reference and playable-prototype guide  
 **Current prototype set:** *Animal Friends: First Boroughs* (`AF-STARTER-01`)  
 **Authoritative implementation sources:** `spec/game.json` and `spec/starter_card_set.json`  
-**Last consolidated:** September 11, 2026
+**Last consolidated:** September 11, 2026 (auctions, Statue burdens, Disruptions and three Market Decks)
 
 This document gathers the decisions, rules, design principles, and current prototype content for **Animal Friends TCG**. It distinguishes between rules implemented in the playtest, agreed design direction, and items still to be designed. It is not yet a final, player-facing rulebook.
 
@@ -32,7 +32,7 @@ Animal identity should be easy to read and original. Broad traits are welcome wh
 
 ### Players and decks
 
-The current rules specify exactly **two** players, each with a private player deck and a public town. The *First Boroughs* starter prototype gives each player a 30-card deck, starts each at 6 Supply and five cards in hand, and uses a shared 25-card Market Deck.
+The current rules specify exactly **two** players, each with a private player deck and a public town. The *First Boroughs* starter prototype gives each player a 30-card deck and starts each at 6 Supply with five cards in hand; the second player draws one extra card. The shared Market Deck is chosen from three (see Section 4), each nine Statues plus a sampled pool.
 
 ### Areas
 
@@ -67,9 +67,21 @@ Events replaced the earlier Location and Action concepts. They live in player de
 - An Event can be free, cost Supply, or require one or more upright Characters. Supported requirement patterns include an upright Character, a trait count, species count, area-of-study count, and Supply.
 - To meet a Character requirement, the selected upright Characters become Busy. This makes Events part of the same worker-allocation puzzle as shifts and bids.
 
-### Market cards and Statues
+### Market cards, Statues and Disruptions
 
-The shared Market Deck contains ordinary **Market** cards and **Statues**. They are gained through the delayed purchase-and-bidding system. Ordinary Market cards provide effects and usually go to the City Dump after use; Statues remain in their controller's Victory Row and count toward victory.
+The shared Market Deck contains ordinary **Market** cards, **Statues** and **Disruptions**. Market cards and Statues are gained through the auction system: ordinary Market cards provide effects and usually go to the City Dump after use; Statues remain in their controller's Victory Row and count toward victory.
+
+**Disruptions** are never bought and never occupy a display slot. The moment one is dealt into the Capital City it resolves against **both** towns at once and goes to the City Dump, and another card is dealt in its place. They are the design's main instrument of shared disruption (Section 2): a Recession sends every Character in both towns to Unemployment, a Hard Winter abandons every shift in progress, a Boom Season pays both Mayors. A Disruption dealt while the market is first laid out is set aside unresolved, since there is no game state yet to disrupt.
+
+### Market Decks
+
+The shared market is chosen at setup from three Market Decks, each containing all nine Statues plus its own pool:
+
+| Market Deck | Character |
+| --- | --- |
+| **First Boroughs** | The classic mix of growth, card flow and pointed disruption. No shared shocks. |
+| **Boom Town** | Prosperity and momentum: Supply flows freely, direct disruption is rare, and the shared shocks are mostly good news. |
+| **Hard Times** | Recessions, hard winters and backlogs strike both towns alike, and the cards that survive them are worth fighting over. |
 
 ## 5. Supply, readiness, and delayed availability
 
@@ -152,20 +164,27 @@ Five Market cards are displayed in the Capital City. It is deliberately a contes
 
 ### Announcing a purchase
 
-During Actions, choose an upright Character, make it Busy, select an available Capital City card, and announce a bid at least equal to that card's listed cost. The card remains in the Capital City as a pending purchase until the announcer's next turn.
+During Actions, choose an upright Character, make it Busy, select an available Capital City card, and announce a bid at least equal to that card's listed cost. This opens an **auction** on that card; the card remains in the Capital City while the auction runs.
 
-### Challenging
+### Raising
 
-On their own turn before the pending purchase resolves, the opponent may make an upright Character Busy and make a challenge bid. Only one challenge is permitted. The challenger must normally bid more than the announcer; ties go to the original announcer. A special effect can allow a challenger to win ties.
+On their own turn, a Mayor who is **not** the current high bidder may pledge another upright Character, making it Busy, and bid above the standing bid. There is no limit on rounds: the announcer may answer a raise, the rival may answer that, and so on for as long as both can pay. To keep a war from crawling upward one Supply at a time, the required step grows by one every two bids. Ties stay with the standing bid; a special effect can let a raiser take the lead on a tie.
 
-When the announcer's next turn starts:
+An auction settles at the start of the **high bidder's** turn. Because the Mayors alternate turns, still holding the lead when your own turn comes round means your rival has had a turn and declined to answer.
 
-- the higher bidder wins;
-- only the winner pays their committed bid;
-- the winner gains and resolves the card before their resource choice;
-- a tied bid goes to the announcer unless an effect says otherwise.
+- the high bidder wins and pays their bid in full;
+- the loser **forfeits half** of everything they escrowed, rounded up, and is refunded the rest;
+- the winner gains and resolves the card before their resource choice.
 
-Cards and abilities can protect an announcement from challenges, cancel a challenge, modify bids, or respond to a challenge. A player can also bid simply to deny an opponent a disruptive card, even if they do not plan to use it.
+### The cost of bidding
+
+A bid costs animals as much as Supply, and this is the mechanism that ends auctions.
+
+- **Every Character pledged to an auction stays Busy until that auction ends.** It does not advance at Ready, and effects that would ready a Character cannot free it. A Mayor four rounds into a bidding war has four animals standing in the Capital City instead of working, satisfying Events, or bidding elsewhere.
+- Because escrow is forfeit by half, entering a war you cannot finish is genuinely expensive: walking away costs real Supply, not just tempo.
+- So "one Mayor can no longer bid" is usually literal — they have nobody upright left to pledge.
+
+Cards and abilities can protect an announcement from raises, cancel a raise, modify bids, or respond to one. A player can also bid simply to deny an opponent a disruptive card, even if they do not plan to use it.
 
 ### Market refresh and disposal
 
@@ -176,6 +195,22 @@ This top-up refill replaced the earlier refill-only-when-empty rule: playtests f
 ## 9. Statues, victory, theft, and the endgame
 
 Statues are visible Victory cards that remain in the controller's Victory Row. The total number of Statues should always be odd so that the goal is obvious. The current starter set has nine; control of five is a strict majority and wins.
+
+### Boons and burdens
+
+Every Statue grants its controller a lasting **boon** and imposes a lasting **burden**, both active for as long as it sits in their Victory Row. The burden is not a drawback to be played around once — it is a standing tax on the town that is winning, which keeps a Statue lead from compounding into a runaway and gives the trailing Mayor something to work with.
+
+| Statue | Boon | Burden |
+| --- | --- | --- |
+| Kindness | Supply at turn start when your Unemployment is no worse than your rival's | Your opponent's rehires cost 1 less |
+| Curiosity | On gain, draw 2 then discard 1 | End your turn holding more than 6 cards and you discard 1 |
+| Courage | Your next raise costs 1 less Supply to pay | Your opponent's first bid each turn is worth 1 more |
+| Patience | Masters enter with one fewer orientation delay | Your Apprentices enter Busy instead of upright |
+| Generosity | On gain, give 1 Supply and draw 2 | Every Statue you gain, this one included, pays your opponent 2 Supply |
+| Ingenuity | Once per turn, an Event needs one fewer Character | Your Events cost 1 more Supply |
+| Community | With three species, your first completed shift each turn gains 1 | Choosing Supply in Resources gives 1 less |
+| Harmony | Ready a Character after a tied bid | You pay your losing bids in full instead of forfeiting half |
+| Joy | On gain, ready up to two Apprentices | Give your opponent 1 Supply at the start of each of your turns |
 
 Statues are not automatically safe. Expensive theft or return effects can interfere with Victory Rows, but must include a significant cost, requirement, restriction, or drawback. A player may **not** steal the final opponent Statue in a way that immediately gives them the winning majority. This boundary prevents the game ending purely through taking an opponent's last needed Statue.
 
@@ -260,7 +295,8 @@ Digital achievements are a future companion-app or player-profile feature, **not
 
 These details need decisions before this can become a finished rulebook:
 
-- The exact physical rotation convention and player-facing explanation of orientation.
+- The exact physical rotation convention and player-facing explanation of orientation, including how a table shows that a Character is pledged to an open auction rather than merely Busy.
+- Whether an auction should have a hard round cap for tournament play, or whether running out of upright animals is limit enough.
 - The exact Transfer effect.
 - Card schema details for shift outputs/delays and Limited Event duration as the broader card pool grows.
 - Starting-deck composition, starting hand, and Market Deck composition outside the current prototype.

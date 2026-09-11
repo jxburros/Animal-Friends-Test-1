@@ -7,14 +7,14 @@
   "setup": {
     "deckSize": 30,
     "startingSupply": 6,
-    "secondPlayerBonusSupply": 2,
+    "secondPlayerBonusSupply": 0,
     "startingHand": 5,
     "marketDeckSize": 25,
     "capitalCitySize": 5,
     "secondPlayerBonusCards": 1
   },
   "deckbuilding": {
-    "$comment": "Prototype decision: the Deck Workshop lets a player build any 30-card deck from the Character and Event catalogue. Copy and Character limits keep a custom deck playable — a deck of pure Events could never pay its own requirements.",
+    "$comment": "Prototype decision: the Deck Workshop lets a player build any 30-card deck from the Character and Event catalogue. Copy and Character limits keep a custom deck playable \u2014 a deck of pure Events could never pay its own requirements.",
     "deckSize": 30,
     "maxCopiesPerCard": 3,
     "minCharacters": 12,
@@ -24,7 +24,9 @@
     "statueTotal": 9,
     "statuesToWin": 5,
     "rule": "strict majority of Statues",
-    "forbidStealingFinalStatue": true
+    "forbidStealingFinalStatue": true,
+    "statuesCarryBurdens": true,
+    "$comment": "Every Statue grants a boon and imposes a burden that lasts as long as its Mayor controls it. Collecting Statues therefore taxes the town that is winning, which keeps a Statue lead from compounding into a runaway."
   },
   "orientation": {
     "upright": 0,
@@ -81,11 +83,27 @@
     "refillToFull": true,
     "refillWhenEmpty": false,
     "minimumBidIsCardCost": true,
-    "oneChallengePerPurchase": true,
     "tiesGoToAnnouncer": true,
     "bidsAreEscrowed": true,
-    "pendingResolvesAtAnnouncerStart": true,
-    "staleTurns": 6
+    "staleTurns": 6,
+    "auction": {
+      "$comment": "Section 8. An announcement opens an auction rather than a one-shot challenge. On your own turn you may raise any auction you are not already winning by making another upright Character Busy and bidding above the standing bid; there is no limit on rounds, but the required step grows by 1 every incrementGrowsEveryNRounds bids so a war converges. Every Character pledged to an auction stays Busy until that auction ends -- it does not advance at Ready and effects cannot ready it -- so a long bidding war costs a Mayor their whole workforce, and 'cannot bid any more' usually means 'has nobody left to bid with'. Because the players alternate turns, being the high bidder at the start of your own turn means your rival had a turn and declined to answer, so the auction resolves then. A bid is a real commitment: escrow is topped up to the bid when it is made, the winner pays it all, and the loser forfeits half (rounded up) of everything they escrowed.",
+      "unlimitedRaises": true,
+      "raiseRequiresUprightCharacter": true,
+      "raiseMustExceedStandingBid": true,
+      "incrementGrowsEveryNRounds": 2,
+      "resolvesAtHighBidderStart": true,
+      "losingBidForfeitNumerator": 1,
+      "losingBidForfeitDenominator": 2,
+      "losingBidForfeitRounding": "up",
+      "biddersLockedUntilAuctionEnds": true
+    },
+    "disruptions": {
+      "$comment": "Disruption cards are shared shocks in the Market Deck. They are never bought: the moment one is dealt into the Capital City it resolves against both towns at once and goes to the City Dump, and another card is dealt in its place. Disruptions dealt during setup are set aside without resolving, since there is no game state yet to disrupt.",
+      "resolveOnReveal": true,
+      "disposal": "cityDump",
+      "skipDuringSetup": true
+    }
   },
   "unemployment": {
     "rehireCostsFullPrintedCost": true,
@@ -109,9 +127,12 @@
     "$comment": "Safety cap for automated playtests; a game that reaches the cap is scored by Statue count, then Supply."
   },
   "assumptions": [
-    "Second player starts with two extra Supply and one extra card (setup.secondPlayerBonusSupply / secondPlayerBonusCards); playtests with the heuristic AI put the first player at 51% with this offset versus 56% with none.",
-    "A player may have several pending purchases at once (one per Capital City card); each may receive at most one challenge.",
-    "Committed bids are escrowed when announced or challenged and refunded to the loser.",
+    "The second player starts with one extra card and no extra Supply (setup.secondPlayerBonusSupply / secondPlayerBonusCards). The earlier +2 Supply offset was tuned for the one-shot challenge; once Supply became ammunition for a multi-round auction it handed the second seat a 57% win rate, and 480-game passes put the first player at 50.0% with cards alone.",
+    "A player may have several auctions running at once (one per Capital City card); each may be raised any number of times, but only on the raiser's own turn and only by a player who is not already the high bidder. Each bid pledges another upright Character, and pledged Characters stay Busy until that auction ends.",
+    "Committed bids are escrowed as they are made. The winner pays their bid in full; the loser forfeits half of everything they escrowed (rounded up) and is refunded the rest, so bidding beyond your means still costs something.",
+    "Every Statue carries a burden as well as a boon; burdens apply while the Statue sits in that player's Victory Row.",
+    "Disruption cards resolve on reveal against both towns and are never purchasable.",
+    "The Market Deck is chosen at setup from three decks (First Boroughs, Boom Town, Hard Times); all three contain every Statue.",
     "Upgrading keeps the stack's current orientation and re-triggers the new card's recruit abilities.",
     "Readying a Character that is mid-shift completes the shift at once.",
     "Reactive abilities (Rowan, Ombudsperson; Rumor Control; Emergency Reserve) are implemented as shields set on your own turn that last until your next turn starts.",
