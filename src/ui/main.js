@@ -90,7 +90,19 @@ function renderMarketChoice() {
   const el = $('marketChoice');
   if (!el) return;
   el.innerHTML = '';
-  const decks = cardSet.marketDecks || [];
+  // Same fallback the engine makes (state.js resolveMarketDeck): an older card set had one Market
+  // Deck under `marketDeck` rather than a list.
+  const decks = (cardSet.marketDecks && cardSet.marketDecks.length)
+    ? cardSet.marketDecks
+    : (cardSet.marketDeck ? [cardSet.marketDeck] : []);
+  if (!decks.length) {
+    const note = document.createElement('p');
+    note.className = 'menu-note';
+    note.textContent = 'This card set defines no Market Decks. The page may be serving an old spec/starter_card_set.json — reload, and check the server is running from the project root.';
+    el.appendChild(note);
+    chosenMarketId = undefined;
+    return;
+  }
   if (!decks.some((d) => d.id === chosenMarketId)) chosenMarketId = decks[0] && decks[0].id;
   for (const deck of decks) {
     const card = document.createElement('button');
@@ -334,10 +346,41 @@ function wireMenu() {
   });
 }
 
+/**
+ * Load one spec file.
+ *
+ * `cache: 'no-cache'` makes the browser revalidate with the server on every load instead of serving
+ * a heuristically cached copy: edit spec/starter_card_set.json and the next reload always sees it,
+ * while an unchanged file still costs only a 304. Without this an old spec can sit in the cache and
+ * the game quietly plays yesterday's card set — new cards, decks and Market Decks simply missing.
+ */
+async function loadSpec(url, label) {
+  let resp;
+  try {
+    resp = await fetch(url, { cache: 'no-cache' });
+  } catch (e) {
+    throw new Error(`Could not fetch ${label} (${url}). Serve the project over http (npm run serve) — browsers block file:// module and fetch access. [${e.message}]`);
+  }
+  if (!resp.ok) throw new Error(`Could not load ${label}: ${resp.status} ${resp.statusText} for ${url}. Is the server running from the project root?`);
+  try {
+    return await resp.json();
+  } catch (e) {
+    throw new Error(`${label} (${url}) is not valid JSON: ${e.message}`);
+  }
+}
+
 async function main() {
-  const [rulesResp, setResp] = await Promise.all([fetch(RULES_URL), fetch(SET_URL)]);
-  rules = await rulesResp.json();
-  cardSet = indexSet(await setResp.json());
+  const [loadedRules, loadedSet] = await Promise.all([
+    loadSpec(RULES_URL, 'the rules (spec/game.json)'),
+    loadSpec(SET_URL, 'the card set (spec/starter_card_set.json)'),
+  ]);
+  rules = loadedRules;
+  if (!Array.isArray(loadedSet.cards) || !loadedSet.cards.length) throw new Error('The card set has no cards.');
+  if (!Array.isArray(loadedSet.decks) || !loadedSet.decks.length) throw new Error('The card set has no town decks.');
+  cardSet = indexSet(loadedSet);
+  // One line saying exactly which set is on the table, so a stale file is obvious at a glance.
+  // eslint-disable-next-line no-console
+  console.info(`Animal Friends — ${cardSet.name || cardSet.setId}: ${cardSet.cards.length} cards, ${cardSet.decks.length} town decks, ${(cardSet.marketDecks || []).length} Market Decks.`);
   // Drop saved decks that no longer match the card set (a card was renamed or removed).
   customDecks = loadSavedDecks().filter((d) => Object.keys(d.list).every((id) => cardSet.cardsById[id]));
   chosenDeckId = cardSet.decks[0].id;
@@ -348,7 +391,7 @@ async function main() {
 }
 
 main().catch((e) => {
-  document.body.innerHTML = `<pre style="padding:20px;color:#b8434e">Failed to start: ${e.stack || e.message}</pre>`;
+  document.body.innerHTML = `<pre style="padding:20px;color:#b8434e;white-space:pre-wrap;font:14px/1.5 system-ui,sans-serif">Failed to start.\n\n${e.message}\n\n${e.stack || ''}</pre>`;
   // eslint-disable-next-line no-console
   console.error(e);
 });
