@@ -39,10 +39,12 @@ describe('upgrades', () => {
     const state = newGame();
     setSupply(state, 0, 10);
     const target = addStack(state, 0, 'bb_clover_1', BUSY); // Clover, Seedling Helper, cost 0, currently Busy
-    const upgrade = addToHand(state, 0, 'bb_clover_2'); // Clover, Community Gardener, cost 3
+    addToHand(state, 0, 'bb_clover_2'); // Clover, Community Gardener, cost 3
     begin(state, 0);
     const acts = legalActions(state, 0);
-    const up = acts.find((a) => a.type === 'recruit' && a.upgrade && a.cardUid === upgrade.uid);
+    // legalActions offers one action per distinct card id, so match on the card, not the copy:
+    // the opening hand may already hold a Community Gardener of its own.
+    const up = acts.find((a) => a.type === 'recruit' && a.upgrade && a.cardId === 'bb_clover_2');
     assert.ok(up, 'upgrade action should be offered');
     assert.equal(up.cost, 3 - 0, 'pays only the cost difference');
     await applyAction(state, 0, up);

@@ -3,7 +3,7 @@
 **Status:** living design reference and playable-prototype guide  
 **Current prototype set:** *Animal Friends: First Boroughs* (`AF-STARTER-01`)  
 **Authoritative implementation sources:** `spec/game.json` and `spec/starter_card_set.json`  
-**Last consolidated:** September 11, 2026 (auctions, Statue burdens, Disruptions and three Market Decks)
+**Last consolidated:** September 11, 2026 (the power/cost model and rarity, a doubled card set, six printed decks and four Market Decks)
 
 This document gathers the decisions, rules, design principles, and current prototype content for **Animal Friends TCG**. It distinguishes between rules implemented in the playtest, agreed design direction, and items still to be designed. It is not yet a final, player-facing rulebook.
 
@@ -75,13 +75,41 @@ The shared Market Deck contains ordinary **Market** cards, **Statues** and **Dis
 
 ### Market Decks
 
-The shared market is chosen at setup from three Market Decks, each containing all nine Statues plus its own pool:
+The shared market is chosen at setup from four Market Decks, each containing all nine Statues plus its own pool:
 
 | Market Deck | Character |
 | --- | --- |
 | **First Boroughs** | The classic mix of growth, card flow and pointed disruption. No shared shocks. |
 | **Boom Town** | Prosperity and momentum: Supply flows freely, direct disruption is rare, and the shared shocks are mostly good news. |
 | **Hard Times** | Recessions, hard winters and backlogs strike both towns alike, and the cards that survive them are worth fighting over. |
+| **Founders' Fair** | Auction tools, understudies and second chances, with fair weather and nothing that empties a town. |
+
+### Rarity and the power/cost model
+
+Every card in the set carries a **rarity** — Common, Uncommon, Rare, Super Rare or Legendary — and it is
+derived, not hand-assigned. `src/engine/power.js` rates a card in *Supply-equivalents*:
+
+- **Power** is everything the card gives you: a shift is rated by its throughput (`output / delay`) plus a
+  little for the lump sum; an ability is rated by what it does times how often its trigger fires, discounted
+  for every condition attached to it; a Statue adds the value of being a fifth of a victory; a Statue's burden
+  subtracts.
+- **Opportunity cost** is everything it asks for: the Supply, the action, the turns a Master spends rotating
+  into work, the Characters an Event taps, the slot the card takes in a 30-card deck.
+- **Rating** is `power^0.6 × efficiency^0.4`, where efficiency is power over opportunity cost.
+
+That exponent split is the design decision. Rarity is *not* raw power: of two cards that give you the same,
+the cheaper one rates higher, and a cost-0 Rabbit with a good shift can out-rate a Master. But efficiency alone
+would make every cheap card legendary, so size still decides between two equally efficient cards. Bands are
+set so the set reads as a pyramid (about 50% Common, 25% Uncommon, 18% Rare, 5% Super Rare, 3% Legendary).
+
+Rarity then does real work at the table: it caps how many copies of a card a 30-card town deck may hold —
+**3 / 3 / 2 / 1 / 1** — so the cards that carry a game are the ones you may least often repeat. The printed
+decks are built to that shape: a base of Commons and Uncommons at three and two copies, a Rare or two at two,
+and at most a single Super Rare or Legendary as the deck's one marquee card.
+
+The model is also what the heuristic AI uses to value an unfamiliar card, so a new card is understood the day
+it is printed rather than the day someone adds it to a table. `npm run power` prints the whole set in rating
+order, and a test fails if the rarity printed on a card is no longer the one the model gives it.
 
 ## 5. Supply, readiness, and delayed availability
 
@@ -216,7 +244,18 @@ Statues are not automatically safe. Expensive theft or return effects can interf
 
 ## 10. Current starter set: First Boroughs
 
-The prototype uses two 30-card player decks and a 25-card Capital City deck (nine Statues and sixteen other Market cards).
+The set holds **208 cards**: 68 Characters, 52 Events, 9 Statues, a 64-card Capital City pool and 15
+Disruptions. A game uses two 30-card player decks and a 25-card Capital City deck (nine Statues and sixteen
+other cards sampled from the chosen Market Deck's pool).
+
+Six printed decks are provided: **Burrow & Bloom** (Rabbit/Mouse, Agriculture/Botany), **Paws & Papers**
+(Raccoon/Fox, Commerce/Civics), **Bramble & Bristle** (Hedgehog/Badger, Crafts/Agriculture), **Ripple & Rune**
+(Otter/Squirrel, Lore/Commerce), **Lantern & Ledger** (Fox/Otter, Lore/Commerce) and **Root & Rampart**
+(Badger/Rabbit, Civics/Crafts).
+
+The tables below are the two founding decks, kept as worked examples of the card shapes; every other card
+lives in `spec/starter_card_set.json`, which is the contract. Most Characters now have a third version — a
+further promotion or a sideways retraining into another study — so an upgrade line can branch.
 
 ### Burrow & Bloom
 

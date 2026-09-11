@@ -28,6 +28,7 @@
 import {
   cardDef, topCard, canAct, opponentOf, statueCount, findEventAssignment, eventReduction, rankOf, hasPassive,
 } from '../engine/index.js';
+import { cardPower } from '../engine/power.js';
 
 // ---------------------------------------------------------------- tuning knobs
 // Defaults are merged with `options.params` so the weights can be swept from a playtest harness.
@@ -114,85 +115,80 @@ function entryDelayTurns(state, d) {
 }
 
 // ---------------------------------------------------------------- card valuation
-// Rough "supply equivalent" of gaining a non-Statue Market card.
-function marketCardValue(state, pi, d) {
+// Both valuations below start from the set's own power model (src/engine/power.js), which rates
+// every card in Supply-equivalents, and then correct it for the board in front of us: a free rehire
+// is worth nothing with an empty Unemployment, however well it rates on paper. Rating the cards from
+// their data rather than from a table means a new card is understood the day it is printed.
+
+/** Every effect node in a card's effect tree, flattened. */
+function effectNodes(eff, out = []) {
+  if (!eff || !eff.do) return out;
+  out.push(eff);
+  if (eff.do === 'seq') for (const st of eff.steps || []) effectNodes(st, out);
+  return out;
+}
+/** The effect nodes a card would resolve when it is gained, played or revealed. */
+function cardEffects(d) {
+  return [...effectNodes(d.effect), ...effectNodes(d.onGain), ...effectNodes(d.onReveal)];
+}
+const findEffect = (d, kind) => cardEffects(d).find((e) => e.do === kind);
+const hasMod = (d, key) => cardEffects(d).some((e) => e.do === 'addMod' && e.key === key);
+
+/**
+ * Multiplier for effects that can fizzle on the current board. 0 means "this card does nothing for
+ * me right now", which is what keeps the agent from paying for an empty Rehire.
+ */
+function situationFactor(state, pi, d) {
   const p = state.players[pi];
   const o = state.players[opponentOf(pi)];
-  const unemployed = p.unemployment.length;
-  switch (d.id) {
-    case 'mk_festival_grant': return 5.5;
-    case 'mk_supply_depot': return 4.0;
-    case 'mk_public_gardens': return 3.0;
-    case 'mk_library_annex': return 3.5;
-    case 'mk_mayors_seal': return 6.0; // an unchallengeable Statue announcement is gold
-    case 'mk_quiet_mediation': return 4.5;
-    case 'mk_town_charter': return 1.8;
-    case 'mk_town_bell': return 2.0;
-    case 'mk_courier_network': return 1.4;
-    case 'mk_community_kitchen': return unemployed ? 2.5 : 0.4;
-    case 'mk_appeal_board': return unemployed ? 2.2 : 0.3;
-    case 'mk_scrap_yard': return o.town.some((s) => (stackTop(state, s) || { cost: 9 }).cost <= 2) ? 3.0 : 0.5;
-    case 'mk_poachers_pardon': return o.town.length ? 3.2 : 0.5;
-    case 'mk_town_archives': return p.dump.some((c) => (def(state, c.cardId) || {}).type === 'event') ? 2.0 : 0.3;
-    case 'mk_town_clock': return 2.6;
-    case 'mk_emergency_reserve': return 0.8;
-    case 'mk_towpath': return 2.0;
-    case 'mk_lamplighters_round': return 1.2;
-    case 'mk_seed_exchange': return 2.2;
-    case 'mk_river_ferry': return 3.2;
-    case 'mk_toolshed': return 2.6;
-    case 'mk_common_pasture': return p.unemployment.some((c) => (def(state, c.cardId) || { cost: 9 }).cost <= 2) ? 3.0 : 0.3;
-    case 'mk_story_circle': return p.dump.some((c) => (def(state, c.cardId) || {}).type === 'event') ? 2.2 : 0.8;
-    case 'mk_harvest_fair': return 5.0; // 5 Supply, minus a small gift to the rival
-    case 'mk_guild_hall': return p.hand.some((c) => {
-      const cd = def(state, c.cardId);
-      return cd && cd.type === 'character' && cd.cost <= 2;
-    }) ? 4.0 : 0.3;
-    case 'mk_night_watch': return 1.6;
-    case 'mk_watermill': return 4.0;
-    case 'mk_ledger_audit': return 3.4;
-    case 'mk_masons_yard': return 3.0;
-    case 'mk_festival_parade': return 5.0;
-    case 'mk_boundary_stone': return o.town.some((st) => (stackTop(state, st) || { cost: 9 }).cost <= 3) ? 3.4 : 0.4;
-    case 'mk_beacon_hill': return 5.5;
-    default: return 1.5;
+  let f = 1;
+  const rehire = findEffect(d, 'rehire');
+  if (rehire) {
+    const eligible = p.unemployment.filter((c) => {
+      const cd = def(state, c.cardId) || { cost: 9 };
+      const max = rehire.filter && (rehire.filter.maxCost ?? rehire.filter.cost);
+      return max === undefined || cd.cost <= max;
+    });
+    if (!eligible.length) f *= 0.08;
   }
+  const recruit = findEffect(d, 'recruitFromHand');
+  if (recruit) {
+    const max = (recruit.filter && recruit.filter.maxCost) ?? 5;
+    if (!p.hand.some((c) => { const cd = def(state, c.cardId); return cd && cd.type === 'character' && cd.cost <= max; })) f *= 0.1;
+  }
+  const unemploy = findEffect(d, 'unemployOpponentCharacter');
+  if (unemploy) {
+    const max = unemploy.maxCost ?? 5;
+    if (!o.town.some((st) => (stackTop(state, st) || { cost: 9 }).cost <= max)) f *= 0.12;
+  }
+  if (cardEffects(d).some((e) => e.do === 'eventFromDumpToHand' || e.do === 'eventFromDumpToDeckBottom')) {
+    if (!p.dump.some((c) => (def(state, c.cardId) || {}).type === 'event')) f *= 0.2;
+  }
+  if (findEffect(d, 'raiseOwnBid') && !state.market.pending.some((pd) => pd.high === pi)) f *= 0.1;
+  if (findEffect(d, 'readyCharacter') && !p.town.some((st) => st.orientation !== 0 && !st.lockedBid)) f *= 0.3;
+  return f;
+}
+
+/** Corrections the power model cannot see, because they are about this engine's auctions. */
+function auctionBonus(d) {
+  let b = 0;
+  if (hasMod(d, 'unchallengeable')) b += 3.0; // an unchallengeable Statue announcement wins games
+  if (hasMod(d, 'cancelNextChallenge')) b += 1.8;
+  return b;
+}
+
+// Rough "supply equivalent" of gaining a non-Statue Market card.
+function marketCardValue(state, pi, d) {
+  const base = cardPower(d) * 0.9 + auctionBonus(d);
+  return Math.max(0.2, base * situationFactor(state, pi, d));
 }
 
 // Value of resolving an Event right now (before the cost of the Characters it taps).
 function eventValue(state, pi, d) {
-  const p = state.players[pi];
-  const unemployed = p.unemployment.length;
-  switch (d.id) {
-    case 'bb_community_garden': return 5.0;
-    case 'bb_seed_swap': return 3.2;
-    case 'bb_patient_harvest': return 3.4;
-    case 'bb_neighborhood_watch': return unemployed ? 4.0 : 0.2;
-    case 'bb_blooming_confidence': return 5.0; // readying a working Character cashes its shift
-    case 'bb_welcome_wagon': return p.hand.some((c) => {
-      const cd = def(state, c.cardId);
-      return cd && cd.type === 'character' && cd.cost === 0;
-    }) ? 3.6 : 0.2;
-    case 'pp_open_ledger': return 4.0;
-    case 'pp_paper_trail': return 3.8;
-    case 'pp_civic_rally': return 3.0;
-    case 'pp_rumor_control': return 2.0;
-    case 'pp_fair_hearing': return unemployed ? 3.0 : -3.0; // otherwise it only feeds the opponent
-    case 'pp_market_day': return 2.6;
-    case 'br_barn_raising': return 4.4;
-    case 'br_mended_fences': return unemployed ? 4.0 : 0.8;
-    case 'br_winter_stores': return 3.2;
-    case 'br_workshop_swap': return 3.0;
-    case 'br_hedgerow_guard': return 1.8;
-    case 'br_tool_lending': return 3.4; // readying a working Character cashes its shift
-    case 'rr_river_market': return 4.0;
-    case 'rr_told_by_lamplight': return 2.2;
-    case 'rr_acorn_cache': return 3.4;
-    case 'rr_rune_reading': return 3.0;
-    case 'rr_ferry_charter': return 4.2;
-    case 'rr_hushed_agreement': return 2.8;
-    default: return 2.0;
-  }
+  const base = cardPower(d) + 1.0 + auctionBonus(d);
+  const v = base * situationFactor(state, pi, d);
+  // A Limited Event that only pays out on later turns is worth less the closer the game is to over.
+  return d.kind === 'limited' ? v * 0.9 : v;
 }
 
 // How much we want a card sitting in hand (used for discard / topdeck / deck ordering).

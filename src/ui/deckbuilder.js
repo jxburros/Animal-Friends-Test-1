@@ -3,8 +3,9 @@
 // The builder owns its own screen and knows nothing about a running game: it hands a plain
 // `{ id, name, list: { cardId: count } }` deck back through onSave, which is exactly what
 // createGame accepts in place of a deck id (see engine/state.js resolveDeck).
-import { deckRules, deckProblems } from '../engine/deckbuilding.js';
-import { buildCardFace, setPreviewContext } from './render.js';
+import { deckRules, deckProblems, maxCopiesOf } from '../engine/deckbuilding.js';
+import { RARITIES, powerRating } from '../engine/power.js';
+import { buildCardFace, setPreviewContext, raritySlug } from './render.js';
 import { iconSVG } from './art.js';
 
 const STORE_KEY = 'af-custom-decks';
@@ -56,7 +57,7 @@ export function deleteSavedDeck(id) {
 // ---------- the screen ----------
 let host = null;
 let ctx = null; // { rules, set, list, name, id, onSave, onCancel }
-let filter = { type: 'all', species: null, study: null };
+let filter = { type: 'all', species: null, study: null, rarity: null };
 
 function counts() {
   const byId = ctx.set.cardsById || Object.fromEntries(ctx.set.cards.map((c) => [c.id, c]));
@@ -74,10 +75,15 @@ function counts() {
 function copiesOf(cardId) {
   return ctx.list[cardId] || 0;
 }
+/** The copy limit for one card: its rarity's, never above the set-wide cap. */
+function limitFor(def) {
+  return maxCopiesOf(ctx.rules, def);
+}
 function addCopy(cardId) {
   const dr = deckRules(ctx.rules);
+  const byId = ctx.set.cardsById || Object.fromEntries(ctx.set.cards.map((c) => [c.id, c]));
   const { total } = counts();
-  if (total >= dr.deckSize || copiesOf(cardId) >= dr.maxCopies) return;
+  if (total >= dr.deckSize || copiesOf(cardId) >= limitFor(byId[cardId])) return;
   ctx.list[cardId] = copiesOf(cardId) + 1;
   render();
 }
@@ -89,13 +95,20 @@ function removeCopy(cardId) {
 }
 
 function poolCards() {
-  return ctx.set.cards.filter((c) => {
-    if (c.type !== 'character' && c.type !== 'event') return false;
-    if (filter.type !== 'all' && c.type !== filter.type) return false;
-    if (filter.species && !matchesSpecies(c, filter.species)) return false;
-    if (filter.study && !matchesStudy(c, filter.study)) return false;
-    return true;
-  });
+  return ctx.set.cards
+    .filter((c) => {
+      if (c.type !== 'character' && c.type !== 'event') return false;
+      if (filter.type !== 'all' && c.type !== filter.type) return false;
+      if (filter.species && !matchesSpecies(c, filter.species)) return false;
+      if (filter.study && !matchesStudy(c, filter.study)) return false;
+      if (filter.rarity && (c.rarity || 'Common') !== filter.rarity) return false;
+      return true;
+    })
+    // Strongest for its cost first: the book is browsed down the power curve.
+    .sort((a, b) => score(b) - score(a) || a.name.localeCompare(b.name));
+}
+function score(def) {
+  return (def.power && def.power.score) || powerRating(def);
 }
 function matchesSpecies(c, species) {
   if (c.type === 'character') return c.species === species;
@@ -132,9 +145,17 @@ function buildFilters() {
       render();
     }, st)),
   ]);
+  const rarityRow = h('div', { class: 'db-chiprow' }, [
+    chip('Any rarity', !filter.rarity, () => { filter.rarity = null; render(); }),
+    ...RARITIES.map((r) => chip(r, filter.rarity === r, () => {
+      filter.rarity = filter.rarity === r ? null : r;
+      render();
+    })),
+  ]);
   bar.appendChild(typeRow);
   bar.appendChild(speciesRow);
   bar.appendChild(studyRow);
+  bar.appendChild(rarityRow);
   return bar;
 }
 
@@ -147,10 +168,11 @@ function buildPool() {
     const face = buildCardFace(def, { interactive: true });
     face.classList.add('clickable');
     slot.appendChild(face);
+    const limit = limitFor(def);
     slot.appendChild(h('div', { class: 'db-slot-controls' }, [
       h('button', { class: 'small', type: 'button', title: 'Remove a copy', disabled: !n, onclick: (e) => { e.stopPropagation(); removeCopy(def.id); } }, '−'),
-      h('span', { class: 'db-count' }, `${n}/${dr.maxCopies}`),
-      h('button', { class: 'small', type: 'button', title: 'Add a copy', disabled: n >= dr.maxCopies, onclick: (e) => { e.stopPropagation(); addCopy(def.id); } }, '+'),
+      h('span', { class: 'db-count', title: `${def.rarity || 'Common'}: at most ${limit} in a deck` }, `${n}/${limit}`),
+      h('button', { class: 'small', type: 'button', title: 'Add a copy', disabled: n >= limit, onclick: (e) => { e.stopPropagation(); addCopy(def.id); } }, '+'),
     ]));
     slot.addEventListener('click', () => addCopy(def.id));
     grid.appendChild(slot);
@@ -177,6 +199,7 @@ function buildDeckList() {
         h('span', { class: 'db-row-cost', title: `Cost ${def.cost}` }, String(def.cost || 0)),
         h('span', { class: 'db-row-name' }, def.type === 'character' ? `${def.name}, ${def.title}` : def.name),
         h('span', { class: 'db-row-tags' }, def.type === 'character' ? [icon(def.species), icon(def.study)] : [icon(def.kind === 'limited' ? 'limited' : 'instant')]),
+        h('span', { class: `rarity-tag rar-${raritySlug(def)}`, title: `${def.rarity || 'Common'}: at most ${limitFor(def)} in a deck` }, def.rarity || 'Common'),
         h('button', { class: 'small', type: 'button', title: 'Remove a copy', onclick: () => removeCopy(id) }, '−'),
       ]));
     }
@@ -204,7 +227,7 @@ function render() {
   const head = h('div', { class: 'db-head' }, [
     h('div', { class: 'db-head-main' }, [
       h('h2', {}, 'The Deck Workshop'),
-      h('p', { class: 'db-sub' }, `Build a ${dr.deckSize}-card town deck from any Characters and Events in the book — at most ${dr.maxCopies} copies of a card, and at least ${dr.minCharacters} Characters.`),
+      h('p', { class: 'db-sub' }, `Build a ${dr.deckSize}-card town deck from any Characters and Events in the book — at least ${dr.minCharacters} Characters, and copies capped by rarity: ${RARITIES.map((r) => `${r} ${dr.copiesByRarity[r]}`).join(', ')}.`),
     ]),
     h('div', { class: 'db-head-side' }, [
       h('label', { class: 'menu-label', for: 'dbName' }, 'Deck name'),
@@ -254,6 +277,6 @@ export function openDeckBuilder(hostEl, opts) {
     onSave: opts.onSave,
     onCancel: opts.onCancel,
   };
-  filter = { type: 'all', species: null, study: null };
+  filter = { type: 'all', species: null, study: null, rarity: null };
   render();
 }

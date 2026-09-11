@@ -36,7 +36,65 @@ now an opening bid, and roughly two contested cards in five are still held by th
 The cost is length: games run about 11 turns longer, because each round of bidding pushes resolution out another
 turn and pledged animals are not working while it lasts.
 
-## Headline results (480 games per market, seed 4400)
+## The expansion: 208 cards, rarity, and an AI that reads the card
+
+The set was doubled (104 → 208 cards), every card was rated by a power/cost model, and the ratings were
+turned into rarities that cap how often a card may repeat in a deck.
+
+**The model** (`src/engine/power.js`) rates a card in Supply-equivalents: *power* is what it gives you (shift
+throughput, an ability times how often its trigger fires, discounted per condition; a Statue's burden
+subtracts), *opportunity cost* is what it asks for (Supply, the action, the turns a Master rotates, the
+Characters an Event taps, the deck slot). The rating is `power^0.6 × efficiency^0.4`, which is the whole
+argument of the pass: efficiency decides between cards of similar size, size decides between cards of similar
+efficiency. Bands were then chosen to make a pyramid.
+
+| Rarity | Score ≥ | Copies per deck | Cards | Share |
+| --- | ---: | ---: | ---: | ---: |
+| Common | — | 3 | 106 | 51% |
+| Uncommon | 2.4 | 3 | 49 | 24% |
+| Rare | 3.6 | 2 | 37 | 18% |
+| Super Rare | 4.5 | 1 | 10 | 5% |
+| Legendary | 5.4 | 1 | 6 | 3% |
+
+Two findings fell out of the model rather than out of play:
+
+- **A shield printed with a sentinel value broke the first pass.** `lossShield: 99` rated Hedgerow Guard and
+  Rumor Control at 80 power, twenty times the next card. Flag-shaped mods are now rated flat.
+- **The Capital City is where the Commons live.** 54 of 64 market cards rate Common, because a one-shot
+  effect bought for Supply *and* a pledged animal simply cannot match a Character who produces every turn.
+  That is a real statement about the market, not a modelling artefact, and it is the thing to look at if
+  buying a non-Statue card should ever feel exciting on its own.
+
+**The AI now rates cards from the model.** Both `marketCardValue` and `eventValue` in the heuristic agent were
+hardcoded tables keyed by card id, with `default: 1.5` / `2.0` for anything unlisted — so the agent was blind
+to all 104 new cards and played almost none of them. They now start from `cardPower` and correct for the board
+(a free rehire with an empty Unemployment is worth nothing, an Unemployment effect with no legal target likewise),
+plus a named bonus for this engine's auction tools. Events played per player-game went 2.6 → 4.0.
+
+### Deck balance, 480 games per market, seed 4400, all ordered deck pairings
+
+| Deck | First Boroughs | Boom Town | Hard Times | Founders' Fair |
+| --- | ---: | ---: | ---: | ---: |
+| Burrow & Bloom | 48.1% | 46.9% | 43.1% | 43.8% |
+| Paws & Papers | 54.4% | 55.0% | 56.3% | 54.4% |
+| Bramble & Bristle | 62.5% | 58.1% | 60.0% | 55.0% |
+| Ripple & Rune | 50.0% | 47.5% | 44.4% | 49.4% |
+| Lantern & Ledger | 51.3% | 51.3% | 53.1% | 51.9% |
+| Root & Rampart | 33.8% | 41.3% | 43.1% | 45.6% |
+| Seat balance (P0) | 49.6% | 50.2% | 51.0% | 48.5% |
+
+The spread narrowed from 37 points (33–70% across four decks) to 18 (41–59% across six), which is the deck
+balance pass that observation 1 below asked for — though it was rarity and curve work, not a rules change.
+Two decks were rebuilt twice during the pass: Root & Rampart opened at 17.5% because its curve was top-heavy
+(only five cards at cost 0–1), and Ripple & Rune at 42.5% on a hand of all-Common Events. Bramble & Bristle
+is now the best deck and Root & Rampart still the worst; the honest read is that a two-species deck built from
+three boroughs' leftovers (Root & Rampart is Badgers and Rabbits borrowed from three other decks) is harder to
+make coherent than one with its own borough.
+
+Seat balance holds in all four markets, essentially every game is still decided by Statues, and card
+conservation holds over 200 random-vs-random games across all four Market Decks (`npm run invariants`).
+
+## Headline results, before the expansion (480 games per market, seed 4400)
 
 | Measure | First Boroughs | Boom Town | Hard Times |
 | --- | --- | --- | --- |
@@ -58,7 +116,8 @@ shortens the bidding wars (5.5 rounds, 40 Supply forfeited) and the game with it
 
 ## Observations for the design
 
-1. **Deck balance is the biggest open problem, and it got worse.** Over 480 games per market the four printed
+1. **Deck balance was the biggest open problem** (largely addressed by the rarity pass above; the numbers in
+   this observation are the pre-expansion ones). **It got worse with the auction rewrite.** Over 480 games per market the four printed
    decks land at roughly Burrow & Bloom 33%, Bramble & Bristle 45%, Paws & Papers 52%, Ripple & Rune 70%. The
    pre-change baseline was 42 / 65 / 40 / 53, so the spread has both widened and moved: Ripple & Rune is now the
    clear best deck and Burrow & Bloom the clear worst. The new bidding rules reward a deck that can field many
@@ -102,12 +161,18 @@ shortens the bidding wars (5.5 rounds, 40 Supply forfeited) and the game with it
   `--market` in the playtest runner.
 - Engine fix: a player could finish a turn holding six Statues, because several auctions settling in the same
   Start phase kept resolving after one of them had already won the game. This predates the auction rewrite.
+- The card set doubled to 208 cards, sorted by power/cost rating, with a rarity on every card and rarity-based
+  copy limits (`deckbuilding.maxCopiesByRarity`, 3/3/2/1/1).
+- Two new printed decks (Lantern & Ledger, Root & Rampart) and a fourth Market Deck (Founders' Fair).
+- The heuristic AI's card valuations were replaced by the power model, so it understands new cards.
 - The heuristic AI learned walk-away ceilings (it folds once the price passes what a card is worth), to price a
   pledged animal as lost for the whole war rather than for a turn, and to weigh the half-forfeit risk of entering
   a war it may not finish.
 
 ## Still open
 
-- The deck balance pass described in observation 1.
+- Bramble & Bristle (≈59%) against Root & Rampart (≈41%) is the remaining deck-balance gap.
+- Whether non-Statue Market cards should be worth more: the model says 54 of 64 are Commons, and the AI's own
+  ratings agree with it.
 - Whether the endgame Statue auction wants a cap, or whether running out of animals is limit enough.
 - Whether First Boroughs should carry a single Unemployment source so its recovery cards are live.

@@ -31,9 +31,11 @@ Whenever a card leaves the display, cards are dealt from the Market Deck until t
 
 **Statues** are the victory cards. Control 5 of 9 to win. Each Statue carries a **boon and a burden**, both lasting as long as you hold it: the Statue of Community's extra shift Supply comes with a thinner Resources choice, the Statue of Patience speeds your Masters but slows your Apprentices, and the Statue of Harmony makes you pay losing bids in full. Collecting Statues taxes the town that is winning.
 
-**Market Decks** — three shared markets to choose from at setup, all containing every Statue: **First Boroughs** (the classic mix, no shared shocks), **Boom Town** (prosperity and momentum; its shocks are mostly good news) and **Hard Times** (recessions, hard winters and backlogs strike both towns alike).
+**Market Decks** — four shared markets to choose from at setup, all containing every Statue: **First Boroughs** (the classic mix, no shared shocks), **Boom Town** (prosperity and momentum; its shocks are mostly good news), **Hard Times** (recessions, hard winters and backlogs strike both towns alike) and **Founders' Fair** (auction tools, understudies and second chances, with fair weather and nothing that empties a town).
 
-**Decks** — four printed 30-card decks (Burrow & Bloom, Paws & Papers, Bramble & Bristle, Ripple & Rune), or build your own in the **Deck Workshop** from the whole catalogue: 30 cards, at most 3 copies of a card, at least 12 Characters. Custom decks are saved in the browser.
+**Rarity** — every card is rated by what it gives you against what it asks for, and that rating sets its rarity: Common, Uncommon, Rare, Super Rare, Legendary. Rarity is not raw power. The model scores a card `power^0.6 × efficiency^0.4`, so of two cards that do the same thing the cheaper one rates higher, while of two equally efficient cards the bigger one does — a cost-0 Rabbit with a good shift can out-rate a Master. Rarity then caps how often a card may repeat in a deck: **3 / 3 / 2 / 1 / 1** copies. See `src/engine/power.js` and `npm run power`.
+
+**Decks** — six printed 30-card decks (Burrow & Bloom, Paws & Papers, Bramble & Bristle, Ripple & Rune, Lantern & Ledger, Root & Rampart), or build your own in the **Deck Workshop** from the whole catalogue: 30 cards, at least 12 Characters, and copies capped by rarity. Custom decks are saved in the browser.
 
 ## How to play
 
@@ -51,12 +53,12 @@ Or use any static server (e.g., `python3 -m http.server 8080`).
 
 - `docs/ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md` - design reference and source of truth
 - `spec/game.json` - rules constants and prototype decisions
-- `spec/starter_card_set.json` - all 104 cards: 32 Characters, 24 Events, 9 Statues, a 32-card Capital City pool and 7 Disruptions, plus four printed 30-card decks and three Market Decks. A Market Deck is dealt as all 9 Statues plus a random sample of its own pool, so it keeps one size while the display varies from game to game.
-- `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`
+- `spec/starter_card_set.json` - all 208 cards: 68 Characters, 52 Events, 9 Statues, a 64-card Capital City pool and 15 Disruptions, plus six printed 30-card decks and four Market Decks. Every card carries its `rarity` and the `power` rating that earned it, and the file is ordered by that rating, strongest for its cost first. A Market Deck is dealt as all 9 Statues plus a random sample of its own pool, so it keeps one size while the display varies from game to game.
+- `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`. `power.js` is the power/cost model that rates every card and assigns its rarity
 - `src/ai/` - agents: `random.js` (baseline), `heuristic.js` (opponent)
 - `src/ui/` - browser interface: `main.js`, `humanAgent.js`, `render.js`, `deckbuilder.js` (the Deck Workshop), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations)
 - `index.html` - playable game
-- `scripts/` - test utilities: `smoke.mjs` (one game log), `invariants.mjs` (card conservation), `playtest.mjs` (AI vs AI)
+- `scripts/` - test utilities: `smoke.mjs` (one game log), `invariants.mjs` (card conservation), `playtest.mjs` (AI vs AI), `power.mjs` (the card set sorted by power/cost)
 - `test/` - unit tests (`node --test`)
 
 ## Commands
@@ -65,11 +67,13 @@ Or use any static server (e.g., `python3 -m http.server 8080`).
 npm test                                   # Run unit tests
 npm run smoke                              # Print one full game log
 npm run invariants                         # Check card conservation over many games
+npm run power                               # Print every card sorted by power/cost, with its rarity
+npm run power -- --type character           # ...one card type, or --rarity Legendary, or --csv
 npm run playtest -- --games 200            # Playtest 200 AI matches
 npm run playtest -- --games 100 --seed 42 # Use fixed seed for reproducibility
 npm run playtest -- --p0 random --p1 heuristic  # Choose agents
 npm run playtest -- --games 240 --decks all     # Rotate through every ordered deck pairing
-npm run playtest -- --decks br,rr               # One matchup (bb, pp, br, rr or full deck ids)
+npm run playtest -- --decks br,rr               # One matchup (bb, pp, br, rr, ll, rw or full deck ids)
 npm run playtest -- --market hard-times          # Choose the shared Market Deck (or `all` to rotate)
 ```
 

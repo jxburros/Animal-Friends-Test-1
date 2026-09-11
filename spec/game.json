@@ -14,9 +14,16 @@
     "secondPlayerBonusCards": 1
   },
   "deckbuilding": {
-    "$comment": "Prototype decision: the Deck Workshop lets a player build any 30-card deck from the Character and Event catalogue. Copy and Character limits keep a custom deck playable \u2014 a deck of pure Events could never pay its own requirements.",
+    "$comment": "Prototype decision: the Deck Workshop lets a player build any 30-card deck from the Character and Event catalogue. Copy and Character limits keep a custom deck playable — a deck of pure Events could never pay its own requirements. Copies are further capped by the card's rarity (maxCopiesByRarity), which src/engine/power.js derives from its power-to-opportunity-cost rating: the cards that carry a game are the ones you may least often repeat.",
     "deckSize": 30,
     "maxCopiesPerCard": 3,
+    "maxCopiesByRarity": {
+      "Common": 3,
+      "Uncommon": 3,
+      "Rare": 2,
+      "Super Rare": 1,
+      "Legendary": 1
+    },
     "minCharacters": 12,
     "maxEvents": 18
   },
@@ -138,6 +145,7 @@
     "Reactive abilities (Rowan, Ombudsperson; Rumor Control; Emergency Reserve) are implemented as shields set on your own turn that last until your next turn starts.",
     "When the player deck is empty, the Town Dump is shuffled into it.",
     "Top-up refill: the Capital City is dealt back up to five cards as soon as a purchase resolves, so the Market Deck keeps flowing instead of waiting for the whole display to be bought out.",
-    "Stale market: if nobody gains a Capital City card for six consecutive turns, the display is swept and redealt so the game cannot stall on unwanted cards."
+    "Stale market: if nobody gains a Capital City card for six consecutive turns, the display is swept and redealt so the game cannot stall on unwanted cards.",
+    "Every card carries a rarity computed from its power-to-opportunity-cost rating (src/engine/power.js): Common, Uncommon, Rare, Super Rare or Legendary. Rarity is not raw power — a card is rated power^0.6 x efficiency^0.4, so an efficient cheap card can out-rate an expensive one. Rarity caps copies in a town deck (3/3/2/1/1)."
   ]
 }

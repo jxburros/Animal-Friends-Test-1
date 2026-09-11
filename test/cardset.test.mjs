@@ -4,7 +4,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { RULES, SET, newGame } from './helpers.mjs';
-import { createGame, playGame, buildMarketDeck, resolveDeck, deckProblems, deckRules } from '../src/engine/index.js';
+import { createGame, playGame, buildMarketDeck, resolveDeck, deckProblems, deckRules, maxCopiesOf } from '../src/engine/index.js';
 import { seedRng } from '../src/engine/rng.js';
 import { makeRandomAgent } from '../src/ai/random.js';
 
@@ -153,7 +153,7 @@ test('decks', async (t) => {
         const def = SET.cards.find((c) => c.id === cardId);
         assert.ok(def, `${deck.id}: unknown card ${cardId}`);
         assert.ok(['character', 'event'].includes(def.type), `${deck.id}: ${cardId} is a ${def.type}`);
-        assert.ok(n <= RULES.deckbuilding.maxCopiesPerCard, `${deck.id}: ${n} copies of ${cardId}`);
+        assert.ok(n <= maxCopiesOf(RULES, def), `${deck.id}: ${n} copies of ${cardId} (${def.rarity})`);
       }
       const chars = entries.reduce((a, [id, n]) => a + (SET.cards.find((c) => c.id === id).type === 'character' ? n : 0), 0);
       assert.ok(chars >= RULES.deckbuilding.minCharacters, `${deck.id}: only ${chars} Characters`);
