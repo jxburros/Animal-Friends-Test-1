@@ -104,11 +104,14 @@ export function createGame(rules, set, opts = {}) {
   state.market.deck = shuffle(state, indexed.marketDeck.slice());
   refillCity(state);
   state.phase = 'start';
-  log(state, null, `A new game of ${indexed.name} begins. ${names[0]} plays ${indexed.decksById[deckIds[0]].name}; ${names[1]} plays ${indexed.decksById[deckIds[1]].name}.`);
+  log(state, null, `A new game of ${indexed.name} begins. ${names[0]} plays ${indexed.decksById[deckIds[0]].name}; ${names[1]} plays ${indexed.decksById[deckIds[1]].name}.`, { kind: 'gameStart' });
   return state;
 }
 
-/** Stale-market rule: if nobody has gained a Capital City card for `market.staleTurns` turns, sweep the display and deal a fresh one. */
+/**
+ * Stale-market rule: if nobody has gained a Capital City card for `market.staleTurns` turns, sweep the display
+ * and deal a fresh one. With the top-up refill below this is a rare safety valve for an unwanted display.
+ */
 export function sweepStaleCity(state) {
   const m = state.market;
   const limit = state.rules.market.staleTurns;
@@ -118,25 +121,38 @@ export function sweepStaleCity(state) {
     else m.cityDump.push(id);
   }
   m.turnsSinceGain = 0;
-  log(state, null, `Nobody has bought from the Capital City for ${limit} turns; the display is swept and redealt.`);
+  log(state, null, `Nobody has bought from the Capital City for ${limit} turns; the display is swept and redealt.`, { kind: 'sweep' });
   refillCity(state);
   return true;
 }
 
 export function refillCity(state) {
   const m = state.market;
-  if (m.city.length > 0) return false;
-  if (m.deck.length === 0 && m.cityDump.length > 0) {
-    m.deck = shuffle(state, m.cityDump.splice(0));
-    log(state, null, 'The City Dump is shuffled back into the Market Deck.');
+  const target = state.rules.setup.capitalCitySize;
+  if (m.city.length >= target) return false;
+  const added = [];
+  while (m.city.length < target) {
+    if (m.deck.length === 0) {
+      if (m.cityDump.length === 0) break;
+      m.deck = shuffle(state, m.cityDump.splice(0));
+      log(state, null, 'The City Dump is shuffled back into the Market Deck.', { kind: 'reshuffleMarket' });
+    }
+    const id = m.deck.shift();
+    m.city.push(id);
+    added.push(id);
   }
-  while (m.city.length < state.rules.setup.capitalCitySize && m.deck.length > 0) m.city.push(m.deck.shift());
-  if (m.city.length) log(state, null, `The Capital City is restocked: ${m.city.map((id) => cardDef(state, id).name).join(', ')}.`);
-  return true;
+  if (added.length) log(state, null, `The Capital City is restocked: ${added.map((id) => cardDef(state, id).name).join(', ')}.`, { kind: 'refill', cardIds: added });
+  return added.length > 0;
 }
 
-export function log(state, player, text) {
-  state.log.push({ turn: state.turnNumber, player, text });
+/**
+ * Append a log line. `fx` is an optional structured description of what happened (e.g. `{kind:'supply', player, amount}`)
+ * that a presentation layer can animate; the engine itself never reads it back.
+ */
+export function log(state, player, text, fx = null) {
+  const entry = { turn: state.turnNumber, player, text };
+  if (fx) entry.fx = fx;
+  state.log.push(entry);
 }
 
 // ---------- queries ----------

@@ -11,7 +11,7 @@ export async function startPhase(state, pi) {
   state.turnNumber++;
   p.turn = freshTurnCounters();
   expireMods(p, 'nextTurnStart');
-  log(state, pi, `— Turn ${state.turnNumber}: ${p.name} (Supply ${p.supply}, hand ${p.hand.length}, Statues ${p.victoryRow.length}) —`);
+  log(state, pi, `— Turn ${state.turnNumber}: ${p.name} (Supply ${p.supply}, hand ${p.hand.length}, Statues ${p.victoryRow.length}) —`, { kind: 'turnStart', player: pi, turn: state.turnNumber });
   // Resolve pending purchases announced by this player.
   const mine = state.market.pending.filter((pd) => pd.announcer === pi);
   for (const pd of mine) await resolvePurchase(state, pd);
@@ -35,7 +35,7 @@ export async function resolvePurchase(state, pd) {
     const chEff = pd.challenge.bid + pd.challenge.bonus;
     if (chEff > annEff || (chEff === annEff && pd.challenge.winsTies)) winner = pd.challenge.player;
     tied = chEff === annEff;
-    log(state, pd.announcer, `Purchase of ${def.name} resolves: ${ann.name} bid ${annEff}, ${ch.name} bid ${chEff}${tied ? ' (tie)' : ''}. ${state.players[winner].name} wins.`);
+    log(state, pd.announcer, `Purchase of ${def.name} resolves: ${ann.name} bid ${annEff}, ${ch.name} bid ${chEff}${tied ? ' (tie)' : ''}. ${state.players[winner].name} wins.`, { kind: 'resolve', cardId: pd.cardId, winner, loser: opponentOf(winner), announcer: pd.announcer, challenger: pd.challenge.player, winningBid: winner === pd.announcer ? annEff : chEff, tied, refund: winner === pd.announcer ? pd.challenge.paid : pd.bid });
     // settle escrow
     if (winner === pd.announcer) {
       ann.escrow -= pd.bid;
@@ -48,10 +48,10 @@ export async function resolvePurchase(state, pd) {
     }
   } else {
     ann.escrow -= pd.bid;
-    log(state, pd.announcer, `Purchase of ${def.name} resolves unchallenged for ${pd.bid} Supply.`);
+    log(state, pd.announcer, `Purchase of ${def.name} resolves unchallenged for ${pd.bid} Supply.`, { kind: 'resolve', cardId: pd.cardId, winner, announcer: pd.announcer, challenger: null, winningBid: pd.bid, tied: false, refund: 0 });
   }
   if (!m.city.includes(pd.cardId)) {
-    log(state, winner, `${def.name} is no longer in the Capital City; the purchase fizzles.`);
+    log(state, winner, `${def.name} is no longer in the Capital City; the purchase fizzles.`, { kind: 'fizzle', cardId: pd.cardId, player: winner });
     return;
   }
   m.city.splice(m.city.indexOf(pd.cardId), 1);
@@ -63,6 +63,7 @@ export async function resourcesPhase(state, pi) {
   const p = state.players[pi];
   state.phase = 'resources';
   const choice = await ask(state, pi, { kind: 'resources', options: ['draw', 'supply'] });
+  log(state, pi, `${p.name} chooses ${choice === 'draw' ? 'to draw a card' : 'to gain Supply'}.`, { kind: 'phase', player: pi, phase: 'resources', choice });
   if (choice === 'draw') draw(state, pi, state.rules.resources.choices.draw.cards, 'resource choice');
   else gainSupply(state, pi, state.rules.resources.choices.supply.amount, 'resource choice');
 }
@@ -72,6 +73,7 @@ export async function readyPhase(state, pi) {
   state.phase = 'ready';
   const steps = 1 + (hasMod(p, 'extraAdvance') ? consumeMod(p, 'extraAdvance') : 0);
   const becameUpright = [];
+  const advanced = [];
   for (const s of p.town) {
     for (let k = 0; k < steps; k++) {
       if (s.orientation === UPRIGHT) break;
@@ -79,11 +81,12 @@ export async function readyPhase(state, pi) {
       const order = state.rules.orientation.advanceOrder;
       const i = order.indexOf(s.orientation);
       s.orientation = order[Math.min(order.length - 1, i + 1)];
+      if (!advanced.includes(s)) advanced.push(s);
       if (s.orientation === UPRIGHT) becameUpright.push(s);
     }
     if (s.orientation === UPRIGHT) s.hasBeenUpright = true;
   }
-  if (becameUpright.length) log(state, pi, `Ready: ${becameUpright.map((s) => topCard(state, s).name).join(', ')} now upright.`);
+  if (advanced.length) log(state, pi, `Ready: ${becameUpright.length ? `${becameUpright.map((s) => topCard(state, s).name).join(', ')} now upright` : 'Characters turn toward upright'}.`, { kind: 'ready', player: pi, uids: becameUpright.map((s) => s.uid), advanced: advanced.map((s) => s.uid) });
   for (const s of becameUpright) await fireHook(state, 'onReady', { player: pi, stackUid: s.uid, selfOnly: s.uid });
 }
 
@@ -113,16 +116,18 @@ export async function endPhase(state, pi) {
     if (!s.shift) continue;
     s.shift.remaining--;
     if (s.shift.remaining <= 0) await completeShift(state, pi, s);
+    else log(state, pi, `${topCard(state, s).name} keeps working (${s.shift.remaining} turn${s.shift.remaining === 1 ? '' : 's'} left).`, { kind: 'shiftTick', player: pi, uid: s.uid, remaining: s.shift.remaining });
   }
   for (const e of p.events.slice()) {
     e.remaining--;
     if (e.remaining <= 0) {
       p.events.splice(p.events.indexOf(e), 1);
       p.dump.push({ uid: e.uid, cardId: e.cardId });
-      log(state, pi, `${cardDef(state, e.cardId).name} expires.`);
+      log(state, pi, `${cardDef(state, e.cardId).name} expires.`, { kind: 'eventExpire', player: pi, uid: e.uid, cardId: e.cardId });
     }
   }
   expireMods(p, 'turnEnd');
+  log(state, pi, `${p.name} ends the turn.`, { kind: 'turnEnd', player: pi });
 }
 
 /** Play one full turn for the active player. */
@@ -153,7 +158,7 @@ export async function playGame(state, agents, { maxTurnsPerPlayer } = {}) {
     if (a.victoryRow.length !== b.victoryRow.length) state.winner = a.victoryRow.length > b.victoryRow.length ? 0 : 1;
     else if (a.supply !== b.supply) state.winner = a.supply > b.supply ? 0 : 1;
     state.result = 'turnLimit';
-    log(state, null, `Turn limit reached. ${state.winner === null ? 'The game is a draw.' : `${state.players[state.winner].name} leads on tiebreak.`}`);
+    log(state, null, `Turn limit reached. ${state.winner === null ? 'The game is a draw.' : `${state.players[state.winner].name} leads on tiebreak.`}`, { kind: 'win', player: state.winner });
   }
   return state;
 }

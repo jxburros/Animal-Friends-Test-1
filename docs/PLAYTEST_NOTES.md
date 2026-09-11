@@ -9,12 +9,12 @@ alternating decks and seats. Runs take about 10 ms per game. Numbers below are f
 | Measure | Value |
 | --- | --- |
 | Heuristic vs random | 100% wins for the heuristic (both seats) |
-| Seat balance (P0 win rate) | 51% on seed 7, 46% on seed 99 (400 games each), so within noise of even |
-| Deck balance | Burrow & Bloom 49–53%, Paws & Papers 47–51% |
-| Games decided by Statues | 99.5% or more; the rest hit the 80-turn safety cap |
-| Game length | mean 30–35 player turns, median 30–33, min 16 |
-| Statues claimed per game | 7.6 of 9 |
-| Contested purchases | about 4 per game; the challenger wins nearly all of them |
+| Seat balance (P0 win rate) | 46.5% on seed 7 (200 games), so within noise of even |
+| Deck balance | Burrow & Bloom 50.5%, Paws & Papers 49.5% |
+| Games decided by Statues | 100% (none hit the turn cap) |
+| Game length | mean 26.9 player turns, median 27, min 11, max 40 |
+| Statues claimed per game | 7.79 of 9 |
+| Contested purchases | 3.97 per game; the challenger wins 100% |
 
 ## Observations for the design
 
@@ -26,8 +26,10 @@ alternating decks and seats. Runs take about 10 ms per game. Numbers below are f
    raise once in response, or making some ties go to the challenger.
 2. **Cycling the Capital City was a public good.** With refill only on an empty display, a player who never
    buys filler cards free-rides on the opponent's cycling and wins about 63/37; two such players deadlocked in
-   100% of games. The prototype now adds a stale-market sweep (six turns without a purchase redeals the display,
-   Statues returning to the Market Deck). A partial refill rule would be a cleaner permanent fix.
+   100% of games. This was fixed permanently by adopting the top-up refill: the Capital City is dealt back up to
+   five cards whenever a purchase resolves, so the Market Deck keeps flowing instead of sitting idle while unwanted
+   cards silt up the display. The stale-market sweep (six turns without a purchase redeals the display, Statues
+   returning to the Market Deck) remains as a safety valve but is rarely needed.
 3. **First-player advantage** was 56% with one extra Supply for the second player. Two extra Supply plus one
    extra card brings it to roughly even.
 4. **Two-Character Events are expensive.** Seed Swap and Fair Hearing were never played because they tap two
@@ -39,9 +41,12 @@ alternating decks and seats. Runs take about 10 ms per game. Numbers below are f
 6. **Shift value is output ÷ delay.** Delay-1 Characters (Juniper Messenger, Fern Forager, Hazel Market Vendor)
    are the most recruited; Poppy Postmaster (2 → 2) is the weakest 1-cost body.
 
+The top-up refill has made games noticeably shorter: the mean game length dropped from 30–35 turns to 26.9 turns.
+
 ## Tuning applied in this prototype
 
 - Fixed an engine bug where Civic Rally's +1 was quoted but not applied to challenge bids.
-- Added `market.staleTurns = 6` (stale-market sweep).
+- Added top-up refill: the Capital City is dealt back up to five cards whenever a purchase resolves (`market.refillToFull: true`).
+- Added `market.staleTurns = 6` (stale-market sweep safety valve).
 - `setup.secondPlayerBonusSupply = 2`, `setup.secondPlayerBonusCards = 1`.
 - Seed Swap: draw 3, discard 1, gain 1 Supply. Fair Hearing: free rehire, draw 2, opponent gains 1 Supply.

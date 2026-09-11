@@ -89,6 +89,7 @@
         "output": 1
       },
       "text": "Recruit: if you have another Agriculture Character, draw 1 card, then discard 1 card.",
+      "flavor": "Small paws, big watering can, and the first green shoots of spring.",
       "abilities": [
         {
           "trigger": "onRecruit",
@@ -127,6 +128,7 @@
         "output": 3
       },
       "text": "Upgrades Clover. Recruit: choose another Agriculture Character you control; it becomes upright at the start of your next turn.",
+      "flavor": "Clover transforms a meadow into a lush, thriving garden.",
       "abilities": [
         {
           "trigger": "onRecruit",
@@ -155,6 +157,7 @@
         "output": 1
       },
       "text": "The first Event you play each turn that requires an Agriculture Character gives you 1 Supply.",
+      "flavor": "Mabel carefully saves seeds for next season's planting.",
       "abilities": [
         {
           "trigger": "onEventPlayed",
@@ -183,6 +186,7 @@
         "output": 4
       },
       "text": "Upgrades Mabel. Busy: the next Event you play this turn requires one fewer Character.",
+      "flavor": "Mabel knows the secret language of all growing things.",
       "abilities": [
         {
           "trigger": "busy",
@@ -209,6 +213,7 @@
         "output": 2
       },
       "text": "When you announce a purchase with Poppy while she is your only upright Rabbit, gain 1 Supply.",
+      "flavor": "Poppy hops from burrow to burrow with important letters.",
       "abilities": [
         {
           "trigger": "onAnnounce",
@@ -237,6 +242,8 @@
         "output": 5
       },
       "text": "Upgrades Poppy. Your challenge bids win ties.",
+      "flavor": "Poppy shapes the town's future with her wise decisions.",
+      "foil": true,
       "abilities": [
         {
           "trigger": "passive",
@@ -258,6 +265,7 @@
         "output": 2
       },
       "text": "When Fern becomes upright, you may put an Event from your Town Dump on the bottom of your deck.",
+      "flavor": "Fern ventures into the forest, gathering nature's gifts.",
       "abilities": [
         {
           "trigger": "onReady",
@@ -282,6 +290,8 @@
         "output": 5
       },
       "text": "Upgrades Fern. The first Event you play each turn also gives you 1 Supply.",
+      "flavor": "Fern understands the woodland's deepest rhythms and needs.",
+      "foil": true,
       "abilities": [
         {
           "trigger": "onEventPlayed",
@@ -306,6 +316,7 @@
         }
       ],
       "text": "Requires an Agriculture Character. Gain 3 Supply.",
+      "flavor": "Friends gather to plant seeds and share their harvest.",
       "effect": {
         "do": "gainSupply",
         "amount": 3
@@ -328,6 +339,7 @@
         }
       ],
       "text": "Requires a Rabbit and a Mouse. Draw 3 cards, then discard 1 card, and gain 1 Supply.",
+      "flavor": "Rabbits and Mice exchange precious seeds and stories.",
       "effect": {
         "do": "seq",
         "steps": [
@@ -360,6 +372,7 @@
         }
       ],
       "text": "Requires a Botany Character. Limited 2: the first shift you complete each turn produces 1 extra Supply.",
+      "flavor": "Time passes slowly; the garden rewards those who wait.",
       "abilities": [
         {
           "trigger": "onShiftCompleted",
@@ -384,6 +397,7 @@
         }
       ],
       "text": "Requires a Civics Character. Rehire a Character from your Unemployment for 2 less Supply.",
+      "flavor": "Neighbors look after one another with gentle vigilance.",
       "effect": {
         "do": "rehire",
         "discount": 2,
@@ -403,6 +417,7 @@
         }
       ],
       "text": "Requires two Rabbits. Ready one of your Characters and draw 1 card.",
+      "flavor": "One brave blossom opens, and the whole hedgerow follows.",
       "effect": {
         "do": "seq",
         "steps": [
@@ -430,6 +445,7 @@
         }
       ],
       "text": "Requires a Mouse. Recruit a cost-0 Character from your hand for free; it enters Busy.",
+      "flavor": "The town greets its newest friend with warm welcome.",
       "effect": {
         "do": "recruitFromHand",
         "filter": {
@@ -454,6 +470,7 @@
         "output": 1
       },
       "text": "Recruit: look at the top two cards of your deck and put them back in any order.",
+      "flavor": "Clever Patch finds hidden treasures in forgotten places.",
       "abilities": [
         {
           "trigger": "onRecruit",
@@ -478,6 +495,7 @@
         "output": 3
       },
       "text": "Upgrades Patch. When an opponent challenges one of your purchases, draw 1 card.",
+      "flavor": "Patch keeps the town's affairs honest and balanced.",
       "abilities": [
         {
           "trigger": "onChallengedByOpponent",
@@ -502,6 +520,7 @@
         "output": 2
       },
       "text": "When Juniper starts a shift, you may pay 1 Supply to raise one of your open bids by 1.",
+      "flavor": "No letter is too urgent for a Fox with quick paws and a quicker grin.",
       "abilities": [
         {
           "trigger": "onShiftStarted",
@@ -530,6 +549,7 @@
         "output": 4
       },
       "text": "Upgrades Juniper. Your opponent cannot raise a pending bid.",
+      "flavor": "Juniper brings understanding and peace between old friends.",
       "abilities": [
         {
           "trigger": "passive",
@@ -551,6 +571,7 @@
         "output": 2
       },
       "text": "While Hazel is upright, your first purchase announcement each turn may bid 1 less than the card's cost.",
+      "flavor": "Hazel arranges her market stall with care and pride.",
       "abilities": [
         {
           "trigger": "passive",
@@ -573,6 +594,8 @@
         "output": 6
       },
       "text": "Upgrades Hazel. Whenever you gain a non-Statue Market card, draw 1 card.",
+      "flavor": "Hazel has become a trusted merchant of all the land.",
+      "foil": true,
       "abilities": [
         {
           "trigger": "onGainMarketCard",
@@ -600,6 +623,7 @@
         "output": 3
       },
       "text": "Whenever a card effect sends any Character to Unemployment, gain 1 Supply.",
+      "flavor": "Rowan writes everything down in her neat leather journal.",
       "abilities": [
         {
           "trigger": "onCharacterUnemployed",
@@ -624,6 +648,8 @@
         "output": 6
       },
       "text": "Upgrades Rowan. Busy: until your next turn, your Characters cannot be sent to Unemployment.",
+      "flavor": "Rowan ensures everyone's voice is heard and honored.",
+      "foil": true,
       "abilities": [
         {
           "trigger": "busy",
@@ -649,6 +675,7 @@
         }
       ],
       "text": "Requires a Commerce Character. Gain 2 Supply and look at the top card of the Market Deck.",
+      "flavor": "Every coin counted twice, every promise written down once.",
       "effect": {
         "do": "seq",
         "steps": [
@@ -680,6 +707,7 @@
         }
       ],
       "text": "Requires a Raccoon and a Fox. Draw 2 cards. Your opponent puts a card from their hand on top of their deck.",
+      "flavor": "Raccoon and Fox uncover the truth through careful inquiry.",
       "effect": {
         "do": "seq",
         "steps": [
@@ -707,6 +735,7 @@
         }
       ],
       "text": "Requires a Civics Character. Limited 2: your first bid each turn counts as 1 higher.",
+      "flavor": "The town gathers to speak its mind and make decisions.",
       "abilities": [
         {
           "trigger": "passive",
@@ -727,6 +756,7 @@
         }
       ],
       "text": "Requires a Fox. Draw 1 card. Until your next turn, opponent effects cannot make you discard or lose Supply.",
+      "flavor": "Whispers fade fast when a clever Fox sets the record straight.",
       "effect": {
         "do": "seq",
         "steps": [
@@ -756,6 +786,7 @@
         }
       ],
       "text": "Requires two Civics Characters. Rehire a Character from your Unemployment for free and draw 2 cards. Your opponent gains 1 Supply.",
+      "flavor": "Justice finds its way through reasoned debate and mercy.",
       "effect": {
         "do": "seq",
         "steps": [
@@ -789,6 +820,7 @@
         }
       ],
       "text": "Requires a Commerce Character. Limited 2: your first purchase announcement each turn draws 1 card.",
+      "flavor": "Everyone gathers to trade, talk, and make their bids.",
       "abilities": [
         {
           "trigger": "onAnnounce",
@@ -807,6 +839,7 @@
       "virtue": "Kindness",
       "cost": 2,
       "text": "At the start of your turn, if you have no more Characters in Unemployment than your opponent, gain 1 Supply.",
+      "flavor": "Carved with open paws, it warms the whole square on cold mornings.",
       "abilities": [
         {
           "trigger": "onTurnStart",
@@ -827,6 +860,7 @@
       "virtue": "Curiosity",
       "cost": 2,
       "text": "On gain: draw 2 cards, then discard 1 card.",
+      "flavor": "Its stone eyes follow whoever wonders loudest what lies beyond the hill.",
       "onGain": {
         "do": "seq",
         "steps": [
@@ -848,6 +882,7 @@
       "virtue": "Courage",
       "cost": 3,
       "text": "Your next challenge bid costs 1 less Supply to pay.",
+      "flavor": "A monument to those who face their fears bravely.",
       "onGain": {
         "do": "addMod",
         "key": "challengeDiscount",
@@ -862,6 +897,7 @@
       "virtue": "Patience",
       "cost": 3,
       "text": "Your Masters enter play with one fewer orientation delay (they enter Busy instead of at 180\u00b0).",
+      "flavor": "Moss grows on its shoulders, and it does not mind one bit.",
       "abilities": [
         {
           "trigger": "passive",
@@ -876,6 +912,7 @@
       "virtue": "Generosity",
       "cost": 4,
       "text": "On gain: give your opponent 1 Supply and draw 2 cards.",
+      "flavor": "A statue with open arms, sharing freely with all.",
       "onGain": {
         "do": "seq",
         "steps": [
@@ -897,6 +934,7 @@
       "virtue": "Ingenuity",
       "cost": 4,
       "text": "Once per turn, an Event you play requires one fewer Character.",
+      "flavor": "Stone shaped to celebrate clever paws and minds.",
       "abilities": [
         {
           "trigger": "passive",
@@ -911,6 +949,8 @@
       "virtue": "Community",
       "cost": 5,
       "text": "If you control Characters of at least three species, the first shift you complete each turn produces 1 extra Supply.",
+      "flavor": "Standing strong together, a monument to unity.",
+      "foil": true,
       "abilities": [
         {
           "trigger": "onShiftCompleted",
@@ -932,6 +972,8 @@
       "virtue": "Harmony",
       "cost": 5,
       "text": "Whenever a purchase you are part of resolves with a tied bid, ready one of your Characters at the start of your next turn.",
+      "flavor": "A peaceful figure, bringing all voices into accord.",
+      "foil": true,
       "abilities": [
         {
           "trigger": "onTiedBid",
@@ -949,6 +991,8 @@
       "virtue": "Joy",
       "cost": 5,
       "text": "On gain: ready up to two of your Apprentices.",
+      "flavor": "Carved in laughter, capturing happiness forever.",
+      "foil": true,
       "onGain": {
         "do": "readyCharacter",
         "filter": {
@@ -965,6 +1009,7 @@
       "cost": 1,
       "disposal": "cityDump",
       "text": "The first Character you recruit before your next turn costs 1 less.",
+      "flavor": "The founding promise that binds this town together.",
       "onGain": {
         "do": "addMod",
         "key": "recruitDiscount",
@@ -980,6 +1025,7 @@
       "cost": 2,
       "disposal": "cityDump",
       "text": "Gain 4 Supply.",
+      "flavor": "Gold for celebration, music, and merry gatherings.",
       "onGain": {
         "do": "gainSupply",
         "amount": 4
@@ -992,6 +1038,7 @@
       "cost": 2,
       "disposal": "outOfPlay",
       "text": "Prevent up to 3 Supply you would lose to opponent effects. Goes Out of Play.",
+      "flavor": "Saved supplies for when hardship comes unexpectedly.",
       "onGain": {
         "do": "addMod",
         "key": "lossShield",
@@ -1006,6 +1053,7 @@
       "cost": 3,
       "disposal": "cityDump",
       "text": "Your next purchase announcement cannot be challenged.",
+      "flavor": "The mayor's official mark of protection and authority.",
       "onGain": {
         "do": "addMod",
         "key": "unchallengeable",
@@ -1020,6 +1068,7 @@
       "cost": 3,
       "disposal": "cityDump",
       "text": "Draw 3 cards, then discard 1 card.",
+      "flavor": "A room full of stories, wisdom, and forgotten lore.",
       "onGain": {
         "do": "seq",
         "steps": [
@@ -1041,6 +1090,7 @@
       "cost": 4,
       "disposal": "cityDump",
       "text": "The next challenge against one of your purchases is cancelled; your bid stays open.",
+      "flavor": "A space for calm voices to settle hot disputes.",
       "onGain": {
         "do": "addMod",
         "key": "cancelNextChallenge",
@@ -1055,6 +1105,7 @@
       "cost": 5,
       "disposal": "cityDump",
       "text": "Send an opponent's Character to Unemployment, then discard 2 cards. (Cannot target a Character that has not yet been upright on its owner's turn.)",
+      "flavor": "The cage door swings open, but somebody still has to answer for it.",
       "onGain": {
         "do": "seq",
         "steps": [
@@ -1076,6 +1127,7 @@
       "cost": 1,
       "disposal": "cityDump",
       "text": "Ready one of your Apprentices.",
+      "flavor": "It rings to gather townsfolk for news and celebration.",
       "onGain": {
         "do": "readyCharacter",
         "filter": {
@@ -1092,6 +1144,7 @@
       "cost": 2,
       "disposal": "cityDump",
       "text": "Gain 3 Supply.",
+      "flavor": "Carefully stored goods for the town's daily needs.",
       "onGain": {
         "do": "gainSupply",
         "amount": 3
@@ -1104,6 +1157,7 @@
       "cost": 2,
       "disposal": "cityDump",
       "text": "The next shift you complete produces 2 extra Supply.",
+      "flavor": "Flourishing beds of green that feed and gladden.",
       "onGain": {
         "do": "addMod",
         "key": "shiftBonus",
@@ -1118,6 +1172,7 @@
       "cost": 3,
       "disposal": "cityDump",
       "text": "Look at the top five cards of your deck and put them back in any order.",
+      "flavor": "Swift paws connect the far reaches of the realm.",
       "onGain": {
         "do": "reorderDeckTop",
         "count": 5
@@ -1130,6 +1185,7 @@
       "cost": 3,
       "disposal": "cityDump",
       "text": "Rehire a cost-1 Character from your Unemployment for free; it enters upright.",
+      "flavor": "A heart of warmth where friends share meals daily.",
       "onGain": {
         "do": "rehire",
         "free": true,
@@ -1146,6 +1202,7 @@
       "cost": 4,
       "disposal": "cityDump",
       "text": "Your next rehire costs 2 less Supply.",
+      "flavor": "Second chances and reconsideration for those wronged.",
       "onGain": {
         "do": "addMod",
         "key": "rehireDiscount",
@@ -1160,6 +1217,7 @@
       "cost": 4,
       "disposal": "cityDump",
       "text": "You may discard a card to send an opponent's Character with cost 2 or less to Unemployment. (Cannot target a Character that has not yet been upright on its owner's turn.)",
+      "flavor": "A place of salvage where nothing goes to waste.",
       "onGain": {
         "do": "unemployOpponentCharacter",
         "maxCost": 2,
@@ -1174,6 +1232,7 @@
       "cost": 5,
       "disposal": "outOfPlay",
       "text": "Return an Event from your Town Dump to your hand. Goes Out of Play.",
+      "flavor": "Ancient records holding the town's true history.",
       "onGain": {
         "do": "eventFromDumpToHand",
         "optional": true
@@ -1186,6 +1245,8 @@
       "cost": 5,
       "disposal": "cityDump",
       "text": "At the start of your next turn, advance all your Characters one extra orientation step.",
+      "flavor": "Its bells hurry the whole town along, one extra tick at a time.",
+      "foil": true,
       "onGain": {
         "do": "addMod",
         "key": "extraAdvance",

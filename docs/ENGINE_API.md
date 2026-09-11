@@ -45,7 +45,7 @@ announce/challenge — raise `bid` if you want). `applyAction(state, pi, action)
 ## State shape (serialisable; `state.set` and `state.rules` are shared data)
 
 ```
-state = { seed, rng, turnNumber, active, phase, players:[P,P], market, log:[{turn,player,text}], winner, result }
+state = { seed, rng, turnNumber, active, phase, players:[P,P], market, log:[{turn,player,text,fx?}], winner, result }
 P = { index, name, deckId, deck:[Card], hand:[Card], town:[Stack], events:[{uid,cardId,remaining}], dump:[Card],
       unemployment:[Card], victoryRow:[cardId], supply, escrow, mods:[{key,value,expires}], turn:{...counters}, stats }
 Card  = { uid, cardId }                       // cardDef(state, cardId) gives the definition
@@ -57,6 +57,50 @@ Helpers: `topCard(state, stack)`, `canAct(stack)` (upright and not on a shift), 
 `opponentOf(pi)`, `statueCount(state, pi)`, `getMod/hasMod(player, key)`, `hasPassive(state, pi, key)`,
 `recruitCost`, `rehireCost`, `minBidFor`, `challengeMinBid`, `eventReduction`, `findEventAssignment`,
 `serialize/deserialize/cloneState`.
+
+## Log entry `fx` field (presentation layer)
+
+Log entries may carry an optional `fx` object describing what happened, for animation or presentation. The engine stores but never reads `fx`; it exists for a UI layer like `src/ui/choreo.js` to animate events. `fx` kinds and their fields:
+
+| kind | fields |
+| --- | --- |
+| `gameStart` | (none) |
+| `turnStart` | player, turn |
+| `phase` | player, phase, choice |
+| `supply` | player, amount, why? |
+| `draw` | player, count, uids |
+| `discard` | player, uid, cardId |
+| `ready` | player, uids, advanced |
+| `readyNextTurn` | player, uid |
+| `shiftStart` | player, uid, delay, output |
+| `shiftTick` | player, uid, remaining |
+| `shiftDone` | player, uid, output |
+| `ability` | player, uid, cardId |
+| `recruit` | player, uid, cardUid, cardId, cost, upgrade, orientation? |
+| `playEvent` | player, uid, cardId, limited, chars |
+| `announce` | player, cardId, uid, bid, bonus? |
+| `challenge` | player, cardId, uid, bid, bonus?, cancelled |
+| `raiseBid` | player, cardId, amount |
+| `resolve` | cardId, winner, announcer, challenger, winningBid, tied, refund |
+| `fizzle` | cardId, player, winner |
+| `marketGain` | player, cardId, statue, disposal |
+| `refill` | cardIds |
+| `reshuffleMarket` | (none) |
+| `sweep` | (none) |
+| `rehire` | player, uid, cardUid, cardId, cost |
+| `topdeck` | player, uid |
+| `dumpToHand` | player, uid, cardId |
+| `dumpToDeck` | player, uid, cardId |
+| `peekDeck` | player, count |
+| `peekMarket` | player, cardIds |
+| `unemploy` | player, stackUid, uid, cardId, knockedDown? |
+| `shield` | player, amount?, uid? |
+| `trigger` | player, cardId, uid?, source |
+| `mod` | player, key, value |
+| `reshuffleDeck` | player |
+| `eventExpire` | player, uid, cardId |
+| `turnEnd` | player |
+| `win` | player |
 
 Turn flow: `playTurn(state)` runs Start (resolve this player's pending purchases) → Resources (ask) →
 Ready (orientation advance) → Actions (ask until `endTurn`) → End (shifts tick and pay out, Limited Events tick).

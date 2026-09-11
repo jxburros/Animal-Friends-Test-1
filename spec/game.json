@@ -70,8 +70,9 @@
     "readyEffectCompletesShift": true
   },
   "market": {
-    "$comment": "Section 8. Refill only when the Capital City is empty. Reshuffle the City Dump into the Market Deck when the Market Deck is empty; cards in use and Out of Play never return. Prototype addition: if no Capital City card has been gained for market.staleTurns consecutive turns (and nothing is pending), the display is swept (Statues return to the Market Deck, other cards go to the City Dump) and redealt.",
-    "refillWhenEmpty": true,
+    "$comment": "Section 8. Whenever a card leaves the Capital City, deal from the Market Deck until the display is back to setup.capitalCitySize (top-up refill; the earlier refill-only-when-empty rule let the display silt up with unwanted cards). Reshuffle the City Dump into the Market Deck when the Market Deck runs out mid-deal; cards in use and Out of Play never return. Prototype addition: if no Capital City card has been gained for market.staleTurns consecutive turns (and nothing is pending), the display is swept (Statues return to the Market Deck, other cards go to the City Dump) and redealt.",
+    "refillToFull": true,
+    "refillWhenEmpty": false,
     "minimumBidIsCardCost": true,
     "oneChallengePerPurchase": true,
     "tiesGoToAnnouncer": true,
@@ -108,6 +109,7 @@
     "Readying a Character that is mid-shift completes the shift at once.",
     "Reactive abilities (Rowan, Ombudsperson; Rumor Control; Emergency Reserve) are implemented as shields set on your own turn that last until your next turn starts.",
     "When the player deck is empty, the Town Dump is shuffled into it.",
+    "Top-up refill: the Capital City is dealt back up to five cards as soon as a purchase resolves, so the Market Deck keeps flowing instead of waiting for the whole display to be bought out.",
     "Stale market: if nobody gains a Capital City card for six consecutive turns, the display is swept and redealt so the game cannot stall on unwanted cards."
   ]
 }
