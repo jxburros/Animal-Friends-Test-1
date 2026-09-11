@@ -58,6 +58,7 @@ input[type=range]{width:100%;accent-color:var(--gold)}
 .logo{font-size:44px;letter-spacing:1px;line-height:1.05;color:var(--ink);text-shadow:2px 2px 0 var(--gold3);font-variant:small-caps}
 .logo-sub{font-style:italic;color:var(--plum);font-size:16px;margin:4px 0 8px}
 .tagline{color:var(--muted);margin:0 0 18px;font-style:italic}
+.edition{color:var(--muted);font-size:12px;letter-spacing:.04em;margin:-10px 0 16px;opacity:.85}
 .menu-critters{display:flex;justify-content:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
 .menu-critters svg{width:58px;height:58px;filter:drop-shadow(0 2px 0 rgba(0,0,0,.15))}
 .menu-critters svg:nth-child(odd){transform:rotate(-6deg)}

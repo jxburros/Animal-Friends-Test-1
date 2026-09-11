@@ -11,6 +11,7 @@ import * as fx from './fx.js';
 
 const RULES_URL = new URL('../../spec/game.json', import.meta.url);
 const SET_URL = new URL('../../spec/starter_card_set.json', import.meta.url);
+const PACKAGE_URL = new URL('../../package.json', import.meta.url);
 
 let rules = null;
 let cardSet = null;
@@ -369,18 +370,50 @@ async function loadSpec(url, label) {
   }
 }
 
+/** The version from package.json, or null when it cannot be read (some hosts do not serve it). */
+async function loadVersion() {
+  try {
+    const resp = await fetch(PACKAGE_URL, { cache: 'no-cache' });
+    if (!resp.ok) return null;
+    const pkg = await resp.json();
+    return typeof pkg.version === 'string' ? pkg.version : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
+ * Stamp the cover with exactly what is loaded: the game version, the card set and its size. If the
+ * line does not match the package.json of the folder being served, the browser is still showing an
+ * old copy — hard-reload (Ctrl+Shift+R / Cmd+Shift+R) or check which server is on the port.
+ */
+function stampEdition(version) {
+  const parts = [
+    version ? `v${version}` : 'unknown version',
+    cardSet.name || cardSet.setId,
+    `${cardSet.cards.length} cards`,
+    `${cardSet.decks.length} decks`,
+    `${(cardSet.marketDecks || []).length} Market Decks`,
+  ];
+  const line = parts.join(' · ');
+  const el = $('edition');
+  if (el) el.textContent = line;
+  // The same line in the console, so a stale load is obvious there too.
+  // eslint-disable-next-line no-console
+  console.info(`Animal Friends — ${line}`);
+}
+
 async function main() {
-  const [loadedRules, loadedSet] = await Promise.all([
+  const [loadedRules, loadedSet, version] = await Promise.all([
     loadSpec(RULES_URL, 'the rules (spec/game.json)'),
     loadSpec(SET_URL, 'the card set (spec/starter_card_set.json)'),
+    loadVersion(),
   ]);
   rules = loadedRules;
   if (!Array.isArray(loadedSet.cards) || !loadedSet.cards.length) throw new Error('The card set has no cards.');
   if (!Array.isArray(loadedSet.decks) || !loadedSet.decks.length) throw new Error('The card set has no town decks.');
   cardSet = indexSet(loadedSet);
-  // One line saying exactly which set is on the table, so a stale file is obvious at a glance.
-  // eslint-disable-next-line no-console
-  console.info(`Animal Friends — ${cardSet.name || cardSet.setId}: ${cardSet.cards.length} cards, ${cardSet.decks.length} town decks, ${(cardSet.marketDecks || []).length} Market Decks.`);
+  stampEdition(version);
   // Drop saved decks that no longer match the card set (a card was renamed or removed).
   customDecks = loadSavedDecks().filter((d) => Object.keys(d.list).every((id) => cardSet.cardsById[id]));
   chosenDeckId = cardSet.decks[0].id;
