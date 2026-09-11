@@ -14,7 +14,7 @@ describe('setup', () => {
     for (const [i, p] of state.players.entries()) {
       const total = p.deck.length + p.hand.length + p.dump.length + p.unemployment.length + p.town.length;
       assert.equal(total, 30, `player ${i} should have 30 total cards`);
-      assert.equal(p.hand.length, 5, `player ${i} starts with a 5-card hand`);
+      assert.equal(p.hand.length, RULES.setup.startingHand + (i === 1 ? RULES.setup.secondPlayerBonusCards || 0 : 0), `player ${i} starting hand size`);
     }
     assert.equal(state.players[0].supply, RULES.setup.startingSupply, 'player 1 starts with base Supply');
     assert.equal(

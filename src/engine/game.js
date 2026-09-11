@@ -1,5 +1,5 @@
 // Turn structure: Start → Resources → Ready → Actions → End, plus the whole-game runner.
-import { cardDef, topCard, log, opponentOf, expireMods, consumeMod, hasMod, refillCity, freshTurnCounters, UPRIGHT, BUSY, findStack } from './state.js';
+import { cardDef, topCard, log, opponentOf, expireMods, consumeMod, hasMod, refillCity, sweepStaleCity, freshTurnCounters, UPRIGHT, BUSY, findStack } from './state.js';
 import { ask, draw, gainSupply, completeShift, readyStack, gainMarketCard, fireHook, checkVictory } from './effects.js';
 import { legalActions, applyAction } from './actions.js';
 
@@ -15,6 +15,8 @@ export async function startPhase(state, pi) {
   // Resolve pending purchases announced by this player.
   const mine = state.market.pending.filter((pd) => pd.announcer === pi);
   for (const pd of mine) await resolvePurchase(state, pd);
+  state.market.turnsSinceGain++;
+  sweepStaleCity(state);
   // Characters flagged to be ready at the start of this turn.
   for (const s of p.town.slice()) if (s.readyNextTurn) await readyStack(state, pi, s, 'ready-next-turn effect');
   await fireHook(state, 'onTurnStart', { player: pi });

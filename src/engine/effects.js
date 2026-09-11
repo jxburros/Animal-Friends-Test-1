@@ -188,6 +188,7 @@ export async function gainMarketCard(state, pi, cardId, why = '') {
     else state.market.cityDump.push(cardId);
   }
   p.stats.purchasesWon++;
+  state.market.turnsSinceGain = 0;
   await fireHook(state, 'onGainMarketCard', { player: pi, cardId, nonStatue: def.type !== 'statue' });
   refillCity(state);
 }

@@ -84,7 +84,7 @@ export function createGame(rules, set, opts = {}) {
     active: 0,
     phase: 'setup',
     players: [],
-    market: { deck: [], city: [], cityDump: [], outOfPlay: [], pending: [] },
+    market: { deck: [], city: [], cityDump: [], outOfPlay: [], pending: [], turnsSinceGain: 0 },
     log: [],
     winner: null,
     result: null,
@@ -95,7 +95,8 @@ export function createGame(rules, set, opts = {}) {
   state.players = [makePlayer(state, 0, names[0], deckIds[0]), makePlayer(state, 1, names[1], deckIds[1])];
   state.players.forEach((p, i) => {
     p.supply = rules.setup.startingSupply + (i === 1 ? rules.setup.secondPlayerBonusSupply : 0);
-    for (let k = 0; k < rules.setup.startingHand; k++) {
+    const handSize = rules.setup.startingHand + (i === 1 ? rules.setup.secondPlayerBonusCards || 0 : 0);
+    for (let k = 0; k < handSize; k++) {
       const c = p.deck.shift();
       if (c) p.hand.push(c);
     }
@@ -105,6 +106,21 @@ export function createGame(rules, set, opts = {}) {
   state.phase = 'start';
   log(state, null, `A new game of ${indexed.name} begins. ${names[0]} plays ${indexed.decksById[deckIds[0]].name}; ${names[1]} plays ${indexed.decksById[deckIds[1]].name}.`);
   return state;
+}
+
+/** Stale-market rule: if nobody has gained a Capital City card for `market.staleTurns` turns, sweep the display and deal a fresh one. */
+export function sweepStaleCity(state) {
+  const m = state.market;
+  const limit = state.rules.market.staleTurns;
+  if (!limit || m.pending.length || m.city.length === 0 || m.turnsSinceGain < limit) return false;
+  for (const id of m.city.splice(0)) {
+    if (cardDef(state, id).type === 'statue') m.deck.push(id); // Statues stay in circulation
+    else m.cityDump.push(id);
+  }
+  m.turnsSinceGain = 0;
+  log(state, null, `Nobody has bought from the Capital City for ${limit} turns; the display is swept and redealt.`);
+  refillCity(state);
+  return true;
 }
 
 export function refillCity(state) {

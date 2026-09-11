@@ -1,0 +1,570 @@
+// Heuristic agent for Animal Friends TCG.
+//
+// Design notes (why this plays the way it does):
+//  * Statues are the only win condition (5 of 9). Everything else is instrumental.
+//  * A pending purchase can only be challenged once and the announcer cannot answer the
+//    challenge, so a challenge at `challengeMinBid` ALWAYS wins if it can be paid.
+//    Therefore announcing a Statue at the minimum bid simply hands it to an opponent who
+//    has Supply and an upright Character; the announcer must instead bid high enough that
+//    the opponent cannot legally out-bid (bid >= opponent's expected Supply), or accept the risk.
+//  * Losing a bid is refunded, so contesting costs tempo (a Busy Character) rather than Supply.
+//  * The Capital City only refills when it is EMPTY, so when no Statue is on display the
+//    cheapest way to find one is to buy the display out.
+//
+// The agent is synchronous, deterministic given `options.seed`, and never throws:
+// every entry point is wrapped and falls back to a legal default.
+//
+//   makeHeuristicAgent({
+//     seed,              // PRNG seed; only used to break ties between equally scored choices
+//     aggression = 0.5,  // 0..1: how far above the minimum bid it will go, and how eagerly it challenges
+//     debug = false,     // annotate returned actions with `why` (the engine ignores unknown fields)
+//     params,            // override any DEFAULT_PARAMS weight (used by the playtest tuner)
+//   })
+
+import {
+  cardDef, topCard, canAct, opponentOf, statueCount, findEventAssignment, eventReduction, rankOf, hasPassive,
+} from '../engine/index.js';
+
+// ---------------------------------------------------------------- tuning knobs
+// Defaults are merged with `options.params` so the weights can be swept from a playtest harness.
+const DEFAULT_PARAMS = {
+  rateWeight: 3.4, // value of +1 Supply/turn of shift income, per remaining turn
+  costWeight: 1.7, // value of 1 Supply spent on a Character
+  bodyBonus: 4.5, // an extra upright body is worth something on its own
+  upgradeBonus: 6, // upgrades keep orientation and re-trigger recruit abilities
+  workBase: 7.0, // multiplier on a shift's supply-per-turn rate
+  lowSupplyWork: 5, // extra urgency to work when broke
+  eventCharCost: 3.2, // opportunity cost per Character tapped for an Event
+  bidCost: 1.15, // Supply spent in a bid
+  statueBase: 58,
+  statuePerMine: 11,
+  denial3: 20, // opponent has 3 statues
+  denial4: 90, // opponent is one statue from winning
+  winNow: 140, // this purchase would win the game
+  riskPenalty: 26, // announcing a Statue the opponent can profitably steal
+  challengeBase: 70,
+  reservePenalty: 11, // penalty for tapping the last body while a Statue is on display
+  cycleBase: 10, // base value of emptying the Capital City when no Statue is showing
+  cycleBehind: 12, // ...more urgent when we are behind on Statues (the leader profits from a deadlock)
+  cycleRich: 10, // ...more urgent when we can afford to spend the tempo
+  cycleLate: 2, // ...more urgent the longer the deadlock has lasted
+  cycleReserve: 0.6, // only cycle while keeping this much of the opponent's Supply in hand
+  horizonCap: 11,
+  premiumBase: 20, // how far above the minimum bid we will go to deter a challenge...
+  premiumAggr: 16, // ...plus this much, scaled by (aggression - 0.5)
+  riskAggr: 0.5, // aggression discount on the risk penalty
+  challengeAggr: 14, // extra appetite for Statue challenges, scaled by (aggression - 0.5)
+  challengeGate: 3, // reluctance to spend a body challenging a non-Statue
+  oppPad: 5, // Supply we assume the opponent will add before their next turn
+  drawWhenRich: 9, // Supply level at which drawing beats taking Supply
+  drawHandCap: 6, // ...as long as the hand is no bigger than this
+};
+
+// ---------------------------------------------------------------- small utils
+function mulberry32(seed) {
+  let a = (seed >>> 0) || 0x9e3779b9;
+  return () => {
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+const clamp = (x, lo, hi) => (x < lo ? lo : x > hi ? hi : x);
+
+function def(state, cardId) {
+  try {
+    return cardDef(state, cardId);
+  } catch {
+    return null;
+  }
+}
+function rateOf(d) {
+  return d && d.shift ? d.shift.output / Math.max(1, d.shift.delay) : 0;
+}
+function stackTop(state, s) {
+  try {
+    return topCard(state, s);
+  } catch {
+    return null;
+  }
+}
+function stackRate(state, s) {
+  return rateOf(stackTop(state, s));
+}
+function findStack(state, pi, uid) {
+  return state.players[pi].town.find((s) => s.uid === uid) || null;
+}
+function entryDelayTurns(state, d) {
+  const rank = rankOf(state.rules, d.cost);
+  return rank === 'apprentice' ? 0 : rank === 'journeyman' ? 1 : 2;
+}
+
+// ---------------------------------------------------------------- card valuation
+// Rough "supply equivalent" of gaining a non-Statue Market card.
+function marketCardValue(state, pi, d) {
+  const p = state.players[pi];
+  const o = state.players[opponentOf(pi)];
+  const unemployed = p.unemployment.length;
+  switch (d.id) {
+    case 'mk_festival_grant': return 5.5;
+    case 'mk_supply_depot': return 4.0;
+    case 'mk_public_gardens': return 3.0;
+    case 'mk_library_annex': return 3.5;
+    case 'mk_mayors_seal': return 6.0; // an unchallengeable Statue announcement is gold
+    case 'mk_quiet_mediation': return 4.5;
+    case 'mk_town_charter': return 1.8;
+    case 'mk_town_bell': return 2.0;
+    case 'mk_courier_network': return 1.4;
+    case 'mk_community_kitchen': return unemployed ? 2.5 : 0.4;
+    case 'mk_appeal_board': return unemployed ? 2.2 : 0.3;
+    case 'mk_scrap_yard': return o.town.some((s) => (stackTop(state, s) || { cost: 9 }).cost <= 2) ? 3.0 : 0.5;
+    case 'mk_poachers_pardon': return o.town.length ? 3.2 : 0.5;
+    case 'mk_town_archives': return p.dump.some((c) => (def(state, c.cardId) || {}).type === 'event') ? 2.0 : 0.3;
+    case 'mk_town_clock': return 2.6;
+    case 'mk_emergency_reserve': return 0.8;
+    default: return 1.5;
+  }
+}
+
+// Value of resolving an Event right now (before the cost of the Characters it taps).
+function eventValue(state, pi, d) {
+  const p = state.players[pi];
+  const unemployed = p.unemployment.length;
+  switch (d.id) {
+    case 'bb_community_garden': return 5.0;
+    case 'bb_seed_swap': return 3.2;
+    case 'bb_patient_harvest': return 3.4;
+    case 'bb_neighborhood_watch': return unemployed ? 4.0 : 0.2;
+    case 'bb_blooming_confidence': return 5.0; // readying a working Character cashes its shift
+    case 'bb_welcome_wagon': return p.hand.some((c) => {
+      const cd = def(state, c.cardId);
+      return cd && cd.type === 'character' && cd.cost === 0;
+    }) ? 3.6 : 0.2;
+    case 'pp_open_ledger': return 4.0;
+    case 'pp_paper_trail': return 3.8;
+    case 'pp_civic_rally': return 3.0;
+    case 'pp_rumor_control': return 2.0;
+    case 'pp_fair_hearing': return unemployed ? 3.0 : -3.0; // otherwise it only feeds the opponent
+    case 'pp_market_day': return 2.6;
+    default: return 2.0;
+  }
+}
+
+// How much we want a card sitting in hand (used for discard / topdeck / deck ordering).
+function handCardValue(state, pi, cardId) {
+  const p = state.players[pi];
+  const d = def(state, cardId);
+  if (!d) return 0;
+  if (d.type === 'event') {
+    const waive = eventReduction(state, pi);
+    const playable = !!findEventAssignment(state, pi, d, waive);
+    const units = (d.requires || []).reduce((a, r) => a + (r.count || 1), 0);
+    return eventValue(state, pi, d) + (playable ? 2.5 : 0) - units * 0.6;
+  }
+  // character
+  let v = rateOf(d) * 3.0 + 2.0 - d.cost * 0.9;
+  const upgradeTarget = p.town.some((s) => {
+    const t = stackTop(state, s);
+    return t && t.name === d.name && t.cost < d.cost;
+  });
+  const alreadyBetter = p.town.some((s) => {
+    const t = stackTop(state, s);
+    return t && t.name === d.name && t.cost >= d.cost;
+  });
+  if (upgradeTarget) v += 4;
+  if (alreadyBetter) v -= 3.5; // a duplicate of a Character we have already upgraded past
+  if (d.cost > p.supply + 3) v -= 2.5; // cannot deploy it any time soon
+  return v;
+}
+
+// ---------------------------------------------------------------- shared context
+function buildContext(state, pi, P) {
+  const p = state.players[pi];
+  const oi = opponentOf(pi);
+  const o = state.players[oi];
+  const cap = (state.rules.simulation.maxTurnsPerPlayer || 40) * 2;
+  const horizon = clamp((cap - state.turnNumber) / 2, 1, P.horizonCap);
+  const pendingIds = new Set(state.market.pending.map((pd) => pd.cardId));
+  const cityStatues = state.market.city.filter((id) => {
+    const d = def(state, id);
+    return d && d.type === 'statue' && !pendingIds.has(id);
+  });
+  const myPending = state.market.pending.filter((pd) => pd.announcer === pi);
+  const oppPending = state.market.pending.filter((pd) => pd.announcer === oi && !pd.challenge && !pd.unchallengeable);
+  return {
+    pi, oi, p, o, horizon,
+    myStatues: statueCount(state, pi),
+    oppStatues: statueCount(state, oi),
+    upright: p.town.filter(canAct),
+    oppUpright: o.town.filter(canAct).length,
+    // What the opponent can realistically spend on a challenge during their next turn.
+    oppSupplyEst: o.supply + P.oppPad,
+    cityStatues,
+    myPending,
+    oppPending,
+    statueThreat: cityStatues.length > 0,
+    // Statues neither claimed nor on display: how many are still hiding in the Market Deck.
+    statuesUnseen: (state.rules.victory.statueTotal || 9) - statueCount(state, pi) - statueCount(state, oi)
+      - state.market.city.filter((id) => (def(state, id) || {}).type === 'statue').length,
+  };
+}
+
+// ---------------------------------------------------------------- action scoring
+function scoreAction(state, ctx, a, agg, out, P) {
+  const { p, o, horizon } = ctx;
+  switch (a.type) {
+    case 'endTurn':
+      return 0;
+
+    case 'recruit': {
+      const d = def(state, a.cardId);
+      if (!d) return -1;
+      if (a.upgrade) {
+        const target = findStack(state, ctx.pi, a.targetUid);
+        const cur = target ? stackTop(state, target) : null;
+        const gain = rateOf(d) - rateOf(cur);
+        let s = gain * P.rateWeight * horizon - a.cost * P.costWeight + P.upgradeBonus;
+        if (d.abilities && d.abilities.some((x) => x.trigger === 'passive')) s += 5;
+        out.why = `upgrade ${d.name} (+${gain.toFixed(1)}/turn)`;
+        return s;
+      }
+      const delay = entryDelayTurns(state, d);
+      let s = rateOf(d) * P.rateWeight * Math.max(0, horizon - delay) - a.cost * P.costWeight + P.bodyBonus;
+      if (p.town.length >= 6) s -= 4; // diminishing returns on a crowded town
+      out.why = `recruit ${d.name} (${rateOf(d).toFixed(1)}/turn)`;
+      return s;
+    }
+
+    case 'work': {
+      const rate = a.output / Math.max(1, a.delay);
+      let s = P.workBase * rate;
+      if (p.supply <= 3) s += P.lowSupplyWork;
+      if (ctx.upright.length === 1 && ctx.statueThreat && p.supply >= 3) s -= P.reservePenalty;
+      out.why = `work ${a.output}/${a.delay}`;
+      return s;
+    }
+
+    case 'ability': {
+      const d = def(state, a.cardId);
+      if (!d) return -1;
+      if (d.id === 'bb_mabel_2') {
+        // Only worth going Busy if it unlocks an Event we cannot otherwise play.
+        const waive = eventReduction(state, ctx.pi);
+        const avoid = new Set([a.charUid]);
+        for (const c of p.hand) {
+          const ed = def(state, c.cardId);
+          if (!ed || ed.type !== 'event') continue;
+          if (findEventAssignment(state, ctx.pi, ed, waive, avoid)) continue; // already playable elsewhere
+          if (findEventAssignment(state, ctx.pi, ed, waive + 1, avoid)) {
+            out.why = `busy to unlock ${ed.name}`;
+            return eventValue(state, ctx.pi, ed) * 1.5 - stackRate(state, findStack(state, ctx.pi, a.charUid)) * 2;
+          }
+        }
+        return -1;
+      }
+      if (d.id === 'pp_rowan_2') {
+        // Unemployment shield: only when the opponent actually has the tools to use it.
+        const threat = state.market.city.some((id) => ['mk_poachers_pardon', 'mk_scrap_yard'].includes(id));
+        out.why = 'unemployment shield';
+        return threat ? 4 : -1;
+      }
+      return -1;
+    }
+
+    case 'playEvent': {
+      const d = def(state, a.cardId);
+      if (!d) return -1;
+      const chars = (a.characters || []).map((uid) => findStack(state, ctx.pi, uid));
+      const tapCost = chars.reduce((acc, s) => acc + (s ? stackRate(state, s) : 0), 0) * P.eventCharCost;
+      let s = eventValue(state, ctx.pi, d) * 3.0 - tapCost - a.cost * P.costWeight;
+      const remainingUpright = ctx.upright.length - chars.length;
+      if (remainingUpright <= 0 && ctx.statueThreat && p.supply >= 3) s -= P.reservePenalty;
+      out.why = `event ${d.name}`;
+      return s;
+    }
+
+    case 'announce': {
+      const d = def(state, a.cardId);
+      if (!d) return -1;
+      const stack = findStack(state, ctx.pi, a.charUid);
+      const charCost = stack ? stackRate(state, stack) * 2.2 : 0;
+      const minBid = a.minBid;
+      const maxBid = Math.min(a.maxBid, p.supply);
+      if (minBid > maxBid) return -1;
+
+      if (d.type === 'statue') {
+        const winsGame = ctx.myStatues + 1 >= (state.rules.victory.statuesToWin || 5);
+        // Bid high enough that the opponent cannot legally out-bid us.
+        const deter = clamp(ctx.oppSupplyEst, minBid, maxBid);
+        const premiumCap = Math.round(P.premiumBase + P.premiumAggr * (agg - 0.5)) + ctx.myStatues * 2 + (winsGame ? 40 : 0) + (ctx.oppStatues >= 4 ? 20 : 0);
+        let bid = Math.min(deter, minBid + premiumCap);
+        bid = clamp(Math.floor(bid), minBid, maxBid);
+        const safe = bid >= ctx.oppSupplyEst || ctx.oppUpright === 0;
+        let s = P.statueBase + P.statuePerMine * ctx.myStatues - bid * P.bidCost - charCost;
+        if (ctx.oppStatues >= 3) s += P.denial3;
+        if (ctx.oppStatues >= 4) s += P.denial4;
+        if (winsGame) s += P.winNow;
+        if (!safe) s -= P.riskPenalty * (1 + (ctx.oppStatues >= 3 ? 1 : 0)) * Math.max(0.2, 1 + P.riskAggr * 0.5 - P.riskAggr * agg);
+        out.bid = bid;
+        out.why = `announce STATUE ${d.name} @${bid}${safe ? ' (deterrent)' : ' (risky)'}`;
+        return s;
+      }
+
+      // Ordinary Market card: worth it for its effect, and for draining the Capital City
+      // so that fresh Statues can appear. The City only refills when empty, so when no Statue
+      // is on display somebody has to buy the display out — but whoever does it spends Supply
+      // and tempo that the opponent can then use on the Statues that appear. So we cycle when
+      // we are behind (a deadlock favours the leader), when we are richer, or when the
+      // deadlock has already dragged on.
+      const cityLeft = state.market.city.length;
+      let cycle = 0;
+      const keepsReserve = p.supply - minBid >= P.cycleReserve * ctx.oppSupplyEst;
+      if (ctx.cityStatues.length === 0 && ctx.statuesUnseen > 0 && keepsReserve) {
+        cycle = P.cycleBase
+          + P.cycleBehind * clamp(ctx.oppStatues - ctx.myStatues, -2, 2)
+          + P.cycleRich * clamp((p.supply - o.supply) / 5, -1.5, 1.5)
+          + P.cycleLate * clamp((state.turnNumber - 16) / 24, 0, 1);
+        cycle = Math.max(0, cycle) * (1 + (5 - cityLeft) * 0.25) - d.cost * 1.2;
+      }
+      const bid = clamp(minBid, minBid, maxBid);
+      let s = marketCardValue(state, ctx.pi, d) * 2.6 + cycle - bid * P.bidCost - charCost;
+      if (ctx.upright.length === 1 && ctx.statueThreat && p.supply >= 3) s -= P.reservePenalty;
+      out.bid = bid;
+      out.why = `announce ${d.name} @${bid}${cycle ? ' (cycle)' : ''}`;
+      return s;
+    }
+
+    case 'challenge': {
+      const d = def(state, a.cardId);
+      if (!d) return -1;
+      const stack = findStack(state, ctx.pi, a.charUid);
+      const charCost = stack ? stackRate(state, stack) * 2.2 : 0;
+      // Bid enough to beat the announcer on the raw numbers rather than trusting our own bid
+      // bonus: `challengeMinBid` credits a firstBidPlus1 bonus that the engine does not
+      // actually record on the challenge, which would turn the bid into a tie the announcer wins.
+      const pd = state.market.pending.find((x) => x.id === a.pendingId);
+      const annEff = pd ? pd.bid + pd.bonus : a.minBid;
+      const needed = hasPassive(state, ctx.pi, 'winTiesAsChallenger') ? annEff : annEff + 1;
+      const bid = clamp(Math.max(a.minBid, needed), a.minBid, a.maxBid);
+      if (bid > a.maxBid || bid < needed) return -1; // cannot actually out-bid the announcer
+      if (d.type === 'statue') {
+        const winsGame = ctx.myStatues + 1 >= (state.rules.victory.statuesToWin || 5);
+        let s = P.challengeBase + P.statuePerMine * ctx.myStatues - bid * P.bidCost - charCost;
+        if (ctx.oppStatues >= 3) s += P.denial3;
+        if (ctx.oppStatues >= 4) s += P.denial4;
+        if (winsGame) s += P.winNow;
+        s += P.challengeAggr * (agg - 0.5);
+        out.bid = bid;
+        out.why = `challenge STATUE ${d.name} @${bid}`;
+        return s;
+      }
+      let s = marketCardValue(state, ctx.pi, d) * 2.2 - bid * P.bidCost - charCost - P.challengeGate * (1 - agg);
+      // Denying a card the opponent clearly wants is worth a little on its own.
+      s += 4 * (agg - 0.5);
+      out.bid = bid;
+      out.why = `challenge ${d.name} @${bid}`;
+      return s;
+    }
+
+    case 'rehire': {
+      const d = def(state, a.cardId);
+      if (!d) return -1;
+      let s = rateOf(d) * P.rateWeight * horizon - a.cost * P.costWeight + P.bodyBonus;
+      out.why = `rehire ${d.name}`;
+      return s;
+    }
+
+    default:
+      return -1;
+  }
+}
+
+// ---------------------------------------------------------------- pick handlers
+function pickBest(options, valueFn, req) {
+  const scored = options.map((o, i) => ({ o, i, v: valueFn(o) }));
+  scored.sort((x, y) => y.v - x.v || x.i - y.i);
+  const out = [];
+  for (const s of scored) {
+    if (out.length >= req.max) break;
+    if (out.length >= req.min && s.v <= 0) break;
+    out.push(s.o.uid);
+  }
+  while (out.length < req.min && out.length < options.length) {
+    const next = scored.find((s) => !out.includes(s.o.uid));
+    if (!next) break;
+    out.push(next.o.uid);
+  }
+  return out;
+}
+
+function pickWorst(options, valueFn, req) {
+  const scored = options.map((o, i) => ({ o, i, v: valueFn(o) }));
+  scored.sort((x, y) => x.v - y.v || x.i - y.i);
+  const n = clamp(req.min, 0, req.max);
+  return scored.slice(0, n).map((s) => s.o.uid);
+}
+
+// ---------------------------------------------------------------- agent
+export function makeHeuristicAgent(options = {}) {
+  const agg = clamp(typeof options.aggression === 'number' ? options.aggression : 0.5, 0, 1);
+  const debug = !!options.debug;
+  const P = { ...DEFAULT_PARAMS, ...(options.params || {}) };
+  const rnd = mulberry32((options.seed ?? 12345) >>> 0);
+
+  function chooseResources(state, pi) {
+    const ctx = buildContext(state, pi, P);
+    const p = state.players[pi];
+    // Do we want Supply to fund a Statue bid this turn (announce or challenge)?
+    let need = 0;
+    for (const id of ctx.cityStatues) {
+      const d = def(state, id);
+      if (d) need = Math.max(need, d.cost);
+    }
+    for (const pd of ctx.oppPending) {
+      const d = def(state, pd.cardId);
+      if (d && d.type === 'statue') need = Math.max(need, pd.bid + pd.bonus + 1);
+    }
+    if (need > 0 && p.supply < need + 2 && p.supply + 2 >= need) return 'supply';
+    if (p.hand.length <= 2) return 'draw';
+    if (p.supply >= P.drawWhenRich && p.hand.length <= P.drawHandCap) return 'draw';
+    if (p.hand.length >= 8) return 'supply';
+    return p.supply >= P.drawWhenRich + 3 ? 'draw' : 'supply';
+  }
+
+  function chooseAction(state, pi, req) {
+    const ctx = buildContext(state, pi, P);
+    const acts = Array.isArray(req.options) ? req.options : [];
+    let best = { type: 'endTurn' };
+    let bestScore = 0; // anything that does not beat "do nothing" is not worth doing
+    for (const a of acts) {
+      if (a.type === 'endTurn') continue;
+      const out = {};
+      let s;
+      try {
+        s = scoreAction(state, ctx, a, agg, out, P);
+      } catch {
+        s = -1;
+      }
+      if (!Number.isFinite(s)) s = -1;
+      s += rnd() * 0.01; // deterministic tie-break
+      if (s > bestScore) {
+        bestScore = s;
+        const chosen = { ...a };
+        if (out.bid !== undefined && (a.type === 'announce' || a.type === 'challenge')) {
+          chosen.bid = clamp(Math.floor(out.bid), a.minBid, a.maxBid);
+        }
+        if (debug) chosen.why = `${out.why || a.type} [${s.toFixed(1)}]`;
+        best = chosen;
+      }
+    }
+    return best;
+  }
+
+  function choosePick(state, pi, req) {
+    const oi = opponentOf(pi);
+    const opts = req.options || [];
+    switch (req.reason) {
+      case 'discard':
+      case 'topdeck':
+        // Shed the least useful cards; for topdeck the same ranking keeps the good cards in hand.
+        return pickWorst(opts, (o) => handCardValue(state, pi, o.cardId), req);
+
+      case 'ready':
+      case 'readyNextTurn':
+        // Readying a working Character cashes its shift immediately, so prefer big shifts.
+        return pickBest(opts, (o) => {
+          const s = findStack(state, pi, o.uid);
+          if (!s) return 0.1;
+          const t = stackTop(state, s);
+          const pending = s.shift ? s.shift.output * 1.8 : 0;
+          return pending + rateOf(t) * 2 + (s.orientation === 180 ? 1 : 0) + 0.5;
+        }, req);
+
+      case 'rehire':
+      case 'recruitFree':
+        return pickBest(opts, (o) => {
+          const d = def(state, o.cardId);
+          if (!d) return 0.1;
+          return rateOf(d) * 3 + 1.5 - d.cost * 0.3;
+        }, req);
+
+      case 'eventFromDumpToHand':
+      case 'eventFromDumpToDeckBottom':
+        return pickBest(opts, (o) => {
+          const d = def(state, o.cardId);
+          return d ? eventValue(state, pi, d) + 0.5 : 0.1;
+        }, req);
+
+      case 'unemployOpponent':
+        return pickBest(opts, (o) => {
+          const s = findStack(state, oi, o.uid);
+          if (!s) return 0.1;
+          const t = stackTop(state, s);
+          if (!t) return 0.1;
+          return t.cost * 1.2 + rateOf(t) * 2.5 + (s.orientation === 0 ? 3 : 0) + (s.cards.length > 1 ? 2 : 0);
+        }, req);
+
+      case 'raiseBidTarget':
+        return pickBest(opts, (o) => {
+          const d = def(state, o.cardId);
+          if (!d) return 0.1;
+          return d.type === 'statue' ? 10 : 1;
+        }, req);
+
+      default:
+        return pickBest(opts, (o) => (o.cardId ? handCardValue(state, pi, o.cardId) : 1), req);
+    }
+  }
+
+  function chooseOrder(state, pi, req) {
+    const opts = (req.options || []).slice();
+    // Top of the deck first: put what we most want to draw on top.
+    opts.sort((a, b) => handCardValue(state, pi, b.cardId) - handCardValue(state, pi, a.cardId));
+    return opts.map((o) => o.uid);
+  }
+
+  function chooseConfirm(state, pi, req) {
+    if (req.reason === 'raiseBid') {
+      // Juniper's +1: cheap insurance, but only on a Statue we are contesting.
+      const p = state.players[pi];
+      const mine = state.market.pending.filter((pd) => pd.announcer === pi || (pd.challenge && pd.challenge.player === pi));
+      const statue = mine.some((pd) => {
+        const d = def(state, pd.cardId);
+        return d && d.type === 'statue';
+      });
+      return statue && p.supply >= 2;
+    }
+    return !!req.default;
+  }
+
+  return {
+    name: 'heuristic',
+    options: { aggression: agg, debug },
+    choose(state, pi, request) {
+      const req = request || {};
+      try {
+        switch (req.kind) {
+          case 'resources': return chooseResources(state, pi);
+          case 'action': return chooseAction(state, pi, req);
+          case 'pick': return choosePick(state, pi, req);
+          case 'order': return chooseOrder(state, pi, req);
+          case 'confirm': return chooseConfirm(state, pi, req);
+          default: return undefined;
+        }
+      } catch {
+        // Safe, always-legal defaults — the agent must never break a game.
+        switch (req.kind) {
+          case 'resources': return 'supply';
+          case 'action': return { type: 'endTurn' };
+          case 'pick': return (req.options || []).slice(0, req.min || 0).map((o) => o.uid);
+          case 'order': return (req.options || []).map((o) => o.uid);
+          case 'confirm': return !!req.default;
+          default: return undefined;
+        }
+      }
+    },
+  };
+}
+
+export default makeHeuristicAgent;

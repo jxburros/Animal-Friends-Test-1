@@ -2,174 +2,1223 @@
   "$comment": "Animal Friends: First Boroughs (AF-STARTER-01). Authoritative card data for the prototype. Effects use the vocabulary interpreted by src/engine/effects.js; 'text' is the player-facing rules text. The named cards are examples; the schema is the contract.",
   "setId": "AF-STARTER-01",
   "name": "Animal Friends: First Boroughs",
-  "species": ["Rabbit", "Mouse", "Raccoon", "Fox"],
-  "studies": ["Agriculture", "Botany", "Civics", "Commerce"],
+  "species": [
+    "Rabbit",
+    "Mouse",
+    "Raccoon",
+    "Fox"
+  ],
+  "studies": [
+    "Agriculture",
+    "Botany",
+    "Civics",
+    "Commerce"
+  ],
   "decks": [
     {
       "id": "burrow-bloom",
       "name": "Burrow & Bloom",
       "blurb": "Rabbits and Mice of Agriculture and Botany: efficient shifts, recruiting, growth and Event synergy.",
-      "species": ["Rabbit", "Mouse"],
-      "studies": ["Agriculture", "Botany"],
+      "species": [
+        "Rabbit",
+        "Mouse"
+      ],
+      "studies": [
+        "Agriculture",
+        "Botany"
+      ],
       "list": {
-        "bb_clover_1": 3, "bb_clover_2": 2, "bb_mabel_1": 3, "bb_mabel_2": 2,
-        "bb_poppy_1": 2, "bb_poppy_2": 2, "bb_fern_1": 2, "bb_fern_2": 2,
-        "bb_community_garden": 2, "bb_seed_swap": 2, "bb_patient_harvest": 2,
-        "bb_neighborhood_watch": 2, "bb_blooming_confidence": 2, "bb_welcome_wagon": 2
+        "bb_clover_1": 3,
+        "bb_clover_2": 2,
+        "bb_mabel_1": 3,
+        "bb_mabel_2": 2,
+        "bb_poppy_1": 2,
+        "bb_poppy_2": 2,
+        "bb_fern_1": 2,
+        "bb_fern_2": 2,
+        "bb_community_garden": 2,
+        "bb_seed_swap": 2,
+        "bb_patient_harvest": 2,
+        "bb_neighborhood_watch": 2,
+        "bb_blooming_confidence": 2,
+        "bb_welcome_wagon": 2
       }
     },
     {
       "id": "paws-papers",
       "name": "Paws & Papers",
       "blurb": "Raccoons and Foxes of Commerce and Civics: market contests, card flow and controlled disruption.",
-      "species": ["Raccoon", "Fox"],
-      "studies": ["Commerce", "Civics"],
+      "species": [
+        "Raccoon",
+        "Fox"
+      ],
+      "studies": [
+        "Commerce",
+        "Civics"
+      ],
       "list": {
-        "pp_patch_1": 3, "pp_patch_2": 2, "pp_juniper_1": 3, "pp_juniper_2": 2,
-        "pp_hazel_1": 2, "pp_hazel_2": 2, "pp_rowan_1": 2, "pp_rowan_2": 2,
-        "pp_open_ledger": 2, "pp_paper_trail": 2, "pp_civic_rally": 2,
-        "pp_rumor_control": 2, "pp_fair_hearing": 2, "pp_market_day": 2
+        "pp_patch_1": 3,
+        "pp_patch_2": 2,
+        "pp_juniper_1": 3,
+        "pp_juniper_2": 2,
+        "pp_hazel_1": 2,
+        "pp_hazel_2": 2,
+        "pp_rowan_1": 2,
+        "pp_rowan_2": 2,
+        "pp_open_ledger": 2,
+        "pp_paper_trail": 2,
+        "pp_civic_rally": 2,
+        "pp_rumor_control": 2,
+        "pp_fair_hearing": 2,
+        "pp_market_day": 2
       }
     }
   ],
   "cards": [
-    { "id": "bb_clover_1", "type": "character", "name": "Clover", "title": "Seedling Helper", "job": "Seedling Helper", "species": "Rabbit", "study": "Agriculture", "cost": 0, "shift": { "delay": 1, "output": 1 },
+    {
+      "id": "bb_clover_1",
+      "type": "character",
+      "name": "Clover",
+      "title": "Seedling Helper",
+      "job": "Seedling Helper",
+      "species": "Rabbit",
+      "study": "Agriculture",
+      "cost": 0,
+      "shift": {
+        "delay": 1,
+        "output": 1
+      },
       "text": "Recruit: if you have another Agriculture Character, draw 1 card, then discard 1 card.",
-      "abilities": [ { "trigger": "onRecruit", "condition": { "otherCharacterInTown": { "study": "Agriculture" } }, "effect": { "do": "seq", "steps": [ { "do": "draw", "count": 1 }, { "do": "discard", "count": 1 } ] } } ] },
-    { "id": "bb_clover_2", "type": "character", "name": "Clover", "title": "Community Gardener", "job": "Community Gardener", "species": "Rabbit", "study": "Botany", "cost": 3, "shift": { "delay": 2, "output": 3 },
+      "abilities": [
+        {
+          "trigger": "onRecruit",
+          "condition": {
+            "otherCharacterInTown": {
+              "study": "Agriculture"
+            }
+          },
+          "effect": {
+            "do": "seq",
+            "steps": [
+              {
+                "do": "draw",
+                "count": 1
+              },
+              {
+                "do": "discard",
+                "count": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "bb_clover_2",
+      "type": "character",
+      "name": "Clover",
+      "title": "Community Gardener",
+      "job": "Community Gardener",
+      "species": "Rabbit",
+      "study": "Botany",
+      "cost": 3,
+      "shift": {
+        "delay": 2,
+        "output": 3
+      },
       "text": "Upgrades Clover. Recruit: choose another Agriculture Character you control; it becomes upright at the start of your next turn.",
-      "abilities": [ { "trigger": "onRecruit", "effect": { "do": "readyNextTurn", "filter": { "study": "Agriculture", "notSelf": true }, "optional": true } } ] },
-    { "id": "bb_mabel_1", "type": "character", "name": "Mabel", "title": "Seed Keeper", "job": "Seed Keeper", "species": "Mouse", "study": "Agriculture", "cost": 1, "shift": { "delay": 1, "output": 1 },
+      "abilities": [
+        {
+          "trigger": "onRecruit",
+          "effect": {
+            "do": "readyNextTurn",
+            "filter": {
+              "study": "Agriculture",
+              "notSelf": true
+            },
+            "optional": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "bb_mabel_1",
+      "type": "character",
+      "name": "Mabel",
+      "title": "Seed Keeper",
+      "job": "Seed Keeper",
+      "species": "Mouse",
+      "study": "Agriculture",
+      "cost": 1,
+      "shift": {
+        "delay": 1,
+        "output": 1
+      },
       "text": "The first Event you play each turn that requires an Agriculture Character gives you 1 Supply.",
-      "abilities": [ { "trigger": "onEventPlayed", "condition": { "eventRequiresStudy": "Agriculture" }, "oncePerTurn": true, "effect": { "do": "gainSupply", "amount": 1 } } ] },
-    { "id": "bb_mabel_2", "type": "character", "name": "Mabel", "title": "Horticulturist", "job": "Horticulturist", "species": "Mouse", "study": "Botany", "cost": 4, "shift": { "delay": 2, "output": 4 },
+      "abilities": [
+        {
+          "trigger": "onEventPlayed",
+          "condition": {
+            "eventRequiresStudy": "Agriculture"
+          },
+          "oncePerTurn": true,
+          "effect": {
+            "do": "gainSupply",
+            "amount": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "bb_mabel_2",
+      "type": "character",
+      "name": "Mabel",
+      "title": "Horticulturist",
+      "job": "Horticulturist",
+      "species": "Mouse",
+      "study": "Botany",
+      "cost": 4,
+      "shift": {
+        "delay": 2,
+        "output": 4
+      },
       "text": "Upgrades Mabel. Busy: the next Event you play this turn requires one fewer Character.",
-      "abilities": [ { "trigger": "busy", "effect": { "do": "addMod", "key": "eventCharReduction", "value": 1, "expires": "turnEnd" } } ] },
-    { "id": "bb_poppy_1", "type": "character", "name": "Poppy", "title": "Postmaster", "job": "Postmaster", "species": "Rabbit", "study": "Civics", "cost": 1, "shift": { "delay": 2, "output": 2 },
+      "abilities": [
+        {
+          "trigger": "busy",
+          "effect": {
+            "do": "addMod",
+            "key": "eventCharReduction",
+            "value": 1,
+            "expires": "turnEnd"
+          }
+        }
+      ]
+    },
+    {
+      "id": "bb_poppy_1",
+      "type": "character",
+      "name": "Poppy",
+      "title": "Postmaster",
+      "job": "Postmaster",
+      "species": "Rabbit",
+      "study": "Civics",
+      "cost": 1,
+      "shift": {
+        "delay": 2,
+        "output": 2
+      },
       "text": "When you announce a purchase with Poppy while she is your only upright Rabbit, gain 1 Supply.",
-      "abilities": [ { "trigger": "onAnnounce", "condition": { "announcerIsSelf": true, "onlyUprightOfSpecies": true }, "effect": { "do": "gainSupply", "amount": 1 } } ] },
-    { "id": "bb_poppy_2", "type": "character", "name": "Poppy", "title": "Civic Planner", "job": "Civic Planner", "species": "Rabbit", "study": "Civics", "cost": 5, "shift": { "delay": 3, "output": 5 },
+      "abilities": [
+        {
+          "trigger": "onAnnounce",
+          "condition": {
+            "announcerIsSelf": true,
+            "onlyUprightOfSpecies": true
+          },
+          "effect": {
+            "do": "gainSupply",
+            "amount": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "bb_poppy_2",
+      "type": "character",
+      "name": "Poppy",
+      "title": "Civic Planner",
+      "job": "Civic Planner",
+      "species": "Rabbit",
+      "study": "Civics",
+      "cost": 5,
+      "shift": {
+        "delay": 3,
+        "output": 5
+      },
       "text": "Upgrades Poppy. Your challenge bids win ties.",
-      "abilities": [ { "trigger": "passive", "key": "winTiesAsChallenger" } ] },
-    { "id": "bb_fern_1", "type": "character", "name": "Fern", "title": "Forager", "job": "Forager", "species": "Mouse", "study": "Botany", "cost": 2, "shift": { "delay": 1, "output": 2 },
+      "abilities": [
+        {
+          "trigger": "passive",
+          "key": "winTiesAsChallenger"
+        }
+      ]
+    },
+    {
+      "id": "bb_fern_1",
+      "type": "character",
+      "name": "Fern",
+      "title": "Forager",
+      "job": "Forager",
+      "species": "Mouse",
+      "study": "Botany",
+      "cost": 2,
+      "shift": {
+        "delay": 1,
+        "output": 2
+      },
       "text": "When Fern becomes upright, you may put an Event from your Town Dump on the bottom of your deck.",
-      "abilities": [ { "trigger": "onReady", "effect": { "do": "eventFromDumpToDeckBottom", "optional": true } } ] },
-    { "id": "bb_fern_2", "type": "character", "name": "Fern", "title": "Ecologist", "job": "Ecologist", "species": "Mouse", "study": "Botany", "cost": 5, "shift": { "delay": 2, "output": 5 },
+      "abilities": [
+        {
+          "trigger": "onReady",
+          "effect": {
+            "do": "eventFromDumpToDeckBottom",
+            "optional": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "bb_fern_2",
+      "type": "character",
+      "name": "Fern",
+      "title": "Ecologist",
+      "job": "Ecologist",
+      "species": "Mouse",
+      "study": "Botany",
+      "cost": 5,
+      "shift": {
+        "delay": 2,
+        "output": 5
+      },
       "text": "Upgrades Fern. The first Event you play each turn also gives you 1 Supply.",
-      "abilities": [ { "trigger": "onEventPlayed", "oncePerTurn": true, "effect": { "do": "gainSupply", "amount": 1 } } ] },
-
-    { "id": "bb_community_garden", "type": "event", "name": "Community Garden", "kind": "instant", "cost": 0, "requires": [ { "study": "Agriculture", "count": 1 } ],
-      "text": "Requires an Agriculture Character. Gain 3 Supply.", "effect": { "do": "gainSupply", "amount": 3 } },
-    { "id": "bb_seed_swap", "type": "event", "name": "Seed Swap", "kind": "instant", "cost": 0, "requires": [ { "species": "Rabbit", "count": 1 }, { "species": "Mouse", "count": 1 } ],
-      "text": "Requires a Rabbit and a Mouse. Draw 2 cards, then discard 1 card.", "effect": { "do": "seq", "steps": [ { "do": "draw", "count": 2 }, { "do": "discard", "count": 1 } ] } },
-    { "id": "bb_patient_harvest", "type": "event", "name": "Patient Harvest", "kind": "limited", "duration": 2, "cost": 0, "requires": [ { "study": "Botany", "count": 1 } ],
+      "abilities": [
+        {
+          "trigger": "onEventPlayed",
+          "oncePerTurn": true,
+          "effect": {
+            "do": "gainSupply",
+            "amount": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "bb_community_garden",
+      "type": "event",
+      "name": "Community Garden",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "study": "Agriculture",
+          "count": 1
+        }
+      ],
+      "text": "Requires an Agriculture Character. Gain 3 Supply.",
+      "effect": {
+        "do": "gainSupply",
+        "amount": 3
+      }
+    },
+    {
+      "id": "bb_seed_swap",
+      "type": "event",
+      "name": "Seed Swap",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "species": "Rabbit",
+          "count": 1
+        },
+        {
+          "species": "Mouse",
+          "count": 1
+        }
+      ],
+      "text": "Requires a Rabbit and a Mouse. Draw 3 cards, then discard 1 card, and gain 1 Supply.",
+      "effect": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "draw",
+            "count": 3
+          },
+          {
+            "do": "discard",
+            "count": 1
+          },
+          {
+            "do": "gainSupply",
+            "amount": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "bb_patient_harvest",
+      "type": "event",
+      "name": "Patient Harvest",
+      "kind": "limited",
+      "duration": 2,
+      "cost": 0,
+      "requires": [
+        {
+          "study": "Botany",
+          "count": 1
+        }
+      ],
       "text": "Requires a Botany Character. Limited 2: the first shift you complete each turn produces 1 extra Supply.",
-      "abilities": [ { "trigger": "onShiftCompleted", "oncePerTurn": true, "effect": { "do": "gainSupply", "amount": 1 } } ] },
-    { "id": "bb_neighborhood_watch", "type": "event", "name": "Neighborhood Watch", "kind": "instant", "cost": 0, "requires": [ { "study": "Civics", "count": 1 } ],
-      "text": "Requires a Civics Character. Rehire a Character from your Unemployment for 2 less Supply.", "effect": { "do": "rehire", "discount": 2, "optional": true } },
-    { "id": "bb_blooming_confidence", "type": "event", "name": "Blooming Confidence", "kind": "instant", "cost": 0, "requires": [ { "species": "Rabbit", "count": 2 } ],
-      "text": "Requires two Rabbits. Ready one of your Characters and draw 1 card.", "effect": { "do": "seq", "steps": [ { "do": "readyCharacter", "optional": true }, { "do": "draw", "count": 1 } ] } },
-    { "id": "bb_welcome_wagon", "type": "event", "name": "Welcome Wagon", "kind": "instant", "cost": 0, "requires": [ { "species": "Mouse", "count": 1 } ],
-      "text": "Requires a Mouse. Recruit a cost-0 Character from your hand for free; it enters Busy.", "effect": { "do": "recruitFromHand", "filter": { "maxCost": 0 }, "free": true, "orientation": 270, "optional": true } },
-
-    { "id": "pp_patch_1", "type": "character", "name": "Patch", "title": "Recycling Scout", "job": "Recycling Scout", "species": "Raccoon", "study": "Commerce", "cost": 0, "shift": { "delay": 1, "output": 1 },
+      "abilities": [
+        {
+          "trigger": "onShiftCompleted",
+          "oncePerTurn": true,
+          "effect": {
+            "do": "gainSupply",
+            "amount": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "bb_neighborhood_watch",
+      "type": "event",
+      "name": "Neighborhood Watch",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "study": "Civics",
+          "count": 1
+        }
+      ],
+      "text": "Requires a Civics Character. Rehire a Character from your Unemployment for 2 less Supply.",
+      "effect": {
+        "do": "rehire",
+        "discount": 2,
+        "optional": true
+      }
+    },
+    {
+      "id": "bb_blooming_confidence",
+      "type": "event",
+      "name": "Blooming Confidence",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "species": "Rabbit",
+          "count": 2
+        }
+      ],
+      "text": "Requires two Rabbits. Ready one of your Characters and draw 1 card.",
+      "effect": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "readyCharacter",
+            "optional": true
+          },
+          {
+            "do": "draw",
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "bb_welcome_wagon",
+      "type": "event",
+      "name": "Welcome Wagon",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "species": "Mouse",
+          "count": 1
+        }
+      ],
+      "text": "Requires a Mouse. Recruit a cost-0 Character from your hand for free; it enters Busy.",
+      "effect": {
+        "do": "recruitFromHand",
+        "filter": {
+          "maxCost": 0
+        },
+        "free": true,
+        "orientation": 270,
+        "optional": true
+      }
+    },
+    {
+      "id": "pp_patch_1",
+      "type": "character",
+      "name": "Patch",
+      "title": "Recycling Scout",
+      "job": "Recycling Scout",
+      "species": "Raccoon",
+      "study": "Commerce",
+      "cost": 0,
+      "shift": {
+        "delay": 1,
+        "output": 1
+      },
       "text": "Recruit: look at the top two cards of your deck and put them back in any order.",
-      "abilities": [ { "trigger": "onRecruit", "effect": { "do": "reorderDeckTop", "count": 2 } } ] },
-    { "id": "pp_patch_2", "type": "character", "name": "Patch", "title": "Town Auditor", "job": "Town Auditor", "species": "Raccoon", "study": "Civics", "cost": 3, "shift": { "delay": 2, "output": 3 },
+      "abilities": [
+        {
+          "trigger": "onRecruit",
+          "effect": {
+            "do": "reorderDeckTop",
+            "count": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "pp_patch_2",
+      "type": "character",
+      "name": "Patch",
+      "title": "Town Auditor",
+      "job": "Town Auditor",
+      "species": "Raccoon",
+      "study": "Civics",
+      "cost": 3,
+      "shift": {
+        "delay": 2,
+        "output": 3
+      },
       "text": "Upgrades Patch. When an opponent challenges one of your purchases, draw 1 card.",
-      "abilities": [ { "trigger": "onChallengedByOpponent", "effect": { "do": "draw", "count": 1 } } ] },
-    { "id": "pp_juniper_1", "type": "character", "name": "Juniper", "title": "Messenger", "job": "Messenger", "species": "Fox", "study": "Civics", "cost": 1, "shift": { "delay": 1, "output": 2 },
+      "abilities": [
+        {
+          "trigger": "onChallengedByOpponent",
+          "effect": {
+            "do": "draw",
+            "count": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "pp_juniper_1",
+      "type": "character",
+      "name": "Juniper",
+      "title": "Messenger",
+      "job": "Messenger",
+      "species": "Fox",
+      "study": "Civics",
+      "cost": 1,
+      "shift": {
+        "delay": 1,
+        "output": 2
+      },
       "text": "When Juniper starts a shift, you may pay 1 Supply to raise one of your open bids by 1.",
-      "abilities": [ { "trigger": "onShiftStarted", "condition": { "self": true }, "effect": { "do": "raiseOwnBid", "amount": 1, "optional": true } } ] },
-    { "id": "pp_juniper_2", "type": "character", "name": "Juniper", "title": "Diplomat", "job": "Diplomat", "species": "Fox", "study": "Civics", "cost": 4, "shift": { "delay": 2, "output": 4 },
+      "abilities": [
+        {
+          "trigger": "onShiftStarted",
+          "condition": {
+            "self": true
+          },
+          "effect": {
+            "do": "raiseOwnBid",
+            "amount": 1,
+            "optional": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "pp_juniper_2",
+      "type": "character",
+      "name": "Juniper",
+      "title": "Diplomat",
+      "job": "Diplomat",
+      "species": "Fox",
+      "study": "Civics",
+      "cost": 4,
+      "shift": {
+        "delay": 2,
+        "output": 4
+      },
       "text": "Upgrades Juniper. Your opponent cannot raise a pending bid.",
-      "abilities": [ { "trigger": "passive", "key": "blockOpponentBidRaise" } ] },
-    { "id": "pp_hazel_1", "type": "character", "name": "Hazel", "title": "Market Vendor", "job": "Market Vendor", "species": "Raccoon", "study": "Commerce", "cost": 2, "shift": { "delay": 1, "output": 2 },
+      "abilities": [
+        {
+          "trigger": "passive",
+          "key": "blockOpponentBidRaise"
+        }
+      ]
+    },
+    {
+      "id": "pp_hazel_1",
+      "type": "character",
+      "name": "Hazel",
+      "title": "Market Vendor",
+      "job": "Market Vendor",
+      "species": "Raccoon",
+      "study": "Commerce",
+      "cost": 2,
+      "shift": {
+        "delay": 1,
+        "output": 2
+      },
       "text": "While Hazel is upright, your first purchase announcement each turn may bid 1 less than the card's cost.",
-      "abilities": [ { "trigger": "passive", "key": "firstAnnounceMinBidMinus1", "requiresUpright": true } ] },
-    { "id": "pp_hazel_2", "type": "character", "name": "Hazel", "title": "Merchant", "job": "Merchant", "species": "Raccoon", "study": "Commerce", "cost": 5, "shift": { "delay": 2, "output": 6 },
+      "abilities": [
+        {
+          "trigger": "passive",
+          "key": "firstAnnounceMinBidMinus1",
+          "requiresUpright": true
+        }
+      ]
+    },
+    {
+      "id": "pp_hazel_2",
+      "type": "character",
+      "name": "Hazel",
+      "title": "Merchant",
+      "job": "Merchant",
+      "species": "Raccoon",
+      "study": "Commerce",
+      "cost": 5,
+      "shift": {
+        "delay": 2,
+        "output": 6
+      },
       "text": "Upgrades Hazel. Whenever you gain a non-Statue Market card, draw 1 card.",
-      "abilities": [ { "trigger": "onGainMarketCard", "condition": { "nonStatue": true }, "effect": { "do": "draw", "count": 1 } } ] },
-    { "id": "pp_rowan_1", "type": "character", "name": "Rowan", "title": "Records Clerk", "job": "Records Clerk", "species": "Fox", "study": "Commerce", "cost": 2, "shift": { "delay": 2, "output": 3 },
+      "abilities": [
+        {
+          "trigger": "onGainMarketCard",
+          "condition": {
+            "nonStatue": true
+          },
+          "effect": {
+            "do": "draw",
+            "count": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "pp_rowan_1",
+      "type": "character",
+      "name": "Rowan",
+      "title": "Records Clerk",
+      "job": "Records Clerk",
+      "species": "Fox",
+      "study": "Commerce",
+      "cost": 2,
+      "shift": {
+        "delay": 2,
+        "output": 3
+      },
       "text": "Whenever a card effect sends any Character to Unemployment, gain 1 Supply.",
-      "abilities": [ { "trigger": "onCharacterUnemployed", "effect": { "do": "gainSupply", "amount": 1 } } ] },
-    { "id": "pp_rowan_2", "type": "character", "name": "Rowan", "title": "Ombudsperson", "job": "Ombudsperson", "species": "Fox", "study": "Civics", "cost": 5, "shift": { "delay": 3, "output": 6 },
+      "abilities": [
+        {
+          "trigger": "onCharacterUnemployed",
+          "effect": {
+            "do": "gainSupply",
+            "amount": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "pp_rowan_2",
+      "type": "character",
+      "name": "Rowan",
+      "title": "Ombudsperson",
+      "job": "Ombudsperson",
+      "species": "Fox",
+      "study": "Civics",
+      "cost": 5,
+      "shift": {
+        "delay": 3,
+        "output": 6
+      },
       "text": "Upgrades Rowan. Busy: until your next turn, your Characters cannot be sent to Unemployment.",
-      "abilities": [ { "trigger": "busy", "effect": { "do": "addMod", "key": "unemploymentShield", "value": 1, "expires": "nextTurnStart" } } ] },
-
-    { "id": "pp_open_ledger", "type": "event", "name": "Open Ledger", "kind": "instant", "cost": 0, "requires": [ { "study": "Commerce", "count": 1 } ],
-      "text": "Requires a Commerce Character. Gain 2 Supply and look at the top card of the Market Deck.", "effect": { "do": "seq", "steps": [ { "do": "gainSupply", "amount": 2 }, { "do": "peekMarketDeck", "count": 1 } ] } },
-    { "id": "pp_paper_trail", "type": "event", "name": "Paper Trail", "kind": "instant", "cost": 0, "requires": [ { "species": "Raccoon", "count": 1 }, { "species": "Fox", "count": 1 } ],
-      "text": "Requires a Raccoon and a Fox. Draw 2 cards. Your opponent puts a card from their hand on top of their deck.", "effect": { "do": "seq", "steps": [ { "do": "draw", "count": 2 }, { "do": "opponentTopdeckFromHand" } ] } },
-    { "id": "pp_civic_rally", "type": "event", "name": "Civic Rally", "kind": "limited", "duration": 2, "cost": 0, "requires": [ { "study": "Civics", "count": 1 } ],
+      "abilities": [
+        {
+          "trigger": "busy",
+          "effect": {
+            "do": "addMod",
+            "key": "unemploymentShield",
+            "value": 1,
+            "expires": "nextTurnStart"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pp_open_ledger",
+      "type": "event",
+      "name": "Open Ledger",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "study": "Commerce",
+          "count": 1
+        }
+      ],
+      "text": "Requires a Commerce Character. Gain 2 Supply and look at the top card of the Market Deck.",
+      "effect": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "gainSupply",
+            "amount": 2
+          },
+          {
+            "do": "peekMarketDeck",
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "pp_paper_trail",
+      "type": "event",
+      "name": "Paper Trail",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "species": "Raccoon",
+          "count": 1
+        },
+        {
+          "species": "Fox",
+          "count": 1
+        }
+      ],
+      "text": "Requires a Raccoon and a Fox. Draw 2 cards. Your opponent puts a card from their hand on top of their deck.",
+      "effect": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "draw",
+            "count": 2
+          },
+          {
+            "do": "opponentTopdeckFromHand"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pp_civic_rally",
+      "type": "event",
+      "name": "Civic Rally",
+      "kind": "limited",
+      "duration": 2,
+      "cost": 0,
+      "requires": [
+        {
+          "study": "Civics",
+          "count": 1
+        }
+      ],
       "text": "Requires a Civics Character. Limited 2: your first bid each turn counts as 1 higher.",
-      "abilities": [ { "trigger": "passive", "key": "firstBidPlus1" } ] },
-    { "id": "pp_rumor_control", "type": "event", "name": "Rumor Control", "kind": "instant", "cost": 0, "requires": [ { "species": "Fox", "count": 1 } ],
-      "text": "Requires a Fox. Draw 1 card. Until your next turn, opponent effects cannot make you discard or lose Supply.", "effect": { "do": "seq", "steps": [ { "do": "draw", "count": 1 }, { "do": "addMod", "key": "lossShield", "value": 99, "expires": "nextTurnStart" } ] } },
-    { "id": "pp_fair_hearing", "type": "event", "name": "Fair Hearing", "kind": "instant", "cost": 0, "requires": [ { "study": "Civics", "count": 2 } ],
-      "text": "Requires two Civics Characters. Rehire a Character from your Unemployment for free. Your opponent gains 2 Supply.", "effect": { "do": "seq", "steps": [ { "do": "rehire", "free": true, "optional": false }, { "do": "opponentGainSupply", "amount": 2 } ] } },
-    { "id": "pp_market_day", "type": "event", "name": "Market Day", "kind": "limited", "duration": 2, "cost": 0, "requires": [ { "study": "Commerce", "count": 1 } ],
+      "abilities": [
+        {
+          "trigger": "passive",
+          "key": "firstBidPlus1"
+        }
+      ]
+    },
+    {
+      "id": "pp_rumor_control",
+      "type": "event",
+      "name": "Rumor Control",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "species": "Fox",
+          "count": 1
+        }
+      ],
+      "text": "Requires a Fox. Draw 1 card. Until your next turn, opponent effects cannot make you discard or lose Supply.",
+      "effect": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "draw",
+            "count": 1
+          },
+          {
+            "do": "addMod",
+            "key": "lossShield",
+            "value": 99,
+            "expires": "nextTurnStart"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pp_fair_hearing",
+      "type": "event",
+      "name": "Fair Hearing",
+      "kind": "instant",
+      "cost": 0,
+      "requires": [
+        {
+          "study": "Civics",
+          "count": 2
+        }
+      ],
+      "text": "Requires two Civics Characters. Rehire a Character from your Unemployment for free and draw 2 cards. Your opponent gains 1 Supply.",
+      "effect": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "rehire",
+            "free": true,
+            "optional": true
+          },
+          {
+            "do": "draw",
+            "count": 2
+          },
+          {
+            "do": "opponentGainSupply",
+            "amount": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "pp_market_day",
+      "type": "event",
+      "name": "Market Day",
+      "kind": "limited",
+      "duration": 2,
+      "cost": 0,
+      "requires": [
+        {
+          "study": "Commerce",
+          "count": 1
+        }
+      ],
       "text": "Requires a Commerce Character. Limited 2: your first purchase announcement each turn draws 1 card.",
-      "abilities": [ { "trigger": "onAnnounce", "oncePerTurn": true, "effect": { "do": "draw", "count": 1 } } ] },
-
-    { "id": "st_kindness", "type": "statue", "name": "Statue of Kindness", "virtue": "Kindness", "cost": 2,
+      "abilities": [
+        {
+          "trigger": "onAnnounce",
+          "oncePerTurn": true,
+          "effect": {
+            "do": "draw",
+            "count": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "st_kindness",
+      "type": "statue",
+      "name": "Statue of Kindness",
+      "virtue": "Kindness",
+      "cost": 2,
       "text": "At the start of your turn, if you have no more Characters in Unemployment than your opponent, gain 1 Supply.",
-      "abilities": [ { "trigger": "onTurnStart", "condition": { "unemploymentNotMoreThanOpponent": true }, "effect": { "do": "gainSupply", "amount": 1 } } ] },
-    { "id": "st_curiosity", "type": "statue", "name": "Statue of Curiosity", "virtue": "Curiosity", "cost": 2,
-      "text": "On gain: draw 2 cards, then discard 1 card.", "onGain": { "do": "seq", "steps": [ { "do": "draw", "count": 2 }, { "do": "discard", "count": 1 } ] } },
-    { "id": "st_courage", "type": "statue", "name": "Statue of Courage", "virtue": "Courage", "cost": 3,
-      "text": "Your next challenge bid costs 1 less Supply to pay.", "onGain": { "do": "addMod", "key": "challengeDiscount", "value": 1, "expires": "untilUsed" } },
-    { "id": "st_patience", "type": "statue", "name": "Statue of Patience", "virtue": "Patience", "cost": 3,
-      "text": "Your Masters enter play with one fewer orientation delay (they enter Busy instead of at 180°).", "abilities": [ { "trigger": "passive", "key": "masterDelayMinus1" } ] },
-    { "id": "st_generosity", "type": "statue", "name": "Statue of Generosity", "virtue": "Generosity", "cost": 4,
-      "text": "On gain: give your opponent 1 Supply and draw 2 cards.", "onGain": { "do": "seq", "steps": [ { "do": "giveSupplyToOpponent", "amount": 1 }, { "do": "draw", "count": 2 } ] } },
-    { "id": "st_ingenuity", "type": "statue", "name": "Statue of Ingenuity", "virtue": "Ingenuity", "cost": 4,
-      "text": "Once per turn, an Event you play requires one fewer Character.", "abilities": [ { "trigger": "passive", "key": "eventCharReductionPerTurn" } ] },
-    { "id": "st_community", "type": "statue", "name": "Statue of Community", "virtue": "Community", "cost": 5,
+      "abilities": [
+        {
+          "trigger": "onTurnStart",
+          "condition": {
+            "unemploymentNotMoreThanOpponent": true
+          },
+          "effect": {
+            "do": "gainSupply",
+            "amount": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "st_curiosity",
+      "type": "statue",
+      "name": "Statue of Curiosity",
+      "virtue": "Curiosity",
+      "cost": 2,
+      "text": "On gain: draw 2 cards, then discard 1 card.",
+      "onGain": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "draw",
+            "count": 2
+          },
+          {
+            "do": "discard",
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "st_courage",
+      "type": "statue",
+      "name": "Statue of Courage",
+      "virtue": "Courage",
+      "cost": 3,
+      "text": "Your next challenge bid costs 1 less Supply to pay.",
+      "onGain": {
+        "do": "addMod",
+        "key": "challengeDiscount",
+        "value": 1,
+        "expires": "untilUsed"
+      }
+    },
+    {
+      "id": "st_patience",
+      "type": "statue",
+      "name": "Statue of Patience",
+      "virtue": "Patience",
+      "cost": 3,
+      "text": "Your Masters enter play with one fewer orientation delay (they enter Busy instead of at 180\u00b0).",
+      "abilities": [
+        {
+          "trigger": "passive",
+          "key": "masterDelayMinus1"
+        }
+      ]
+    },
+    {
+      "id": "st_generosity",
+      "type": "statue",
+      "name": "Statue of Generosity",
+      "virtue": "Generosity",
+      "cost": 4,
+      "text": "On gain: give your opponent 1 Supply and draw 2 cards.",
+      "onGain": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "giveSupplyToOpponent",
+            "amount": 1
+          },
+          {
+            "do": "draw",
+            "count": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "st_ingenuity",
+      "type": "statue",
+      "name": "Statue of Ingenuity",
+      "virtue": "Ingenuity",
+      "cost": 4,
+      "text": "Once per turn, an Event you play requires one fewer Character.",
+      "abilities": [
+        {
+          "trigger": "passive",
+          "key": "eventCharReductionPerTurn"
+        }
+      ]
+    },
+    {
+      "id": "st_community",
+      "type": "statue",
+      "name": "Statue of Community",
+      "virtue": "Community",
+      "cost": 5,
       "text": "If you control Characters of at least three species, the first shift you complete each turn produces 1 extra Supply.",
-      "abilities": [ { "trigger": "onShiftCompleted", "condition": { "minSpeciesInTown": 3 }, "oncePerTurn": true, "effect": { "do": "gainSupply", "amount": 1 } } ] },
-    { "id": "st_harmony", "type": "statue", "name": "Statue of Harmony", "virtue": "Harmony", "cost": 5,
+      "abilities": [
+        {
+          "trigger": "onShiftCompleted",
+          "condition": {
+            "minSpeciesInTown": 3
+          },
+          "oncePerTurn": true,
+          "effect": {
+            "do": "gainSupply",
+            "amount": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "st_harmony",
+      "type": "statue",
+      "name": "Statue of Harmony",
+      "virtue": "Harmony",
+      "cost": 5,
       "text": "Whenever a purchase you are part of resolves with a tied bid, ready one of your Characters at the start of your next turn.",
-      "abilities": [ { "trigger": "onTiedBid", "effect": { "do": "readyNextTurn", "optional": true } } ] },
-    { "id": "st_joy", "type": "statue", "name": "Statue of Joy", "virtue": "Joy", "cost": 5,
-      "text": "On gain: ready up to two of your Apprentices.", "onGain": { "do": "readyCharacter", "filter": { "rank": "apprentice" }, "count": 2, "optional": true } },
-
-    { "id": "mk_town_charter", "type": "market", "name": "Town Charter", "cost": 1, "disposal": "cityDump",
-      "text": "The first Character you recruit before your next turn costs 1 less.", "onGain": { "do": "addMod", "key": "recruitDiscount", "value": 1, "expires": "nextTurnStart", "consumable": true } },
-    { "id": "mk_festival_grant", "type": "market", "name": "Festival Grant", "cost": 2, "disposal": "cityDump",
-      "text": "Gain 4 Supply.", "onGain": { "do": "gainSupply", "amount": 4 } },
-    { "id": "mk_emergency_reserve", "type": "market", "name": "Emergency Reserve", "cost": 2, "disposal": "outOfPlay",
-      "text": "Prevent up to 3 Supply you would lose to opponent effects. Goes Out of Play.", "onGain": { "do": "addMod", "key": "lossShield", "value": 3, "expires": "untilUsed" } },
-    { "id": "mk_mayors_seal", "type": "market", "name": "Mayor's Seal", "cost": 3, "disposal": "cityDump",
-      "text": "Your next purchase announcement cannot be challenged.", "onGain": { "do": "addMod", "key": "unchallengeable", "value": 1, "expires": "untilUsed" } },
-    { "id": "mk_library_annex", "type": "market", "name": "Library Annex", "cost": 3, "disposal": "cityDump",
-      "text": "Draw 3 cards, then discard 1 card.", "onGain": { "do": "seq", "steps": [ { "do": "draw", "count": 3 }, { "do": "discard", "count": 1 } ] } },
-    { "id": "mk_quiet_mediation", "type": "market", "name": "Quiet Mediation", "cost": 4, "disposal": "cityDump",
-      "text": "The next challenge against one of your purchases is cancelled; your bid stays open.", "onGain": { "do": "addMod", "key": "cancelNextChallenge", "value": 1, "expires": "untilUsed" } },
-    { "id": "mk_poachers_pardon", "type": "market", "name": "Poacher's Pardon", "cost": 5, "disposal": "cityDump",
+      "abilities": [
+        {
+          "trigger": "onTiedBid",
+          "effect": {
+            "do": "readyNextTurn",
+            "optional": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "st_joy",
+      "type": "statue",
+      "name": "Statue of Joy",
+      "virtue": "Joy",
+      "cost": 5,
+      "text": "On gain: ready up to two of your Apprentices.",
+      "onGain": {
+        "do": "readyCharacter",
+        "filter": {
+          "rank": "apprentice"
+        },
+        "count": 2,
+        "optional": true
+      }
+    },
+    {
+      "id": "mk_town_charter",
+      "type": "market",
+      "name": "Town Charter",
+      "cost": 1,
+      "disposal": "cityDump",
+      "text": "The first Character you recruit before your next turn costs 1 less.",
+      "onGain": {
+        "do": "addMod",
+        "key": "recruitDiscount",
+        "value": 1,
+        "expires": "nextTurnStart",
+        "consumable": true
+      }
+    },
+    {
+      "id": "mk_festival_grant",
+      "type": "market",
+      "name": "Festival Grant",
+      "cost": 2,
+      "disposal": "cityDump",
+      "text": "Gain 4 Supply.",
+      "onGain": {
+        "do": "gainSupply",
+        "amount": 4
+      }
+    },
+    {
+      "id": "mk_emergency_reserve",
+      "type": "market",
+      "name": "Emergency Reserve",
+      "cost": 2,
+      "disposal": "outOfPlay",
+      "text": "Prevent up to 3 Supply you would lose to opponent effects. Goes Out of Play.",
+      "onGain": {
+        "do": "addMod",
+        "key": "lossShield",
+        "value": 3,
+        "expires": "untilUsed"
+      }
+    },
+    {
+      "id": "mk_mayors_seal",
+      "type": "market",
+      "name": "Mayor's Seal",
+      "cost": 3,
+      "disposal": "cityDump",
+      "text": "Your next purchase announcement cannot be challenged.",
+      "onGain": {
+        "do": "addMod",
+        "key": "unchallengeable",
+        "value": 1,
+        "expires": "untilUsed"
+      }
+    },
+    {
+      "id": "mk_library_annex",
+      "type": "market",
+      "name": "Library Annex",
+      "cost": 3,
+      "disposal": "cityDump",
+      "text": "Draw 3 cards, then discard 1 card.",
+      "onGain": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "draw",
+            "count": 3
+          },
+          {
+            "do": "discard",
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "mk_quiet_mediation",
+      "type": "market",
+      "name": "Quiet Mediation",
+      "cost": 4,
+      "disposal": "cityDump",
+      "text": "The next challenge against one of your purchases is cancelled; your bid stays open.",
+      "onGain": {
+        "do": "addMod",
+        "key": "cancelNextChallenge",
+        "value": 1,
+        "expires": "untilUsed"
+      }
+    },
+    {
+      "id": "mk_poachers_pardon",
+      "type": "market",
+      "name": "Poacher's Pardon",
+      "cost": 5,
+      "disposal": "cityDump",
       "text": "Send an opponent's Character to Unemployment, then discard 2 cards. (Cannot target a Character that has not yet been upright on its owner's turn.)",
-      "onGain": { "do": "seq", "steps": [ { "do": "unemployOpponentCharacter", "optional": true }, { "do": "discard", "count": 2 } ] } },
-    { "id": "mk_town_bell", "type": "market", "name": "Town Bell", "cost": 1, "disposal": "cityDump",
-      "text": "Ready one of your Apprentices.", "onGain": { "do": "readyCharacter", "filter": { "rank": "apprentice" }, "count": 1, "optional": true } },
-    { "id": "mk_supply_depot", "type": "market", "name": "Supply Depot", "cost": 2, "disposal": "cityDump",
-      "text": "Gain 3 Supply.", "onGain": { "do": "gainSupply", "amount": 3 } },
-    { "id": "mk_public_gardens", "type": "market", "name": "Public Gardens", "cost": 2, "disposal": "cityDump",
-      "text": "The next shift you complete produces 2 extra Supply.", "onGain": { "do": "addMod", "key": "shiftBonus", "value": 2, "expires": "untilUsed" } },
-    { "id": "mk_courier_network", "type": "market", "name": "Courier Network", "cost": 3, "disposal": "cityDump",
-      "text": "Look at the top five cards of your deck and put them back in any order.", "onGain": { "do": "reorderDeckTop", "count": 5 } },
-    { "id": "mk_community_kitchen", "type": "market", "name": "Community Kitchen", "cost": 3, "disposal": "cityDump",
-      "text": "Rehire a cost-1 Character from your Unemployment for free; it enters upright.", "onGain": { "do": "rehire", "free": true, "filter": { "cost": 1 }, "optional": true } },
-    { "id": "mk_appeal_board", "type": "market", "name": "Appeal Board", "cost": 4, "disposal": "cityDump",
-      "text": "Your next rehire costs 2 less Supply.", "onGain": { "do": "addMod", "key": "rehireDiscount", "value": 2, "expires": "untilUsed" } },
-    { "id": "mk_scrap_yard", "type": "market", "name": "Scrap Yard", "cost": 4, "disposal": "cityDump",
+      "onGain": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "unemployOpponentCharacter",
+            "optional": true
+          },
+          {
+            "do": "discard",
+            "count": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "mk_town_bell",
+      "type": "market",
+      "name": "Town Bell",
+      "cost": 1,
+      "disposal": "cityDump",
+      "text": "Ready one of your Apprentices.",
+      "onGain": {
+        "do": "readyCharacter",
+        "filter": {
+          "rank": "apprentice"
+        },
+        "count": 1,
+        "optional": true
+      }
+    },
+    {
+      "id": "mk_supply_depot",
+      "type": "market",
+      "name": "Supply Depot",
+      "cost": 2,
+      "disposal": "cityDump",
+      "text": "Gain 3 Supply.",
+      "onGain": {
+        "do": "gainSupply",
+        "amount": 3
+      }
+    },
+    {
+      "id": "mk_public_gardens",
+      "type": "market",
+      "name": "Public Gardens",
+      "cost": 2,
+      "disposal": "cityDump",
+      "text": "The next shift you complete produces 2 extra Supply.",
+      "onGain": {
+        "do": "addMod",
+        "key": "shiftBonus",
+        "value": 2,
+        "expires": "untilUsed"
+      }
+    },
+    {
+      "id": "mk_courier_network",
+      "type": "market",
+      "name": "Courier Network",
+      "cost": 3,
+      "disposal": "cityDump",
+      "text": "Look at the top five cards of your deck and put them back in any order.",
+      "onGain": {
+        "do": "reorderDeckTop",
+        "count": 5
+      }
+    },
+    {
+      "id": "mk_community_kitchen",
+      "type": "market",
+      "name": "Community Kitchen",
+      "cost": 3,
+      "disposal": "cityDump",
+      "text": "Rehire a cost-1 Character from your Unemployment for free; it enters upright.",
+      "onGain": {
+        "do": "rehire",
+        "free": true,
+        "filter": {
+          "cost": 1
+        },
+        "optional": true
+      }
+    },
+    {
+      "id": "mk_appeal_board",
+      "type": "market",
+      "name": "Appeal Board",
+      "cost": 4,
+      "disposal": "cityDump",
+      "text": "Your next rehire costs 2 less Supply.",
+      "onGain": {
+        "do": "addMod",
+        "key": "rehireDiscount",
+        "value": 2,
+        "expires": "untilUsed"
+      }
+    },
+    {
+      "id": "mk_scrap_yard",
+      "type": "market",
+      "name": "Scrap Yard",
+      "cost": 4,
+      "disposal": "cityDump",
       "text": "You may discard a card to send an opponent's Character with cost 2 or less to Unemployment. (Cannot target a Character that has not yet been upright on its owner's turn.)",
-      "onGain": { "do": "unemployOpponentCharacter", "maxCost": 2, "discardFirst": 1, "optional": true } },
-    { "id": "mk_town_archives", "type": "market", "name": "Town Archives", "cost": 5, "disposal": "outOfPlay",
-      "text": "Return an Event from your Town Dump to your hand. Goes Out of Play.", "onGain": { "do": "eventFromDumpToHand", "optional": true } },
-    { "id": "mk_town_clock", "type": "market", "name": "Town Clock", "cost": 5, "disposal": "cityDump",
-      "text": "At the start of your next turn, advance all your Characters one extra orientation step.", "onGain": { "do": "addMod", "key": "extraAdvance", "value": 1, "expires": "untilUsed" } }
+      "onGain": {
+        "do": "unemployOpponentCharacter",
+        "maxCost": 2,
+        "discardFirst": 1,
+        "optional": true
+      }
+    },
+    {
+      "id": "mk_town_archives",
+      "type": "market",
+      "name": "Town Archives",
+      "cost": 5,
+      "disposal": "outOfPlay",
+      "text": "Return an Event from your Town Dump to your hand. Goes Out of Play.",
+      "onGain": {
+        "do": "eventFromDumpToHand",
+        "optional": true
+      }
+    },
+    {
+      "id": "mk_town_clock",
+      "type": "market",
+      "name": "Town Clock",
+      "cost": 5,
+      "disposal": "cityDump",
+      "text": "At the start of your next turn, advance all your Characters one extra orientation step.",
+      "onGain": {
+        "do": "addMod",
+        "key": "extraAdvance",
+        "value": 1,
+        "expires": "untilUsed"
+      }
+    }
   ],
-  "marketDeck": ["st_kindness", "st_curiosity", "st_courage", "st_patience", "st_generosity", "st_ingenuity", "st_community", "st_harmony", "st_joy",
-    "mk_town_charter", "mk_festival_grant", "mk_emergency_reserve", "mk_mayors_seal", "mk_library_annex", "mk_quiet_mediation", "mk_poachers_pardon",
-    "mk_town_bell", "mk_supply_depot", "mk_public_gardens", "mk_courier_network", "mk_community_kitchen", "mk_appeal_board", "mk_scrap_yard", "mk_town_archives", "mk_town_clock"]
+  "marketDeck": [
+    "st_kindness",
+    "st_curiosity",
+    "st_courage",
+    "st_patience",
+    "st_generosity",
+    "st_ingenuity",
+    "st_community",
+    "st_harmony",
+    "st_joy",
+    "mk_town_charter",
+    "mk_festival_grant",
+    "mk_emergency_reserve",
+    "mk_mayors_seal",
+    "mk_library_annex",
+    "mk_quiet_mediation",
+    "mk_poachers_pardon",
+    "mk_town_bell",
+    "mk_supply_depot",
+    "mk_public_gardens",
+    "mk_courier_network",
+    "mk_community_kitchen",
+    "mk_appeal_board",
+    "mk_scrap_yard",
+    "mk_town_archives",
+    "mk_town_clock"
+  ]
 }

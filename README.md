@@ -63,7 +63,7 @@ npm run playtest -- --p0 random --p1 heuristic  # Choose agents
 ## Prototype decisions
 
 The `assumptions` array in `spec/game.json` documents current prototype choices:
-- Second player starts with +1 Supply (first-player offset)
+- Second player starts with +2 Supply and +1 card (first-player offset, tuned by playtest)
 - Multiple pending purchases allowed simultaneously (one per Capital City card), each with at most one challenge
 - Bids are escrowed when announced or challenged; refunded to loser
 - Upgrading preserves stack orientation and re-triggers recruit abilities

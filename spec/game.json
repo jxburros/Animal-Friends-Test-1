@@ -7,10 +7,11 @@
   "setup": {
     "deckSize": 30,
     "startingSupply": 6,
-    "secondPlayerBonusSupply": 1,
+    "secondPlayerBonusSupply": 2,
     "startingHand": 5,
     "marketDeckSize": 25,
-    "capitalCitySize": 5
+    "capitalCitySize": 5,
+    "secondPlayerBonusCards": 1
   },
   "victory": {
     "statueTotal": 9,
@@ -22,17 +23,46 @@
     "upright": 0,
     "busy": 270,
     "masterEntry": 180,
-    "advanceOrder": [180, 270, 0],
+    "advanceOrder": [
+      180,
+      270,
+      0
+    ],
     "$comment": "Section 5: non-upright Characters rotate clockwise one quarter turn at the start of their owner's turn: 180 -> 270 -> 0."
   },
   "ranks": {
-    "apprentice": { "minCost": 0, "maxCost": 1, "entryOrientation": 0 },
-    "journeyman": { "minCost": 2, "maxCost": 3, "entryOrientation": 270 },
-    "master": { "minCost": 4, "maxCost": 5, "entryOrientation": 180 }
+    "apprentice": {
+      "minCost": 0,
+      "maxCost": 1,
+      "entryOrientation": 0
+    },
+    "journeyman": {
+      "minCost": 2,
+      "maxCost": 3,
+      "entryOrientation": 270
+    },
+    "master": {
+      "minCost": 4,
+      "maxCost": 5,
+      "entryOrientation": 180
+    }
   },
-  "phases": ["start", "resources", "ready", "actions", "end"],
+  "phases": [
+    "start",
+    "resources",
+    "ready",
+    "actions",
+    "end"
+  ],
   "resources": {
-    "choices": { "draw": { "cards": 1 }, "supply": { "amount": 2 } }
+    "choices": {
+      "draw": {
+        "cards": 1
+      },
+      "supply": {
+        "amount": 2
+      }
+    }
   },
   "shifts": {
     "$comment": "A working Character stays Busy for its full delay: it does not advance orientation at Ready while a shift is in progress. The shift produces Supply at the End phase in which its remaining delay reaches 0; the Character readies normally afterwards. An effect that readies a working Character completes its shift immediately.",
@@ -40,13 +70,14 @@
     "readyEffectCompletesShift": true
   },
   "market": {
-    "$comment": "Section 8. Refill only when the Capital City is empty. Reshuffle the City Dump into the Market Deck when the Market Deck is empty; cards in use and Out of Play never return.",
+    "$comment": "Section 8. Refill only when the Capital City is empty. Reshuffle the City Dump into the Market Deck when the Market Deck is empty; cards in use and Out of Play never return. Prototype addition: if no Capital City card has been gained for market.staleTurns consecutive turns (and nothing is pending), the display is swept (Statues return to the Market Deck, other cards go to the City Dump) and redealt.",
     "refillWhenEmpty": true,
     "minimumBidIsCardCost": true,
     "oneChallengePerPurchase": true,
     "tiesGoToAnnouncer": true,
     "bidsAreEscrowed": true,
-    "pendingResolvesAtAnnouncerStart": true
+    "pendingResolvesAtAnnouncerStart": true,
+    "staleTurns": 6
   },
   "unemployment": {
     "rehireCostsFullPrintedCost": true,
@@ -70,12 +101,13 @@
     "$comment": "Safety cap for automated playtests; a game that reaches the cap is scored by Statue count, then Supply."
   },
   "assumptions": [
-    "Second player starts with one extra Supply (setup.secondPlayerBonusSupply) to offset going second.",
+    "Second player starts with two extra Supply and one extra card (setup.secondPlayerBonusSupply / secondPlayerBonusCards); playtests with the heuristic AI put the first player at 51% with this offset versus 56% with none.",
     "A player may have several pending purchases at once (one per Capital City card); each may receive at most one challenge.",
     "Committed bids are escrowed when announced or challenged and refunded to the loser.",
     "Upgrading keeps the stack's current orientation and re-triggers the new card's recruit abilities.",
     "Readying a Character that is mid-shift completes the shift at once.",
     "Reactive abilities (Rowan, Ombudsperson; Rumor Control; Emergency Reserve) are implemented as shields set on your own turn that last until your next turn starts.",
-    "When the player deck is empty, the Town Dump is shuffled into it."
+    "When the player deck is empty, the Town Dump is shuffled into it.",
+    "Stale market: if nobody gains a Capital City card for six consecutive turns, the display is swept and redealt so the game cannot stall on unwanted cards."
   ]
 }

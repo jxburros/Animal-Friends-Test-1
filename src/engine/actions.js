@@ -315,8 +315,9 @@ export async function applyAction(state, pi, a) {
       const pay = challengePayment(state, pi, bid);
       if (bid < minBid || pay > p.supply) throw new Error('Invalid challenge bid');
       s.orientation = BUSY;
-      p.turn.bids++;
       p.stats.challenges++;
+      const bonus = bidBonus(state, pi);
+      p.turn.bids++;
       const o = state.players[oi];
       if (hasMod(o, 'cancelNextChallenge')) {
         consumeMod(o, 'cancelNextChallenge');
@@ -326,7 +327,7 @@ export async function applyAction(state, pi, a) {
       if (getMod(p, 'challengeDiscount')) consumeMod(p, 'challengeDiscount');
       p.supply -= pay;
       p.escrow += pay;
-      pd.challenge = { player: pi, bid, paid: pay, bonus: bidBonus(state, pi), charUid: s.uid, winsTies: hasPassive(state, pi, 'winTiesAsChallenger') };
+      pd.challenge = { player: pi, bid, paid: pay, bonus, charUid: s.uid, winsTies: hasPassive(state, pi, 'winTiesAsChallenger') };
       log(state, pi, `${p.name} challenges the purchase of ${cardDef(state, pd.cardId).name} with ${topCard(state, s).name}, bidding ${bid}${pd.challenge.bonus ? ` (+${pd.challenge.bonus})` : ''}.`);
       await fireHook(state, 'onChallengedByOpponent', { player: oi, pendingId: pd.id });
       return false;
