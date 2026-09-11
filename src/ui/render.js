@@ -187,10 +187,15 @@ export function rankLabel(def) {
  * Build a card face. `large` is the hand/spotlight size; `interactive` faces get the hover peek and foil
  * pointer tracking (turned off for animation clones).
  */
+/** The rarity slug used in class names: "Super Rare" -> "super-rare". */
+export function raritySlug(def) {
+  return def && def.rarity ? def.rarity.toLowerCase().replace(/\s+/g, '-') : 'common';
+}
+
 export function buildCardFace(def, { large = false, interactive = true } = {}) {
   const rank = def.type === 'character' && activeRules() ? rankOf(activeRules(), def.cost) : null;
   const face = h('div', {
-    class: `card-face t-${def.type}${large ? ' large' : ''}${def.foil ? ' foil' : ''}${rank ? ` rank-${rank}` : ''}`,
+    class: `card-face t-${def.type}${large ? ' large' : ''}${def.foil ? ' foil' : ''}${rank ? ` rank-${rank}` : ''} rar-${raritySlug(def)}`,
     'data-card': def.id,
     'data-peek': interactive && !large ? '1' : null,
   });
@@ -198,6 +203,13 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
   if (def.cost !== undefined) banner.appendChild(h('div', { class: 'cost', title: `Cost ${def.cost} Supply` }, String(def.cost)));
   banner.appendChild(h('div', { class: 'cname' }, def.type === 'statue' && def.virtue ? def.virtue : def.name));
   banner.appendChild(h('div', { class: 'ticon', html: iconSVG(typeIconName(def)) }));
+  if (def.rarity) {
+    const p = def.power || {};
+    const title = p.score !== undefined
+      ? `${def.rarity} — rated ${p.score} (power ${p.power} against an opportunity cost of ${p.opportunityCost})`
+      : def.rarity;
+    banner.appendChild(h('div', { class: `gem rar-${raritySlug(def)}`, title }));
+  }
   face.appendChild(banner);
   face.appendChild(h('div', { class: 'art', html: cardArtSVG(def) }));
 

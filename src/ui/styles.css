@@ -162,6 +162,22 @@ input[type=range]{width:100%;accent-color:var(--gold)}
 .card-face .cost{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a8,#e6a400 60%,#b3730e);border:1.5px solid #6b4423;color:#3b2a1a;font-weight:bold;font-size:9.5px;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 1px 0 rgba(0,0,0,.25)}
 .card-face .cname{flex:1;font-weight:bold;font-size:9.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 0 rgba(0,0,0,.35);letter-spacing:.2px}
 .card-face .ticon{width:12px;height:12px;color:#fff;opacity:.95;flex:none}
+/* Rarity: a gem in the banner and a matching edge, so the curve is visible at a glance. */
+.card-face .gem{width:9px;height:9px;flex:none;transform:rotate(45deg);border-radius:1.5px;border:1px solid rgba(0,0,0,.45);box-shadow:inset 0 0 2px rgba(255,255,255,.7)}
+.card-face .gem.rar-common{background:#b9b2a6}
+.card-face .gem.rar-uncommon{background:#6fa96b}
+.card-face .gem.rar-rare{background:#5b8fd0}
+.card-face .gem.rar-super-rare{background:#a874d2}
+.card-face .gem.rar-legendary{background:linear-gradient(135deg,#ffd766,#e68a2e 55%,#ffe9a8)}
+.card-face.large .gem{width:13px;height:13px}
+.card-face.rar-super-rare .frame{box-shadow:inset 0 0 0 1px rgba(168,116,210,.55)}
+.card-face.rar-legendary .frame{box-shadow:inset 0 0 0 1px rgba(230,138,46,.65)}
+.rarity-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--ink-soft,#6b5a45)}
+.rarity-tag::before{content:'';width:8px;height:8px;transform:rotate(45deg);border-radius:1.5px;border:1px solid rgba(0,0,0,.4);background:#b9b2a6}
+.rarity-tag.rar-uncommon::before{background:#6fa96b}
+.rarity-tag.rar-rare::before{background:#5b8fd0}
+.rarity-tag.rar-super-rare::before{background:#a874d2}
+.rarity-tag.rar-legendary::before{background:linear-gradient(135deg,#ffd766,#e68a2e 55%,#ffe9a8)}
 .card-face .ticon svg{width:100%;height:100%}
 .card-face .art{height:58px;flex:none;background:var(--tint);border-bottom:1.5px solid var(--edge);position:relative;overflow:hidden}
 .card-face .art svg{width:100%;height:100%;display:block}
