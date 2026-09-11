@@ -66,7 +66,7 @@ describe('announcing a purchase', () => {
   });
 });
 
-describe('challenging', () => {
+describe('bid wars', () => {
   function setupPending(state, { annBid = 3 } = {}) {
     setSupply(state, 0, 10);
     setSupply(state, 1, 10);
@@ -76,65 +76,106 @@ describe('challenging', () => {
     return applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: annChar.uid, bid: annBid, minBid: 2, maxBid: 10 })
       .then(() => state.market.pending[0]);
   }
+  const resolveFor = (state, pi) => {
+    state.agents = [{ choose: async () => 'supply' }, { choose: async () => 'supply' }];
+    return startPhase(state, pi);
+  };
 
-  test('a challenge must bid higher; a higher challenger wins and only the winner pays', async () => {
+  test('a raise must beat the standing bid, and the loser forfeits half of what they pledged', async () => {
     const state = newGame();
     const pd = await setupPending(state, { annBid: 3 });
     const chChar = addStack(state, 1, 'pp_patch_1', UPRIGHT);
     begin(state, 1);
-    await applyAction(state, 1, { type: 'challenge', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 5, minBid: 4, maxBid: 10 });
+    await assert.rejects(
+      () => applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 3, minBid: 4, maxBid: 10 }),
+      /Invalid bid/,
+      'matching the standing bid is not enough',
+    );
+    await applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 5, minBid: 4, maxBid: 10 });
     assert.equal(state.players[1].escrow, 5);
-    state.agents = [{ choose: async () => 'supply' }, {}];
-    await startPhase(state, 0); // announcer's next turn: resolves
-    assert.equal(state.players[1].supply, 10 - 5 + 4, 'challenger paid their bid and got the card');
+    assert.equal(pd.high, 1, 'the raiser is now the high bidder');
+    await resolveFor(state, 1); // resolves at the high bidder's next turn
+    assert.equal(state.players[1].supply, 10 - 5 + 4, 'the winner paid their bid in full and gained the card');
     assert.equal(state.players[1].escrow, 0);
-    assert.equal(state.players[0].supply, 10 - 3 + 3, 'announcer loses nothing extra, escrow refunded');
-    assert.equal(state.players[0].escrow, 0, "loser's escrow is refunded");
+    assert.equal(state.players[0].supply, 10 - 2 + 0, 'the loser forfeits ceil(3/2)=2 of the 3 pledged');
+    assert.equal(state.players[0].escrow, 0, 'the rest of the losing escrow is refunded');
   });
 
-  test('an equal bid loses to the announcer (ties go to announcer)', async () => {
+  test('bidding goes back and forth until one Mayor declines, and each bid costs another Character', async () => {
+    const state = newGame();
+    const pd = await setupPending(state, { annBid: 3 });
+    const a2 = addStack(state, 0, 'bb_mabel_1', UPRIGHT);
+    const b1 = addStack(state, 1, 'pp_patch_1', UPRIGHT);
+    const b2 = addStack(state, 1, 'pp_juniper_1', UPRIGHT);
+
+    begin(state, 1);
+    await applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: b1.uid, bid: 4, minBid: 4, maxBid: 10 });
+    assert.equal(b1.orientation, BUSY, 'raising makes the chosen Character Busy');
+
+    begin(state, 0); // the announcer can answer, which the old one-shot challenge never allowed
+    await applyAction(state, 0, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: a2.uid, bid: 6, minBid: 5, maxBid: 13 });
+    assert.equal(pd.high, 0);
+    assert.equal(state.players[0].escrow, 6, 'escrow tops up to the new bid rather than stacking');
+
+    begin(state, 1);
+    await applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: b2.uid, bid: 8, minBid: 7, maxBid: 14 });
+    assert.equal(pd.rounds.length, 4, 'four bids were made');
+    assert.equal(pd.high, 1);
+
+    // Player 0 has no upright Character left to bid with, so the auction is over.
+    begin(state, 0);
+    assert.equal(legalActions(state, 0).some((a) => a.type === 'raise'), false, 'no upright Character means no answer');
+    await resolveFor(state, 1);
+    assert.equal(state.players[1].supply, 10 - 8 + 4, 'the last bidder standing pays 8 and gains the card');
+    assert.equal(state.players[0].supply, 10 - 3, 'the loser forfeits half of the 6 they pledged');
+  });
+
+  test('an equal bid loses to the standing bid (ties go to the high bidder)', async () => {
     const state = newGame();
     const pd = await setupPending(state, { annBid: 3 });
     const chChar = addStack(state, 1, 'pp_patch_1', UPRIGHT);
     begin(state, 1);
-    // Minimum legal challenge bid is already announcer+1, so force an equal bid directly to test resolution logic.
-    pd.challenge = { player: 1, bid: 3, paid: 3, bonus: 0, charUid: chChar.uid, winsTies: false };
+    // The minimum legal raise is already standing+1, so stage an equal bid directly to test resolution.
+    pd.bid = 3;
+    pd.committed[1] = 3;
+    pd.rounds.push({ player: 1, bid: 3, bonus: 0, turn: state.turnNumber });
     state.players[1].supply -= 3;
     state.players[1].escrow += 3;
-    state.agents = [{ choose: async () => 'supply' }, {}];
-    await startPhase(state, 0);
-    assert.equal(state.players[0].supply, 10 - 3 + 4, 'announcer wins the tie and gains the card');
-    assert.equal(state.players[1].supply, 10 - 3 + 3, "challenger's escrow is refunded on a tie loss");
+    assert.equal(pd.high, 0, 'a tie never takes the lead');
+    void chChar;
+    await resolveFor(state, 0);
+    assert.equal(state.players[0].supply, 10 - 3 + 4, 'the standing bidder wins the tie and gains the card');
+    assert.equal(state.players[1].supply, 10 - 2, 'the tied loser still forfeits half of their pledge');
   });
 
-  test('Poppy, Civic Planner lets her controller win ties as challenger', async () => {
+  test('Poppy, Civic Planner lets her controller take the lead on a tie', async () => {
     const state = newGame();
     const pd = await setupPending(state, { annBid: 3 });
-    giveStatue(state, 1, 'st_kindness'); // unrelated statue, just to prove non-Poppy statues don't grant this
+    giveStatue(state, 1, 'st_patience'); // an unrelated Statue, to prove it is Poppy granting this
     addStack(state, 1, 'bb_poppy_2', UPRIGHT); // Poppy, Civic Planner: winTiesAsChallenger passive
-    const chChar = state.players[1].town.find((s) => s.cards[0].cardId === 'bb_poppy_2');
     begin(state, 1);
-    const acts = legalActions(state, 1);
-    const chAct = acts.find((a) => a.type === 'challenge');
-    assert.ok(chAct, 'a challenge action should be legal');
-    assert.equal(chAct.minBid, 3, 'Poppy lets the challenger tie (announcer bid 3) instead of needing 4');
-    await applyAction(state, 1, chAct);
-    state.agents = [{ choose: async () => 'supply' }, {}];
-    await startPhase(state, 0);
-    assert.equal(state.players[1].supply, 10 - 3 + 4, 'challenger wins the tie thanks to Poppy');
+    const raise = legalActions(state, 1).find((a) => a.type === 'raise');
+    assert.ok(raise, 'a raise should be legal');
+    assert.equal(raise.minBid, 3, 'Poppy can match the standing 3 instead of needing 4');
+    await applyAction(state, 1, raise);
+    void pd;
+    await resolveFor(state, 1);
+    assert.equal(state.players[1].supply, 10 - 3 + 4, 'the tie takes the lead thanks to Poppy');
   });
 
-  test('only one challenge is permitted per purchase', async () => {
+  test('an auction resolves at the high bidder\'s turn start, not the announcer\'s', async () => {
     const state = newGame();
     const pd = await setupPending(state, { annBid: 3 });
     const chChar = addStack(state, 1, 'pp_patch_1', UPRIGHT);
     begin(state, 1);
-    await applyAction(state, 1, { type: 'challenge', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 5, minBid: 4, maxBid: 10 });
-    const otherChar = addStack(state, 1, 'pp_juniper_1', UPRIGHT);
-    await assert.rejects(() => applyAction(state, 1, { type: 'challenge', pendingId: pd.id, cardId: pd.cardId, charUid: otherChar.uid, bid: 6, minBid: 6, maxBid: 10 }));
+    await applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 5, minBid: 4, maxBid: 10 });
+    await resolveFor(state, 0); // the announcer's turn: they are no longer winning, so nothing settles
+    assert.equal(state.market.pending.length, 1, 'the auction is still open for the announcer to answer');
+    await resolveFor(state, 1);
+    assert.equal(state.market.pending.length, 0, 'it settles once the high bidder comes round again');
   });
 
-  test("Mayor's Seal blocks challenges on the next announcement", async () => {
+  test("Mayor's Seal blocks raises on the next announcement", async () => {
     const state = newGame();
     setSupply(state, 0, 10);
     setSupply(state, 1, 10);
@@ -147,10 +188,10 @@ describe('challenging', () => {
     assert.equal(pd.unchallengeable, true);
     const chChar = addStack(state, 1, 'pp_patch_1', UPRIGHT);
     begin(state, 1);
-    await assert.rejects(() => applyAction(state, 1, { type: 'challenge', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 3, minBid: 3, maxBid: 10 }));
+    await assert.rejects(() => applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 3, minBid: 3, maxBid: 10 }));
   });
 
-  test('Quiet Mediation cancels the next challenge against the announcer', async () => {
+  test('Quiet Mediation cancels the next raise against the standing bidder', async () => {
     const state = newGame();
     setSupply(state, 0, 10);
     setSupply(state, 1, 10);
@@ -162,25 +203,36 @@ describe('challenging', () => {
     const pd = state.market.pending[0];
     const chChar = addStack(state, 1, 'pp_patch_1', UPRIGHT);
     begin(state, 1);
-    await applyAction(state, 1, { type: 'challenge', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 3, minBid: 3, maxBid: 10 });
-    assert.equal(pd.challenge, null, 'the challenge never registers');
-    assert.equal(chChar.orientation, BUSY, "the challenger's character still commits to being Busy");
+    await applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 3, minBid: 3, maxBid: 10 });
+    assert.equal(pd.high, 0, 'the raise never registers');
+    assert.equal(pd.rounds.length, 1);
+    assert.equal(chChar.orientation, BUSY, "the raiser's Character still commits to being Busy");
     assert.equal(state.players[0].mods.some((m) => m.key === 'cancelNextChallenge'), false, 'the mod is consumed');
   });
 
-  test('Statue of Courage makes the next challenge cost 1 less to pay (but bid is unaffected)', async () => {
+  test('Statue of Courage makes the next raise cost 1 less to pay (the bid itself is unaffected)', async () => {
     const state = newGame();
     const pd = await setupPending(state, { annBid: 3 });
-    giveStatue(state, 1, 'st_courage');
     addMod(state, 1, 'challengeDiscount', 1, 'untilUsed');
     const chChar = addStack(state, 1, 'pp_patch_1', UPRIGHT);
     begin(state, 1);
-    await applyAction(state, 1, { type: 'challenge', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 4, minBid: 4, maxBid: 10 });
+    await applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 4, minBid: 4, maxBid: 10 });
     assert.equal(state.players[1].escrow, 3, 'paid 1 less than the bid amount');
-    assert.equal(pd.challenge.bid, 4, 'the recorded bid itself is still 4');
+    assert.equal(pd.bid, 4, 'the recorded bid itself is still 4');
   });
 
-  test('Patch, Town Auditor draws a card when the announcer is challenged', async () => {
+  test('Statue of Harmony\'s burden makes its controller pay a losing bid in full', async () => {
+    const state = newGame();
+    const pd = await setupPending(state, { annBid: 4 });
+    giveStatue(state, 0, 'st_harmony');
+    const chChar = addStack(state, 1, 'pp_patch_1', UPRIGHT);
+    begin(state, 1);
+    await applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 6, minBid: 5, maxBid: 10 });
+    await resolveFor(state, 1);
+    assert.equal(state.players[0].supply, 10 - 4, 'all 4 pledged Supply is forfeit, not half');
+  });
+
+  test('Patch, Town Auditor draws a card when an opponent raises against you', async () => {
     const state = newGame();
     setSupply(state, 0, 10);
     setSupply(state, 1, 10);
@@ -193,8 +245,8 @@ describe('challenging', () => {
     const chChar = addStack(state, 1, 'pp_juniper_1', UPRIGHT);
     begin(state, 1);
     const before = state.players[0].hand.length;
-    await applyAction(state, 1, { type: 'challenge', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 3, minBid: 3, maxBid: 10 });
-    assert.equal(state.players[0].hand.length, before + 1, 'Patch draws for the announcer when challenged');
+    await applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 3, minBid: 3, maxBid: 10 });
+    assert.equal(state.players[0].hand.length, before + 1, 'Patch draws for the outbid Mayor');
   });
 
   test('Market Day draws on the first announcement of the turn', async () => {

@@ -1,7 +1,7 @@
 // Turn structure: Start → Resources → Ready → Actions → End, plus the whole-game runner.
-import { cardDef, topCard, log, opponentOf, expireMods, consumeMod, hasMod, refillCity, sweepStaleCity, freshTurnCounters, UPRIGHT, BUSY, findStack } from './state.js';
-import { ask, draw, gainSupply, completeShift, readyStack, gainMarketCard, fireHook, checkVictory } from './effects.js';
-import { legalActions, applyAction } from './actions.js';
+import { cardDef, topCard, log, opponentOf, expireMods, consumeMod, hasMod, hasPassive, refillCity, sweepStaleCity, freshTurnCounters, UPRIGHT, BUSY, findStack } from './state.js';
+import { ask, draw, gainSupply, completeShift, readyStack, gainMarketCard, fireHook, checkVictory, flushReveals } from './effects.js';
+import { legalActions, applyAction, forfeitOf } from './actions.js';
 
 const MAX_ACTIONS_PER_TURN = 60;
 
@@ -12,51 +12,71 @@ export async function startPhase(state, pi) {
   p.turn = freshTurnCounters();
   expireMods(p, 'nextTurnStart');
   log(state, pi, `— Turn ${state.turnNumber}: ${p.name} (Supply ${p.supply}, hand ${p.hand.length}, Statues ${p.victoryRow.length}) —`, { kind: 'turnStart', player: pi, turn: state.turnNumber });
-  // Resolve pending purchases announced by this player.
-  const mine = state.market.pending.filter((pd) => pd.announcer === pi);
-  for (const pd of mine) await resolvePurchase(state, pd);
+  // Every auction this player is still winning resolves now: the players alternate turns, so a standing
+  // high bid at the start of your own turn means your rival had a turn and chose not to answer it.
+  const mine = state.market.pending.filter((pd) => pd.high === pi);
+  for (const pd of mine) {
+    if (state.winner !== null) break; // a Statue won the game; later auctions never settle
+    await resolvePurchase(state, pd);
+  }
   state.market.turnsSinceGain++;
   sweepStaleCity(state);
+  await flushReveals(state);
   // Characters flagged to be ready at the start of this turn.
   for (const s of p.town.slice()) if (s.readyNextTurn) await readyStack(state, pi, s, 'ready-next-turn effect');
   await fireHook(state, 'onTurnStart', { player: pi });
 }
 
+/** Free every Character pledged to this auction: they resume advancing at their owner's next Ready. */
+export function releaseBidders(state, pd) {
+  for (let pi = 0; pi < 2; pi++) {
+    for (const uid of pd.chars[pi]) {
+      const s = findStack(state, pi, uid);
+      if (s && s.lockedBid === pd.id) s.lockedBid = null;
+    }
+  }
+}
+
+/**
+ * Settle a finished auction. The winner spends everything they escrowed; the loser forfeits half of
+ * theirs (Statue of Harmony's burden makes them pay it all) and is refunded the rest, so a bidding war
+ * you walk away from still costs you.
+ */
 export async function resolvePurchase(state, pd) {
   const m = state.market;
   m.pending.splice(m.pending.indexOf(pd), 1);
-  const ann = state.players[pd.announcer];
+  releaseBidders(state, pd);
   const def = cardDef(state, pd.cardId);
-  let winner = pd.announcer;
-  let tied = false;
-  if (pd.challenge) {
-    const ch = state.players[pd.challenge.player];
-    const annEff = pd.bid + pd.bonus;
-    const chEff = pd.challenge.bid + pd.challenge.bonus;
-    if (chEff > annEff || (chEff === annEff && pd.challenge.winsTies)) winner = pd.challenge.player;
-    tied = chEff === annEff;
-    log(state, pd.announcer, `Purchase of ${def.name} resolves: ${ann.name} bid ${annEff}, ${ch.name} bid ${chEff}${tied ? ' (tie)' : ''}. ${state.players[winner].name} wins.`, { kind: 'resolve', cardId: pd.cardId, winner, loser: opponentOf(winner), announcer: pd.announcer, challenger: pd.challenge.player, winningBid: winner === pd.announcer ? annEff : chEff, tied, refund: winner === pd.announcer ? pd.challenge.paid : pd.bid });
-    // settle escrow
-    if (winner === pd.announcer) {
-      ann.escrow -= pd.bid;
-      ch.escrow -= pd.challenge.paid;
-      ch.supply += pd.challenge.paid;
-    } else {
-      ch.escrow -= pd.challenge.paid;
-      ann.escrow -= pd.bid;
-      ann.supply += pd.bid;
-    }
-  } else {
-    ann.escrow -= pd.bid;
-    log(state, pd.announcer, `Purchase of ${def.name} resolves unchallenged for ${pd.bid} Supply.`, { kind: 'resolve', cardId: pd.cardId, winner, announcer: pd.announcer, challenger: null, winningBid: pd.bid, tied: false, refund: 0 });
-  }
+  const winner = pd.high;
+  const loser = opponentOf(winner);
+  const win = state.players[winner];
+  const lose = state.players[loser];
+  const contested = pd.rounds.length > 1;
+  const winningBid = pd.bid + pd.bonus;
+  const tied = contested && pd.rounds[pd.rounds.length - 2].bid + pd.rounds[pd.rounds.length - 2].bonus === winningBid;
+
+  win.escrow -= pd.committed[winner];
+  const escrowed = pd.committed[loser];
+  const forfeit = forfeitOf(state, loser, escrowed);
+  lose.escrow -= escrowed;
+  lose.supply += escrowed - forfeit;
+
+  log(
+    state, winner,
+    contested
+      ? `The auction for ${def.name} closes after ${pd.rounds.length} bids: ${win.name} wins at ${winningBid}. ${lose.name} forfeits ${forfeit} of ${escrowed} Supply pledged.`
+      : `Purchase of ${def.name} resolves unopposed for ${pd.bid} Supply.`,
+    { kind: 'resolve', cardId: pd.cardId, winner, loser, announcer: pd.announcer, challenger: contested ? loser : null, winningBid, rounds: pd.rounds.length, tied, forfeit, refund: escrowed - forfeit },
+  );
+  if (forfeit > 0) log(state, loser, `${lose.name} pays ${forfeit} Supply for the losing bid and is refunded ${escrowed - forfeit}.`, { kind: 'forfeit', player: loser, forfeit, refund: escrowed - forfeit, cardId: pd.cardId });
+
   if (!m.city.includes(pd.cardId)) {
     log(state, winner, `${def.name} is no longer in the Capital City; the purchase fizzles.`, { kind: 'fizzle', cardId: pd.cardId, player: winner });
     return;
   }
   m.city.splice(m.city.indexOf(pd.cardId), 1);
   if (tied) await fireHook(state, 'onTiedBid', { player: winner, listeners: [0, 1] });
-  await gainMarketCard(state, winner, pd.cardId, pd.challenge ? 'won the bid' : 'unchallenged');
+  await gainMarketCard(state, winner, pd.cardId, contested ? 'won the auction' : 'unopposed');
 }
 
 export async function resourcesPhase(state, pi) {
@@ -65,16 +85,27 @@ export async function resourcesPhase(state, pi) {
   const choice = await ask(state, pi, { kind: 'resources', options: ['draw', 'supply'] });
   log(state, pi, `${p.name} chooses ${choice === 'draw' ? 'to draw a card' : 'to gain Supply'}.`, { kind: 'phase', player: pi, phase: 'resources', choice });
   if (choice === 'draw') draw(state, pi, state.rules.resources.choices.draw.cards, 'resource choice');
-  else gainSupply(state, pi, state.rules.resources.choices.supply.amount, 'resource choice');
+  else {
+    // Statue of Community's burden thins the resource choice.
+    const amount = state.rules.resources.choices.supply.amount - (hasPassive(state, pi, 'resourceSupplyMinus1') ? 1 : 0);
+    gainSupply(state, pi, Math.max(0, amount), 'resource choice');
+  }
 }
 
 export async function readyPhase(state, pi) {
   const p = state.players[pi];
   state.phase = 'ready';
-  const steps = 1 + (hasMod(p, 'extraAdvance') ? consumeMod(p, 'extraAdvance') : 0);
+  let steps = 1 + (hasMod(p, 'extraAdvance') ? consumeMod(p, 'extraAdvance') : 0);
+  if (hasMod(p, 'skipNextAdvance')) {
+    consumeMod(p, 'skipNextAdvance');
+    steps = 0;
+    log(state, pi, `${p.name}'s Characters cannot advance this turn.`, { kind: 'ready', player: pi, uids: [], advanced: [], blocked: true });
+  }
   const becameUpright = [];
   const advanced = [];
   for (const s of p.town) {
+    // A Character pledged to an open auction stays Busy for as long as the bidding lasts.
+    if (s.lockedBid) continue;
     for (let k = 0; k < steps; k++) {
       if (s.orientation === UPRIGHT) break;
       if (s.shift && state.rules.shifts.blocksReadyWhileInProgress) break;
@@ -126,6 +157,7 @@ export async function endPhase(state, pi) {
       log(state, pi, `${cardDef(state, e.cardId).name} expires.`, { kind: 'eventExpire', player: pi, uid: e.uid, cardId: e.cardId });
     }
   }
+  await fireHook(state, 'onTurnEnd', { player: pi });
   expireMods(p, 'turnEnd');
   log(state, pi, `${p.name} ends the turn.`, { kind: 'turnEnd', player: pi });
 }

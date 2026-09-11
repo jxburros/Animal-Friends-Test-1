@@ -1,6 +1,6 @@
 # Animal Friends TCG - First Boroughs Prototype
 
-A two-player town-building trading card game where each player is the **Mayor** of a town populated by cute animal workers. Recruit Characters, send them on work shifts to produce **Supply**, play Events, and bid against your rival in the shared **Capital City**. Win by controlling 5 of the 9 **Statues**.
+A two-player town-building trading card game where each player is the **Mayor** of a town populated by cute animal workers. Recruit Characters, send them on work shifts to produce **Supply**, play Events, and fight bidding wars against your rival in the shared **Capital City**. Win by controlling 5 of the 9 **Statues** — each of which grants a boon and imposes a burden.
 
 This repo replaced the earlier single-file "Critter Town" game (archived at `docs/legacy-critter-town.html`).
 
@@ -17,13 +17,21 @@ At the start of your turn, non-upright Characters rotate clockwise: 180° → 27
 
 **Turn phases:** Start / Resources (draw 1 card or gain 2 Supply) / Ready (advance orientations) / Actions (recruit, shift, Events, purchase) / End (complete shifts, expire Limited Events).
 
-**Capital City** is a contested 5-card market. Announce a purchase with an upright Character and a bid ≥ cost; the opponent may challenge once with a higher bid. Resolves at the start of the announcer's next turn; ties go to the announcer; only the winner pays. Whenever a card leaves the display, cards are dealt from the Market Deck until the display is back to five; if the Market Deck runs out, the City Dump is shuffled in. A stale-market safety valve (six turns with no purchase → sweep and redeal) exists but is rarely needed.
+**Capital City** is a contested 5-card market, and buying from it is an auction. Announce a purchase with an upright Character and a bid ≥ cost. On their own turn your rival may **outbid** you by pledging another upright Character and bidding higher; then you may answer, for as many rounds as you can both afford. The required step grows by 1 every two bids, so a war converges. When you are still the high bidder at the start of your own turn, your rival has had their chance and the card is yours; ties stay with the standing bid.
+
+Bidding costs animals as well as Supply. **Every Character pledged to an auction stays Busy until that auction ends** — it does not advance at Ready and no effect can wake it — so a long war strips a town of its workforce, and "cannot bid any more" usually means "has nobody left to bid with". A bid is also a real promise: the winner pays in full and the **loser forfeits half (rounded up)** of everything they escrowed.
+
+Whenever a card leaves the display, cards are dealt from the Market Deck until the display is back to five; if the Market Deck runs out, the City Dump is shuffled in. A stale-market safety valve (six turns with no purchase → sweep and redeal) exists but is rarely needed.
+
+**Disruptions** are shared shocks that live in some Market Decks. They are never bought: the moment one is dealt into the Capital City it strikes both towns at once — Recession sends every Character in both towns to Unemployment, Hard Winter abandons every shift in progress — and then it goes to the City Dump and another card is dealt in its place.
 
 **Unemployment** disrupts Characters. Rehire for the full printed cost to return upright.
 
 **Upgrades** let higher-cost versions of the same Character replace lower ones; pay only the difference.
 
-**Statues** are the victory cards. Control 5 of 9 to win.
+**Statues** are the victory cards. Control 5 of 9 to win. Each Statue carries a **boon and a burden**, both lasting as long as you hold it: the Statue of Community's extra shift Supply comes with a thinner Resources choice, the Statue of Patience speeds your Masters but slows your Apprentices, and the Statue of Harmony makes you pay losing bids in full. Collecting Statues taxes the town that is winning.
+
+**Market Decks** — three shared markets to choose from at setup, all containing every Statue: **First Boroughs** (the classic mix, no shared shocks), **Boom Town** (prosperity and momentum; its shocks are mostly good news) and **Hard Times** (recessions, hard winters and backlogs strike both towns alike).
 
 **Decks** — four printed 30-card decks (Burrow & Bloom, Paws & Papers, Bramble & Bristle, Ripple & Rune), or build your own in the **Deck Workshop** from the whole catalogue: 30 cards, at most 3 copies of a card, at least 12 Characters. Custom decks are saved in the browser.
 
@@ -43,7 +51,7 @@ Or use any static server (e.g., `python3 -m http.server 8080`).
 
 - `docs/ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md` - design reference and source of truth
 - `spec/game.json` - rules constants and prototype decisions
-- `spec/starter_card_set.json` - all 97 cards: 32 Characters, 24 Events, 9 Statues and a 32-card Capital City pool, plus four printed 30-card decks. The Market Deck is dealt as all 9 Statues plus a random 16 of the Capital City pool, so it keeps its 25-card shape while the display varies from game to game.
+- `spec/starter_card_set.json` - all 104 cards: 32 Characters, 24 Events, 9 Statues, a 32-card Capital City pool and 7 Disruptions, plus four printed 30-card decks and three Market Decks. A Market Deck is dealt as all 9 Statues plus a random sample of its own pool, so it keeps one size while the display varies from game to game.
 - `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`
 - `src/ai/` - agents: `random.js` (baseline), `heuristic.js` (opponent)
 - `src/ui/` - browser interface: `main.js`, `humanAgent.js`, `render.js`, `deckbuilder.js` (the Deck Workshop), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations)
@@ -62,14 +70,18 @@ npm run playtest -- --games 100 --seed 42 # Use fixed seed for reproducibility
 npm run playtest -- --p0 random --p1 heuristic  # Choose agents
 npm run playtest -- --games 240 --decks all     # Rotate through every ordered deck pairing
 npm run playtest -- --decks br,rr               # One matchup (bb, pp, br, rr or full deck ids)
+npm run playtest -- --market hard-times          # Choose the shared Market Deck (or `all` to rotate)
 ```
 
 ## Prototype decisions
 
 The `assumptions` array in `spec/game.json` documents current prototype choices:
-- Second player starts with +2 Supply and +1 card (first-player offset, tuned by playtest)
-- Multiple pending purchases allowed simultaneously (one per Capital City card), each with at most one challenge
-- Bids are escrowed when announced or challenged; refunded to loser
+- Second player starts with +1 card and no extra Supply (first-player offset, tuned by playtest; the old +2 Supply became a large head start once Supply was auction ammunition)
+- Multiple auctions may run at once (one per Capital City card); each may be raised any number of times, but only on the raiser's own turn and only by a player who is not already winning it
+- Bids are escrowed as they are made; the winner pays in full and the loser forfeits half (rounded up)
+- Characters pledged to an auction stay Busy until it ends
+- Statues carry burdens as well as boons
+- Disruptions resolve on reveal against both towns and are never purchasable; one dealt during setup is set aside unresolved
 - Upgrading preserves stack orientation and re-triggers recruit abilities
 - Readying a Character mid-shift completes the shift immediately
 - Reactive abilities (shields) set on your turn and last until your next turn starts

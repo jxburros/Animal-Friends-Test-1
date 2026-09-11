@@ -2,14 +2,18 @@
 //
 // Design notes (why this plays the way it does):
 //  * Statues are the only win condition (5 of 9). Everything else is instrumental.
-//  * A pending purchase can only be challenged once and the announcer cannot answer the
-//    challenge, so a challenge at `challengeMinBid` ALWAYS wins if it can be paid.
-//    Therefore announcing a Statue at the minimum bid simply hands it to an opponent who
-//    has Supply and an upright Character; the announcer must instead bid high enough that
-//    the opponent cannot legally out-bid (bid >= opponent's expected Supply), or accept the risk.
-//  * Losing a bid is refunded, so contesting costs tempo (a Busy Character) rather than Supply.
-//  * The Capital City only refills when it is EMPTY, so when no Statue is on display the
-//    cheapest way to find one is to buy the display out.
+//  * An auction runs for as many rounds as the two Mayors can pay for: whoever is not the high
+//    bidder may raise on their own turn by making another upright Character Busy. So a bid is
+//    never simply "sniped" — the answer to being outbid is to bid again, and the real limits are
+//    Supply and upright bodies. Announcing at the minimum is therefore fine; a big opening bid
+//    mostly wastes Supply we could have spent one round at a time.
+//  * Losing an auction is NOT free: the loser forfeits half of everything they escrowed. Every
+//    raise is a real commitment, so we only enter a bidding war we expect to be able to finish,
+//    and we value a card against the possibility of paying half of the bid for nothing.
+//  * The Capital City tops back up after every purchase, so cycling it is cheap upkeep rather
+//    than a public good somebody has to fund.
+//  * Statues carry burdens as well as boons, but they still win the game, so the burden is only
+//    a light thumb on the scale when we are far from the fifth Statue.
 //
 // The agent is synchronous, deterministic given `options.seed`, and never throws:
 // every entry point is wrapped and falls back to a legal default.
@@ -42,7 +46,16 @@ const DEFAULT_PARAMS = {
   denial4: 90, // opponent is one statue from winning
   winNow: 140, // this purchase would win the game
   riskPenalty: 26, // announcing a Statue the opponent can profitably steal
-  challengeBase: 70,
+  challengeBase: 70, // appetite for taking the lead in an auction
+  forfeitRisk: 0.5, // weight on "we may be outbid again and forfeit half of this"
+  statueBurden: 4, // a Statue's burden, discounted against its boon and the win it buys
+  // Walk-away ceilings. Raises are made one step at a time (losing early is cheaper than losing
+  // late), so without a ceiling two Mayors who both price a Statue at "almost anything" trade +1
+  // bids for the rest of the game. The ceiling is what actually ends an auction.
+  lockedBodyCost: 2.4, // a pledged Character is Busy for the whole auction, not just a turn
+  statueCeiling: 7, // Supply above the asking price we will pay for a Statue...
+  statueCeilingPerMine: 2, // ...plus this per Statue we already hold (the next one is worth more)
+  marketCeiling: 1.6, // multiple of a Market card's estimated worth we will pay for it
   reservePenalty: 11, // penalty for tapping the last body while a Statue is on display
   cycleBase: 10, // base value of emptying the Capital City when no Statue is showing
   cycleBehind: 12, // ...more urgent when we are behind on Statues (the leader profits from a deadlock)
@@ -50,8 +63,8 @@ const DEFAULT_PARAMS = {
   cycleLate: 2, // ...more urgent the longer the deadlock has lasted
   cycleReserve: 0.6, // only cycle while keeping this much of the opponent's Supply in hand
   horizonCap: 11,
-  premiumBase: 20, // how far above the minimum bid we will go to deter a challenge...
-  premiumAggr: 16, // ...plus this much, scaled by (aggression - 0.5)
+  premiumBase: 6, // how far above the minimum bid we will open on a Statue...
+  premiumAggr: 8, // ...plus this much, scaled by (aggression - 0.5)
   riskAggr: 0.5, // aggression discount on the risk penalty
   challengeAggr: 14, // extra appetite for Statue challenges, scaled by (aggression - 0.5)
   challengeGate: 3, // reluctance to spend a body challenging a non-Statue
@@ -209,6 +222,28 @@ function handCardValue(state, pi, cardId) {
   return v;
 }
 
+/**
+ * What a Statue's burden is worth avoiding. Statues win the game, so this is deliberately small:
+ * it only breaks ties between Statues, and it disappears entirely on the Statue that wins or that
+ * stops the opponent winning.
+ */
+/**
+ * The most Supply we will commit to one card. Nothing is worth every Supply we own except the
+ * Statue that wins the game or the one that stops the opponent winning theirs.
+ */
+function bidCeiling(state, ctx, d, P, askingPrice) {
+  const winsGame = ctx.myStatues + 1 >= (state.rules.victory.statuesToWin || 5);
+  if (winsGame || ctx.oppStatues >= 4) return Infinity;
+  if (d.type === 'statue') return askingPrice + P.statueCeiling + P.statueCeilingPerMine * ctx.myStatues;
+  return Math.max(askingPrice, marketCardValue(state, ctx.pi, d) * P.marketCeiling);
+}
+
+function statueBurdenCost(ctx, d, P, winsGame) {
+  if (winsGame || ctx.oppStatues >= 4) return 0;
+  if (!(d.abilities || []).some((ab) => ab.burden)) return 0;
+  return P.statueBurden;
+}
+
 // ---------------------------------------------------------------- shared context
 function buildContext(state, pi, P) {
   const p = state.players[pi];
@@ -221,8 +256,8 @@ function buildContext(state, pi, P) {
     const d = def(state, id);
     return d && d.type === 'statue' && !pendingIds.has(id);
   });
-  const myPending = state.market.pending.filter((pd) => pd.announcer === pi);
-  const oppPending = state.market.pending.filter((pd) => pd.announcer === oi && !pd.challenge && !pd.unchallengeable);
+  const myPending = state.market.pending.filter((pd) => pd.high === pi);
+  const oppPending = state.market.pending.filter((pd) => pd.high === oi && !pd.unchallengeable);
   return {
     pi, oi, p, o, horizon,
     myStatues: statueCount(state, pi),
@@ -340,19 +375,24 @@ function scoreAction(state, ctx, a, agg, out, P) {
 
       if (d.type === 'statue') {
         const winsGame = ctx.myStatues + 1 >= (state.rules.victory.statuesToWin || 5);
-        // Bid high enough that the opponent cannot legally out-bid us.
-        const deter = clamp(ctx.oppSupplyEst, minBid, maxBid);
-        const premiumCap = Math.round(P.premiumBase + P.premiumAggr * (agg - 0.5)) + ctx.myStatues * 2 + (winsGame ? 40 : 0) + (ctx.oppStatues >= 4 ? 20 : 0);
-        let bid = Math.min(deter, minBid + premiumCap);
-        bid = clamp(Math.floor(bid), minBid, maxBid);
+        // Open modestly: we can answer a raise next turn, and every Supply we escrow now is
+        // Supply we cannot raise with later (and half of it is forfeit if we lose anyway).
+        // Opening above the opponent's reach is only worth it when this purchase ends the game.
+        const premiumCap = Math.round(P.premiumBase + P.premiumAggr * (agg - 0.5)) + ctx.myStatues + (winsGame ? 40 : 0) + (ctx.oppStatues >= 4 ? 12 : 0);
+        const deter = winsGame || ctx.oppStatues >= 4 ? clamp(ctx.oppSupplyEst, minBid, maxBid) : maxBid;
+        const ceiling = bidCeiling(state, ctx, d, P, minBid);
+        const bid = clamp(Math.floor(Math.min(deter, ceiling, minBid + premiumCap)), minBid, maxBid);
         const safe = bid >= ctx.oppSupplyEst || ctx.oppUpright === 0;
         let s = P.statueBase + P.statuePerMine * ctx.myStatues - bid * P.bidCost - charCost;
+        s -= statueBurdenCost(ctx, d, P, winsGame);
         if (ctx.oppStatues >= 3) s += P.denial3;
         if (ctx.oppStatues >= 4) s += P.denial4;
         if (winsGame) s += P.winNow;
-        if (!safe) s -= P.riskPenalty * (1 + (ctx.oppStatues >= 3 ? 1 : 0)) * Math.max(0.2, 1 + P.riskAggr * 0.5 - P.riskAggr * agg);
+        // Being outbid is survivable now (we can answer), but it still costs half of our escrow,
+        // so an opening we cannot defend is worth a little less than one we can.
+        if (!safe) s -= P.riskPenalty * 0.4 * Math.max(0.2, 1 + P.riskAggr * 0.5 - P.riskAggr * agg);
         out.bid = bid;
-        out.why = `announce STATUE ${d.name} @${bid}${safe ? ' (deterrent)' : ' (risky)'}`;
+        out.why = `announce STATUE ${d.name} @${bid}${safe ? ' (deterrent)' : ''}`;
         return s;
       }
 
@@ -380,35 +420,45 @@ function scoreAction(state, ctx, a, agg, out, P) {
       return s;
     }
 
-    case 'challenge': {
+    case 'raise': {
       const d = def(state, a.cardId);
       if (!d) return -1;
       const stack = findStack(state, ctx.pi, a.charUid);
-      const charCost = stack ? stackRate(state, stack) * 2.2 : 0;
-      // Bid enough to beat the announcer on the raw numbers rather than trusting our own bid
-      // bonus: `challengeMinBid` credits a firstBidPlus1 bonus that the engine does not
-      // actually record on the challenge, which would turn the bid into a tie the announcer wins.
+      // Pledging a Character to an auction takes it off the board until the bidding ends, which is
+      // far dearer than the single Busy turn a shift or an Event costs.
+      const charCost = stack ? stackRate(state, stack) * P.lockedBodyCost : 0;
+      // Take the lead on the raw numbers rather than trusting our own bid bonus: `raiseMinBid`
+      // credits a firstBidPlus1 that would leave us tied, and a tie stays with the standing bidder.
       const pd = state.market.pending.find((x) => x.id === a.pendingId);
-      const annEff = pd ? pd.bid + pd.bonus : a.minBid;
-      const needed = hasPassive(state, ctx.pi, 'winTiesAsChallenger') ? annEff : annEff + 1;
+      const standing = pd ? pd.bid + pd.bonus : a.minBid;
+      const needed = hasPassive(state, ctx.pi, 'winTiesAsChallenger') ? standing : standing + 1;
       const bid = clamp(Math.max(a.minBid, needed), a.minBid, a.maxBid);
-      if (bid > a.maxBid || bid < needed) return -1; // cannot actually out-bid the announcer
+      if (bid > a.maxBid || bid < needed) return -1; // cannot actually take the lead
+      // Raise one step at a time, and fold once the price passes what the card is worth to us.
+      if (bid > bidCeiling(state, ctx, d, P, def(state, a.cardId)?.cost ?? bid)) return -1;
+      // If we take the lead and are then outbid again, we forfeit half of everything escrowed.
+      // The deeper the war and the richer the opponent, the more that costs us.
+      const escrowed = pd ? pd.committed[ctx.pi] + (bid - pd.committed[ctx.pi]) : bid;
+      const mayBeOutbid = ctx.oppSupplyEst > bid && ctx.oppUpright > 0;
+      const forfeitRisk = mayBeOutbid ? P.forfeitRisk * (escrowed / 2) : 0;
+
       if (d.type === 'statue') {
         const winsGame = ctx.myStatues + 1 >= (state.rules.victory.statuesToWin || 5);
-        let s = P.challengeBase + P.statuePerMine * ctx.myStatues - bid * P.bidCost - charCost;
+        let s = P.challengeBase + P.statuePerMine * ctx.myStatues - bid * P.bidCost - charCost - forfeitRisk;
+        s -= statueBurdenCost(ctx, d, P, winsGame);
         if (ctx.oppStatues >= 3) s += P.denial3;
         if (ctx.oppStatues >= 4) s += P.denial4;
         if (winsGame) s += P.winNow;
         s += P.challengeAggr * (agg - 0.5);
         out.bid = bid;
-        out.why = `challenge STATUE ${d.name} @${bid}`;
+        out.why = `raise STATUE ${d.name} @${bid}`;
         return s;
       }
-      let s = marketCardValue(state, ctx.pi, d) * 2.2 - bid * P.bidCost - charCost - P.challengeGate * (1 - agg);
+      let s = marketCardValue(state, ctx.pi, d) * 2.2 - bid * P.bidCost - charCost - forfeitRisk - P.challengeGate * (1 - agg);
       // Denying a card the opponent clearly wants is worth a little on its own.
       s += 4 * (agg - 0.5);
       out.bid = bid;
-      out.why = `challenge ${d.name} @${bid}`;
+      out.why = `raise ${d.name} @${bid}`;
       return s;
     }
 
@@ -460,7 +510,7 @@ export function makeHeuristicAgent(options = {}) {
   function chooseResources(state, pi) {
     const ctx = buildContext(state, pi, P);
     const p = state.players[pi];
-    // Do we want Supply to fund a Statue bid this turn (announce or challenge)?
+    // Do we want Supply to fund a Statue bid this turn (opening one, or answering one)?
     let need = 0;
     for (const id of ctx.cityStatues) {
       const d = def(state, id);
@@ -496,7 +546,7 @@ export function makeHeuristicAgent(options = {}) {
       if (s > bestScore) {
         bestScore = s;
         const chosen = { ...a };
-        if (out.bid !== undefined && (a.type === 'announce' || a.type === 'challenge')) {
+        if (out.bid !== undefined && (a.type === 'announce' || a.type === 'raise')) {
           chosen.bid = clamp(Math.floor(out.bid), a.minBid, a.maxBid);
         }
         if (debug) chosen.why = `${out.why || a.type} [${s.toFixed(1)}]`;
@@ -573,7 +623,7 @@ export function makeHeuristicAgent(options = {}) {
     if (req.reason === 'raiseBid') {
       // Juniper's +1: cheap insurance, but only on a Statue we are contesting.
       const p = state.players[pi];
-      const mine = state.market.pending.filter((pd) => pd.announcer === pi || (pd.challenge && pd.challenge.player === pi));
+      const mine = state.market.pending.filter((pd) => pd.high === pi);
       const statue = mine.some((pd) => {
         const d = def(state, pd.cardId);
         return d && d.type === 'statue';

@@ -15,6 +15,7 @@ const SET_URL = new URL('../../spec/starter_card_set.json', import.meta.url);
 let rules = null;
 let cardSet = null;
 let chosenDeckId = null;
+let chosenMarketId = null;
 let customDecks = [];
 let renderTicker = null;
 const PACE_KEY = 'af-pace';
@@ -59,6 +60,7 @@ function buildMenu() {
   }
 
   renderDeckChoice();
+  renderMarketChoice();
   buildHowToPlay();
 }
 
@@ -82,6 +84,26 @@ function renderDeckChoice() {
   const chosen = deckById(chosenDeckId);
   $('editDeckBtn').hidden = !(chosen && chosen.custom);
   $('deleteDeckBtn').hidden = !(chosen && chosen.custom);
+}
+
+function renderMarketChoice() {
+  const el = $('marketChoice');
+  if (!el) return;
+  el.innerHTML = '';
+  const decks = cardSet.marketDecks || [];
+  if (!decks.some((d) => d.id === chosenMarketId)) chosenMarketId = decks[0] && decks[0].id;
+  for (const deck of decks) {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = `deck-card${deck.id === chosenMarketId ? ' selected' : ''}`;
+    card.setAttribute('aria-pressed', deck.id === chosenMarketId ? 'true' : 'false');
+    card.innerHTML = `<h4>${deck.name}</h4><p>${deck.blurb || ''}</p>`;
+    card.addEventListener('click', () => {
+      chosenMarketId = deck.id;
+      renderMarketChoice();
+    });
+    el.appendChild(card);
+  }
 }
 
 function openWorkshop(deck) {
@@ -127,7 +149,7 @@ function buildHowToPlay() {
     <h3>Turn phases</h3>
     <p><strong>Start</strong> (resolve your pending Capital City purchases) → <strong>Resources</strong>
     (draw 1 or gain 2 Supply) → <strong>Ready</strong> (advance orientation) → <strong>Actions</strong>
-    (recruit, work, play Events, announce/challenge, rehire — as many as you like) →
+    (recruit, work, play Events, announce or outbid in the Capital City, rehire — as many as you like) →
     <strong>End</strong> (shifts tick down and pay out; Limited Events expire).</p>
 
     <h3>Shifts</h3>
@@ -139,11 +161,27 @@ function buildHowToPlay() {
     their duration. Both can require upright Characters (by species/study) — those Characters become
     Busy to pay the cost.</p>
 
-    <h3>Capital City: announce &amp; challenge</h3>
-    <p>Make an upright Character Busy, pick a Capital City card, and bid at least its cost. It stays
-    pending until your next turn. Your opponent may challenge once, on their turn, with a higher bid
-    (ties go to the announcer). Only the winner pays; the loser is refunded. Whenever a card leaves the
-    Capital City, a new one is dealt from the Market Deck so the display always offers five cards.</p>
+    <h3>Capital City: the bidding war</h3>
+    <p>Make an upright Character Busy, pick a Capital City card, and bid at least its cost — that opens an
+    auction. On their own turn your rival may <strong>outbid</strong> you by pledging an upright Character of
+    their own and bidding higher; then you may answer, and so on for as many rounds as you can both afford.
+    The required step grows as the bidding wears on. When you are still the high bidder at the start of your
+    own turn, your rival has had their chance and the card is yours.</p>
+    <p><strong>Bidding costs animals as well as Supply.</strong> Every Character you pledge stays Busy until
+    the auction ends — it will not advance at Ready and nothing can wake it — so a long war leaves your town
+    with nobody left to work. And a bid is a promise: the winner pays in full, and the <strong>loser forfeits
+    half</strong> of everything they pledged. Bidding beyond your means is expensive even when you walk away.</p>
+
+    <h3>Statues: a boon and a burden</h3>
+    <p>Every Statue grants its Mayor a lasting gift and a lasting cost — cheaper rehires for your rival,
+    dearer Events, a thinner Resources choice. Five of the nine still win the game, but collecting them
+    taxes the town that is winning.</p>
+
+    <h3>Disruptions</h3>
+    <p>Some Market Decks hold <strong>Disruption</strong> cards. They are never bought: the moment one is
+    dealt into the Capital City it strikes both towns at once — a Recession sends every animal to
+    Unemployment, a Hard Winter abandons every shift in progress — and then it is discarded and another card
+    is dealt in its place. Choose the <strong>Hard Times</strong> Capital City if you want to live with them.</p>
 
     <h3>Watching the story</h3>
     <p>Every card move is animated so you can follow what happened: cards fly between zones, Characters
@@ -249,6 +287,7 @@ async function startGame() {
   const state = createGame(rules, cardSet, {
     seed,
     decks: [myDeckRef, rivalDeck.id],
+    market: chosenMarketId,
     names: ['Mayor Bramble', 'Mayor Sable'],
   });
   const human = makeHumanAgent('Mayor Bramble');

@@ -14,8 +14,9 @@ export function init(d) {
 const ORIENT_PREV = { 270: 180, 0: 270, 180: 180 };
 const MOD_NAMES = {
   recruitDiscount: 'Recruit discount', rehireDiscount: 'Rehire discount', eventCharReduction: 'Event needs one fewer Character',
-  unchallengeable: 'Next purchase cannot be challenged', cancelNextChallenge: 'Next challenge is cancelled', shiftBonus: 'Bonus on next shift',
-  extraAdvance: 'Extra orientation step next turn', unemploymentShield: 'Characters protected', lossShield: 'Supply protected', challengeDiscount: 'Cheaper challenge',
+  unchallengeable: 'Next purchase cannot be outbid', cancelNextChallenge: 'Next raise against you is cancelled', shiftBonus: 'Bonus on next shift',
+  extraAdvance: 'Extra orientation step next turn', unemploymentShield: 'Characters protected', lossShield: 'Supply protected', challengeDiscount: 'Cheaper raise',
+  skipNextAdvance: 'Characters cannot advance next Ready',
 };
 
 function name(pi) {
@@ -251,20 +252,30 @@ const handlers = {
     fx.arrive(pend, 500);
     await fx.pop(r, `${name(e.player)} bids ${e.bid}${e.bonus ? ` (+${e.bonus})` : ''}`, 'fx-pop-bid', { hold: 700 });
   },
-  async challenge(e) {
-    await busyTurn(e.uid, 'Challenges!');
+  async raise(e) {
+    await busyTurn(e.uid, 'Bids again!');
     const cityEl = fx.byKey(`city:${e.cardId}`);
     await fx.bringIntoView(cityEl);
     const r = cityEl && cityEl.getBoundingClientRect();
     if (e.cancelled) {
       fx.flash(cityEl, 'fx-shield', 1200);
-      await fx.pop(r, 'Challenge cancelled by Quiet Mediation', 'fx-pop-note', { hold: 700 });
+      await fx.pop(r, 'The raise is cancelled by Quiet Mediation', 'fx-pop-note', { hold: 700 });
     } else {
       fx.pop(chip(e.player, 'supply'), `−${e.bid} Supply held in escrow`, 'fx-pop-loss', { hold: 0 });
       fx.flash(cityEl, 'fx-challenged', 1500);
       fx.shake(cityEl, 600);
-      await fx.pop(r, `Challenge! ${name(e.player)} bids ${e.bid}${e.bonus ? ` (+${e.bonus})` : ''}`, 'fx-pop-challenge', { hold: 800 });
+      await fx.pop(r, `Outbid! ${name(e.player)} bids ${e.bid}${e.bonus ? ` (+${e.bonus})` : ''} (round ${e.round})`, 'fx-pop-challenge', { hold: 800 });
     }
+  },
+  async disruption(e) {
+    const def = deps.cardDef(e.cardId);
+    const board = document.getElementById('board') || document.body;
+    fx.flash(board, 'fx-shock', 700);
+    const spot = await fx.spotlight(face(e.cardId, { large: true }), `<b>${def.name}</b> — ${def.text.replace(/ Goes to the City Dump\.$/, '')}`, { dur: 1900, cls: 'fx-pop-disruption' });
+    spot.done();
+  },
+  async forfeit(e) {
+    await fx.pop(chip(e.player, 'supply'), `−${e.forfeit} Supply forfeited on the losing bid`, 'fx-pop-loss', { hold: 700 });
   },
   async raiseBid(e) {
     const cityEl = fx.byKey(`city:${e.cardId}`);
@@ -275,7 +286,7 @@ const handlers = {
     await fx.bringIntoView(fx.byKey('marketdeck'));
     const r = fx.rectOf(`city:${e.cardId}`) || fx.rectOf('marketdeck');
     if (e.challenger !== null && e.challenger !== undefined) {
-      await fx.pop(r, `The gavel falls: ${name(e.winner)} wins ${def.name}${e.tied ? ' on a tie' : ''} for ${e.winningBid}`, 'fx-pop-bid', { hold: 900, icon: '🔨' });
+      await fx.pop(r, `The gavel falls after ${e.rounds} bids: ${name(e.winner)} wins ${def.name}${e.tied ? ' on a tie' : ''} for ${e.winningBid}`, 'fx-pop-bid', { hold: 900, icon: '🔨' });
       if (e.refund) fx.pop(chip(e.loser, 'supply'), `+${e.refund} Supply refunded`, 'fx-pop-gain', { hold: 0 });
     } else {
       await fx.pop(r, `Sold to ${name(e.winner)} for ${e.winningBid}`, 'fx-pop-bid', { hold: 700, icon: '🔨' });

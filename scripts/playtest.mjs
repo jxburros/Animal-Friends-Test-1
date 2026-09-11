@@ -2,10 +2,11 @@
 // Batch playtest runner for Animal Friends TCG.
 //
 //   node scripts/playtest.mjs [--games N] [--seed S] [--p0 heuristic|random] [--p1 heuristic|random]
-//                             [--decks <a>,<b>|alternate|all] [--verbose] [--aggression A]
+//                             [--decks <a>,<b>|alternate|all] [--market <id>|all] [--verbose] [--aggression A]
 //
 // Deck names may be full ids (burrow-bloom) or short aliases (bb, pp, br, rr). `alternate` swaps the
 // first two decks between seats; `all` rotates through every ordered pair of decks in the set.
+// `--market` picks the shared Market Deck (first-boroughs, boom-town, hard-times) or rotates through all.
 //
 // Also exports runPlaytest(opts) -> stats object, for use from tests.
 
@@ -23,6 +24,7 @@ const DECK_ALIAS = { ...SHORT_ALIAS, ...Object.fromEntries(DECK_IDS.map((id) => 
 // Stats are keyed by deck id; the pairings cycle through every ordered pair of distinct decks.
 const DECK_PAIRS = DECK_IDS.flatMap((a) => DECK_IDS.filter((b) => b !== a).map((b) => [a, b]));
 const MARKET_POOL = set.cards.filter((c) => c.type === 'statue' || c.type === 'market').map((c) => c.id);
+const MARKET_DECK_IDS = set.marketDecks.map((d) => d.id);
 const MARKET_NAMES = new Map(MARKET_POOL.map((id) => [set.cards.find((c) => c.id === id).name, id]));
 const zeroByDeck = () => Object.fromEntries(DECK_IDS.map((id) => [id, 0]));
 const zeroBySlot = () => Object.fromEntries(DECK_IDS.map((id) => [id, [0, 0]]));
@@ -76,12 +78,14 @@ function mineLog(state, stats, decks) {
       rec.byDeck[decks[pi]]++;
       stats.gains.set(cardId, rec);
     }
-    // "Purchase of <Card> resolves: <ann> bid N, <ch> bid M[ (tie)]. <winner> wins."
-    const m = text.match(/^Purchase of .+ resolves: (\S+) bid (\d+), (\S+) bid (\d+)(?: \(tie\))?\. (\S+) wins\.$/);
-    if (m) {
+    const fx = entry.fx;
+    if (fx && fx.kind === 'resolve' && fx.rounds > 1) {
       stats.contested++;
-      if (m[5] !== m[1]) stats.challengerWins++;
+      stats.bidRounds.push(fx.rounds);
+      if (fx.winner !== fx.announcer) stats.challengerWins++;
     }
+    if (fx && fx.kind === 'forfeit') stats.forfeited += fx.forfeit;
+    if (fx && fx.kind === 'disruption') stats.disruptions.set(fx.cardId, (stats.disruptions.get(fx.cardId) || 0) + 1);
   }
 }
 
@@ -92,10 +96,11 @@ export async function runPlaytest(opts = {}) {
   const p0Kind = opts.p0 ?? 'heuristic';
   const p1Kind = opts.p1 ?? 'heuristic';
   const deckMode = opts.decks ?? 'alternate';
+  const marketMode = opts.market ?? MARKET_DECK_IDS[0];
   const aggression = opts.aggression;
 
   const stats = {
-    config: { games, seed: baseSeed, p0: p0Kind, p1: p1Kind, decks: deckMode },
+    config: { games, seed: baseSeed, p0: p0Kind, p1: p1Kind, decks: deckMode, market: marketMode },
     winsBySlot: [0, 0],
     draws: 0,
     winsByDeck: zeroByDeck(),
@@ -111,6 +116,11 @@ export async function runPlaytest(opts = {}) {
     gains: new Map(),
     contested: 0,
     challengerWins: 0,
+    bidRounds: [],
+    forfeited: 0,
+    disruptions: new Map(),
+    gamesByMarket: Object.fromEntries(MARKET_DECK_IDS.map((id) => [id, 0])),
+    winsByMarketSlot: Object.fromEntries(MARKET_DECK_IDS.map((id) => [id, [0, 0]])),
     plays: new Map(),
     firstGameLog: null,
     elapsedMs: 0,
@@ -127,7 +137,8 @@ export async function runPlaytest(opts = {}) {
       decks = parts.length === 2 ? parts : [DECK_IDS[0], DECK_IDS[1]];
     }
     const seed = baseSeed + g;
-    const state = createGame(rules, set, { seed, decks, names: ['P0', 'P1'] });
+    const market = marketMode === 'all' ? MARKET_DECK_IDS[g % MARKET_DECK_IDS.length] : marketMode;
+    const state = createGame(rules, set, { seed, decks, market, names: ['P0', 'P1'] });
     const sink = (pi, action) => {
       if (action.type === 'recruit' || action.type === 'playEvent') {
         stats.plays.set(action.cardId, (stats.plays.get(action.cardId) || 0) + 1);
@@ -163,6 +174,8 @@ export async function runPlaytest(opts = {}) {
       stats.perGame.challenges.push(p.stats.challenges);
     }
     stats.statuesPerGame.push(totalStatues);
+    stats.gamesByMarket[market]++;
+    if (state.winner !== null) stats.winsByMarketSlot[market][state.winner]++;
     mineLog(state, stats, decks);
   }
   stats.elapsedMs = Date.now() - t0;
@@ -187,6 +200,10 @@ export async function runPlaytest(opts = {}) {
     avgAnnouncements: mean(stats.perGame.announcements),
     avgChallenges: mean(stats.perGame.challenges),
     challengerWinRate: stats.contested ? stats.challengerWins / stats.contested : 0,
+    avgBidRounds: mean(stats.bidRounds),
+    maxBidRounds: stats.bidRounds.length ? Math.max(...stats.bidRounds) : 0,
+    forfeitedPerGame: stats.forfeited / games,
+    disruptionsPerGame: [...stats.disruptions.values()].reduce((a, b) => a + b, 0) / games,
   };
   return stats;
 }
@@ -196,7 +213,7 @@ function report(stats, { verbose = false } = {}) {
   const s = stats.summary;
   const g = stats.config.games;
   const L = [];
-  L.push(`Animal Friends TCG playtest — ${g} games, seed ${stats.config.seed}, P0=${stats.config.p0}, P1=${stats.config.p1}, decks=${stats.config.decks}`);
+  L.push(`Animal Friends TCG playtest — ${g} games, seed ${stats.config.seed}, P0=${stats.config.p0}, P1=${stats.config.p1}, decks=${stats.config.decks}, market=${stats.config.market}`);
   L.push(`ran in ${(stats.elapsedMs / 1000).toFixed(2)}s (${(stats.elapsedMs / g).toFixed(1)} ms/game)`);
   L.push('');
   L.push('WIN RATES');
@@ -222,7 +239,22 @@ function report(stats, { verbose = false } = {}) {
   L.push('ECONOMY / ACTIVITY (per player-game)');
   L.push(`  supply earned: ${s.avgSupplyEarned.toFixed(1)}   recruits: ${s.avgRecruits.toFixed(1)}   events: ${s.avgEvents.toFixed(1)}`
     + `   announcements: ${s.avgAnnouncements.toFixed(1)}   challenges: ${s.avgChallenges.toFixed(1)}`);
-  L.push(`  contested purchases: ${stats.contested} (${(stats.contested / g).toFixed(2)}/game); challenger won ${pct(stats.challengerWins, stats.contested)}`);
+  L.push(`  contested auctions: ${stats.contested} (${(stats.contested / g).toFixed(2)}/game); the first bidder held on ${pct(stats.contested - stats.challengerWins, stats.contested)}`);
+  L.push(`  bidding rounds when contested: avg ${s.avgBidRounds.toFixed(2)}, longest ${s.maxBidRounds}; Supply forfeited by losers: ${s.forfeitedPerGame.toFixed(2)}/game`);
+  if (stats.disruptions.size) {
+    L.push(`  disruptions fired: ${s.disruptionsPerGame.toFixed(2)}/game — `
+      + [...stats.disruptions.entries()].sort((a, b) => b[1] - a[1]).map(([id, n]) => `${CARD_BY_ID.get(id).name} ${(n / g).toFixed(2)}`).join(', '));
+  }
+  const marketRows = MARKET_DECK_IDS.filter((id) => stats.gamesByMarket[id]);
+  if (marketRows.length > 1) {
+    L.push('');
+    L.push('MARKET DECKS');
+    for (const id of marketRows) {
+      const played = stats.gamesByMarket[id];
+      const w = stats.winsByMarketSlot[id];
+      L.push(`  ${id.padEnd(16)} ${played} games, P0 ${pct(w[0], played)} / P1 ${pct(w[1], played)}`);
+    }
+  }
   L.push('');
   L.push('CAPITAL CITY CARDS GAINED (count, then by deck)');
   const gainRows = MARKET_POOL.map((id) => {

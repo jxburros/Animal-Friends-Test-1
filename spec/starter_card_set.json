@@ -1,5 +1,5 @@
 {
-  "$comment": "Animal Friends: First Boroughs (AF-STARTER-01). Authoritative card data for the prototype. Effects use the vocabulary interpreted by src/engine/effects.js; 'text' is the player-facing rules text. The named cards are examples; the schema is the contract.",
+  "$comment": "Animal Friends: First Boroughs (AF-STARTER-01). Authoritative card data for the prototype. Effects use the vocabulary interpreted by src/engine/effects.js; 'text' is the player-facing rules text, and a Statue's 'burden' is the drawback it imposes while controlled. The named cards are examples; the schema is the contract.",
   "setId": "AF-STARTER-01",
   "name": "Animal Friends: First Boroughs",
   "species": [
@@ -914,8 +914,15 @@
             "do": "gainSupply",
             "amount": 1
           }
+        },
+        {
+          "trigger": "passive",
+          "key": "opponentRehireDiscount",
+          "value": 1,
+          "burden": true
         }
-      ]
+      ],
+      "burden": "Burden: your opponent's rehires cost 1 less Supply."
     },
     {
       "id": "st_curiosity",
@@ -937,7 +944,21 @@
             "count": 1
           }
         ]
-      }
+      },
+      "burden": "Burden: at the end of your turn, if you hold more than 6 cards, discard 1.",
+      "abilities": [
+        {
+          "trigger": "onTurnEnd",
+          "condition": {
+            "handAtLeast": 7
+          },
+          "burden": true,
+          "effect": {
+            "do": "discard",
+            "count": 1
+          }
+        }
+      ]
     },
     {
       "id": "st_courage",
@@ -945,14 +966,22 @@
       "name": "Statue of Courage",
       "virtue": "Courage",
       "cost": 3,
-      "text": "Your next challenge bid costs 1 less Supply to pay.",
+      "text": "Your next raise in a Capital City auction costs 1 less Supply to pay.",
       "flavor": "A monument to those who face their fears bravely.",
       "onGain": {
         "do": "addMod",
         "key": "challengeDiscount",
         "value": 1,
         "expires": "untilUsed"
-      }
+      },
+      "burden": "Burden: your opponent's first bid each turn is worth 1 more.",
+      "abilities": [
+        {
+          "trigger": "passive",
+          "key": "opponentFirstBidPlus1",
+          "burden": true
+        }
+      ]
     },
     {
       "id": "st_patience",
@@ -966,8 +995,14 @@
         {
           "trigger": "passive",
           "key": "masterDelayMinus1"
+        },
+        {
+          "trigger": "passive",
+          "key": "apprenticeEntersBusy",
+          "burden": true
         }
-      ]
+      ],
+      "burden": "Burden: your Apprentices enter Busy instead of upright."
     },
     {
       "id": "st_generosity",
@@ -989,7 +1024,21 @@
             "count": 2
           }
         ]
-      }
+      },
+      "burden": "Burden: whenever you gain a Statue, including this one, your opponent gains 2 Supply.",
+      "abilities": [
+        {
+          "trigger": "onGainMarketCard",
+          "condition": {
+            "statue": true
+          },
+          "burden": true,
+          "effect": {
+            "do": "opponentGainSupply",
+            "amount": 2
+          }
+        }
+      ]
     },
     {
       "id": "st_ingenuity",
@@ -1003,8 +1052,14 @@
         {
           "trigger": "passive",
           "key": "eventCharReductionPerTurn"
+        },
+        {
+          "trigger": "passive",
+          "key": "eventCostPlus1",
+          "burden": true
         }
-      ]
+      ],
+      "burden": "Burden: your Events cost 1 more Supply."
     },
     {
       "id": "st_community",
@@ -1026,8 +1081,14 @@
             "do": "gainSupply",
             "amount": 1
           }
+        },
+        {
+          "trigger": "passive",
+          "key": "resourceSupplyMinus1",
+          "burden": true
         }
-      ]
+      ],
+      "burden": "Burden: choosing Supply in your Resources phase gives you 1 less."
     },
     {
       "id": "st_harmony",
@@ -1045,8 +1106,14 @@
             "do": "readyNextTurn",
             "optional": true
           }
+        },
+        {
+          "trigger": "passive",
+          "key": "losingBidsPayFull",
+          "burden": true
         }
-      ]
+      ],
+      "burden": "Burden: you pay your losing bids in full instead of forfeiting half."
     },
     {
       "id": "st_joy",
@@ -1064,7 +1131,18 @@
         },
         "count": 2,
         "optional": true
-      }
+      },
+      "burden": "Burden: at the start of your turn, give 1 Supply to your opponent.",
+      "abilities": [
+        {
+          "trigger": "onTurnStart",
+          "burden": true,
+          "effect": {
+            "do": "giveSupplyToOpponent",
+            "amount": 1
+          }
+        }
+      ]
     },
     {
       "id": "mk_town_charter",
@@ -1116,7 +1194,7 @@
       "name": "Mayor's Seal",
       "cost": 3,
       "disposal": "cityDump",
-      "text": "Your next purchase announcement cannot be challenged.",
+      "text": "Your next purchase announcement cannot be raised against.",
       "flavor": "The mayor's official mark of protection and authority.",
       "onGain": {
         "do": "addMod",
@@ -1153,7 +1231,7 @@
       "name": "Quiet Mediation",
       "cost": 4,
       "disposal": "cityDump",
-      "text": "The next challenge against one of your purchases is cancelled; your bid stays open.",
+      "text": "The next raise against an auction you are winning is cancelled; your bid stays open.",
       "flavor": "A space for calm voices to settle hot disputes.",
       "onGain": {
         "do": "addMod",
@@ -2409,10 +2487,104 @@
           }
         ]
       }
+    },
+    {
+      "id": "dx_recession",
+      "type": "disruption",
+      "name": "Recession",
+      "cost": 0,
+      "text": "On reveal: every Character in both towns is sent to Unemployment. Goes to the City Dump.",
+      "flavor": "The ledgers close, the workshops darken, and every animal walks home the long way.",
+      "foil": true,
+      "onReveal": {
+        "do": "allCharactersToUnemployment"
+      }
+    },
+    {
+      "id": "dx_hard_winter",
+      "type": "disruption",
+      "name": "Hard Winter",
+      "cost": 0,
+      "text": "On reveal: every shift in progress in both towns ends at once and produces nothing. Goes to the City Dump.",
+      "flavor": "Snow to the windowsills. Whatever was half-finished stays half-finished.",
+      "onReveal": {
+        "do": "endAllShifts"
+      }
+    },
+    {
+      "id": "dx_rent_hike",
+      "type": "disruption",
+      "name": "Rent Hike",
+      "cost": 0,
+      "text": "On reveal: both Mayors lose 3 Supply. Goes to the City Dump.",
+      "flavor": "A new figure on the noticeboard, written in a very confident hand.",
+      "onReveal": {
+        "do": "everyoneLosesSupply",
+        "amount": 3
+      }
+    },
+    {
+      "id": "dx_paperwork_backlog",
+      "type": "disruption",
+      "name": "Paperwork Backlog",
+      "cost": 0,
+      "text": "On reveal: both Mayors discard down to 3 cards in hand. Goes to the City Dump.",
+      "flavor": "Every form needs another form, and the pile has begun to lean.",
+      "onReveal": {
+        "do": "everyoneDiscardsDownTo",
+        "count": 3
+      }
+    },
+    {
+      "id": "dx_bridge_out",
+      "type": "disruption",
+      "name": "Bridge Out",
+      "cost": 0,
+      "text": "On reveal: at each Mayor's next Ready, their Characters do not advance. Goes to the City Dump.",
+      "flavor": "Two planks and a rope, and the whole borough waits.",
+      "onReveal": {
+        "do": "blockNextReady"
+      }
+    },
+    {
+      "id": "dx_boom_season",
+      "type": "disruption",
+      "name": "Boom Season",
+      "cost": 0,
+      "text": "On reveal: both Mayors gain 3 Supply and draw 1 card. Goes to the City Dump.",
+      "flavor": "Good weather, full carts, and everybody suddenly has an idea.",
+      "onReveal": {
+        "do": "seq",
+        "steps": [
+          {
+            "do": "everyoneGainsSupply",
+            "amount": 3
+          },
+          {
+            "do": "everyoneDraws",
+            "count": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "dx_open_hiring",
+      "type": "disruption",
+      "name": "Open Hiring Fair",
+      "cost": 0,
+      "text": "On reveal: each Mayor may rehire one Character from their Unemployment for free; it enters upright. Goes to the City Dump.",
+      "flavor": "Trestle tables on the green, and a queue that moves surprisingly fast.",
+      "onReveal": {
+        "do": "everyoneRehiresFree",
+        "count": 1
+      }
     }
   ],
   "marketDeck": {
-    "$comment": "Every Statue is always in the Market Deck; `poolSize` Capital City cards are drawn at random from `pool` each game, so the deck keeps its 25-card shape while the display varies between games. A plain array of card ids is still accepted.",
+    "$comment": "Legacy single-deck field, kept so older callers keep working: it mirrors marketDecks[0]. Prefer marketDecks and pass `market` to createGame.",
+    "id": "first-boroughs",
+    "name": "First Boroughs",
+    "blurb": "The classic market: a broad mix of growth, card flow and pointed disruption, and no shared shocks.",
     "always": [
       "st_kindness",
       "st_curiosity",
@@ -2459,5 +2631,146 @@
       "mk_beacon_hill"
     ],
     "poolSize": 16
-  }
+  },
+  "marketDecks": [
+    {
+      "id": "first-boroughs",
+      "name": "First Boroughs",
+      "blurb": "The classic market: a broad mix of growth, card flow and pointed disruption, and no shared shocks.",
+      "always": [
+        "st_kindness",
+        "st_curiosity",
+        "st_courage",
+        "st_patience",
+        "st_generosity",
+        "st_ingenuity",
+        "st_community",
+        "st_harmony",
+        "st_joy"
+      ],
+      "pool": [
+        "mk_town_charter",
+        "mk_festival_grant",
+        "mk_emergency_reserve",
+        "mk_mayors_seal",
+        "mk_library_annex",
+        "mk_quiet_mediation",
+        "mk_poachers_pardon",
+        "mk_town_bell",
+        "mk_supply_depot",
+        "mk_public_gardens",
+        "mk_courier_network",
+        "mk_community_kitchen",
+        "mk_appeal_board",
+        "mk_scrap_yard",
+        "mk_town_archives",
+        "mk_town_clock",
+        "mk_towpath",
+        "mk_lamplighters_round",
+        "mk_seed_exchange",
+        "mk_river_ferry",
+        "mk_toolshed",
+        "mk_common_pasture",
+        "mk_story_circle",
+        "mk_harvest_fair",
+        "mk_guild_hall",
+        "mk_night_watch",
+        "mk_watermill",
+        "mk_ledger_audit",
+        "mk_masons_yard",
+        "mk_festival_parade",
+        "mk_boundary_stone",
+        "mk_beacon_hill"
+      ],
+      "poolSize": 16
+    },
+    {
+      "id": "boom-town",
+      "name": "Boom Town",
+      "blurb": "Prosperity and momentum. Supply flows freely, direct disruption is rare, and shared shocks are mostly good news.",
+      "always": [
+        "st_kindness",
+        "st_curiosity",
+        "st_courage",
+        "st_patience",
+        "st_generosity",
+        "st_ingenuity",
+        "st_community",
+        "st_harmony",
+        "st_joy"
+      ],
+      "pool": [
+        "mk_towpath",
+        "mk_seed_exchange",
+        "mk_lamplighters_round",
+        "mk_town_bell",
+        "mk_town_charter",
+        "mk_festival_grant",
+        "mk_supply_depot",
+        "mk_river_ferry",
+        "mk_public_gardens",
+        "mk_toolshed",
+        "mk_story_circle",
+        "mk_common_pasture",
+        "mk_watermill",
+        "mk_harvest_fair",
+        "mk_festival_parade",
+        "mk_guild_hall",
+        "mk_masons_yard",
+        "mk_beacon_hill",
+        "mk_town_clock",
+        "mk_library_annex",
+        "mk_courier_network",
+        "mk_community_kitchen",
+        "dx_boom_season",
+        "dx_open_hiring",
+        "dx_rent_hike"
+      ],
+      "poolSize": 16
+    },
+    {
+      "id": "hard-times",
+      "name": "Hard Times",
+      "blurb": "A harsh market. Recessions, hard winters and backlogs strike both towns alike, and the cards that survive them are worth fighting over.",
+      "always": [
+        "st_kindness",
+        "st_curiosity",
+        "st_courage",
+        "st_patience",
+        "st_generosity",
+        "st_ingenuity",
+        "st_community",
+        "st_harmony",
+        "st_joy"
+      ],
+      "pool": [
+        "dx_recession",
+        "dx_hard_winter",
+        "dx_rent_hike",
+        "dx_paperwork_backlog",
+        "dx_bridge_out",
+        "dx_open_hiring",
+        "mk_poachers_pardon",
+        "mk_scrap_yard",
+        "mk_boundary_stone",
+        "mk_ledger_audit",
+        "mk_night_watch",
+        "mk_emergency_reserve",
+        "mk_mayors_seal",
+        "mk_quiet_mediation",
+        "mk_appeal_board",
+        "mk_community_kitchen",
+        "mk_common_pasture",
+        "mk_town_archives",
+        "mk_supply_depot",
+        "mk_towpath",
+        "mk_festival_grant",
+        "mk_masons_yard",
+        "mk_town_bell",
+        "mk_library_annex",
+        "mk_watermill"
+      ],
+      "poolSize": 18
+    }
+  ]
 }
