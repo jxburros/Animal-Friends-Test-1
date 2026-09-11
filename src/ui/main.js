@@ -3,9 +3,10 @@
 import { createGame, playTurn, log } from '../engine/index.js';
 import { makeHumanAgent } from './humanAgent.js';
 import {
-  setGame, stopGame, isGameActive, scheduleRender, renderIfChanged,
+  setGame, stopGame, isGameActive, scheduleRender, renderIfChanged, settle,
 } from './render.js';
 import { animalSVG } from './art.js';
+import * as fx from './fx.js';
 
 const RULES_URL = new URL('../../spec/game.json', import.meta.url);
 const SET_URL = new URL('../../spec/starter_card_set.json', import.meta.url);
@@ -13,8 +14,9 @@ const SET_URL = new URL('../../spec/starter_card_set.json', import.meta.url);
 let rules = null;
 let cardSet = null;
 let chosenDeckId = null;
-let fast = false;
 let renderTicker = null;
+const PACE_KEY = 'af-pace';
+const THINK_DELAY = { storybook: 900, brisk: 400, instant: 0 };
 
 function $(id) { return document.getElementById(id); }
 
@@ -99,7 +101,15 @@ function buildHowToPlay() {
     <h3>Capital City: announce &amp; challenge</h3>
     <p>Make an upright Character Busy, pick a Capital City card, and bid at least its cost. It stays
     pending until your next turn. Your opponent may challenge once, on their turn, with a higher bid
-    (ties go to the announcer). Only the winner pays; the loser is refunded.</p>
+    (ties go to the announcer). Only the winner pays; the loser is refunded. Whenever a card leaves the
+    Capital City, a new one is dealt from the Market Deck so the display always offers five cards.</p>
+
+    <h3>Watching the story</h3>
+    <p>Every card move is animated so you can follow what happened: cards fly between zones, Characters
+    turn sideways when they become Busy and turn back when they are ready, Supply pops out of the wallet,
+    and the Town Chronicle records each chapter. Hover a small card to read it at full size. Use the
+    <strong>Pace</strong> control to slow things down (Storybook), speed them up (Brisk) or skip animations
+    (Instant). Foil cards shimmer when you move the pointer across them.</p>
 
     <h3>Unemployment</h3>
     <p>Disruptive effects can send a Character to Unemployment. Rehire it for its full printed cost to
@@ -112,9 +122,25 @@ function buildHowToPlay() {
   `;
 }
 
+// ---------- pace ----------
+function applyPace(name) {
+  const pace = ['storybook', 'brisk', 'instant'].includes(name) ? name : 'storybook';
+  fx.setPace(pace);
+  for (const id of ['paceSelect', 'paceSelectMenu']) {
+    const el = $(id);
+    if (el && el.value !== pace) el.value = pace;
+  }
+  try { localStorage.setItem(PACE_KEY, pace); } catch (e) { /* private mode */ }
+}
+function loadPace() {
+  let saved = null;
+  try { saved = localStorage.getItem(PACE_KEY); } catch (e) { /* ignore */ }
+  applyPace(saved || 'storybook');
+}
+
 // ---------- AI agent ----------
 function getDelay() {
-  return fast ? 0 : 250;
+  return THINK_DELAY[fx.getPace()] ?? 900;
 }
 
 async function makeAIAgent(seed) {
@@ -130,10 +156,11 @@ async function makeAIAgent(seed) {
   return {
     name: inner.name || 'Rival',
     async choose(state, pi, req) {
-      const answer = await inner.choose(state, pi, req);
+      // Let the player watch what just happened before the rival acts again.
+      await settle();
       const delay = getDelay();
       if (delay > 0) await new Promise((r) => setTimeout(r, delay));
-      return answer;
+      return inner.choose(state, pi, req);
     },
   };
 }
@@ -173,8 +200,8 @@ async function startGame() {
   const human = makeHumanAgent('Mayor Bramble');
   const ai = await makeAIAgent(seed + 1);
 
+  showScreen('game'); // before setGame: the first render must measure a visible board
   setGame(state, 0);
-  showScreen('game');
   if (renderTicker) clearInterval(renderTicker);
   renderTicker = setInterval(() => { if (isGameActive()) renderIfChanged(); }, 150);
 
@@ -187,7 +214,8 @@ function wireMenu() {
   $('howToPlayBtn').addEventListener('click', () => $('howToPlayOverlay').classList.add('active'));
   $('howToPlayBtn2').addEventListener('click', () => $('howToPlayOverlay').classList.add('active'));
   $('closeHowToPlay').addEventListener('click', () => $('howToPlayOverlay').classList.remove('active'));
-  $('fastToggle').addEventListener('change', (e) => { fast = e.target.checked; });
+  $('paceSelect').addEventListener('change', (e) => applyPace(e.target.value));
+  $('paceSelectMenu').addEventListener('change', (e) => applyPace(e.target.value));
   $('quitBtn').addEventListener('click', () => {
     quitRequested = true;
     stopGame();
@@ -207,6 +235,7 @@ async function main() {
   cardSet = await setResp.json();
   buildMenu();
   wireMenu();
+  loadPace();
   showScreen('menu');
 }
 

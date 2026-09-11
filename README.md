@@ -17,7 +17,7 @@ At the start of your turn, non-upright Characters rotate clockwise: 180° → 27
 
 **Turn phases:** Start / Resources (draw 1 card or gain 2 Supply) / Ready (advance orientations) / Actions (recruit, shift, Events, purchase) / End (complete shifts, expire Limited Events).
 
-**Capital City** is a contested 5-card market. Announce a purchase with an upright Character and a bid ≥ cost; the opponent may challenge once with a higher bid. Resolves at the start of the announcer's next turn; ties go to the announcer; only the winner pays.
+**Capital City** is a contested 5-card market. Announce a purchase with an upright Character and a bid ≥ cost; the opponent may challenge once with a higher bid. Resolves at the start of the announcer's next turn; ties go to the announcer; only the winner pays. Whenever a card leaves the display, cards are dealt from the Market Deck until the display is back to five; if the Market Deck runs out, the City Dump is shuffled in. A stale-market safety valve (six turns with no purchase → sweep and redeal) exists but is rarely needed.
 
 **Unemployment** disrupts Characters. Rehire for the full printed cost to return upright.
 
@@ -33,7 +33,7 @@ No build step or dependencies beyond Node 22+ (for scripts/tests only). ES modul
 ```
 npm run serve          # Python http.server on :8080
 ```
-Then open http://localhost:8080/ in any modern browser.
+Then open http://localhost:8080/ in any modern browser. During play, use the **Pace** control (menu or bottom right) to choose animation speed: Storybook (slow, watch every card), Brisk (quicker), or Instant (no animations).
 
 Or use any static server (e.g., `python3 -m http.server 8080`).
 
@@ -44,7 +44,7 @@ Or use any static server (e.g., `python3 -m http.server 8080`).
 - `spec/starter_card_set.json` - all cards: two 30-card decks ("Burrow & Bloom", "Paws & Papers") and 25-card Market Deck with 9 Statues
 - `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`
 - `src/ai/` - agents: `random.js` (baseline), `heuristic.js` (opponent)
-- `src/ui/` - browser interface: `main.js`, `humanAgent.js`, `art.js`, `styles.css`
+- `src/ui/` - browser interface: `main.js`, `humanAgent.js`, `render.js`, `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations)
 - `index.html` - playable game
 - `scripts/` - test utilities: `smoke.mjs` (one game log), `invariants.mjs` (card conservation), `playtest.mjs` (AI vs AI)
 - `test/` - unit tests (`node --test`)
@@ -70,6 +70,8 @@ The `assumptions` array in `spec/game.json` documents current prototype choices:
 - Readying a Character mid-shift completes the shift immediately
 - Reactive abilities (shields) set on your turn and last until your next turn starts
 - Deck reshuffle: when player deck empties, shuffle Town Dump in
+- Top-up refill: the Capital City is dealt back up to five cards as soon as a purchase resolves, so the Market Deck keeps flowing
+- Stale market: if no Capital City card has been gained for six consecutive turns, the display is swept and redealt (safety valve, rarely needed)
 
 ## Design notes
 

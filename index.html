@@ -4,31 +4,46 @@
 <meta charset="utf-8">
 <link rel="icon" href="data:,">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Animal Friends TCG</title>
+<title>Animal Friends TCG — A Storybook of the First Boroughs</title>
 <link rel="stylesheet" href="src/ui/styles.css">
 </head>
 <body>
 <div id="app">
 
-  <!-- ============ MENU ============ -->
+  <!-- ============ MENU (book cover) ============ -->
   <section id="screen-menu" class="screen active">
-    <div class="menu-box">
-      <div class="menu-critters" id="menuCritters"></div>
-      <h1 class="logo">Animal Friends <span>TCG</span></h1>
-      <p class="tagline">Build your town. Win the Capital City. Collect the Statues.</p>
+    <div class="book-cover">
+      <div class="cover-inner">
+        <div class="cover-orn top">❦</div>
+        <div class="menu-critters" id="menuCritters"></div>
+        <h1 class="logo">Animal Friends</h1>
+        <div class="logo-sub">A Storybook of the First Boroughs</div>
+        <p class="tagline">Build your town. Win the Capital City. Collect the Statues.</p>
 
-      <div class="menu-field">
-        <div class="menu-label">Choose your deck</div>
-        <div class="deck-choice" id="deckChoice"></div>
+        <div class="menu-field">
+          <div class="menu-label">Choose your deck</div>
+          <div class="deck-choice" id="deckChoice"></div>
+        </div>
+
+        <div class="menu-grid">
+          <div class="menu-field">
+            <label class="menu-label" for="seedInput">Seed (optional)</label>
+            <input type="text" id="seedInput" class="seed-input" placeholder="random" inputmode="numeric">
+          </div>
+          <div class="menu-field">
+            <label class="menu-label" for="paceSelectMenu">Pace</label>
+            <select id="paceSelectMenu" class="pace-select">
+              <option value="storybook">Storybook — slow, watch every card</option>
+              <option value="brisk">Brisk — quicker animations</option>
+              <option value="instant">Instant — no animations</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="primary big" id="startGameBtn">Open the book</button>
+        <button id="howToPlayBtn">How to play</button>
+        <div class="cover-orn bottom">❦</div>
       </div>
-
-      <div class="menu-field">
-        <label class="menu-label" for="seedInput">Seed (optional)</label>
-        <input type="text" id="seedInput" class="seed-input" placeholder="random" inputmode="numeric">
-      </div>
-
-      <button class="primary big" id="startGameBtn">Start Game</button>
-      <button id="howToPlayBtn">How to play</button>
     </div>
   </section>
 
@@ -37,22 +52,27 @@
     <header class="topbar">
       <div class="turn-banner" id="turnBanner">—</div>
       <div class="topbar-controls">
-        <label class="fast-toggle"><input type="checkbox" id="fastToggle"> Fast</label>
-        <button id="howToPlayBtn2" aria-label="How to play">?</button>
-        <button id="quitBtn" class="danger">Quit to menu</button>
+        <label class="pace-label" for="paceSelect">Pace</label>
+        <select id="paceSelect" class="pace-select small">
+          <option value="storybook">Storybook</option>
+          <option value="brisk">Brisk</option>
+          <option value="instant">Instant</option>
+        </select>
+        <button id="howToPlayBtn2" aria-label="How to play" title="How to play">?</button>
+        <button id="quitBtn" class="danger">Close the book</button>
       </div>
     </header>
 
-    <div class="town-panel" id="oppTown" data-side="opponent"></div>
+    <div class="town-panel page rival" id="oppTown" data-side="opponent"></div>
 
-    <div class="capital-city-panel" id="capitalCity"></div>
+    <div class="capital-city-panel page" id="capitalCity"></div>
 
-    <div class="log-panel">
-      <div class="log-title">Town Crier</div>
+    <div class="log-panel page">
+      <div class="log-title"><span class="orn">❦</span> The Town Chronicle <span class="orn">❦</span></div>
       <div class="log-scroll" id="gameLog"></div>
     </div>
 
-    <div class="town-panel" id="yourTown" data-side="you"></div>
+    <div class="town-panel page you" id="yourTown" data-side="you"></div>
   </section>
 
   <!-- ============ OVERLAYS ============ -->
@@ -65,10 +85,11 @@
   </div>
 
   <div class="overlay" id="winOverlay">
-    <div class="box">
+    <div class="box win-box">
+      <div class="cover-orn">❦</div>
       <h2 id="winTitle">Game Over</h2>
       <p id="winBody"></p>
-      <button class="primary big" id="playAgainBtn">Play again</button>
+      <button class="primary big" id="playAgainBtn">Read another story</button>
     </div>
   </div>
 
@@ -77,6 +98,7 @@
   </div>
 
   <div class="popover" id="popover" hidden></div>
+  <div class="card-peek" id="cardPeek" hidden></div>
 
 </div>
 <script type="module" src="src/ui/main.js"></script>

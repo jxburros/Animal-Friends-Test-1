@@ -169,7 +169,9 @@ Cards and abilities can protect an announcement from challenges, cancel a challe
 
 ### Market refresh and disposal
 
-When the Capital City is empty, deal five cards from the Market Deck. If that deck is empty, shuffle eligible City Dump cards back into it first. Cards in use and cards Out of Play are not returned. Ordinary used Market cards normally enter the City Dump; cards that say they go Out of Play do not cycle back.
+Whenever a card leaves the Capital City (through a purchase or sweep), cards are dealt from the Market Deck until the display is back to five. If the Market Deck runs out mid-deal, the City Dump is shuffled into it first. Cards in use and cards Out of Play never return to circulation. Ordinary used Market cards normally enter the City Dump; cards that say they go Out of Play do not cycle back.
+
+This top-up refill replaced the earlier refill-only-when-empty rule: playtests found that rule let a player free-ride on the opponent's cycling, creating deadlock when both players avoided undesirable cards. The current system keeps the Market Deck flowing continuously. A stale-market safety valve exists: if no Capital City card has been gained for six consecutive turns and nothing is pending, the display is swept (Statues return to the Market Deck, other cards go to City Dump) and redealt.
 
 ## 9. Statues, victory, theft, and the endgame
 
