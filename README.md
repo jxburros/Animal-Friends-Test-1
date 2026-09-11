@@ -25,6 +25,8 @@ At the start of your turn, non-upright Characters rotate clockwise: 180° → 27
 
 **Statues** are the victory cards. Control 5 of 9 to win.
 
+**Decks** — four printed 30-card decks (Burrow & Bloom, Paws & Papers, Bramble & Bristle, Ripple & Rune), or build your own in the **Deck Workshop** from the whole catalogue: 30 cards, at most 3 copies of a card, at least 12 Characters. Custom decks are saved in the browser.
+
 ## How to play
 
 No build step or dependencies beyond Node 22+ (for scripts/tests only). ES modules require serving; browsers block file:// access.
@@ -41,10 +43,10 @@ Or use any static server (e.g., `python3 -m http.server 8080`).
 
 - `docs/ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md` - design reference and source of truth
 - `spec/game.json` - rules constants and prototype decisions
-- `spec/starter_card_set.json` - all cards: two 30-card decks ("Burrow & Bloom", "Paws & Papers") and 25-card Market Deck with 9 Statues
+- `spec/starter_card_set.json` - all 97 cards: 32 Characters, 24 Events, 9 Statues and a 32-card Capital City pool, plus four printed 30-card decks. The Market Deck is dealt as all 9 Statues plus a random 16 of the Capital City pool, so it keeps its 25-card shape while the display varies from game to game.
 - `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`
 - `src/ai/` - agents: `random.js` (baseline), `heuristic.js` (opponent)
-- `src/ui/` - browser interface: `main.js`, `humanAgent.js`, `render.js`, `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations)
+- `src/ui/` - browser interface: `main.js`, `humanAgent.js`, `render.js`, `deckbuilder.js` (the Deck Workshop), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations)
 - `index.html` - playable game
 - `scripts/` - test utilities: `smoke.mjs` (one game log), `invariants.mjs` (card conservation), `playtest.mjs` (AI vs AI)
 - `test/` - unit tests (`node --test`)
@@ -58,6 +60,8 @@ npm run invariants                         # Check card conservation over many g
 npm run playtest -- --games 200            # Playtest 200 AI matches
 npm run playtest -- --games 100 --seed 42 # Use fixed seed for reproducibility
 npm run playtest -- --p0 random --p1 heuristic  # Choose agents
+npm run playtest -- --games 240 --decks all     # Rotate through every ordered deck pairing
+npm run playtest -- --decks br,rr               # One matchup (bb, pp, br, rr or full deck ids)
 ```
 
 ## Prototype decisions
@@ -72,6 +76,13 @@ The `assumptions` array in `spec/game.json` documents current prototype choices:
 - Deck reshuffle: when player deck empties, shuffle Town Dump in
 - Top-up refill: the Capital City is dealt back up to five cards as soon as a purchase resolves, so the Market Deck keeps flowing
 - Stale market: if no Capital City card has been gained for six consecutive turns, the display is swept and redealt (safety valve, rarely needed)
+
+## Card art
+
+`src/ui/art.js` draws every illustration as inline SVG. `animalHeadParts(kind)` is the single source of the
+animal look: the book cover renders it flat (`animalSVG`), the card scenes embed the same head ink-traced on a
+small storybook body, and the Statues carve it in stone. Adding a species therefore means one entry in
+`ANIMALS`, one in `SPECIES_KIND`, and an icon; adding a study means a backdrop and an icon.
 
 ## Design notes
 

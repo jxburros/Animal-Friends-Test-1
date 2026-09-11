@@ -1,11 +1,12 @@
 // Bootstraps the menu, builds the game, and drives the turn loop. All rules logic lives in
 // src/engine/*; this file only wires the menu, builds agents, and re-renders the screen.
-import { createGame, playTurn, log } from '../engine/index.js';
+import { createGame, playTurn, log, indexSet } from '../engine/index.js';
 import { makeHumanAgent } from './humanAgent.js';
 import {
   setGame, stopGame, isGameActive, scheduleRender, renderIfChanged, settle,
 } from './render.js';
 import { animalSVG } from './art.js';
+import { openDeckBuilder, loadSavedDecks, saveDeck, deleteSavedDeck } from './deckbuilder.js';
 import * as fx from './fx.js';
 
 const RULES_URL = new URL('../../spec/game.json', import.meta.url);
@@ -14,49 +15,89 @@ const SET_URL = new URL('../../spec/starter_card_set.json', import.meta.url);
 let rules = null;
 let cardSet = null;
 let chosenDeckId = null;
+let customDecks = [];
 let renderTicker = null;
 const PACE_KEY = 'af-pace';
 const THINK_DELAY = { storybook: 900, brisk: 400, instant: 0 };
 
 function $(id) { return document.getElementById(id); }
 
+const SCREENS = { menu: 'screen-menu', deck: 'screen-deck', game: 'screen-game' };
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach((s) => s.classList.remove('active'));
-  $(name === 'menu' ? 'screen-menu' : 'screen-game').classList.add('active');
+  $(SCREENS[name] || SCREENS.game).classList.add('active');
+}
+
+/** Every deck a player can pick: the printed decks from the set, then their own. */
+function allDecks() {
+  return [...cardSet.decks, ...customDecks.map((d) => ({ ...d, custom: true }))];
+}
+function deckById(id) {
+  return allDecks().find((d) => d.id === id) || null;
+}
+function customBlurb(deck) {
+  const chars = Object.entries(deck.list).reduce((a, [cardId, n]) => a + (cardSet.cardsById[cardId].type === 'character' ? n : 0), 0);
+  const species = new Set();
+  const studies = new Set();
+  for (const cardId of Object.keys(deck.list)) {
+    const def = cardSet.cardsById[cardId];
+    if (def.species) species.add(def.species);
+    if (def.study) studies.add(def.study);
+  }
+  const total = Object.values(deck.list).reduce((a, n) => a + n, 0);
+  return `Your own deck: ${chars} Characters and ${total - chars} Events. ${[...species].join(', ') || 'No species'} · ${[...studies].join(', ') || 'No studies'}.`;
 }
 
 // ---------- menu ----------
 function buildMenu() {
   const critters = $('menuCritters');
   critters.innerHTML = '';
-  for (const kind of ['rabbit', 'mouse', 'raccoon', 'fox']) {
+  for (const kind of ['rabbit', 'mouse', 'raccoon', 'fox', 'hedgehog', 'badger', 'otter', 'squirrel']) {
     const wrap = document.createElement('div');
     wrap.innerHTML = animalSVG(kind);
     critters.appendChild(wrap.firstChild);
   }
 
+  renderDeckChoice();
+  buildHowToPlay();
+}
+
+function renderDeckChoice() {
   const choiceEl = $('deckChoice');
   choiceEl.innerHTML = '';
-  chosenDeckId = cardSet.decks[0].id;
-  for (const deck of cardSet.decks) {
+  const decks = allDecks();
+  if (!deckById(chosenDeckId)) chosenDeckId = decks[0].id;
+  for (const deck of decks) {
     const card = document.createElement('button');
     card.type = 'button';
-    card.className = `deck-card${deck.id === chosenDeckId ? ' selected' : ''}`;
+    card.className = `deck-card${deck.id === chosenDeckId ? ' selected' : ''}${deck.custom ? ' custom' : ''}`;
     card.setAttribute('aria-pressed', deck.id === chosenDeckId ? 'true' : 'false');
-    card.innerHTML = `<h4>${deck.name}</h4><p>${deck.blurb}</p>`;
+    card.innerHTML = `<h4>${deck.name}</h4><p>${deck.blurb || customBlurb(deck)}</p>`;
     card.addEventListener('click', () => {
       chosenDeckId = deck.id;
-      choiceEl.querySelectorAll('.deck-card').forEach((c) => {
-        c.classList.remove('selected');
-        c.setAttribute('aria-pressed', 'false');
-      });
-      card.classList.add('selected');
-      card.setAttribute('aria-pressed', 'true');
+      renderDeckChoice();
     });
     choiceEl.appendChild(card);
   }
+  const chosen = deckById(chosenDeckId);
+  $('editDeckBtn').hidden = !(chosen && chosen.custom);
+  $('deleteDeckBtn').hidden = !(chosen && chosen.custom);
+}
 
-  buildHowToPlay();
+function openWorkshop(deck) {
+  showScreen('deck');
+  openDeckBuilder($('deckBuilder'), {
+    rules,
+    set: cardSet,
+    deck,
+    onSave: (saved) => {
+      customDecks = saveDeck(saved).map((d) => ({ ...d }));
+      chosenDeckId = saved.id;
+      renderDeckChoice();
+      showScreen('menu');
+    },
+    onCancel: () => showScreen('menu'),
+  });
 }
 
 function buildHowToPlay() {
@@ -115,6 +156,14 @@ function buildHowToPlay() {
     <p>Disruptive effects can send a Character to Unemployment. Rehire it for its full printed cost to
     return it upright. A freshly-played Character that hasn't yet been upright on your turn is protected
     from being targeted this way.</p>
+
+    <h3>Build your own deck</h3>
+    <p>The book holds far more cards than the four printed decks use. <strong>Build your own deck</strong>
+    on the cover opens the Deck Workshop: pick any Characters and Events from the whole catalogue
+    (${rules.deckbuilding.deckSize} cards, at most ${rules.deckbuilding.maxCopiesPerCard} copies of a card and at least
+    ${rules.deckbuilding.minCharacters} Characters), name it, and it is saved in this browser for later games.
+    Remember that Events need upright Characters of the right species or study to pay for them, so a deck
+    wants Characters that match the Events you chose.</p>
 
     <h3>Statues &amp; victory</h3>
     <p>Statues won from the Capital City sit in your Victory Row and count toward victory. Control
@@ -187,14 +236,19 @@ async function runGame(state, agents) {
 }
 
 async function startGame() {
-  const otherDeck = cardSet.decks.find((d) => d.id !== chosenDeckId);
   const seedText = $('seedInput').value.trim();
   const seed = seedText ? Number(seedText) : Math.floor(Math.random() * 2 ** 31);
   quitRequested = false;
 
+  // The rival always plays one of the printed decks — a different one where possible.
+  const rivals = cardSet.decks.filter((d) => d.id !== chosenDeckId);
+  const rivalDeck = rivals[Math.floor(Math.random() * rivals.length)] || cardSet.decks[0];
+  const mine = deckById(chosenDeckId);
+  const myDeckRef = mine && mine.custom ? { id: mine.id, name: mine.name, list: mine.list } : chosenDeckId;
+
   const state = createGame(rules, cardSet, {
     seed,
-    decks: [chosenDeckId, otherDeck.id],
+    decks: [myDeckRef, rivalDeck.id],
     names: ['Mayor Bramble', 'Mayor Sable'],
   });
   const human = makeHumanAgent('Mayor Bramble');
@@ -211,6 +265,18 @@ async function startGame() {
 // ---------- wiring ----------
 function wireMenu() {
   $('startGameBtn').addEventListener('click', () => { startGame(); });
+  $('buildDeckBtn').addEventListener('click', () => openWorkshop(null));
+  $('editDeckBtn').addEventListener('click', () => {
+    const deck = deckById(chosenDeckId);
+    if (deck && deck.custom) openWorkshop(deck);
+  });
+  $('deleteDeckBtn').addEventListener('click', () => {
+    const deck = deckById(chosenDeckId);
+    if (!deck || !deck.custom) return;
+    customDecks = deleteSavedDeck(deck.id).map((d) => ({ ...d }));
+    chosenDeckId = cardSet.decks[0].id;
+    renderDeckChoice();
+  });
   $('howToPlayBtn').addEventListener('click', () => $('howToPlayOverlay').classList.add('active'));
   $('howToPlayBtn2').addEventListener('click', () => $('howToPlayOverlay').classList.add('active'));
   $('closeHowToPlay').addEventListener('click', () => $('howToPlayOverlay').classList.remove('active'));
@@ -232,7 +298,10 @@ function wireMenu() {
 async function main() {
   const [rulesResp, setResp] = await Promise.all([fetch(RULES_URL), fetch(SET_URL)]);
   rules = await rulesResp.json();
-  cardSet = await setResp.json();
+  cardSet = indexSet(await setResp.json());
+  // Drop saved decks that no longer match the card set (a card was renamed or removed).
+  customDecks = loadSavedDecks().filter((d) => Object.keys(d.list).every((id) => cardSet.cardsById[id]));
+  chosenDeckId = cardSet.decks[0].id;
   buildMenu();
   wireMenu();
   loadPace();

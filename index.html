@@ -23,6 +23,11 @@
         <div class="menu-field">
           <div class="menu-label">Choose your deck</div>
           <div class="deck-choice" id="deckChoice"></div>
+          <div class="deck-tools">
+            <button type="button" id="buildDeckBtn">✎ Build your own deck</button>
+            <button type="button" id="editDeckBtn" hidden>Edit this deck</button>
+            <button type="button" id="deleteDeckBtn" class="danger" hidden>Delete</button>
+          </div>
         </div>
 
         <div class="menu-grid">
@@ -45,6 +50,11 @@
         <div class="cover-orn bottom">❦</div>
       </div>
     </div>
+  </section>
+
+  <!-- ============ DECK WORKSHOP ============ -->
+  <section id="screen-deck" class="screen">
+    <div class="deckbuilder" id="deckBuilder"></div>
   </section>
 
   <!-- ============ GAME ============ -->

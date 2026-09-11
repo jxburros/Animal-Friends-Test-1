@@ -19,6 +19,7 @@ const PHASE_LABEL = { start: 'Start', resources: 'Resources', ready: 'Ready', ac
 
 // ---------- module state ----------
 let state = null;
+let preview = null; // { rules, set } — lets the deck builder render card faces with no game running
 let humanIndex = 0;
 let aiIndex = 1;
 let pending = null; // { pi, request, rawResolve }
@@ -36,6 +37,17 @@ choreo.init({
   humanIndex: () => humanIndex,
   state: () => state,
 });
+
+/** Point the card-face helpers at a rules/card set while no game is running (deck builder, previews). */
+export function setPreviewContext(rules, set) {
+  preview = { rules, set };
+}
+function activeRules() {
+  return state ? state.rules : (preview && preview.rules);
+}
+function cardsById() {
+  return state ? state.set.cardsById : (preview && preview.set.cardsById) || {};
+}
 
 export function setGame(s, hIdx) {
   state = s;
@@ -165,8 +177,9 @@ function typeIconName(def) {
   return 'market';
 }
 export function rankLabel(def) {
-  if (def.type !== 'character' || !state) return '';
-  const r = rankOf(state.rules, def.cost);
+  const rules = activeRules();
+  if (def.type !== 'character' || !rules) return '';
+  const r = rankOf(rules, def.cost);
   return r.charAt(0).toUpperCase() + r.slice(1);
 }
 
@@ -175,7 +188,7 @@ export function rankLabel(def) {
  * pointer tracking (turned off for animation clones).
  */
 export function buildCardFace(def, { large = false, interactive = true } = {}) {
-  const rank = def.type === 'character' && state ? rankOf(state.rules, def.cost) : null;
+  const rank = def.type === 'character' && activeRules() ? rankOf(activeRules(), def.cost) : null;
   const face = h('div', {
     class: `card-face t-${def.type}${large ? ' large' : ''}${def.foil ? ' foil' : ''}${rank ? ` rank-${rank}` : ''}`,
     'data-card': def.id,
@@ -263,8 +276,7 @@ function hidePeek() {
   }
 }
 function showPeek(faceEl) {
-  if (!state) return;
-  const def = state.set.cardsById[faceEl.dataset.card];
+  const def = cardsById()[faceEl.dataset.card];
   if (!def) return;
   const el = document.getElementById('cardPeek');
   el.innerHTML = '';

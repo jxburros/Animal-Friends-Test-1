@@ -50,3 +50,30 @@ The top-up refill has made games noticeably shorter: the mean game length droppe
 - Added `market.staleTurns = 6` (stale-market sweep safety valve).
 - `setup.secondPlayerBonusSupply = 2`, `setup.secondPlayerBonusCards = 1`.
 - Seed Swap: draw 3, discard 1, gain 1 Supply. Fair Hearing: free rehire, draw 2, opponent gains 1 Supply.
+
+## Expansion playtest (97-card set, four decks)
+
+500 heuristic-vs-heuristic games per pass, every deck against every other deck in both seats:
+
+| Deck | Win rate |
+| --- | --- |
+| Burrow & Bloom | 47.3% |
+| Paws & Papers | 44.7% |
+| Bramble & Bristle | 53.3% |
+| Ripple & Rune | 54.7% |
+
+Mean game length is unchanged at ~26 turns, and card conservation holds over 200 random-vs-random games.
+
+First pass measured the new decks at 63% (Bramble & Bristle) and 56% (Ripple & Rune); the supply-per-game
+diagnostic showed both were simply earning more Supply (138 and 145 versus 105 for Burrow & Bloom). Tuning
+applied:
+
+- Thistle, Field Hand: cost 1 → 2 and shift 1 → 2 delay. "+1 Supply whenever it becomes upright" stacked on a
+  delay-1 shift meant two Supply a turn from a one-cost body.
+- Willow, Ferry Trader: shift 1/1 → 2/2, for the same reason on the shift-start trigger.
+- Barn Raising: 3 → 2 Supply. Tool Lending Day: dropped the extra Supply (readying a working Character already
+  cashes its shift, which is the strongest line in the game).
+
+Still open: both new decks sit a couple of points above the two starters, mostly on Supply throughput; the
+next pass should look at Bramble, Master Joiner and the Capital City cards that hand out two effects at once
+(Watermill, Beacon Hill).
