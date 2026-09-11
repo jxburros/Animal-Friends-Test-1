@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Animal Friends TCG</title>
+<link rel="stylesheet" href="src/ui/styles.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ MENU ============ -->
+  <section id="screen-menu" class="screen active">
+    <div class="menu-box">
+      <div class="menu-critters" id="menuCritters"></div>
+      <h1 class="logo">Animal Friends <span>TCG</span></h1>
+      <p class="tagline">Build your town. Win the Capital City. Collect the Statues.</p>
+
+      <div class="menu-field">
+        <div class="menu-label">Choose your deck</div>
+        <div class="deck-choice" id="deckChoice"></div>
+      </div>
+
+      <div class="menu-field">
+        <label class="menu-label" for="seedInput">Seed (optional)</label>
+        <input type="text" id="seedInput" class="seed-input" placeholder="random" inputmode="numeric">
+      </div>
+
+      <button class="primary big" id="startGameBtn">Start Game</button>
+      <button id="howToPlayBtn">How to play</button>
+    </div>
+  </section>
+
+  <!-- ============ GAME ============ -->
+  <section id="screen-game" class="screen">
+    <header class="topbar">
+      <div class="turn-banner" id="turnBanner">—</div>
+      <div class="topbar-controls">
+        <label class="fast-toggle"><input type="checkbox" id="fastToggle"> Fast</label>
+        <button id="howToPlayBtn2" aria-label="How to play">?</button>
+        <button id="quitBtn" class="danger">Quit to menu</button>
+      </div>
+    </header>
+
+    <div class="town-panel" id="oppTown" data-side="opponent"></div>
+
+    <div class="capital-city-panel" id="capitalCity"></div>
+
+    <div class="log-panel">
+      <div class="log-title">Town Crier</div>
+      <div class="log-scroll" id="gameLog"></div>
+    </div>
+
+    <div class="town-panel" id="yourTown" data-side="you"></div>
+  </section>
+
+  <!-- ============ OVERLAYS ============ -->
+  <div class="overlay" id="howToPlayOverlay">
+    <div class="box help-box">
+      <h2>How to Play</h2>
+      <div class="help" id="howToPlayBody"></div>
+      <button class="primary" id="closeHowToPlay">Got it!</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="winOverlay">
+    <div class="box">
+      <h2 id="winTitle">Game Over</h2>
+      <p id="winBody"></p>
+      <button class="primary big" id="playAgainBtn">Play again</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="modalOverlay">
+    <div class="box modal-box" id="modalBox"></div>
+  </div>
+
+  <div class="popover" id="popover" hidden></div>
+
+</div>
+<script type="module" src="src/ui/main.js"></script>
+</body>
+</html>
