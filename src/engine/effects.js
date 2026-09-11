@@ -60,7 +60,7 @@ export function gainSupply(state, pi, n, why = '') {
   const p = state.players[pi];
   p.supply += n;
   p.stats.supplyEarned += n;
-  log(state, pi, `${p.name} gains ${n} Supply${why ? ` (${why})` : ''}.`);
+  log(state, pi, `${p.name} gains ${n} Supply${why ? ` (${why})` : ''}.`, { kind: 'supply', player: pi, amount: n, why });
   return n;
 }
 export function loseSupply(state, pi, n, { byOpponent = false } = {}) {
@@ -68,10 +68,11 @@ export function loseSupply(state, pi, n, { byOpponent = false } = {}) {
   if (byOpponent && hasMod(p, 'lossShield')) {
     const prevented = consumeMod(p, 'lossShield', n);
     n -= prevented;
-    if (prevented) log(state, pi, `${p.name} prevents ${prevented} Supply loss.`);
+    if (prevented) log(state, pi, `${p.name} prevents ${prevented} Supply loss.`, { kind: 'shield', player: pi, amount: prevented });
   }
   n = Math.min(n, p.supply);
   p.supply -= n;
+  if (n > 0) log(state, pi, `${p.name} loses ${n} Supply.`, { kind: 'supply', player: pi, amount: -n });
   return n;
 }
 export function draw(state, pi, n, why = '') {
@@ -80,20 +81,20 @@ export function draw(state, pi, n, why = '') {
   for (let i = 0; i < n; i++) {
     if (p.deck.length === 0 && p.dump.length > 0 && state.rules.deckOut.shuffleTownDumpIntoDeck) {
       p.deck = shuffle(state, p.dump.splice(0));
-      log(state, pi, `${p.name} shuffles the Town Dump into a new deck.`);
+      log(state, pi, `${p.name} shuffles the Town Dump into a new deck.`, { kind: 'reshuffleDeck', player: pi });
     }
     const c = p.deck.shift();
     if (!c) break;
     p.hand.push(c);
     drawn++;
   }
-  if (drawn) log(state, pi, `${p.name} draws ${drawn} card${drawn === 1 ? '' : 's'}${why ? ` (${why})` : ''}.`);
+  if (drawn) log(state, pi, `${p.name} draws ${drawn} card${drawn === 1 ? '' : 's'}${why ? ` (${why})` : ''}.`, { kind: 'draw', player: pi, count: drawn, uids: p.hand.slice(-drawn).map((c) => c.uid) });
   return drawn;
 }
 export async function discard(state, pi, n, { byOpponent = false } = {}) {
   const p = state.players[pi];
   if (byOpponent && hasMod(p, 'lossShield')) {
-    log(state, pi, `${p.name} ignores the discard effect.`);
+    log(state, pi, `${p.name} ignores the discard effect.`, { kind: 'shield', player: pi, amount: 0 });
     return 0;
   }
   const count = Math.min(n, p.hand.length);
@@ -103,7 +104,7 @@ export async function discard(state, pi, n, { byOpponent = false } = {}) {
     const i = p.hand.findIndex((c) => c.uid === uid);
     const [c] = p.hand.splice(i, 1);
     p.dump.push(c);
-    log(state, pi, `${p.name} discards ${cardDef(state, c.cardId).name}.`);
+    log(state, pi, `${p.name} discards ${cardDef(state, c.cardId).name}.`, { kind: 'discard', player: pi, uid: c.uid, cardId: c.cardId });
   }
   return chosen.length;
 }
@@ -124,6 +125,7 @@ export async function completeShift(state, pi, stack) {
   stack.shift = null;
   p.stats.shiftsCompleted++;
   p.turn.shiftsCompleted++;
+  log(state, pi, `${def.name}, ${def.title} finishes the shift.`, { kind: 'shiftDone', player: pi, uid: stack.uid, output: out });
   gainSupply(state, pi, out, `${def.name}'s shift${bonus ? `, +${bonus} bonus` : ''}`);
   await fireHook(state, 'onShiftCompleted', { player: pi, stackUid: stack.uid });
 }
@@ -134,14 +136,14 @@ export async function readyStack(state, pi, stack, why = '') {
   stack.orientation = UPRIGHT;
   stack.hasBeenUpright = true;
   stack.readyNextTurn = false;
-  log(state, pi, `${topCard(state, stack).name} is readied${why ? ` (${why})` : ''}.`);
+  log(state, pi, `${topCard(state, stack).name} is readied${why ? ` (${why})` : ''}.`, { kind: 'ready', player: pi, uids: [stack.uid], advanced: [stack.uid] });
 }
 
 /** Send a stack to Unemployment following the knock-down rule. Returns false if prevented. */
 export async function unemployStack(state, ownerPi, stack, { byEffect = true, sourcePi = null } = {}) {
   const p = state.players[ownerPi];
   if (byEffect && hasMod(p, 'unemploymentShield')) {
-    log(state, ownerPi, `${p.name}'s Characters are protected; ${topCard(state, stack).name} stays in town.`);
+    log(state, ownerPi, `${p.name}'s Characters are protected; ${topCard(state, stack).name} stays in town.`, { kind: 'shield', player: ownerPi, uid: stack.uid });
     return false;
   }
   const idx = p.town.indexOf(stack);
@@ -150,12 +152,12 @@ export async function unemployStack(state, ownerPi, stack, { byEffect = true, so
   const [top, ...rest] = stack.cards;
   if (rest.length === 0) {
     p.unemployment.push(top);
-    log(state, ownerPi, `${cardDef(state, top.cardId).name}, ${cardDef(state, top.cardId).title} is sent to Unemployment.`);
+    log(state, ownerPi, `${cardDef(state, top.cardId).name}, ${cardDef(state, top.cardId).title} is sent to Unemployment.`, { kind: 'unemploy', player: ownerPi, stackUid: stack.uid, uid: top.uid, cardId: top.cardId });
   } else {
     p.dump.push(top);
     p.unemployment.push(rest[0]);
     p.dump.push(...rest.slice(1));
-    log(state, ownerPi, `${cardDef(state, top.cardId).name} is knocked down: ${cardDef(state, top.cardId).title} goes to the Town Dump and ${cardDef(state, rest[0].cardId).title} goes to Unemployment.`);
+    log(state, ownerPi, `${cardDef(state, top.cardId).name} is knocked down: ${cardDef(state, top.cardId).title} goes to the Town Dump and ${cardDef(state, rest[0].cardId).title} goes to Unemployment.`, { kind: 'unemploy', player: ownerPi, stackUid: stack.uid, uid: rest[0].uid, cardId: rest[0].cardId, knockedDown: top.cardId });
   }
   if (byEffect) await fireHook(state, 'onCharacterUnemployed', { player: ownerPi, listeners: [0, 1], sourcePlayer: sourcePi });
   return true;
@@ -167,7 +169,7 @@ export function checkVictory(state) {
     if (p.victoryRow.length >= state.rules.victory.statuesToWin) {
       state.winner = p.index;
       state.result = 'statues';
-      log(state, p.index, `${p.name} controls ${p.victoryRow.length} Statues and wins the game!`);
+      log(state, p.index, `${p.name} controls ${p.victoryRow.length} Statues and wins the game!`, { kind: 'win', player: p.index });
       return;
     }
   }
@@ -177,7 +179,7 @@ export function checkVictory(state) {
 export async function gainMarketCard(state, pi, cardId, why = '') {
   const p = state.players[pi];
   const def = cardDef(state, cardId);
-  log(state, pi, `${p.name} gains ${def.name}${why ? ` (${why})` : ''}.`);
+  log(state, pi, `${p.name} gains ${def.name}${why ? ` (${why})` : ''}.`, { kind: 'marketGain', player: pi, cardId, statue: def.type === 'statue', disposal: def.type === 'statue' ? 'victoryRow' : (def.disposal || 'cityDump') });
   if (def.type === 'statue') {
     p.victoryRow.push(cardId);
     if (def.onGain) await runEffect(state, pi, def.onGain, { sourceCardId: cardId });
@@ -211,7 +213,7 @@ export async function fireHook(state, trigger, ctx) {
         if (p.turn.usedOnce.includes(src.key)) continue;
         p.turn.usedOnce.push(src.key);
       }
-      log(state, pi, `${src.def.name}${src.def.title ? `, ${src.def.title}` : ''} triggers.`);
+      log(state, pi, `${src.def.name}${src.def.title ? `, ${src.def.title}` : ''} triggers.`, { kind: 'trigger', player: pi, cardId: src.def.id, uid: src.stack ? src.stack.uid : null, source: src.kind });
       await runEffect(state, pi, ab.effect, { ...ctx, sourceCardId: src.def.id, sourceStackUid: src.stack ? src.stack.uid : null });
     }
   }
@@ -282,7 +284,7 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       return;
     case 'addMod':
       p.mods.push({ key: eff.key, value: eff.value, expires: eff.expires || 'untilUsed', consumable: !!eff.consumable, source: ctx.sourceCardId || null });
-      log(state, pi, `${p.name} gains an ongoing effect: ${eff.key} (${eff.value}).`);
+      log(state, pi, `${p.name} gains an ongoing effect: ${eff.key} (${eff.value}).`, { kind: 'mod', player: pi, key: eff.key, value: eff.value });
       return;
     case 'readyCharacter': {
       const opts = p.town.filter((s) => s.orientation !== UPRIGHT && matchesFilter(state, s, eff.filter));
@@ -301,7 +303,7 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       const chosen = await ask(state, pi, { kind: 'pick', reason: 'readyNextTurn', from: 'town', options: opts.map((s) => stackOpt(state, s)), min: eff.optional ? 0 : 1, max: 1 });
       for (const uid of chosen) {
         findStack(state, pi, uid).readyNextTurn = true;
-        log(state, pi, `${topCard(state, findStack(state, pi, uid)).name} will be upright at the start of ${p.name}'s next turn.`);
+        log(state, pi, `${topCard(state, findStack(state, pi, uid)).name} will be upright at the start of ${p.name}'s next turn.`, { kind: 'readyNextTurn', player: pi, uid });
       }
       return;
     }
@@ -319,8 +321,8 @@ export async function runEffect(state, pi, eff, ctx = {}) {
         const d = cardDef(state, c.cardId);
         const cost = eff.free ? 0 : Math.max(0, d.cost - (eff.discount || 0));
         p.supply -= cost;
-        makeStack(state, pi, c, UPRIGHT);
-        log(state, pi, `${p.name} rehires ${d.name}, ${d.title} for ${cost} Supply (upright).`);
+        const s = makeStack(state, pi, c, UPRIGHT);
+        log(state, pi, `${p.name} rehires ${d.name}, ${d.title} for ${cost} Supply (upright).`, { kind: 'rehire', player: pi, uid: s.uid, cardUid: c.uid, cardId: c.cardId, cost });
       }
       return;
     }
@@ -337,7 +339,7 @@ export async function runEffect(state, pi, eff, ctx = {}) {
         const orientation = eff.orientation ?? entryOrientation(state.rules, d.cost);
         const s = makeStack(state, pi, c, orientation);
         p.stats.recruits++;
-        log(state, pi, `${p.name} recruits ${d.name}, ${d.title} for free (${orientation === UPRIGHT ? 'upright' : 'Busy'}).`);
+        log(state, pi, `${p.name} recruits ${d.name}, ${d.title} for free (${orientation === UPRIGHT ? 'upright' : 'Busy'}).`, { kind: 'recruit', player: pi, uid: s.uid, cardUid: c.uid, cardId: c.cardId, cost: 0, upgrade: false });
         await fireHook(state, 'onRecruit', { player: pi, stackUid: s.uid, listeners: [pi], selfOnly: s.uid });
       }
       return;
@@ -349,7 +351,7 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       const order = await ask(state, pi, { kind: 'order', reason: 'reorderDeck', options: top.map((c) => inst(state, c)) });
       const byUid = Object.fromEntries(top.map((c) => [c.uid, c]));
       p.deck.splice(0, n, ...order.map((uid) => byUid[uid]));
-      log(state, pi, `${p.name} looks at the top ${n} cards of the deck and reorders them.`);
+      log(state, pi, `${p.name} looks at the top ${n} cards of the deck and reorders them.`, { kind: 'peekDeck', player: pi, count: n });
       return;
     }
     case 'eventFromDumpToDeckBottom':
@@ -361,10 +363,10 @@ export async function runEffect(state, pi, eff, ctx = {}) {
         const c = p.dump.splice(p.dump.findIndex((x) => x.uid === uid), 1)[0];
         if (eff.do === 'eventFromDumpToHand') {
           p.hand.push(c);
-          log(state, pi, `${p.name} returns ${cardDef(state, c.cardId).name} from the Town Dump to hand.`);
+          log(state, pi, `${p.name} returns ${cardDef(state, c.cardId).name} from the Town Dump to hand.`, { kind: 'dumpToHand', player: pi, uid: c.uid, cardId: c.cardId });
         } else {
           p.deck.push(c);
-          log(state, pi, `${p.name} puts ${cardDef(state, c.cardId).name} on the bottom of the deck.`);
+          log(state, pi, `${p.name} puts ${cardDef(state, c.cardId).name} on the bottom of the deck.`, { kind: 'dumpToDeck', player: pi, uid: c.uid, cardId: c.cardId });
         }
       }
       return;
@@ -372,7 +374,7 @@ export async function runEffect(state, pi, eff, ctx = {}) {
     case 'peekMarketDeck': {
       const top = state.market.deck.slice(0, eff.count || 1).map((id) => cardDef(state, id).name);
       p.knownMarketTop = state.market.deck.slice(0, eff.count || 1);
-      log(state, pi, `${p.name} looks at the top of the Market Deck${top.length ? `: ${top.join(', ')}` : ' (empty)'}.`);
+      log(state, pi, `${p.name} looks at the top of the Market Deck${top.length ? `: ${top.join(', ')}` : ' (empty)'}.`, { kind: 'peekMarket', player: pi, cardIds: p.knownMarketTop.slice() });
       return;
     }
     case 'opponentTopdeckFromHand': {
@@ -380,12 +382,12 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       const chosen = await ask(state, oi, { kind: 'pick', reason: 'topdeck', from: 'hand', options: o.hand.map((c) => inst(state, c)), min: 1, max: 1 });
       const c = o.hand.splice(o.hand.findIndex((x) => x.uid === chosen[0]), 1)[0];
       o.deck.unshift(c);
-      log(state, oi, `${o.name} puts a card from hand on top of the deck.`);
+      log(state, oi, `${o.name} puts a card from hand on top of the deck.`, { kind: 'topdeck', player: oi, uid: c.uid });
       return;
     }
     case 'unemployOpponentCharacter': {
       if (hasMod(o, 'unemploymentShield')) {
-        log(state, pi, `${o.name}'s Characters are protected from Unemployment.`);
+        log(state, pi, `${o.name}'s Characters are protected from Unemployment.`, { kind: 'shield', player: oi });
         return;
       }
       if (eff.discardFirst && p.hand.length < eff.discardFirst) return;
@@ -412,7 +414,7 @@ export async function runEffect(state, pi, eff, ctx = {}) {
         pd.challenge.bid += eff.amount;
         pd.challenge.paid += eff.amount;
       }
-      log(state, pi, `${p.name} raises the bid on ${cardDef(state, pd.cardId).name} by ${eff.amount}.`);
+      log(state, pi, `${p.name} raises the bid on ${cardDef(state, pd.cardId).name} by ${eff.amount}.`, { kind: 'raiseBid', player: pi, cardId: pd.cardId, amount: eff.amount });
       return;
     }
     default:

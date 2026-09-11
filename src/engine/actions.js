@@ -212,12 +212,12 @@ export async function applyAction(state, pi, a) {
       if (target) {
         target.cards.unshift(c);
         s = target;
-        log(state, pi, `${p.name} upgrades ${def.name} to ${def.title} for ${cost} Supply.`);
+        log(state, pi, `${p.name} upgrades ${def.name} to ${def.title} for ${cost} Supply.`, { kind: 'recruit', player: pi, uid: s.uid, cardUid: c.uid, cardId: def.id, cost, upgrade: true });
       } else {
         let orientation = entryOrientation(state.rules, def.cost);
         if (orientation === state.rules.orientation.masterEntry && hasPassive(state, pi, 'masterDelayMinus1')) orientation = BUSY;
         s = makeStack(state, pi, c, orientation);
-        log(state, pi, `${p.name} recruits ${def.name}, ${def.title} (${def.species}, ${def.study}) for ${cost} Supply; enters at ${orientation}°.`);
+        log(state, pi, `${p.name} recruits ${def.name}, ${def.title} (${def.species}, ${def.study}) for ${cost} Supply; enters at ${orientation}°.`, { kind: 'recruit', player: pi, uid: s.uid, cardUid: c.uid, cardId: def.id, cost, upgrade: false, orientation });
       }
       await fireHook(state, 'onRecruit', { player: pi, stackUid: s.uid, selfOnly: s.uid });
       return false;
@@ -228,7 +228,7 @@ export async function applyAction(state, pi, a) {
       const def = topCard(state, s);
       s.orientation = BUSY;
       s.shift = { remaining: def.shift.delay, output: def.shift.output };
-      log(state, pi, `${def.name}, ${def.title} starts a shift (${def.shift.delay} turn${def.shift.delay === 1 ? '' : 's'} → ${def.shift.output} Supply).`);
+      log(state, pi, `${def.name}, ${def.title} starts a shift (${def.shift.delay} turn${def.shift.delay === 1 ? '' : 's'} → ${def.shift.output} Supply).`, { kind: 'shiftStart', player: pi, uid: s.uid, delay: def.shift.delay, output: def.shift.output });
       await fireHook(state, 'onShiftStarted', { player: pi, stackUid: s.uid });
       return false;
     }
@@ -239,7 +239,7 @@ export async function applyAction(state, pi, a) {
       const ab = (def.abilities || []).find((x) => x.trigger === 'busy');
       if (!ab) throw new Error('No Busy ability');
       s.orientation = BUSY;
-      log(state, pi, `${def.name}, ${def.title} uses its Busy ability.`);
+      log(state, pi, `${def.name}, ${def.title} uses its Busy ability.`, { kind: 'ability', player: pi, uid: s.uid, cardId: def.id });
       await runEffect(state, pi, ab.effect, { player: pi, stackUid: s.uid, sourceCardId: def.id });
       return false;
     }
@@ -267,7 +267,7 @@ export async function applyAction(state, pi, a) {
       for (const s of stacks) s.orientation = BUSY;
       p.stats.eventsPlayed++;
       p.turn.eventsPlayed++;
-      log(state, pi, `${p.name} plays ${def.name}${stacks.length ? ` using ${stacks.map((s) => topCard(state, s).name).join(' and ')}` : ''}.`);
+      log(state, pi, `${p.name} plays ${def.name}${stacks.length ? ` using ${stacks.map((s) => topCard(state, s).name).join(' and ')}` : ''}.`, { kind: 'playEvent', player: pi, uid: c.uid, cardId: def.id, limited: def.kind === 'limited', chars: stacks.map((s) => s.uid) });
       if (def.kind === 'limited') {
         p.events.push({ uid: c.uid, cardId: c.cardId, remaining: def.duration });
       } else {
@@ -300,7 +300,7 @@ export async function applyAction(state, pi, a) {
       p.turn.announcements++;
       p.turn.bids++;
       p.stats.announcements++;
-      log(state, pi, `${p.name} announces a purchase of ${cardDef(state, a.cardId).name} with ${topCard(state, s).name}, bidding ${bid}${bonus ? ` (+${bonus})` : ''}${pd.unchallengeable ? ' (cannot be challenged)' : ''}.`);
+      log(state, pi, `${p.name} announces a purchase of ${cardDef(state, a.cardId).name} with ${topCard(state, s).name}, bidding ${bid}${bonus ? ` (+${bonus})` : ''}${pd.unchallengeable ? ' (cannot be challenged)' : ''}.`, { kind: 'announce', player: pi, cardId: a.cardId, uid: s.uid, bid, bonus });
       await fireHook(state, 'onAnnounce', { player: pi, stackUid: s.uid, uprightSpeciesSnapshot: snapshot, pendingId: pd.id });
       return false;
     }
@@ -321,14 +321,14 @@ export async function applyAction(state, pi, a) {
       const o = state.players[oi];
       if (hasMod(o, 'cancelNextChallenge')) {
         consumeMod(o, 'cancelNextChallenge');
-        log(state, pi, `${p.name} challenges ${cardDef(state, pd.cardId).name}, but the challenge is cancelled by Quiet Mediation.`);
+        log(state, pi, `${p.name} challenges ${cardDef(state, pd.cardId).name}, but the challenge is cancelled by Quiet Mediation.`, { kind: 'challenge', player: pi, cardId: pd.cardId, uid: s.uid, bid, cancelled: true });
         return false;
       }
       if (getMod(p, 'challengeDiscount')) consumeMod(p, 'challengeDiscount');
       p.supply -= pay;
       p.escrow += pay;
       pd.challenge = { player: pi, bid, paid: pay, bonus, charUid: s.uid, winsTies: hasPassive(state, pi, 'winTiesAsChallenger') };
-      log(state, pi, `${p.name} challenges the purchase of ${cardDef(state, pd.cardId).name} with ${topCard(state, s).name}, bidding ${bid}${pd.challenge.bonus ? ` (+${pd.challenge.bonus})` : ''}.`);
+      log(state, pi, `${p.name} challenges the purchase of ${cardDef(state, pd.cardId).name} with ${topCard(state, s).name}, bidding ${bid}${pd.challenge.bonus ? ` (+${pd.challenge.bonus})` : ''}.`, { kind: 'challenge', player: pi, cardId: pd.cardId, uid: s.uid, bid, bonus, cancelled: false });
       await fireHook(state, 'onChallengedByOpponent', { player: oi, pendingId: pd.id });
       return false;
     }
@@ -341,8 +341,8 @@ export async function applyAction(state, pi, a) {
       p.supply -= cost;
       if (getMod(p, 'rehireDiscount')) consumeMod(p, 'rehireDiscount');
       const [c] = p.unemployment.splice(idx, 1);
-      makeStack(state, pi, c, UPRIGHT);
-      log(state, pi, `${p.name} rehires ${def.name}, ${def.title} for ${cost} Supply (upright).`);
+      const s = makeStack(state, pi, c, UPRIGHT);
+      log(state, pi, `${p.name} rehires ${def.name}, ${def.title} for ${cost} Supply (upright).`, { kind: 'rehire', player: pi, uid: s.uid, cardUid: c.uid, cardId: def.id, cost });
       return false;
     }
     default:

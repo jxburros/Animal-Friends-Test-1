@@ -252,18 +252,59 @@ describe('challenging', () => {
 });
 
 describe('Capital City refresh and disposal', () => {
-  test('the City only refills when it is completely empty', async () => {
+  test('the City tops back up to five cards as soon as a purchase resolves', async () => {
     const state = newGame();
     setCity(state, ['mk_festival_grant', 'mk_supply_depot']);
-    state.market.deck = ['mk_town_bell', 'mk_town_clock', 'mk_courier_network'];
+    state.market.deck = ['mk_town_bell', 'mk_town_clock', 'mk_courier_network', 'mk_library_annex'];
     setSupply(state, 0, 10);
     const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
     begin(state, 0);
     await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     const pd = state.market.pending[0];
+    const logLen = state.log.length;
     await resolvePurchase(state, pd);
-    assert.equal(state.market.city.length, 1, 'City is not refilled while a card remains');
-    assert.equal(state.market.deck.length, 3, 'deck untouched');
+    assert.ok(!state.market.city.includes('mk_festival_grant'), 'the bought card left the display');
+    assert.ok(state.market.cityDump.includes('mk_festival_grant'), 'and went to the City Dump');
+    assert.equal(state.market.city[0], 'mk_supply_depot', 'the unsold card stays where it was');
+    assert.equal(state.market.city.length, 5, 'the display is topped up: 1 remaining + 4 dealt');
+    assert.equal(state.market.deck.length, 0, 'the Market Deck was drawn down to refill the display');
+    assert.deepEqual(state.market.city.slice(1), ['mk_town_bell', 'mk_town_clock', 'mk_courier_network', 'mk_library_annex'], 'dealt in deck order');
+    const refillLine = state.log.slice(logLen).find((l) => l.fx && l.fx.kind === 'refill');
+    assert.ok(refillLine, 'the refill is logged with a structured fx event');
+    assert.deepEqual(refillLine.fx.cardIds, ['mk_town_bell', 'mk_town_clock', 'mk_courier_network', 'mk_library_annex']);
+  });
+
+  test('a full display is not touched, and a 5-card deck fully restocks after a purchase', async () => {
+    const state = newGame();
+    assert.equal(state.market.city.length, 5);
+    assert.equal(refillCity(state), false, 'nothing to deal when the display is full');
+    setCity(state, ['mk_festival_grant', 'mk_supply_depot', 'mk_town_bell', 'mk_town_clock', 'mk_courier_network']);
+    state.market.deck = ['mk_library_annex', 'mk_public_gardens'];
+    setSupply(state, 0, 10);
+    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    begin(state, 0);
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
+    await resolvePurchase(state, state.market.pending[0]);
+    assert.equal(state.market.city.length, 5, 'back to five');
+    assert.equal(state.market.deck.length, 1, 'exactly one card dealt');
+    assert.equal(state.market.city[4], 'mk_library_annex');
+  });
+
+  test('the Market Deck reshuffles the City Dump mid-deal when it runs out while topping up', async () => {
+    const state = newGame();
+    setCity(state, ['mk_festival_grant', 'mk_supply_depot', 'mk_town_bell']);
+    state.market.deck = ['mk_library_annex'];
+    state.market.cityDump = ['mk_public_gardens', 'mk_town_clock'];
+    setSupply(state, 0, 10);
+    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    begin(state, 0);
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
+    await resolvePurchase(state, state.market.pending[0]);
+    // 2 remaining + 1 from the deck + 2 needed: the deck is empty so the dump (2 old + festival grant) is reshuffled in.
+    assert.equal(state.market.city.length, 5, 'topped back up to five');
+    assert.equal(state.market.cityDump.length, 0, 'the City Dump was shuffled into the Market Deck');
+    assert.equal(state.market.deck.length, 1, 'one reshuffled card is left in the deck');
+    assert.ok(state.market.city.includes('mk_library_annex'));
   });
 
   test('the City Dump reshuffles into the Market Deck once the deck is empty, refilling the City', async () => {
