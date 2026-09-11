@@ -43,11 +43,23 @@ No build step or dependencies beyond Node 22+ (for scripts/tests only). ES modul
 
 **Serve** the folder:
 ```
-npm run serve          # Python http.server on :8080
+npm run serve                  # http://localhost:8080/
+npm run serve -- --port 9000   # another port (or PORT=9000 npm run serve)
 ```
 Then open http://localhost:8080/ in any modern browser. During play, use the **Pace** control (menu or bottom right) to choose animation speed: Storybook (slow, watch every card), Brisk (quicker), or Instant (no animations).
 
-Or use any static server (e.g., `python3 -m http.server 8080`).
+The server (`scripts/serve.mjs`, no dependencies) sends every file with `Cache-Control: no-store`, so each reload plays exactly what is on disk. When it starts it prints the version and the folder it is serving; the book cover shows the same version line (e.g. `v0.2.1 · Animal Friends: First Boroughs · 208 cards · 6 decks · 4 Market Decks`). If the two disagree, the browser is showing an old copy.
+
+### Testing a fresh download
+
+If you test by downloading the ZIP from GitHub and unzipping it:
+
+1. **Stop the old server first.** `npm run serve` refuses to start while another server holds port 8080 and says so; an old server left running in another terminal keeps serving the old folder.
+2. Run `npm run serve` **inside the new folder** and check the `Serving …` line it prints.
+3. The first time you switch from the old Python server, **hard-reload once** (Ctrl+Shift+R, or Cmd+Shift+R on a Mac) to throw away the files it let the browser cache. After that a normal reload is always fresh.
+4. Saved decks and the Pace setting live in the browser's localStorage, not in the folder, so they carry over between downloads. A saved deck that names a card the new set no longer has is dropped automatically.
+
+`npm run serve:python` is the old `python3 -m http.server` and is kept only as a fallback; it sends no cache headers, so browsers may keep serving a previous version until a hard reload.
 
 ## Project layout
 
