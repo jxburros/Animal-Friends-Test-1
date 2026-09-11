@@ -1,0 +1,176 @@
+// Shared test helpers: load the specs once, build games with a fixed seed, and give tests direct
+// control over state (hands, town stacks, supply, market) without having to script whole turns.
+import fs from 'node:fs';
+import {
+  createGame, nextUid, makeStack, legalActions, applyAction, UPRIGHT, BUSY,
+} from '../src/engine/index.js';
+
+const rulesUrl = new URL('../spec/game.json', import.meta.url);
+const setUrl = new URL('../spec/starter_card_set.json', import.meta.url);
+
+export function loadSpecs() {
+  const rules = JSON.parse(fs.readFileSync(rulesUrl, 'utf8'));
+  const set = JSON.parse(fs.readFileSync(setUrl, 'utf8'));
+  return { rules, set };
+}
+
+// Cache the parsed specs across the whole test run; they are treated as read-only shared data,
+// matching how the engine itself shares state.rules/state.set across clones.
+const specs = loadSpecs();
+export const RULES = specs.rules;
+export const SET = specs.set;
+
+/** Create a fresh game. Defaults to a fixed seed and the two starter decks for determinism. */
+export function newGame(opts = {}) {
+  return createGame(RULES, SET, {
+    seed: 42,
+    decks: ['burrow-bloom', 'paws-papers'],
+    names: ['You', 'Rival'],
+    ...opts,
+  });
+}
+
+/** A fresh {uid, cardId} card instance not yet placed anywhere. */
+export function newCard(state, cardId) {
+  return { uid: nextUid(state), cardId };
+}
+
+/** Put a brand-new card instance for `cardId` into a player's hand; returns the instance. */
+export function addToHand(state, pi, cardId) {
+  const c = newCard(state, cardId);
+  state.players[pi].hand.push(c);
+  return c;
+}
+
+/** Put a brand-new card instance into a player's Town Dump. */
+export function addToDump(state, pi, cardId) {
+  const c = newCard(state, cardId);
+  state.players[pi].dump.push(c);
+  return c;
+}
+
+/** Put a brand-new card instance into a player's Unemployment. */
+export function addToUnemployment(state, pi, cardId) {
+  const c = newCard(state, cardId);
+  state.players[pi].unemployment.push(c);
+  return c;
+}
+
+/** Push a brand-new card instance to the top of a player's deck (drawn next). */
+export function addToDeckTop(state, pi, cardId) {
+  const c = newCard(state, cardId);
+  state.players[pi].deck.unshift(c);
+  return c;
+}
+
+/** Create a single-card town stack at the given orientation (defaults to upright) via the engine's own makeStack. */
+export function addStack(state, pi, cardId, orientation = UPRIGHT, opts = {}) {
+  const c = newCard(state, cardId);
+  const s = makeStack(state, pi, c, orientation);
+  if (opts.hasBeenUpright !== undefined) s.hasBeenUpright = opts.hasBeenUpright;
+  if (opts.shift !== undefined) s.shift = opts.shift;
+  if (opts.readyNextTurn !== undefined) s.readyNextTurn = opts.readyNextTurn;
+  return s;
+}
+
+/** Create a multi-card stack (cardIds given top-first) at the given orientation, for upgrade/knockdown tests. */
+export function addMultiStack(state, pi, cardIds, orientation = UPRIGHT) {
+  const cards = cardIds.map((id) => newCard(state, id));
+  const s = { uid: nextUid(state), cards, orientation, shift: null, enteredTurn: state.turnNumber, hasBeenUpright: orientation === UPRIGHT, readyNextTurn: false };
+  state.players[pi].town.push(s);
+  return s;
+}
+
+/** Add a limited event already "in play" for a player (bypassing playEvent). */
+export function addLimitedEvent(state, pi, cardId, remaining) {
+  const uid = nextUid(state);
+  state.players[pi].events.push({ uid, cardId, remaining });
+  return state.players[pi].events[state.players[pi].events.length - 1];
+}
+
+/**
+ * Replace the Capital City display outright (test setup only). Also strips the placed ids out of
+ * the Market Deck / City Dump / Out of Play so a card can't accidentally exist in two places at
+ * once (e.g. get dealt back into the City a second time when it refills during the test).
+ */
+export function setCity(state, cardIds) {
+  const ids = new Set(cardIds);
+  state.market.city = cardIds.slice();
+  state.market.deck = state.market.deck.filter((id) => !ids.has(id));
+  state.market.cityDump = state.market.cityDump.filter((id) => !ids.has(id));
+  state.market.outOfPlay = state.market.outOfPlay.filter((id) => !ids.has(id));
+}
+
+export function setSupply(state, pi, n) {
+  state.players[pi].supply = n;
+}
+
+/** Give a player a mod directly (bypassing whatever card would normally grant it). */
+export function addMod(state, pi, key, value = 1, expires = 'untilUsed', extra = {}) {
+  state.players[pi].mods.push({ key, value, expires, consumable: !!extra.consumable, source: extra.source || null });
+}
+
+/** Grant a statue directly by pushing its card id into the victory row (no onGain effect fires). */
+export function giveStatue(state, pi, statueCardId) {
+  state.players[pi].victoryRow.push(statueCardId);
+}
+
+export function findAction(actions, pred) {
+  return actions.find(pred);
+}
+
+export function legalActionsFor(state, pi) {
+  return legalActions(state, pi);
+}
+
+export async function act(state, pi, action) {
+  return applyAction(state, pi, action);
+}
+
+// ---------- scripted agent ----------
+/**
+ * A scripted agent answers requests from a queue, in order. Each queued entry is either a literal
+ * answer value, or a function `(state, pi, req) => value` for answers that depend on the live
+ * request (e.g. picking whichever uid matches a card id). When the queue runs dry, it falls back
+ * to safe defaults (same shape as the engine's own validateAnswer fallback), so tests that only
+ * care about the first few decisions don't have to script the rest of a game.
+ */
+export function makeScriptedAgent(answers = []) {
+  const queue = answers.slice();
+  return {
+    name: 'scripted',
+    async choose(state, pi, req) {
+      if (queue.length) {
+        const next = queue.shift();
+        return typeof next === 'function' ? next(state, pi, req) : next;
+      }
+      return defaultAnswer(req);
+    },
+  };
+}
+
+function defaultAnswer(req) {
+  switch (req.kind) {
+    case 'resources': return 'supply';
+    case 'action': return { type: 'endTurn' };
+    case 'pick': return [];
+    case 'order': return (req.options || []).map((o) => o.uid);
+    case 'confirm': return !!req.default;
+    default: return undefined;
+  }
+}
+
+/** Convenience: an agent function that always answers a fixed 'pick' of the given uids for a given reason, otherwise defaults. */
+export function pickAgentFor(reason, uidsOrFn) {
+  return {
+    name: `pick-${reason}`,
+    async choose(state, pi, req) {
+      if (req.kind === 'pick' && req.reason === reason) {
+        return typeof uidsOrFn === 'function' ? uidsOrFn(state, pi, req) : uidsOrFn;
+      }
+      return defaultAnswer(req);
+    },
+  };
+}
+
+export { UPRIGHT, BUSY };
