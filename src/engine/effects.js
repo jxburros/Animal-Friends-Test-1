@@ -270,6 +270,7 @@ function conditionHolds(state, pi, src, cond, ctx) {
 
 export function matchesFilter(state, stack, f = {}) {
   const def = topCard(state, stack);
+  if (f.name && def.name !== f.name) return false; // a specific Character, whichever version is on top
   if (f.study && def.study !== f.study) return false;
   if (f.species && def.species !== f.species) return false;
   if (f.rank && rankOf(state.rules, def.cost) !== f.rank) return false;

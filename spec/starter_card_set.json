@@ -283,9 +283,136 @@
     "ww_arcade_fair": 1,
     "ww_welcome_committee": 1
    }
+  },
+  {
+   "id": "hedge-harvest",
+   "name": "Hedge & Harvest",
+   "blurb": "Hedgehogs, Rabbits and Badgers who know each other by name: Burr sweeps for Bramble, Sorrel calls for Clover, and the whole grange turns out for Thistle.",
+   "species": [
+    "Hedgehog",
+    "Rabbit",
+    "Badger"
+   ],
+   "studies": [
+    "Agriculture",
+    "Crafts",
+    "Lore"
+   ],
+   "list": {
+    "br_bramble_1": 2,
+    "mh_burr_0": 1,
+    "br_burr_1": 1,
+    "bb_clover_1": 1,
+    "mh_clover_2": 1,
+    "mh_sorrel_2": 1,
+    "br_thistle_1": 1,
+    "br_thistle_2": 1,
+    "mh_thistle_4": 1,
+    "mh_bramble_5": 1,
+    "br_oakley_1": 2,
+    "br_quill_1": 1,
+    "br_quill_3": 1,
+    "mh_barley_3": 1,
+    "br_moss_1": 1,
+    "mh_moss_1": 1,
+    "mh_clovers_seed_drive": 2,
+    "mh_thistles_grange_supper": 1,
+    "mh_guild_retraining": 1,
+    "bb_community_garden": 1,
+    "br_spare_parts": 1,
+    "rw_barn_meeting": 2,
+    "br_barn_raising": 1,
+    "br_mended_fences": 1,
+    "br_tool_lending": 1,
+    "br_root_cellar": 1
+   }
+  },
+  {
+   "id": "tales-tolls",
+   "name": "Tales & Tolls",
+   "blurb": "Squirrels, Otters and Foxes of the river road: Pip tells the stories Nim files, Brook pilots what Willow sells, and Tansy lights the way for Vesper.",
+   "species": [
+    "Squirrel",
+    "Otter",
+    "Fox"
+   ],
+   "studies": [
+    "Lore",
+    "Commerce",
+    "Civics"
+   ],
+   "list": {
+    "rr_pip_1": 3,
+    "mh_pip_2": 1,
+    "rr_nim_1": 2,
+    "mh_nim_5": 1,
+    "rr_willow_1": 2,
+    "mh_brook_1": 2,
+    "mh_acorn_0": 2,
+    "rr_tansy_1": 1,
+    "mh_tansy_4": 1,
+    "ll_vesper_1": 2,
+    "mh_vesper_3": 1,
+    "mh_pips_reading_hour": 2,
+    "mh_acorns_bidding_war": 1,
+    "mh_study_hall": 1,
+    "rr_river_market": 2,
+    "rr_slack_water": 2,
+    "rr_dogeared_page": 2,
+    "rr_low_tide_cache": 2
+   }
   }
  ],
  "cards": [
+  {
+   "id": "mh_dill_5",
+   "type": "character",
+   "name": "Dill",
+   "title": "Herbalist Surgeon",
+   "job": "Herbalist Surgeon",
+   "species": "Mouse",
+   "study": "Lore",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Dill. When Dill becomes upright, you may rehire a Character from your Unemployment for 2 less Supply; if you control Fern, draw 1 card as well.",
+   "flavor": "Dill's remedies are half herb and half Fern's field notes, and she credits both.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "rehire",
+      "discount": 2,
+      "optional": true
+     }
+    },
+    {
+     "trigger": "onReady",
+     "condition": {
+      "otherCharacterInTown": {
+       "name": "Fern"
+      }
+     },
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 1
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Legendary",
+   "power": {
+    "score": 6.45,
+    "power": 15.67,
+    "opportunityCost": 9.2
+   }
+  },
   {
    "id": "dx_recession",
    "type": "disruption",
@@ -493,6 +620,106 @@
     }
    ],
    "burden": "Burden: your Apprentices enter Busy instead of upright."
+  },
+  {
+   "id": "mh_bramble_5",
+   "type": "character",
+   "name": "Bramble",
+   "title": "Guild Warden",
+   "job": "Guild Warden",
+   "species": "Hedgehog",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Bramble. At the start of your turn, if you control another Crafts Character, gain 1 Supply and draw 1 card.",
+   "flavor": "The tinker who fixed everyone's kettles now keeps the guild's keys, and still fixes the kettles.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Crafts"
+      }
+     },
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 1
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 4
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.33,
+    "power": 12.95,
+    "opportunityCost": 9.2
+   }
+  },
+  {
+   "id": "mh_nim_5",
+   "type": "character",
+   "name": "Nim",
+   "title": "Chancellor of Records",
+   "job": "Chancellor of Records",
+   "species": "Squirrel",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Nim. At the start of your turn, if you control Pip, gain 1 Supply and draw 1 card.",
+   "flavor": "Nim files what Pip collects. Between them, nothing that happens in town is ever quite forgotten.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "name": "Pip"
+      }
+     },
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 1
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 7
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.33,
+    "power": 12.95,
+    "opportunityCost": 9.2
+   }
   },
   {
    "id": "pp_marlow_2",
@@ -886,6 +1113,47 @@
    ]
   },
   {
+   "id": "mh_russet_4",
+   "type": "character",
+   "name": "Russet",
+   "title": "Tea House Keeper",
+   "job": "Tea House Keeper",
+   "species": "Fox",
+   "study": "Civics",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Russet. At the start of your turn, if you control a Cat, gain 2 Supply.",
+   "flavor": "The tea house is where the borough's business really gets done, and Russet pours for all of it.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "species": "Cat"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.47,
+    "power": 10.36,
+    "opportunityCost": 8.2
+   }
+  },
+  {
    "id": "pp_hazel_2",
    "type": "character",
    "name": "Hazel",
@@ -1022,6 +1290,51 @@
      }
     }
    ]
+  },
+  {
+   "id": "mh_nib_4",
+   "type": "character",
+   "name": "Nib",
+   "title": "Master Cartographer",
+   "job": "Master Cartographer",
+   "species": "Mouse",
+   "study": "Lore",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Nib. When Nib becomes upright, look at the top three cards of your deck and put them back in any order, then look at the top two cards of the Market Deck.",
+   "flavor": "Nib's maps show where the canals go and, in the margins, where the money does.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "reorderDeckTop",
+        "count": 3
+       },
+       {
+        "do": "peekMarketDeck",
+        "count": 2
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 7
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.43,
+    "power": 10.27,
+    "opportunityCost": 8.2
+   }
   },
   {
    "id": "rr_pip_2",
@@ -1251,6 +1564,136 @@
    }
   },
   {
+   "id": "mh_willow_5",
+   "type": "character",
+   "name": "Willow",
+   "title": "Harbour Admiral",
+   "job": "Harbour Admiral",
+   "species": "Otter",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 3,
+    "output": 6
+   },
+   "text": "Upgrades Willow. Whenever you gain a non-Statue Capital City card, gain 2 Supply and draw 1 card.",
+   "flavor": "Willow started with one ferry. She now signs for everything that floats.",
+   "abilities": [
+    {
+     "trigger": "onGainMarketCard",
+     "condition": {
+      "nonStatue": true
+     },
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 2
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 6
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.3,
+    "power": 10.44,
+    "opportunityCost": 9.2
+   }
+  },
+  {
+   "id": "mh_linnet_5",
+   "type": "character",
+   "name": "Linnet",
+   "title": "Master Printer",
+   "job": "Master Printer",
+   "species": "Rabbit",
+   "study": "Crafts",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Linnet. Busy: draw 2 cards, then discard 1 card.",
+   "flavor": "The press runs all night, and by morning the whole borough is reading the same page.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "draw",
+        "count": 2
+       },
+       {
+        "do": "discard",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 6
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.28,
+    "power": 10.4,
+    "opportunityCost": 9.2
+   }
+  },
+  {
+   "id": "mh_mortar_5",
+   "type": "character",
+   "name": "Mortar",
+   "title": "Master Millwright",
+   "job": "Master Millwright",
+   "species": "Badger",
+   "study": "Crafts",
+   "cost": 5,
+   "shift": {
+    "delay": 3,
+    "output": 6
+   },
+   "text": "Upgrades Mortar. The first shift you complete each turn produces 2 extra Supply.",
+   "flavor": "Every gear in the borough turns a little truer once Mortar has had a look at it.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "oncePerTurn": true,
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 9
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.28,
+    "power": 10.4,
+    "opportunityCost": 9.2
+   }
+  },
+  {
    "id": "st_harmony",
    "type": "statue",
    "name": "Statue of Harmony",
@@ -1280,6 +1723,45 @@
     }
    ],
    "burden": "Burden: you pay your losing bids in full instead of forfeiting half."
+  },
+  {
+   "id": "mh_pebble_5",
+   "type": "character",
+   "name": "Pebble",
+   "title": "Harbour Warden",
+   "job": "Harbour Warden",
+   "species": "Otter",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Pebble. At the start of your turn, if you control Characters of at least three species, gain 2 Supply.",
+   "flavor": "A harbour with one kind of boat in it, Pebble says, is a harbour waiting to be a pond.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "minSpeciesInTown": 3
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 10
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.26,
+    "power": 10.36,
+    "opportunityCost": 9.2
+   }
   },
   {
    "id": "bb_sorrel_1",
@@ -1318,6 +1800,47 @@
    ]
   },
   {
+   "id": "mh_mortar_1",
+   "type": "character",
+   "name": "Mortar",
+   "title": "Grain Miller",
+   "job": "Grain Miller",
+   "species": "Badger",
+   "study": "Agriculture",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Recruit: if you have another Crafts Character, gain 1 Supply.",
+   "flavor": "Before he fixed the watermill, Mortar fed it, one sack at a time.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Crafts"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 9
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.24,
+    "power": 6.4,
+    "opportunityCost": 2.8
+   }
+  },
+  {
    "id": "rw_barley_1",
    "type": "character",
    "name": "Barley",
@@ -1352,6 +1875,44 @@
      }
     }
    ]
+  },
+  {
+   "id": "mh_juniper_3",
+   "type": "character",
+   "name": "Juniper",
+   "title": "Border Warden",
+   "job": "Border Warden",
+   "species": "Fox",
+   "study": "Crafts",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Juniper. Busy: until your next turn, your Characters cannot be sent to Unemployment.",
+   "flavor": "Juniper traded the messenger's satchel for a hammer, and the town walls have never been sturdier.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "addMod",
+      "key": "unemploymentShield",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 2
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.22,
+    "power": 8.65,
+    "opportunityCost": 6
+   }
   },
   {
    "id": "pp_flint_1",
@@ -1489,6 +2050,54 @@
    ]
   },
   {
+   "id": "mh_tansy_4",
+   "type": "character",
+   "name": "Tansy",
+   "title": "Lantern Maker",
+   "job": "Lantern Maker",
+   "species": "Otter",
+   "study": "Crafts",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Tansy. When Tansy becomes upright, draw 1 card; if you control Vesper, gain 1 Supply as well.",
+   "flavor": "Tansy makes the lanterns and Vesper carries them, and between them the night shift never stumbles.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    },
+    {
+     "trigger": "onReady",
+     "condition": {
+      "otherCharacterInTown": {
+       "name": "Vesper"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 6
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.18,
+    "power": 9.71,
+    "opportunityCost": 8.2
+   }
+  },
+  {
    "id": "rr_tansy_1",
    "type": "character",
    "name": "Tansy",
@@ -1596,6 +2205,39 @@
    ]
   },
   {
+   "id": "mh_mabel_5",
+   "type": "character",
+   "name": "Mabel",
+   "title": "Seed Bank Director",
+   "job": "Seed Bank Director",
+   "species": "Mouse",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Mabel. Once per turn, an Event you play requires one fewer Character. (This does not stack with the Statue of Ingenuity.)",
+   "flavor": "Mabel has a seed for every soil and a form for every seed, and somehow the town loves her for it.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "eventCharReductionPerTurn"
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 1
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.1,
+    "power": 9.95,
+    "opportunityCost": 9.2
+   }
+  },
+  {
    "id": "bb_mabel_2",
    "type": "character",
    "name": "Mabel",
@@ -1652,6 +2294,51 @@
       "count": 1
      }
     ]
+   }
+  },
+  {
+   "id": "mh_vesper_3",
+   "type": "character",
+   "name": "Vesper",
+   "title": "Moonlight Trader",
+   "job": "Moonlight Trader",
+   "species": "Fox",
+   "study": "Commerce",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Vesper. Busy: gain 1 Supply and look at the top two cards of the Market Deck.",
+   "flavor": "Vesper deals after dark, when the prices are honest and the buyers are not.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 1
+       },
+       {
+        "do": "peekMarketDeck",
+        "count": 2
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 2
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.03,
+    "power": 8.25,
+    "opportunityCost": 6
    }
   },
   {
@@ -1769,6 +2456,51 @@
    ]
   },
   {
+   "id": "mh_patch_4",
+   "type": "character",
+   "name": "Patch",
+   "title": "Salvage Foreman",
+   "job": "Salvage Foreman",
+   "species": "Raccoon",
+   "study": "Crafts",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Patch. Whenever a card effect sends any Character to Unemployment, gain 1 Supply and draw 1 card.",
+   "flavor": "Nothing is wasted at Patch's yard, least of all a sudden vacancy.",
+   "abilities": [
+    {
+     "trigger": "onCharacterUnemployed",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 1
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 3
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 3.97,
+    "power": 9.2,
+    "opportunityCost": 8.2
+   }
+  },
+  {
    "id": "pp_juniper_2",
    "type": "character",
    "name": "Juniper",
@@ -1863,6 +2595,42 @@
    "burden": "Burden: choosing Supply in your Resources phase gives you 1 less."
   },
   {
+   "id": "mh_thistle_4",
+   "type": "character",
+   "name": "Thistle",
+   "title": "Field Surveyor",
+   "job": "Field Surveyor",
+   "species": "Badger",
+   "study": "Civics",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Thistle. When Thistle becomes upright, gain 2 Supply.",
+   "flavor": "Thistle measures the fields with the same long strides that once worked them.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 5
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 3.9,
+    "power": 9.05,
+    "opportunityCost": 8.2
+   }
+  },
+  {
    "id": "ww_thimble_3",
    "type": "character",
    "name": "Thimble",
@@ -1899,6 +2667,48 @@
     "score": 3.88,
     "power": 9,
     "opportunityCost": 8.2
+   }
+  },
+  {
+   "id": "mh_thistles_grange_supper",
+   "type": "event",
+   "name": "Thistle's Grange Supper",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Thistle"
+    },
+    {
+     "study": "Agriculture"
+    }
+   ],
+   "text": "Requires Thistle and an Agriculture Character. Gain 4 Supply, then you may rehire a Character from your Unemployment for 2 less Supply.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 4
+     },
+     {
+      "do": "rehire",
+      "discount": 2,
+      "optional": true
+     }
+    ]
+   },
+   "flavor": "There is always a chair at the long table for somebody who has been away.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 8
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 3.83,
+    "power": 6.4,
+    "opportunityCost": 3.6
    }
   },
   {
@@ -2001,6 +2811,139 @@
    }
   },
   {
+   "id": "mh_burr_0",
+   "type": "character",
+   "name": "Burr",
+   "title": "Barn Sweeper",
+   "job": "Barn Sweeper",
+   "species": "Hedgehog",
+   "study": "Agriculture",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Recruit: if you control Bramble, gain 1 Supply and draw 1 card.",
+   "flavor": "Burr sweeps the barn twice as fast when Bramble is around to talk to.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "otherCharacterInTown": {
+       "name": "Bramble"
+      }
+     },
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 1
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 4
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 3.79,
+    "power": 4.8,
+    "opportunityCost": 1.8
+   }
+  },
+  {
+   "id": "mh_nutmeg_4",
+   "type": "character",
+   "name": "Nutmeg",
+   "title": "Festival Florist",
+   "job": "Festival Florist",
+   "species": "Squirrel",
+   "study": "Commerce",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Nutmeg. The first non-Statue Market card you gain each turn gives you 1 extra Supply and lets you draw 1 card.",
+   "flavor": "When the Capital City throws a festival, every garland on the square is Nutmeg's.",
+   "abilities": [
+    {
+     "trigger": "onGainMarketCard",
+     "condition": {
+      "nonStatue": true
+     },
+     "oncePerTurn": true,
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 1
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 11
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 3.79,
+    "power": 8.8,
+    "opportunityCost": 8.2
+   }
+  },
+  {
+   "id": "mh_copper_2",
+   "type": "character",
+   "name": "Copper",
+   "title": "Weights Inspector",
+   "job": "Weights Inspector",
+   "species": "Cat",
+   "study": "Civics",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Copper. While Copper is upright, your first purchase announcement each turn may bid 1 less than the card's cost.",
+   "flavor": "Nobody argues with Copper's scales, least of all the merchants who used to lean on them.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "firstAnnounceMinBidMinus1",
+     "requiresUpright": true
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 5
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 3.78,
+    "power": 7.2,
+    "opportunityCost": 5
+   }
+  },
+  {
    "id": "pp_hazel_1",
    "type": "character",
    "name": "Hazel",
@@ -2096,6 +3039,45 @@
     "score": 3.78,
     "power": 9.19,
     "opportunityCost": 9.2
+   }
+  },
+  {
+   "id": "mh_inkwell_2",
+   "type": "character",
+   "name": "Inkwell",
+   "title": "Ledger Scribe",
+   "job": "Ledger Scribe",
+   "species": "Cat",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Inkwell. Whenever you gain a non-Statue Market card, draw 1 card.",
+   "flavor": "Inkwell copies the market ledgers by night and remembers every entry by morning.",
+   "abilities": [
+    {
+     "trigger": "onGainMarketCard",
+     "condition": {
+      "nonStatue": true
+     },
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 2
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 3.76,
+    "power": 7.16,
+    "opportunityCost": 5
    }
   },
   {
@@ -2379,6 +3361,165 @@
    ]
   },
   {
+   "id": "mh_fern_4",
+   "type": "character",
+   "name": "Fern",
+   "title": "Field Recorder",
+   "job": "Field Recorder",
+   "species": "Mouse",
+   "study": "Lore",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Fern. The first Event you play each turn lets you draw 1 card.",
+   "flavor": "Every festival, flood and first frost goes into Fern's notebook in tiny, tidy handwriting.",
+   "abilities": [
+    {
+     "trigger": "onEventPlayed",
+     "oncePerTurn": true,
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 1
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 3.64,
+    "power": 8.45,
+    "opportunityCost": 8.2
+   }
+  },
+  {
+   "id": "mh_marmalade_2",
+   "type": "character",
+   "name": "Marmalade",
+   "title": "Market Baker",
+   "job": "Market Baker",
+   "species": "Cat",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Marmalade. When Marmalade starts a shift, gain 1 Supply.",
+   "flavor": "The first tray sells before the oven is even warm.",
+   "abilities": [
+    {
+     "trigger": "onShiftStarted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 1
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 3.61,
+    "power": 6.88,
+    "opportunityCost": 5
+   }
+  },
+  {
+   "id": "mh_sorrel_2",
+   "type": "character",
+   "name": "Sorrel",
+   "title": "Harvest Caller",
+   "job": "Harvest Caller",
+   "species": "Rabbit",
+   "study": "Civics",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Sorrel. The first shift you start each turn while you control Clover gives you 1 Supply.",
+   "flavor": "Sorrel calls the rows to work each morning, and Clover is always first in the field.",
+   "abilities": [
+    {
+     "trigger": "onShiftStarted",
+     "oncePerTurn": true,
+     "condition": {
+      "otherCharacterInTown": {
+       "name": "Clover"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 0
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 3.61,
+    "power": 6.88,
+    "opportunityCost": 5
+   }
+  },
+  {
+   "id": "mh_velvet_2",
+   "type": "character",
+   "name": "Velvet",
+   "title": "Notary",
+   "job": "Notary",
+   "species": "Cat",
+   "study": "Lore",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Velvet. Recruit: if you control a Civics Character, draw 1 card.",
+   "flavor": "Velvet reads the small print aloud, slowly, and watches who fidgets.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Civics"
+      }
+     },
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 4
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.57,
+    "power": 6.8,
+    "opportunityCost": 5
+   }
+  },
+  {
    "id": "rr_willow_2",
    "type": "character",
    "name": "Willow",
@@ -2411,6 +3552,264 @@
      }
     }
    ]
+  },
+  {
+   "id": "mh_agricultural_show",
+   "type": "event",
+   "name": "Agricultural Show",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Agriculture",
+     "count": 2
+    },
+    {
+     "study": "Botany"
+    }
+   ],
+   "text": "Requires two Agriculture Characters and a Botany Character. Gain 5 Supply and draw 1 card.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 5
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "The pumpkin took first prize. The pumpkin took three carts to move.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 8
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.56,
+    "power": 6.5,
+    "opportunityCost": 4.5
+   }
+  },
+  {
+   "id": "mh_barley_3",
+   "type": "character",
+   "name": "Barley",
+   "title": "Warren Surveyor",
+   "job": "Warren Surveyor",
+   "species": "Badger",
+   "study": "Lore",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Barley. When Barley becomes upright, if you control a Rabbit Character, draw 1 card.",
+   "flavor": "Barley maps every burrow in the borough and still knocks before entering.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "condition": {
+      "otherCharacterInTown": {
+       "species": "Rabbit"
+      }
+     },
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 5
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.56,
+    "power": 7.29,
+    "opportunityCost": 6
+   }
+  },
+  {
+   "id": "mh_flint_3",
+   "type": "character",
+   "name": "Flint",
+   "title": "Fair Warden",
+   "job": "Fair Warden",
+   "species": "Fox",
+   "study": "Civics",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Flint. When you announce a purchase with Flint, gain 1 Supply; if you control Juniper, draw 1 card as well.",
+   "flavor": "Flint keeps the fair honest, which mostly means keeping an eye on the Flint of five years ago.",
+   "abilities": [
+    {
+     "trigger": "onAnnounce",
+     "condition": {
+      "announcerIsSelf": true
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    },
+    {
+     "trigger": "onAnnounce",
+     "condition": {
+      "announcerIsSelf": true,
+      "otherCharacterInTown": {
+       "name": "Juniper"
+      }
+     },
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 2
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.56,
+    "power": 7.29,
+    "opportunityCost": 6
+   }
+  },
+  {
+   "id": "mh_quill_4",
+   "type": "character",
+   "name": "Quill",
+   "title": "Orchard Scribe",
+   "job": "Orchard Scribe",
+   "species": "Hedgehog",
+   "study": "Lore",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Quill. When Quill starts a shift, draw 1 card.",
+   "flavor": "Quill writes down which tree fruited when, and the orchard has never had a bad year since.",
+   "abilities": [
+    {
+     "trigger": "onShiftStarted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 4
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.5,
+    "power": 8.12,
+    "opportunityCost": 8.2
+   }
+  },
+  {
+   "id": "mh_thimble_3",
+   "type": "character",
+   "name": "Thimble",
+   "title": "Sailmaker",
+   "job": "Sailmaker",
+   "species": "Cat",
+   "study": "Commerce",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Thimble. Recruit: gain 1 Supply and draw 1 card.",
+   "flavor": "A quilt is a sail that has not yet met the wind, Thimble says, and prices accordingly.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 1
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 3
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.49,
+    "power": 7.15,
+    "opportunityCost": 6
+   }
+  },
+  {
+   "id": "mh_pip_2",
+   "type": "character",
+   "name": "Pip",
+   "title": "Travelling Storyteller",
+   "job": "Travelling Storyteller",
+   "species": "Squirrel",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Pip. When Pip starts a shift, look at the top two cards of the Market Deck.",
+   "flavor": "Pip tells stories at every market from here to the Capital, and hears twice as many back.",
+   "abilities": [
+    {
+     "trigger": "onShiftStarted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 7
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.48,
+    "power": 6.62,
+    "opportunityCost": 5
+   }
   },
   {
    "id": "ww_inkwell_1",
@@ -2596,6 +3995,88 @@
    ]
   },
   {
+   "id": "mh_clover_2",
+   "type": "character",
+   "name": "Clover",
+   "title": "Market Gardener",
+   "job": "Market Gardener",
+   "species": "Rabbit",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Clover. Whenever you gain a non-Statue Market card, if you control another Agriculture Character, gain 1 Supply.",
+   "flavor": "Clover sells the surplus at the Saturday stall and comes home with more seeds than coins.",
+   "abilities": [
+    {
+     "trigger": "onGainMarketCard",
+     "condition": {
+      "nonStatue": true,
+      "otherCharacterInTown": {
+       "study": "Agriculture"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 0
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.38,
+    "power": 6.43,
+    "opportunityCost": 5
+   }
+  },
+  {
+   "id": "mh_hazels_bargain",
+   "type": "event",
+   "name": "Hazel's Bargain",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Hazel"
+    }
+   ],
+   "text": "Requires Hazel. Gain 3 Supply. Your next purchase announcement cannot be raised against.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 3
+     },
+     {
+      "do": "addMod",
+      "key": "unchallengeable",
+      "value": 1,
+      "expires": "untilUsed"
+     }
+    ]
+   },
+   "flavor": "Hazel shakes on it before the other stallholders have finished counting.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 13
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.36,
+    "power": 5,
+    "opportunityCost": 2.7
+   }
+  },
+  {
    "id": "br_quill_1",
    "type": "character",
    "name": "Quill",
@@ -2675,6 +4156,82 @@
       "amount": 1
      }
     ]
+   }
+  },
+  {
+   "id": "mh_poppy_4",
+   "type": "character",
+   "name": "Poppy",
+   "title": "Mail Coach Driver",
+   "job": "Mail Coach Driver",
+   "species": "Rabbit",
+   "study": "Commerce",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Poppy. The first time you announce a purchase each turn, gain 1 Supply.",
+   "flavor": "The coach leaves on the hour whether the passengers are aboard or not. Poppy considers this a kindness.",
+   "abilities": [
+    {
+     "trigger": "onAnnounce",
+     "oncePerTurn": true,
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 0
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.32,
+    "power": 7.7,
+    "opportunityCost": 8.2
+   }
+  },
+  {
+   "id": "mh_moss_1",
+   "type": "character",
+   "name": "Moss",
+   "title": "Ploughwright",
+   "job": "Ploughwright",
+   "species": "Badger",
+   "study": "Agriculture",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Moss becomes upright, your next rehire costs 1 less Supply.",
+   "flavor": "Moss mends ploughs in the spring and pride in the autumn, and charges less for the second.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "addMod",
+      "key": "rehireDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 5
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.31,
+    "power": 5,
+    "opportunityCost": 2.8
    }
   },
   {
@@ -2803,6 +4360,44 @@
    }
   },
   {
+   "id": "mh_rowan_3",
+   "type": "character",
+   "name": "Rowan",
+   "title": "Locksmith",
+   "job": "Locksmith",
+   "species": "Fox",
+   "study": "Crafts",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Rowan. Recruit: until your next turn, your Characters cannot be sent to Unemployment.",
+   "flavor": "Rowan cuts a key for every door in town and keeps a spare for none of them.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "addMod",
+      "key": "unemploymentShield",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 2
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.25,
+    "power": 6.65,
+    "opportunityCost": 6
+   }
+  },
+  {
    "id": "ww_marmalade_2",
    "type": "character",
    "name": "Marmalade",
@@ -2866,6 +4461,45 @@
       "optional": true
      }
     ]
+   }
+  },
+  {
+   "id": "mh_linnet_3",
+   "type": "character",
+   "name": "Linnet",
+   "title": "Lending Librarian",
+   "job": "Lending Librarian",
+   "species": "Rabbit",
+   "study": "Lore",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Linnet. At the end of your turn, if you hold at least 5 cards, gain 1 Supply.",
+   "flavor": "A full shelf, Linnet insists, is a shelf that is about to earn its keep.",
+   "abilities": [
+    {
+     "trigger": "onTurnEnd",
+     "condition": {
+      "handAtLeast": 5
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 6
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.21,
+    "power": 6.57,
+    "opportunityCost": 6
    }
   },
   {
@@ -2943,6 +4577,47 @@
    }
   },
   {
+   "id": "mh_nib_0",
+   "type": "character",
+   "name": "Nib",
+   "title": "Ink Mixer",
+   "job": "Ink Mixer",
+   "species": "Mouse",
+   "study": "Lore",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Recruit: if you control a Cat, draw 1 card.",
+   "flavor": "Nib grinds the ink; the cats bring the stories that need writing down.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "otherCharacterInTown": {
+       "species": "Cat"
+      }
+     },
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 7
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.16,
+    "power": 4,
+    "opportunityCost": 1.8
+   }
+  },
+  {
    "id": "br_burr_2",
    "type": "character",
    "name": "Burr",
@@ -3006,6 +4681,42 @@
    ]
   },
   {
+   "id": "mh_oakley_3",
+   "type": "character",
+   "name": "Oakley",
+   "title": "Boundary Surveyor",
+   "job": "Boundary Surveyor",
+   "species": "Badger",
+   "study": "Lore",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Oakley. When Oakley becomes upright, look at the top two cards of the Market Deck.",
+   "flavor": "Oakley paces out the town's edges every spring and reports what is coming down the road.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 5
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.13,
+    "power": 6.41,
+    "opportunityCost": 6
+   }
+  },
+  {
    "id": "pp_flint_2",
    "type": "character",
    "name": "Flint",
@@ -3038,6 +4749,46 @@
      }
     }
    ]
+  },
+  {
+   "id": "mh_marlow_reads_the_bylaws",
+   "type": "event",
+   "name": "Marlow Reads the Bylaws",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Marlow"
+    }
+   ],
+   "text": "Requires Marlow. Draw 2 cards. The next Event you play this turn requires one fewer Character.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 2
+     },
+     {
+      "do": "addMod",
+      "key": "eventCharReduction",
+      "value": 1,
+      "expires": "turnEnd"
+     }
+    ]
+   },
+   "flavor": "Subsection four, paragraph two: a committee of one is still a committee.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 10
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.09,
+    "power": 4.6,
+    "opportunityCost": 2.7
+   }
   },
   {
    "id": "bb_poppy_2",
@@ -3093,6 +4844,58 @@
       "count": 1
      }
     ]
+   }
+  },
+  {
+   "id": "mh_brook_1",
+   "type": "character",
+   "name": "Brook",
+   "title": "Canal Pilot",
+   "job": "Canal Pilot",
+   "species": "Otter",
+   "study": "Commerce",
+   "cost": 1,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "When Brook starts a shift, look at the top card of the Market Deck; if you control Willow, gain 1 Supply as well.",
+   "flavor": "Brook knows which barges are coming before the lock keeper does, and Willow knows what they carry.",
+   "abilities": [
+    {
+     "trigger": "onShiftStarted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 1
+     }
+    },
+    {
+     "trigger": "onShiftStarted",
+     "condition": {
+      "self": true,
+      "otherCharacterInTown": {
+       "name": "Willow"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 6
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.07,
+    "power": 4.64,
+    "opportunityCost": 2.8
    }
   },
   {
@@ -3171,6 +4974,85 @@
    "onGain": {
     "do": "gainSupply",
     "amount": 6
+   }
+  },
+  {
+   "id": "mh_pippa_3",
+   "type": "character",
+   "name": "Pippa",
+   "title": "Herb Cook",
+   "job": "Herb Cook",
+   "species": "Cat",
+   "study": "Agriculture",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Pippa. Recruit: if you control Marmalade, gain 2 Supply.",
+   "flavor": "Pippa grows the rosemary; Marmalade bakes it into everything. The queue starts at dawn.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "otherCharacterInTown": {
+       "name": "Marmalade"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 0
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.05,
+    "power": 6.25,
+    "opportunityCost": 6
+   }
+  },
+  {
+   "id": "mk_promotion_board",
+   "type": "market",
+   "name": "Promotion Board",
+   "cost": 5,
+   "disposal": "cityDump",
+   "text": "Gain 3 Supply, draw 1 card, and ready one of your Characters.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 3
+     },
+     {
+      "do": "draw",
+      "count": 1
+     },
+     {
+      "do": "readyCharacter",
+      "count": 1,
+      "optional": true
+     }
+    ]
+   },
+   "flavor": "Three references, one interview, and a new title painted on the door by teatime.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 14
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.05,
+    "power": 6.4,
+    "opportunityCost": 6.4
    }
   },
   {
@@ -3430,6 +5312,52 @@
    }
   },
   {
+   "id": "mh_hedge_apothecary",
+   "type": "event",
+   "name": "Hedge Apothecary",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "species": "Hedgehog"
+    },
+    {
+     "species": "Mouse"
+    }
+   ],
+   "text": "Requires a Hedgehog and a Mouse. Gain 2 Supply and draw 1 card, then you may rehire a Character from your Unemployment for 1 less Supply.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "draw",
+      "count": 1
+     },
+     {
+      "do": "rehire",
+      "discount": 1,
+      "optional": true
+     }
+    ]
+   },
+   "flavor": "One gathers, one grinds, and the whole borough sleeps better for it.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 4
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.94,
+    "power": 4.9,
+    "opportunityCost": 3.6
+   }
+  },
+  {
    "id": "pp_juniper_3",
    "type": "character",
    "name": "Juniper",
@@ -3530,6 +5458,51 @@
    ]
   },
   {
+   "id": "mh_botany_lecture",
+   "type": "event",
+   "name": "Botany Lecture",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Botany"
+    },
+    {
+     "study": "Lore"
+    }
+   ],
+   "text": "Requires a Botany Character and a Lore Character. Draw 2 cards, gain 1 Supply, and look at the top two cards of the Market Deck.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 2
+     },
+     {
+      "do": "gainSupply",
+      "amount": 1
+     },
+     {
+      "do": "peekMarketDeck",
+      "count": 2
+     }
+    ]
+   },
+   "flavor": "The lecture is on root systems. The audience is here for the greenhouse tea.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 14
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.88,
+    "power": 4.8,
+    "opportunityCost": 3.6
+   }
+  },
+  {
    "id": "bb_poppy_3",
    "type": "character",
    "name": "Poppy",
@@ -3600,6 +5573,129 @@
    ]
   },
   {
+   "id": "mh_acorn_0",
+   "type": "character",
+   "name": "Acorn",
+   "title": "Nut Runner",
+   "job": "Nut Runner",
+   "species": "Squirrel",
+   "study": "Agriculture",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Recruit: if you control an Otter, gain 1 Supply.",
+   "flavor": "Half the nuts Acorn carries down to the ferry never quite reach the boat.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "otherCharacterInTown": {
+       "species": "Otter"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 7
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.85,
+    "power": 3.6,
+    "opportunityCost": 1.8
+   }
+  },
+  {
+   "id": "mh_nutmeg_0",
+   "type": "character",
+   "name": "Nutmeg",
+   "title": "Petal Sweeper",
+   "job": "Petal Sweeper",
+   "species": "Squirrel",
+   "study": "Botany",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Recruit: if you control another Botany Character, gain 1 Supply.",
+   "flavor": "The florist's floor is the best place in town to learn which flowers sell.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Botany"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 11
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.85,
+    "power": 3.6,
+    "opportunityCost": 1.8
+   }
+  },
+  {
+   "id": "mh_russet_0",
+   "type": "character",
+   "name": "Russet",
+   "title": "Tea Boy",
+   "job": "Tea Boy",
+   "species": "Fox",
+   "study": "Commerce",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Recruit: if you control a Cat, gain 1 Supply.",
+   "flavor": "Russet learned the trade carrying trays for the cats of Whiskerwood, who tip in advice.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "otherCharacterInTown": {
+       "species": "Cat"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.85,
+    "power": 3.6,
+    "opportunityCost": 1.8
+   }
+  },
+  {
    "id": "rr_pip_1",
    "type": "character",
    "name": "Pip",
@@ -3667,6 +5763,51 @@
    }
   },
   {
+   "id": "mh_study_hall",
+   "type": "event",
+   "name": "Study Hall",
+   "kind": "limited",
+   "cost": 0,
+   "duration": 2,
+   "requires": [
+    {
+     "study": "Lore",
+     "count": 2
+    }
+   ],
+   "text": "Requires two Lore Characters. Limited 2: at the start of your turn, gain 1 Supply and draw 1 card.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 1
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "flavor": "Quiet, please. Somebody is about to have an idea.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 10
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.82,
+    "power": 5,
+    "opportunityCost": 4.2
+   }
+  },
+  {
    "id": "br_thistle_1",
    "type": "character",
    "name": "Thistle",
@@ -3696,6 +5837,45 @@
      }
     }
    ]
+  },
+  {
+   "id": "mh_pebble_3",
+   "type": "character",
+   "name": "Pebble",
+   "title": "Ferry Master",
+   "job": "Ferry Master",
+   "species": "Otter",
+   "study": "Commerce",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Pebble. Whenever you gain a non-Statue Market card, gain 1 Supply.",
+   "flavor": "Pebble ran letters across the bridge for years; now the bridge runs to her schedule.",
+   "abilities": [
+    {
+     "trigger": "onGainMarketCard",
+     "condition": {
+      "nonStatue": true
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 10
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.78,
+    "power": 5.69,
+    "opportunityCost": 6
+   }
   },
   {
    "id": "ww_velvet_2",
@@ -3871,6 +6051,47 @@
    "onReveal": {
     "do": "everyoneLosesSupply",
     "amount": 4
+   }
+  },
+  {
+   "id": "mh_hazel_0",
+   "type": "character",
+   "name": "Hazel",
+   "title": "Barrow Girl",
+   "job": "Barrow Girl",
+   "species": "Raccoon",
+   "study": "Commerce",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Recruit: if you control Patch, look at the top two cards of the Market Deck.",
+   "flavor": "Hazel pushed a barrow before she owned a stall, and Patch always knew which alley to push it down.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "otherCharacterInTown": {
+       "name": "Patch"
+      }
+     },
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 3
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.72,
+    "power": 3.44,
+    "opportunityCost": 1.8
    }
   },
   {
@@ -4120,6 +6341,47 @@
      }
     }
    ]
+  },
+  {
+   "id": "mh_marlow_1",
+   "type": "character",
+   "name": "Marlow",
+   "title": "Bylaw Reader",
+   "job": "Bylaw Reader",
+   "species": "Raccoon",
+   "study": "Lore",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Recruit: if you control another Raccoon, draw 1 card.",
+   "flavor": "Young Marlow read the bylaws aloud to anyone who would listen. Only the Raccoons stayed.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "otherCharacterInTown": {
+       "species": "Raccoon"
+      }
+     },
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 3
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.65,
+    "power": 4,
+    "opportunityCost": 2.8
+   }
   },
   {
    "id": "pp_paper_trail",
@@ -4555,6 +6817,87 @@
    }
   },
   {
+   "id": "mh_inkwells_late_shift",
+   "type": "event",
+   "name": "Inkwell's Late Shift",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Inkwell"
+    }
+   ],
+   "text": "Requires Inkwell. Draw 3 cards, then discard 1 card.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 3
+     },
+     {
+      "do": "discard",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "The candle burns down. The stack of books does not.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 2
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.42,
+    "power": 3.6,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mh_audit_of_the_walls",
+   "type": "event",
+   "name": "Audit of the Walls",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "species": "Raccoon"
+    },
+    {
+     "species": "Badger"
+    }
+   ],
+   "text": "Requires a Raccoon and a Badger. Gain 2 Supply. Until your next turn, your Characters cannot be sent to Unemployment.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "addMod",
+      "key": "unemploymentShield",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    ]
+   },
+   "flavor": "The Raccoon checks the ledger, the Badger checks the mortar, and nobody gets through either.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 3
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.4,
+    "power": 4,
+    "opportunityCost": 3.6
+   }
+  },
+  {
    "id": "ww_thread_exchange",
    "type": "event",
    "name": "Thread Exchange",
@@ -4648,6 +6991,50 @@
    ]
   },
   {
+   "id": "mh_pips_reading_hour",
+   "type": "event",
+   "name": "Pip's Reading Hour",
+   "kind": "limited",
+   "cost": 0,
+   "duration": 2,
+   "requires": [
+    {
+     "name": "Pip"
+    }
+   ],
+   "text": "Requires Pip. Limited 2: at the start of your turn, draw 1 card and look at the top card of the Market Deck.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "draw",
+        "count": 1
+       },
+       {
+        "do": "peekMarketDeck",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "flavor": "Pip reads to the whole square, and pauses at the good bits to see who is coming up the road.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 10
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.36,
+    "power": 3.8,
+    "opportunityCost": 3.3
+   }
+  },
+  {
    "id": "bb_borrowed_basket",
    "type": "event",
    "name": "Borrowed Basket",
@@ -4713,6 +7100,85 @@
       "count": 1
      }
     ]
+   }
+  },
+  {
+   "id": "mh_poppys_post_route",
+   "type": "event",
+   "name": "Poppy's Post Route",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Poppy"
+    }
+   ],
+   "text": "Requires Poppy. Gain 2 Supply and draw 1 card.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "Rain, snow or bidding war, the post gets through.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 3
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.35,
+    "power": 3.5,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mh_velvets_petition",
+   "type": "event",
+   "name": "Velvet's Petition",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Velvet"
+    }
+   ],
+   "text": "Requires Velvet. Draw 1 card. Your next recruit costs 2 less Supply.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 1
+     },
+     {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 2,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    ]
+   },
+   "flavor": "Four hundred signatures, one of them a paw print, and the new hire starts on Monday.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 4
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.35,
+    "power": 3.5,
+    "opportunityCost": 2.7
    }
   },
   {
@@ -4941,6 +7407,156 @@
       "optional": true
      }
     ]
+   }
+  },
+  {
+   "id": "mk_masters_lodge",
+   "type": "market",
+   "name": "Masters' Lodge",
+   "cost": 5,
+   "disposal": "cityDump",
+   "text": "Ready one of your Masters and draw 2 cards.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "readyCharacter",
+      "count": 1,
+      "filter": {
+       "rank": "master"
+      },
+      "optional": true
+     },
+     {
+      "do": "draw",
+      "count": 2
+     }
+    ]
+   },
+   "flavor": "Behind the oak door, the old hands argue about who taught whom.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 12
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.33,
+    "power": 4.9,
+    "opportunityCost": 6.4
+   }
+  },
+  {
+   "id": "mh_clovers_seed_drive",
+   "type": "event",
+   "name": "Clover's Seed Drive",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Clover"
+    }
+   ],
+   "text": "Requires Clover. Gain 2 Supply, and another Agriculture Character you control becomes upright at the start of your next turn.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "readyNextTurn",
+      "filter": {
+       "study": "Agriculture"
+      },
+      "optional": true
+     }
+    ]
+   },
+   "flavor": "Every packet Clover hands out comes back as a basket in the autumn.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 9
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.29,
+    "power": 3.4,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mh_guild_retraining",
+   "type": "event",
+   "name": "Guild Retraining",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Crafts",
+     "count": 2
+    }
+   ],
+   "text": "Requires two Crafts Characters. Ready two of your Characters.",
+   "effect": {
+    "do": "readyCharacter",
+    "count": 2,
+    "optional": true
+   },
+   "flavor": "A new trade is only an old trade with different tools, the guild says, and hands them over.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 14
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.28,
+    "power": 3.8,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mh_tea_trade_route",
+   "type": "event",
+   "name": "Tea Trade Route",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "species": "Fox"
+    },
+    {
+     "species": "Cat"
+    }
+   ],
+   "text": "Requires a Fox and a Cat. Gain 3 Supply and look at the top two cards of the Market Deck.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 3
+     },
+     {
+      "do": "peekMarketDeck",
+      "count": 2
+     }
+    ]
+   },
+   "flavor": "The foxes bring the leaves; the cats know exactly who will pay for them.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.28,
+    "power": 3.8,
+    "opportunityCost": 3.6
    }
   },
   {
@@ -5242,6 +7858,36 @@
    }
   },
   {
+   "id": "mh_moss_rehiring_day",
+   "type": "event",
+   "name": "Moss's Rehiring Day",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Moss"
+    }
+   ],
+   "text": "Requires Moss. Rehire a Character from your Unemployment for free; it enters upright.",
+   "effect": {
+    "do": "rehire",
+    "free": true,
+    "optional": true
+   },
+   "flavor": "Moss keeps every old apprentice's apron on a hook, just in case.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 5
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.15,
+    "power": 3.2,
+    "opportunityCost": 2.7
+   }
+  },
+  {
    "id": "mk_river_ferry",
    "type": "market",
    "name": "River Ferry",
@@ -5267,6 +7913,40 @@
       "count": 1
      }
     ]
+   }
+  },
+  {
+   "id": "mk_old_friends_reunion",
+   "type": "market",
+   "name": "Old Friends' Reunion",
+   "cost": 4,
+   "disposal": "cityDump",
+   "text": "Rehire a Character from your Unemployment for free; it enters upright. Then gain 1 Supply.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "rehire",
+      "free": true,
+      "optional": true
+     },
+     {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    ]
+   },
+   "flavor": "Nobody remembers who left, only who came back.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 13
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.14,
+    "power": 4.2,
+    "opportunityCost": 5.4
    }
   },
   {
@@ -5363,6 +8043,34 @@
    "onReveal": {
     "do": "everyoneLosesSupply",
     "amount": 3
+   }
+  },
+  {
+   "id": "mk_apprentice_fair",
+   "type": "market",
+   "name": "Apprentice Fair",
+   "cost": 3,
+   "disposal": "cityDump",
+   "text": "Recruit a Character costing 1 or less from your hand for free; it enters upright.",
+   "onGain": {
+    "do": "recruitFromHand",
+    "filter": {
+     "maxCost": 1
+    },
+    "orientation": 0,
+    "optional": true
+   },
+   "flavor": "Every stall is hiring, and every youngster has three offers by noon.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 13
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.05,
+    "power": 3.7,
+    "opportunityCost": 4.4
    }
   },
   {
@@ -5685,6 +8393,43 @@
    }
   },
   {
+   "id": "mk_journeymans_road",
+   "type": "market",
+   "name": "Journeyman's Road",
+   "cost": 4,
+   "disposal": "cityDump",
+   "text": "Ready one of your Journeymen, then gain 2 Supply.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "readyCharacter",
+      "count": 1,
+      "filter": {
+       "rank": "journeyman"
+      },
+      "optional": true
+     },
+     {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    ]
+   },
+   "flavor": "The road out of town is also, if you keep walking, the road back in.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 11
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.99,
+    "power": 3.9,
+    "opportunityCost": 5.4
+   }
+  },
+  {
    "id": "mk_library_annex",
    "type": "market",
    "name": "Library Annex",
@@ -5759,6 +8504,44 @@
      }
     }
    ]
+  },
+  {
+   "id": "mh_town_census",
+   "type": "event",
+   "name": "Town Census",
+   "kind": "limited",
+   "cost": 0,
+   "duration": 2,
+   "requires": [
+    {
+     "study": "Civics"
+    }
+   ],
+   "text": "Requires a Civics Character. Limited 2: at the start of your turn, if you control Characters of at least three species, gain 2 Supply.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "minSpeciesInTown": 3
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "flavor": "The census taker counts ears, tails and whiskers, and the town treasury counts the rest.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 14
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.98,
+    "power": 3.2,
+    "opportunityCost": 3.3
+   }
   },
   {
    "id": "ww_arcade_fair",
@@ -5939,6 +8722,46 @@
    }
   },
   {
+   "id": "mk_census_office",
+   "type": "market",
+   "name": "Census Office",
+   "cost": 3,
+   "disposal": "cityDump",
+   "text": "Gain 1 Supply and draw 1 card. Your next rehire costs 1 less Supply.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 1
+     },
+     {
+      "do": "draw",
+      "count": 1
+     },
+     {
+      "do": "addMod",
+      "key": "rehireDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    ]
+   },
+   "flavor": "Name, trade, previous trade, trade before that. Take a seat.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 4
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.94,
+    "power": 3.5,
+    "opportunityCost": 4.4
+   }
+  },
+  {
    "id": "mk_lantern_terrace",
    "type": "market",
    "name": "Lantern Terrace",
@@ -5992,6 +8815,43 @@
    }
   },
   {
+   "id": "mk_night_school",
+   "type": "market",
+   "name": "Night School",
+   "cost": 2,
+   "disposal": "cityDump",
+   "text": "Draw 2 cards, then discard 1 card, and gain 1 Supply.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 2
+     },
+     {
+      "do": "discard",
+      "count": 1
+     },
+     {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    ]
+   },
+   "flavor": "The lamps stay lit until the last question is answered.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 10
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.9,
+    "power": 3.1,
+    "opportunityCost": 3.4
+   }
+  },
+  {
    "id": "mk_bounty_notice",
    "type": "market",
    "name": "Bounty Notice",
@@ -6034,6 +8894,40 @@
     "free": true,
     "orientation": 270,
     "optional": true
+   }
+  },
+  {
+   "id": "mk_retraining_hall",
+   "type": "market",
+   "name": "Retraining Hall",
+   "cost": 3,
+   "disposal": "cityDump",
+   "text": "Ready one of your Characters and draw 1 card.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "readyCharacter",
+      "count": 1,
+      "optional": true
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "Walk in a farmer, walk out a clerk. The hat shop is next door.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 14
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.88,
+    "power": 3.4,
+    "opportunityCost": 4.4
    }
   },
   {
@@ -6272,6 +9166,42 @@
    }
   },
   {
+   "id": "mk_hat_makers_shop",
+   "type": "market",
+   "name": "Hat Maker's Shop",
+   "cost": 2,
+   "disposal": "cityDump",
+   "text": "Gain 2 Supply. Your next recruit costs 1 less Supply.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    ]
+   },
+   "flavor": "A new hat, the milliner says, is the first day of a new job.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 15
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.84,
+    "power": 3,
+    "opportunityCost": 3.4
+   }
+  },
+  {
    "id": "mk_orchard_share",
    "type": "market",
    "name": "Orchard Share",
@@ -6381,6 +9311,42 @@
     "score": 1.78,
     "power": 3.5,
     "opportunityCost": 5.4
+   }
+  },
+  {
+   "id": "mk_guild_charter",
+   "type": "market",
+   "name": "Guild Charter",
+   "cost": 1,
+   "disposal": "cityDump",
+   "text": "Draw 1 card. Your next recruit costs 1 less Supply.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 1
+     },
+     {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    ]
+   },
+   "flavor": "Sealed in wax and read aloud twice a year, whether anyone is listening or not.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 10
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.76,
+    "power": 2.5,
+    "opportunityCost": 2.4
    }
   },
   {
@@ -6753,6 +9719,48 @@
    "onReveal": {
     "do": "everyoneDiscardsDownTo",
     "count": 3
+   }
+  },
+  {
+   "id": "mh_acorns_bidding_war",
+   "type": "event",
+   "name": "Acorn's Bidding War",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Acorn"
+    },
+    {
+     "study": "Commerce"
+    }
+   ],
+   "text": "Requires Acorn and a Commerce Character. Gain 2 Supply, then you may pay 2 Supply to raise one of your open bids by 2.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "raiseOwnBid",
+      "amount": 2,
+      "optional": true
+     }
+    ]
+   },
+   "flavor": "Acorn bids like a squirrel buries nuts: often, and with total confidence.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 13
+   },
+   "expansion": "AF-HATS-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.56,
+    "power": 2.6,
+    "opportunityCost": 3.6
    }
   },
   {
@@ -8638,6 +11646,41 @@
     "mk_town_charter"
    ],
    "poolSize": 16
+  },
+  {
+   "id": "many-hats-fair",
+   "name": "Many Hats Fair",
+   "blurb": "A hiring fair for every trade: ten new halls that ready, retrain and rehire, six familiar favorites, and no shared shocks.",
+   "always": [
+    "st_kindness",
+    "st_curiosity",
+    "st_patience",
+    "st_ingenuity",
+    "st_generosity",
+    "st_courage",
+    "st_joy",
+    "st_harmony",
+    "st_community"
+   ],
+   "pool": [
+    "mk_retraining_hall",
+    "mk_hat_makers_shop",
+    "mk_apprentice_fair",
+    "mk_journeymans_road",
+    "mk_masters_lodge",
+    "mk_night_school",
+    "mk_census_office",
+    "mk_old_friends_reunion",
+    "mk_guild_charter",
+    "mk_promotion_board",
+    "mk_guild_hall",
+    "mk_understudy_program",
+    "mk_returning_champion",
+    "mk_town_bell",
+    "mk_apprentice_bell",
+    "mk_masons_yard"
+   ],
+   "poolSize": 16
   }
  ],
  "expansions": [
@@ -8645,6 +11688,11 @@
    "id": "AF-WHISKER-01",
    "name": "Whiskerwood",
    "cardCount": 52
+  },
+  {
+   "id": "AF-HATS-01",
+   "name": "Many Hats",
+   "cardCount": 72
   }
  ]
 }

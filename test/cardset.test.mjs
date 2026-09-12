@@ -79,7 +79,8 @@ test('card set', async (t) => {
       for (const r of c.requires || []) {
         if (r.species) assert.ok(SET.species.includes(r.species), `${c.id}: undeclared species ${r.species}`);
         if (r.study) assert.ok(SET.studies.includes(r.study), `${c.id}: undeclared study ${r.study}`);
-        assert.ok(r.species || r.study, `${c.id}: requirement with neither species nor study`);
+        if (r.name) assert.ok(byType('character').some((ch) => ch.name === r.name), `${c.id}: requires unknown Character ${r.name}`);
+        assert.ok(r.species || r.study || r.name, `${c.id}: requirement with neither species, study nor Character name`);
       }
       assert.ok(c.effect || c.abilities, `${c.id}: Event does nothing`);
     }

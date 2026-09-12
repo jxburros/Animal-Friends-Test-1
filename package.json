@@ -1,6 +1,6 @@
 {
   "name": "animal-friends-tcg",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "Animal Friends TCG: First Boroughs — browser game, headless engine and playtest simulator",
   "type": "module",
@@ -11,6 +11,7 @@
     "smoke": "node scripts/smoke.mjs",
     "invariants": "node scripts/invariants.mjs 200",
     "power": "node scripts/power.mjs",
+    "stamp": "node scripts/stamp.mjs",
     "playtest": "node scripts/playtest.mjs"
   },
   "engines": {

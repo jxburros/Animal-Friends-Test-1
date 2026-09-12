@@ -41,7 +41,7 @@ function requirementUnits(def) {
 }
 
 function unitMatches(state, stack, unit) {
-  return matchesFilter(state, stack, { species: unit.species, study: unit.study });
+  return matchesFilter(state, stack, { species: unit.species, study: unit.study, name: unit.name });
 }
 
 /** Can `stacks` (upright, distinct) satisfy the event's requirements with up to `waive` units waived? Returns the number of units they cover or -1. */
