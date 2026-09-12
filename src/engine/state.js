@@ -23,6 +23,11 @@ export function rankOf(rules, cost) {
   return 'master';
 }
 
+/** 1 for the lowest-printed rank (Apprentice), 2 for the next (Journeyman), and so on. */
+export function rankLevel(rules, cost) {
+  return Object.keys(rules.ranks).indexOf(rankOf(rules, cost)) + 1;
+}
+
 export function entryOrientation(rules, cost) {
   return rules.ranks[rankOf(rules, cost)].entryOrientation;
 }

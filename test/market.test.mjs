@@ -104,9 +104,10 @@ describe('bid wars', () => {
   test('bidding goes back and forth until one Mayor declines, and each bid costs another Character', async () => {
     const state = newGame();
     const pd = await setupPending(state, { annBid: 3 });
-    const a2 = addStack(state, 0, 'bb_mabel_1', UPRIGHT);
+    // Each Mayor's 2nd pledge to this auction must be at least Journeyman rank (cost 2-3).
+    const a2 = addStack(state, 0, 'bb_fern_1', UPRIGHT);
     const b1 = addStack(state, 1, 'pp_patch_1', UPRIGHT);
-    const b2 = addStack(state, 1, 'pp_juniper_1', UPRIGHT);
+    const b2 = addStack(state, 1, 'pp_hazel_1', UPRIGHT);
 
     begin(state, 1);
     await applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: b1.uid, bid: 4, minBid: 4, maxBid: 10 });
