@@ -6,6 +6,7 @@ import {
   setGame, stopGame, isGameActive, scheduleRender, renderIfChanged, settle,
 } from './render.js';
 import { cardArtSVG } from './art.js';
+import { openFullArtGallery } from './full-art-gallery.js';
 import { openDeckBuilder, loadSavedDecks, saveDeck, deleteSavedDeck } from './deckbuilder.js';
 import * as fx from './fx.js';
 
@@ -52,6 +53,7 @@ function customBlurb(deck) {
 
 // ---------- menu ----------
 function buildMenu() {
+  $('fullArtGalleryBtn').onclick = () => openFullArtGallery(rules, cardSet);
   const critters = $('menuCritters');
   critters.innerHTML = '';
   for (const name of ['Clover', 'Pip', 'Marmalade']) {

@@ -11,6 +11,7 @@ import {
 } from '../engine/index.js';
 import { cardArtSVG, cardBackSVG, iconSVG } from './art.js';
 import { ornamentalFrameSVG } from './painted-art.js';
+import { fullArtFor, fullArtFrameSVG } from './full-art.js';
 import * as fx from './fx.js';
 import * as choreo from './choreo.js';
 
@@ -203,9 +204,10 @@ export function raritySlug(def) {
 }
 
 export function buildCardFace(def, { large = false, interactive = true } = {}) {
+  const fullArt = fullArtFor(def);
   const rank = def.type === 'character' && activeRules() ? rankOf(activeRules(), def.cost) : null;
   const face = h('div', {
-    class: `card-face t-${def.type}${large ? ' large' : ''}${def.foil ? ' foil' : ''}${rank ? ` rank-${rank}` : ''} rar-${raritySlug(def)}`,
+    class: `card-face t-${def.type}${large ? ' large' : ''}${def.foil || fullArt ? ' foil' : ''}${fullArt ? ' full-art' : ''}${rank ? ` rank-${rank}` : ''} rar-${raritySlug(def)}`,
     'data-card': def.id,
     'data-peek': interactive && !large ? '1' : null,
   });
@@ -263,18 +265,18 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
   if (def.burden) body.appendChild(h('div', { class: 'burden' }, def.burden));
   if (def.flavor) body.appendChild(h('div', { class: 'flavor' }, def.flavor));
   face.appendChild(body);
-  if (def.foil) {
+  if (def.foil || fullArt) {
     face.appendChild(h('div', { class: 'foil-sheen' }));
-    face.appendChild(h('div', { class: 'foil-tag', title: 'Foil card', html: iconSVG('foil') }));
+    if (!fullArt) face.appendChild(h('div', { class: 'foil-tag', title: 'Foil card', html: iconSVG('foil') }));
   }
-  const footer = h('div', { class: 'card-footer' }, [h('span', {}, def.type === 'statue' ? 'Victory' : def.type)]);
+  const footer = h('div', { class: 'card-footer' }, [h('span', {}, fullArt ? `Full Art · ${fullArt.number}/12` : def.type === 'statue' ? 'Victory' : def.type)]);
   if (interactive) footer.appendChild(h('button', {
     class: 'inspect-card', type: 'button', 'aria-label': `Read ${def.name}`,
     onclick: (event) => { event.stopPropagation(); inspectCard(def); },
     onpointerdown: (event) => event.stopPropagation(),
   }, 'Read'));
   face.appendChild(footer);
-  face.appendChild(h('div', { class: 'frame', html: ornamentalFrameSVG() }));
+  face.appendChild(h('div', { class: 'frame', html: fullArt ? fullArtFrameSVG() : ornamentalFrameSVG() }));
   return face;
 }
 
