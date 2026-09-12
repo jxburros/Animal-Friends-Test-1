@@ -2,6 +2,8 @@
 // Coordinates refer to the unmodified 4 × 4 atlases; new species keep their vector art. A card may
 // name its painting with `art: { atlas: 'boroughs' | 'whiskerwood' | 'neighbors', tile: 0..15 }`;
 // otherwise the original species/theme selection applies. Only bundled atlases resolve.
+import { fullArtFor } from './full-art.js';
+
 export const PAINTED_ATLAS_URL = new URL('../../assets/art/boroughs-atlas.png', import.meta.url).href;
 export const WHISKERWOOD_ATLAS_URL = new URL('../../assets/art/whiskerwood-atlas.png', import.meta.url).href;
 export const NEIGHBORS_ATLAS_URL = new URL('../../assets/art/neighbors-atlas.png', import.meta.url).href;
@@ -35,6 +37,15 @@ export function paintedTile(def) {
 }
 
 export function paintedArtSVG(def, fallback) {
+  const standard = atlasArtSVG(def, fallback);
+  const fullArt = fullArtFor(def);
+  if (fullArt) {
+    return `<svg class="painted-art full-art-painting" viewBox="0 0 100 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><svg width="100" height="160">${standard}</svg><image href="${fullArt.url}" width="100" height="160" preserveAspectRatio="xMidYMid slice"/></svg>`;
+  }
+  return standard;
+}
+
+function atlasArtSVG(def, fallback) {
   const tile = paintedTile(def);
   if (tile === null) return fallback;
   const x = -(tile % 4) * 100;
