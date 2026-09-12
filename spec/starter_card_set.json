@@ -10,7 +10,8 @@
   "Hedgehog",
   "Badger",
   "Otter",
-  "Squirrel"
+  "Squirrel",
+  "Cat"
  ],
  "studies": [
   "Agriculture",
@@ -203,6 +204,84 @@
     "br_tool_lending": 2,
     "bb_blooming_confidence": 2,
     "br_mended_fences": 1
+   }
+  },
+  {
+   "id": "whisker-willow",
+   "name": "Whisker & Willow",
+   "blurb": "Cats and their garden-and-workshop neighbors: steady shifts, mending, and botanical Event rewards.",
+   "species": [
+    "Cat",
+    "Rabbit",
+    "Badger",
+    "Squirrel"
+   ],
+   "studies": [
+    "Botany",
+    "Agriculture",
+    "Crafts"
+   ],
+   "list": {
+    "ww_pippa_1": 3,
+    "ww_pippa_2": 1,
+    "ww_pippa_3": 1,
+    "ww_marmalade_1": 2,
+    "ww_marmalade_2": 1,
+    "ww_marmalade_3": 1,
+    "ww_thimble_1": 3,
+    "ww_thimble_2": 1,
+    "ww_thimble_3": 1,
+    "ww_linnet_1": 2,
+    "ww_mortar_1": 1,
+    "ww_nutmeg_1": 1,
+    "ww_windowsill_garden": 2,
+    "ww_fresh_batch": 2,
+    "ww_patchwork_gift": 2,
+    "ww_garden_helpers": 1,
+    "ww_thread_exchange": 1,
+    "ww_guild_open_day": 1,
+    "ww_rooftop_supper": 1,
+    "ww_sewing_circle": 1,
+    "ww_blossom_week": 1
+   }
+  },
+  {
+   "id": "velvet-ledger",
+   "name": "Velvet & Ledger",
+   "blurb": "Cats, Mice, Foxes and Otters: libraries, civic teamwork, card flow and market rewards.",
+   "species": [
+    "Cat",
+    "Mouse",
+    "Fox",
+    "Otter"
+   ],
+   "studies": [
+    "Lore",
+    "Civics",
+    "Commerce"
+   ],
+   "list": {
+    "ww_inkwell_1": 3,
+    "ww_inkwell_2": 1,
+    "ww_inkwell_3": 1,
+    "ww_velvet_1": 2,
+    "ww_velvet_2": 1,
+    "ww_velvet_3": 1,
+    "ww_copper_1": 2,
+    "ww_copper_2": 1,
+    "ww_copper_3": 1,
+    "ww_nib_1": 2,
+    "ww_russet_1": 2,
+    "ww_pebble_1": 1,
+    "ww_shared_book": 2,
+    "ww_midnight_index": 2,
+    "ww_fair_measure": 2,
+    "ww_open_petition": 1,
+    "ww_tea_and_tales": 1,
+    "ww_courier_shortcut": 1,
+    "ww_reading_lanterns": 1,
+    "ww_arcade_fair": 1,
+    "ww_welcome_committee": 1
    }
   }
  ],
@@ -687,6 +766,51 @@
    }
   },
   {
+   "id": "ww_mortar_1",
+   "type": "character",
+   "name": "Mortar",
+   "title": "Watermill Mechanic",
+   "job": "Watermill Mechanic",
+   "species": "Badger",
+   "study": "Crafts",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Busy: gain 1 Supply and draw 1 card.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 1
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "flavor": "He listens to the wheel until the wheel sounds happy.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 9
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 4.71,
+    "power": 9.65,
+    "opportunityCost": 6
+   }
+  },
+  {
    "id": "rr_acorn_2",
    "type": "character",
    "name": "Acorn",
@@ -931,6 +1055,42 @@
    ]
   },
   {
+   "id": "ww_copper_1",
+   "type": "character",
+   "name": "Copper",
+   "title": "Scale Polisher",
+   "job": "Scale Polisher",
+   "species": "Cat",
+   "study": "Commerce",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Recruit: gain 1 Supply.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "flavor": "An honest measure makes a lasting friendship.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 5
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.37,
+    "power": 6.6,
+    "opportunityCost": 2.8
+   }
+  },
+  {
    "id": "br_moss_2",
    "type": "character",
    "name": "Moss",
@@ -1043,6 +1203,51 @@
       "optional": true
      }
     ]
+   }
+  },
+  {
+   "id": "ww_inkwell_2",
+   "type": "character",
+   "name": "Inkwell",
+   "title": "Night Librarian",
+   "job": "Night Librarian",
+   "species": "Cat",
+   "study": "Lore",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Inkwell. Busy: draw 2 cards, then discard 1 card.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "draw",
+        "count": 2
+       },
+       {
+        "do": "discard",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "flavor": "A good story always leaves room for one more listener.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 2
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.32,
+    "power": 8.85,
+    "opportunityCost": 6
    }
   },
   {
@@ -1219,6 +1424,42 @@
    ]
   },
   {
+   "id": "ww_copper_2",
+   "type": "character",
+   "name": "Copper",
+   "title": "Arcade Merchant",
+   "job": "Arcade Merchant",
+   "species": "Cat",
+   "study": "Commerce",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Copper. Busy: gain 2 Supply.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "flavor": "An honest measure makes a lasting friendship.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 5
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.22,
+    "power": 8.65,
+    "opportunityCost": 6
+   }
+  },
+  {
    "id": "br_quill_2",
    "type": "character",
    "name": "Quill",
@@ -1277,6 +1518,51 @@
      }
     }
    ]
+  },
+  {
+   "id": "ww_velvet_1",
+   "type": "character",
+   "name": "Velvet",
+   "title": "Petition Runner",
+   "job": "Petition Runner",
+   "species": "Cat",
+   "study": "Civics",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Recruit: draw 1 card, then discard 1 card.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "draw",
+        "count": 1
+       },
+       {
+        "do": "discard",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "flavor": "Every pawprint deserves a place in the town record.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 4
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.11,
+    "power": 6.2,
+    "opportunityCost": 2.8
+   }
   },
   {
    "id": "bb_fern_1",
@@ -1577,6 +1863,45 @@
    "burden": "Burden: choosing Supply in your Resources phase gives you 1 less."
   },
   {
+   "id": "ww_thimble_3",
+   "type": "character",
+   "name": "Thimble",
+   "title": "Master of Mending",
+   "job": "Master of Mending",
+   "species": "Cat",
+   "study": "Crafts",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Thimble. Busy: choose another Character you control; it becomes upright at the start of your next turn.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "readyNextTurn",
+      "filter": {
+       "notSelf": true
+      },
+      "optional": true
+     }
+    }
+   ],
+   "flavor": "No scrap is too small to keep somebody warm.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 3
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 3.88,
+    "power": 9,
+    "opportunityCost": 8.2
+   }
+  },
+  {
    "id": "rr_tansy_2",
    "type": "character",
    "name": "Tansy",
@@ -1734,6 +2059,46 @@
    ]
   },
   {
+   "id": "ww_marmalade_3",
+   "type": "character",
+   "name": "Marmalade",
+   "title": "Harvest Head Baker",
+   "job": "Harvest Head Baker",
+   "species": "Cat",
+   "study": "Agriculture",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Marmalade. The first time Marmalade completes a shift each turn, gain 1 extra Supply.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     },
+     "condition": {
+      "self": true
+     },
+     "oncePerTurn": true
+    }
+   ],
+   "flavor": "The first loaf is always for a neighbor.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 1
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 3.78,
+    "power": 9.19,
+    "opportunityCost": 9.2
+   }
+  },
+  {
    "id": "mk_grand_repeal",
    "type": "market",
    "name": "Grand Repeal",
@@ -1839,6 +2204,34 @@
    },
    "text": "A steady shift: 1 turn, 2 Supply.",
    "flavor": "Nim can find any book in the library, provided you don't ask which shelf."
+  },
+  {
+   "id": "ww_marmalade_1",
+   "type": "character",
+   "name": "Marmalade",
+   "title": "Dough Kneader",
+   "job": "Dough Kneader",
+   "species": "Cat",
+   "study": "Agriculture",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "A steady shift: 1 turn, then 2 Supply.",
+   "abilities": [],
+   "flavor": "The first loaf is always for a neighbor.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 1
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Rare",
+   "power": {
+    "score": 3.71,
+    "power": 5.6,
+    "opportunityCost": 2.8
+   }
   },
   {
    "id": "pp_marlow_1",
@@ -2020,6 +2413,126 @@
    ]
   },
   {
+   "id": "ww_inkwell_1",
+   "type": "character",
+   "name": "Inkwell",
+   "title": "Bookmark Keeper",
+   "job": "Bookmark Keeper",
+   "species": "Cat",
+   "study": "Lore",
+   "cost": 1,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Recruit: draw 1 card, then discard 1 card.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "draw",
+        "count": 1
+       },
+       {
+        "do": "discard",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "flavor": "A good story always leaves room for one more listener.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 2
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.48,
+    "power": 5.25,
+    "opportunityCost": 2.8
+   }
+  },
+  {
+   "id": "ww_nutmeg_1",
+   "type": "character",
+   "name": "Nutmeg",
+   "title": "Bouquet Weaver",
+   "job": "Bouquet Weaver",
+   "species": "Squirrel",
+   "study": "Botany",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Recruit: gain 1 Supply.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "flavor": "Even the busiest stall has room for flowers.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 11
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.47,
+    "power": 6.6,
+    "opportunityCost": 5
+   }
+  },
+  {
+   "id": "ww_russet_1",
+   "type": "character",
+   "name": "Russet",
+   "title": "Tea Trader",
+   "job": "Tea Trader",
+   "species": "Fox",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Recruit: your next rehire costs 1 less Supply.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "addMod",
+      "key": "rehireDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "flavor": "There is always a spare cup behind the counter.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.47,
+    "power": 6.6,
+    "opportunityCost": 5
+   }
+  },
+  {
    "id": "br_bramble_2",
    "type": "character",
    "name": "Bramble",
@@ -2165,6 +2678,167 @@
    }
   },
   {
+   "id": "ww_copper_3",
+   "type": "character",
+   "name": "Copper",
+   "title": "Market Steward",
+   "job": "Market Steward",
+   "species": "Cat",
+   "study": "Commerce",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Copper. The first time Copper announces a purchase each turn, draw 1 card.",
+   "abilities": [
+    {
+     "trigger": "onAnnounce",
+     "effect": {
+      "do": "draw",
+      "count": 1
+     },
+     "condition": {
+      "announcerIsSelf": true
+     },
+     "oncePerTurn": true
+    }
+   ],
+   "flavor": "An honest measure makes a lasting friendship.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 5
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.29,
+    "power": 8,
+    "opportunityCost": 9.2
+   }
+  },
+  {
+   "id": "ww_inkwell_3",
+   "type": "character",
+   "name": "Inkwell",
+   "title": "Keeper of Stories",
+   "job": "Keeper of Stories",
+   "species": "Cat",
+   "study": "Lore",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Inkwell. The first Event you play each turn that requires Lore lets you draw 1 card.",
+   "abilities": [
+    {
+     "trigger": "onEventPlayed",
+     "effect": {
+      "do": "draw",
+      "count": 1
+     },
+     "condition": {
+      "eventRequiresStudy": "Lore"
+     },
+     "oncePerTurn": true
+    }
+   ],
+   "flavor": "A good story always leaves room for one more listener.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 2
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.29,
+    "power": 8,
+    "opportunityCost": 9.2
+   }
+  },
+  {
+   "id": "ww_pippa_2",
+   "type": "character",
+   "name": "Pippa",
+   "title": "Conservatory Keeper",
+   "job": "Conservatory Keeper",
+   "species": "Cat",
+   "study": "Botany",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Pippa. Recruit: draw 1 card, then discard 1 card.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "draw",
+        "count": 1
+       },
+       {
+        "do": "discard",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "flavor": "Every windowsill can become a small garden.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 0
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.26,
+    "power": 6.2,
+    "opportunityCost": 5
+   }
+  },
+  {
+   "id": "ww_marmalade_2",
+   "type": "character",
+   "name": "Marmalade",
+   "title": "Neighborhood Baker",
+   "job": "Neighborhood Baker",
+   "species": "Cat",
+   "study": "Agriculture",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Marmalade. Recruit: gain 2 Supply.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "flavor": "The first loaf is always for a neighbor.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 1
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.25,
+    "power": 6.65,
+    "opportunityCost": 6
+   }
+  },
+  {
    "id": "mk_beacon_hill",
    "type": "market",
    "name": "Beacon Hill",
@@ -2192,6 +2866,80 @@
       "optional": true
      }
     ]
+   }
+  },
+  {
+   "id": "ww_velvet_3",
+   "type": "character",
+   "name": "Velvet",
+   "title": "Guild Speaker",
+   "job": "Guild Speaker",
+   "species": "Cat",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Velvet. While Velvet is upright, your first bid each turn counts as 1 higher.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "firstBidPlus1",
+     "requiresUpright": true
+    }
+   ],
+   "flavor": "Every pawprint deserves a place in the town record.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 4
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.21,
+    "power": 7.8,
+    "opportunityCost": 9.2
+   }
+  },
+  {
+   "id": "ww_pippa_3",
+   "type": "character",
+   "name": "Pippa",
+   "title": "Glasshouse Curator",
+   "job": "Glasshouse Curator",
+   "species": "Cat",
+   "study": "Botany",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Pippa. The first Event you play each turn that requires Botany gives you 1 Supply.",
+   "abilities": [
+    {
+     "trigger": "onEventPlayed",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     },
+     "condition": {
+      "eventRequiresStudy": "Botany"
+     },
+     "oncePerTurn": true
+    }
+   ],
+   "flavor": "Every windowsill can become a small garden.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 0
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.19,
+    "power": 7.4,
+    "opportunityCost": 8.2
    }
   },
   {
@@ -2510,6 +3258,42 @@
      }
     }
    ]
+  },
+  {
+   "id": "ww_thimble_2",
+   "type": "character",
+   "name": "Thimble",
+   "title": "Quilt Maker",
+   "job": "Quilt Maker",
+   "species": "Cat",
+   "study": "Crafts",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Thimble. Recruit: gain 1 Supply.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "flavor": "No scrap is too small to keep somebody warm.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 3
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.97,
+    "power": 5.65,
+    "opportunityCost": 5
+   }
   },
   {
    "id": "br_hedgerow_guard",
@@ -2847,6 +3631,42 @@
    ]
   },
   {
+   "id": "ww_linnet_1",
+   "type": "character",
+   "name": "Linnet",
+   "title": "Bookbinder",
+   "job": "Bookbinder",
+   "species": "Rabbit",
+   "study": "Crafts",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Recruit: draw 1 card.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "flavor": "A repaired spine gives an old story a new beginning.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 6
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.85,
+    "power": 4.3,
+    "opportunityCost": 2.8
+   }
+  },
+  {
    "id": "br_thistle_1",
    "type": "character",
    "name": "Thistle",
@@ -2876,6 +3696,46 @@
      }
     }
    ]
+  },
+  {
+   "id": "ww_velvet_2",
+   "type": "character",
+   "name": "Velvet",
+   "title": "Neighborhood Registrar",
+   "job": "Neighborhood Registrar",
+   "species": "Cat",
+   "study": "Civics",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Velvet. The first non-Statue Market card you gain each turn gives you 1 extra Supply.",
+   "abilities": [
+    {
+     "trigger": "onGainMarketCard",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     },
+     "condition": {
+      "nonStatue": true
+     },
+     "oncePerTurn": true
+    }
+   ],
+   "flavor": "Every pawprint deserves a place in the town record.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 4
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.78,
+    "power": 5.69,
+    "opportunityCost": 6
+   }
   },
   {
    "id": "pp_patch_1",
@@ -2951,6 +3811,51 @@
    }
   },
   {
+   "id": "ww_nib_1",
+   "type": "character",
+   "name": "Nib",
+   "title": "Canal Cartographer",
+   "job": "Canal Cartographer",
+   "species": "Mouse",
+   "study": "Lore",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Recruit: draw 1 card, then discard 1 card.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "draw",
+        "count": 1
+       },
+       {
+        "do": "discard",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "flavor": "The shortest route usually passes a friend.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 7
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.76,
+    "power": 5.25,
+    "opportunityCost": 5
+   }
+  },
+  {
    "id": "dx_tax_assessors",
    "type": "disruption",
    "name": "The Tax Assessors",
@@ -3004,6 +3909,45 @@
       "count": 1
      }
     ]
+   }
+  },
+  {
+   "id": "ww_guild_open_day",
+   "type": "event",
+   "name": "Guild Open Day",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "species": "Cat",
+     "count": 2
+    }
+   ],
+   "text": "Requires two Cats. Gain 3 Supply and draw 1 card.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 3
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "Small kindnesses make the whole borough feel like home.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 14
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.7,
+    "power": 4.5,
+    "opportunityCost": 3.6
    }
   },
   {
@@ -3369,6 +4313,45 @@
    }
   },
   {
+   "id": "ww_pebble_1",
+   "type": "character",
+   "name": "Pebble",
+   "title": "Bridge Courier",
+   "job": "Bridge Courier",
+   "species": "Otter",
+   "study": "Civics",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Recruit: your next recruit costs 1 less Supply.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "flavor": "Every bridge is an invitation to visit.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 10
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.52,
+    "power": 3.8,
+    "opportunityCost": 2.8
+   }
+  },
+  {
    "id": "mk_spare_room",
    "type": "market",
    "name": "Spare Room",
@@ -3421,6 +4404,30 @@
    ]
   },
   {
+   "id": "mk_community_oven",
+   "type": "market",
+   "name": "Community Oven",
+   "cost": 2,
+   "disposal": "cityDump",
+   "text": "Gain 4 Supply.",
+   "onGain": {
+    "do": "gainSupply",
+    "amount": 4
+   },
+   "flavor": "Another welcoming corner of Whiskerwood.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 1
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.45,
+    "power": 4,
+    "opportunityCost": 3.4
+   }
+  },
+  {
    "id": "mk_festival_grant",
    "type": "market",
    "name": "Festival Grant",
@@ -3437,6 +4444,34 @@
    "onGain": {
     "do": "gainSupply",
     "amount": 4
+   }
+  },
+  {
+   "id": "ww_pippa_1",
+   "type": "character",
+   "name": "Pippa",
+   "title": "Potting Helper",
+   "job": "Potting Helper",
+   "species": "Cat",
+   "study": "Botany",
+   "cost": 0,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "A patient shift: 2 turns, then 2 Supply.",
+   "abilities": [],
+   "flavor": "Every windowsill can become a small garden.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 0
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.45,
+    "power": 3.1,
+    "opportunityCost": 1.8
    }
   },
   {
@@ -3517,6 +4552,40 @@
       "expires": "untilUsed"
      }
     ]
+   }
+  },
+  {
+   "id": "ww_thread_exchange",
+   "type": "event",
+   "name": "Thread Exchange",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "species": "Cat",
+     "count": 1
+    },
+    {
+     "species": "Rabbit",
+     "count": 1
+    }
+   ],
+   "text": "Requires a Cat and a Rabbit. Gain 4 Supply.",
+   "effect": {
+    "do": "gainSupply",
+    "amount": 4
+   },
+   "flavor": "Small kindnesses make the whole borough feel like home.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 3
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.4,
+    "power": 4,
+    "opportunityCost": 3.6
    }
   },
   {
@@ -3678,6 +4747,87 @@
       "count": 1
      }
     ]
+   }
+  },
+  {
+   "id": "ww_open_petition",
+   "type": "event",
+   "name": "Open Petition",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Civics",
+     "count": 1
+    }
+   ],
+   "text": "Requires Civics. Draw 1 card. Your next rehire costs 2 less Supply.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 1
+     },
+     {
+      "do": "addMod",
+      "key": "rehireDiscount",
+      "value": 2,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    ]
+   },
+   "flavor": "Small kindnesses make the whole borough feel like home.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 4
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.35,
+    "power": 3.5,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "ww_windowsill_garden",
+   "type": "event",
+   "name": "Windowsill Garden",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "species": "Cat",
+     "count": 1
+    }
+   ],
+   "text": "Requires a Cat. Gain 2 Supply and draw 1 card.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "Small kindnesses make the whole borough feel like home.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 0
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.35,
+    "power": 3.5,
+    "opportunityCost": 2.7
    }
   },
   {
@@ -4021,6 +5171,77 @@
    }
   },
   {
+   "id": "ww_thimble_1",
+   "type": "character",
+   "name": "Thimble",
+   "title": "Thread Sorter",
+   "job": "Thread Sorter",
+   "species": "Cat",
+   "study": "Crafts",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A small shift: 1 turn, then 1 Supply.",
+   "abilities": [],
+   "flavor": "No scrap is too small to keep somebody warm.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 3
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.21,
+    "power": 2.8,
+    "opportunityCost": 1.8
+   }
+  },
+  {
+   "id": "ww_shared_book",
+   "type": "event",
+   "name": "A Shared Book",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "species": "Cat",
+     "count": 1
+    },
+    {
+     "species": "Mouse",
+     "count": 1
+    }
+   ],
+   "text": "Requires a Cat and a Mouse. Draw 3 cards, then discard 1 card.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 3
+     },
+     {
+      "do": "discard",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "Small kindnesses make the whole borough feel like home.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 12
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.16,
+    "power": 3.6,
+    "opportunityCost": 3.6
+   }
+  },
+  {
    "id": "mk_river_ferry",
    "type": "market",
    "name": "River Ferry",
@@ -4329,6 +5550,141 @@
    }
   },
   {
+   "id": "ww_fair_measure",
+   "type": "event",
+   "name": "Fair Measure",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Commerce",
+     "count": 1
+    }
+   ],
+   "text": "Requires Commerce. Gain 2 Supply. Your next recruit costs 1 less Supply.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    ]
+   },
+   "flavor": "Small kindnesses make the whole borough feel like home.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 5
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.02,
+    "power": 3,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "ww_fresh_batch",
+   "type": "event",
+   "name": "Fresh Batch",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Agriculture",
+     "count": 1
+    }
+   ],
+   "text": "Requires Agriculture. Gain 3 Supply.",
+   "effect": {
+    "do": "gainSupply",
+    "amount": 3
+   },
+   "flavor": "Small kindnesses make the whole borough feel like home.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 1
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.02,
+    "power": 3,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "ww_tea_and_tales",
+   "type": "event",
+   "name": "Tea and Tales",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "species": "Cat",
+     "count": 1
+    }
+   ],
+   "text": "Requires a Cat. Draw 2 cards.",
+   "effect": {
+    "do": "draw",
+    "count": 2
+   },
+   "flavor": "Small kindnesses make the whole borough feel like home.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 2.02,
+    "power": 3,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_bookbinders_arcade",
+   "type": "market",
+   "name": "Bookbinders' Arcade",
+   "cost": 3,
+   "disposal": "cityDump",
+   "text": "Draw 3 cards, then discard 1 card.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 3
+     },
+     {
+      "do": "discard",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "Another welcoming corner of Whiskerwood.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 6
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.99,
+    "power": 3.6,
+    "opportunityCost": 4.4
+   }
+  },
+  {
    "id": "mk_library_annex",
    "type": "market",
    "name": "Library Annex",
@@ -4403,6 +5759,46 @@
      }
     }
    ]
+  },
+  {
+   "id": "ww_arcade_fair",
+   "type": "event",
+   "name": "Arcade Fair",
+   "kind": "limited",
+   "cost": 0,
+   "duration": 2,
+   "requires": [
+    {
+     "study": "Commerce",
+     "count": 1
+    }
+   ],
+   "text": "Requires Commerce. Limited 2: the first non-Statue Market card you gain each turn gives you 2 extra Supply.",
+   "abilities": [
+    {
+     "trigger": "onGainMarketCard",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     "oncePerTurn": true,
+     "condition": {
+      "nonStatue": true
+     }
+    }
+   ],
+   "flavor": "A little time together goes a long way.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 15
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.98,
+    "power": 3.2,
+    "opportunityCost": 3.3
+   }
   },
   {
    "id": "dx_open_hiring",
@@ -4501,6 +5897,78 @@
       "amount": 1
      }
     ]
+   }
+  },
+  {
+   "id": "ww_courier_shortcut",
+   "type": "event",
+   "name": "Courier Shortcut",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Civics",
+     "count": 1
+    }
+   ],
+   "text": "Requires Civics. Choose a Character you control to become upright at the start of your next turn, then draw 1 card.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "readyNextTurn",
+      "optional": true
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "Small kindnesses make the whole borough feel like home.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 10
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.95,
+    "power": 2.9,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_lantern_terrace",
+   "type": "market",
+   "name": "Lantern Terrace",
+   "cost": 3,
+   "disposal": "cityDump",
+   "text": "Gain 2 Supply and draw 1 card.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "Another welcoming corner of Whiskerwood.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 13
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.94,
+    "power": 3.5,
+    "opportunityCost": 4.4
    }
   },
   {
@@ -4743,6 +6211,67 @@
    }
   },
   {
+   "id": "ww_reading_lanterns",
+   "type": "event",
+   "name": "Reading Lanterns",
+   "kind": "limited",
+   "cost": 0,
+   "duration": 2,
+   "requires": [
+    {
+     "study": "Lore",
+     "count": 1
+    }
+   ],
+   "text": "Requires Lore. Limited 2: at the start of your turn, draw 1 card.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "draw",
+      "count": 1
+     },
+     "oncePerTurn": true
+    }
+   ],
+   "flavor": "A little time together goes a long way.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 2
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.86,
+    "power": 3,
+    "opportunityCost": 3.3
+   }
+  },
+  {
+   "id": "mk_canal_map_room",
+   "type": "market",
+   "name": "Canal Map Room",
+   "cost": 2,
+   "disposal": "cityDump",
+   "text": "Draw 2 cards.",
+   "onGain": {
+    "do": "draw",
+    "count": 2
+   },
+   "flavor": "Another welcoming corner of Whiskerwood.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 7
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.84,
+    "power": 3,
+    "opportunityCost": 3.4
+   }
+  },
+  {
    "id": "mk_orchard_share",
    "type": "market",
    "name": "Orchard Share",
@@ -4816,6 +6345,42 @@
    "flavor": "Two planks and a rope, and the whole borough waits.",
    "onReveal": {
     "do": "blockNextReady"
+   }
+  },
+  {
+   "id": "mk_whiskerwood_guildhall",
+   "type": "market",
+   "name": "Whiskerwood Guildhall",
+   "cost": 4,
+   "disposal": "cityDump",
+   "text": "Draw 1 card. Your next recruit costs 2 less Supply.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 1
+     },
+     {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 2,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    ]
+   },
+   "flavor": "Another welcoming corner of Whiskerwood.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 14
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.78,
+    "power": 3.5,
+    "opportunityCost": 5.4
    }
   },
   {
@@ -5075,6 +6640,80 @@
    }
   },
   {
+   "id": "ww_patchwork_gift",
+   "type": "event",
+   "name": "Patchwork Gift",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Crafts",
+     "count": 1
+    }
+   ],
+   "text": "Requires Crafts. You may rehire a Character for 1 less Supply, then gain 1 Supply.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "rehire",
+      "discount": 1,
+      "optional": true
+     },
+     {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    ]
+   },
+   "flavor": "Small kindnesses make the whole borough feel like home.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 3
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.61,
+    "power": 2.4,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_glasshouse_walk",
+   "type": "market",
+   "name": "Glasshouse Walk",
+   "cost": 3,
+   "disposal": "cityDump",
+   "text": "You may ready one of your Characters, then gain 1 Supply.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "readyCharacter",
+      "count": 1,
+      "optional": true
+     },
+     {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    ]
+   },
+   "flavor": "Another welcoming corner of Whiskerwood.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 0
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.6,
+    "power": 2.9,
+    "opportunityCost": 4.4
+   }
+  },
+  {
    "id": "mk_understudy_program",
    "type": "market",
    "name": "Understudy Program",
@@ -5219,6 +6858,46 @@
    }
   },
   {
+   "id": "ww_blossom_week",
+   "type": "event",
+   "name": "Blossom Week",
+   "kind": "limited",
+   "cost": 0,
+   "duration": 2,
+   "requires": [
+    {
+     "study": "Botany",
+     "count": 1
+    }
+   ],
+   "text": "Requires Botany. Limited 2: the first Event you play each turn that requires Botany lets you draw 1 card.",
+   "abilities": [
+    {
+     "trigger": "onEventPlayed",
+     "effect": {
+      "do": "draw",
+      "count": 1
+     },
+     "oncePerTurn": true,
+     "condition": {
+      "eventRequiresStudy": "Botany"
+     }
+    }
+   ],
+   "flavor": "A little time together goes a long way.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 0
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.49,
+    "power": 2.4,
+    "opportunityCost": 3.3
+   }
+  },
+  {
    "id": "mk_seed_exchange",
    "type": "market",
    "name": "Seed Exchange",
@@ -5265,6 +6944,31 @@
     "key": "shiftBonus",
     "value": 2,
     "expires": "untilUsed"
+   }
+  },
+  {
+   "id": "mk_tailors_cooperative",
+   "type": "market",
+   "name": "Tailors' Cooperative",
+   "cost": 2,
+   "disposal": "cityDump",
+   "text": "You may rehire a Character for 2 less Supply.",
+   "onGain": {
+    "do": "rehire",
+    "discount": 2,
+    "optional": true
+   },
+   "flavor": "Another welcoming corner of Whiskerwood.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 3
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.47,
+    "power": 2.4,
+    "opportunityCost": 3.4
    }
   },
   {
@@ -5429,6 +7133,45 @@
    }
   },
   {
+   "id": "ww_midnight_index",
+   "type": "event",
+   "name": "Midnight Index",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Lore",
+     "count": 1
+    }
+   ],
+   "text": "Requires Lore. Draw 2 cards, then discard 1 card.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 2
+     },
+     {
+      "do": "discard",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "Small kindnesses make the whole borough feel like home.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 2
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.41,
+    "power": 2.1,
+    "opportunityCost": 2.7
+   }
+  },
+  {
    "id": "dx_market_glut",
    "type": "disruption",
    "name": "Market Glut",
@@ -5467,6 +7210,39 @@
     },
     "count": 1,
     "optional": true
+   }
+  },
+  {
+   "id": "mk_tea_house_arcade",
+   "type": "market",
+   "name": "Tea House Arcade",
+   "cost": 3,
+   "disposal": "cityDump",
+   "text": "Gain 3 Supply. Your opponent gains 1 Supply.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 3
+     },
+     {
+      "do": "opponentGainSupply",
+      "amount": 1
+     }
+    ]
+   },
+   "flavor": "Another welcoming corner of Whiskerwood.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 15
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.33,
+    "power": 2.4,
+    "opportunityCost": 4.4
    }
   },
   {
@@ -5550,6 +7326,37 @@
    }
   },
   {
+   "id": "ww_garden_helpers",
+   "type": "event",
+   "name": "Garden Helpers",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Botany",
+     "count": 1
+    }
+   ],
+   "text": "Requires Botany. You may ready one of your Characters.",
+   "effect": {
+    "do": "readyCharacter",
+    "count": 1,
+    "optional": true
+   },
+   "flavor": "Small kindnesses make the whole borough feel like home.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 0
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.28,
+    "power": 1.9,
+    "opportunityCost": 2.7
+   }
+  },
+  {
    "id": "bb_patient_harvest",
    "type": "event",
    "name": "Patient Harvest",
@@ -5611,6 +7418,156 @@
      }
     }
    ]
+  },
+  {
+   "id": "ww_rooftop_supper",
+   "type": "event",
+   "name": "Rooftop Supper",
+   "kind": "limited",
+   "cost": 0,
+   "duration": 2,
+   "requires": [
+    {
+     "species": "Cat",
+     "count": 1
+    }
+   ],
+   "text": "Requires a Cat. Limited 2: the first shift you complete each turn gives you 1 extra Supply.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     },
+     "oncePerTurn": true
+    }
+   ],
+   "flavor": "A little time together goes a long way.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 13
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.24,
+    "power": 2,
+    "opportunityCost": 3.3
+   }
+  },
+  {
+   "id": "ww_sewing_circle",
+   "type": "event",
+   "name": "Sewing Circle",
+   "kind": "limited",
+   "cost": 0,
+   "duration": 2,
+   "requires": [
+    {
+     "study": "Crafts",
+     "count": 1
+    }
+   ],
+   "text": "Requires Crafts. Limited 2: at the start of your turn, gain 1 Supply.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     },
+     "oncePerTurn": true
+    }
+   ],
+   "flavor": "A little time together goes a long way.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 3
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.24,
+    "power": 2,
+    "opportunityCost": 3.3
+   }
+  },
+  {
+   "id": "ww_welcome_committee",
+   "type": "event",
+   "name": "Welcome Committee",
+   "kind": "limited",
+   "cost": 0,
+   "duration": 2,
+   "requires": [
+    {
+     "study": "Civics",
+     "count": 1
+    }
+   ],
+   "text": "Requires Civics. Limited 2: the first shift you start each turn gives you 1 Supply.",
+   "abilities": [
+    {
+     "trigger": "onShiftStarted",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     },
+     "oncePerTurn": true
+    }
+   ],
+   "flavor": "A little time together goes a long way.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 14
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.24,
+    "power": 2,
+    "opportunityCost": 3.3
+   }
+  },
+  {
+   "id": "mk_fairweight_scales",
+   "type": "market",
+   "name": "Fairweight Scales",
+   "cost": 2,
+   "disposal": "cityDump",
+   "text": "Your next recruit and your next rehire each cost 1 less Supply.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     },
+     {
+      "do": "addMod",
+      "key": "rehireDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    ]
+   },
+   "flavor": "Another welcoming corner of Whiskerwood.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 5
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 1.23,
+    "power": 2,
+    "opportunityCost": 3.4
+   }
   },
   {
    "id": "mk_lucky_horseshoe",
@@ -6044,6 +8001,33 @@
    "flavor": "One coin and a wave through, unless the gatekeeper has questions.",
    "onGain": {
     "do": "opponentTopdeckFromHand"
+   }
+  },
+  {
+   "id": "mk_blossom_court",
+   "type": "market",
+   "name": "Blossom Court",
+   "cost": 4,
+   "disposal": "cityDump",
+   "text": "At the start of your next turn, advance all your Characters one extra orientation step.",
+   "onGain": {
+    "do": "addMod",
+    "key": "extraAdvance",
+    "value": 1,
+    "expires": "untilUsed",
+    "consumable": false
+   },
+   "flavor": "Another welcoming corner of Whiskerwood.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 12
+   },
+   "expansion": "AF-WHISKER-01",
+   "rarity": "Common",
+   "power": {
+    "score": 0.76,
+    "power": 1.5,
+    "opportunityCost": 5.4
    }
   },
   {
@@ -6619,6 +8603,48 @@
     "dx_toll_dispute"
    ],
    "poolSize": 16
+  },
+  {
+   "id": "whiskerwood-fair",
+   "name": "Whiskerwood Fair",
+   "blurb": "A welcoming artisan district: ten new shops and six familiar favorites, with no shared shocks.",
+   "always": [
+    "st_kindness",
+    "st_curiosity",
+    "st_courage",
+    "st_patience",
+    "st_generosity",
+    "st_ingenuity",
+    "st_community",
+    "st_harmony",
+    "st_joy"
+   ],
+   "pool": [
+    "mk_whiskerwood_guildhall",
+    "mk_lantern_terrace",
+    "mk_bookbinders_arcade",
+    "mk_community_oven",
+    "mk_glasshouse_walk",
+    "mk_tailors_cooperative",
+    "mk_canal_map_room",
+    "mk_fairweight_scales",
+    "mk_blossom_court",
+    "mk_tea_house_arcade",
+    "mk_town_clock",
+    "mk_public_gardens",
+    "mk_library_annex",
+    "mk_community_kitchen",
+    "mk_supply_depot",
+    "mk_town_charter"
+   ],
+   "poolSize": 16
+  }
+ ],
+ "expansions": [
+  {
+   "id": "AF-WHISKER-01",
+   "name": "Whiskerwood",
+   "cardCount": 52
   }
  ]
 }

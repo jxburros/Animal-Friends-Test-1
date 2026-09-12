@@ -54,7 +54,7 @@ function customBlurb(deck) {
 function buildMenu() {
   const critters = $('menuCritters');
   critters.innerHTML = '';
-  for (const name of ['Clover', 'Patient Harvest', 'Statue of Kindness']) {
+  for (const name of ['Pippa', 'Inkwell', 'Velvet']) {
     const wrap = document.createElement('div');
     const def = cardSet.cards.find((card) => card.name === name);
     wrap.innerHTML = cardArtSVG(def);

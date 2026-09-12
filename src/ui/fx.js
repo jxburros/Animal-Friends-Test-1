@@ -14,6 +14,7 @@ let pace = 'storybook';
 
 export function setPace(name) {
   pace = PACES[name] === undefined ? 'storybook' : name;
+  document.documentElement.dataset.pace = pace;
   document.documentElement.style.setProperty('--fx-scale', String(factor()));
 }
 export function getPace() {

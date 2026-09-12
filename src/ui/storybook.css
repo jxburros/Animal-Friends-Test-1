@@ -26,6 +26,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .menu-critters svg { width: calc((100% - 24px)/3); height: 160px; border: 4px double #a38d58; border-radius: 70px 70px 5px 5px; filter: none; }
 .menu-critters svg:nth-child(n) { transform: none; }
 .edition { opacity: 1; }
+.expansion-note { color: #35593d; font-size: 14px; margin: -7px 0 22px; font-weight: bold; }
 #screen-game.active { max-width: 1440px; padding: 18px; gap: 16px; }
 .page { border-radius: 9px; border-color: #b6a079; background-color: #f3e9d5; padding: 18px; }
 .topbar { border-radius: 8px; }
@@ -105,6 +106,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .card-reader .card-face.large .flavor { display: block; font-size: 12px; overflow: visible; }
 .reader-close { width: 100%; min-height: 44px; margin-top: 14px; background: #fff4db; }
 .db-pool { gap: 20px 14px; }
+:root[data-pace="instant"] *, :root[data-pace="instant"] *::before, :root[data-pace="instant"] *::after {
+  animation: none !important; transition: none !important;
+}
 
 @media (max-width: 700px) {
   :root { --card-w: 132px; --card-h: 242px; --card-lw: 208px; --card-lh: 388px; }

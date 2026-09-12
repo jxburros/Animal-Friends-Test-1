@@ -12,6 +12,7 @@ function simpleHash(str) {
 }
 
 export const ANIMALS = {
+  cat:      {body:'#c79359', belly:'#fff0d9', ears:'point', earIn:'#e7b7ac', cheeks:'#dba478', extra:'whiskers'},
   fox:      {body:'#e8772e', belly:'#fff1e0', ears:'point', earIn:'#3b2a1a', cheeks:'#f5a15b', extra:'foxmask'},
   otter:    {body:'#8a5a34', belly:'#d9b48f', ears:'round', earIn:'#c99a6c', cheeks:'#a9784f', extra:'whiskers'},
   badger:   {body:'#5f5f66', belly:'#e9e9ee', ears:'round', earIn:'#ccc', cheeks:'#7c7c85', extra:'badgerstripe'},
@@ -115,6 +116,7 @@ const PLUM = '#6f4a8a';
  * so a Character's palette comes straight from ANIMALS instead of a second set of colours.
  */
 export const SPECIES_KIND = {
+  Cat: 'cat',
   Rabbit: 'rabbit', Mouse: 'mouse', Raccoon: 'raccoon', Fox: 'fox',
   Hedgehog: 'hedgehog', Badger: 'badger', Otter: 'otter', Squirrel: 'squirrel',
 };
@@ -1348,6 +1350,7 @@ function iconSparkle4(cx, cy, r) {
 }
 
 const ICONS = {
+  Cat: () => `<path d="M4 10 L3 2 L8 6 Q10 5 12 6 L17 2 L16 10 Q18 17 10 18 Q2 17 4 10Z" fill="currentColor"/><path d="M5 12 L1 11 M5 14 L1 15 M15 12 L19 11 M15 14 L19 15" stroke="currentColor" stroke-width="1.2"/>`,
   supply: () => `<circle cx="10" cy="10" r="8" fill="currentColor"/><circle cx="10" cy="10" r="4.4" fill="currentColor" opacity="0.4"/>`,
   statue: () => `<rect x="6" y="15" width="8" height="3" fill="currentColor"/><rect x="7" y="11" width="6" height="4" fill="currentColor"/><circle cx="10" cy="7" r="4" fill="currentColor"/>`,
   shift: () => `<path d="M6 3 H14 L10 10 L14 17 H6 L10 10 Z" fill="currentColor"/>`,

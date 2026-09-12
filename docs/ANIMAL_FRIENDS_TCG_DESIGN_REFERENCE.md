@@ -2,6 +2,10 @@
 
 **Status:** living design reference and playable-prototype guide  
 **Current prototype set:** *Animal Friends: First Boroughs* (`AF-STARTER-01`)  
+**v0.3.0 expansion:** *Whiskerwood* (`AF-WHISKER-01`) adds 52 cards, Cats, two starter decks,
+and a fifth Market Deck. Current totals are 260 cards, nine species, eight decks and five Market Decks.
+The earlier counts below describe the pre-expansion design; see [WHISKERWOOD.md](WHISKERWOOD.md)
+for current expansion content. The original 208 cards and the nine-Statue victory structure are unchanged.
 **Authoritative implementation sources:** `spec/game.json` and `spec/starter_card_set.json`  
 **Last consolidated:** September 11, 2026 (the power/cost model and rarity, a doubled card set, six printed decks and four Market Decks)
 

@@ -20,9 +20,11 @@ function check(state, seed, marketSize) {
 }
 let results = { 0: 0, 1: 0, null: 0 }, turns = 0, N = Number(process.argv[2] || 50);
 const markets = set.marketDecks.map((d) => d.id);
+const deckIds = set.decks.map((d) => d.id);
+const pairs = deckIds.flatMap(a => deckIds.filter(b => a !== b).map(b => [a,b]));
 for (let seed = 1; seed <= N; seed++) {
   const market = markets[seed % markets.length];
-  const state = createGame(rules, set, { seed, market, decks: seed % 2 ? ['burrow-bloom', 'paws-papers'] : ['paws-papers', 'burrow-bloom'] });
+  const state = createGame(rules, set, { seed, market, decks: pairs[(seed - 1) % pairs.length] });
   state.agents = [makeRandomAgent(seed * 7), makeRandomAgent(seed * 13)];
   const marketSize = state.market.deck.length + state.market.city.length + state.market.cityDump.length;
   const cap = rules.simulation.maxTurnsPerPlayer * 2;
@@ -33,4 +35,4 @@ for (let seed = 1; seed <= N; seed++) {
   results[state.winner]++;
   turns += state.turnNumber;
 }
-console.log('random vs random', results, 'avg turns', turns / N, `over ${markets.length} market decks`);
+console.log('random vs random', results, 'avg turns', turns / N, `over ${markets.length} market decks and ${pairs.length} ordered deck pairings`);
