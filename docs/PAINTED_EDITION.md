@@ -1,5 +1,8 @@
 # Painted storybook edition
 
+This records the original 208-card visual pass. The v0.3.0 [Whiskerwood expansion](WHISKERWOOD.md)
+adds 52 cards and 16 more paintings, for 260 cards and 32 paintings overall.
+
 The September 12, 2026 user-supplied four-card reference guides this visual update: lush storybook
 paintings, parchment panels, botanical ornament and type-specific frames. Text on that reference is
 visual reference material, not a request to replace the live card set or change the rules.
@@ -39,7 +42,7 @@ was created or changed. The full generation prompt is in [ART_PROMPT.txt](ART_PR
 
 ## Validation
 
-- 172 existing unit tests passed.
+- 142 existing unit tests passed (plus 30 suite containers).
 - Full-game smoke run completed with a winner.
 - 200 randomized games across four Market Decks passed card-conservation checks.
 - Chromium: desktop (1440 px), tablet (768 px), and mobile (390 px); no page errors, failed asset

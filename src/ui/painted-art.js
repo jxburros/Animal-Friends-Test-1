@@ -1,10 +1,12 @@
 // Shared painted archetypes. Card identity and rules always come from the card set.
 // Coordinates refer to the unmodified 4 × 4 atlas; new species keep their vector art.
 export const PAINTED_ATLAS_URL = new URL('../../assets/art/boroughs-atlas.png', import.meta.url).href;
+export const WHISKERWOOD_ATLAS_URL = new URL('../../assets/art/whiskerwood-atlas.png', import.meta.url).href;
 const SPECIES_TILE = { Rabbit: 0, Mouse: 1, Fox: 2, Raccoon: 3, Hedgehog: 4, Badger: 5, Otter: 6, Squirrel: 7 };
 
 export function paintedTile(def) {
   if (!def) return null;
+  if (def.art?.atlas === 'whiskerwood' && Number.isInteger(def.art.tile) && def.art.tile >= 0 && def.art.tile < 16) return def.art.tile;
   if (def.type === 'character') return SPECIES_TILE[def.species] ?? null;
   if (def.type === 'statue') return 15;
   const words = `${def.id || ''} ${def.name || ''}`.toLowerCase();
@@ -25,8 +27,9 @@ export function paintedArtSVG(def, fallback) {
   if (tile === null) return fallback;
   const x = -(tile % 4) * 100;
   const y = -Math.floor(tile / 4) * 100;
+  const atlas = def.art?.atlas === 'whiskerwood' ? WHISKERWOOD_ATLAS_URL : PAINTED_ATLAS_URL;
   // A failed image request reveals the original per-card vector illustration underneath.
-  return `<svg class="painted-art" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><svg width="100" height="100">${fallback}</svg><image href="${PAINTED_ATLAS_URL}" x="${x}" y="${y}" width="400" height="400" preserveAspectRatio="none"/></svg>`;
+  return `<svg class="painted-art" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><svg width="100" height="100">${fallback}</svg><image href="${atlas}" x="${x}" y="${y}" width="400" height="400" preserveAspectRatio="none"/></svg>`;
 }
 
 export function ornamentalFrameSVG() {

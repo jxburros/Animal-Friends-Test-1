@@ -4,6 +4,11 @@ A two-player town-building trading card game where each player is the **Mayor** 
 
 This repo replaced the earlier single-file "Critter Town" game (archived at `docs/legacy-critter-town.html`).
 
+**New in v0.3.0 — Whiskerwood:** 52 additional cards (260 total), Cats as the ninth species,
+two new starter decks, Whiskerwood Fair, and 16 additional paintings. Meet Pippa, Marmalade,
+Inkwell, Thimble, Velvet and Copper, each with three upgrade levels.
+See the [expansion catalogue and playtest results](docs/WHISKERWOOD.md).
+
 ## Rules in brief
 
 **Supply** is the core resource: pay Supply to recruit Characters, rehire from Unemployment, bid in the Capital City, and activate card effects. Work shifts generate Supply.
@@ -31,11 +36,11 @@ Whenever a card leaves the display, cards are dealt from the Market Deck until t
 
 **Statues** are the victory cards. Control 5 of 9 to win. Each Statue carries a **boon and a burden**, both lasting as long as you hold it: the Statue of Community's extra shift Supply comes with a thinner Resources choice, the Statue of Patience speeds your Masters but slows your Apprentices, and the Statue of Harmony makes you pay losing bids in full. Collecting Statues taxes the town that is winning.
 
-**Market Decks** — four shared markets to choose from at setup, all containing every Statue: **First Boroughs** (the classic mix, no shared shocks), **Boom Town** (prosperity and momentum; its shocks are mostly good news), **Hard Times** (recessions, hard winters and backlogs strike both towns alike) and **Founders' Fair** (auction tools, understudies and second chances, with fair weather and nothing that empties a town).
+**Market Decks** — five shared markets to choose from at setup, all containing every Statue: **First Boroughs** (the classic mix, no shared shocks), **Boom Town** (prosperity and momentum; its shocks are mostly good news), **Hard Times** (recessions, hard winters and backlogs strike both towns alike) and **Founders' Fair** (auction tools, understudies and second chances, with fair weather and nothing that empties a town), and **Whiskerwood Fair** (ten new artisan shops with six familiar favorites and no shared shocks).
 
 **Rarity** — every card is rated by what it gives you against what it asks for, and that rating sets its rarity: Common, Uncommon, Rare, Super Rare, Legendary. Rarity is not raw power. The model scores a card `power^0.6 × efficiency^0.4`, so of two cards that do the same thing the cheaper one rates higher, while of two equally efficient cards the bigger one does — a cost-0 Rabbit with a good shift can out-rate a Master. Rarity then caps how often a card may repeat in a deck: **3 / 3 / 2 / 1 / 1** copies. See `src/engine/power.js` and `npm run power`.
 
-**Decks** — six printed 30-card decks (Burrow & Bloom, Paws & Papers, Bramble & Bristle, Ripple & Rune, Lantern & Ledger, Root & Rampart), or build your own in the **Deck Workshop** from the whole catalogue: 30 cards, at least 12 Characters, and copies capped by rarity. Custom decks are saved in the browser.
+**Decks** — eight printed 30-card decks (Burrow & Bloom, Paws & Papers, Bramble & Bristle, Ripple & Rune, Lantern & Ledger, Root & Rampart, Whisker & Willow, Velvet & Ledger), or build your own in the **Deck Workshop** from the whole catalogue: 30 cards, at least 12 Characters, and copies capped by rarity. Custom decks are saved in the browser.
 
 ## How to play
 
@@ -48,7 +53,7 @@ npm run serve -- --port 9000   # another port (or PORT=9000 npm run serve)
 ```
 Then open http://localhost:8080/ in any modern browser. During play, use the **Pace** control (menu or bottom right) to choose animation speed: Storybook (slow, watch every card), Brisk (quicker), or Instant (no animations).
 
-The server (`scripts/serve.mjs`, no dependencies) sends every file with `Cache-Control: no-store`, so each reload plays exactly what is on disk. When it starts it prints the version and the folder it is serving; the book cover shows the same version line (e.g. `v0.2.1 · Animal Friends: First Boroughs · 208 cards · 6 decks · 4 Market Decks`). If the two disagree, the browser is showing an old copy.
+The server (`scripts/serve.mjs`, no dependencies) sends every file with `Cache-Control: no-store`, so each reload plays exactly what is on disk. When it starts it prints the version and the folder it is serving; the book cover shows the same version line (e.g. `v0.3.0 · Animal Friends: First Boroughs · 260 cards · 8 decks · 5 Market Decks`). If the two disagree, the browser is showing an old copy.
 
 ### Testing a fresh download
 
@@ -65,7 +70,7 @@ If you test by downloading the ZIP from GitHub and unzipping it:
 
 - `docs/ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md` - design reference and source of truth
 - `spec/game.json` - rules constants and prototype decisions
-- `spec/starter_card_set.json` - all 208 cards: 68 Characters, 52 Events, 9 Statues, a 64-card Capital City pool and 15 Disruptions, plus six printed 30-card decks and four Market Decks. Every card carries its `rarity` and the `power` rating that earned it, and the file is ordered by that rating, strongest for its cost first. A Market Deck is dealt as all 9 Statues plus a random sample of its own pool, so it keeps one size while the display varies from game to game.
+- `spec/starter_card_set.json` - all 260 cards: 92 Characters, 70 Events, 9 Statues, 74 Market cards and 15 Disruptions, plus eight printed 30-card decks and five Market Decks. Every card carries its `rarity` and the `power` rating that earned it, and the file is ordered by that rating, strongest for its cost first. A Market Deck is dealt as all 9 Statues plus a random sample of its own pool, so it keeps one size while the display varies from game to game.
 - `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`. `power.js` is the power/cost model that rates every card and assigns its rarity
 - `src/ai/` - agents: `random.js` (baseline), `heuristic.js` (opponent)
 - `src/ui/` - browser interface: `main.js`, `humanAgent.js`, `render.js`, `deckbuilder.js` (the Deck Workshop), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations)
@@ -107,15 +112,15 @@ The `assumptions` array in `spec/game.json` documents current prototype choices:
 
 ## Card art
 
-The painted storybook edition uses a bundled 16-scene illustration atlas, parchment nameplates,
+The painted storybook edition uses two bundled atlases with 32 paintings, parchment nameplates,
 botanical borders, and distinct type colors: forest-green Characters, midnight-blue Events,
 vermilion Market cards, and antique-gold Statues. The cover, game, card previews and Deck Workshop
 share this presentation. Select **Read** on any visible card to open its full artwork, rules and
 burden in a keyboard- and touch-accessible reading view; Escape closes it.
 
-`src/ui/painted-art.js` selects a shared painted archetype by species or scene theme. This is **16
-shared scenes, not 208 unique illustrations**: related cards retain different printed names, jobs,
-stats and effects while sharing art. `assets/art/boroughs-atlas.png` ships with the game; no image
+`src/ui/painted-art.js` selects a painted scene by explicit atlas/tile for Whiskerwood, or by species
+and theme for the original set. These are **32 paintings, not 260 unique illustrations**: related cards retain different printed names, jobs,
+stats and effects while sharing art. Both PNG atlases in `assets/art/` ship with the game; no image
 service or external font request is needed to play. `src/ui/art.js` preserves the original per-card
 vector illustrations underneath the painted layer as a fallback for missing art or unknown species.
 `src/ui/storybook.css` owns the painted edition's presentation without changing rules or animation timing.
