@@ -133,7 +133,7 @@ export function createGame(rules, set, opts = {}) {
     active: 0,
     phase: 'setup',
     players: [],
-    market: { deckId: null, deckName: '', deck: [], city: [], cityDump: [], outOfPlay: [], pending: [], revealQueue: [], turnsSinceGain: 0 },
+    market: { deckId: null, deckName: '', deck: [], city: [], cityDump: [], outOfPlay: [], pending: [], revealQueue: [], turnsSinceGain: 0, voidedOnce: {} },
     log: [],
     winner: null,
     result: null,

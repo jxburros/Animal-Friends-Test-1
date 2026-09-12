@@ -130,6 +130,17 @@ export function raisePayment(state, pi, pending, bid) {
   return Math.max(0, owed - getMod(state.players[pi], 'challengeDiscount'));
 }
 
+/** Max Characters a Mayor may pledge to a single auction (announcing counts as one). Infinity if unset. */
+export function pledgeCap(state) {
+  return state.rules.market.auction?.maxPledgesPerPlayer ?? Infinity;
+}
+
+/** True once every Mayor still contesting `pd` has pledged as many Characters as the cap allows, so nobody can raise further. */
+export function auctionAtPledgeCap(state, pd) {
+  const cap = pledgeCap(state);
+  return pd.chars.every((chars) => chars.length >= cap);
+}
+
 /** What a losing bidder actually forfeits of their escrow (the rest is refunded). */
 export function forfeitOf(state, pi, escrowed) {
   if (escrowed <= 0) return 0;
@@ -196,9 +207,10 @@ export function legalActions(state, pi) {
     if (minBid > p.supply) continue;
     for (const s of uprights) acts.push({ type: 'announce', cardId, charUid: s.uid, bid: minBid, minBid, maxBid: p.supply });
   }
-  // raise an auction someone else is currently winning — as often as you can pay for it
+  // raise an auction someone else is currently winning — as often as you can pay for it, up to the pledge cap
   for (const pd of state.market.pending) {
     if (pd.high === pi || pd.unchallengeable) continue;
+    if (pd.chars[pi].length >= pledgeCap(state)) continue;
     const minBid = raiseMinBid(state, pi, pd);
     const pay = raisePayment(state, pi, pd, minBid);
     if (pay > p.supply) continue;
@@ -352,6 +364,7 @@ export async function applyAction(state, pi, a) {
       if (!pd) throw new Error('No such auction');
       if (pd.high === pi) throw new Error('You are already the high bidder');
       if (pd.unchallengeable) throw new Error('This auction cannot be raised against');
+      if (pd.chars[pi].length >= pledgeCap(state)) throw new Error('Already pledged the maximum Characters to this auction');
       const s = findStack(state, pi, a.charUid);
       if (!s || !canAct(s)) throw new Error('Character cannot bid');
       const minBid = raiseMinBid(state, pi, pd);

@@ -1,7 +1,8 @@
 // Turn structure: Start → Resources → Ready → Actions → End, plus the whole-game runner.
 import { cardDef, topCard, log, opponentOf, expireMods, consumeMod, hasMod, hasPassive, refillCity, sweepStaleCity, freshTurnCounters, UPRIGHT, BUSY, findStack } from './state.js';
 import { ask, draw, gainSupply, completeShift, readyStack, gainMarketCard, fireHook, checkVictory, flushReveals } from './effects.js';
-import { legalActions, applyAction, forfeitOf } from './actions.js';
+import { legalActions, applyAction, forfeitOf, auctionAtPledgeCap } from './actions.js';
+import { shuffle } from './rng.js';
 
 const MAX_ACTIONS_PER_TURN = 60;
 
@@ -79,6 +80,54 @@ export async function resolvePurchase(state, pd) {
   await gainMarketCard(state, winner, pd.cardId, contested ? 'won the auction' : 'unopposed');
 }
 
+/**
+ * Void an auction that has hit the per-Mayor pledge cap on every side: nobody can raise it further, so
+ * instead of awarding it to the standing bidder it is called off. Every Mayor is refunded their escrow in
+ * full (no forfeit — a capped-out standoff is nobody's loss), every pledged Character is released to ready
+ * normally, and the card itself is shuffled back into the Market Deck to come up again later.
+ */
+export async function voidAuction(state, pd) {
+  const m = state.market;
+  m.pending.splice(m.pending.indexOf(pd), 1);
+  releaseBidders(state, pd);
+  const def = cardDef(state, pd.cardId);
+  for (let pi = 0; pi < state.players.length; pi++) {
+    const committed = pd.committed[pi] || 0;
+    if (committed <= 0) continue;
+    const p = state.players[pi];
+    p.escrow -= committed;
+    p.supply += committed;
+  }
+  log(
+    state, null,
+    `The auction for ${def.name} is called off after ${pd.rounds.length} bids: both Mayors have pledged all the Characters they may. Every bid is refunded in full and ${def.name} is shuffled back into the Market Deck.`,
+    { kind: 'auctionVoided', cardId: pd.cardId, rounds: pd.rounds.length },
+  );
+  if (m.city.includes(pd.cardId)) {
+    m.city.splice(m.city.indexOf(pd.cardId), 1);
+    m.deck.push(pd.cardId);
+    shuffle(state, m.deck);
+    refillCity(state);
+  }
+}
+
+/**
+ * Call off any pending auction where every contesting Mayor has hit the pledge cap. A card gets one
+ * reprieve: if it hits the cap again later (the same standoff replayed after reshuffling back in), the
+ * second cap-out resolves for real to the standing bidder instead of voiding forever — otherwise two
+ * evenly-matched Mayors can refight an identical stalemate for the rest of the game without ever settling it.
+ */
+export async function voidCappedAuctions(state) {
+  for (const pd of state.market.pending.slice()) {
+    if (!auctionAtPledgeCap(state, pd)) continue;
+    if (state.market.voidedOnce[pd.cardId]) await resolvePurchase(state, pd);
+    else {
+      state.market.voidedOnce[pd.cardId] = true;
+      await voidAuction(state, pd);
+    }
+  }
+}
+
 export async function resourcesPhase(state, pi) {
   const p = state.players[pi];
   state.phase = 'resources';
@@ -135,6 +184,7 @@ export async function actionsPhase(state, pi) {
       log(state, pi, `Illegal action ${a.type} (${e.message}); turn ends.`);
       done = true;
     }
+    await voidCappedAuctions(state);
     if (done) return;
   }
   log(state, pi, 'Action limit reached; turn ends.');

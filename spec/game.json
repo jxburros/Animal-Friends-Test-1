@@ -99,6 +99,8 @@
       "raiseRequiresUprightCharacter": true,
       "raiseMustExceedStandingBid": true,
       "incrementGrowsEveryNRounds": 2,
+      "maxPledgesPerPlayer": 4,
+      "$maxPledgesPerPlayerComment": "Each Mayor may pledge at most this many Characters to a single auction (announcing counts as the first pledge). Once every Mayor still contesting the auction has hit this cap, nobody can raise further, so instead of resolving to the standing bidder the auction voids: the card is shuffled back into the Market Deck, all escrow is refunded in full with no forfeit, and every pledged Character is released to ready normally. This bounds any single auction to at most maxPledgesPerPlayer bids per Mayor and reads the same way for more than two players.",
       "resolvesAtHighBidderStart": true,
       "losingBidForfeitNumerator": 1,
       "losingBidForfeitDenominator": 2,
