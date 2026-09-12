@@ -48,6 +48,16 @@ Whenever a card leaves the display, cards are dealt from the Market Deck until t
 
 **Decks** — ten printed 30-card decks (Burrow & Bloom, Paws & Papers, Bramble & Bristle, Ripple & Rune, Lantern & Ledger, Root & Rampart, Whisker & Willow, Velvet & Ledger, Hedge & Harvest, Tales & Tolls), or build your own in the **Deck Workshop** from the whole catalogue: 30 cards, at least 12 Characters, and copies capped by rarity. Custom decks are saved in the browser.
 
+## Play it online
+
+The game is published to GitHub Pages: **https://jxburros.github.io/Animal-Friends-Test-1/**
+
+The site is not updated automatically. To push whatever is on `main` live, open the repository's
+**Actions** tab, pick **Deploy game to GitHub Pages**, and press **Run workflow** (leave
+*Run the engine tests* ticked to have `npm test` gate the deploy). The workflow copies
+`index.html`, `src/`, `spec/`, `assets/` and `package.json` to Pages — the version stamped on the
+book cover tells you which build you are looking at.
+
 ## How to play
 
 No build step or dependencies beyond Node 22+ (for scripts/tests only). ES modules require serving; browsers block file:// access.
