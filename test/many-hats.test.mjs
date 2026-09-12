@@ -42,12 +42,12 @@ test('Many Hats adds 72 cards and gives every existing Character a new version',
   assert.ok(costs.filter((k) => k >= 4).length >= 12, 'new Masters');
 });
 
-test('every Many Hats card names a painting from one of the two bundled atlases', () => {
+test('every Many Hats card names a painting from a bundled atlas', () => {
   for (const c of hats) {
-    assert.ok(['boroughs', 'whiskerwood'].includes(c.art.atlas), `${c.id}: atlas ${c.art.atlas}`);
+    assert.ok(['boroughs', 'whiskerwood', 'neighbors'].includes(c.art.atlas), `${c.id}: atlas ${c.art.atlas}`);
     assert.equal(explicitTile(c), c.art.tile);
     assert.equal(paintedTile(c), c.art.tile);
-    assert.match(paintedArtSVG(c, '<svg/>'), c.art.atlas === 'boroughs' ? /boroughs-atlas\.png/ : /whiskerwood-atlas\.png/);
+    assert.ok(paintedArtSVG(c, '<svg/>').includes(`${c.art.atlas}-atlas.png`));
   }
   // A new version keeps its Character's portrait: the Whiskerwood cats and neighbors use their own tile.
   const nib = hats.find((c) => c.id === 'mh_nib_4');

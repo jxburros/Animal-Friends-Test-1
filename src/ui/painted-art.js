@@ -1,16 +1,17 @@
 // Shared painted archetypes. Card identity and rules always come from the card set.
 // Coordinates refer to the unmodified 4 × 4 atlases; new species keep their vector art. A card may
-// name its painting outright with `art: { atlas: 'boroughs' | 'whiskerwood', tile: 0..15 }`; otherwise
-// the original set's species/theme selection below applies. Only the two bundled atlases resolve.
+// name its painting with `art: { atlas: 'boroughs' | 'whiskerwood' | 'neighbors', tile: 0..15 }`;
+// otherwise the original species/theme selection applies. Only bundled atlases resolve.
 export const PAINTED_ATLAS_URL = new URL('../../assets/art/boroughs-atlas.png', import.meta.url).href;
 export const WHISKERWOOD_ATLAS_URL = new URL('../../assets/art/whiskerwood-atlas.png', import.meta.url).href;
+export const NEIGHBORS_ATLAS_URL = new URL('../../assets/art/neighbors-atlas.png', import.meta.url).href;
 const SPECIES_TILE = { Rabbit: 0, Mouse: 1, Fox: 2, Raccoon: 3, Hedgehog: 4, Badger: 5, Otter: 6, Squirrel: 7 };
-const ATLASES = { boroughs: () => PAINTED_ATLAS_URL, whiskerwood: () => WHISKERWOOD_ATLAS_URL };
+const ATLASES = { boroughs: () => PAINTED_ATLAS_URL, whiskerwood: () => WHISKERWOOD_ATLAS_URL, neighbors: () => NEIGHBORS_ATLAS_URL };
 
 /** The explicit atlas tile a card asks for, or null when it leaves the choice to the theme rules. */
 export function explicitTile(def) {
   const art = def && def.art;
-  if (!art || !ATLASES[art.atlas] || !Number.isInteger(art.tile) || art.tile < 0 || art.tile >= 16) return null;
+  if (!art || !Object.hasOwn(ATLASES, art.atlas) || !Number.isInteger(art.tile) || art.tile < 0 || art.tile >= 16) return null;
   return art.tile;
 }
 

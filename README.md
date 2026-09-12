@@ -7,8 +7,8 @@ This repo replaced the earlier single-file "Critter Town" game (archived at `doc
 **New in v0.4.0 — Many Hats:** 72 additional cards (332 total) about the Characters you already know.
 All 38 named Characters take up a new trade or a new level, ten Events ask for a friend by name, nine new
 versions pay out when a particular neighbor is in town, and two new decks (Hedge & Harvest, Tales & Tolls)
-and the Many Hats Fair market are built around those pairs. No new art was needed: every card names one of
-the 32 existing paintings. See the [expansion catalogue and playtest results](docs/MANY_HATS.md).
+and the Many Hats Fair market are built around those pairs. Each card names a bundled painting; the
+Neighbors artwork update adds more job-specific choices. See the [expansion catalogue and playtest results](docs/MANY_HATS.md).
 
 **v0.3.0 — Whiskerwood:** 52 cards, Cats as the ninth species, two starter decks, Whiskerwood Fair and 16
 paintings; see [docs/WHISKERWOOD.md](docs/WHISKERWOOD.md).
@@ -130,21 +130,24 @@ The `assumptions` array in `spec/game.json` documents current prototype choices:
 
 ## Card art
 
-The painted storybook edition uses two bundled atlases with 32 paintings, parchment nameplates,
+The painted storybook edition uses three bundled atlases with 48 paintings, parchment nameplates,
 botanical borders, and distinct type colors: forest-green Characters, midnight-blue Events,
 vermilion Market cards, and antique-gold Statues. The cover, game, card previews and Deck Workshop
 share this presentation. Select **Read** on any visible card to open its full artwork, rules and
 burden in a keyboard- and touch-accessible reading view; Escape closes it.
 
-`src/ui/painted-art.js` selects a painted scene by explicit atlas/tile when a card names one (`art: { atlas: "boroughs" | "whiskerwood", tile }`, as every Whiskerwood and Many Hats card does), or by species
-and theme for the original set. These are **32 paintings, not 332 unique illustrations**: related cards retain different printed names, jobs,
-stats and effects while sharing art. Both PNG atlases in `assets/art/` ship with the game; no image
+`src/ui/painted-art.js` selects a painted scene by explicit atlas/tile when a card names one (`art: { atlas: "boroughs" | "whiskerwood" | "neighbors", tile }`), or by species
+and theme for other cards. These are **48 paintings, not 332 unique illustrations**: related cards retain different printed names, jobs,
+stats and effects while sharing art. All three PNG atlases in `assets/art/` ship with the game; no image
 service or external font request is needed to play. `src/ui/art.js` preserves the original per-card
 vector illustrations underneath the painted layer as a fallback for missing art or unknown species.
 `src/ui/storybook.css` owns the painted edition's presentation without changing rules or animation timing.
 
 See [the art direction and validation notes](docs/PAINTED_EDITION.md) for scene coverage and the
 generation prompt, and [the rendered card preview](docs/screenshots/painted-cards.png).
+
+The user-supplied [Neighbors sheet](docs/NEIGHBORS_ART.md) adds 16 job-specific paintings assigned
+to 71 Characters from the original set and Many Hats. See the [updated card preview](docs/screenshots/neighbors-cards.png).
 
 ## Design notes
 
