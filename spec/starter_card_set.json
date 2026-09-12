@@ -402,8 +402,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 1
+    "atlas": "neighbors",
+    "tile": 2
    },
    "expansion": "AF-HATS-01",
    "rarity": "Legendary",
@@ -545,7 +545,11 @@
       ]
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 14
+   }
   },
   {
    "id": "pp_backroom_deal",
@@ -660,8 +664,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 4
+    "atlas": "neighbors",
+    "tile": 8
    },
    "expansion": "AF-HATS-01",
    "rarity": "Super Rare",
@@ -710,8 +714,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 7
+    "atlas": "neighbors",
+    "tile": 14
    },
    "expansion": "AF-HATS-01",
    "rarity": "Super Rare",
@@ -832,7 +836,11 @@
       "amount": 2
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 1
+   }
   },
   {
    "id": "st_ingenuity",
@@ -1076,7 +1084,11 @@
       ]
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 15
+   }
   },
   {
    "id": "br_thistle_3",
@@ -1110,7 +1122,11 @@
       "amount": 2
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 11
+   }
   },
   {
    "id": "mh_russet_4",
@@ -1186,7 +1202,11 @@
       "count": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 5
+   }
   },
   {
    "id": "rw_barley_2",
@@ -1222,7 +1242,11 @@
       "amount": 2
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 10
+   }
   },
   {
    "id": "br_oakley_2",
@@ -1255,7 +1279,11 @@
       "expires": "nextTurnStart"
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 10
+   }
   },
   {
    "id": "pp_rowan_2",
@@ -1289,7 +1317,11 @@
       "expires": "nextTurnStart"
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 6
+   }
   },
   {
    "id": "mh_nib_4",
@@ -1365,7 +1397,11 @@
       "optional": true
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 14
+   }
   },
   {
    "id": "ww_copper_1",
@@ -1600,8 +1636,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 6
+    "atlas": "neighbors",
+    "tile": 12
    },
    "expansion": "AF-HATS-01",
    "rarity": "Rare",
@@ -1752,8 +1788,8 @@
     }
    ],
    "art": {
-    "atlas": "whiskerwood",
-    "tile": 10
+    "atlas": "neighbors",
+    "tile": 12
    },
    "expansion": "AF-HATS-01",
    "rarity": "Rare",
@@ -1874,7 +1910,11 @@
       "amount": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 10
+   }
   },
   {
    "id": "mh_juniper_3",
@@ -1903,8 +1943,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 2
+    "atlas": "neighbors",
+    "tile": 7
    },
    "expansion": "AF-HATS-01",
    "rarity": "Rare",
@@ -1982,7 +2022,11 @@
       "optional": true
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 7
+   }
   },
   {
    "id": "ww_copper_2",
@@ -2047,7 +2091,11 @@
      "trigger": "passive",
      "key": "masterDelayMinus1"
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 9
+   }
   },
   {
    "id": "mh_tansy_4",
@@ -2086,8 +2134,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 6
+    "atlas": "neighbors",
+    "tile": 13
    },
    "expansion": "AF-HATS-01",
    "rarity": "Rare",
@@ -2126,7 +2174,11 @@
       "count": 3
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 13
+   }
   },
   {
    "id": "ww_velvet_1",
@@ -2202,7 +2254,11 @@
       "optional": true
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 2
+   }
   },
   {
    "id": "mh_mabel_5",
@@ -2226,8 +2282,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 1
+    "atlas": "neighbors",
+    "tile": 3
    },
    "expansion": "AF-HATS-01",
    "rarity": "Rare",
@@ -2268,7 +2324,11 @@
       "expires": "turnEnd"
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 2
+   }
   },
   {
    "id": "dx_late_frost",
@@ -2420,7 +2480,11 @@
       ]
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 8
+   }
   },
   {
    "id": "br_moss_1",
@@ -2489,8 +2553,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 3
+    "atlas": "neighbors",
+    "tile": 4
    },
    "expansion": "AF-HATS-01",
    "rarity": "Rare",
@@ -2526,7 +2590,11 @@
      "trigger": "passive",
      "key": "blockOpponentBidRaise"
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 6
+   }
   },
   {
    "id": "pp_patch_3",
@@ -2619,8 +2687,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 5
+    "atlas": "neighbors",
+    "tile": 10
    },
    "expansion": "AF-HATS-01",
    "rarity": "Rare",
@@ -2783,7 +2851,11 @@
       "amount": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 2
+   }
   },
   {
    "id": "dx_founders_day",
@@ -2970,7 +3042,11 @@
      "key": "firstAnnounceMinBidMinus1",
      "requiresUpright": true
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 5
+   }
   },
   {
    "id": "rr_acorn_1",
@@ -2999,7 +3075,11 @@
      "key": "firstBidPlus1",
      "requiresUpright": true
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 15
+   }
   },
   {
    "id": "ww_marmalade_3",
@@ -3128,7 +3208,11 @@
     "output": 2
    },
    "text": "A steady shift: 1 turn, 2 Supply.",
-   "flavor": "Burr's pocketknife has carved half the toys in the nursery."
+   "flavor": "Burr's pocketknife has carved half the toys in the nursery.",
+   "art": {
+    "atlas": "neighbors",
+    "tile": 8
+   }
   },
   {
    "id": "ll_vesper_2",
@@ -3185,7 +3269,11 @@
     "output": 2
    },
    "text": "A steady shift: 1 turn, 2 Supply.",
-   "flavor": "Nim can find any book in the library, provided you don't ask which shelf."
+   "flavor": "Nim can find any book in the library, provided you don't ask which shelf.",
+   "art": {
+    "atlas": "neighbors",
+    "tile": 14
+   }
   },
   {
    "id": "ww_marmalade_1",
@@ -3326,7 +3414,11 @@
       "count": 3
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 14
+   }
   },
   {
    "id": "br_thistle_2",
@@ -3358,7 +3450,11 @@
       "optional": true
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 11
+   }
   },
   {
    "id": "mh_fern_4",
@@ -3551,7 +3647,11 @@
       "amount": 2
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 12
+   }
   },
   {
    "id": "mh_agricultural_show",
@@ -3625,8 +3725,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 5
+    "atlas": "neighbors",
+    "tile": 10
    },
    "expansion": "AF-HATS-01",
    "rarity": "Uncommon",
@@ -3677,8 +3777,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 2
+    "atlas": "neighbors",
+    "tile": 6
    },
    "expansion": "AF-HATS-01",
    "rarity": "Uncommon",
@@ -3716,8 +3816,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 4
+    "atlas": "neighbors",
+    "tile": 9
    },
    "expansion": "AF-HATS-01",
    "rarity": "Uncommon",
@@ -3800,8 +3900,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 7
+    "atlas": "neighbors",
+    "tile": 15
    },
    "expansion": "AF-HATS-01",
    "rarity": "Uncommon",
@@ -3961,7 +4061,11 @@
       "amount": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 8
+   }
   },
   {
    "id": "bb_fern_3",
@@ -3992,7 +4096,11 @@
       "count": 3
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 2
+   }
   },
   {
    "id": "mh_clover_2",
@@ -4025,8 +4133,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 0
+    "atlas": "neighbors",
+    "tile": 1
    },
    "expansion": "AF-HATS-01",
    "rarity": "Uncommon",
@@ -4117,7 +4225,11 @@
       ]
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 9
+   }
   },
   {
    "id": "pp_fair_hearing",
@@ -4184,7 +4296,7 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
+    "atlas": "neighbors",
     "tile": 0
    },
    "expansion": "AF-HATS-01",
@@ -4223,8 +4335,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 5
+    "atlas": "neighbors",
+    "tile": 11
    },
    "expansion": "AF-HATS-01",
    "rarity": "Uncommon",
@@ -4647,7 +4759,11 @@
       "amount": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 8
+   }
   },
   {
    "id": "pp_patch_2",
@@ -4705,8 +4821,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 5
+    "atlas": "neighbors",
+    "tile": 10
    },
    "expansion": "AF-HATS-01",
    "rarity": "Uncommon",
@@ -4817,7 +4933,11 @@
      "trigger": "passive",
      "key": "winTiesAsChallenger"
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 0
+   }
   },
   {
    "id": "dx_boom_season",
@@ -4887,8 +5007,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 6
+    "atlas": "neighbors",
+    "tile": 12
    },
    "expansion": "AF-HATS-01",
    "rarity": "Uncommon",
@@ -5082,7 +5202,11 @@
      "key": "firstBidPlus1",
      "requiresUpright": true
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 15
+   }
   },
   {
    "id": "dx_hard_winter",
@@ -5139,7 +5263,11 @@
       ]
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 2
+   }
   },
   {
    "id": "ww_thimble_2",
@@ -5270,7 +5398,11 @@
     "output": 2
    },
    "text": "A steady shift: 1 turn, 2 Supply.",
-   "flavor": "Mabel keeps every packet labelled, dated, and exactly where she said it would be."
+   "flavor": "Mabel keeps every packet labelled, dated, and exactly where she said it would be.",
+   "art": {
+    "atlas": "neighbors",
+    "tile": 3
+   }
   },
   {
    "id": "br_double_thatch",
@@ -5377,7 +5509,11 @@
     "output": 2
    },
    "text": "A steady shift: 1 turn, 2 Supply.",
-   "flavor": "Juniper still runs the fastest route in town, just with better maps now."
+   "flavor": "Juniper still runs the fastest route in town, just with better maps now.",
+   "art": {
+    "atlas": "neighbors",
+    "tile": 7
+   }
   },
   {
    "id": "rr_brook_1",
@@ -5399,7 +5535,11 @@
     "output": 2
    },
    "text": "A steady shift: 1 turn, 2 Supply.",
-   "flavor": "Brook picked up every story the river carried, and passes them all along."
+   "flavor": "Brook picked up every story the river carried, and passes them all along.",
+   "art": {
+    "atlas": "neighbors",
+    "tile": 12
+   }
   },
   {
    "id": "rr_willow_3",
@@ -5421,7 +5561,11 @@
     "output": 2
    },
    "text": "A steady shift: 1 turn, 2 Supply.",
-   "flavor": "Willow moved from the ferry to the tollhouse, and still knows everyone's business."
+   "flavor": "Willow moved from the ferry to the tollhouse, and still knows everyone's business.",
+   "art": {
+    "atlas": "neighbors",
+    "tile": 12
+   }
   },
   {
    "id": "rr_willow_1",
@@ -5455,7 +5599,11 @@
       "amount": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 12
+   }
   },
   {
    "id": "mh_botany_lecture",
@@ -5534,7 +5682,11 @@
       "count": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 0
+   }
   },
   {
    "id": "br_bramble_1",
@@ -5570,7 +5722,11 @@
       "amount": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 8
+   }
   },
   {
    "id": "mh_acorn_0",
@@ -5724,7 +5880,11 @@
       "count": 2
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 14
+   }
   },
   {
    "id": "ww_linnet_1",
@@ -5836,7 +5996,11 @@
       "amount": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 11
+   }
   },
   {
    "id": "mh_pebble_3",
@@ -5866,8 +6030,8 @@
     }
    ],
    "art": {
-    "atlas": "whiskerwood",
-    "tile": 10
+    "atlas": "neighbors",
+    "tile": 12
    },
    "expansion": "AF-HATS-01",
    "rarity": "Uncommon",
@@ -5946,7 +6110,11 @@
       "count": 2
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 4
+   }
   },
   {
    "id": "bb_seed_swap",
@@ -6083,8 +6251,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 3
+    "atlas": "neighbors",
+    "tile": 5
    },
    "expansion": "AF-HATS-01",
    "rarity": "Uncommon",
@@ -6204,7 +6372,11 @@
       "amount": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 0
+   }
   },
   {
    "id": "pp_rowan_3",
@@ -6226,7 +6398,11 @@
     "output": 4
    },
    "text": "A steady shift: 2 turns, 4 Supply.",
-   "flavor": "Rowan's journal became the town's law books; the handwriting never changed."
+   "flavor": "Rowan's journal became the town's law books; the handwriting never changed.",
+   "art": {
+    "atlas": "neighbors",
+    "tile": 6
+   }
   },
   {
    "id": "bb_mabel_1",
@@ -6261,7 +6437,11 @@
       "amount": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 3
+   }
   },
   {
    "id": "br_quill_3",
@@ -6304,7 +6484,11 @@
       ]
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 9
+   }
   },
   {
    "id": "ll_vesper_1",
@@ -6340,7 +6524,11 @@
       "count": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 7
+   }
   },
   {
    "id": "mh_marlow_1",
@@ -7641,7 +7829,11 @@
     "output": 3
    },
    "text": "A steady shift: 2 turns, 3 Supply.",
-   "flavor": "Moss draws the plans now and lets younger paws swing the hammer."
+   "flavor": "Moss draws the plans now and lets younger paws swing the hammer.",
+   "art": {
+    "atlas": "neighbors",
+    "tile": 10
+   }
   },
   {
    "id": "pp_hazel_3",
@@ -7663,7 +7855,11 @@
     "output": 3
    },
    "text": "A steady shift: 2 turns, 3 Supply.",
-   "flavor": "Hazel closed the stall and opened the guild hall instead; the haggling never really stopped."
+   "flavor": "Hazel closed the stall and opened the guild hall instead; the haggling never really stopped.",
+   "art": {
+    "atlas": "neighbors",
+    "tile": 5
+   }
   },
   {
    "id": "rr_tansy_3",
@@ -7765,7 +7961,11 @@
     "output": 1
    },
    "text": "A steady shift: 1 turn, 1 Supply.",
-   "flavor": "Dill sells bundles of mint and thyme from a basket twice her size."
+   "flavor": "Dill sells bundles of mint and thyme from a basket twice her size.",
+   "art": {
+    "atlas": "neighbors",
+    "tile": 2
+   }
   },
   {
    "id": "mk_kettle_and_cup",
