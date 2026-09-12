@@ -28,7 +28,7 @@
 import {
   cardDef, topCard, canAct, opponentOf, statueCount, findEventAssignment, eventReduction, rankOf, hasPassive,
 } from '../engine/index.js';
-import { cardPower } from '../engine/power.js';
+import { cardPower, effectPower } from '../engine/power.js';
 
 // ---------------------------------------------------------------- tuning knobs
 // Defaults are merged with `options.params` so the weights can be swept from a playtest harness.
@@ -184,6 +184,13 @@ function marketCardValue(state, pi, d) {
 }
 
 // Value of resolving an Event right now (before the cost of the Characters it taps).
+/** True for a Busy effect made only of gains, draws, discards and peeks — the ones the power model rates well on its own. */
+function plainBusyEffect(eff) {
+  if (!eff) return false;
+  if (eff.do === 'seq') return (eff.steps || []).every(plainBusyEffect);
+  return ['gainSupply', 'draw', 'discard', 'peekMarketDeck', 'reorderDeckTop'].includes(eff.do);
+}
+
 function eventValue(state, pi, d) {
   const base = cardPower(d) + 1.0 + auctionBonus(d);
   const v = base * situationFactor(state, pi, d);
@@ -345,7 +352,14 @@ function scoreAction(state, ctx, a, agg, out, P) {
         out.why = 'busy to rehire';
         return affordable ? 3.5 : -1;
       }
-      return -1;
+      // Anything else: worth going Busy when the printed effect beats the shift this Character would
+      // otherwise start. Shields, readies and rehires stay case-by-case above; plain gains, draws and
+      // peeks are rated by the power model, so a new card with a Busy ability is used without a rule.
+      const ab = (d.abilities || []).find((x) => x.trigger === 'busy');
+      if (!ab || !plainBusyEffect(ab.effect)) return -1;
+      const own = stackRate(state, findStack(state, ctx.pi, a.charUid));
+      out.why = `busy for ${effectPower(ab.effect).toFixed(1)}`;
+      return effectPower(ab.effect) * 2.2 - own * P.workBase * 0.5;
     }
 
     case 'playEvent': {

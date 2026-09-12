@@ -112,11 +112,15 @@ function score(def) {
 }
 function matchesSpecies(c, species) {
   if (c.type === 'character') return c.species === species;
-  return (c.requires || []).some((r) => r.species === species);
+  return (c.requires || []).some((r) => r.species === species || (r.name && namedVersions(r.name).some((v) => v.species === species)));
 }
 function matchesStudy(c, study) {
   if (c.type === 'character') return c.study === study;
-  return (c.requires || []).some((r) => r.study === study);
+  return (c.requires || []).some((r) => r.study === study || (r.name && namedVersions(r.name).some((v) => v.study === study)));
+}
+/** Every printed version of a named Character: an Event that requires "Pip" belongs with Squirrels and with Lore. */
+function namedVersions(name) {
+  return ctx.set.cards.filter((c) => c.type === 'character' && c.name === name);
 }
 
 function chip(label, active, onClick, iconName) {

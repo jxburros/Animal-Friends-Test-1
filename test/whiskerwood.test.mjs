@@ -11,7 +11,7 @@ function begin(s) { s.phase='actions'; s.active=0; }
 
 test('Whiskerwood adds 52 cards with six complete Cat upgrade families and usable art', () => {
   assert.equal(expansion.length,52);
-  assert.equal(SET.cards.length,260);
+  assert.ok(SET.cards.length>=260,'later expansions only add to the set');
   assert.deepEqual(['character','event','market'].map(t=>expansion.filter(c=>c.type===t).length),[24,18,10]);
   const cats=expansion.filter(c=>c.species==='Cat');
   assert.equal(cats.length,18);

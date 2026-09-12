@@ -169,7 +169,16 @@ function icon(name, cls = '') {
 function requirementParts(def) {
   const reqs = def.requires || [];
   if (!reqs.length) return [];
-  return reqs.map((r) => ({ label: `${r.count && r.count > 1 ? `${r.count}× ` : ''}${r.species || r.study}`, icon: r.species || r.study }));
+  return reqs.map((r) => ({
+    label: `${r.count && r.count > 1 ? `${r.count}× ` : ''}${r.name || r.species || r.study}`,
+    icon: r.species || r.study || speciesOfNamed(r.name),
+  }));
+}
+/** The species of a named Character (any printed version), for a requirement that asks for them by name. */
+function speciesOfNamed(name) {
+  if (!name) return 'Civics';
+  const match = Object.values(cardsById()).find((c) => c.type === 'character' && c.name === name);
+  return match ? match.species : 'Civics';
 }
 function typeIconName(def) {
   if (def.type === 'character') return def.study;
@@ -461,7 +470,7 @@ function openRecruitPopover(handCard, options, anchorEl) {
 
 function openEventPopover(def, options, anchorEl) {
   const canonical = options[0];
-  const requiresChars = (def.requires || []).some((r) => r.species || r.study);
+  const requiresChars = (def.requires || []).some((r) => r.species || r.study || r.name);
   showPopover(anchorEl, (pop) => {
     pop.appendChild(h('h4', {}, def.name));
     const actions = h('div', { class: 'po-actions' });

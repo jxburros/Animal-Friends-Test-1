@@ -13,7 +13,7 @@ await playGame(state, [agent0, agent1]);          // runs to completion; state.w
 ## Decks and the Market Deck
 
 `createGame(rules, set, { seed, decks, names, market })` — `market` selects the shared Market Deck from
-`set.marketDecks` (`first-boroughs`, `boom-town`, `hard-times`; default: the first). Each entry of `decks` is either a deck id from the set or a
+`set.marketDecks` (`first-boroughs`, `boom-town`, `hard-times`, `founders-fair`, `whiskerwood-fair`, `many-hats-fair`; default: the first). Each entry of `decks` is either a deck id from the set or a
 deck object `{ id?, name?, list: { cardId: count } }` (`resolveDeck`), which is how the Deck Workshop plays a
 custom deck. `deckProblems(rules, set, list)` returns the deck's legality problems as player-facing sentences
 (empty array = legal); `deckRules(rules)` exposes the limits from `spec/game.json` `deckbuilding`.
@@ -143,3 +143,21 @@ Passive keys: `winTiesAsChallenger`, `blockOpponentBidRaise`, `firstAnnounceMinB
 
 Disruption effect ops (global, both players): `allCharactersToUnemployment`, `endAllShifts`, `everyoneLosesSupply`,
 `everyoneGainsSupply`, `everyoneDraws`, `everyoneDiscardsDownTo`, `blockNextReady`, `everyoneRehiresFree`.
+
+## Card data: naming a Character (v0.4.0)
+
+Filters and Event requirements are matched by `matchesFilter(state, stack, f)` in `effects.js` against the
+**top card** of a stack. Besides `species`, `study`, `rank`, `cost` and `maxCost`, a filter may carry `name`:
+the Character's printed name, matching whichever version is currently on top.
+
+- Conditions: `{ "otherCharacterInTown": { "name": "Pip" } }` holds while any Pip other than the source stack
+  is in town (an Event or Statue source has no stack, so any Pip counts).
+- Effects: `readyCharacter`, `readyNextTurn` and the other filtered effects accept `filter.name` the same way.
+- Event requirements: `{ "requires": [{ "name": "Clover" }, { "study": "Agriculture" }] }` needs an upright
+  Clover plus a second, distinct Agriculture Character. `requirementUnits` / `assignmentCovers` in `actions.js`
+  treat a named pip like any other; waivers (Statue of Ingenuity, Mabel) apply to it too.
+
+Card art is presentation data: `art: { atlas: "boroughs" | "whiskerwood", tile: 0..15 }` picks a tile of one
+of the two bundled atlases (`src/ui/painted-art.js`, `explicitTile`); anything else falls back to the theme
+rules, and the engine never reads it.
+
