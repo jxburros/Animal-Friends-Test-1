@@ -505,7 +505,11 @@
       "count": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-scenes",
+    "tile": 0
+   }
   },
   {
    "id": "rr_pip_3",
@@ -592,6 +596,10 @@
       "optional": true
      }
     ]
+   },
+   "art": {
+    "atlas": "boroughs-scenes",
+    "tile": 11
    }
   },
   {
@@ -619,7 +627,11 @@
      "burden": true
     }
    ],
-   "burden": "Burden: your Apprentices enter Busy instead of upright."
+   "burden": "Burden: your Apprentices enter Busy instead of upright.",
+   "art": {
+    "atlas": "boroughs-scenes",
+    "tile": 1
+   }
   },
   {
    "id": "mh_bramble_5",
@@ -832,7 +844,11 @@
       "amount": 2
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-characters",
+    "tile": 1
+   }
   },
   {
    "id": "st_ingenuity",
@@ -859,7 +875,11 @@
      "burden": true
     }
    ],
-   "burden": "Burden: your Events cost 1 more Supply."
+   "burden": "Burden: your Events cost 1 more Supply.",
+   "art": {
+    "atlas": "boroughs-scenes",
+    "tile": 2
+   }
   },
   {
    "id": "dx_landslide",
@@ -927,7 +947,11 @@
       "amount": 2
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-scenes",
+    "tile": 3
+   }
   },
   {
    "id": "st_courage",
@@ -956,7 +980,11 @@
      "key": "opponentFirstBidPlus1",
      "burden": true
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-scenes",
+    "tile": 4
+   }
   },
   {
    "id": "mk_second_founding",
@@ -1076,7 +1104,11 @@
       ]
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-characters",
+    "tile": 15
+   }
   },
   {
    "id": "br_thistle_3",
@@ -1186,7 +1218,11 @@
       "count": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-characters",
+    "tile": 5
+   }
   },
   {
    "id": "rw_barley_2",
@@ -1255,7 +1291,11 @@
       "expires": "nextTurnStart"
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-characters",
+    "tile": 10
+   }
   },
   {
    "id": "pp_rowan_2",
@@ -1365,7 +1405,11 @@
       "optional": true
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-characters",
+    "tile": 14
+   }
   },
   {
    "id": "ww_copper_1",
@@ -1469,7 +1513,11 @@
       "amount": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-scenes",
+    "tile": 5
+   }
   },
   {
    "id": "bb_founders_orchard",
@@ -1722,7 +1770,11 @@
      "burden": true
     }
    ],
-   "burden": "Burden: you pay your losing bids in full instead of forfeiting half."
+   "burden": "Burden: you pay your losing bids in full instead of forfeiting half.",
+   "art": {
+    "atlas": "boroughs-scenes",
+    "tile": 6
+   }
   },
   {
    "id": "mh_pebble_5",
@@ -2126,7 +2178,11 @@
       "count": 3
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-characters",
+    "tile": 13
+   }
   },
   {
    "id": "ww_velvet_1",
@@ -2294,6 +2350,10 @@
       "count": 1
      }
     ]
+   },
+   "art": {
+    "atlas": "boroughs-scenes",
+    "tile": 15
    }
   },
   {
@@ -2592,7 +2652,11 @@
      "burden": true
     }
    ],
-   "burden": "Burden: choosing Supply in your Resources phase gives you 1 less."
+   "burden": "Burden: choosing Supply in your Resources phase gives you 1 less.",
+   "art": {
+    "atlas": "boroughs-scenes",
+    "tile": 7
+   }
   },
   {
    "id": "mh_thistle_4",
@@ -3551,7 +3615,11 @@
       "amount": 2
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-characters",
+    "tile": 12
+   }
   },
   {
    "id": "mh_agricultural_show",
@@ -3961,7 +4029,11 @@
       "amount": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-characters",
+    "tile": 8
+   }
   },
   {
    "id": "bb_fern_3",
@@ -4117,7 +4189,11 @@
       ]
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-characters",
+    "tile": 9
+   }
   },
   {
    "id": "pp_fair_hearing",
@@ -5139,7 +5215,11 @@
       ]
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-characters",
+    "tile": 2
+   }
   },
   {
    "id": "ww_thimble_2",
@@ -5270,7 +5350,11 @@
     "output": 2
    },
    "text": "A steady shift: 1 turn, 2 Supply.",
-   "flavor": "Mabel keeps every packet labelled, dated, and exactly where she said it would be."
+   "flavor": "Mabel keeps every packet labelled, dated, and exactly where she said it would be.",
+   "art": {
+    "atlas": "boroughs-characters",
+    "tile": 3
+   }
   },
   {
    "id": "br_double_thatch",
@@ -5377,7 +5461,11 @@
     "output": 2
    },
    "text": "A steady shift: 1 turn, 2 Supply.",
-   "flavor": "Juniper still runs the fastest route in town, just with better maps now."
+   "flavor": "Juniper still runs the fastest route in town, just with better maps now.",
+   "art": {
+    "atlas": "boroughs-characters",
+    "tile": 7
+   }
   },
   {
    "id": "rr_brook_1",
@@ -5836,7 +5924,11 @@
       "amount": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-characters",
+    "tile": 11
+   }
   },
   {
    "id": "mh_pebble_3",
@@ -5946,7 +6038,11 @@
       "count": 2
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-characters",
+    "tile": 4
+   }
   },
   {
    "id": "bb_seed_swap",
@@ -6204,7 +6300,11 @@
       "amount": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "boroughs-characters",
+    "tile": 0
+   }
   },
   {
    "id": "pp_rowan_3",
@@ -6226,7 +6326,11 @@
     "output": 4
    },
    "text": "A steady shift: 2 turns, 4 Supply.",
-   "flavor": "Rowan's journal became the town's law books; the handwriting never changed."
+   "flavor": "Rowan's journal became the town's law books; the handwriting never changed.",
+   "art": {
+    "atlas": "boroughs-characters",
+    "tile": 6
+   }
   },
   {
    "id": "bb_mabel_1",
@@ -6418,6 +6522,10 @@
       "do": "opponentTopdeckFromHand"
      }
     ]
+   },
+   "art": {
+    "atlas": "boroughs-scenes",
+    "tile": 9
    }
   },
   {
@@ -6814,6 +6922,10 @@
       "expires": "untilUsed"
      }
     ]
+   },
+   "art": {
+    "atlas": "boroughs-scenes",
+    "tile": 12
    }
   },
   {
@@ -7329,6 +7441,10 @@
       "optional": true
      }
     ]
+   },
+   "art": {
+    "atlas": "boroughs-scenes",
+    "tile": 8
    }
   },
   {
@@ -7913,6 +8029,10 @@
       "count": 1
      }
     ]
+   },
+   "art": {
+    "atlas": "boroughs-scenes",
+    "tile": 13
    }
   },
   {
@@ -8255,6 +8375,10 @@
    "effect": {
     "do": "gainSupply",
     "amount": 3
+   },
+   "art": {
+    "atlas": "boroughs-scenes",
+    "tile": 10
    }
   },
   {
@@ -9275,6 +9399,10 @@
    "flavor": "Two planks and a rope, and the whole borough waits.",
    "onReveal": {
     "do": "blockNextReady"
+   },
+   "art": {
+    "atlas": "boroughs-scenes",
+    "tile": 14
    }
   },
   {

@@ -1,16 +1,21 @@
 // Shared painted archetypes. Card identity and rules always come from the card set.
 // Coordinates refer to the unmodified 4 × 4 atlases; new species keep their vector art. A card may
-// name its painting outright with `art: { atlas: 'boroughs' | 'whiskerwood', tile: 0..15 }`; otherwise
-// the original set's species/theme selection below applies. Only the two bundled atlases resolve.
+// name its painting outright with `art: { atlas, tile: 0..15 }`; otherwise
+// the original set's species/theme selection below applies. Only bundled atlases resolve.
 export const PAINTED_ATLAS_URL = new URL('../../assets/art/boroughs-atlas.png', import.meta.url).href;
 export const WHISKERWOOD_ATLAS_URL = new URL('../../assets/art/whiskerwood-atlas.png', import.meta.url).href;
 const SPECIES_TILE = { Rabbit: 0, Mouse: 1, Fox: 2, Raccoon: 3, Hedgehog: 4, Badger: 5, Otter: 6, Squirrel: 7 };
-const ATLASES = { boroughs: () => PAINTED_ATLAS_URL, whiskerwood: () => WHISKERWOOD_ATLAS_URL };
+const ATLASES = new Map([
+  ['boroughs', PAINTED_ATLAS_URL],
+  ['whiskerwood', WHISKERWOOD_ATLAS_URL],
+  ['boroughs-characters', new URL('../../assets/art/boroughs-characters-atlas.png', import.meta.url).href],
+  ['boroughs-scenes', new URL('../../assets/art/boroughs-scenes-atlas.png', import.meta.url).href],
+]);
 
 /** The explicit atlas tile a card asks for, or null when it leaves the choice to the theme rules. */
 export function explicitTile(def) {
   const art = def && def.art;
-  if (!art || !ATLASES[art.atlas] || !Number.isInteger(art.tile) || art.tile < 0 || art.tile >= 16) return null;
+  if (!art || !ATLASES.has(art.atlas) || !Number.isInteger(art.tile) || art.tile < 0 || art.tile >= 16) return null;
   return art.tile;
 }
 
@@ -38,7 +43,7 @@ export function paintedArtSVG(def, fallback) {
   if (tile === null) return fallback;
   const x = -(tile % 4) * 100;
   const y = -Math.floor(tile / 4) * 100;
-  const atlas = explicitTile(def) !== null ? ATLASES[def.art.atlas]() : PAINTED_ATLAS_URL;
+  const atlas = explicitTile(def) !== null ? ATLASES.get(def.art.atlas) : PAINTED_ATLAS_URL;
   // A failed image request reveals the original per-card vector illustration underneath.
   return `<svg class="painted-art" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><svg width="100" height="100">${fallback}</svg><image href="${atlas}" x="${x}" y="${y}" width="400" height="400" preserveAspectRatio="none"/></svg>`;
 }
