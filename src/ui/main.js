@@ -5,7 +5,7 @@ import { makeHumanAgent } from './humanAgent.js';
 import {
   setGame, stopGame, isGameActive, scheduleRender, renderIfChanged, settle,
 } from './render.js';
-import { animalSVG } from './art.js';
+import { cardArtSVG } from './art.js';
 import { openDeckBuilder, loadSavedDecks, saveDeck, deleteSavedDeck } from './deckbuilder.js';
 import * as fx from './fx.js';
 
@@ -54,9 +54,10 @@ function customBlurb(deck) {
 function buildMenu() {
   const critters = $('menuCritters');
   critters.innerHTML = '';
-  for (const kind of ['rabbit', 'mouse', 'raccoon', 'fox', 'hedgehog', 'badger', 'otter', 'squirrel']) {
+  for (const name of ['Clover', 'Patient Harvest', 'Statue of Kindness']) {
     const wrap = document.createElement('div');
-    wrap.innerHTML = animalSVG(kind);
+    const def = cardSet.cards.find((card) => card.name === name);
+    wrap.innerHTML = cardArtSVG(def);
     critters.appendChild(wrap.firstChild);
   }
 
