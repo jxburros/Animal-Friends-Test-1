@@ -1,6 +1,6 @@
 // Legal action enumeration and action application for the Actions phase.
 import {
-  cardDef, topCard, log, nextUid, opponentOf, entryOrientation, rankOf, rankLevel, hasPassive, hasMod, getMod, consumeMod,
+  cardDef, topCard, log, nextUid, opponentOf, entryOrientation, rankOf, costLevel, hasPassive, hasMod, getMod, consumeMod,
   canAct, findStack, UPRIGHT, BUSY,
 } from './state.js';
 import { ask, gainSupply, draw, discard, makeStack, fireHook, runEffect, matchesFilter } from './effects.js';
@@ -131,21 +131,22 @@ export function raisePayment(state, pi, pending, bid) {
 }
 
 /**
- * A Mayor's Nth pledge to a single auction must be at least rank N: their 1st pledge (announcing or an
- * opening raise) may be any rank, their 2nd must be Journeyman or better, their 3rd must be a Master, and
- * so on. It escalates instead of just counting, so cheap Apprentices can't be minted turn after turn to
- * fund an endless war -- each side eventually runs out of a strong enough Character to answer with.
+ * A Mayor's Nth pledge to a single auction must cost enough to reach level N (see `costLevel`): their 1st
+ * pledge (announcing or an opening raise) may be any cost, their 2nd must cost 2 or more, their 3rd must
+ * cost 4 or more, and so on -- tied to the Character's printed cost directly, not to its rank name. It
+ * escalates instead of just counting, so cheap 0/1-cost Characters can't be minted turn after turn to fund
+ * an endless war -- each side eventually runs out of a Character that costs enough to answer with.
  */
 export function requiredPledgeLevel(pd, pi) {
   return pd.chars[pi].length + 1;
 }
 
-/** How many times a Mayor could ever pledge to one auction: once per printed rank (3 today). */
+/** How many times a Mayor could ever pledge to one auction: once per printed cost band (3 today: 0-1, 2-3, 4-5). */
 export function maxPledgeRounds(state) {
   return Object.keys(state.rules.ranks).length;
 }
 
-/** True once every Mayor still contesting `pd` has already pledged at the highest printed rank, so nobody can ever field a Character strong enough to raise again. */
+/** True once every Mayor still contesting `pd` has already pledged at the highest cost band, so nobody can ever field a Character costly enough to raise again. */
 export function auctionAtPledgeCap(state, pd) {
   const cap = maxPledgeRounds(state);
   return pd.chars.every((chars) => chars.length >= cap);
@@ -221,7 +222,7 @@ export function legalActions(state, pi) {
   for (const pd of state.market.pending) {
     if (pd.high === pi || pd.unchallengeable) continue;
     const requiredLevel = requiredPledgeLevel(pd, pi);
-    const strongEnough = uprights.filter((s) => rankLevel(state.rules, topCard(state, s).cost) >= requiredLevel);
+    const strongEnough = uprights.filter((s) => costLevel(state.rules, topCard(state, s).cost) >= requiredLevel);
     if (!strongEnough.length) continue;
     const minBid = raiseMinBid(state, pi, pd);
     const pay = raisePayment(state, pi, pd, minBid);
@@ -378,7 +379,7 @@ export async function applyAction(state, pi, a) {
       if (pd.unchallengeable) throw new Error('This auction cannot be raised against');
       const s = findStack(state, pi, a.charUid);
       if (!s || !canAct(s)) throw new Error('Character cannot bid');
-      if (rankLevel(state.rules, topCard(state, s).cost) < requiredPledgeLevel(pd, pi)) throw new Error('This Character is not a high enough rank for this pledge');
+      if (costLevel(state.rules, topCard(state, s).cost) < requiredPledgeLevel(pd, pi)) throw new Error('This Character does not cost enough for this pledge');
       const minBid = raiseMinBid(state, pi, pd);
       const bid = Math.floor(a.bid ?? minBid);
       const pay = raisePayment(state, pi, pd, bid);

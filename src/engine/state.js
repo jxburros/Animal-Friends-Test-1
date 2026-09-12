@@ -23,9 +23,15 @@ export function rankOf(rules, cost) {
   return 'master';
 }
 
-/** 1 for the lowest-printed rank (Apprentice), 2 for the next (Journeyman), and so on. */
-export function rankLevel(rules, cost) {
-  return Object.keys(rules.ranks).indexOf(rankOf(rules, cost)) + 1;
+/**
+ * 1 for the cheapest printed cost band (0-1), 2 for the next (2-3), 3 for the next (4-5), and so on.
+ * Reads each rank's minCost/maxCost sorted by cost, not the rank's name or where it happens to sit in
+ * `rules.ranks` -- this is a Character's printed cost banded into tiers, not a lookup through its rank name.
+ */
+export function costLevel(rules, cost) {
+  const bands = Object.values(rules.ranks).slice().sort((a, b) => a.minCost - b.minCost);
+  const i = bands.findIndex((r) => cost >= r.minCost && cost <= r.maxCost);
+  return (i >= 0 ? i : bands.length - 1) + 1;
 }
 
 export function entryOrientation(rules, cost) {
