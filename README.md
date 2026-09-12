@@ -107,10 +107,21 @@ The `assumptions` array in `spec/game.json` documents current prototype choices:
 
 ## Card art
 
-`src/ui/art.js` draws every illustration as inline SVG. `animalHeadParts(kind)` is the single source of the
-animal look: the book cover renders it flat (`animalSVG`), the card scenes embed the same head ink-traced on a
-small storybook body, and the Statues carve it in stone. Adding a species therefore means one entry in
-`ANIMALS`, one in `SPECIES_KIND`, and an icon; adding a study means a backdrop and an icon.
+The painted storybook edition uses a bundled 16-scene illustration atlas, parchment nameplates,
+botanical borders, and distinct type colors: forest-green Characters, midnight-blue Events,
+vermilion Market cards, and antique-gold Statues. The cover, game, card previews and Deck Workshop
+share this presentation. Select **Read** on any visible card to open its full artwork, rules and
+burden in a keyboard- and touch-accessible reading view; Escape closes it.
+
+`src/ui/painted-art.js` selects a shared painted archetype by species or scene theme. This is **16
+shared scenes, not 208 unique illustrations**: related cards retain different printed names, jobs,
+stats and effects while sharing art. `assets/art/boroughs-atlas.png` ships with the game; no image
+service or external font request is needed to play. `src/ui/art.js` preserves the original per-card
+vector illustrations underneath the painted layer as a fallback for missing art or unknown species.
+`src/ui/storybook.css` owns the painted edition's presentation without changing rules or animation timing.
+
+See [the art direction and validation notes](docs/PAINTED_EDITION.md) for scene coverage and the
+generation prompt, and [the rendered card preview](docs/screenshots/painted-cards.png).
 
 ## Design notes
 

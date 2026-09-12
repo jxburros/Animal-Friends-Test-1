@@ -1,3 +1,5 @@
+import { paintedArtSVG } from './painted-art.js';
+
 // Simple hash function to map strings to consistent indices
 function simpleHash(str) {
   let hash = 0;
@@ -1309,8 +1311,7 @@ function fallbackScene(def) {
 export function cardArtSVG(def) {
   if (!def) return fallbackEvent();
   const fn = def.id && CARD_SCENES[def.id];
-  if (fn) return fn();
-  return fallbackScene(def);
+  return paintedArtSVG(def, fn ? fn() : fallbackScene(def));
 }
 
 /* ---------- card back ---------- */

@@ -10,6 +10,7 @@ import {
   cardDef, topCard, canAct, findStack, eventReduction, assignmentCovers, rankOf,
 } from '../engine/index.js';
 import { cardArtSVG, cardBackSVG, iconSVG } from './art.js';
+import { ornamentalFrameSVG } from './painted-art.js';
 import * as fx from './fx.js';
 import * as choreo from './choreo.js';
 
@@ -201,7 +202,7 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
   });
   const banner = h('div', { class: 'banner' });
   if (def.cost !== undefined) banner.appendChild(h('div', { class: 'cost', title: `Cost ${def.cost} Supply` }, String(def.cost)));
-  banner.appendChild(h('div', { class: 'cname' }, def.type === 'statue' && def.virtue ? def.virtue : def.name));
+  banner.appendChild(h('div', { class: 'cname', title: def.name }, def.name));
   banner.appendChild(h('div', { class: 'ticon', html: iconSVG(typeIconName(def)) }));
   if (def.rarity) {
     const p = def.power || {};
@@ -211,6 +212,10 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
     banner.appendChild(h('div', { class: `gem rar-${raritySlug(def)}`, title }));
   }
   face.appendChild(banner);
+  const subtitle = def.type === 'character' ? def.title : def.type === 'event'
+    ? (def.kind === 'limited' ? `Limited Event · ${def.duration} turns` : 'Instant Event')
+    : def.type === 'statue' ? 'Victory · Statue' : def.type === 'disruption' ? 'Shared Disruption' : 'Capital City Market';
+  face.appendChild(h('div', { class: 'card-subtitle' }, subtitle || def.type));
   face.appendChild(h('div', { class: 'art', html: cardArtSVG(def) }));
 
   const body = h('div', { class: 'body' });
@@ -253,8 +258,28 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
     face.appendChild(h('div', { class: 'foil-sheen' }));
     face.appendChild(h('div', { class: 'foil-tag', title: 'Foil card', html: iconSVG('foil') }));
   }
-  face.appendChild(h('div', { class: 'frame' }));
+  const footer = h('div', { class: 'card-footer' }, [h('span', {}, def.type === 'statue' ? 'Victory' : def.type)]);
+  if (interactive) footer.appendChild(h('button', {
+    class: 'inspect-card', type: 'button', 'aria-label': `Read ${def.name}`,
+    onclick: (event) => { event.stopPropagation(); inspectCard(def); },
+    onpointerdown: (event) => event.stopPropagation(),
+  }, 'Read'));
+  face.appendChild(footer);
+  face.appendChild(h('div', { class: 'frame', html: ornamentalFrameSVG() }));
   return face;
+}
+
+// Separate from decision dialogs so inspecting art cannot answer or cancel an engine choice.
+function inspectCard(def) {
+  hidePeek();
+  const previous = document.activeElement;
+  const dialog = h('dialog', { class: 'card-reader', 'aria-label': def.name });
+  dialog.appendChild(buildCardFace(def, { large: true, interactive: false }));
+  dialog.appendChild(h('button', { class: 'reader-close', type: 'button', onclick: () => dialog.close() }, 'Return to the table'));
+  dialog.addEventListener('close', () => { dialog.remove(); if (previous?.isConnected) previous.focus(); });
+  dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+  document.body.appendChild(dialog);
+  dialog.showModal();
 }
 
 export function buildCardBack({ mini = false } = {}) {
