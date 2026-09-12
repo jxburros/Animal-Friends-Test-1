@@ -40,11 +40,12 @@ jobs:
         if: ${{ inputs.run_tests }}
         run: npm test
 
-      # enablement: true creates the Pages site on first run, so no manual setup in Settings.
+      # One-time repo setup, needed before the first run: Settings -> Pages -> Build and
+      # deployment -> Source: "GitHub Actions". The workflow's own token is not allowed to create
+      # the Pages site (the API answers "Resource not accessible by integration"), so this step
+      # fails with "Get Pages site failed ... Not Found" until that switch is flipped by hand.
       - name: Configure Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Assemble the site
         run: |

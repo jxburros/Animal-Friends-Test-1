@@ -52,6 +52,9 @@ Whenever a card leaves the display, cards are dealt from the Market Deck until t
 
 The game is published to GitHub Pages: **https://jxburros.github.io/Animal-Friends-Test-1/**
 
+One-time setup: in **Settings -> Pages -> Build and deployment**, set **Source** to
+**GitHub Actions**. The workflow cannot do this for you — its token may not create the Pages site.
+
 The site is not updated automatically. To push whatever is on `main` live, open the repository's
 **Actions** tab, pick **Deploy game to GitHub Pages**, and press **Run workflow** (leave
 *Run the engine tests* ticked to have `npm test` gate the deploy). The workflow copies
