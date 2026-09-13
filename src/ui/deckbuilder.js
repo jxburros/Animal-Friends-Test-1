@@ -8,7 +8,7 @@
 // spec/starter_card_set.json — the only cards a deck may hold. "Maker cards" is the hand-remade
 // collection in spec/maker_card_set.json, shown for comparison and not playable yet. Each printed
 // card can be ticked off as remade (see ./remade.js), so the rebuild can be tracked card by card.
-import { deckRules, deckProblems, maxCopiesOf } from '../engine/deckbuilding.js';
+import { deckRules, deckProblems, deckWarnings, maxCopiesOf, DECK_TYPES } from '../engine/deckbuilding.js';
 import { RARITIES, powerRating } from '../engine/power.js';
 import { groupByCharacter, characterOf } from '../engine/characters.js';
 import { buildCardFace, setPreviewContext, raritySlug } from './render.js';
@@ -40,7 +40,7 @@ function icon(name) {
 }
 
 // ---------- saved decks ----------
-export { deckRules, deckProblems };
+export { deckRules, deckProblems, deckWarnings };
 
 export function loadSavedDecks() {
   try {
@@ -79,15 +79,16 @@ const SORTS = [
 
 function counts() {
   const byId = ctx.set.cardsById || Object.fromEntries(ctx.set.cards.map((c) => [c.id, c]));
-  let total = 0; let chars = 0; let events = 0;
+  let total = 0; let chars = 0; let events = 0; let buildings = 0;
   for (const [id, n] of Object.entries(ctx.list)) {
     if (!n) continue;
     total += n;
     const t = byId[id] && byId[id].type;
     if (t === 'character') chars += n;
     if (t === 'event') events += n;
+    if (t === 'townBuilding') buildings += n;
   }
-  return { total, chars, events };
+  return { total, chars, events, buildings };
 }
 
 function copiesOf(cardId) {
@@ -101,7 +102,7 @@ function addCopy(cardId) {
   const dr = deckRules(ctx.rules);
   const byId = ctx.set.cardsById || Object.fromEntries(ctx.set.cards.map((c) => [c.id, c]));
   const { total } = counts();
-  if (total >= dr.deckSize || copiesOf(cardId) >= limitFor(byId[cardId])) return;
+  if (total >= dr.maxDeckSize || copiesOf(cardId) >= limitFor(byId[cardId])) return;
   ctx.list[cardId] = copiesOf(cardId) + 1;
   render();
 }
@@ -120,7 +121,7 @@ function removeCopy(cardId) {
  */
 function shelfCards() {
   if (section === 'maker') return ((ctx.makerSet && ctx.makerSet.cards) || []);
-  return ctx.set.cards.filter((c) => c.type === 'character' || c.type === 'event');
+  return ctx.set.cards.filter((c) => DECK_TYPES.has(c.type));
 }
 
 function matchesFilters(c) {
@@ -244,7 +245,7 @@ function chip(label, active, onClick, iconName) {
 }
 
 function buildShelfBar() {
-  const printedCount = ctx.set.cards.filter((c) => c.type === 'character' || c.type === 'event').length;
+  const printedCount = ctx.set.cards.filter((c) => DECK_TYPES.has(c.type)).length;
   const makerCount = ((ctx.makerSet && ctx.makerSet.cards) || []).length;
   const progress = remadeProgress(ctx.marks, ctx.makerIndex, ctx.set.cards);
   const bar = h('div', { class: 'db-shelfbar' }, [
@@ -272,6 +273,7 @@ function buildFilters() {
     chip('All cards', filter.type === 'all', () => { filter.type = 'all'; render(); }),
     chip('Characters', filter.type === 'character', () => { filter.type = 'character'; render(); }),
     chip('Events', filter.type === 'event', () => { filter.type = 'event'; render(); }),
+    chip('Town Buildings', filter.type === 'townBuilding', () => { filter.type = 'townBuilding'; render(); }),
   ]);
   const sortRow = h('div', { class: 'db-chiprow' }, [
     h('span', { class: 'db-chiplabel' }, 'Sort by:'),
@@ -465,8 +467,11 @@ function suggestFrom(deckId) {
 
 function render() {
   const dr = deckRules(ctx.rules);
-  const { total, chars, events } = counts();
+  const { total, chars, events, buildings } = counts();
   const problems = deckProblems(ctx.rules, ctx.set, ctx.list);
+  // Advice sits beside the rules, not among them: a thin deck is legal, and the Workshop says so
+  // plainly rather than refusing to build it.
+  const warnings = deckWarnings(ctx.rules, ctx.set, ctx.list);
   host.innerHTML = '';
 
   const nameInput = h('input', { type: 'text', id: 'dbName', class: 'seed-input', value: ctx.name, maxlength: '40', placeholder: 'Name your deck' });
@@ -475,7 +480,7 @@ function render() {
   const head = h('div', { class: 'db-head' }, [
     h('div', { class: 'db-head-main' }, [
       h('h2', {}, 'The Deck Workshop'),
-      h('p', { class: 'db-sub' }, `Build a ${dr.deckSize}-card town deck from any Characters and Events in the book — at least ${dr.minCharacters} Characters, and copies capped by rarity: ${RARITIES.map((r) => `${r} ${dr.copiesByRarity[r]}`).join(', ')}.`),
+      h('p', { class: 'db-sub' }, `Build a town deck of ${dr.minDeckSize} to ${dr.maxDeckSize} cards from any Characters, Events and Town Buildings in the book. There is no floor on animals and no ceiling on Events — the deck is yours to get wrong — and copies are capped by rarity: ${RARITIES.map((r) => `${r} ${dr.copiesByRarity[r]}`).join(', ')}.`),
     ]),
     h('div', { class: 'db-head-side' }, [
       h('label', { class: 'menu-label', for: 'dbName' }, 'Deck name'),
@@ -484,11 +489,12 @@ function render() {
   ]);
 
   const counter = h('div', { class: `db-counter${problems.length ? '' : ' ok'}` }, [
-    h('div', { class: 'db-big' }, `${total} / ${dr.deckSize}`),
-    h('div', { class: 'db-counter-sub' }, `${chars} Characters · ${events} Events`),
+    h('div', { class: 'db-big' }, `${total} / ${dr.minDeckSize}–${dr.maxDeckSize}`),
+    h('div', { class: 'db-counter-sub' }, `${chars} Characters · ${events} Events${buildings ? ` · ${buildings} Town Buildings` : ''}`),
     problems.length
       ? h('ul', { class: 'db-problems' }, problems.map((t) => h('li', {}, t)))
       : h('div', { class: 'db-ok' }, 'This deck is ready to play.'),
+    warnings.length ? h('ul', { class: 'db-warnings' }, warnings.map((t) => h('li', {}, t))) : null,
   ]);
 
   const starters = h('div', { class: 'db-chiprow' }, [

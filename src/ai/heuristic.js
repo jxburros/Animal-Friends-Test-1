@@ -27,7 +27,7 @@
 
 import {
   cardDef, topCard, canAct, opponentOf, statueCount, findEventAssignment, eventReduction, rankOf, hasPassive,
-  pledgeMinCost, townFootprint, townCap, hasTownRoom, rehireCost, cityRule,
+  pledgeMinCost, townFootprint, townCap, hasTownRoom, rehireCost, cityRule, hasBuildingRoom,
 } from '../engine/index.js';
 import { cardPower, effectPower } from '../engine/power.js';
 
@@ -574,6 +574,31 @@ function scoreAction(state, ctx, a, agg, out, P) {
       return s;
     }
 
+    case 'build': {
+      // A Town Building pays for the rest of the game, but raising it costs a round of the town's
+      // labour: every animal on the crew is a shift not worked. Worth it when the town has animals
+      // to spare, a poor idea when the Capital City is about to want them for a bidding war.
+      const d = def(state, a.cardId);
+      if (!d) return -1;
+      const crew = (a.characters || []).map((uid) => findStack(state, ctx.pi, uid));
+      const labour = crew.reduce((acc, st) => acc + (st ? stackRate(state, st) : 0), 0) * P.eventCharCost;
+      let s = cardPower(d, state.rules) * 1.4 - labour - a.cost * P.costWeight;
+      // Building into a full row means pulling something down, and a Statue we cannot stand is worse
+      // than a Building we never raised.
+      if (!hasBuildingRoom(state, ctx.pi)) s -= 4;
+      if (ctx.statueThreat && ctx.upright.length - crew.length <= 0) s -= P.reservePenalty;
+      out.why = `build ${d.name}`;
+      return s;
+    }
+
+    case 'playHeld': {
+      // Already paid for at auction: the only question left is whether this is the turn for it.
+      const d = def(state, a.cardId);
+      if (!d) return -1;
+      out.why = `held ${d.name}`;
+      return effectPower(d.onGain || d.effect || {}) * 2.4;
+    }
+
     default:
       return -1;
   }
@@ -719,8 +744,10 @@ export function makeHeuristicAgent(options = {}) {
           return t.cost * 1.2 + rateOf(t) * 2.5 + (s.orientation === 0 ? 3 : 0) + (s.cards.length > 1 ? 2 : 0);
         }, req);
 
+      case 'demolishForStatue':
       case 'demolish':
-        // Knock down the Building that is doing the least for us.
+        // Knock down the Building that is doing the least for us. Making room for a Statue is worth
+        // almost any Building, so the same ranking answers both questions.
         return pickWorst(opts, (o) => {
           const d = def(state, o.cardId);
           return d ? cardPower(d, state.rules) : 0;

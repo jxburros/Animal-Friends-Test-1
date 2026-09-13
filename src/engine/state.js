@@ -124,18 +124,22 @@ function makePlayer(state, index, name, deckRef) {
     dump: [], // town dump: card instances
     unemployment: [], // card instances
     victoryRow: [], // statue card ids
-    buildings: [], // market cards that stay in town: card ids, capped by rules.buildings.maxPerTown
+    // Everything permanent that is not a Statue: {uid, cardId, source:'market'|'deck'}. Capital City
+    // Buildings and Town Buildings built out of the deck stand in the same places, and the Statues in
+    // the Victory Row take places out of the same eight (rules.buildings).
+    buildings: [],
+    reshuffles: 0, // Town Dump shuffled back into the deck; rules.deckOut.maxReshuffles allows one
     held: [], // market cards whose effect is still pending (for display)
     supply: 0,
     escrow: 0,
     mods: [], // {key, value, expires, consumable}
     turn: freshTurnCounters(),
-    stats: { supplyEarned: 0, shiftsCompleted: 0, recruits: 0, eventsPlayed: 0, announcements: 0, challenges: 0, purchasesWon: 0 },
+    stats: { supplyEarned: 0, shiftsCompleted: 0, recruits: 0, eventsPlayed: 0, announcements: 0, challenges: 0, purchasesWon: 0, buildingsRaised: 0 },
   };
 }
 
 export function freshTurnCounters() {
-  return { eventsPlayed: 0, announcements: 0, bids: 0, recruits: 0, shiftsCompleted: 0, usedOnce: [], ingenuityUsed: false };
+  return { eventsPlayed: 0, announcements: 0, bids: 0, recruits: 0, shiftsCompleted: 0, buildingsRaised: 0, usedOnce: [], ingenuityUsed: false };
 }
 
 /**
@@ -357,8 +361,8 @@ export function abilitySources(state, pi) {
     const def = cardDef(state, id);
     for (const [i, ab] of (def.abilities || []).entries()) out.push({ kind: 'statue', def, ability: ab, key: `s${j}:${i}` });
   }
-  for (const [j, id] of (p.buildings || []).entries()) {
-    const def = cardDef(state, id);
+  for (const [j, b] of (p.buildings || []).entries()) {
+    const def = cardDef(state, b.cardId);
     for (const [i, ab] of (def.abilities || []).entries()) out.push({ kind: 'building', def, ability: ab, key: `b${j}:${i}` });
   }
   return out;
@@ -397,6 +401,37 @@ export function townCap(state) {
  */
 export function hasTownRoom(state, pi) {
   return townFootprint(state, pi) < townCap(state);
+}
+
+// ---------- the Building places ----------
+/**
+ * How many of the town's Building places are spoken for. A Statue counts as a Building: it stands in
+ * the same row and takes one of the same places, so a Mayor closing on a victory is also running out
+ * of room to build. That is the whole point of counting them together.
+ */
+export function buildingSlotsUsed(state, pi) {
+  const p = state.players[pi];
+  const statues = (state.rules.buildings || {}).statuesOccupySlots === false ? 0 : p.victoryRow.length;
+  return (p.buildings || []).length + statues;
+}
+
+/** The town's Building limit, or Infinity when no cap is configured. */
+export function buildingCap(state) {
+  const n = (state.rules.buildings || {}).maxPerTown;
+  return typeof n === 'number' && n > 0 ? n : Infinity;
+}
+
+/** Is there an empty place to stand something permanent in? */
+export function hasBuildingRoom(state, pi) {
+  return buildingSlotsUsed(state, pi) < buildingCap(state);
+}
+
+/**
+ * Whether this Mayor could make room by demolishing. A Statue can never be demolished, so a town
+ * holding eight Statues — or eight places' worth of Statues and nothing else — is simply full.
+ */
+export function canDemolishFor(state, pi) {
+  return (state.players[pi].buildings || []).length > 0;
 }
 
 /** Card types whose `displayed` abilities change the rules of the Capital City while they sit in it. */

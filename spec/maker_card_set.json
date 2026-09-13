@@ -451,7 +451,7 @@
     "tile": 14
    },
    "remakes": "mh_acorn_0",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.95,
     "power": 4.92,
@@ -721,7 +721,7 @@
     "tile": 10
    },
    "remakes": "ns_barley_2",
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.58,
     "power": 9.85,
@@ -915,7 +915,7 @@
     "tile": 1
    },
    "remakes": "mkt_barrow",
-   "rarity": "Legendary",
+   "rarity": "Super Rare",
    "power": {
     "score": 6.6,
     "power": 16.17,
@@ -1139,7 +1139,7 @@
     "tile": 8
    },
    "remakes": "br_bramble_1",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.64,
     "power": 4.4,
@@ -1287,7 +1287,7 @@
     "tile": 8
    },
    "remakes": "br_bramble_2",
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.63,
     "power": 11.63,
@@ -1414,7 +1414,7 @@
     "atlas": "capital",
     "tile": 7
    },
-   "rarity": "Legendary",
+   "rarity": "Super Rare",
    "power": {
     "score": 6.33,
     "power": 15.9,
@@ -1646,7 +1646,7 @@
     }
    ],
    "remakes": "rr_brook_2",
-   "rarity": "Legendary",
+   "rarity": "Super Rare",
    "power": {
     "score": 6,
     "power": 15.65,
@@ -1685,7 +1685,7 @@
     "tile": 4
    },
    "remakes": "mh_burr_0",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.08,
     "power": 5.14,
@@ -2118,7 +2118,7 @@
     "tile": 11
    },
    "remakes": "ns_clovers_potato_experiment",
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.61,
     "power": 7.7,
@@ -2296,7 +2296,7 @@
     "tile": 9
    },
    "remakes": "ns_comet_5",
-   "rarity": "Legendary",
+   "rarity": "Super Rare",
    "power": {
     "score": 5.9,
     "power": 15.39,
@@ -2608,7 +2608,7 @@
     "tile": 0
    },
    "remakes": "mkt_dabble",
-   "rarity": "Legendary",
+   "rarity": "Super Rare",
    "power": {
     "score": 6.74,
     "power": 15.8,
@@ -2649,7 +2649,7 @@
     "tile": 2
    },
    "remakes": "bb_dill_1",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.08,
     "power": 5.14,
@@ -2816,9 +2816,9 @@
    "remakes": "ns_bld_all_night_cafe",
    "rarity": "Rare",
    "power": {
-    "score": 4.65,
+    "score": 4.79,
     "power": 11.64,
-    "opportunityCost": 9.9
+    "opportunityCost": 9.22
    }
   },
   {
@@ -2854,9 +2854,9 @@
    "remakes": "bld_festival_green",
    "rarity": "Super Rare",
    "power": {
-    "score": 5.39,
+    "score": 5.51,
     "power": 15,
-    "opportunityCost": 12.9
+    "opportunityCost": 12.22
    }
   },
   {
@@ -2884,9 +2884,9 @@
    "remakes": "bld_hiring_hall",
    "rarity": "Rare",
    "power": {
-    "score": 4.73,
+    "score": 4.88,
     "power": 11.34,
-    "opportunityCost": 8.9
+    "opportunityCost": 8.22
    }
   },
   {
@@ -2912,9 +2912,9 @@
    "remakes": "bld_winter_stores",
    "rarity": "Rare",
    "power": {
-    "score": 4.8,
+    "score": 4.94,
     "power": 12,
-    "opportunityCost": 9.9
+    "opportunityCost": 9.22
    }
   },
   {
@@ -3019,7 +3019,7 @@
     "tile": 4
    },
    "remakes": "mh_hedge_apothecary",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.85,
     "power": 4.76,
@@ -3097,7 +3097,7 @@
    },
    "flavor": "Biff gives his account, which takes a while because he starts with everyone's names. Brett reads the clause. The animal in the dock walks out with a job, which is how it usually goes.",
    "remakes": "pp_fair_hearing",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.79,
     "power": 4.65,
@@ -3134,7 +3134,7 @@
     "tile": 1
    },
    "remakes": "mk_community_oven",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3,
     "power": 4.9,
@@ -3175,7 +3175,7 @@
     "tile": 13
    },
    "remakes": "mk_lantern_terrace",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.99,
     "power": 5.4,
@@ -3220,7 +3220,7 @@
    },
    "flavor": "They come out from the Capital City with clipboards and nobody remembers inviting them. Copper has met them four times and has never once been surprised.",
    "remakes": "dx_tax_assessors",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.73,
     "power": 3.6,

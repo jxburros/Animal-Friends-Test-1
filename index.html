@@ -93,16 +93,30 @@
     <!-- The tutorial's coach: dialog chips that say what to do and why. Empty unless a tutorial is running. -->
     <aside id="coach" class="coach" hidden></aside>
 
-    <div class="town-panel page rival" id="oppTown" data-side="opponent"></div>
+    <!--
+      The table, seen from your chair. Your rival's town is laid out at the top and mirrored: their
+      back row (deck, dump, the eight Building places) furthest away, their animals nearer. Between
+      the two towns is the middle of the table — the Market Deck, the Capital City display and the
+      City Dump — with each Mayor's Events at their own right hand. The Chronicle rails down the
+      left and folds away; what you can do sits down the right, beside the hand you do it with.
+    -->
+    <div class="table" id="board">
+      <aside class="chronicle-rail page" id="chronicleRail">
+        <button type="button" class="rail-fold" id="logToggle" aria-expanded="true" aria-controls="gameLog" title="Fold the Chronicle away">❦ <span class="rail-fold-text">The Town Chronicle</span></button>
+        <div class="log-scroll" id="gameLog"></div>
+      </aside>
 
-    <div class="capital-city-panel page" id="capitalCity"></div>
+      <div class="board-rows">
+        <div class="town-row-panel page rival back" id="oppBackRow" data-side="opponent"></div>
+        <div class="town-row-panel page rival front" id="oppFrontRow" data-side="opponent"></div>
+        <div class="middle-row page" id="middleRow"></div>
+        <div class="town-row-panel page you front" id="yourFrontRow" data-side="you"></div>
+        <div class="town-row-panel page you back" id="yourBackRow" data-side="you"></div>
+        <div class="hand-rail page" id="handRow"></div>
+      </div>
 
-    <div class="log-panel page">
-      <div class="log-title"><span class="orn">❦</span> The Town Chronicle <span class="orn">❦</span></div>
-      <div class="log-scroll" id="gameLog"></div>
+      <aside class="action-rail page" id="actionRail"></aside>
     </div>
-
-    <div class="town-panel page you" id="yourTown" data-side="you"></div>
   </section>
 
   <!-- ============ OVERLAYS ============ -->

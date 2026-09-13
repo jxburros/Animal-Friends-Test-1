@@ -13,17 +13,26 @@
 // Pure data in, numbers out: nothing here reads game state, so the Deck Workshop, the tests and the
 // balance scripts all rate a card the same way.
 
-export const RARITIES = ['Common', 'Uncommon', 'Rare', 'Super Rare', 'Legendary'];
+export const RARITIES = ['Common', 'Uncommon', 'Rare', 'Super Rare'];
 
-/** Copies of a card of each rarity that a 40-card town deck may hold. */
-export const COPY_LIMITS = { Common: 3, Uncommon: 3, Rare: 2, 'Super Rare': 1, Legendary: 1 };
+/**
+ * Copies of a card a town deck may hold, by rarity. Rarity here is a deck-building limit and nothing
+ * else: it says how often a deck may repeat a card, not how hard the card is to come by. Four tiers,
+ * because a fifth (the retired Legendary) drew a line the limits could not see — it capped copies at
+ * one exactly as Super Rare did, so it was a label with no rule behind it.
+ */
+export const COPY_LIMITS = { Common: 4, Uncommon: 3, Rare: 2, 'Super Rare': 1 };
 
-/** Score at or above which a card lands in each rarity. Tuned to a pyramid on the printed set. */
+/**
+ * Score at or above which a card lands in each rarity. Retuned when the fifth tier went and the
+ * Building cap opened up: the cuts sit on the quantiles of the cards a deck may actually hold
+ * (Characters and Events), which is where a copy limit bites, and they make a pyramid there —
+ * about 40% Common, 32% Uncommon, 20% Rare, 8% Super Rare — and set-wide too.
+ */
 export const RARITY_THRESHOLDS = [
-  ['Legendary', 5.83],
-  ['Super Rare', 5.31],
-  ['Rare', 4.53],
-  ['Uncommon', 2.6],
+  ['Super Rare', 5.4],
+  ['Rare', 4.65],
+  ['Uncommon', 3.2],
   ['Common', 0],
 ];
 
@@ -70,6 +79,31 @@ function townSlotCost(rules) {
   if (!(typeof cap === 'number' && cap > 0)) return 0.3;
   return BODY * (10 / cap);
 }
+
+/**
+ * What one of a town's Building places costs. Eight places sound generous until you remember that a
+ * Statue stands in one of them: a Mayor who means to win spends five on Statues, so the places a
+ * Building can actually have are the cap less the Statues that are coming. That is what `EXPECTED_STATUES`
+ * is — not how many a Mayor ends with, but how many are standing there while they are deciding whether
+ * to build. Loosening the cap from three places to eight is why every Building in the set re-rates
+ * upward: the same card now displaces much less.
+ */
+const BUILDING_SLOT = 1.5; // what a place was worth when a town had only three
+const EXPECTED_STATUES = 2.5;
+function buildingSlotCost(rules) {
+  const cap = rules?.buildings?.maxPerTown;
+  if (!(typeof cap === 'number' && cap > 0)) return 0.3;
+  const free = rules?.buildings?.statuesOccupySlots ? Math.max(1, cap - EXPECTED_STATUES) : cap;
+  return BUILDING_SLOT * (3 / free);
+}
+
+/**
+ * What one animal put to work on a Town Building costs its Mayor: the shift they were not working
+ * (a middling shift is worth about three Supply over the turn or two they are Busy) plus the tempo
+ * of having them face down while the Capital City is bidding. Building with four animals is meant to
+ * feel like a round of your town's whole labour, because it is.
+ */
+const BUILD_LABOUR = 2.2;
 
 /**
  * The Statue price that matters for rating: the dearest tier, because the Statue that wins the game
@@ -329,6 +363,11 @@ function entryTurns(cost) {
   return 2; // Masters enter at 180 and take two Readys to stand up
 }
 
+/** Animals a Town Building puts to work to raise it — a head count, never a species. */
+function buildAnimals(card) {
+  return (card.build && card.build.animals) || 0;
+}
+
 /** Requirement "pips": an Event that needs two Civics Characters is asking for two. */
 function requirePips(card) {
   return (card.requires || []).reduce((a, r) => a + (r.count || 1), 0);
@@ -350,18 +389,24 @@ export function opportunityCost(card, statueCost, rules) {
       // and it takes one of the town's places like any other animal.
       return card.cost + ACTION + 0.6 + 1.2 + townSlot;
     case 'building':
-      // The most expensive thing on the board, and it takes one of only three town slots.
-      return card.cost + ACTION + 0.6 + 1.5;
+      // The most expensive thing on the board, and it stands in one of the town's Building places.
+      return card.cost + ACTION + 0.6 + buildingSlotCost(rules);
+    case 'townBuilding':
+      // Built out of your own deck: a draw, an action, the printed Supply, the animals who go Busy
+      // to raise it without producing anything, and one of the town's Building places.
+      return slot + ACTION + card.cost + BUILD_LABOUR * buildAnimals(card) + buildingSlotCost(rules);
     case 'ordinance':
       return 2.0; // never bought; it is weather, like an on-reveal card
     case 'statue':
       // A Statue's price is not printed on it: it is the tiered price in spec/game.json, and the one
       // that matters is the dearest — the fifth and winning Statue is always bought at that tier.
-      return (statueCost || card.cost) + ACTION + 0.6;
+      // It also stands in a Building place, and cannot be demolished to get that place back.
+      return (statueCost || card.cost) + ACTION + 0.6 + buildingSlotCost(rules);
     case 'market':
       // Bought at auction: announcing costs an action and makes one of your Characters Busy until
       // the auction ends. The printed cost is the minimum bid, so it already carries the Supply.
-      return card.cost + ACTION + 0.6 + (card.disposal === 'outOfPlay' ? 0.4 : 0);
+      // A held Event is bought now and played later, so it costs the second action as well.
+      return card.cost + ACTION + 0.6 + (card.hold ? 0.5 * ACTION : 0) + (card.disposal === 'outOfPlay' ? 0.4 : 0);
     case 'disruption':
       return 2.0; // never bought; rated purely by how hard it hits the table
     default:
@@ -384,12 +429,15 @@ export function cardPower(card, rules) {
   const limited = card.type === 'event' && card.kind === 'limited';
   let runs;
   if (limited) runs = card.duration || 1;
-  else if (card.type === 'building') runs = BUILDING_RUNS;
+  else if (card.type === 'building' || card.type === 'townBuilding') runs = BUILDING_RUNS;
   // A retained hire only fires its abilities for as long as the retainer lasts, and the body goes
   // home with them. `leavesAfter` therefore caps the runs and discounts the whole card.
   else if (card.leavesAfter) runs = card.leavesAfter;
   for (const ab of card.abilities || []) power += abilityPower(ab, runs);
   if (card.leavesAfter) power *= termFactor(card.leavesAfter);
+  // A held Event waits in hand for the turn that suits it, and asks for no Characters when it comes
+  // down. Playing the same effect exactly when you want it is worth more than playing it on reveal.
+  if (card.hold) power *= 1.12;
   return power;
 }
 

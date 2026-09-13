@@ -17,7 +17,7 @@ function hiredIn(state, p) {
     + p.hand.filter(isHired).length + p.deck.filter(isHired).length;
 }
 
-function check(state, seed, marketSize) {
+function check(state, seed, marketSize, deckSizes) {
   const m = state.market;
   // Market cards now also come to rest as Buildings in a town and as hired animals in it.
   const total = m.deck.length + m.city.length + m.cityDump.length + m.outOfPlay.length + m.revealQueue.length
@@ -25,7 +25,10 @@ function check(state, seed, marketSize) {
   if (total !== marketSize) throw new Error(`seed ${seed} turn ${state.turnNumber}: market card count ${total} (expected ${marketSize})`);
   for (const p of state.players) {
     const n = p.deck.length + p.hand.length + p.dump.length + p.unemployment.length + p.events.length + p.town.reduce((a, s) => a + s.cards.length, 0) - hiredIn(state, p);
-    if (n !== rules.setup.deckSize) throw new Error(`seed ${seed} turn ${state.turnNumber}: ${p.name} has ${n} deck cards`);
+    // A deck may be any legal size now, so the invariant is that its own card count never changes,
+    // not that it matches one printed number. Town Buildings standing in a town are still its cards.
+    const built = (p.buildings || []).filter((b) => b.source === 'deck').length;
+    if (n + built !== deckSizes[p.index]) throw new Error(`seed ${seed} turn ${state.turnNumber}: ${p.name} has ${n + built} deck cards (started with ${deckSizes[p.index]})`);
     if (p.supply < 0) throw new Error(`seed ${seed}: negative supply ${p.supply}`);
     if (p.escrow < 0) throw new Error(`seed ${seed}: negative escrow`);
     const esc = m.pending.reduce((a, pd) => a + pd.committed[p.index], 0);
@@ -43,10 +46,13 @@ for (let seed = 1; seed <= N; seed++) {
   const state = createGame(rules, set, { seed, market, decks: pairs[(seed - 1) % pairs.length] });
   state.agents = [makeRandomAgent(seed * 7), makeRandomAgent(seed * 13)];
   const marketSize = state.market.deck.length + state.market.city.length + state.market.cityDump.length;
+  // Each Mayor's own card count, taken at the start: a deck may be any legal size, so what has to
+  // hold is that no card of theirs is ever created or lost, not that both decks match one number.
+  const deckSizes = state.players.map((p) => p.deck.length + p.hand.length);
   const cap = rules.simulation.maxTurnsPerPlayer * 2;
   while (state.winner === null && state.turnNumber < cap) {
     await playTurn(state);
-    check(state, seed, marketSize);
+    check(state, seed, marketSize, deckSizes);
   }
   results[state.winner]++;
   turns += state.turnNumber;

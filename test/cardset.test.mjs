@@ -4,7 +4,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { RULES, SET, newGame } from './helpers.mjs';
-import { createGame, playGame, buildMarketDeck, resolveDeck, deckProblems, deckRules, maxCopiesOf } from '../src/engine/index.js';
+import { createGame, playGame, buildMarketDeck, resolveDeck, deckProblems, deckWarnings, deckRules, maxCopiesOf, DECK_TYPES } from '../src/engine/index.js';
 import { seedRng } from '../src/engine/rng.js';
 import { EFFECTS, TRIGGERS, PASSIVE_KEYS, MOD_KEYS, CITY_RULE_KEYS, CONDITIONS } from './card-vocabulary.mjs';
 import { makeRandomAgent } from '../src/ai/random.js';
@@ -127,19 +127,22 @@ test('card set', async (t) => {
 });
 
 test('decks', async (t) => {
-  await t.test('every printed deck is the printed size, with legal copy counts', () => {
+  await t.test('every printed deck is a legal size, with legal copy counts', () => {
+    const db = RULES.deckbuilding;
     for (const deck of SET.decks) {
       const entries = Object.entries(deck.list);
       const total = entries.reduce((a, [, n]) => a + n, 0);
-      assert.equal(total, RULES.setup.deckSize, `${deck.id}: ${total} cards`);
+      assert.ok(total >= db.minDeckSize && total <= db.maxDeckSize, `${deck.id}: ${total} cards`);
       for (const [cardId, n] of entries) {
         const def = SET.cards.find((c) => c.id === cardId);
         assert.ok(def, `${deck.id}: unknown card ${cardId}`);
-        assert.ok(['character', 'event'].includes(def.type), `${deck.id}: ${cardId} is a ${def.type}`);
+        assert.ok(DECK_TYPES.has(def.type), `${deck.id}: ${cardId} is a ${def.type}`);
         assert.ok(n <= maxCopiesOf(RULES, def), `${deck.id}: ${n} copies of ${cardId} (${def.rarity})`);
       }
+      // There is no Character floor any more — a thin deck is the Mayor's to build — but a printed
+      // deck is a starting point, so it should still be a town rather than a pile of paperwork.
       const chars = entries.reduce((a, [id, n]) => a + (SET.cards.find((c) => c.id === id).type === 'character' ? n : 0), 0);
-      assert.ok(chars >= RULES.deckbuilding.minCharacters, `${deck.id}: only ${chars} Characters`);
+      assert.ok(chars > RULES.deckbuilding.warnMinCharacters, `${deck.id}: only ${chars} Characters`);
     }
   });
 
@@ -180,17 +183,17 @@ test('custom decks', async (t) => {
     let total = 0;
     for (const src of [SET.decks[0], SET.decks[2], SET.decks[4]]) {
       for (const [id, n] of Object.entries(src.list)) {
-        if (total >= dr.deckSize) break;
+        if (total >= dr.minDeckSize) break;
         const card = SET.cards.find((c) => c.id === id);
-        const room = Math.min(n, maxCopiesOf(dr, card) - (list[id] || 0), dr.deckSize - total);
+        const room = Math.min(n, maxCopiesOf(dr, card) - (list[id] || 0), dr.minDeckSize - total);
         if (room > 0) { list[id] = (list[id] || 0) + room; total += room; }
       }
     }
     assert.deepEqual(deckProblems(RULES, SET, list), [], 'the mixed deck is legal');
-    assert.equal(Object.values(list).reduce((a, n) => a + n, 0), RULES.setup.deckSize);
+    assert.equal(Object.values(list).reduce((a, n) => a + n, 0), dr.minDeckSize);
     const state = createGame(RULES, SET, { seed: 3, decks: [{ id: 'custom-test', name: 'Six Boroughs', list }, 'paws-papers'] });
     assert.equal(state.players[0].deckName, 'Six Boroughs');
-    assert.equal(state.players[0].deck.length + state.players[0].hand.length, RULES.setup.deckSize);
+    assert.equal(state.players[0].deck.length + state.players[0].hand.length, dr.minDeckSize);
     await playGame(state, [makeRandomAgent(21), makeRandomAgent(23)]);
     assert.ok(state.winner !== undefined);
   });
@@ -203,22 +206,49 @@ test('deck legality', async (t) => {
     assert.deepEqual(deckProblems(RULES, SET, legal), []);
   });
 
-  await t.test('the wrong size, too many copies, too few Characters and stray cards are all reported', () => {
+  await t.test('a deck outside the size range, over a copy limit or holding a stray card is reported', () => {
     const dr = deckRules(RULES);
     const short = { ...legal };
     delete short[Object.keys(short)[0]];
-    assert.ok(deckProblems(RULES, SET, short).some((p) => p.includes(`of ${dr.deckSize} cards`)));
+    assert.ok(deckProblems(RULES, SET, short).some((p) => p.includes(`at least ${dr.minDeckSize}`)));
 
-    const tooMany = { bb_clover_1: 4, bb_mabel_1: 3, br_bramble_1: 3, rr_pip_1: 3, bb_poppy_1: 3, br_thistle_1: 3, rr_willow_1: 3, pp_patch_1: 3, pp_juniper_1: 3, rr_acorn_1: 2 };
-    assert.ok(deckProblems(RULES, SET, tooMany).some((p) => p.includes('4 copies')));
+    const long = { ...legal };
+    for (const id of Object.keys(long)) { if (Object.values(long).reduce((a, n) => a + n, 0) > dr.maxDeckSize) break; long[id] += 1; }
+    assert.ok(deckProblems(RULES, SET, long).some((p) => p.includes(`at most ${dr.maxDeckSize}`)), 'a deck over the ceiling is reported');
 
-    const eventHeavy = { bb_community_garden: 3, bb_seed_swap: 3, bb_patient_harvest: 3, bb_neighborhood_watch: 3, bb_blooming_confidence: 3, bb_welcome_wagon: 3, pp_open_ledger: 3, pp_paper_trail: 3, rr_river_market: 3, br_barn_raising: 3 };
-    assert.ok(deckProblems(RULES, SET, eventHeavy).some((p) => p.includes('Characters (at least')));
+    // A Common may be repeated four times now, so five is the copy limit to break.
+    const common = SET.cards.find((c) => c.type === 'character' && c.rarity === 'Common');
+    assert.ok(deckProblems(RULES, SET, { ...legal, [common.id]: 5 }).some((p) => p.includes('5 copies')));
 
     const withStatue = { ...legal, st_kindness: 1 };
     assert.ok(deckProblems(RULES, SET, withStatue).some((p) => p.includes('cannot go in a town deck')));
 
     assert.ok(deckProblems(RULES, SET, { not_a_card: 30 }).some((p) => p.includes('Unknown card')));
+  });
+
+  await t.test('a thin deck is legal but warned about, and the warning waits for a full deck', () => {
+    const dr = deckRules(RULES);
+    const events = SET.cards.filter((c) => c.type === 'event' && (c.rarity || 'Common') === 'Common');
+    // A deck of nothing but Events: legal, and unplayable, which is exactly what the warning is for.
+    const thin = {};
+    let n = 0;
+    for (const e of events) {
+      if (n >= dr.minDeckSize) break;
+      const take = Math.min(maxCopiesOf(RULES, e), dr.minDeckSize - n);
+      thin[e.id] = take;
+      n += take;
+    }
+    assert.equal(n, dr.minDeckSize, 'the set has enough Common Events to fill a deck');
+    assert.deepEqual(deckProblems(RULES, SET, thin), [], 'no Character floor any more: it is legal');
+    const warnings = deckWarnings(RULES, SET, thin);
+    assert.equal(warnings.length, 1, 'but the Workshop says it is ill-advised');
+    assert.ok(warnings[0].includes('0 Characters'), warnings[0]);
+
+    // Half a deck with no animals in it yet is just a deck being built; nothing to say.
+    const half = {};
+    let m = 0;
+    for (const [id, k] of Object.entries(thin)) { if (m >= 20) break; half[id] = k; m += k; }
+    assert.deepEqual(deckWarnings(RULES, SET, half), [], 'a deck under way is not yet ill-advised');
   });
 
   await t.test('a deck the builder calls legal is one createGame accepts', async () => {

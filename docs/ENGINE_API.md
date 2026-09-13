@@ -23,11 +23,24 @@ and `buildMarketDeck` deals every `always` card (all nine Statues) plus a seeded
 Market Deck keeps one size while its contents vary per game. A plain array of card ids is still accepted, as is the
 legacy single `set.marketDeck` field.
 
-Card types: `character`, `event` (town decks); `statue`, `market`, `building`, `marketCharacter`,
-`ordinance`, `disruption` (the Market Deck). A `building` goes to its buyer's town (capped by
-`rules.buildings.maxPerTown`, demolishing one if full); a `marketCharacter` joins the town as a Busy
-stack; an `ordinance` occupies a display slot, cannot be announced on, and applies `cityRule` keys while
-it is there.
+Card types: `character`, `event`, `townBuilding` (town decks); `statue`, `market`, `building`,
+`marketCharacter`, `ordinance`, `disruption` (the Market Deck).
+
+A town has `rules.buildings.maxPerTown` **Building places**, and `buildingSlotsUsed(state, pi)` counts
+everything standing in them: `building` cards bought at auction, `townBuilding` cards built out of the deck,
+and — when `rules.buildings.statuesOccupySlots` is set — the Statues in the Victory Row. `p.buildings` holds
+`{ uid, cardId, source }` entries, `source` being `'market'` or `'deck'`; `addBuilding` demolishes one first
+when the places are full (a market one to the City Dump, a deck one to its owner's Town Dump), and
+`makeStatueRoom` does the same for a Statue that has just been won, failing when only Statues are left to
+pull down. `legalActions` refuses to announce a Statue auction without room, and `resolvePurchase` checks
+again at resolution, refunding the bid if the places filled up in between.
+
+A `townBuilding` is played from hand with the `build` action: it pays `def.cost` and turns `def.build.animals`
+upright Characters Busy without starting a shift, then stands in a Building place and works at once. A
+`market` card printed `hold: true` goes to the buyer's hand instead of resolving, and is played later with the
+`playHeld` action, free and without requirements. A `marketCharacter` joins the town as a Busy stack and, when
+it would be unemployed, returns to the City Dump instead (`rules.market.characters`). An `ordinance` occupies
+a display slot, cannot be announced on, and applies `cityRule` keys while it is there.
 
 A `disruption` card is never displayed or bought. When `refillCity` deals one it goes to `market.revealQueue`
 and dealing continues past it; `await flushReveals(state)` then resolves each one against both towns and moves it

@@ -119,7 +119,7 @@ describe('Buildings', () => {
     assert.ok(Math.max(...buildings.map((c) => c.cost)) > dearestMarket, 'a Building outprices any one-shot');
   });
 
-  test('a Building stays in town, and a fourth demolishes one', async () => {
+  test('a Building stays in town, and one over the cap demolishes another', async () => {
     const { gainMarketCard } = await import('../src/engine/effects.js');
     const state = newGame();
     const cap = RULES.buildings.maxPerTown;
@@ -134,6 +134,7 @@ describe('Buildings', () => {
     await gainMarketCard(state, 0, picks[cap].id, 'test');
     assert.equal(state.players[0].buildings.length, cap, 'still capped');
     assert.ok(state.market.cityDump.includes(picks[0].id), 'the demolished Building went to the City Dump');
+    assert.ok(state.players[0].buildings.every((b) => b.cardId && b.source === 'market'), 'a Building in town is an entry, not a bare id');
   });
 
   test("a Building's ability works from the town", async () => {
@@ -141,7 +142,7 @@ describe('Buildings', () => {
     const payer = SET.cards.find((c) => c.type === 'building'
       && (c.abilities || []).some((a) => a.trigger === 'onTurnStart' && JSON.stringify(a.effect || {}).includes('"gainSupply"')));
     assert.ok(payer, 'the set prints a Building that pays at turn start');
-    state.players[0].buildings.push(payer.id);
+    state.players[0].buildings.push({ uid: 9001, cardId: payer.id, source: 'market' });
     setSupply(state, 0, 0);
     state.agents = [{ choose: async () => 'supply' }, { choose: async () => 'supply' }];
     await startPhase(state, 0);

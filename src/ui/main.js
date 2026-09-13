@@ -279,6 +279,20 @@ function wireMenu() {
   $('howToPlayBtn2').addEventListener('click', () => openHelp('quick'));
   $('paceSelect').addEventListener('change', (e) => applyPace(e.target.value));
   $('paceSelectMenu').addEventListener('change', (e) => applyPace(e.target.value));
+  // The Chronicle folds away to a spine when the table wants the width. It starts open: the story
+  // of the game is half of what the Chronicle is for, and a reader should have to close it on purpose.
+  $('logToggle').addEventListener('click', () => {
+    const table = document.getElementById('board');
+    const folded = table.classList.toggle('log-folded');
+    const btn = $('logToggle');
+    btn.setAttribute('aria-expanded', folded ? 'false' : 'true');
+    btn.title = folded ? 'Open the Chronicle' : 'Fold the Chronicle away';
+    try { localStorage.setItem('af-log-folded', folded ? '1' : '0'); } catch { /* private window: no memory, no harm */ }
+  });
+  try {
+    if (localStorage.getItem('af-log-folded') === '1') $('logToggle').click();
+  } catch { /* no stored preference */ }
+
   $('quitBtn').addEventListener('click', leaveGame);
   $('playAgainBtn').addEventListener('click', leaveGame);
   buildHelp(rules, { onTutorial: () => { startTutorial(); } });
