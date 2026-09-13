@@ -456,6 +456,25 @@ input[type=range]{width:100%;accent-color:var(--gold)}
 .db-row button{padding:0 7px;line-height:1.4;box-shadow:0 2px 0 var(--ink)}
 .db-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
 .db-actions button{flex:1 1 auto}
+/* Shelves: the printed book and the hand-remade maker cards, and the remade tick on each printed card. */
+.db-shelfbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.db-shelfbar .db-chiprow{margin-bottom:0}
+.db-progress{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:11.5px;color:var(--ink2)}
+.db-progress button{padding:1px 9px;box-shadow:0 2px 0 var(--ink)}
+.db-group-title{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);margin:14px 0 8px;padding-bottom:2px}
+.db-group-name{font-size:16px;font-variant:small-caps;letter-spacing:.7px;font-weight:bold}
+.db-group-count{font-family:var(--sans);font-size:11px;color:var(--muted)}
+.db-list-sub{font-family:var(--sans);font-size:11px;font-variant:small-caps;letter-spacing:.5px;color:var(--muted);margin-top:4px}
+.db-remade{font-family:var(--sans);font-size:10.5px;padding:1px 8px;line-height:1.6;box-shadow:0 2px 0 var(--line2);border-radius:12px}
+.db-remade.on{background:var(--green2,#e6f3e6);border-color:var(--green,#4b8b5a);box-shadow:0 2px 0 var(--green,#4b8b5a);font-weight:bold}
+.db-slot.remade .card-face{opacity:.82}
+.db-slot.remade .card-face:hover{opacity:1}
+.db-slot.maker .card-face{box-shadow:0 0 0 3px #b98bd6,var(--shadow2)}
+.db-maker-tag{font-family:var(--sans);font-size:10.5px;color:var(--muted);font-style:italic}
+.db-maker-note{font-family:var(--sans);font-size:10.5px;color:var(--ink2);text-align:center;max-width:var(--card-w)}
+.db-maker-empty{border:2px dashed var(--line2);border-radius:12px;padding:16px 18px;background:#fffaf0;max-width:640px}
+.db-maker-empty h3{font-size:18px;font-variant:small-caps;letter-spacing:.6px;margin:0 0 6px}
+.db-maker-empty p{font-size:13px;margin:0 0 6px;color:var(--ink2)}
 
 /* ---------- auctions: pledged animals, burdens, disruptions ---------- */
 .stack.bidding .stack-flip { filter: saturate(0.75) brightness(0.94); }

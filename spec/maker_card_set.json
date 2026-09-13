@@ -1,0 +1,11 @@
+{
+ "$comment": "Maker Cards (AF-MAKER-01). The hand-remade collection: as each printed card from spec/starter_card_set.json is remade it is added here, so the new version can be compared side by side with the old one in the Deck Workshop. This set starts empty and is NOT playable yet — the Workshop shows it in its own section, read-only, and deck lists still draw only from the printed set. Cards use exactly the schema of spec/starter_card_set.json, plus one extra field: 'remakes', the id (or ids) of the printed card(s) this card replaces. That link is what survives a rename — the Workshop marks the old card remade from it even after the new card is given a different name.",
+ "setId": "AF-MAKER-01",
+ "name": "Maker Cards",
+ "playable": false,
+ "note": "Work in progress: cards here cannot be put in a deck yet.",
+ "species": [],
+ "studies": [],
+ "decks": [],
+ "cards": []
+}
