@@ -129,6 +129,14 @@ add to the list.
   until they are fit to be somewhere else; half the Hiring Hall's second chances started there. Her
   tinctures are the only remedies in the First Boroughs that reliably work, and the Science hall has
   twice failed to account for why. She charges for the tincture and never for the rest. [Rosabeth]
+- **The borough's ovens are banked overnight and shared out by morning.** The Community Oven is a
+  standing arrangement, not a building somebody owns, and it is the arrangement that made Food a
+  study rather than a sideline of Commerce. [town cards]
+- **The Bandstand on the Festival Green was built for speeches** and has never once been used for
+  one. It holds a band of five if two of them stand on the step. [town cards]
+- **The Tax Assessors come out from the Capital City with clipboards**, unannounced, and the borough
+  loses Supply when they do. They are the disaster Copper's cellar was stocked against, and he has
+  met them four times. [Copper]
 
 ## Relationships
 

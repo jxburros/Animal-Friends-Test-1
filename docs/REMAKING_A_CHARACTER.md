@@ -229,7 +229,12 @@ not a wish.
 
 **Triggers**: `passive`, `busy`, `onRecruit`, `onTurnStart`, `onTurnEnd`, `onReady`,
 `onShiftStarted`, `onShiftCompleted`, `onEventPlayed`, `onAnnounce`, `onChallengedByOpponent`,
-`onGainMarketCard`, `onCharacterUnemployed`, `onTiedBid`, `displayed`.
+`onGainMarketCard`, `onCharacterUnemployed`, `onTiedBid`, `onSupplyLost`, `displayed`.
+
+A `displayed` ability is a rule the Capital City applies while the card sits in the display, named by
+`key` rather than run as an effect (`pledgeLadderDelta`, `statueCostDelta`, `buildingCostDelta`,
+`noRaises`, `blockStatuePurchase`). Only an **Ordinance** or a **marketCharacter** is ever displayed,
+so it is the only place the key means anything — on a Character in a town it is read by nothing.
 
 **Effects**: `seq`, `gainSupply`, `opponentGainSupply`, `giveSupplyToOpponent`, `draw`, `discard`,
 `addMod`, `readyCharacter`, `readyNextTurn`, `rehire`, `recruitFromHand`, `reorderDeckTop`,
@@ -248,6 +253,12 @@ route: wish, then approval, then engine, then the card.
 unplayable card. Build the nearest thing out of verbs that exist, and log the gap in the character
 entry's `wantedVerbs` with what the story wanted and what you used instead. The maker approves new
 engine verbs as separate work; a remake batch never changes `src/engine/`.
+
+Three effects take more than a count. `recruitFromHand` takes `filter` (`maxCost`), `orientation`
+and `then` — a rider that runs **only when a Character actually came out of hand**, which is what
+separates it from putting the same step in a `seq`. `rehire` filters on `cost`, `maxCost`, `minCost`,
+`study` and `species`: who is out of work, not who is standing where. `protectCharacter` and
+`readyNextTurn` take `filter: { notSelf: true }`.
 
 Rules text must say exactly what the effect does, in the printed set's voice — plain sentences,
 town words ("Busy:", "Upgrades Acorn.", "gain 1 Supply"), no keyword soup.

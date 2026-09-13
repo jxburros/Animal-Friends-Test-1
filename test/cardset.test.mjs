@@ -19,6 +19,7 @@ function walkEffect(eff, where) {
     eff.steps.forEach((st, i) => walkEffect(st, `${where}.steps[${i}]`));
   }
   if (eff.do === 'addMod') assert.ok(MOD_KEYS.has(eff.key), `${where}: unknown mod key "${eff.key}"`);
+  if (eff.then) walkEffect(eff.then, `${where}.then`);
 }
 
 test('card set', async (t) => {

@@ -3,8 +3,10 @@
 // manners they inherit (never a Character mid-shift, never one pledged, never one behind quills).
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { newGame, addStack, setSupply, UPRIGHT, BUSY } from './helpers.mjs';
+import { newGame, addStack, addToHand, addToUnemployment, setSupply, UPRIGHT, BUSY } from './helpers.mjs';
 import { runEffect, isProtected } from '../src/engine/effects.js';
+import { cityRule } from '../src/engine/state.js';
+import { pledgeMinCost } from '../src/engine/actions.js';
 import { endPhase } from '../src/engine/game.js';
 import { recruitCost } from '../src/engine/actions.js';
 
@@ -151,4 +153,87 @@ test('a retained hire pledged into an auction stays until it resolves', async ()
   await endPhase(state, 0);
   assert.ok(state.players[0].town.includes(hire), 'the town cannot send home what it has bid');
   assert.equal(hire.termRemaining, 1, 'and the term does not run while it is pledged');
+});
+
+// ---------------------------------------------------------------- the second round of wishes
+// Four more verbs, each one a gap a remade character walked into: the gate animal who should work
+// the door while he is still on display, the friend who should arrive with something, the cellar
+// that should notice a loss, and the herbalist who takes whoever came to the gate.
+
+test('a displayed market animal changes the rules of the Capital City', () => {
+  const state = stage();
+  const gate = { id: 'test_gate', type: 'marketCharacter', name: 'Gate', cost: 3, abilities: [{ trigger: 'displayed', key: 'pledgeLadderDelta', value: 1 }] };
+  state.set.cardsById[gate.id] = gate;
+  assert.equal(cityRule(state, 'pledgeLadderDelta'), 0, 'nothing on display, nothing owed');
+  state.market.city.push(gate.id);
+  assert.equal(cityRule(state, 'pledgeLadderDelta'), 1, 'the animal on the door taxes the ladder');
+  assert.equal(pledgeMinCost(state, null, 0), 2, 'and the first pledge of an auction costs a rung more');
+  state.market.city.pop();
+  assert.equal(cityRule(state, 'pledgeLadderDelta'), 0, 'hire him out of the display and the gate is open');
+});
+
+test('only a displayed card with the rule carries it: a Building in town is not the Capital City', () => {
+  const state = stage();
+  const bld = { id: 'test_bld', type: 'building', name: 'Shed', cost: 3, abilities: [{ trigger: 'displayed', key: 'buildingCostDelta', value: 2 }] };
+  state.set.cardsById[bld.id] = bld;
+  state.market.city.push(bld.id);
+  assert.equal(cityRule(state, 'buildingCostDelta'), 0, 'a Building is bought, not a standing rule');
+});
+
+test('recruitFromHand runs its `then` rider only when somebody actually comes out of hand', async () => {
+  const state = stage();
+  state.players[0].hand = [];
+  const friend = addToHand(state, 0, 'ns_copper_0'); // cost 0, and brings nobody else with it
+  state.agents = [{ choose: async (_s, _pi, req) => (req.kind === 'pick' ? [friend.uid] : true) }];
+  setSupply(state, 0, 0);
+  await runEffect(state, 0, { do: 'recruitFromHand', filter: { maxCost: 1 }, orientation: BUSY, then: { do: 'gainSupply', amount: 2 } }, {});
+  assert.equal(state.players[0].town.length, 1, 'the friend came out');
+  assert.equal(state.players[0].supply, 2, 'and the rider paid for the seed');
+});
+
+test('the `then` rider does not pay out when there is nobody to bring', async () => {
+  const state = stage();
+  state.players[0].hand = [];
+  agentTakesAll(state);
+  setSupply(state, 0, 0);
+  await runEffect(state, 0, { do: 'recruitFromHand', filter: { maxCost: 1 }, orientation: BUSY, then: { do: 'gainSupply', amount: 2 } }, {});
+  assert.equal(state.players[0].town.length, 0);
+  assert.equal(state.players[0].supply, 0, 'an empty hand pays nothing — this is what a seq could not say');
+});
+
+test('onSupplyLost fires for the Mayor who lost something, and not for a loss of nothing', async () => {
+  const state = stage();
+  setSupply(state, 0, 5);
+  setSupply(state, 1, 0);
+  const watcher = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+  state.set.cardsById.bb_clover_1 = { ...state.set.cardsById.bb_clover_1, abilities: [{ trigger: 'onSupplyLost', effect: { do: 'gainSupply', amount: 1 } }] };
+  const other = addStack(state, 1, 'bb_mabel_1', UPRIGHT);
+  state.set.cardsById.bb_mabel_1 = { ...state.set.cardsById.bb_mabel_1, abilities: [{ trigger: 'onSupplyLost', effect: { do: 'gainSupply', amount: 1 } }] };
+  assert.ok(watcher && other);
+  await runEffect(state, 0, { do: 'everyoneLosesSupply', amount: 3 }, {});
+  assert.equal(state.players[0].supply, 3, '5 - 3 lost, +1 back from the cellar');
+  assert.equal(state.players[1].supply, 0, 'a Mayor with nothing to lose loses nothing and is told nothing');
+});
+
+test('a cellar that reacts to a loss by causing one does not cascade', async () => {
+  const state = stage();
+  setSupply(state, 0, 10);
+  addStack(state, 0, 'bb_clover_1', UPRIGHT);
+  state.set.cardsById.bb_clover_1 = { ...state.set.cardsById.bb_clover_1, abilities: [{ trigger: 'onSupplyLost', effect: { do: 'everyoneLosesSupply', amount: 1 } }] };
+  await runEffect(state, 0, { do: 'everyoneLosesSupply', amount: 2 }, {});
+  assert.equal(state.players[0].supply, 7, '2 lost, then the reaction takes 1 more, and there it stops');
+});
+
+test('rehire can be filtered by study and by species, not only by cost', async () => {
+  const state = stage();
+  setSupply(state, 0, 0);
+  addToUnemployment(state, 0, 'bb_clover_1'); // Rabbit, Agriculture
+  addToUnemployment(state, 0, 'rr_pip_1'); // Squirrel, Lore
+  state.agents = [{ choose: async (_s, _pi, req) => (req.kind === 'pick' ? [req.options[0].uid] : true) }];
+  await runEffect(state, 0, { do: 'rehire', free: true, filter: { study: 'Lore' }, optional: true }, {});
+  assert.deepEqual(state.players[0].town.map((s) => s.cards[0].cardId), ['rr_pip_1'], 'only the Lore animal was on offer');
+  await runEffect(state, 0, { do: 'rehire', free: true, filter: { species: 'Squirrel' }, optional: true }, {});
+  assert.equal(state.players[0].town.length, 1, 'no Squirrel left in Unemployment, so nothing happens');
+  await runEffect(state, 0, { do: 'rehire', free: true, filter: { species: 'Rabbit' }, optional: true }, {});
+  assert.equal(state.players[0].town.length, 2, 'the Rabbit comes back when the filter asks for one');
 });

@@ -75,6 +75,23 @@ export function loseSupply(state, pi, n, { byOpponent = false } = {}) {
   if (n > 0) log(state, pi, `${p.name} loses ${n} Supply.`, { kind: 'supply', player: pi, amount: -n });
   return n;
 }
+/**
+ * Lose Supply and tell the town about it. `onSupplyLost` fires for the Mayor who actually lost
+ * something — the trigger a cautious animal's cellar listens for — and never for a loss of nothing.
+ * It cannot cascade: a card that reacts to a loss by causing one does not re-enter this hook.
+ */
+export async function loseSupplyAndNotify(state, pi, n, opts = {}) {
+  const lost = loseSupply(state, pi, n, opts);
+  if (lost > 0 && !state.notifyingSupplyLoss) {
+    state.notifyingSupplyLoss = true;
+    try {
+      await fireHook(state, 'onSupplyLost', { player: pi, listeners: [pi], amount: lost });
+    } finally {
+      state.notifyingSupplyLoss = false;
+    }
+  }
+  return lost;
+}
 export function draw(state, pi, n, why = '') {
   const p = state.players[pi];
   let drawn = 0;
@@ -359,6 +376,11 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       const n = Math.min(eff.amount, p.supply);
       p.supply -= n;
       gainSupply(state, oi, eff.amount, `${cardDef(state, ctx.sourceCardId).name}`);
+      if (n > 0 && !state.notifyingSupplyLoss) {
+        state.notifyingSupplyLoss = true;
+        try { await fireHook(state, 'onSupplyLost', { player: pi, listeners: [pi], amount: n }); }
+        finally { state.notifyingSupplyLoss = false; }
+      }
       return;
     }
     case 'draw':
@@ -393,10 +415,17 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       return;
     }
     case 'rehire': {
+      // `filter` reads the card in Unemployment rather than a stack in town: who is out of work, not
+      // who is standing where. Cost was always here; study and species are the herbalist's version —
+      // she takes the animal who came to the gate, not the cheapest one going.
+      const f = eff.filter || {};
       const opts = p.unemployment.filter((c) => {
         const d = cardDef(state, c.cardId);
-        if (eff.filter && eff.filter.cost !== undefined && d.cost !== eff.filter.cost) return false;
-        if (eff.filter && eff.filter.maxCost !== undefined && d.cost > eff.filter.maxCost) return false;
+        if (f.cost !== undefined && d.cost !== f.cost) return false;
+        if (f.maxCost !== undefined && d.cost > f.maxCost) return false;
+        if (f.minCost !== undefined && d.cost < f.minCost) return false;
+        if (f.study && d.study !== f.study) return false;
+        if (f.species && d.species !== f.species) return false;
         return eff.free || Math.max(0, d.cost - (eff.discount || 0)) <= p.supply;
       });
       if (!opts.length) return;
@@ -427,6 +456,10 @@ export async function runEffect(state, pi, eff, ctx = {}) {
         p.stats.recruits++;
         log(state, pi, `${p.name} recruits ${d.name}, ${d.title} for free (${orientation === UPRIGHT ? 'upright' : 'Busy'}).`, { kind: 'recruit', player: pi, uid: s.uid, cardUid: c.uid, cardId: c.cardId, cost: 0, upgrade: false });
         await fireHook(state, 'onRecruit', { player: pi, stackUid: s.uid, listeners: [pi], selfOnly: s.uid });
+        // `then` is the rider the friend arrives with: it runs only when somebody actually came out
+        // of hand, which is what separates it from putting the same step in a `seq`. Declining the
+        // recruit declines the rider with it.
+        if (eff.then) await runEffect(state, pi, eff.then, { ...ctx, recruitedStackUid: s.uid });
       }
       return;
     }
@@ -550,7 +583,7 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       return;
     }
     case 'everyoneLosesSupply':
-      for (const pl of state.players) loseSupply(state, pl.index, eff.amount);
+      for (const pl of state.players) await loseSupplyAndNotify(state, pl.index, eff.amount);
       return;
     case 'everyoneGainsSupply':
       for (const pl of state.players) gainSupply(state, pl.index, eff.amount, ctx.sourceCardId ? cardDef(state, ctx.sourceCardId).name : '');

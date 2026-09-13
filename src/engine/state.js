@@ -399,11 +399,17 @@ export function hasTownRoom(state, pi) {
   return townFootprint(state, pi) < townCap(state);
 }
 
+/** Card types whose `displayed` abilities change the rules of the Capital City while they sit in it. */
+const DISPLAYED_RULE_TYPES = new Set(['ordinance', 'marketCharacter']);
+
 export function cityRule(state, key) {
   let total = 0;
   for (const cardId of state.market.city) {
     const def = state.set.cardsById[cardId];
-    if (!def || def.type !== 'ordinance') continue;
+    // An Ordinance is the usual source, and never leaves the display except by ageing out. A hired
+    // animal may also work the door while nobody has hired them: the gate attendant taxes every
+    // auction until somebody buys him out of the way, which is the point of buying him.
+    if (!def || !DISPLAYED_RULE_TYPES.has(def.type)) continue;
     for (const ab of def.abilities || []) {
       if (ab.trigger === 'displayed' && ab.key === key) total += ab.value === undefined ? 1 : ab.value;
     }
