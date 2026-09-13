@@ -181,3 +181,38 @@ describe('three-tier Statue pricing', () => {
     assert.equal(statueTierFor(legacy, 4), 20, 'and never indexes past the tiers it has');
   });
 });
+
+describe('the Statue tier is charged at resolution, not at announcement', () => {
+  test('a Mayor cannot lock two Statues in at a cheaper tier by opening both at once', async () => {
+    const { newGame: ng } = await import('./helpers.mjs');
+    const h = await import('./helpers.mjs');
+    const eng = await import('../src/engine/index.js');
+    const state = ng();
+    h.setSupply(state, 0, 100);
+    h.setCity(state, ['st_kindness', 'st_curiosity']);
+    for (const id of ['st_joy', 'st_courage', 'st_patience']) h.giveStatue(state, 0, id);
+    const tiers = RULES.victory.statueCostTiers;
+    const mid = tiers[1];
+    const top = tiers[tiers.length - 1];
+
+    // Holding three, both Statues are announced at the middle tier.
+    assert.equal(eng.cardCostFor(state, 0, 'st_kindness'), mid);
+    const a = addStack(state, 0, SET.cards.find((c) => c.type === 'character' && c.cost === 1).id, UPRIGHT);
+    const b = addStack(state, 0, SET.cards.find((c) => c.type === 'character' && c.cost === 2).id, UPRIGHT);
+    state.phase = 'actions'; state.active = 0;
+    await applyAction(state, 0, { type: 'announce', cardId: 'st_kindness', charUid: a.uid, bid: mid, minBid: mid, maxBid: 100 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'st_curiosity', charUid: b.uid, bid: mid, minBid: mid, maxBid: 100 });
+
+    state.agents = [{ choose: async () => 'supply' }, { choose: async () => 'supply' }];
+    const before = state.players[0].supply;
+    await eng.startPhase(state, 0);
+
+    assert.equal(state.players[0].victoryRow.length, 5, 'both Statues were gained');
+    // The fourth is bought at the middle tier; the fifth, taking them to four held, must pay the top.
+    const rise = state.log.find((e) => e.fx && e.fx.kind === 'statueTierRise');
+    assert.ok(rise, 'the price rose on the Statue that took them to four held');
+    assert.equal(rise.fx.due, top, 'and it rose to the top tier');
+    assert.equal(state.players[0].supply, before - (top - mid),
+      'the difference was charged on top of the bid already escrowed');
+  });
+});

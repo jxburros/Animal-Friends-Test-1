@@ -1,8 +1,8 @@
 // Turn structure: Start → Resources → Ready → Actions → End, plus the whole-game runner.
-import { cardDef, topCard, log, opponentOf, expireMods, consumeMod, hasMod, hasPassive, refillCity, ageCity, freshTurnCounters, UPRIGHT, BUSY, findStack } from './state.js';
+import { cardDef, topCard, log, opponentOf, expireMods, consumeMod, hasMod, hasPassive, refillCity, ageCity, cityRule, freshTurnCounters, UPRIGHT, BUSY, findStack } from './state.js';
 import { ask, draw, gainSupply, completeShift, readyStack, gainMarketCard, fireHook, checkVictory, flushReveals } from './effects.js';
 import { shuffle } from './rng.js';
-import { legalActions, applyAction, forfeitOf } from './actions.js';
+import { legalActions, applyAction, forfeitOf, statueTierFor } from './actions.js';
 
 const MAX_ACTIONS_PER_TURN = 60;
 
@@ -113,6 +113,28 @@ export async function resolvePurchase(state, pd) {
     log(state, winner, `${def.name} is no longer in the Capital City; the purchase fizzles.`, { kind: 'fizzle', cardId: pd.cardId, player: winner });
     return;
   }
+
+  // A Statue's tier is read again here, against the Victory Row as it stands now rather than as it
+  // stood when the bid was announced. Without this a Mayor holding three Statues could open auctions
+  // on two at once, lock both in at the middle tier, and never pay the top one at all — which is
+  // exactly the purchase the top tier exists to make expensive. If they cannot cover the rise, the
+  // purchase fizzles and they keep what they bid.
+  if (def.type === 'statue') {
+    const due = Math.max(0, statueTierFor(state.rules, win.victoryRow.length) + cityRule(state, 'statueCostDelta'));
+    const shortfall = due - pd.committed[winner];
+    if (shortfall > 0) {
+      if (win.supply < shortfall) {
+        win.supply += pd.committed[winner];
+        log(state, winner, `${win.name} cannot meet the risen price of ${def.name} (${due} Supply now they hold ${win.victoryRow.length}); the purchase fizzles and the bid is returned.`,
+          { kind: 'fizzle', cardId: pd.cardId, player: winner, due, reason: 'statueTierRose' });
+        return;
+      }
+      win.supply -= shortfall;
+      log(state, winner, `${def.name} now costs ${due} Supply to ${win.name}, who holds ${win.victoryRow.length}; they pay ${shortfall} more.`,
+        { kind: 'statueTierRise', cardId: pd.cardId, player: winner, due, shortfall });
+    }
+  }
+
   m.city.splice(m.city.indexOf(pd.cardId), 1);
   if (tied) await fireHook(state, 'onTiedBid', { player: winner, listeners: [0, 1] });
   await gainMarketCard(state, winner, pd.cardId, contested ? 'won the auction' : 'unopposed');
