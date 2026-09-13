@@ -102,6 +102,21 @@ export function askHuman(pi, request) {
   });
 }
 
+/**
+ * Drop the decision the board is currently offering without answering it. The tutorial uses this
+ * when it answers a request on the player's behalf: the engine already has its answer, so the glow
+ * on the cards would otherwise invite a click that goes nowhere.
+ */
+export function abandonPending() {
+  if (!pending) return;
+  pending = null;
+  wizard = null;
+  hidePopoverUI();
+  hidePeek();
+  closeModal();
+  scheduleRender();
+}
+
 function resolvePending(answer) {
   if (!pending) return;
   const { rawResolve } = pending;

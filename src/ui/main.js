@@ -8,6 +8,9 @@ import {
 import { cardArtSVG } from './art.js';
 import { openFullArtGallery } from './full-art-gallery.js';
 import { openDeckBuilder, loadSavedDecks, saveDeck, deleteSavedDeck } from './deckbuilder.js';
+import { buildHelp, openHelp, openWelcome, hasBeenWelcomed } from './help.js';
+import { createTutorialSession, stopTutorial } from './tutorial.js';
+import { TUTORIAL_SEED } from '../tutorial/scenario.js';
 import * as fx from './fx.js';
 
 const RULES_URL = new URL('../../spec/game.json', import.meta.url);
@@ -65,7 +68,6 @@ function buildMenu() {
 
   renderDeckChoice();
   renderMarketChoice();
-  buildHowToPlay();
 }
 
 function renderDeckChoice() {
@@ -138,132 +140,6 @@ function openWorkshop(deck) {
   });
 }
 
-/**
- * The Statue price ladder in words, read from victory.statueCostTiers and the holdings at which the
- * price steps up (statueCostTierBreaks). With tiers [10,20,30] and breaks [2,4] this reads
- * "10 Supply while you hold fewer than 2 Statues, 20 while you hold 2–3, 30 once you hold 4 or more".
- */
-function statuePriceSentence() {
-  const v = rules.victory || {};
-  const tiers = Array.isArray(v.statueCostTiers) ? v.statueCostTiers : [];
-  if (!tiers.length) return 'every Statue costs the same';
-  const breaks = Array.isArray(v.statueCostTierBreaks) && v.statueCostTierBreaks.length
-    ? v.statueCostTierBreaks : [v.statueCostTierBreak ?? 2];
-  return tiers.map((cost, i) => {
-    if (i === 0) return `<strong>${cost} Supply</strong> while you hold fewer than ${breaks[0]}`;
-    const from = breaks[i - 1];
-    const to = breaks[i];
-    if (from === undefined) return `<strong>${cost}</strong> beyond that`;
-    return to === undefined ? `<strong>${cost}</strong> once you hold ${from} or more` : `<strong>${cost}</strong> while you hold ${from}–${to - 1}`;
-  }).join(', ');
-}
-
-function buildHowToPlay() {
-  $('howToPlayBody').innerHTML = `
-    <h3>The goal</h3>
-    <p>You are the Mayor of a town of animal Characters. Recruit workers, run shifts for
-    <strong>Supply</strong>, play Events, and bid for cards in the shared <strong>Capital City</strong>.
-    Win by controlling <strong>${rules.victory.statuesToWin} of the ${rules.victory.statueTotal} Statues</strong>.</p>
-
-    <h3>Supply</h3>
-    <p>Supply pays for recruiting, rehiring, market bids and card effects. Work shifts are the main
-    source, plus your once-per-turn Resources choice: draw 1 card, or gain 2 Supply.</p>
-
-    <h3>Orientation &amp; Busy</h3>
-    <p>Cards show readiness by rotation instead of counters. <strong>Upright (0°)</strong> Characters
-    can act. A <strong>Busy</strong> Character is rotated a quarter turn and cannot act until it advances
-    back to upright at the start of your turn (180° → 270° → 0°).</p>
-
-    <h3>Ranks and arrival delay</h3>
-    <table>
-      <tr><th>Rank</th><th>Cost</th><th>Enters</th></tr>
-      <tr><td>Apprentice</td><td>0–1</td><td>Upright — acts immediately</td></tr>
-      <tr><td>Journeyman</td><td>2–3</td><td>Busy — ready next turn</td></tr>
-      <tr><td>Master</td><td>4–5</td><td>180° — ready in two turns</td></tr>
-    </table>
-
-    <h3>Turn phases</h3>
-    <p><strong>Start</strong> (resolve your pending Capital City purchases) → <strong>Resources</strong>
-    (draw 1 or gain 2 Supply) → <strong>Ready</strong> (advance orientation) → <strong>Actions</strong>
-    (recruit, work, play Events, announce or outbid in the Capital City, rehire — as many as you like) →
-    <strong>End</strong> (shifts tick down and pay out; Limited Events expire).</p>
-
-    <h3>Shifts</h3>
-    <p>Make an upright Character Busy to start a shift. After its listed delay, it pays out its Supply
-    at End phase and becomes ready to advance again.</p>
-
-    <h3>Events</h3>
-    <p>Instant Events resolve immediately and go to your Town Dump. Limited Events stay in your town for
-    their duration. Both can require upright Characters (by species/study) — those Characters become
-    Busy to pay the cost.</p>
-
-    <h3>Capital City: the bidding war</h3>
-    <p>Make an upright Character Busy, pick a Capital City card, and bid at least its cost — that opens an
-    auction. On their own turn your rival may <strong>outbid</strong> you by pledging an upright Character of
-    their own and bidding higher; then you may answer, and so on for as many rounds as you can both afford.
-    A raise need only beat the standing bid. When you are still the high bidder at the start of your
-    own turn, your rival has had their chance and the card is yours.</p>
-    <p><strong>Bidding costs animals, not Supply you cannot get back.</strong> Every Character you pledge
-    stays Busy until the auction ends — it will not advance at Ready and nothing can wake it — so a long war
-    leaves your town with nobody left to work. The winner pays their bid in full; the <strong>loser is
-    refunded everything</strong> and gets their animals back. What ends a bidding war is the
-    <strong>pledge ladder</strong>: your Nth bid in an auction must be made with a Character costing at
-    least N, so a cost-0 animal cannot bid at all and nobody bids more than five times. Your deck's curve
-    is your bidding range.</p>
-
-    <h3>Statues: a boon and a burden</h3>
-    <p>A Statue is priced from your own Victory Row, so the two Mayors can face different prices for the same
-    card in the same auction: ${statuePriceSentence()}. The Statue that wins the game is always the dearest
-    thing on the table.</p>
-    <p>Every Statue grants its Mayor a lasting gift and a lasting cost — cheaper rehires for your rival,
-    dearer Events, a thinner Resources choice. Five of the nine still win the game, but collecting them
-    taxes the town that is winning.</p>
-
-    <h3>Disruptions</h3>
-    <p>Some Market Decks hold <strong>Disruption</strong> cards. They are never bought: the moment one is
-    dealt into the Capital City it strikes both towns at once — a Recession sends every animal to
-    Unemployment, a Hard Winter abandons every shift in progress — and then it is discarded and another card
-    is dealt in its place. Choose the <strong>Hard Times</strong> Capital City if you want to live with them.</p>
-
-    <h3>Watching the story</h3>
-    <p>Every card move is animated so you can follow what happened: cards fly between zones, Characters
-    turn sideways when they become Busy and turn back when they are ready, Supply pops out of the wallet,
-    and the Town Chronicle records each chapter. Hover a small card to read it at full size. Use the
-    <strong>Pace</strong> control to slow things down (Storybook), speed them up (Brisk) or skip animations
-    (Instant). Foil cards shimmer when you move the pointer across them.</p>
-
-    <h3>How many animals a town holds</h3>
-    <p>A town has room for <strong>${rules.town.maxCharacters} animals</strong>, and everybody counts: animals
-    at work, animals standing in the Capital City on a bid, and animals out of work. The counter above your
-    town reads your whole footprint — when it is full, nobody new can move in, so improving an animal you
-    already have beats hiring another one.</p>
-
-    <h3>Out of work</h3>
-    <p>Disruptive effects can put a Character out of work. They do not leave: they stay in your town,
-    <strong>turned face down</strong>, still taking up their place. Either Mayor may turn a face-down animal
-    over and read them at any time — it is a state, not a secret. A freshly-played Character that hasn't yet
-    been upright on your turn is protected from being put out of work.</p>
-    <p>Three things bring the town back to life. <strong>Rehire</strong> pays their full printed cost and
-    stands them back up as they are. <strong>Promote</strong> plays a better version of that same animal from
-    your hand over them for the printed difference — one action instead of a rehire and then an upgrade, and
-    they come back upright. Or <strong>lay them off</strong>: they leave town for good, to the Town Dump, and
-    their place opens up again. Laying off is free and does not end your turn — it is the way out of a town
-    so full it cannot hire anybody.</p>
-
-    <h3>Build your own deck</h3>
-    <p>The book holds far more cards than the four printed decks use. <strong>Build your own deck</strong>
-    on the cover opens the Deck Workshop: pick any Characters and Events from the whole catalogue
-    (${rules.deckbuilding.deckSize} cards, at most ${rules.deckbuilding.maxCopiesPerCard} copies of a card and at least
-    ${rules.deckbuilding.minCharacters} Characters), name it, and it is saved in this browser for later games.
-    Remember that Events need upright Characters of the right species or study to pay for them, so a deck
-    wants Characters that match the Events you chose.</p>
-
-    <h3>Statues &amp; victory</h3>
-    <p>Statues won from the Capital City sit in your Victory Row and count toward victory. Control
-    ${rules.victory.statuesToWin} of the ${rules.victory.statueTotal} Statues to win the game.</p>
-  `;
-}
-
 // ---------- pace ----------
 function applyPace(name) {
   const pace = ['storybook', 'brisk', 'instant'].includes(name) ? name : 'storybook';
@@ -285,16 +161,20 @@ function getDelay() {
   return THINK_DELAY[fx.getPace()] ?? 900;
 }
 
-async function makeAIAgent(seed) {
-  let inner;
+/** The computer Mayor's brain, with no pacing: the heuristic agent, or the random one if it fails to load. */
+async function loadRivalBrain(seed) {
   try {
     const mod = await import('../ai/heuristic.js');
     if (typeof mod.makeHeuristicAgent !== 'function') throw new Error('no makeHeuristicAgent export');
-    inner = mod.makeHeuristicAgent({ seed });
+    return mod.makeHeuristicAgent({ seed });
   } catch (e) {
     const { makeRandomAgent } = await import('../ai/random.js');
-    inner = makeRandomAgent(seed);
+    return makeRandomAgent(seed);
   }
+}
+
+async function makeAIAgent(seed) {
+  const inner = await loadRivalBrain(seed);
   return {
     name: inner.name || 'Rival',
     async choose(state, pi, req) {
@@ -333,7 +213,6 @@ async function runGame(state, agents) {
 async function startGame() {
   const seedText = $('seedInput').value.trim();
   const seed = seedText ? Number(seedText) : Math.floor(Math.random() * 2 ** 31);
-  quitRequested = false;
 
   // The rival always plays one of the printed decks — a different one where possible.
   const rivals = cardSet.decks.filter((d) => d.id !== chosenDeckId);
@@ -349,13 +228,39 @@ async function startGame() {
   });
   const human = makeHumanAgent('Mayor Bramble');
   const ai = await makeAIAgent(seed + 1);
+  launch(state, [human, ai]);
+}
 
+/** Put a built game on screen and start its turn loop. Shared by an ordinary game and the tutorial. */
+function launch(state, agents) {
+  quitRequested = false;
   showScreen('game'); // before setGame: the first render must measure a visible board
   setGame(state, 0);
   if (renderTicker) clearInterval(renderTicker);
   renderTicker = setInterval(() => { if (isGameActive()) renderIfChanged(); }, 150);
+  runGame(state, agents);
+}
 
-  runGame(state, [human, ai]);
+/**
+ * The tutorial: the same game loop, with the arranged match and the coached agents from
+ * src/ui/tutorial.js. Once the lesson is over the rival plays on with its usual brain.
+ */
+async function startTutorial() {
+  const brain = await loadRivalBrain(TUTORIAL_SEED + 1);
+  const { state, agents } = createTutorialSession({
+    rules, cardSet, fallbackRival: brain, thinkDelay: getDelay, onLeave: leaveGame,
+  });
+  launch(state, agents);
+}
+
+/** Close the book: abandon the running game (and the coach, if any) and return to the cover. */
+function leaveGame() {
+  quitRequested = true;
+  stopGame();
+  stopTutorial();
+  if (renderTicker) clearInterval(renderTicker);
+  $('winOverlay').classList.remove('active');
+  showScreen('menu');
 }
 
 // ---------- wiring ----------
@@ -373,22 +278,15 @@ function wireMenu() {
     chosenDeckId = cardSet.decks[0].id;
     renderDeckChoice();
   });
-  $('howToPlayBtn').addEventListener('click', () => $('howToPlayOverlay').classList.add('active'));
-  $('howToPlayBtn2').addEventListener('click', () => $('howToPlayOverlay').classList.add('active'));
-  $('closeHowToPlay').addEventListener('click', () => $('howToPlayOverlay').classList.remove('active'));
+  $('tutorialBtn').addEventListener('click', () => { startTutorial(); });
+  $('welcomeBtn').addEventListener('click', () => openWelcome());
+  $('howToPlayBtn').addEventListener('click', () => openHelp('quick'));
+  $('howToPlayBtn2').addEventListener('click', () => openHelp('quick'));
   $('paceSelect').addEventListener('change', (e) => applyPace(e.target.value));
   $('paceSelectMenu').addEventListener('change', (e) => applyPace(e.target.value));
-  $('quitBtn').addEventListener('click', () => {
-    quitRequested = true;
-    stopGame();
-    if (renderTicker) clearInterval(renderTicker);
-    showScreen('menu');
-  });
-  $('playAgainBtn').addEventListener('click', () => {
-    $('winOverlay').classList.remove('active');
-    if (renderTicker) clearInterval(renderTicker);
-    showScreen('menu');
-  });
+  $('quitBtn').addEventListener('click', leaveGame);
+  $('playAgainBtn').addEventListener('click', leaveGame);
+  buildHelp(rules, { onTutorial: () => { startTutorial(); } });
 }
 
 /**
@@ -465,6 +363,8 @@ async function main() {
   wireMenu();
   loadPace();
   showScreen('menu');
+  // A first visit opens on the welcome, which offers the tutorial before the cover.
+  if (!hasBeenWelcomed()) openWelcome();
 }
 
 main().catch((e) => {

@@ -56,7 +56,11 @@
         </div>
 
         <button class="primary big" id="startGameBtn">Open the book</button>
-        <button id="howToPlayBtn">How to play</button>
+        <div class="cover-links">
+          <button type="button" id="tutorialBtn" title="A short match with the moves laid out for you and a coach explaining each one">Play the tutorial</button>
+          <button type="button" id="howToPlayBtn">How to play</button>
+          <button type="button" id="welcomeBtn" title="The welcome and introduction to the game">Welcome</button>
+        </div>
         <div class="cover-orn bottom">❦</div>
       </div>
     </div>
@@ -83,6 +87,9 @@
       </div>
     </header>
 
+    <!-- The tutorial's coach: dialog chips that say what to do and why. Empty unless a tutorial is running. -->
+    <aside id="coach" class="coach" hidden></aside>
+
     <div class="town-panel page rival" id="oppTown" data-side="opponent"></div>
 
     <div class="capital-city-panel page" id="capitalCity"></div>
@@ -96,11 +103,34 @@
   </section>
 
   <!-- ============ OVERLAYS ============ -->
+  <div class="overlay" id="welcomeOverlay">
+    <div class="box welcome-box">
+      <div class="cover-orn">❦</div>
+      <h2>Welcome, Mayor</h2>
+      <div class="welcome" id="welcomeBody"></div>
+      <div class="welcome-actions">
+        <button type="button" class="primary big" id="welcomeTutorialBtn">Play the tutorial</button>
+        <button type="button" id="welcomeRulesBtn">Read how to play</button>
+        <button type="button" id="welcomePlayBtn">Skip to the cover</button>
+      </div>
+    </div>
+  </div>
+
   <div class="overlay" id="howToPlayOverlay">
     <div class="box help-box">
       <h2>How to Play</h2>
-      <div class="help" id="howToPlayBody"></div>
-      <button class="primary" id="closeHowToPlay">Got it!</button>
+      <div class="help-tabs" role="tablist" aria-label="How to play">
+        <button type="button" class="help-tab on" id="helpTab-quick" role="tab" aria-selected="true" aria-controls="help-quick">Quick start</button>
+        <button type="button" class="help-tab" id="helpTab-rules" role="tab" aria-selected="false" aria-controls="help-rules">The rules</button>
+        <button type="button" class="help-tab" id="helpTab-faq" role="tab" aria-selected="false" aria-controls="help-faq">Questions &amp; answers</button>
+      </div>
+      <div class="help" id="help-quick" role="tabpanel"></div>
+      <div class="help" id="help-rules" role="tabpanel" hidden></div>
+      <div class="help" id="help-faq" role="tabpanel" hidden></div>
+      <div class="help-actions">
+        <button type="button" id="helpTutorialBtn">Play the tutorial</button>
+        <button type="button" class="primary" id="closeHowToPlay">Got it!</button>
+      </div>
     </div>
   </div>
 
