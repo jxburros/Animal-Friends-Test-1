@@ -4,6 +4,9 @@ A two-player town-building trading card game where each player is the **Mayor** 
 
 This repo replaced the earlier single-file "Critter Town" game (archived at `docs/legacy-critter-town.html`).
 
+The [painted app surroundings](docs/APP_SURROUNDINGS.md) extend the card illustrations into the menu,
+Capital City banner, welcome screen and deck workshop, with locally bundled artwork and matching parchment frames.
+
 **New in v0.7.0 — Night Shift:** the town after dark. **86 cards**, the **Owl** as the tenth species,
 **Science** as the sixth study, a barista, and a Cat in space. See [NIGHT_SHIFT.md](docs/NIGHT_SHIFT.md).
 
