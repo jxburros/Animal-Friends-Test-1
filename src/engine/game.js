@@ -52,8 +52,14 @@ export async function startPhase(state, pi) {
     await resolvePurchase(state, pd);
   }
   state.market.turnsSinceGain++;
-  // The display ages once a round, at the start of the first player's turn.
-  if (pi === 0 && state.turnNumber > 2) ageCity(state);
+  // The display ages once a round, at the start of the turn belonging to `rules.market.aging.agesAt`
+  // (default: the second player). Whoever the aging fires for gets first sight of the card dealt to
+  // replace it, so this is a real edge — and it belongs to the Mayor who moves second, as part of
+  // their compensation for going second. Firing it for the first player instead stacked first sight
+  // on top of moving first, which showed up as a seat imbalance as soon as the Market Deck grew and
+  // Statues became scarcer in the display.
+  const agesAt = state.rules.market.aging?.agesAt ?? 1;
+  if (pi === agesAt && state.turnNumber > 2) ageCity(state);
   await flushReveals(state);
   // Characters flagged to be ready at the start of this turn.
   for (const s of p.town.slice()) if (s.readyNextTurn) await readyStack(state, pi, s, 'ready-next-turn effect');

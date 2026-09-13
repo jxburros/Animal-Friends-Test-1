@@ -3,11 +3,18 @@ import { createGame, playTurn, cardDef } from '../src/engine/index.js';
 import { makeRandomAgent } from '../src/ai/random.js';
 const rules = JSON.parse(fs.readFileSync(new URL('../spec/game.json', import.meta.url)));
 const set = JSON.parse(fs.readFileSync(new URL('../spec/starter_card_set.json', import.meta.url)));
-/** Market cards that have come to rest in a player's own zones (hired animals). */
+/**
+ * Market cards that have come to rest in a player's own zones (hired animals).
+ *
+ * `deck` is in this list because a hired animal can reach it: laid off or knocked down into the Town
+ * Dump, it is shuffled back into the player deck when that deck runs out (rules.deckOut). Leaving the
+ * deck out of the census made such an animal look like a market card that had vanished.
+ */
 function hiredIn(state, p) {
   const isHired = (c) => (cardDef(state, c.cardId) || {}).type === 'marketCharacter';
   return p.town.reduce((a, s) => a + s.cards.filter(isHired).length, 0)
-    + p.dump.filter(isHired).length + p.unemployment.filter(isHired).length + p.hand.filter(isHired).length;
+    + p.dump.filter(isHired).length + p.unemployment.filter(isHired).length
+    + p.hand.filter(isHired).length + p.deck.filter(isHired).length;
 }
 
 function check(state, seed, marketSize) {

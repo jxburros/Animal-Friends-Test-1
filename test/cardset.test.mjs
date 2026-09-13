@@ -131,10 +131,19 @@ test('card set', async (t) => {
     for (const spec of SET.marketDecks) {
       for (const id of [...spec.always, ...spec.pool]) assert.ok(ids.has(id), `${spec.id} references unknown card ${id}`);
       assert.equal(new Set(spec.pool).size, spec.pool.length, `${spec.id}: a card appears twice in the pool`);
-      const deck = buildMarketDeck({ rng: seedRng(7) }, spec);
+      const byIdMap = Object.fromEntries(SET.cards.map((c) => [c.id, c]));
+      const build = (seed) => buildMarketDeck({ rng: seedRng(seed), set: { cardsById: byIdMap } }, spec);
+      const deck = build(7);
       assert.equal(deck.length, statues.length + spec.poolSize, `${spec.id}: Market Deck size`);
+      assert.equal(deck.length, RULES.setup.marketDeckSize, `${spec.id}: Market Deck matches the printed size`);
       for (const id of statues) assert.ok(deck.includes(id), `${spec.id}: Statue ${id} must always be in the Market Deck`);
-      assert.equal(buildMarketDeck({ rng: seedRng(99) }, spec).length, deck.length);
+      assert.equal(build(99).length, deck.length);
+      // Every market guarantees some shared weather, topped up from its own pool.
+      for (const seed of [7, 99, 1234, 5150]) {
+        const reveals = build(seed).filter((id) => byIdMap[id].type === 'disruption').length;
+        assert.ok(reveals >= (spec.minDisruptions || 0),
+          `${spec.id}: seed ${seed} dealt ${reveals} on-reveal cards, below the floor of ${spec.minDisruptions}`);
+      }
     }
   });
 

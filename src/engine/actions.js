@@ -12,7 +12,10 @@ export function recruitCost(state, pi, cardId, targetUid = null) {
   let cost = def.cost;
   if (targetUid) {
     const s = findStack(state, pi, targetUid);
-    cost = def.cost - topCard(state, s).cost;
+    // The target may be a stack in town or an animal face down in Unemployment; either way the
+    // upgrade costs the plain printed difference.
+    const under = s ? topCard(state, s) : cardDef(state, p.unemployment.find((c) => c.uid === targetUid).cardId);
+    cost = def.cost - under.cost;
   }
   cost = Math.max(0, cost - getMod(p, 'recruitDiscount'));
   return cost;
@@ -22,6 +25,21 @@ export function upgradeTargets(state, pi, cardId) {
   const def = cardDef(state, cardId);
   return state.players[pi].town.filter((s) => {
     const t = topCard(state, s);
+    return t.name === def.name && t.cost < def.cost;
+  });
+}
+
+/**
+ * Animals face down in Unemployment that this card can promote back into work. Promoting pays the
+ * plain printed difference — cheaper than the full rehire price — which is what makes the upgrade
+ * path worth taking at all. The knockdown rule puts the lower version of a stack in Unemployment,
+ * so a demoted animal is exactly the material this is here to pick back up.
+ */
+export function unemployedUpgradeTargets(state, pi, cardId) {
+  if (!(state.rules.upgrades || {}).fromUnemployment) return [];
+  const def = cardDef(state, cardId);
+  return state.players[pi].unemployment.filter((c) => {
+    const t = cardDef(state, c.cardId);
     return t.name === def.name && t.cost < def.cost;
   });
 }
@@ -100,20 +118,60 @@ export function findEventAssignment(state, pi, def, waive, avoid = new Set()) {
 }
 
 /**
- * What this card costs *this* player. A Statue is priced from the buyer's own Victory Row: the first
- * figure in `victory.statueCostTiers` while they hold fewer than `statueCostTierBreak`, the second once
- * they hold that many or more. The two Mayors can therefore face different prices in the same auction,
- * and the fifth and winning Statue is always bought at the higher price.
+ * The Statue price tier a player holding `held` Statues pays. `victory.statueCostTierBreaks` lists the
+ * holdings at which the price steps up, so tiers [10,20,30] with breaks [2,4] price 0-1 held at 10,
+ * 2-3 at 20 and 4 at 30 — the Statue that wins the game is always the dearest. A single legacy
+ * `statueCostTierBreak` is read as a one-entry break list so older rule files still price correctly.
+ */
+export function statueTierFor(rules, held) {
+  const v = rules.victory || {};
+  const tiers = v.statueCostTiers;
+  if (!Array.isArray(tiers) || !tiers.length) return null;
+  const breaks = Array.isArray(v.statueCostTierBreaks) && v.statueCostTierBreaks.length
+    ? v.statueCostTierBreaks
+    : [v.statueCostTierBreak ?? 2];
+  let step = 0;
+  for (const b of breaks) if (held >= b) step++;
+  return tiers[Math.min(step, tiers.length - 1)];
+}
+
+/**
+ * What this card costs *this* player. A Statue is priced from the buyer's own Victory Row (see
+ * `statueTierFor`), so the two Mayors can face different prices for the same card in the same auction.
  */
 export function cardCostFor(state, pi, cardId) {
   const def = cardDef(state, cardId);
-  const v = state.rules.victory || {};
-  if (def.type === 'statue' && Array.isArray(v.statueCostTiers) && v.statueCostTiers.length >= 2) {
-    const held = state.players[pi].victoryRow.length;
-    const tier = held < (v.statueCostTierBreak ?? 2) ? v.statueCostTiers[0] : v.statueCostTiers[1];
-    return Math.max(0, tier + cityRule(state, 'statueCostDelta'));
+  if (def.type === 'statue') {
+    const tier = statueTierFor(state.rules, state.players[pi].victoryRow.length);
+    if (tier !== null) return Math.max(0, tier + cityRule(state, 'statueCostDelta'));
   }
   return Math.max(0, def.cost + (def.type === 'building' ? cityRule(state, 'buildingCostDelta') : 0));
+}
+
+// ---------- the town cap ----------
+/**
+ * How many town slots this Mayor is using. Animals at work, animals pledged into an auction and
+ * animals face down in Unemployment all count, so the cap bites on the town's whole footprint.
+ */
+export function townFootprint(state, pi) {
+  const p = state.players[pi];
+  const t = state.rules.town || {};
+  const pledged = t.countsPledged === false ? p.town.filter((s) => s.lockedBid == null).length : p.town.length;
+  return pledged + (t.countsUnemployment === false ? 0 : p.unemployment.length);
+}
+
+/** The town's slot limit, or Infinity when no cap is configured. */
+export function townCap(state) {
+  const n = (state.rules.town || {}).maxCharacters;
+  return typeof n === 'number' && n > 0 ? n : Infinity;
+}
+
+/**
+ * Is there room for one more *new* body? Rehiring and promoting out of Unemployment move an animal
+ * between zones that both count, so they are footprint-neutral and never consult this.
+ */
+export function hasTownRoom(state, pi) {
+  return townFootprint(state, pi) < townCap(state);
 }
 
 export function minBidFor(state, pi, cardId) {
@@ -205,17 +263,28 @@ export function legalActions(state, pi) {
   const acts = [{ type: 'endTurn' }];
   if (state.phase !== 'actions' || state.active !== pi || state.winner !== null) return acts;
   const seen = new Set();
-  // recruit / upgrade
+  // recruit / upgrade. A brand-new body needs a free town slot; upgrading does not, because it
+  // replaces an animal already inside the footprint (in town, or face down in Unemployment).
+  const room = hasTownRoom(state, pi);
   for (const c of p.hand) {
     const def = cardDef(state, c.cardId);
     if (def.type !== 'character' || seen.has('r' + c.cardId)) continue;
     seen.add('r' + c.cardId);
     const cost = recruitCost(state, pi, c.cardId);
-    if (cost <= p.supply) acts.push({ type: 'recruit', cardUid: c.uid, cardId: c.cardId, cost });
+    if (room && cost <= p.supply) acts.push({ type: 'recruit', cardUid: c.uid, cardId: c.cardId, cost });
     for (const t of upgradeTargets(state, pi, c.cardId)) {
       const uc = recruitCost(state, pi, c.cardId, t.uid);
       if (uc <= p.supply) acts.push({ type: 'recruit', cardUid: c.uid, cardId: c.cardId, targetUid: t.uid, cost: uc, upgrade: true });
     }
+    for (const t of unemployedUpgradeTargets(state, pi, c.cardId)) {
+      const uc = recruitCost(state, pi, c.cardId, t.uid);
+      if (uc <= p.supply) acts.push({ type: 'recruit', cardUid: c.uid, cardId: c.cardId, targetUid: t.uid, cost: uc, upgrade: true, fromUnemployment: true });
+    }
+  }
+  // Lay off: send one face-down animal to the Town Dump for good, freeing its slot. The release
+  // valve that stops a town buried under shared shocks from being locked out of recruiting.
+  if ((state.rules.town || {}).layOffToDump) {
+    for (const c of p.unemployment) acts.push({ type: 'layOff', cardUid: c.uid, cardId: c.cardId });
   }
   // work, abilities
   for (const s of p.town) {
@@ -286,9 +355,18 @@ export async function applyAction(state, pi, a) {
       const def = cardDef(state, p.hand[idx].cardId);
       if (def.type !== 'character') throw new Error('Not a character');
       let target = null;
+      let fromUnemployment = null;
       if (a.targetUid) {
         target = findStack(state, pi, a.targetUid);
-        if (!target || !upgradeTargets(state, pi, def.id).includes(target)) throw new Error('Invalid upgrade target');
+        if (target) {
+          if (!upgradeTargets(state, pi, def.id).includes(target)) throw new Error('Invalid upgrade target');
+        } else {
+          // Promoting an animal that is face down in Unemployment straight back into work.
+          fromUnemployment = unemployedUpgradeTargets(state, pi, def.id).find((c) => c.uid === a.targetUid) || null;
+          if (!fromUnemployment) throw new Error('Invalid upgrade target');
+        }
+      } else if (!hasTownRoom(state, pi)) {
+        throw new Error(`A town holds at most ${townCap(state)} animals`);
       }
       const cost = recruitCost(state, pi, def.id, a.targetUid || null);
       if (cost > p.supply) throw new Error('Cannot afford');
@@ -302,6 +380,12 @@ export async function applyAction(state, pi, a) {
         target.cards.unshift(c);
         s = target;
         log(state, pi, `${p.name} upgrades ${def.name} to ${def.title} for ${cost} Supply.`, { kind: 'recruit', player: pi, uid: s.uid, cardUid: c.uid, cardId: def.id, cost, upgrade: true });
+      } else if (fromUnemployment) {
+        // The animal comes back up face up and upright, with the new version on top of the old.
+        p.unemployment.splice(p.unemployment.findIndex((x) => x.uid === fromUnemployment.uid), 1);
+        s = makeStack(state, pi, fromUnemployment, UPRIGHT);
+        s.cards.unshift(c);
+        log(state, pi, `${p.name} promotes ${def.name} out of Unemployment to ${def.title} for ${cost} Supply (upright).`, { kind: 'recruit', player: pi, uid: s.uid, cardUid: c.uid, cardId: def.id, cost, upgrade: true, fromUnemployment: true });
       } else {
         let orientation = entryOrientation(state.rules, def.cost);
         if (orientation === state.rules.orientation.masterEntry && hasPassive(state, pi, 'masterDelayMinus1')) orientation = BUSY;
@@ -452,6 +536,16 @@ export async function applyAction(state, pi, a) {
       const [c] = p.unemployment.splice(idx, 1);
       const s = makeStack(state, pi, c, UPRIGHT);
       log(state, pi, `${p.name} rehires ${def.name}, ${def.title} for ${cost} Supply (upright).`, { kind: 'rehire', player: pi, uid: s.uid, cardUid: c.uid, cardId: def.id, cost });
+      return false;
+    }
+    case 'layOff': {
+      if (!(state.rules.town || {}).layOffToDump) throw new Error('Laying off is not allowed');
+      const idx = p.unemployment.findIndex((c) => c.uid === a.cardUid);
+      if (idx < 0) throw new Error('Not in Unemployment');
+      const [c] = p.unemployment.splice(idx, 1);
+      const def = cardDef(state, c.cardId);
+      p.dump.push(c);
+      log(state, pi, `${p.name} lays off ${def.name}, ${def.title}; they leave town for good.`, { kind: 'layOff', player: pi, cardUid: c.uid, cardId: c.cardId });
       return false;
     }
     default:

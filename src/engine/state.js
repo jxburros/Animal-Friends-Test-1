@@ -71,12 +71,37 @@ export function resolveMarketDeck(set, ref) {
  * `{ always, pool, poolSize }`: every `always` card plus a random `poolSize` of `pool`,
  * so the deck keeps one size while the Capital City pool varies from game to game.
  */
+/**
+ * Build a Market Deck: everything in `always` (the nine Statues) plus a `poolSize` sample of the
+ * market's own pool.
+ *
+ * `minDisruptions` guarantees the sample carries at least that many on-reveal cards, so every game
+ * gets some shared weather however the shuffle falls. The floor is topped up from the same market's
+ * pool, so a market keeps its own character: Hard Times tops up with recessions and hard winters,
+ * Founders' Fair with its fair-weather windfalls. Nothing is moved out of the pool to achieve this,
+ * so each market's printed shock ratio is unchanged.
+ */
 export function buildMarketDeck(state, spec) {
   if (Array.isArray(spec)) return spec.slice();
   const always = (spec.always || []).slice();
   const pool = shuffle(state, (spec.pool || []).slice());
   const want = spec.poolSize === undefined ? pool.length : Math.min(spec.poolSize, pool.length);
-  return always.concat(pool.slice(0, want));
+  const picked = pool.slice(0, want);
+  const min = spec.minDisruptions || 0;
+  if (min > 0 && state.set) {
+    const isReveal = (id) => state.set.cardsById?.[id]?.type === 'disruption';
+    let have = picked.filter(isReveal).length;
+    if (have < min) {
+      const spare = pool.slice(want).filter(isReveal);
+      // Swap each missing on-reveal card in over a non-reveal pick, keeping the deck the same size.
+      for (let i = picked.length - 1; i >= 0 && have < min && spare.length; i--) {
+        if (isReveal(picked[i])) continue;
+        picked[i] = spare.shift();
+        have++;
+      }
+    }
+  }
+  return always.concat(picked);
 }
 
 function makePlayer(state, index, name, deckRef) {

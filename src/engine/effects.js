@@ -109,6 +109,24 @@ export async function discard(state, pi, n, { byOpponent = false } = {}) {
   return chosen.length;
 }
 
+/**
+ * Town-slot footprint and whether a *new* body fits. Duplicated from actions.js rather than imported
+ * because effects.js is upstream of it; both read the same `rules.town` block. Rehiring and promoting
+ * move an animal between two zones that both count, so neither consults this.
+ */
+export function townFootprintOf(state, pi) {
+  const p = state.players[pi];
+  const t = state.rules.town || {};
+  const inTown = t.countsPledged === false ? p.town.filter((s) => s.lockedBid == null).length : p.town.length;
+  return inTown + (t.countsUnemployment === false ? 0 : p.unemployment.length);
+}
+
+export function townHasRoom(state, pi) {
+  const n = (state.rules.town || {}).maxCharacters;
+  if (!(typeof n === 'number' && n > 0)) return true;
+  return townFootprintOf(state, pi) < n;
+}
+
 export function makeStack(state, pi, cardInst, orientation) {
   const p = state.players[pi];
   const s = { uid: nextUid(state), cards: [cardInst], orientation, shift: null, enteredTurn: state.turnNumber, hasBeenUpright: orientation === UPRIGHT, readyNextTurn: false, lockedBid: null, stored: 0, protectedUntil: 0, selfReadyUsed: false };
@@ -219,9 +237,15 @@ export async function gainMarketCard(state, pi, cardId, why = '') {
     // A Character hired out of the Capital City. They are new in town, so they arrive Busy
     // whatever they cost, and they become ladder fuel and a worker from the next turn on.
     if (def.onGain) await runEffect(state, pi, def.onGain, { sourceCardId: cardId });
-    const stack = makeStack(state, pi, { uid: nextUid(state), cardId }, BUSY);
-    log(state, pi, `${def.name} moves into ${p.name}'s town, Busy after the journey.`, { kind: 'marketRecruit', player: pi, cardId, uid: stack.uid });
-    await fireHook(state, 'onRecruit', { player: pi, stackUid: stack.uid, selfOnly: stack.uid });
+    if (!townHasRoom(state, pi)) {
+      // A full town has nowhere to put them; the hire is paid for but cannot move in.
+      state.market.cityDump.push(cardId);
+      log(state, pi, `${def.name} has nowhere to live in ${p.name}'s full town and moves on.`, { kind: 'marketRecruitRefused', player: pi, cardId });
+    } else {
+      const stack = makeStack(state, pi, { uid: nextUid(state), cardId }, BUSY);
+      log(state, pi, `${def.name} moves into ${p.name}'s town, Busy after the journey.`, { kind: 'marketRecruit', player: pi, cardId, uid: stack.uid });
+      await fireHook(state, 'onRecruit', { player: pi, stackUid: stack.uid, selfOnly: stack.uid });
+    }
   } else {
     if (def.onGain) await runEffect(state, pi, def.onGain, { sourceCardId: cardId });
     if (def.disposal === 'outOfPlay') state.market.outOfPlay.push(cardId);
@@ -403,6 +427,7 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       return;
     }
     case 'recruitFromHand': {
+      if (!townHasRoom(state, pi)) return; // a full town cannot take another body
       const opts = p.hand.filter((c) => {
         const d = cardDef(state, c.cardId);
         return d.type === 'character' && (eff.filter?.maxCost === undefined || d.cost <= eff.filter.maxCost);
