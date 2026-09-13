@@ -1,5 +1,5 @@
 {
-  "$comment": "Species charters. A species is a design space, not a keyword: nothing is printed on every card of a species. Each charter names a centre of gravity (the effects this species should get a disproportionate share of), a hole (what it is genuinely bad at, which is what actually creates identity), and a signature (an effect only this species does). scripts/identity.mjs measures the card set against this file and fails when two species become indistinguishable or a signature goes unused. Studies are the other, horizontal axis: species is what a card IS, study is what it DOES, and a deck is one or two of each.",
+  "$comment": "Species charters. A species is a design space, not a keyword: nothing is printed on every card of a species. Each charter names a centre of gravity (the effects this species should get a disproportionate share of), a hole (what it is genuinely bad at, which is what actually creates identity), and a signature (an effect only this species does). scripts/identity.mjs measures the card set against this file and fails when two species become indistinguishable or a signature goes unused. Owl is the tenth species (Night Shift, v0.7.0). Studies are the other, horizontal axis: species is what a card IS, study is what it DOES, and a deck is one or two of each.",
   "id": "AF-SPECIES-01",
   "signatureFloor": 2,
   "maxPairSimilarity": 0.86,
@@ -75,6 +75,14 @@
       "hole": "Cats do not co-operate: they are the worst species for anything counting friends or species.",
       "signature": "selfReady",
       "signatureText": "Ignoring an orientation rule — acting when a Character should not be able to."
+    },
+    "Owl": {
+      "owns": "the night",
+      "blurb": "Owls are awake when the rest of the town is asleep. They see what is coming, and they have everybody up and working before dawn.",
+      "centre": ["advanceCharacter", "scryDeck", "draw"],
+      "hole": "Owls earn almost nothing on their own and want no part of a bidding war: an Owl town is wise, awake and poor, and an Owl would sooner read the pledge ladder than climb it.",
+      "signature": "advanceCharacter",
+      "signatureText": "The wake-up call: turning a Character one step toward upright outside the Ready phase, never one that is mid-shift."
     }
   }
 }

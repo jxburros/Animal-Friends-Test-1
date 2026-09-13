@@ -116,7 +116,7 @@ const PLUM = '#6f4a8a';
  * so a Character's palette comes straight from ANIMALS instead of a second set of colours.
  */
 export const SPECIES_KIND = {
-  Cat: 'cat',
+  Cat: 'cat', Owl: 'owl',
   Rabbit: 'rabbit', Mouse: 'mouse', Raccoon: 'raccoon', Fox: 'fox',
   Hedgehog: 'hedgehog', Badger: 'badger', Otter: 'otter', Squirrel: 'squirrel',
 };
@@ -365,7 +365,31 @@ function civicsBackdrop(grand, compact) {
   return s;
 }
 
+function telescopeProp(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})"><path d="M-14 12 L0 -2 M14 12 L0 -2 M0 12 L0 -2" stroke="#8a5a34" stroke-width="2.4" stroke-linecap="round"/><g transform="rotate(-35)"><rect x="-4" y="-22" width="8" height="24" rx="2" fill="#c78a2f" stroke="${INK}" stroke-width="1.4"/><rect x="-5.5" y="-26" width="11" height="6" rx="2" fill="#d9c9a3" stroke="${INK}" stroke-width="1.3"/></g></g>`;
+}
+function scienceBackdrop(grand) {
+  // The observatory at night: a deep sky, a moon, a scatter of stars, and the telescope on the hill.
+  const groundY = 62;
+  let s = sky(grand ? '#2c2f5e' : '#3a3f70', groundY);
+  s += moon(128, 18, grand ? 11 : 9, '#fff3c2', grand ? '#2c2f5e' : '#3a3f70');
+  const stars = [[14, 10], [34, 22], [56, 8], [78, 18], [98, 6], [112, 28], [150, 34], [42, 40], [70, 34]];
+  for (let i = 0; i < stars.length; i++) s += starDot(stars[i][0], stars[i][1], i % 3 === 0 ? 1.1 : 0.7, '#fff8d9');
+  s += hillsRow(52, '#3f5a3e', 0.95);
+  s += ground('#4e6a49', groundY);
+  s += telescopeProp(24, 76, grand ? 1.15 : 0.95);
+  if (grand) {
+    s += `<rect x="120" y="36" width="30" height="26" rx="3" fill="#6b5a4a" stroke="${INK}" stroke-width="1.6"/><path d="M118 36 Q135 18 152 36 Z" fill="#8c7a66" stroke="${INK}" stroke-width="1.6"/><rect x="132" y="48" width="6" height="14" fill="#ffd35c"/>`;
+    s += bunting(20, 4, 60, ['#ffd35c', PLUM, CREAM]);
+  } else {
+    s += lanternProp(146, 70, 0.9);
+  }
+  for (let i = 0; i < 5; i++) s += `<circle cx="${20 + i * 30}" cy="${92 + (i % 2) * 3}" r="1.6" fill="#2f4a2e"/>`;
+  return s;
+}
+
 function studyBackdrop(study, grand) {
+  if (study === 'Science') return scienceBackdrop(grand);
   if (study === 'Agriculture') return agricultureBackdrop(grand);
   if (study === 'Botany') return botanyBackdrop(grand);
   if (study === 'Commerce') return commerceBackdrop(grand);
@@ -1365,12 +1389,14 @@ const ICONS = {
   Hedgehog: () => `<circle cx="10" cy="13" r="5" fill="currentColor"/><path d="M3 11 L5 4 L8 8 L10 2 L12 8 L15 4 L17 11 Z" fill="currentColor"/>`,
   Badger: () => `<circle cx="10" cy="12" r="5.4" fill="currentColor"/><circle cx="5" cy="6" r="2.6" fill="currentColor"/><circle cx="15" cy="6" r="2.6" fill="currentColor"/><rect x="8.6" y="7" width="2.8" height="10" fill="#fff" opacity="0.85"/>`,
   Otter: () => `<circle cx="10" cy="12" r="5.4" fill="currentColor"/><circle cx="5.4" cy="7" r="2.4" fill="currentColor"/><circle cx="14.6" cy="7" r="2.4" fill="currentColor"/><path d="M4 12 L1 11 M4 14 L1 15 M16 12 L19 11 M16 14 L19 15" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>`,
+  Owl: () => `<ellipse cx="10" cy="11" rx="6.5" ry="7.5" fill="currentColor"/><polygon points="4,6 3,1 8,4" fill="currentColor"/><polygon points="16,6 17,1 12,4" fill="currentColor"/><circle cx="7.4" cy="9.5" r="2.4" fill="#fff" opacity="0.9"/><circle cx="12.6" cy="9.5" r="2.4" fill="#fff" opacity="0.9"/><circle cx="7.4" cy="9.5" r="1.1" fill="currentColor"/><circle cx="12.6" cy="9.5" r="1.1" fill="currentColor"/><polygon points="10,11.5 8.6,13.5 11.4,13.5" fill="#fff" opacity="0.9"/>`,
   Squirrel: () => `<circle cx="8" cy="12" r="5" fill="currentColor"/><polygon points="4,7 5,2 8,6" fill="currentColor"/><polygon points="12,7 11,2 8,6" fill="currentColor"/><path d="M13 17 Q19 15 18 8 Q17 3 13 4 Q16 7 15 11 Q14 14 12 14 Z" fill="currentColor"/>`,
   Crafts: () => `<rect x="9" y="7" width="2.4" height="11" rx="1" fill="currentColor"/><rect x="4" y="2" width="12" height="5" rx="1.5" fill="currentColor"/>`,
   Lore: () => `<path d="M2 5 Q10 1 10 5 L10 16 Q10 12 2 16 Z" fill="currentColor"/><path d="M18 5 Q10 1 10 5 L10 16 Q10 12 18 16 Z" fill="currentColor" opacity="0.72"/>`,
   Agriculture: () => `<line x1="10" y1="18" x2="10" y2="6" stroke="currentColor" stroke-width="1.6"/><g fill="currentColor"><ellipse cx="10" cy="6" rx="1.6" ry="3"/><ellipse cx="7" cy="9" rx="1.6" ry="3" transform="rotate(-30 7 9)"/><ellipse cx="13" cy="9" rx="1.6" ry="3" transform="rotate(30 13 9)"/><ellipse cx="7" cy="13" rx="1.6" ry="3" transform="rotate(-30 7 13)"/><ellipse cx="13" cy="13" rx="1.6" ry="3" transform="rotate(30 13 13)"/></g>`,
   Botany: () => `<path d="M10 18 V9" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M10 9 Q3 8 3 2 Q10 3 10 9Z" fill="currentColor"/><path d="M10 9 Q17 8 17 2 Q10 3 10 9Z" fill="currentColor"/>`,
   Commerce: () => `<line x1="10" y1="2" x2="10" y2="16" stroke="currentColor" stroke-width="1.6"/><line x1="4" y1="6" x2="16" y2="6" stroke="currentColor" stroke-width="1.6"/><path d="M4 6 L1.5 12 A3 3 0 0 0 6.5 12 Z" fill="currentColor"/><path d="M16 6 L13.5 12 A3 3 0 0 0 18.5 12 Z" fill="currentColor"/><rect x="7" y="16" width="6" height="2" fill="currentColor"/>`,
+  Science: () => `<path d="M8 2 H12 M9 2 V8 L4 16 Q3 18 5 18 H15 Q17 18 16 16 L11 8 V2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M6.5 13 H13.5 L15.4 16.6 H4.6 Z" fill="currentColor"/><circle cx="14" cy="4" r="1.2" fill="currentColor"/><circle cx="17" cy="8" r="0.9" fill="currentColor"/>`,
   Civics: () => `<polygon points="10,2 17,7 3,7" fill="currentColor"/><rect x="4" y="8" width="2" height="8" fill="currentColor"/><rect x="9" y="8" width="2" height="8" fill="currentColor"/><rect x="14" y="8" width="2" height="8" fill="currentColor"/><rect x="3" y="16" width="14" height="2" fill="currentColor"/>`,
   apprentice: () => iconStarShape(10, 10, 7),
   journeyman: () => iconStarShape(6, 11, 5) + iconStarShape(14, 11, 5),

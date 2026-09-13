@@ -1,7 +1,10 @@
 #!/usr/bin/env node
-// Build the six printed starter decks from the current card set.
+// Build the printed starter decks from the current card set.
 //
-//   node scripts/build-decks.mjs [--check]
+//   node scripts/build-decks.mjs [--check] [--only <deck-id>,<deck-id>]
+//
+// `--only` rebuilds just the named decks and leaves every other printed list exactly as it is, which
+// is how an expansion adds its own decks without retuning the ones already playtested.
 //
 // Decks are not hand-listed any more: each one is a stated identity (two species, two studies) and
 // this script fills it from the rated card set, strongest-for-its-cost first, inside the deck rules
@@ -41,6 +44,11 @@ const IDENTITIES = [
     blurb: 'Cats and Mice of Lore and Crafts: the Cats act when they should not be able to, and the Mice have the paperwork ready either way.' },
   { id: 'root-rampart', name: 'Root & Rampart', species: ['Badger', 'Rabbit'], studies: ['Civics', 'Crafts'],
     blurb: 'Badgers and Rabbits of Civics and Crafts: a town meeting that never runs out of bodies and a wall that never comes down.' },
+  // Night Shift (v0.7.0)
+  { id: 'moon-mocha', name: 'Moon & Mocha', species: ['Owl', 'Cat'], studies: ['Science', 'Commerce'],
+    blurb: 'Owls and Cats of Science and Commerce: the café never closes, the observatory never sleeps, and somebody has just been launched into space.' },
+  { id: 'steam-starlight', name: 'Steam & Starlight', species: ['Badger', 'Owl'], studies: ['Crafts', 'Science'],
+    blurb: 'Badgers and Owls of Crafts and Science: the boiler holds, the telescope is pointed the right way, and the whole works is up and running before dawn.' },
 ];
 
 const score = (c) => (c.power && c.power.score) || 0;
@@ -180,7 +188,13 @@ function build(ident) {
   return list;
 }
 
-const built = IDENTITIES.map((ident) => ({
+const onlyArg = process.argv.indexOf('--only');
+const ONLY = onlyArg >= 0 && process.argv[onlyArg + 1] ? new Set(process.argv[onlyArg + 1].split(',')) : null;
+for (const id of ONLY || []) {
+  if (!IDENTITIES.some((i) => i.id === id)) { console.error(`Unknown deck ${id}`); process.exit(1); }
+}
+
+const built = IDENTITIES.filter((ident) => !ONLY || ONLY.has(ident.id)).map((ident) => ({
   id: ident.id,
   name: ident.name,
   species: ident.species,
@@ -206,9 +220,17 @@ for (const deck of built) {
 if (process.argv.includes('--check')) {
   process.exit(bad ? 1 : 0);
 } else if (!bad) {
-  set.decks = built;
+  if (ONLY) {
+    // Replace or append only the decks asked for, keeping the others' printed lists untouched.
+    for (const deck of built) {
+      const i = set.decks.findIndex((d) => d.id === deck.id);
+      if (i >= 0) set.decks[i] = deck; else set.decks.push(deck);
+    }
+  } else {
+    set.decks = built;
+  }
   fs.writeFileSync(setUrl, `${JSON.stringify(set, null, 1)}\n`);
-  console.log(`\nWrote ${built.length} decks to spec/starter_card_set.json.`);
+  console.log(`\nWrote ${built.length} deck${built.length === 1 ? '' : 's'} to spec/starter_card_set.json.`);
 } else {
   console.error('\nNot written: some decks are illegal.');
   process.exit(1);

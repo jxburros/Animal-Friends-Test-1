@@ -4,7 +4,32 @@ A two-player town-building trading card game where each player is the **Mayor** 
 
 This repo replaced the earlier single-file "Critter Town" game (archived at `docs/legacy-critter-town.html`).
 
-**New in v0.6.0:** the town got a size, and Unemployment got something to do.
+**New in v0.7.0 — Night Shift:** the town after dark. **86 cards**, the **Owl** as the tenth species,
+**Science** as the sixth study, a barista, and a Cat in space. See [NIGHT_SHIFT.md](docs/NIGHT_SHIFT.md).
+
+- **Owls own the night.** Their signature is the **wake-up call**: a Character turns one step toward
+  upright outside the Ready phase — a Master still rotating in becomes Busy, a Busy animal stands up —
+  but never one that is mid-shift, and never one pledged into an auction. Owls earn almost nothing and
+  do not bid; that is the hole. Sage keeps the observatory, Bean runs the all-night café, Tawny teaches
+  the night school, and Hoot and Barnaby can be hired from the Capital City.
+- **Science** is the study of the stars, the boiler and the potato: 25 Science Characters across all ten
+  species, with **Comet the Cat** as Rocket Mechanic, Test Pilot and **Astronaut**, the expansion's one
+  Legendary. Astronomers **scry**: look at the top of your own deck and put what you do not want on the
+  bottom.
+- **All 38 named Characters get a Night Shift version** — Clover the Rocket Botanist, Mortar the Steam
+  Engineer, Patch the Junkyard Inventor, Marmalade the Night Baker — plus twelve cards for the four new
+  names, 18 Events, ten Market cards, The Observatory and The All-Night Café, the **Comet Watch**
+  Ordinance and three new pieces of weather (a Solar Eclipse stops both towns to look up).
+- **The Cat's signature works now.** "Busy, once per game: readies itself" used to be a no-op, because it
+  was only ever offered from upright. It is now the trick it was meant to be: used from the wrong side —
+  Busy, mid-shift, or a Master still rotating in — and it cashes a shift in progress at once. The power
+  model also stopped pricing that one-shot as if it repeated, which re-rated Mittens, Pippa the Herb Cook
+  and Thimble the Sailmaker downward.
+- Two printed decks, **Moon & Mocha** (Owl, Cat; Science, Commerce) and **Steam & Starlight** (Badger,
+  Owl; Crafts, Science), and a seventh Market Deck, the **Night Market**. The six earlier decks were not
+  retuned; `npm run decks -- --only <id>` now rebuilds named decks and leaves the rest alone.
+
+**Earlier, in v0.6.0:** the town got a size, and Unemployment got something to do.
 
 - **A town holds ten animals.** The count is the town's whole footprint: animals at work, animals
   pledged into an auction, and animals face down in Unemployment. Capping bodies is what gives the
@@ -96,15 +121,15 @@ Besides one-shot Market cards and Statues, the Capital City sells **Buildings** 
 
 **Statues** are the victory cards. Control 5 of 9 to win. **A Statue costs 10 while you hold fewer than two, 20 once you hold two or three, and 30 at four** — so the purchase that wins the game is the dearest thing in the game by a wide margin. The price is read from your Victory Row **at the moment the auction resolves**, not when you announced it, so if a fourth Statue arrived while this auction was running you top up the difference out of Supply at resolution. If you cannot cover the risen price, the purchase fizzles and your bid comes back — this is the main brake on a runaway. Each Statue also carries a **boon and a burden** lasting as long as you hold it: Community's extra shift Supply comes with a thinner Resources choice, Patience speeds your Masters but slows your Apprentices, and Harmony puts every pledge you make one rung higher up the ladder.
 
-**Market Decks** — six shared markets to choose from at setup, each 35 cards: all nine Statues plus a 26-card sample of its own pool, topped up so that at least three on-reveal cards are always in it. **First Boroughs** (the classic mix; three shocks), **Boom Town** (prosperity and momentum; four shocks, mostly good news), **Hard Times** (recessions, hard winters and backlogs strike both towns alike; thirteen shocks), **Founders' Fair** (auction tools, understudies and second chances; fair weather at two shocks and nothing that empties a town), **Whiskerwood Fair** (ten artisan shops with six familiar favorites; two shocks) and **Many Hats Fair** (a hiring fair of halls that ready, retrain and rehire Characters by rank; three shocks).
+**Market Decks** — seven shared markets to choose from at setup, each 35 cards: all nine Statues plus a 26-card sample of its own pool, topped up so that at least three on-reveal cards are always in it. **First Boroughs** (the classic mix; three shocks), **Boom Town** (prosperity and momentum; four shocks, mostly good news), **Hard Times** (recessions, hard winters and backlogs strike both towns alike; thirteen shocks), **Founders' Fair** (auction tools, understudies and second chances; fair weather at two shocks and nothing that empties a town), **Whiskerwood Fair** (ten artisan shops with six familiar favorites; two shocks) **Many Hats Fair** (a hiring fair of halls that ready, retrain and rehire Characters by rank; three shocks) and **Night Market** (the town after dark: the café, the observatory, a comet the whole square stops to watch; two shocks).
 
 **Rarity** — every card is rated by what it gives you against what it asks for, and that rating sets its rarity: Common, Uncommon, Rare, Super Rare, Legendary. Rarity is not raw power. The model scores a card `power^0.6 × efficiency^0.4`, so of two cards that do the same thing the cheaper one rates higher, while of two equally efficient cards the bigger one does — a cost-0 Rabbit with a good shift can out-rate a Master. The set reads as a pyramid: 49% Common, 25% Uncommon, 18% Rare, 5% Super Rare, 3% Legendary. Rarity then caps how often a card may repeat in a deck: **3 / 3 / 2 / 1 / 1** copies. See `src/engine/power.js` and `npm run power`.
 
 **Characters by name** — some cards ask for a particular friend: Nim, Chancellor of Records pays out while you control Pip (any version of him), and Pip's Reading Hour can only be played with an upright Pip. A named requirement or condition matches whichever version of that Character is on top of a stack.
 
-**Species and study** — species is what a card *is*, study is what it *does*. Species is a design space, not a keyword: each of the nine owns a centre of gravity, a hole and a signature effect (Rabbits arrive in crowds; Badgers shrug off shocks; Raccoons work the City Dump; Squirrels put Supply by; Cats act when they should not be able to). The charters live in `spec/species.json` and `npm run identity` fails the build if two species stop playing differently. Studies — Agriculture, Civics, Commerce, Crafts, Lore — are the horizontal axis that cuts across species.
+**Species and study** — species is what a card *is*, study is what it *does*. Species is a design space, not a keyword: each of the ten owns a centre of gravity, a hole and a signature effect (Rabbits arrive in crowds; Badgers shrug off shocks; Raccoons work the City Dump; Squirrels put Supply by; Cats act when they should not be able to; Owls wake the town before dawn). The charters live in `spec/species.json` and `npm run identity` fails the build if two species stop playing differently. Studies — Agriculture, Civics, Commerce, Crafts, Lore, Science — are the horizontal axis that cuts across species.
 
-**Decks** — six printed 40-card decks (Burrow & Bloom, Paws & Papers, Bramble & Bastion, Ripple & Rune, Whisker & Willow, Root & Rampart), or build your own in the **Deck Workshop**: 40 cards, at least 16 Characters, at most 24 Events, and copies capped by rarity. Each Mayor may **mulligan once, free**. Custom decks are saved in the browser.
+**Decks** — eight printed 40-card decks (Burrow & Bloom, Paws & Papers, Bramble & Bastion, Ripple & Rune, Whisker & Willow, Root & Rampart, Moon & Mocha, Steam & Starlight), or build your own in the **Deck Workshop**: 40 cards, at least 16 Characters, at most 24 Events, and copies capped by rarity. Each Mayor may **mulligan once, free**. Custom decks are saved in the browser.
 
 ## Play it online
 
@@ -146,7 +171,7 @@ Then open http://localhost:8080/ in any modern browser. During play, use the **P
   **Quick start**, **The rules** in full, and **Questions & answers** — the twenty questions new Mayors
   ask most, from "why can't my cost-0 animal bid?" to "why did a card vanish from the Capital City?".
 
-The server (`scripts/serve.mjs`, no dependencies) sends every file with `Cache-Control: no-store`, so each reload plays exactly what is on disk. When it starts it prints the version and the folder it is serving; the book cover shows the same version line (e.g. `v0.6.0 · Animal Friends: First Boroughs · 375 cards · 6 decks · 6 Market Decks`). If the two disagree, the browser is showing an old copy.
+The server (`scripts/serve.mjs`, no dependencies) sends every file with `Cache-Control: no-store`, so each reload plays exactly what is on disk. When it starts it prints the version and the folder it is serving; the book cover shows the same version line (e.g. `v0.7.0 · Animal Friends: First Boroughs · 461 cards · 8 decks · 7 Market Decks`). If the two disagree, the browser is showing an old copy.
 
 ### Testing a fresh download
 
@@ -163,14 +188,14 @@ If you test by downloading the ZIP from GitHub and unzipping it:
 
 - `docs/ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md` - design reference and source of truth
 - `spec/game.json` - rules constants and prototype decisions
-- `spec/species.json` - the nine species charters (centre of gravity, hole, signature); the contract `npm run identity` checks
-- `spec/starter_card_set.json` - all 375 cards: 136 Characters, 88 Events, 9 Statues, 86 Market cards, 12 Buildings, 10 hired animals, 7 Ordinances and 27 on-reveal cards, plus six printed 40-card decks and six Market Decks. Every card carries its `rarity` and the `power` rating that earned it, and the file is ordered by that rating, strongest for its cost first. A Market Deck is dealt as all 9 Statues plus a 26-card sample of its own pool — 35 cards — topped up from that pool until at least three on-reveal cards are in it, so every market keeps one size and its own printed character while the display varies from game to game.
+- `spec/species.json` - the ten species charters (centre of gravity, hole, signature); the contract `npm run identity` checks
+- `spec/starter_card_set.json` - all 461 cards: 186 Characters, 106 Events, 9 Statues, 96 Market cards, 14 Buildings, 12 hired animals, 8 Ordinances and 30 on-reveal cards, plus eight printed 40-card decks and seven Market Decks. Every card carries its `rarity` and the `power` rating that earned it, and the file is ordered by that rating, strongest for its cost first. A Market Deck is dealt as all 9 Statues plus a 26-card sample of its own pool — 35 cards — topped up from that pool until at least three on-reveal cards are in it, so every market keeps one size and its own printed character while the display varies from game to game.
 - `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`. `power.js` is the power/cost model that rates every card and assigns its rarity
 - `src/ai/` - agents: `random.js` (baseline), `heuristic.js` (opponent)
 - `src/ui/` - browser interface: `main.js`, `humanAgent.js`, `render.js`, `deckbuilder.js` (the Deck Workshop), `help.js` (the welcome, quick start, rules and FAQ), `tutorial.js` (the coach chips), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations)
 - `src/tutorial/scenario.js` - the tutorial mini-match: the arranged decks and market, the step script (what to do and why, and which moves are allowed), and the rival's plan; DOM-free so the tests can play it
 - `index.html` - playable game
-- `scripts/` - test utilities: `smoke.mjs` (one game log), `invariants.mjs` (card conservation), `playtest.mjs` (AI vs AI), `power.mjs` (the card set sorted by power/cost), `stamp.mjs` (restamp every card's rarity and rating after editing the set), `identity.mjs` (species/study identity and power-creep gate), `build-decks.mjs` (rebuild the printed decks from the ratings)
+- `scripts/` - test utilities: `smoke.mjs` (one game log), `invariants.mjs` (card conservation), `playtest.mjs` (AI vs AI), `power.mjs` (the card set sorted by power/cost), `stamp.mjs` (restamp every card's rarity and rating after editing the set), `identity.mjs` (species/study identity and power-creep gate), `build-decks.mjs` (rebuild the printed decks from the ratings, or just the ones named with `--only`)
 - `test/` - unit tests (`node --test`)
 
 ## Commands
@@ -184,14 +209,15 @@ npm run power -- --type character           # ...one card type, or --rarity Lege
 npm run stamp                               # Restamp rarity/power on every card and reorder the set file
 npm run identity                            # Per-species and per-study effect profiles, similarity and power creep
 npm run identity -- --check                 # ...or fail if two species play alike, a signature is unused, or a set has crept
-npm run decks                               # Rebuild the six printed decks from the current ratings
+npm run decks                              # Rebuild every printed deck from the current ratings
+npm run decks -- --only moon-mocha         # ...or only the decks named, leaving the others as printed
 npm run decks -- --check                    # ...or just check the printed decks are legal
 npm run stamp -- --check                    # ...or just fail if any printed rarity or rating is stale
 npm run playtest -- --games 200            # Playtest 200 AI matches
 npm run playtest -- --games 100 --seed 42 # Use fixed seed for reproducibility
 npm run playtest -- --p0 random --p1 heuristic  # Choose agents
-npm run playtest -- --games 720 --decks all --market all   # Walk the full 30-pairing x 6-market cross product
-npm run playtest -- --decks br,rr               # One matchup (bb, pp, br, rr, ll, rw, ww, vl, hh, tt or full deck ids)
+npm run playtest -- --games 1120 --decks all --market all  # Walk the full 56-pairing x 7-market cross product
+npm run playtest -- --decks mm,ss               # One matchup (bb, pp, br, rr, ll, rw, ww, vl, hh, tt, mm, ss or full deck ids)
 npm run playtest -- --market hard-times          # Choose the shared Market Deck (or `all` to rotate)
 ```
 

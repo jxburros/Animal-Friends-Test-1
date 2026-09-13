@@ -216,7 +216,16 @@ function marketCardValue(state, pi, d) {
 function plainBusyEffect(eff) {
   if (!eff) return false;
   if (eff.do === 'seq') return (eff.steps || []).every(plainBusyEffect);
-  return ['gainSupply', 'draw', 'discard', 'peekMarketDeck', 'reorderDeckTop'].includes(eff.do);
+  return ['gainSupply', 'draw', 'discard', 'peekMarketDeck', 'reorderDeckTop', 'scryDeck', 'advanceCharacter'].includes(eff.do);
+}
+function usesVerb(eff, verb) {
+  if (!eff) return false;
+  if (eff.do === verb) return true;
+  return eff.do === 'seq' && (eff.steps || []).some((st) => usesVerb(st, verb));
+}
+/** Characters an Owl's wake-up call could actually move: not upright, not pledged, not mid-shift. */
+function wakeable(state, pi, exceptUid) {
+  return state.players[pi].town.filter((st) => st.orientation !== 0 && !st.lockedBid && !st.shift && st.uid !== exceptUid);
 }
 
 function eventValue(state, pi, d) {
@@ -399,8 +408,20 @@ function scoreAction(state, ctx, a, agg, out, P) {
       // otherwise start. Shields, readies and rehires stay case-by-case above; plain gains, draws and
       // peeks are rated by the power model, so a new card with a Busy ability is used without a rule.
       const ab = (d.abilities || []).find((x) => x.trigger === 'busy');
-      if (!ab || !plainBusyEffect(ab.effect)) return -1;
-      const own = stackRate(state, findStack(state, ctx.pi, a.charUid));
+      if (!ab) return -1;
+      const self = findStack(state, ctx.pi, a.charUid);
+      if (a.selfReady) {
+        // The Cat's trick, used from the wrong side of upright: a Busy Character stands up now, a
+        // Master skips the rest of its rotation, and a shift in progress is cashed at once.
+        if (!self || self.orientation === 0) return -1;
+        const pending = self.shift ? self.shift.output * 1.8 : 0;
+        out.why = 'readies itself';
+        return pending + stackRate(state, self) * 2 + (self.orientation === 180 ? 2.5 : 1.5);
+      }
+      if (!plainBusyEffect(ab.effect)) return -1;
+      // A wake-up call with nobody to wake is a wasted turn.
+      if (usesVerb(ab.effect, 'advanceCharacter') && !wakeable(state, ctx.pi, a.charUid).length) return -1;
+      const own = stackRate(state, self);
       out.why = `busy for ${effectPower(ab.effect).toFixed(1)}`;
       return effectPower(ab.effect) * 2.2 - own * P.workBase * 0.5;
     }
@@ -658,6 +679,21 @@ export function makeHeuristicAgent(options = {}) {
           const pending = s.shift ? s.shift.output * 1.8 : 0;
           return pending + rateOf(t) * 2 + (s.orientation === 180 ? 1 : 0) + 0.5;
         }, req);
+
+      case 'advance':
+        // One step only, and never mid-shift: a Busy animal stands up now (worth its whole next
+        // turn), a Master at 180° merely arrives a turn early. Wake the best worker that stands up.
+        return pickBest(opts, (o) => {
+          const s = findStack(state, pi, o.uid);
+          if (!s) return 0.1;
+          const t = stackTop(state, s);
+          return rateOf(t) * 2 + (t ? t.cost * 0.4 : 0) + (s.orientation === 270 ? 2 : 0.8);
+        }, req);
+
+      case 'scry':
+        // Bin what we would not want to draw: dead Events and Characters we cannot use. Keeping
+        // everything is the safe answer, so only clearly poor cards go under.
+        return opts.filter((o) => handCardValue(state, pi, o.cardId) < 2.5).map((o) => o.uid);
 
       case 'rehire':
       case 'recruitFree':

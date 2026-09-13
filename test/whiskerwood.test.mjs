@@ -18,8 +18,9 @@ describe('the Whiskerwood expansion', () => {
     assert.ok(SET.species.includes('Cat'), 'Cat is a declared species');
   });
 
-  test('Botany is gone: the set runs on five studies', () => {
-    assert.deepEqual([...SET.studies].sort(), ['Agriculture', 'Civics', 'Commerce', 'Crafts', 'Lore']);
+  test('Botany is gone: the set runs on the five founding studies, plus Science since Night Shift', () => {
+    assert.deepEqual([...SET.studies].sort(), ['Agriculture', 'Civics', 'Commerce', 'Crafts', 'Lore', 'Science']);
+    assert.ok(!SET.studies.includes('Botany'));
     for (const c of SET.cards) {
       if (c.study) assert.ok(SET.studies.includes(c.study), `${c.id}: unknown study ${c.study}`);
     }

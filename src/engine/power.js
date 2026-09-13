@@ -235,6 +235,13 @@ export function effectPower(eff) {
       return eff.oncePerGame ? 2.2 : READY;
     case 'cancelReveal':
       return 1.0; // on-reveal cards fire about three times a game, and only some are shocks
+    case 'advanceCharacter':
+      // One step toward upright, and never for a Character mid-shift: a full ready for a Busy animal
+      // that is merely waiting, half of one for a Master still rotating in. Worth most of a ready.
+      return 0.75 * READY * n(eff.count) * (eff.optional ? 0.95 : 1);
+    case 'scryDeck':
+      // Seeing the top of your own deck and binning what you do not want: card quality, not cards.
+      return 0.45 * n(eff.count);
     case 'behindPlayerGains':
       return 0.55 * (n(eff.supply, 0) + DRAW * n(eff.cards, 0));
     case 'behindPlayerReadies':
@@ -266,14 +273,22 @@ export function effectPower(eff) {
   }
 }
 
+/** An effect printed "once per game" (the Cat's self-ready) pays out once, whatever its trigger. */
+function oncePerGame(eff) {
+  if (!eff) return false;
+  if (eff.oncePerGame) return true;
+  return eff.do === 'seq' && (eff.steps || []).some(oncePerGame);
+}
+
 /**
  * What one ability is worth across a game, trigger frequency and conditions included.
  * Pass `runs` to say exactly how many times it fires — a Limited Event's ability fires for its
  * printed duration and then the card is gone, so its trigger's usual lifetime does not apply.
+ * An ability printed "once per game" fires once whatever its trigger.
  */
 export function abilityPower(ab, runs) {
   if (!ab) return 0;
-  const weight = runs ?? TRIGGER_WEIGHT[ab.trigger] ?? 1;
+  const weight = runs ?? (oncePerGame(ab.effect) ? 1 : TRIGGER_WEIGHT[ab.trigger] ?? 1);
   const base = ab.trigger === 'passive' ? (PASSIVE_VALUE[ab.key] ?? 1.5) * (ab.value ?? 1) : effectPower(ab.effect) * weight;
   const value = base * conditionFactor(ab.condition);
   // A burden is the price of a Statue's boon, so it subtracts from the card's power.
