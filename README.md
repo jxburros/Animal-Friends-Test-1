@@ -258,17 +258,17 @@ on the book cover to browse the collection. The same treatment appears in play, 
 and card readers. Printed rarities and gameplay are unchanged. See the
 [collection and validation notes](docs/FULL_ART_COLLECTION.md) and [all twelve rendered cards](docs/screenshots/full-art-collection.png).
 
-The painted storybook edition uses five bundled atlases with 80 paintings, parchment nameplates,
+The painted storybook edition uses six bundled atlases with 96 paintings, parchment nameplates,
 botanical borders, and distinct type colors: forest-green Characters, midnight-blue Events,
 vermilion Market cards, and antique-gold Statues. The cover, game, card previews and Deck Workshop
 share this presentation. Select **Read** on any visible card to open its full artwork, rules and
 burden in a keyboard- and touch-accessible reading view; Escape closes it.
 
-`src/ui/painted-art.js` selects a painted scene by explicit atlas/tile when a card names one (`art: { atlas: "boroughs" | "whiskerwood" | "neighbors" | "monuments" | "townlife", tile }`), or by species
-and theme for other cards. These are **80 atlas paintings**: related cards retain different printed names, jobs,
+`src/ui/painted-art.js` selects a painted scene by explicit atlas/tile when a card names one (`art: { atlas: "boroughs" | "whiskerwood" | "neighbors" | "monuments" | "townlife" | "capital", tile }`), or by species
+and theme for other cards. These are **96 atlas paintings**: related cards retain different printed names, jobs,
 stats and effects while sharing art. The twelve Full Art selections override their shared painting
 with an individual PNG from `assets/art/full-art/`, retaining the atlas and vector layers as fallbacks.
-All five PNG atlases and the twelve portraits ship with the game; no image
+All six PNG atlases and the twelve portraits ship with the game; no image
 service or external font request is needed to play. `src/ui/art.js` preserves the original per-card
 vector illustrations underneath the painted layer as a fallback for missing art or unknown species.
 `src/ui/storybook.css` owns the painted edition's presentation without changing rules or animation timing.
@@ -285,3 +285,5 @@ to 71 Characters from the original set and Many Hats. See the [updated card prev
 Character cards in the design reference are examples. The authoritative card set lives in `spec/starter_card_set.json`. Use it as the contract for adding new cards.
 
 The design reference (Section 1-9) is the source of truth for gameplay intent; `spec/game.json` codifies the rules and constants; the playtest implementation is the living rulebook.
+
+The [Capital City art update](docs/CAPITAL_ART.md) replaces mismatched hired-animal and building scenes with 16 new paintings.
