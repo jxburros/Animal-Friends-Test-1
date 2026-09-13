@@ -28,6 +28,8 @@ export const TRIGGERS = new Set([
   'passive', 'busy', 'onRecruit', 'onTurnStart', 'onTurnEnd', 'onReady', 'onShiftStarted', 'onShiftCompleted',
   'onEventPlayed', 'onAnnounce', 'onChallengedByOpponent', 'onGainMarketCard', 'onCharacterUnemployed',
   'onTiedBid',
+  // the cautious animal's trigger: Supply has just been taken off you, by a rival or by the weather
+  'onSupplyLost',
   // an Ordinance changes the rules while it sits in the Capital City
   'displayed',
 ]);

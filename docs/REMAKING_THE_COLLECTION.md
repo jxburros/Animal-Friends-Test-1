@@ -79,6 +79,23 @@ the old ones. Events that name a Character in their requirements (`requires: [{ 
 file with that Character; everything else falls into a final *No named Character* group. The deck
 list on the right follows the same sort, so a Character's versions sit together there too.
 
+### The market side
+
+Buildings, Market cards, Ordinances and Disruptions are remade too, and they carry `remakes` and are
+ticked off the same list — but they belong to **no character entry**, because a Building is not
+somebody's backstory. `spec/maker_card_set.json` records why each batch of them exists under
+`townCards` instead. Two things they are for: giving a new study a market side at all (before the
+first batch, neither Food nor Entertainment had a single Building, Event, Market card or Disruption
+anywhere in the collection), and giving the verbs a remade cast leans on something in the Capital
+City that answers them.
+
+A **Building carries one ability**, and that is a balance fact rather than a style note: a second
+standing ability is worth roughly +2 to +3.5 on the rating, which puts a Building straight past the
+printed band (the dearest printed Building rates 5.39). Put the second idea on a Market card or an
+Event, where a one-shot prices correctly. Where a printed Building was already the right card, a
+remake may change only its name and flavor to place it in the remade world; that is a real remake
+and the tick list treats it as one.
+
 ## The character spreadsheet
 
 ```

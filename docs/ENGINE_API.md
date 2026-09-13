@@ -69,8 +69,17 @@ answer. `legalActions` already filters by this, so an agent never sees an illega
 `cardCostFor(state, pi, cardId)` is what a card costs *that* player — the two-tier Statue price is read
 from the bidder's own Victory Row, so the two Mayors can face different prices in the same auction.
 
-`cityRule(state, key)` sums the rule changes of the Ordinances currently displayed
-(`pledgeLadderDelta`, `statueCostDelta`, `buildingCostDelta`, `noRaises`).
+`cityRule(state, key)` sums the rule changes of the cards currently displayed
+(`pledgeLadderDelta`, `statueCostDelta`, `buildingCostDelta`, `noRaises`, `blockStatuePurchase`).
+Ordinances are the usual source; a **marketCharacter** may also carry a `displayed` ability, so an
+animal can work the door of the Capital City until somebody hires them out of the way — buying them
+is how the rule is removed. No other card type is read, so a `displayed` key on a Building or a
+Character is a no-op.
+
+`loseSupplyAndNotify(state, pi, n, opts)` is the async form of `loseSupply`: it fires the
+`onSupplyLost` trigger for the Mayor who actually lost something, and never for a loss of nothing.
+It does not cascade — an ability that answers a loss by causing one does not re-enter the hook.
+`everyoneLosesSupply` and `giveSupplyToOpponent` both route through it.
 
 `ageCity(state)` discards the oldest displayed card nobody is bidding on and refills; `startPhase` calls
 it once a round.

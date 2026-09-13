@@ -99,6 +99,15 @@ and `wantedVerbs` are covered in §4 and §6. `wantedArt` lists cards whose illu
 yet (§2, `art`). `pronouns` is worth setting whenever the maker gives them — the flavor and the
 backstory should use them.
 
+**Adding a character.** Most entries replace something. Occasionally the maker wants a *new* animal
+on the shelf instead — Bob was added beside Biff rather than instead of him, because one printed
+Gate Hedgehog turned into two characters and the maker kept both. Such an entry carries
+`"addition": true` and an `addedBecause` line saying where they came from and why they are not a
+remake, and it must carry no `renamedFrom` and claim no printed card in any `remakes`. The
+printed-version checks are skipped for it — there is nothing to account for — so `addition` is not a
+way out of a remake you did not finish. The town bible records additions in their own table, not in
+Renames.
+
 **Renaming a character.** The maker may rename anyone (Acorn became Peanut). When they do,
 `renamedFrom` carries the printed name, and it is not optional: everything that checks a remake —
 which printed versions exist, whether any were left unaccounted for, what the spreadsheet shows —
@@ -220,7 +229,12 @@ not a wish.
 
 **Triggers**: `passive`, `busy`, `onRecruit`, `onTurnStart`, `onTurnEnd`, `onReady`,
 `onShiftStarted`, `onShiftCompleted`, `onEventPlayed`, `onAnnounce`, `onChallengedByOpponent`,
-`onGainMarketCard`, `onCharacterUnemployed`, `onTiedBid`, `displayed`.
+`onGainMarketCard`, `onCharacterUnemployed`, `onTiedBid`, `onSupplyLost`, `displayed`.
+
+A `displayed` ability is a rule the Capital City applies while the card sits in the display, named by
+`key` rather than run as an effect (`pledgeLadderDelta`, `statueCostDelta`, `buildingCostDelta`,
+`noRaises`, `blockStatuePurchase`). Only an **Ordinance** or a **marketCharacter** is ever displayed,
+so it is the only place the key means anything — on a Character in a town it is read by nothing.
 
 **Effects**: `seq`, `gainSupply`, `opponentGainSupply`, `giveSupplyToOpponent`, `draw`, `discard`,
 `addMod`, `readyCharacter`, `readyNextTurn`, `rehire`, `recruitFromHand`, `reorderDeckTop`,
@@ -239,6 +253,12 @@ route: wish, then approval, then engine, then the card.
 unplayable card. Build the nearest thing out of verbs that exist, and log the gap in the character
 entry's `wantedVerbs` with what the story wanted and what you used instead. The maker approves new
 engine verbs as separate work; a remake batch never changes `src/engine/`.
+
+Three effects take more than a count. `recruitFromHand` takes `filter` (`maxCost`), `orientation`
+and `then` — a rider that runs **only when a Character actually came out of hand**, which is what
+separates it from putting the same step in a `seq`. `rehire` filters on `cost`, `maxCost`, `minCost`,
+`study` and `species`: who is out of work, not who is standing where. `protectCharacter` and
+`readyNextTurn` take `filter: { notSelf: true }`.
 
 Rules text must say exactly what the effect does, in the printed set's voice — plain sentences,
 town words ("Busy:", "Upgrades Acorn.", "gain 1 Supply"), no keyword soup.

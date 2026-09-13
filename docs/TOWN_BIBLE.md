@@ -85,11 +85,68 @@ add to the list.
 - **Nobody knows where Barnaby is from.** They audit the Capital City's night books, they have no
   address on file at the Hiring Hall, and the town has collectively decided not to pry. Anyone may
   find this strange; nobody gets an answer. [Barnaby]
+- **Bob keeps the county gate**, and the county gate is shut from six. He is Biff's opposite number
+  in every way that matters: Biff's whole method is knowing everyone on his beat, and Bob's is not
+  caring who you say you are. The standing complaints about the late mail cart and the fish are at
+  the Hiring Hall and have never come to anything. Any character arriving in or leaving the borough
+  after six has met him, or rather has met the bar and a sleeping hedgehog. [Bob]
+- **Betty is who the grange sends for when a field has to be cleared**, with a charge and an
+  afternoon rather than a season with a mattock. The same powder supplies Blossom Week's finale, so
+  the borough's fireworks and its stump-clearing come off the same bench. The reclaimed strip along
+  the far hedgerow is hers: four seasons of work, and now the best ground in the borough, already
+  sold on. [Betty]
+- **River Otter is a rank, not a species.** It is the river trade's top licence — the animal
+  permitted to take a loaded boat down the whole river alone, on its own word — and it is granted out
+  of the Harbourmaster's office, so it sits under Willow's harbour rather than beside it. The ladder
+  to it runs dock hand, ferry hand, lighterman, wright. Brooke has been about two years off it for
+  eight years. [Brooke]
+- **The borough holds a regatta on the river**, with called starts and cups that have been in the
+  same families for generations, and it is a fixture of the year rather than an occasional thing.
+  [Brooke]
+- **Clover's family has held the same allotment strip for four generations**, and Clover is the
+  first of them to write anything down. Half the borough's gardeners started as somebody Clover
+  brought along to look at something; a character who gardens plausibly learned it that way. The
+  Lending Library holds the photograph of Clover in a rocket with a tray of seed potatoes. [Clover]
+- **The Observatory and the Science hall run a selection board** for who goes up, and it turns
+  animals down. It turned Comet down twice before she got the seat on her third application. Comet
+  is also the animal the Science hall asks before it bids on anything, because she has read the
+  Capital City's manifests, the dock lists and the Observatory's own order book. [Comet]
+- **Copper keeps the borough's weights and measures**, and under the weights office is a cellar he
+  has been stocking since he was an apprentice — salt, lamp oil, candle stock and a shelf of small
+  coin. It has never been opened. It was not opened the year the bridge went, and it was not opened
+  the winter the Grain Exchange shut for six weeks; both times Copper lent out the salt on the quiet
+  and said there would be worse. Animals who know about the cellar have asked. [Copper]
+- **The Grain Exchange shut for six weeks one winter**, and the bridge went in another year. Both are
+  the borough's reference points for a bad season, and any character old enough may have been caught
+  by either. [Copper]
+- **Dylan holds the River Otter licence** and has since he was very young, by means he has never
+  stated — he answers the question with a story instead, and the story changes. He comes up the
+  river on no schedule, is hired by the day, and is gone inside a week. Asked plainly for help he
+  gives it and gives it well, which is the one reliable fact about him. Brooke, who is working toward
+  the same licence, has met him twice. [Dylan, Brooke]
+- **Rosabeth's garden is where animals are put back together.** An animal who has lost a place and
+  stopped getting up ends up at her gate, usually sent by somebody, and is set to work on the beds
+  until they are fit to be somewhere else; half the Hiring Hall's second chances started there. Her
+  tinctures are the only remedies in the First Boroughs that reliably work, and the Science hall has
+  twice failed to account for why. She charges for the tincture and never for the rest. [Rosabeth]
+- **The borough's ovens are banked overnight and shared out by morning.** The Community Oven is a
+  standing arrangement, not a building somebody owns, and it is the arrangement that made Food a
+  study rather than a sideline of Commerce. [town cards]
+- **The Bandstand on the Festival Green was built for speeches** and has never once been used for
+  one. It holds a band of five if two of them stand on the step. [town cards]
+- **The Tax Assessors come out from the Capital City with clipboards**, unannounced, and the borough
+  loses Supply when they do. They are the disaster Copper's cellar was stocked against, and he has
+  met them four times. [Copper]
 
 ## Relationships
 
 - **Bean owns the café; Peanut runs its counter.** Bean inherited it, Peanut keeps the books, and on
   the days Bean is coming apart Peanut quietly takes over. [Bean, Peanut]
+- **Bob and Betty are twins**, born the same morning at the far end of the borough, and are as
+  unlike as two hedgehogs can be: Bob stops, Betty goes. They are on good terms and see each other
+  rarely, which both of them regard as the natural order. [Bob, Betty]
+- **Rosabeth sings to her plants**, out loud, in full view, and has for thirty years. The borough
+  stopped finding it strange in about the second decade and now regards it as weather. [Rosabeth]
 - **Peanut keeps the books for half the borough**: the grange's feed bills, the ferry's tolls, the
   guild's quarterly returns. A character with accounts has plausibly had them audited, kindly, by
   Peanut. [Peanut]
@@ -106,6 +163,19 @@ be read.
 | Brett | Bram | 2026-09-13 |
 | Berry | Bramble | 2026-09-13 |
 | Biff | Bristle | 2026-09-13 |
+| Brooke | Brook | 2026-09-13 |
+| Betty | Burr | 2026-09-13 |
+| Dylan | Dabble | 2026-09-13 |
+| Rosabeth | Dill | 2026-09-13 |
+
+## Additions
+
+Characters the maker added to the shelf who replace no printed card. They carry `addition: true` in
+`spec/maker_card_set.json` and claim nothing.
+
+| Name | Where they came from | Added |
+| --- | --- | --- |
+| Bob | Bristle's printed Gate Hedgehog became two animals: Biff took the beat and the remake, Bob kept the gate. | 2026-09-13 |
 
 ---
 

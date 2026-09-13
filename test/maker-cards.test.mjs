@@ -8,7 +8,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { SET } from './helpers.mjs';
 import { characterIndex, groupByCharacter, characterOf, isCharacterCard } from '../src/engine/characters.js';
-import { EFFECTS, TRIGGERS, MOD_KEYS, CONDITIONS, PASSIVE_KEYS } from './card-vocabulary.mjs';
+import { EFFECTS, TRIGGERS, MOD_KEYS, CONDITIONS, PASSIVE_KEYS, CITY_RULE_KEYS } from './card-vocabulary.mjs';
 
 const MAKER = JSON.parse(fs.readFileSync(new URL('../spec/maker_card_set.json', import.meta.url), 'utf8'));
 const printedById = Object.fromEntries(SET.cards.map((c) => [c.id, c]));
@@ -35,6 +35,8 @@ function walkEffect(eff, where) {
     eff.steps.forEach((st, i) => walkEffect(st, `${where}.steps[${i}]`));
   }
   if (eff.do === 'addMod') assert.ok(MOD_KEYS.has(eff.key), `${where}: unknown mod key "${eff.key}"`);
+  // `then` is the rider a recruit arrives with; a typo in it is as broken as a typo anywhere else.
+  if (eff.then) walkEffect(eff.then, `${where}.then`);
 }
 
 test('the maker set is a separate, non-playable shelf', () => {
@@ -82,9 +84,15 @@ test('maker cards stay inside the vocabulary the engine interprets', () => {
       for (const key of Object.keys(ab.condition || {})) {
         assert.ok(CONDITIONS.has(key), `${card.id}: unknown condition "${key}"`);
       }
-      // A passive is a standing rule named by `key`, not an effect that runs.
+      // A passive is a standing rule named by `key`, not an effect that runs; a `displayed` ability
+      // is a rule the Capital City applies while the card sits in the display, named the same way.
       if (ab.trigger === 'passive') {
         assert.ok(PASSIVE_KEYS.has(ab.key), `${card.id}: unknown passive key "${ab.key}"`);
+        continue;
+      }
+      if (ab.trigger === 'displayed') {
+        assert.ok(CITY_RULE_KEYS.has(ab.key), `${card.id}: unknown Capital City rule "${ab.key}"`);
+        assert.ok(['ordinance', 'marketCharacter'].includes(card.type), `${card.id}: a ${card.type} is never displayed, so its displayed ability would be read by nothing`);
         continue;
       }
       walkEffect(ab.effect, `${card.id}.abilities`);
@@ -103,9 +111,19 @@ test('every remade character is well formed and accounts for its printed version
     for (const field of ['name', 'species', 'backstory']) {
       assert.ok(entry[field], `character entry ${entry.name || '?'} needs ${field}`);
     }
+    // An addition is a character the maker put on the shelf who has no printed original: the whole
+    // point is that they replace nothing, so the printed-version checks below do not apply to them.
+    // They must therefore claim nothing, and must not pretend to be a rename.
+    const printed = entry.addition ? [] : printedVersionsOf(entry);
+    if (entry.addition) {
+      assert.ok(!entry.renamedFrom, `${entry.name} is an addition and cannot also be renamedFrom ${entry.renamedFrom}`);
+      assert.ok(entry.addedBecause, `${entry.name} is an addition and needs addedBecause: why a new character, not a remake`);
+      const claim = MAKER.cards.find((c) => c.name === entry.name && (c.remakes || []).length);
+      assert.ok(!claim, `${entry.name} is an addition, but ${claim && claim.id} claims a printed card`);
+    } else {
+      assert.ok(printed.length, `${entry.name}: no printed versions found${entry.renamedFrom ? ` under renamedFrom "${entry.renamedFrom}"` : ' — a renamed character needs renamedFrom'}`);
+    }
     // Species is fixed: a remade character keeps the species its printed versions had.
-    const printed = printedVersionsOf(entry);
-    assert.ok(printed.length, `${entry.name}: no printed versions found${entry.renamedFrom ? ` under renamedFrom "${entry.renamedFrom}"` : ' — a renamed character needs renamedFrom'}`);
     if (printed.length) {
       assert.equal(entry.species, printed[0].species, `${entry.name} changed species`);
     }
