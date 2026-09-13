@@ -5,14 +5,21 @@
  "playable": false,
  "note": "Work in progress: cards here cannot be put in a deck yet.",
  "species": [
-  "Squirrel",
+  "Rabbit",
+  "Hedgehog",
   "Badger",
+  "Otter",
+  "Squirrel",
+  "Cat",
   "Owl"
  ],
  "studies": [
+  "Agriculture",
+  "Civics",
   "Commerce",
   "Crafts",
-  "Civics",
+  "Lore",
+  "Science",
   "Food",
   "Entertainment"
  ],
@@ -216,6 +223,125 @@
      "resolved": "Built as `makeBusy`: turns an opponent's Character one step away from upright. It keeps advanceCharacter's manners — never a Character mid-shift, never one pledged, never one behind a Hedgehog's quills. Both of Biff's cards now use it instead of blockNextReady."
     }
    ]
+  },
+  {
+   "name": "Bob",
+   "addition": true,
+   "addedBecause": "Bristle's printed Gate Hedgehog became two animals. Biff took the beat and the remake link — mk_biff_beat_constable_2 claims mkt_bristle — and the maker asked for Bob to be added beside him rather than to replace him. Bob is Bristle's other half by descent and nobody's remake by bookkeeping: he claims no printed card, and retires none.",
+   "species": "Hedgehog",
+   "studies": [
+    "Civics"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Bob and Betty were born the same wet morning at the far end of the borough, and between them they were issued exactly one animal's worth of energy. Betty took it. Bob has been tired ever since. He is not unwell and he is not unhappy; he is simply a hedgehog who has never once in his life been fully awake at the hour somebody wanted him to be.\n\nThe county gate solved him. It is a post nobody else would take, because its whole duty is saying no — no carts after six, no barrows without a docket, no you cannot just this once. Bob is a Hedgehog. He is immovable, he is unembarrassable, and he can say no in his sleep, which is the arrangement the county and Bob have quietly come to. Carters who arrive at the wrong hour find the bar down and a hedgehog folded against it like a dropped coat, and neither the bar nor the hedgehog is going anywhere until morning.\n\nThe difficulty is the other half of the job. A gate has to open as well, and Bob is unbeatable at keeping the borough out and only intermittently good at letting it back in. There is a standing complaint at the Hiring Hall about the mail cart, three separate ones about the fish. It has never come to anything, because everyone who has ever tried to get past him at night agrees that nobody else could have kept them out either.",
+   "voice": "Short. Slow. Mostly the word 'no', and usually a good while after the question.",
+   "arc": "One animal, hired out of the Capital City, and one joke in two halves. Awake, Bob is the bar across the road: the rival cannot improve a bid once it has been made, because the animal at the gate is not interested in second thoughts. Asleep — Busy, which he is the turn he arrives and every turn he works — the gate stands open and everyone gets through, including the ones he was hired to stop. `requiresUpright` is the whole character.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "`displayed` city rules on a marketCharacter",
+     "why": "The maker asked for an animal who makes market items harder to buy for BOTH Mayors while he is sitting on the board, and only harder for the rival once he is hired. The second half exists; the first does not. `cityRule()` in src/engine/state.js walks state.market.city but skips every card whose type is not `ordinance`, so a `displayed` ability on a hired animal — `buildingCostDelta`, `statueCostDelta`, `pledgeLadderDelta`, `noRaises` — is read by nothing and would be a silent no-op.",
+     "workaround": "Built only the hired half: a `blockOpponentBidRaise` passive gated on `requiresUpright`, so the rival cannot raise a pending bid while Bob is awake in your town. Nothing happens while he is on display. The gap is exactly one line — letting `cityRule()` read `displayed` abilities on displayed marketCharacters too — but that is engine work and not a remake's to do."
+    }
+   ]
+  },
+  {
+   "name": "Brooke",
+   "renamedFrom": "Brook",
+   "species": "Otter",
+   "studies": [
+    "Commerce",
+    "Lore",
+    "Entertainment",
+    "Science",
+    "Crafts"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Brooke went onto the Dock rope gang at fourteen and has been working her way up the river trade ever since, which is the thing she would tell you if you asked. The ladder is a real one — dock hand, ferry hand, lighterman, wright — and at the top of it is the licence every otter on the water wants: River Otter, the rank that lets an animal take a loaded boat down the whole river alone, on its own word, with nobody sitting behind it. Brooke has been about two years off it for something like eight years.\n\nThe reason is that Brooke cannot hear about a thing without going to find out how it is done. A balloon came over the estuary in her second year and she was at the field before it had finished deflating, and she came back three months later able to fly it. The regatta needed somebody to call the starts, so she learned to call the starts, and then learned the river's whole history because half the calling is knowing whose great-grandmother won which cup. Somebody said, once, that she would never understand a hull until she had built one. She built one. It took four years and it is still on the water and it is the best boat on the river, and it put her licence back by four years.\n\nThe docks keep her post open. They have worked out what everyone else works out eventually: Brooke always comes back, and she always comes back able to do something nobody asked her to learn, and sooner or later the river needs it. She will make River Otter. Probably not this year. Somebody has just mentioned the railway.",
+   "voice": "Cheerful, fast, already halfway out the door. Answers a question with a better question. Says 'right — how does that work, then' more than anything else.",
+   "arc": "Five careers, one unfinished one. The Commerce card at 1 is the ladder she is actually on, and the tempo verb the Otter charter is built from — she hands the work along and it keeps moving. Lore at 2 is the ferry, where the shift itself changes paws. Entertainment at 3 is the regatta, the one job where her detours pay at once: she gets the whole river back on its feet. Science at 4 is the balloon, kept exactly as it was because it is the best thing she ever did by accident — from up there she can see what the Capital City is about to put up for sale. Crafts at 5 is the boat: four years, one hull, and the thing that finally makes an argument with her expensive. She still is not a River Otter.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedArt": [
+    {
+     "card": "mk_brooke_regatta_caller_3",
+     "why": "The Regatta Caller is a new job — Entertainment, on a starting barge with a horn. No printed Brook tile shows it; neighbors/12 is the ferry and would be the wrong animal at the wrong end of the river."
+    }
+   ],
+   "wantedVerbs": []
+  },
+  {
+   "name": "Betty",
+   "renamedFrom": "Burr",
+   "species": "Hedgehog",
+   "studies": [
+    "Agriculture",
+    "Crafts",
+    "Science"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Betty is Bob's twin sister and got the whole morning's allowance of energy, which the family has never entirely forgiven her for. She whittles, she builds, she grafts, she solders, and about four times a year she blows something up, on purpose, for a client, with a docket. There is no hobby she has not had and very few she has finished, and the barn at the end of the family plot contains all of them at once, in layers.\n\nThe blowing up started honestly. Stumps have to come out of a field and there are two ways to do it: a season with a mattock, or a hole, a charge and an afternoon. Betty worked out which one she preferred at about eleven and has been the animal the grange sends for ever since. It paid for the powder, which paid for the fireworks, which is how the borough's Blossom Week got a finale, and it pays for whatever she is halfway through in the barn this month. She takes the odd jobs to fund the exploits. She would say it the other way round and nobody believes her.\n\nMost of it comes to nothing, cheerfully. Some of it does not. The reclaimed strip along the far hedgerow was four seasons of Betty and a great deal of noise, and it is now the best ground in the borough, and she has already sold it and moved on to something else. She is a Hedgehog, so nothing that goes wrong ever actually hurts her; she is Betty, so it never slows her down either. Bob keeps the gate. Betty keeps going through it.",
+   "voice": "Loud, delighted, already onto the next thing. Explains the interesting part first and the safety part late, if at all.",
+   "arc": "Six versions and no career, which is the point. The two odd jobs that fund everything sit at the bottom — Barn Sweeper at 0 turns a shift into spending money, Stump Blaster at 2 turns a field into cash and costs her something every time. The two Crafts cards are the hobbies that stuck: the Whittler at 1 with her quills out, the Firework Maker at 3 whom nobody in town is willing to sack. Science at 4 is the powder worked out properly, and pays in cards rather than coins. Agriculture at 5 is the one exploit that came off: four seasons, a great deal of noise, and the best ground in the borough — and she puts the quills around somebody else while she is at it, which is as close as Betty ever comes to sitting still.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedArt": [
+    {
+     "card": "mk_betty_stump_blaster_2",
+     "why": "New job — Agriculture with a charge and a fuse. boroughs/4 is the barn sweeper and townlife/9 is the kite; neither is an animal clearing a field with powder."
+    },
+    {
+     "card": "mk_betty_firework_maker_3",
+     "why": "neighbors/8 is Burr at the bench with a chisel, which is the Whittler's tile. The Firework Maker is a different job and needs its own."
+    },
+    {
+     "card": "mk_betty_powder_chemist_4",
+     "why": "townlife/9 shows the kite test it replaces, not a bench of powders and scales."
+    },
+    {
+     "card": "mk_betty_land_clearer_5",
+     "why": "The reclaimed strip is new ground in every sense — no printed Burr tile shows the job."
+    }
+   ],
+   "wantedVerbs": []
+  },
+  {
+   "name": "Clover",
+   "species": "Rabbit",
+   "studies": [
+    "Agriculture",
+    "Commerce",
+    "Science"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Clover comes from a gardening family in the plainest sense: four generations on the same allotment strip, and an unbroken line of animals who could tell you what was wrong with a plant by looking at it and could not have told you why. Clover could do the looking by the time they were six. What nobody in the family expected was the other half — the notebook, the labelled rows, the two identical beds planted differently on purpose to see what happened. Clover's grandmother called it fussing. Clover kept fussing.\n\nThe fussing turned into botany, which in the First Boroughs means the animal everyone sends for when something green is behaving strangely, and the animal the Science hall sends for when something green has to survive somewhere it has no business surviving. That is how a gardener from the allotments ended up in the glasshouse, and then in the cold rooms, and then — there is a photograph of this in the Lending Library — in a rocket, holding a tray of seed potatoes and looking extremely pleased.\n\nClover has never once gone anywhere alone. It is not nerves; it simply does not occur to them that a thing worth doing is worth doing by yourself. Every strange place Clover has been talked their way into has had somebody else in the doorway behind them, usually somebody young, usually somebody who had not been asked yet and said yes anyway. Half the borough's gardeners started as the friend Clover brought along.",
+   "voice": "Curious, unhurried, generous with credit. Says 'come and look at this' before saying what it is. Asks who else is coming.",
+   "arc": "The same five jobs, deepened: the family's allotment (0), the Saturday stall that pays for the seed (2), the community plot (3), the glasshouse that got them off the ground (4), and the master botanist the whole borough owes a cutting to (5). Two things run the whole way up and they are the two the maker asked for — Supply above what the shift pays, and never arriving alone. At 0 the friend comes out of hand for free; at 3 the friend comes with a coin; at 4 the friend can be a better one; at 5 they bring somebody and the garden pays every morning besides. Both of Clover's Events come with them.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "`recruitFromHand` with an on-arrival rider",
+     "why": "The story wants the friend Clover brings along to arrive able to do something — to land upright, or to bring a Supply of their own. `recruitFromHand` takes an `orientation` and a cost filter and nothing else, so the friend is always just a body entering Busy.",
+     "workaround": "Paid for the friend on Clover's side instead: the Supply is gained by Clover's Mayor in the same ability, which is the same total and reads as Clover covering the seed."
+    }
+   ]
+  },
+  {
+   "name": "Comet",
+   "species": "Cat",
+   "studies": [
+    "Science",
+    "Crafts"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Comet has wanted to be an astronaut since she was old enough to say the word, and unusually for an animal who wants something that badly, she has never once been talked out of it or distracted from it. She read every book the Lending Library had, then wrote to the Observatory until they let her sweep it, then took the Crafts hall's engine course twice because she did not think she had understood it the first time. She had. She wanted to be sure.\n\nThe problem has always been her paws. Comet is clumsy in a way that is genuinely remarkable to watch — she has put a foot through a wing panel, upended a tray of instruments into a fuel tank, and once ended a test by falling out of the machine before it left the ground. The selection board turned her down twice. She did not argue either time; she went away, learned the part they had marked her down on until she knew it better than the board did, and came back.\n\nWhat she has instead of hands is a head. Comet knows what the Capital City is going to put up for sale before the Capital City has finished deciding, because she has read the manifests, the dock lists and the Observatory's own order book, and she is the animal the whole Science hall asks before anyone bids on anything. She got the seat on the third application. She fell over on the way to the launch. She went anyway, which is the only thing about Comet that has ever needed explaining and the one thing that never does.",
+   "voice": "Precise, earnest, faintly out of breath. Corrects herself mid-sentence. Apologises for the noise, not for the mess.",
+   "arc": "Mostly unchanged, because the maker said so: the same three jobs, the same climb, the same Cat signature at the top — Comet goes when she should not be able to. What the remake sharpens is the head. At 1 the mechanic's finished job discounts the next thing you build; at 3 the test pilot comes down knowing what the Capital City is about to offer; at 5 the astronaut sees three cards deep and is paid for looking.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": []
   }
  ],
  "cards": [
@@ -1220,6 +1346,961 @@
     "score": 6.33,
     "power": 15.9,
     "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_bob_gate_attendant_4",
+   "type": "marketCharacter",
+   "name": "Bob",
+   "title": "Gate Attendant",
+   "job": "Gate Attendant",
+   "species": "Hedgehog",
+   "study": "Civics",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Hired from the Capital City; enters Busy. While Bob is upright, your opponent cannot raise a pending bid.",
+   "flavor": "He is not refusing you. He is asleep against the bar, which from where you are standing comes to exactly the same thing.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "blockOpponentBidRaise",
+     "requiresUpright": true
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 7
+   },
+   "rarity": "Rare",
+   "power": {
+    "score": 4.7,
+    "power": 11,
+    "opportunityCost": 8.4
+   }
+  },
+  {
+   "id": "mk_brooke_dock_hand_1",
+   "type": "character",
+   "name": "Brooke",
+   "title": "Dock Hand",
+   "job": "Dock Hand",
+   "species": "Otter",
+   "study": "Commerce",
+   "cost": 1,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "When Brooke is recruited, another Character you control is upright at the start of your next turn.",
+   "flavor": "Bottom of the rope gang, top of the list of animals who will still be here at six. The licence is only two years off, she says, and has said for eight.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "readyNextTurn",
+      "filter": {
+       "notSelf": true
+      },
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 12
+   },
+   "remakes": "mh_brook_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.69,
+    "power": 6.8,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_brooke_ferry_hand_2",
+   "type": "character",
+   "name": "Brooke",
+   "title": "Ferry Hand",
+   "job": "Ferry Hand",
+   "species": "Otter",
+   "study": "Lore",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Brooke. When Brooke completes a shift, draw 1 card.",
+   "flavor": "Four crossings an hour and a different great-grandmother's cup story on every one. She learned the whole river's history standing up, in ten-minute pieces.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 12
+   },
+   "remakes": "rr_brook_1",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.84,
+    "power": 10.41,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_brooke_regatta_caller_3",
+   "type": "character",
+   "name": "Brooke",
+   "title": "Regatta Caller",
+   "job": "Regatta Caller",
+   "species": "Otter",
+   "study": "Entertainment",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Brooke. Busy: move a shift from one of your Characters to another.",
+   "flavor": "They needed somebody to call the starts, so she learned to call the starts. She has the whole bank rowing, rowing, and then swapping crews at the buoy, and none of it stops moving for a second.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "moveShift"
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 4.95,
+    "power": 11.25,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_brooke_balloonist_4",
+   "type": "character",
+   "name": "Brooke",
+   "title": "Balloonist",
+   "job": "Balloonist",
+   "species": "Otter",
+   "study": "Science",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Brooke. When Brooke becomes upright, look at the top two cards of the Market Deck and draw 1 card.",
+   "flavor": "One balloon came over the estuary in her second year on the ropes and she was at the field before it had finished deflating. Three months later she could fly it. From up there the whole river is a piece of string somebody dropped.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "peekMarketDeck",
+        "count": 2
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 13
+   },
+   "remakes": "ns_brook_4",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.2,
+    "power": 13.06,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_brooke_riverwright_5",
+   "type": "character",
+   "name": "Brooke",
+   "title": "Riverwright",
+   "job": "Riverwright",
+   "species": "Otter",
+   "study": "Crafts",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Brooke. Whenever an opponent challenges one of your purchases, gain 2 Supply and draw 1 card.",
+   "flavor": "Somebody told her once that she would never understand a hull until she had built one. It took four years, it put her licence back by four years, and it is still the best boat on the river.",
+   "abilities": [
+    {
+     "trigger": "onChallengedByOpponent",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 2
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "remakes": "rr_brook_2",
+   "rarity": "Legendary",
+   "power": {
+    "score": 6,
+    "power": 15.65,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_betty_barn_sweeper_0",
+   "type": "character",
+   "name": "Betty",
+   "title": "Barn Sweeper",
+   "job": "Barn Sweeper",
+   "species": "Hedgehog",
+   "study": "Agriculture",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Betty completes a shift, gain 1 Supply.",
+   "flavor": "The grange pays by the barn and Betty sweeps three of them before lunch. None of it is for the barn; all of it is for whatever is waiting in the shed.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 4
+   },
+   "remakes": "mh_burr_0",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.08,
+    "power": 5.14,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_betty_whittler_1",
+   "type": "character",
+   "name": "Betty",
+   "title": "Whittler",
+   "job": "Whittler",
+   "species": "Hedgehog",
+   "study": "Crafts",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Betty. When Betty is recruited, Betty cannot be targeted by an opponent's effect until your next turn.",
+   "flavor": "One of the hobbies that stuck. Half the toys in the nursery came off that knife, and so did most of the fuse plugs, which the nursery has not been told.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "protectCharacter"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 8
+   },
+   "remakes": "br_burr_1",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.67,
+    "power": 8.6,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_betty_stump_blaster_2",
+   "type": "character",
+   "name": "Betty",
+   "title": "Stump Blaster",
+   "job": "Stump Blaster",
+   "species": "Hedgehog",
+   "study": "Agriculture",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Betty. When Betty becomes upright, gain 2 Supply, then discard a card.",
+   "flavor": "A season with a mattock, or a hole, a charge and an afternoon. She worked out which she preferred at about eleven and the grange has sent for her ever since.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 2
+       },
+       {
+        "do": "discard",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 4.96,
+    "power": 10.67,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_betty_firework_maker_3",
+   "type": "character",
+   "name": "Betty",
+   "title": "Firework Maker",
+   "job": "Firework Maker",
+   "species": "Hedgehog",
+   "study": "Crafts",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Betty. While Betty is in town, your Characters cannot be sent to Unemployment by an opponent.",
+   "flavor": "The stump money paid for the powder and the powder paid for Blossom Week's finale. Nobody in this borough is willing to be the one who sacks the animal holding the fuse.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "unemploymentShield",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "remakes": "br_burr_2",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.28,
+    "power": 9.73,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_betty_powder_chemist_4",
+   "type": "character",
+   "name": "Betty",
+   "title": "Powder Chemist",
+   "job": "Powder Chemist",
+   "species": "Hedgehog",
+   "study": "Science",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Betty. When Betty becomes upright, if you control another Science Character, draw 2 cards.",
+   "flavor": "She finally sat down and worked out why it went bang, which took a winter and improved the bangs enormously. The kite, she admits, had been mostly hope.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Science"
+      }
+     },
+     "effect": {
+      "do": "draw",
+      "count": 2
+     }
+    }
+   ],
+   "remakes": "ns_burr_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.29,
+    "power": 13.28,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_betty_land_clearer_5",
+   "type": "character",
+   "name": "Betty",
+   "title": "Land Clearer",
+   "job": "Land Clearer",
+   "species": "Hedgehog",
+   "study": "Agriculture",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Betty. When Betty becomes upright, gain 1 Supply, and another Character you control cannot be targeted by an opponent's effect until your next turn.",
+   "flavor": "Four seasons on the far hedgerow and a great deal of noise, and it is the best ground in the borough. She sold it in the spring and is already three exploits past it.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 1
+       },
+       {
+        "do": "protectCharacter",
+        "filter": {
+         "notSelf": true
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.82,
+    "power": 15.19,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_clover_seedling_helper_0",
+   "type": "character",
+   "name": "Clover",
+   "title": "Seedling Helper",
+   "job": "Seedling Helper",
+   "species": "Rabbit",
+   "study": "Agriculture",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Clover is recruited, you may recruit a Character costing 1 or less from your hand for free; it enters Busy.",
+   "flavor": "Four generations on the same strip and Clover on the end of the row with a watering can too big for them, and somebody smaller still holding the other handle.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "recruitFromHand",
+      "filter": {
+       "maxCost": 1
+      },
+      "orientation": 270,
+      "optional": true
+     }
+    }
+   ],
+   "remakes": "bb_clover_1",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.03,
+    "power": 8.4,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_clover_market_gardener_2",
+   "type": "character",
+   "name": "Clover",
+   "title": "Market Gardener",
+   "job": "Market Gardener",
+   "species": "Rabbit",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Clover. When Clover completes a shift, gain 2 Supply.",
+   "flavor": "The Saturday stall is not about the stall. It is about the seed money for the two identical beds Clover is going to plant differently on purpose.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 1
+   },
+   "remakes": "mh_clover_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.17,
+    "power": 11.13,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_clover_community_gardener_3",
+   "type": "character",
+   "name": "Clover",
+   "title": "Community Gardener",
+   "job": "Community Gardener",
+   "species": "Rabbit",
+   "study": "Agriculture",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Clover. When Clover is recruited, you may recruit a Character costing 1 or less from your hand for free; it enters Busy.",
+   "flavor": "Clover turned the meadow behind the ward rooms into forty strips and handed thirty-nine of them away. Half the borough's gardeners started as the friend Clover brought along.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "recruitFromHand",
+      "filter": {
+       "maxCost": 1
+      },
+      "orientation": 270,
+      "optional": true
+     }
+    }
+   ],
+   "remakes": "bb_clover_2",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.43,
+    "power": 12.35,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_clover_rocket_botanist_4",
+   "type": "character",
+   "name": "Clover",
+   "title": "Rocket Botanist",
+   "job": "Rocket Botanist",
+   "species": "Rabbit",
+   "study": "Science",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Clover. When Clover is recruited, you may recruit a Character costing 2 or less from your hand for free; it enters Busy.",
+   "flavor": "Potatoes will grow anywhere, they say, if you ask them nicely. There is a photograph of this in the Lending Library, and somebody else is in the doorway of it.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "recruitFromHand",
+      "filter": {
+       "maxCost": 2
+      },
+      "orientation": 270,
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 11
+   },
+   "remakes": "ns_clover_4",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.26,
+    "power": 13.2,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_clover_master_botanist_5",
+   "type": "character",
+   "name": "Clover",
+   "title": "Master Botanist",
+   "job": "Master Botanist",
+   "species": "Rabbit",
+   "study": "Agriculture",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Clover. When Clover is recruited, gain 2 Supply and you may recruit a Character costing 2 or less from your hand for free; it enters Busy.",
+   "flavor": "Every garden in three boroughs owes something to a cutting Clover once gave away, and every one of them was handed over with the same question: who else is coming?",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "recruitFromHand",
+        "filter": {
+         "maxCost": 2
+        },
+        "orientation": 270,
+        "optional": true
+       },
+       {
+        "do": "gainSupply",
+        "amount": 2
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 1
+   },
+   "remakes": "bb_clover_3",
+   "rarity": "Legendary",
+   "power": {
+    "score": 6.55,
+    "power": 17.1,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_clovers_potato_experiment",
+   "type": "event",
+   "name": "Clover’s Potato Experiment",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Clover"
+    },
+    {
+     "study": "Agriculture",
+     "count": 1
+    }
+   ],
+   "text": "Requires Clover and an Agriculture Character. Gain 3 Supply, then you may recruit a Character costing 1 or less from your hand for free; it enters Busy.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 3
+     },
+     {
+      "do": "recruitFromHand",
+      "filter": {
+       "maxCost": 1
+      },
+      "orientation": 270,
+      "optional": true
+     }
+    ]
+   },
+   "flavor": "Two identical beds, planted differently on purpose, exactly the way Clover's grandmother said was fussing. Hypothesis: potatoes. Conclusion: a great many more potatoes than expected, and somebody new holding the other end of the sack.",
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 11
+   },
+   "remakes": "ns_clovers_potato_experiment",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.61,
+    "power": 7.7,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_clovers_seed_drive",
+   "type": "event",
+   "name": "Clover's Seed Drive",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Clover"
+    }
+   ],
+   "text": "Requires Clover. Gain 2 Supply, and another Agriculture Character you control is upright at the start of your next turn.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "readyNextTurn",
+      "filter": {
+       "study": "Agriculture",
+       "notSelf": true
+      },
+      "optional": true
+     }
+    ]
+   },
+   "flavor": "Clover hands out packets on the strip all morning and will not take anything for them. Every one comes back as a basket in the autumn, and most of them come back with the gardener attached.",
+   "art": {
+    "atlas": "townlife",
+    "tile": 5
+   },
+   "remakes": "mh_clovers_seed_drive",
+   "rarity": "Common",
+   "power": {
+    "score": 2.29,
+    "power": 3.4,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_comet_rocket_mechanic_1",
+   "type": "character",
+   "name": "Comet",
+   "title": "Rocket Mechanic",
+   "job": "Rocket Mechanic",
+   "species": "Cat",
+   "study": "Crafts",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Comet completes a shift, the next Building you buy costs 1 less.",
+   "flavor": "She took the Crafts hall's engine course twice because she did not think she had understood it the first time. She had. She has never met a machine she did not want to sit inside.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "addMod",
+      "key": "buildingDiscount",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 7
+   },
+   "remakes": "ns_comet_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.71,
+    "power": 6.83,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_comet_test_pilot_3",
+   "type": "character",
+   "name": "Comet",
+   "title": "Test Pilot",
+   "job": "Test Pilot",
+   "species": "Cat",
+   "study": "Science",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Comet. When Comet becomes upright, look at the top two cards of the Market Deck. Busy, once per game: Comet readies herself.",
+   "flavor": "The board turned her down twice. Both times she went away, learned the part they had marked her down on until she knew it better than they did, and came back. The test was: does it go up.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 2
+     }
+    },
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "selfReady",
+      "oncePerGame": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 8
+   },
+   "remakes": "ns_comet_3",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.1,
+    "power": 11.61,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_comet_astronaut_5",
+   "type": "character",
+   "name": "Comet",
+   "title": "Astronaut",
+   "job": "Astronaut",
+   "species": "Cat",
+   "study": "Science",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Comet. When Comet becomes upright, look at the top three cards of the Market Deck and gain 1 Supply. Busy, once per game: Comet readies herself.",
+   "flavor": "She got the seat on the third application and fell over on the way to the launch. She went anyway. From up here the Capital City is a very small market with very small bidding, and she has already read its order book.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "peekMarketDeck",
+        "count": 3
+       },
+       {
+        "do": "gainSupply",
+        "amount": 1
+       }
+      ]
+     }
+    },
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "selfReady",
+      "oncePerGame": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 9
+   },
+   "remakes": "ns_comet_5",
+   "rarity": "Legendary",
+   "power": {
+    "score": 5.9,
+    "power": 15.39,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_one_small_step",
+   "type": "event",
+   "name": "One Small Step",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Comet"
+    },
+    {
+     "study": "Science",
+     "count": 1
+    }
+   ],
+   "text": "Requires Comet and a Science Character. Gain 5 Supply and draw 1 card.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 5
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "One small step for a Cat, taken on the third application by an animal who had already fallen over twice that morning. One enormous mess in the Crafts hall.",
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 9
+   },
+   "remakes": "ns_one_small_step",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.89,
+    "power": 6.5,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_comets_countdown",
+   "type": "event",
+   "name": "Comet’s Countdown",
+   "kind": "limited",
+   "cost": 0,
+   "duration": 3,
+   "requires": [
+    {
+     "name": "Comet"
+    }
+   ],
+   "text": "Requires Comet. Limited 3: at the start of your turn, gain 1 Supply.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "flavor": "Three. Two. One. (Comet is still doing up her boots. She knows the sequence better than the board does; it is the boots that have never once gone to plan.)",
+   "art": {
+    "atlas": "nightskies",
+    "tile": 3
+   },
+   "remakes": "ns_comets_countdown",
+   "rarity": "Common",
+   "power": {
+    "score": 1.86,
+    "power": 3,
+    "opportunityCost": 3.3
    }
   }
  ],

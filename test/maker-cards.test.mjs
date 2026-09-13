@@ -103,9 +103,19 @@ test('every remade character is well formed and accounts for its printed version
     for (const field of ['name', 'species', 'backstory']) {
       assert.ok(entry[field], `character entry ${entry.name || '?'} needs ${field}`);
     }
+    // An addition is a character the maker put on the shelf who has no printed original: the whole
+    // point is that they replace nothing, so the printed-version checks below do not apply to them.
+    // They must therefore claim nothing, and must not pretend to be a rename.
+    const printed = entry.addition ? [] : printedVersionsOf(entry);
+    if (entry.addition) {
+      assert.ok(!entry.renamedFrom, `${entry.name} is an addition and cannot also be renamedFrom ${entry.renamedFrom}`);
+      assert.ok(entry.addedBecause, `${entry.name} is an addition and needs addedBecause: why a new character, not a remake`);
+      const claim = MAKER.cards.find((c) => c.name === entry.name && (c.remakes || []).length);
+      assert.ok(!claim, `${entry.name} is an addition, but ${claim && claim.id} claims a printed card`);
+    } else {
+      assert.ok(printed.length, `${entry.name}: no printed versions found${entry.renamedFrom ? ` under renamedFrom "${entry.renamedFrom}"` : ' — a renamed character needs renamedFrom'}`);
+    }
     // Species is fixed: a remade character keeps the species its printed versions had.
-    const printed = printedVersionsOf(entry);
-    assert.ok(printed.length, `${entry.name}: no printed versions found${entry.renamedFrom ? ` under renamedFrom "${entry.renamedFrom}"` : ' — a renamed character needs renamedFrom'}`);
     if (printed.length) {
       assert.equal(entry.species, printed[0].species, `${entry.name} changed species`);
     }

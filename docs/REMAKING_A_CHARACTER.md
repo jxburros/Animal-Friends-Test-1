@@ -99,6 +99,15 @@ and `wantedVerbs` are covered in §4 and §6. `wantedArt` lists cards whose illu
 yet (§2, `art`). `pronouns` is worth setting whenever the maker gives them — the flavor and the
 backstory should use them.
 
+**Adding a character.** Most entries replace something. Occasionally the maker wants a *new* animal
+on the shelf instead — Bob was added beside Biff rather than instead of him, because one printed
+Gate Hedgehog turned into two characters and the maker kept both. Such an entry carries
+`"addition": true` and an `addedBecause` line saying where they came from and why they are not a
+remake, and it must carry no `renamedFrom` and claim no printed card in any `remakes`. The
+printed-version checks are skipped for it — there is nothing to account for — so `addition` is not a
+way out of a remake you did not finish. The town bible records additions in their own table, not in
+Renames.
+
 **Renaming a character.** The maker may rename anyone (Acorn became Peanut). When they do,
 `renamedFrom` carries the printed name, and it is not optional: everything that checks a remake —
 which printed versions exist, whether any were left unaccounted for, what the spreadsheet shows —
