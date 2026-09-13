@@ -5,7 +5,6 @@ import { makeHumanAgent } from './humanAgent.js';
 import {
   setGame, stopGame, isGameActive, scheduleRender, renderIfChanged, settle,
 } from './render.js';
-import { cardArtSVG } from './art.js';
 import { openFullArtGallery } from './full-art-gallery.js';
 import { openDeckBuilder, loadSavedDecks, saveDeck, deleteSavedDeck } from './deckbuilder.js';
 import { buildHelp, openHelp, openWelcome, hasBeenWelcomed } from './help.js';
@@ -57,15 +56,6 @@ function customBlurb(deck) {
 // ---------- menu ----------
 function buildMenu() {
   $('fullArtGalleryBtn').onclick = () => openFullArtGallery(rules, cardSet);
-  const critters = $('menuCritters');
-  critters.innerHTML = '';
-  for (const name of ['Clover', 'Sage', 'Comet']) {
-    const wrap = document.createElement('div');
-    const def = cardSet.cards.find((card) => card.name === name);
-    wrap.innerHTML = cardArtSVG(def);
-    critters.appendChild(wrap.firstChild);
-  }
-
   renderDeckChoice();
   renderMarketChoice();
 }

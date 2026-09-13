@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="src/ui/styles.css">
 <link rel="stylesheet" href="src/ui/storybook.css">
 <link rel="stylesheet" href="src/ui/full-art.css">
+<link rel="stylesheet" href="src/ui/surroundings.css">
 </head>
 <body>
 <div id="app">
@@ -16,8 +17,10 @@
   <section id="screen-menu" class="screen active">
     <div class="book-cover">
       <div class="cover-inner">
-        <div class="cover-orn top">❦</div>
-        <div class="menu-critters" id="menuCritters"></div>
+        <div class="cover-landscape" aria-hidden="true">
+          <img src="assets/ui/borough-daylight.webp" alt="" width="1536" height="1024" fetchpriority="high">
+          <span class="cover-caption">Welcome to the First Boroughs</span>
+        </div>
         <h1 class="logo">Animal Friends</h1>
         <div class="logo-sub">A Storybook of the First Boroughs</div>
         <p class="tagline">Build your town. Win the Capital City. Collect the Statues.</p>
@@ -105,6 +108,7 @@
   <!-- ============ OVERLAYS ============ -->
   <div class="overlay" id="welcomeOverlay">
     <div class="box welcome-box">
+      <div class="welcome-landscape" aria-hidden="true"></div>
       <div class="cover-orn">❦</div>
       <h2>Welcome, Mayor</h2>
       <div class="welcome" id="welcomeBody"></div>
