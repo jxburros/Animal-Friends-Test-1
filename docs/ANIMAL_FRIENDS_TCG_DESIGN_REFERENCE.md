@@ -214,8 +214,8 @@ derived, not hand-assigned. `src/engine/power.js` rates a card in *Supply-equiva
 That exponent split is the design decision. Rarity is *not* raw power: of two cards that give you the same,
 the cheaper one rates higher, and a cost-0 Rabbit with a good shift can out-rate a Master. But efficiency alone
 would make every cheap card legendary, so size still decides between two equally efficient cards. The bands
-were re-derived after the repricing to hold the pyramid, and the set currently reads 49% Common, 23%
-Uncommon, 22% Rare, 4% Super Rare, 2% Legendary.
+were re-derived after the repricing to hold the pyramid, and the set currently reads 49% Common, 25%
+Uncommon, 18% Rare, 5% Super Rare, 3% Legendary.
 
 The repricing is what finally made Buildings buyable. Every Building in the set now pays for itself —
 power-to-cost ratios of **1.01 to 1.27**, against 0.13 to 0.57 before — while remaining the dearest cards on
@@ -467,6 +467,10 @@ Its Events are **Open Ledger** (Commerce → gain 2 Supply and inspect the Marke
 | Community | 5 | With at least three species, first completed shift each turn gains +1 Supply. |
 | Harmony | 5 | On a tied bid, ready one Character at the start of your next turn. |
 | Joy | 5 | On gain, ready up to two Apprentices. |
+
+The Cost column above is the figure printed on the card and is not what a Statue is bought for: a
+Statue is always priced from the buyer's own Victory Row at **10 / 20 / 30** (Section 9), read at the
+moment the auction resolves.
 
 ### Other Capital City cards
 

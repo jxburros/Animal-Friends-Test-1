@@ -24,16 +24,16 @@ first, because it invalidates figures printed in the v0.5.0 section below.
 
 | Measure | origin/main | after |
 | --- | ---: | ---: |
-| Deck win-rate spread | 33.2 pts | 28.8 pts |
-| End-of-game Supply per player | 56 | 52 |
-| Upgrades per game (both players) | 0.19 | 2.66 |
+| Deck win-rate spread | 33.2 pts | 24.4 pts |
+| End-of-game Supply per player | 56 | 51 |
+| Upgrades per game (both players) | 0.19 | 2.69 |
 | Recruits per player | 14.1 | 10.4 |
-| Mean turns | 31.9 | 35.5 |
+| Mean turns | 31.9 | 35.3 |
 
 **The town cap is what made upgrading exist.** A town holds ten animals, counting those at work,
 those pledged into an auction and those face down in Unemployment. With an unlimited field, recruiting
 a second animal always beat improving the one you had, and upgrades ran at **0.19 a game across both
-players** while the set prints a second version of all 38 named Characters. They now run at **2.66**,
+players** while the set prints a second version of all 38 named Characters. They now run at **2.69**,
 of which 2.41 are in-town upgrades. Recruits fell from 14.1 to 10.4 per player, which is the same
 change seen from the other side: a place in town is now a thing worth spending on twice.
 
@@ -68,27 +68,27 @@ on the board. Five Many Hats cards were trimmed to hold the 1.08× power-creep g
 
 | Deck | Win rate |
 | --- | ---: |
-| Burrow & Bloom | 63.6% |
-| Paws & Papers | 62.6% |
-| Whisker & Willow | 49.2% |
-| Ripple & Rune | 44.4% |
-| Bramble & Bastion | 43.8% |
-| Root & Rampart | 36.4% |
+| Paws & Papers | 60.7% |
+| Burrow & Bloom | 60.4% |
+| Bramble & Bastion | 52.9% |
+| Ripple & Rune | 42.8% |
+| Whisker & Willow | 42.4% |
+| Root & Rampart | 40.8% |
 
-**Read the spread honestly.** It is noisy run to run: the three runs after the pass gave 29.6, 25.4
-and 31.2 points, and the three runs on `origin/main` gave 35.8, 31.7 and 32.1. The mean improvement of
-about 4.4 points is real, but it is modest and partly inside the noise. It is not a clean win, and
-28.8 points is nowhere near a solved problem.
+**Read the spread honestly.** It is noisy run to run: the three runs after the pass gave 27.5, 22.1
+and 23.8 points, and the three runs on `origin/main` gave 35.8, 31.7 and 32.1. The mean improvement of
+about 8.8 points is larger than the noise and every run after the pass beat every run before it, so
+this one is real — but 24.4 points is still nowhere near a solved problem.
 
 ### Seat balance and game shape
 
 Seat bias is within a couple of points of even, and inside the run-to-run noise: the three runs after
-the pass read −2.8, −0.3 and −0.7 (mean −1.3), and the three on `origin/main` read +0.1, 0.0 and +2.1
+the pass read −0.1, +1.9 and −2.6 (mean −0.3), and the three on `origin/main` read +0.1, 0.0 and +2.1
 (mean +0.7). No single figure here should be quoted as precise.
 
 | Measure | v0.6.0 |
 | --- | --- |
-| Mean turns | 35.5 |
+| Mean turns | 35.3 |
 | Contested auctions | 3.07/game (was 2.00) |
 | Final Statue count | 5–4 in the plurality of games |
 | Unemployment events | 3.8/game |
@@ -163,9 +163,9 @@ Card conservation holds over 200 random-vs-random games across all six Market De
 
 ## Still open
 
-1. **Deck balance is still the biggest problem.** 28.8 points of spread is better than the 33.2 on
-   `origin/main`, but the improvement is modest and partly inside the run-to-run noise, and nothing
-   about it is solved: Root & Rampart still sits at 36.4% and Burrow & Bloom at 63.6%.
+1. **Deck balance is still the biggest problem.** 24.4 points of spread is a real improvement on the
+   33.2 on `origin/main` — every run after the pass beat every run before it — but nothing about it is
+   solved: Root & Rampart still sits at 40.8% and Paws & Papers at 60.7%.
 
    The diagnosis is documented because it is more useful than the number. Win rate tracks **Events
    played per game** almost exactly (the top deck plays 10, the bottom 3), and Events played tracks
@@ -183,9 +183,10 @@ Card conservation holds over 200 random-vs-random games across all six Market De
    though there were much to defend against, when almost nothing in the set sent a Character to
    Unemployment. The v0.6.0 pass answered that with content rather than with a coefficient —
    Unemployment events now run 3.8 a game — but the decks have not been rebuilt against the new
-   ratings, and Bramble & Bastion is still near the bottom at 43.8%.
+   ratings. Bramble & Bastion did move, from near the bottom to 52.9%, once the rarity thresholds were
+   re-derived against the finished set and the printed decks were rebuilt on the new ratings.
 
-2. **Supply still inflates.** 52 per player unspent at the end, down only 4 from 56. The third Statue
+2. **Supply still inflates.** 51 per player unspent at the end, down only 5 from 56. The third Statue
    tier and the repriced Buildings were the two designated fixes and both helped less than hoped; the
    game still hands out more Supply than it has places to spend it.
 

@@ -10,7 +10,7 @@ This repo replaced the earlier single-file "Critter Town" game (archived at `doc
   pledged into an auction, and animals face down in Unemployment. Capping bodies is what gives the
   upgrade path a reason to exist — with an unlimited field a second animal always beat a better one,
   and **upgrades ran at 0.19 per game** while the set prints a second version of all 38 named
-  Characters. They now run at **2.66**.
+  Characters. They now run at **2.69**.
 - **Statues cost 10 / 20 / 30**, stepping up at two and four held, so the fifth and winning Statue is
   the dearest thing in the game by a wide margin. **The tier is charged when the auction resolves**,
   not when it opens: several auctions can run at once, and without this a Mayor holding three Statues
@@ -37,8 +37,8 @@ This repo replaced the earlier single-file "Critter Town" game (archived at `doc
   sight of the replacement card, and that edge belongs to the Mayor who moves second.
 
 Measured against the previous set with the same harness on both — the mean of three independent runs
-of 720 balanced games each: deck win-rate spread **33.2 → 28.8 points**, end-of-game Supply
-**56 → 52** per player, recruits **14.1 → 10.4** per player, mean game length **31.9 → 35.5** turns.
+of 720 balanced games each: deck win-rate spread **33.2 → 24.4 points**, end-of-game Supply
+**56 → 51** per player, recruits **14.1 → 10.4** per player, mean game length **31.9 → 35.3** turns.
 The spread is noisy run to run, so treat that improvement as real but modest; the
 [playtest notes](docs/PLAYTEST_NOTES.md) give the individual runs.
 
@@ -98,7 +98,7 @@ Besides one-shot Market cards and Statues, the Capital City sells **Buildings** 
 
 **Market Decks** — six shared markets to choose from at setup, each 35 cards: all nine Statues plus a 26-card sample of its own pool, topped up so that at least three on-reveal cards are always in it. **First Boroughs** (the classic mix; three shocks), **Boom Town** (prosperity and momentum; four shocks, mostly good news), **Hard Times** (recessions, hard winters and backlogs strike both towns alike; thirteen shocks), **Founders' Fair** (auction tools, understudies and second chances; fair weather at two shocks and nothing that empties a town), **Whiskerwood Fair** (ten artisan shops with six familiar favorites; two shocks) and **Many Hats Fair** (a hiring fair of halls that ready, retrain and rehire Characters by rank; three shocks).
 
-**Rarity** — every card is rated by what it gives you against what it asks for, and that rating sets its rarity: Common, Uncommon, Rare, Super Rare, Legendary. Rarity is not raw power. The model scores a card `power^0.6 × efficiency^0.4`, so of two cards that do the same thing the cheaper one rates higher, while of two equally efficient cards the bigger one does — a cost-0 Rabbit with a good shift can out-rate a Master. The set reads as a pyramid: 49% Common, 23% Uncommon, 22% Rare, 4% Super Rare, 2% Legendary. Rarity then caps how often a card may repeat in a deck: **3 / 3 / 2 / 1 / 1** copies. See `src/engine/power.js` and `npm run power`.
+**Rarity** — every card is rated by what it gives you against what it asks for, and that rating sets its rarity: Common, Uncommon, Rare, Super Rare, Legendary. Rarity is not raw power. The model scores a card `power^0.6 × efficiency^0.4`, so of two cards that do the same thing the cheaper one rates higher, while of two equally efficient cards the bigger one does — a cost-0 Rabbit with a good shift can out-rate a Master. The set reads as a pyramid: 49% Common, 25% Uncommon, 18% Rare, 5% Super Rare, 3% Legendary. Rarity then caps how often a card may repeat in a deck: **3 / 3 / 2 / 1 / 1** copies. See `src/engine/power.js` and `npm run power`.
 
 **Characters by name** — some cards ask for a particular friend: Nim, Chancellor of Records pays out while you control Pip (any version of him), and Pip's Reading Hour can only be played with an upright Pip. A named requirement or condition matches whichever version of that Character is on top of a stack.
 

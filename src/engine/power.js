@@ -20,9 +20,9 @@ export const COPY_LIMITS = { Common: 3, Uncommon: 3, Rare: 2, 'Super Rare': 1, L
 
 /** Score at or above which a card lands in each rarity. Tuned to a pyramid on the printed set. */
 export const RARITY_THRESHOLDS = [
-  ['Legendary', 6.0],
-  ['Super Rare', 5.45],
-  ['Rare', 4.48],
+  ['Legendary', 5.83],
+  ['Super Rare', 5.31],
+  ['Rare', 4.53],
   ['Uncommon', 2.6],
   ['Common', 0],
 ];

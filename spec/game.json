@@ -122,8 +122,9 @@
     "tiesGoToAnnouncer": true,
     "bidsAreEscrowed": true,
     "aging": {
-      "$comment": "The display ages. At the start of each round (each time the first player's turn comes round) the oldest card in the Capital City that nobody is bidding on is discarded and replaced. Cards visibly age out, so the display always turns over, on-reveal cards keep flowing, and 'buy it now or lose it' is a real decision. This replaces the old six-turn stale-market sweep, which only fired when the display had gone completely dead.",
+      "$comment": "The display ages. Once a round — at the start of the turn belonging to `agesAt`, the second player by default — the oldest card in the Capital City that nobody is bidding on is discarded and replaced. Whoever the aging fires for gets first sight of the card dealt to replace it, and that edge belongs to the Mayor who moves second, as part of their compensation for going second. Cards visibly age out, so the display always turns over, on-reveal cards keep flowing, and 'buy it now or lose it' is a real decision. This replaces the old six-turn stale-market sweep, which only fired when the display had gone completely dead.",
       "enabled": true,
+      "agesAt": 1,
       "cardsPerRound": 1,
       "statuesReturnToDeck": true,
       "skipCardsUnderAuction": true
@@ -183,9 +184,9 @@
     "The pledge ladder: your Nth pledge in an auction must be a Character costing at least N, so no Mayor can bid more than five times in one auction and cost-0 Characters cannot bid at all.",
     "Pledged Characters move to the Capital City beneath the card they are bidding on and stay there until the auction ends.",
     "A losing bidder is refunded their escrow in full and gets their animals back; there is no forfeit.",
-    "Statues cost 10 to a Mayor holding fewer than 2, and 20 to a Mayor holding 2 or more, so the fifth Statue is always bought at the higher price.",
+    "Statues cost 10 to a Mayor holding fewer than 2, 20 to one holding 2 or 3, and 30 to one holding 4, so the Statue that wins the game is always the dearest. The tier is read again when the auction resolves, against the Victory Row as it stands then, so several auctions opened at once cannot all be locked in at a cheaper tier.",
     "Every Statue carries a burden as well as a boon; burdens apply while the Statue sits in that player's Victory Row.",
-    "The Capital City ages: one card that nobody is bidding on is discarded and replaced at the start of each round.",
+    "The Capital City ages: one card that nobody is bidding on is discarded and replaced once a round, at the start of the second player's turn, so first sight of the replacement belongs to the Mayor who moves second.",
     "Buildings bought from the Capital City stay in their buyer's town, up to three; buying a fourth demolishes one.",
     "On-reveal Market cards resolve as they are dealt and are never purchasable.",
     "Upgrading keeps the stack's current orientation and re-triggers the new card's recruit abilities.",
