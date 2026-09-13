@@ -69,6 +69,11 @@ add to the list.
 - **Barrow came out from the Capital City** after twenty years cutting stone there, specifically
   because the First Boroughs are not finished being built. The Capital City is therefore a real place
   animals emigrate *from*, and the borough reads as young and growing. [Barrow]
+- **Berry is who the borough calls when something breaks**, and has been for longer than most animals
+  in it have been alive. They retired, were back on the bench within a fortnight, and now sit on the
+  committee and answer to the Town Workshop when the clock stops. Any character with a mended hinge,
+  a working pump or an apprenticeship has plausibly had Berry's help, and been walked into working it
+  out themselves rather than simply told. [Berry]
 - **The Capital City has its own professional class**, and the borough buys it by the day: Brett
   practises there, comes out when the town needs someone who knows how the Capital City's rules are
   written, and goes home the same evening. The Counting House budgets for him a year ahead. He is the
@@ -95,6 +100,7 @@ be read.
 | Peanut | Acorn | 2026-09-13 |
 | Oatmeal | Barley | 2026-09-13 |
 | Brett | Bram | 2026-09-13 |
+| Berry | Bramble | 2026-09-13 |
 
 ---
 

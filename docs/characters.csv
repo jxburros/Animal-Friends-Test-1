@@ -4,8 +4,9 @@ Barley,Badger,Civics / Science / Lore,Town Recorder / Ledger Boy / Geologist / W
 Barnaby,Owl,Commerce,Night Auditor,1,4,Uncommon,AF-NIGHT-01,0,1,all,ns_mkt_barnaby
 Barrow,Badger,Crafts,Stonecutter,1,5,Legendary,AF-MARKET-02,0,1,all,mkt_barrow
 Bean,Owl,Commerce,Café Proprietor / Barista / Espresso Puller,3,1 / 3 / 5,Uncommon / Rare,AF-NIGHT-01,1,3,all,ns_bean_1 ns_bean_3 ns_bean_5
+Berry,Hedgehog,Crafts / Science / Civics,Retired Tinker / Clockmaker / Committee Volunteer / Consulting Engineer / Workshop Elder / Guild Warden,6,0 / 1 / 2 / 3 / 4 / 5,Uncommon / Rare / Super Rare,AF-STARTER-01,0,0,0 of 6,mk_berry_tinker_0 mk_berry_clockmaker_1 mk_berry_committee_2 mk_berry_engineer_3 mk_berry_workshop_elder_4 mk_berry_guild_warden_5
 Bram,Badger,Crafts,Journeyman Carter,1,4,Rare,AF-MARKET-02,0,1,all,mkt_bram
-Bramble,Hedgehog,Civics / Crafts / Science,Guild Warden / Guild Apprentice Master / Master Joiner / Clockmaker / Tinker,5,0 / 1 / 2 / 4 / 5,Uncommon / Rare,AF-STARTER-01 / AF-NIGHT-01 / AF-HATS-01,0,0,0 of 5,br_bramble_1 ns_bramble_1 br_bramble_3 br_bramble_2 mh_bramble_5
+Bramble,Hedgehog,Civics / Crafts / Science,Guild Warden / Guild Apprentice Master / Master Joiner / Clockmaker / Tinker,5,0 / 1 / 2 / 4 / 5,Uncommon / Rare,AF-STARTER-01 / AF-NIGHT-01 / AF-HATS-01,0,5,all,br_bramble_1 ns_bramble_1 br_bramble_3 br_bramble_2 mh_bramble_5
 Brett,Badger,Civics,Retained Counsel,1,5,Rare,AF-STARTER-01,0,0,0 of 1,mk_brett_counsel_5
 Bristle,Hedgehog,Civics,Gate Hedgehog,1,3,Uncommon,AF-MARKET-02,0,0,0 of 1,mkt_bristle
 Brook,Otter,Crafts / Science / Lore / Commerce,Riverwright / Balloonist / Ferry Hand / Canal Pilot,4,1 / 2 / 4 / 5,Uncommon / Rare / Legendary,AF-HATS-01 / AF-STARTER-01 / AF-NIGHT-01,0,0,0 of 4,mh_brook_1 rr_brook_1 ns_brook_4 rr_brook_2

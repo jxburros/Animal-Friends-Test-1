@@ -163,6 +163,29 @@
      "workaround": "Left it untyped, as the printed cards that use this passive do."
     }
    ]
+  },
+  {
+   "name": "Berry",
+   "renamedFrom": "Bramble",
+   "species": "Hedgehog",
+   "studies": [
+    "Crafts",
+    "Civics",
+    "Science"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Berry retired. There was a party, a speech, a clock from the guild, and a plan involving the allotment and a great many naps. The retirement lasted about a fortnight, which everyone who knows Berry had privately predicted, because the trouble with being the animal who can fix it is that the borough knows where you live.\n\nIt starts small — somebody's hinge, somebody's pump — and by the spring they are on the committee, and by midsummer they are the one the Town Workshop calls when the clock stops and nobody under fifty can say why. Berry says yes. Berry has never in their long life managed to say the other thing. They arrive with their own tools and a tin of something baked, they work quietly and much faster than anyone expects, and they will not hear a word about payment beyond the tea.\n\nWhat the town sometimes forgets, because Berry is so kind about it, is that they are the cleverest animal in the First Boroughs. The clock they mended at ninety keeps better time than the one that replaced it. Younger animals come to them for the answer and leave having been gently walked into working it out themselves, which is a harder trick and takes longer, and Berry has all the time in the world for it.",
+   "voice": "Unhurried, warm, faintly amused. Asks after your family first. Gives the answer as a question so you can have it as your own idea.",
+   "arc": "Six cards across three studies, and one continuous joke: Berry keeps being pulled back in. Crafts is the bench — Retired Tinker (0) and Workshop Elder (4), the quills-out protection the Hedgehog charter is built on. Science is the mind — Clockmaker (1) orders what is coming, Consulting Engineer (3) makes the next machine pay double. Civics is the part they never volunteered for and cannot get out of — Committee Volunteer (2) drags somebody else back out of Unemployment with them, and Guild Warden (5) does it for free and puts the quills up while they are at it.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "protectCharacter with a `notSelf` filter",
+     "why": "The grandparently half of Berry wants to put the quills around somebody ELSE. `protectCharacter` auto-picks the source Character whenever it is a legal option, and `matchesFilter` has no `notSelf` key (only `advanceCharacter` and `readyNextTurn` handle notSelf, and they do it in their own code).",
+     "workaround": "Berry protects Berry, and shields the whole town from Unemployment at 4 with `unemploymentShield` — which the Hedgehog charter explicitly calls part of the signature."
+    }
+   ]
   }
  ],
  "cards": [
@@ -850,6 +873,234 @@
     "score": 5.12,
     "power": 12.55,
     "opportunityCost": 9.4
+   }
+  },
+  {
+   "id": "mk_berry_tinker_0",
+   "type": "character",
+   "name": "Berry",
+   "title": "Retired Tinker",
+   "job": "Retired Tinker",
+   "species": "Hedgehog",
+   "study": "Crafts",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Berry is recruited, Berry cannot be targeted by an opponent's effect until your next turn.",
+   "flavor": "The retirement lasted a fortnight. The clock from the guild is already in pieces on the bench, improved.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "protectCharacter"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 8
+   },
+   "remakes": "br_bramble_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.64,
+    "power": 4.4,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_berry_clockmaker_1",
+   "type": "character",
+   "name": "Berry",
+   "title": "Clockmaker",
+   "job": "Clockmaker",
+   "species": "Hedgehog",
+   "study": "Science",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Upgrades Berry. When Berry becomes upright, look at the top three cards of your deck and put them back in any order.",
+   "flavor": "Berry does not guess what is coming next. Berry simply knows what order things go in.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "reorderDeckTop",
+      "count": 3
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightskies",
+    "tile": 10
+   },
+   "remakes": "ns_bramble_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.02,
+    "power": 7.41,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_berry_committee_2",
+   "type": "character",
+   "name": "Berry",
+   "title": "Committee Volunteer",
+   "job": "Committee Volunteer",
+   "species": "Hedgehog",
+   "study": "Civics",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Berry. When Berry is recruited, you may rehire a Character from your Unemployment for 2 less Supply.",
+   "flavor": "They went to the meeting to object to being put on the committee and came home as its secretary.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "rehire",
+      "discount": 2,
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 8
+   },
+   "remakes": "br_bramble_3",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.71,
+    "power": 10.14,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_berry_engineer_3",
+   "type": "character",
+   "name": "Berry",
+   "title": "Consulting Engineer",
+   "job": "Consulting Engineer",
+   "species": "Hedgehog",
+   "study": "Science",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Berry. Busy: the next shift you complete produces 1 extra Supply.",
+   "flavor": "Berry listened to the boiler for a while, tightened one thing, and would not say which.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "addMod",
+      "key": "shiftBonus",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightskies",
+    "tile": 10
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.42,
+    "power": 10.05,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_berry_workshop_elder_4",
+   "type": "character",
+   "name": "Berry",
+   "title": "Workshop Elder",
+   "job": "Workshop Elder",
+   "species": "Hedgehog",
+   "study": "Crafts",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Berry. While Berry is in town, your Characters cannot be sent to Unemployment by an effect.",
+   "flavor": "Nobody is let go from a bench Berry is standing at. It has been tried.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "unemploymentShield",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 8
+   },
+   "remakes": "br_bramble_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.63,
+    "power": 11.63,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_berry_guild_warden_5",
+   "type": "character",
+   "name": "Berry",
+   "title": "Guild Warden",
+   "job": "Guild Warden",
+   "species": "Hedgehog",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Berry. When Berry becomes upright, you may rehire a Character from your Unemployment for 3 less Supply, and Berry cannot be targeted by an opponent until your next turn.",
+   "flavor": "Berry took the warden's chain, thanked the guild, and asked who was not working this season and why.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "rehire",
+        "discount": 3,
+        "optional": true
+       },
+       {
+        "do": "protectCharacter"
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 8
+   },
+   "remakes": "mh_bramble_5",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.76,
+    "power": 15.04,
+    "opportunityCost": 11
    }
   }
  ],
