@@ -12,6 +12,7 @@
     "invariants": "node scripts/invariants.mjs 200",
     "power": "node scripts/power.mjs",
     "stamp": "node scripts/stamp.mjs",
+    "stamp:maker": "node scripts/stamp.mjs --maker",
     "playtest": "node scripts/playtest.mjs",
     "identity": "node scripts/identity.mjs",
     "decks": "node scripts/build-decks.mjs",

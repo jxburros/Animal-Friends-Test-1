@@ -303,6 +303,16 @@ function botanyBackdrop(grand) {
   return s;
 }
 
+/** A cup of something hot: the Food study's prop (Peanut's café, and any counter after it). */
+function mug(x, y, sc = 1, color = CREAM) {
+  return `<g transform="translate(${x} ${y}) scale(${sc})">`
+    + `<path d="M-7 -6 H7 V3 Q7 7 3 7 H-3 Q-7 7 -7 3 Z" fill="${color}" stroke="${INK}" stroke-width="1.6"/>`
+    + `<path d="M7 -3 Q12 -3 12 1 Q12 5 7 5" fill="none" stroke="${INK}" stroke-width="1.6"/>`
+    + `<path d="M-7 -6 H7" stroke="${INK}" stroke-width="1.6"/>`
+    + `<path d="M-3 -10 Q-1 -13 -3 -16 M2 -10 Q4 -13 2 -16" fill="none" stroke="${INK}" stroke-width="1.2" opacity="0.55" stroke-linecap="round"/>`
+    + `</g>`;
+}
+
 function awning(x, y, w, colors) {
   let s = '';
   const n = Math.round(w / 14);
@@ -388,6 +398,25 @@ function scienceBackdrop(grand) {
   return s;
 }
 
+/** Food: a counter under an awning, cups on it, and the smell of the place. */
+function foodBackdrop(grand) {
+  let s = sky(grand ? '#f6d9b0' : '#fdeccf', 58);
+  s += awning(0, 0, 160, grand ? [GOLD, CREAM] : ['#8a5a34', CREAM]);
+  s += ground('#c9a274', 58);
+  s += `<rect x="0" y="72" width="160" height="10" fill="#8a5a34" stroke="${INK}" stroke-width="1.6"/>`;
+  s += mug(24, 70, 0.9);
+  s += mug(138, 70, 0.9);
+  if (grand) {
+    s += bunting(20, 14, 120, [GOLD, CREAM, '#c0473f']);
+    s += mug(56, 70, 0.7);
+    s += mug(104, 70, 0.7);
+    s += barrel(80, 92, 0.7);
+  } else {
+    s += crate(80, 92, 0.7);
+  }
+  return s;
+}
+
 function studyBackdrop(study, grand) {
   if (study === 'Science') return scienceBackdrop(grand);
   if (study === 'Agriculture') return agricultureBackdrop(grand);
@@ -396,6 +425,7 @@ function studyBackdrop(study, grand) {
   if (study === 'Civics') return civicsBackdrop(grand, true);
   if (study === 'Crafts') return craftsBackdrop(grand);
   if (study === 'Lore') return loreBackdrop(grand);
+  if (study === 'Food') return foodBackdrop(grand);
   return sky('#e6e6ee', 60) + ground('#cfc7d9', 60);
 }
 
@@ -1397,6 +1427,7 @@ const ICONS = {
   Botany: () => `<path d="M10 18 V9" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M10 9 Q3 8 3 2 Q10 3 10 9Z" fill="currentColor"/><path d="M10 9 Q17 8 17 2 Q10 3 10 9Z" fill="currentColor"/>`,
   Commerce: () => `<line x1="10" y1="2" x2="10" y2="16" stroke="currentColor" stroke-width="1.6"/><line x1="4" y1="6" x2="16" y2="6" stroke="currentColor" stroke-width="1.6"/><path d="M4 6 L1.5 12 A3 3 0 0 0 6.5 12 Z" fill="currentColor"/><path d="M16 6 L13.5 12 A3 3 0 0 0 18.5 12 Z" fill="currentColor"/><rect x="7" y="16" width="6" height="2" fill="currentColor"/>`,
   Science: () => `<path d="M8 2 H12 M9 2 V8 L4 16 Q3 18 5 18 H15 Q17 18 16 16 L11 8 V2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M6.5 13 H13.5 L15.4 16.6 H4.6 Z" fill="currentColor"/><circle cx="14" cy="4" r="1.2" fill="currentColor"/><circle cx="17" cy="8" r="0.9" fill="currentColor"/>`,
+  Food: () => `<path d="M4 7 H14 V13 Q14 16 11 16 H7 Q4 16 4 13 Z" fill="currentColor"/><path d="M14 8.5 Q18 8.5 18 11 Q18 13.5 14 13.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 5 Q8.6 3 7 1 M11 5 Q12.6 3 11 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>`,
   Civics: () => `<polygon points="10,2 17,7 3,7" fill="currentColor"/><rect x="4" y="8" width="2" height="8" fill="currentColor"/><rect x="9" y="8" width="2" height="8" fill="currentColor"/><rect x="14" y="8" width="2" height="8" fill="currentColor"/><rect x="3" y="16" width="14" height="2" fill="currentColor"/>`,
   apprentice: () => iconStarShape(10, 10, 7),
   journeyman: () => iconStarShape(6, 11, 5) + iconStarShape(14, 11, 5),

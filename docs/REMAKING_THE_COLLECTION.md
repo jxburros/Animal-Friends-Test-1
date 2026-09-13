@@ -16,8 +16,9 @@ Open **✎ Build your own deck** and the Workshop now starts with a shelf picker
 | **The printed book** | `spec/starter_card_set.json` — the published collection | Yes |
 | **Maker cards** | `spec/maker_card_set.json` — the hand-remade collection | **Not yet** |
 
-The Maker shelf starts empty. Its cards render exactly like printed ones (hover to read one, or
-press **Read**), but they carry no `+`/`−` controls and a *Not playable yet* tag instead: they are
+Its cards render exactly like printed ones (hover to read one, or press **Read**), and **Story**
+opens the character's backstory beside the full flavor of every version of them — the flavor a card
+face is too small to show. They carry no `+`/`−` controls and a *Not playable yet* tag instead: they are
 there to be compared against the printed card they replace. When they become playable, the change
 is to let the pool and `deckProblems` see them — the shelf itself, the sort and the ticks all stay
 as they are.
@@ -46,7 +47,8 @@ Add an object to `cards` in `spec/maker_card_set.json`. It uses the same fields 
 }
 ```
 
-`rarity` and `power` are left off: `npm run stamp` computes them from the card and writes them in.
+`rarity` and `power` are left off: `npm run stamp -- --maker` computes them from the card and writes
+them in. (Plain `npm run stamp` stamps the printed set — a different file.)
 
 `remakes` is the point of the whole thing: it is **an id, not a name**. Rename the card, give it a
 new title, move it to a different species — the link still points at the printed card it came from,

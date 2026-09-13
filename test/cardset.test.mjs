@@ -6,52 +6,8 @@ import assert from 'node:assert/strict';
 import { RULES, SET, newGame } from './helpers.mjs';
 import { createGame, playGame, buildMarketDeck, resolveDeck, deckProblems, deckRules, maxCopiesOf } from '../src/engine/index.js';
 import { seedRng } from '../src/engine/rng.js';
+import { EFFECTS, TRIGGERS, PASSIVE_KEYS, MOD_KEYS, CITY_RULE_KEYS, CONDITIONS } from './card-vocabulary.mjs';
 import { makeRandomAgent } from '../src/ai/random.js';
-
-const EFFECTS = new Set([
-  'seq', 'gainSupply', 'opponentGainSupply', 'giveSupplyToOpponent', 'draw', 'discard', 'addMod',
-  'readyCharacter', 'readyNextTurn', 'rehire', 'recruitFromHand', 'reorderDeckTop',
-  'eventFromDumpToDeckBottom', 'eventFromDumpToHand', 'peekMarketDeck', 'opponentTopdeckFromHand',
-  'unemployOpponentCharacter', 'raiseOwnBid',
-  // species signature verbs (spec/species.json)
-  'storeSupply', 'takeStoredSupply', 'takeFromCityDump', 'protectCharacter', 'moveShift',
-  'selfReady', 'cancelReveal', 'advanceCharacter',
-  // the astronomers' verb (Night Shift): look at your own deck top and bin what you do not want
-  'scryDeck',
-  // on-reveal catch-up
-  'behindPlayerGains', 'behindPlayerReadies',
-  // shared shocks, used by Disruption cards
-  'allCharactersToUnemployment', 'endAllShifts', 'everyoneLosesSupply', 'everyoneGainsSupply',
-  'everyoneDraws', 'everyoneDiscardsDownTo', 'blockNextReady', 'everyoneRehiresFree',
-  'everyoneUnemploys',
-]);
-const TRIGGERS = new Set([
-  'passive', 'busy', 'onRecruit', 'onTurnStart', 'onTurnEnd', 'onReady', 'onShiftStarted', 'onShiftCompleted',
-  'onEventPlayed', 'onAnnounce', 'onChallengedByOpponent', 'onGainMarketCard', 'onCharacterUnemployed',
-  'onTiedBid',
-  // an Ordinance changes the rules while it sits in the Capital City
-  'displayed',
-]);
-const PASSIVE_KEYS = new Set([
-  'blockOpponentBidRaise', 'firstAnnounceMinBidMinus1', 'firstBidPlus1', 'winTiesAsChallenger',
-  'masterDelayMinus1', 'eventCharReductionPerTurn',
-  // Statue burdens
-  'opponentRehireDiscount', 'opponentFirstBidPlus1', 'apprenticeEntersBusy', 'eventCostPlus1',
-  'resourceSupplyMinus1', 'losingBidsPayFull', 'pledgeLadderPlus1',
-]);
-const MOD_KEYS = new Set([
-  'recruitDiscount', 'challengeDiscount', 'rehireDiscount', 'shiftBonus', 'extraAdvance', 'lossShield',
-  'unemploymentShield', 'unchallengeable', 'cancelNextChallenge', 'eventCharReduction', 'skipNextAdvance',
-  'cancelNextReveal',
-]);
-/** Keys an Ordinance may change while it is displayed; read by cityRule() in the engine. */
-const CITY_RULE_KEYS = new Set(['pledgeLadderDelta', 'statueCostDelta', 'buildingCostDelta', 'noRaises',
-  'blockStatuePurchase',
-]);
-const CONDITIONS = new Set([
-  'self', 'announcerIsSelf', 'onlyUprightOfSpecies', 'otherCharacterInTown', 'eventRequiresStudy',
-  'nonStatue', 'statue', 'handAtLeast', 'unemploymentNotMoreThanOpponent', 'minSpeciesInTown',
-]);
 
 const byType = (t) => SET.cards.filter((c) => c.type === t);
 

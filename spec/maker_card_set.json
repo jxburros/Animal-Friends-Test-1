@@ -4,9 +4,291 @@
  "name": "Maker Cards",
  "playable": false,
  "note": "Work in progress: cards here cannot be put in a deck yet.",
- "species": [],
- "studies": [],
+ "species": [
+  "Squirrel"
+ ],
+ "studies": [
+  "Commerce",
+  "Food"
+ ],
  "decks": [],
- "characters": [],
- "cards": []
+ "characters": [
+  {
+   "name": "Peanut",
+   "renamedFrom": "Acorn",
+   "species": "Squirrel",
+   "studies": [
+    "Commerce",
+    "Food"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Peanut keeps the books, and has kept them since they were small enough to need two paws for the ledger. Half the borough's accounts pass through them: the grange's feed bills, the ferry's tolls, the guild's quarterly returns. Peanut is bright in the plain way that gets noticed late — they find the error, they find the cheaper supplier, and they tell you about both, cheerfully, whether or not you asked.\n\nThe café came second and turned out to be the point. Peanut took over a failing counter by the Hiring Hall, mostly to have somewhere to spread the ledgers out, and discovered that if you give the whole town coffee they will tell you what everything costs. Now the café is the office. The accounts get done between orders, the good deals get passed across the counter with the change, and a working animal who stops in for a cup leaves knowing something they did not know before.\n\nWhat Peanut is bad at is spending. Everything goes by — in the till, in the tin, in the café cash box — against a rainy day that a Squirrel is always sure is coming. The town is richer for Peanut and Peanut is poor most of the year, right up until the moment they are not.",
+   "voice": "Warm, quick, faintly bookkeeperish. Gives you the number and then the kinder version of the number. Never says 'no', says 'not this quarter'.",
+   "arc": "Commerce is the career: Ledger Apprentice (0) learns to put a little by, Accountant (2) learns to call it back in when it is needed, Town Comptroller (5) stops working their own desk and makes every animal in town a little better paid. Food is the room the career happens in: Barista (1) takes a coin off every shift that passes the counter, Café Manager (4) turns the café into the place friends are hired from. The 0 and the 1 are deliberately small — the Squirrel hole is slow starts, and Peanut's whole story is that the payoff is later.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "shiftBonusPerCharacter",
+     "why": "The Comptroller wants every Character's shift to pay +1 as a standing rule; `shiftBonus` is a player-level mod that `consumeMod` spends on the next shift only, so it cannot express a permanent per-shift bonus.",
+     "workaround": "Used an `onShiftCompleted` ability with no `self` condition, which fires for every shift the player completes and gains 1 Supply — the same outcome, logged per shift rather than folded into the shift's output."
+    },
+    {
+     "verb": "recruitDiscountForStudy",
+     "why": "The Café Manager wanted 'your Food and Commerce Characters cost 1 less to recruit'; `recruitDiscount` is untyped and applies to the next recruit of any kind.",
+     "workaround": "Left the discount untyped and put the character in the flavor instead."
+    }
+   ],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_peanut_barista_1",
+      "mk_peanut_cafe_manager_4"
+     ],
+     "why": "No painted tile shows a Squirrel behind a counter. nightworkers tile 2 is Bean's café, but Bean is an Owl. These two run on the generated vector art with the new Food backdrop until a Squirrel barista is painted."
+    }
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "mk_peanut_ledger_0",
+   "type": "character",
+   "name": "Peanut",
+   "title": "Ledger Apprentice",
+   "job": "Ledger Apprentice",
+   "species": "Squirrel",
+   "study": "Commerce",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Peanut completes a shift, put 1 Supply by on Peanut.",
+   "flavor": "Two paws for the ledger, and a tin behind the desk that nobody is allowed to ask about.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "storeSupply",
+      "amount": 1,
+      "cap": 4
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 14
+   },
+   "remakes": "mh_acorn_0",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.95,
+    "power": 4.92,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_peanut_barista_1",
+   "type": "character",
+   "name": "Peanut",
+   "title": "Barista",
+   "job": "Barista",
+   "species": "Squirrel",
+   "study": "Food",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Upgrades Peanut. Whenever one of your Characters finishes a shift, put 1 Supply by on Peanut.",
+   "flavor": "Everyone coming off a shift walks past the counter, and nobody walks past the counter for free.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "effect": {
+      "do": "storeSupply",
+      "amount": 1,
+      "cap": 4
+     }
+    }
+   ],
+   "remakes": "ns_acorn_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.6,
+    "power": 6.63,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_peanut_accountant_2",
+   "type": "character",
+   "name": "Peanut",
+   "title": "Accountant",
+   "job": "Accountant",
+   "species": "Squirrel",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Peanut. Busy: take every Supply your Characters have put by.",
+   "flavor": "Peanut calls it 'bringing the tins in', and has never once been wrong about which tin.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "takeStoredSupply"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 14
+   },
+   "remakes": "rr_acorn_1",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.69,
+    "power": 12.25,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_peanut_cafe_manager_4",
+   "type": "character",
+   "name": "Peanut",
+   "title": "Café Manager",
+   "job": "Café Manager",
+   "species": "Squirrel",
+   "study": "Food",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Peanut. When you recruit a Character, put 1 Supply by on Peanut, draw 1 card, and your next recruit costs 1 less.",
+   "flavor": "Nobody is hired in this town without someone at the café saying they were worth it, and the second one always comes cheaper.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "storeSupply",
+        "amount": 1,
+        "cap": 4
+       },
+       {
+        "do": "draw",
+        "count": 1
+       },
+       {
+        "do": "addMod",
+        "key": "recruitDiscount",
+        "value": 1,
+        "expires": "nextTurnStart",
+        "consumable": true
+       }
+      ]
+     }
+    }
+   ],
+   "remakes": "rr_acorn_3",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.14,
+    "power": 12.9,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_peanut_comptroller_5",
+   "type": "character",
+   "name": "Peanut",
+   "title": "Town Comptroller",
+   "job": "Town Comptroller",
+   "species": "Squirrel",
+   "study": "Commerce",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Peanut. Whenever one of your Characters finishes a shift, gain 1 Supply.",
+   "flavor": "Peanut audited the whole borough, found everyone underpaid by a little, and fixed it in an afternoon.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 14
+   },
+   "remakes": "rr_acorn_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.08,
+    "power": 13.25,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_peanuts_standing_round",
+   "type": "event",
+   "name": "Peanut's Standing Round",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Peanut"
+    },
+    {
+     "study": "Commerce"
+    }
+   ],
+   "text": "Requires Peanut and a Commerce Character. Gain 2 Supply, then you may pay 2 Supply to raise one of your open bids by 2.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "raiseOwnBid",
+      "amount": 2,
+      "optional": true
+     }
+    ]
+   },
+   "flavor": "Peanut buys the round, the room talks, and by the third cup everyone knows what the lot is really worth.",
+   "remakes": "mh_acorns_bidding_war",
+   "rarity": "Common",
+   "power": {
+    "score": 1.56,
+    "power": 2.6,
+    "opportunityCost": 3.6
+   }
+  }
+ ],
+ "newStudies": [
+  {
+   "name": "Food",
+   "introducedBy": "Peanut",
+   "blurb": "Feeding the town: counters, kitchens, carts and the café. Where Commerce counts the money and Agriculture grows the crop, Food is the animal who hands it over and knows everyone's order.",
+   "note": "A seventh study, declared on the maker shelf only. Before the maker set can be played, Food must be added to the printed set's `studies`, given a place in the species charters and deck tooling, and the printed decks re-checked — they were tuned against six."
+  }
+ ]
 }

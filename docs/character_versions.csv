@@ -1,9 +1,9 @@
 Character,Species,Study,Job / Title,Card id,Card type,Set,Cost,Rarity,Expansion,Shift delay,Shift output,Power score,Remade,Remade by (maker card id),Remade by (maker card name),Rules text
-Acorn,Squirrel,Agriculture,Nut Runner,mh_acorn_0,character,AF-STARTER-01,0,Uncommon,AF-HATS-01,1,1,2.95,no,,,"When Acorn completes a shift, put 1 Supply by on Acorn."
-Acorn,Squirrel,Commerce,Coffee Cart,ns_acorn_1,character,AF-STARTER-01,1,Uncommon,AF-NIGHT-01,1,1,3.4,no,,,"Upgrades Acorn. When Acorn completes a shift, if you control an Owl, gain 1 Supply."
-Acorn,Squirrel,Commerce,Stall Runner,rr_acorn_1,character,AF-STARTER-01,2,Super Rare,AF-STARTER-01,1,2,5.69,no,,,Busy: take every Supply your Characters have put by.
-Acorn,Squirrel,Crafts,Trade Envoy,rr_acorn_3,character,AF-STARTER-01,3,Rare,AF-STARTER-01,2,3,5.12,no,,,Busy: take every Supply your Characters have put by.
-Acorn,Squirrel,Commerce,Guild Broker,rr_acorn_2,character,AF-STARTER-01,5,Super Rare,AF-STARTER-01,3,6,5.63,no,,,"Upgrades Acorn. When an opponent challenges one of your purchases, gain 2 Supply and draw 1 card."
+Acorn,Squirrel,Agriculture,Nut Runner,mh_acorn_0,character,AF-STARTER-01,0,Uncommon,AF-HATS-01,1,1,2.95,yes,mk_peanut_ledger_0,Peanut,"When Acorn completes a shift, put 1 Supply by on Acorn."
+Acorn,Squirrel,Commerce,Coffee Cart,ns_acorn_1,character,AF-STARTER-01,1,Uncommon,AF-NIGHT-01,1,1,3.4,yes,mk_peanut_barista_1,Peanut,"Upgrades Acorn. When Acorn completes a shift, if you control an Owl, gain 1 Supply."
+Acorn,Squirrel,Commerce,Stall Runner,rr_acorn_1,character,AF-STARTER-01,2,Super Rare,AF-STARTER-01,1,2,5.69,yes,mk_peanut_accountant_2,Peanut,Busy: take every Supply your Characters have put by.
+Acorn,Squirrel,Crafts,Trade Envoy,rr_acorn_3,character,AF-STARTER-01,3,Rare,AF-STARTER-01,2,3,5.12,yes,mk_peanut_cafe_manager_4,Peanut,Busy: take every Supply your Characters have put by.
+Acorn,Squirrel,Commerce,Guild Broker,rr_acorn_2,character,AF-STARTER-01,5,Super Rare,AF-STARTER-01,3,6,5.63,yes,mk_peanut_comptroller_5,Peanut,"Upgrades Acorn. When an opponent challenges one of your purchases, gain 2 Supply and draw 1 card."
 Barley,Badger,Civics,Ledger Boy,rw_barley_1,character,AF-STARTER-01,1,Rare,AF-STARTER-01,1,2,4.83,no,,,"When Barley is recruited, your town braces: the next shared shock passes it over."
 Barley,Badger,Science,Geologist,ns_barley_2,character,AF-STARTER-01,2,Rare,AF-NIGHT-01,1,2,4.58,no,,,"Upgrades Barley. Recruit: if you control another Badger, gain 2 Supply."
 Barley,Badger,Lore,Warren Surveyor,mh_barley_3,character,AF-STARTER-01,3,Uncommon,AF-HATS-01,2,2,4.51,no,,,"Upgrades Barley. When Barley becomes upright, you may rehire a Character from your Unemployment for 2 less Supply."
@@ -197,3 +197,8 @@ Willow,Otter,Commerce,Toll Keeper,rr_willow_3,character,AF-STARTER-01,2,Uncommon
 Willow,Otter,Science,Tide Reckoner,ns_willow_3,character,AF-STARTER-01,3,Rare,AF-NIGHT-01,2,3,4.72,no,,,"Upgrades Willow. When Willow becomes upright, another Character you control becomes upright at the start of your next turn."
 Willow,Otter,Commerce,Harbourmaster,rr_willow_2,character,AF-STARTER-01,4,Uncommon,AF-STARTER-01,2,4,4.36,no,,,"Upgrades Willow. When Willow is recruited, another Character you control is upright at the start of your next turn."
 Willow,Otter,Civics,Harbour Admiral,mh_willow_5,character,AF-STARTER-01,5,Super Rare,AF-HATS-01,3,6,5.42,no,,,"Upgrades Willow. Whenever you gain a non-Statue Capital City card, gain 2 Supply and draw 1 card."
+Peanut,Squirrel,Commerce,Ledger Apprentice,mk_peanut_ledger_0,character,AF-MAKER-01,0,Uncommon,AF-MAKER-01,1,1,2.95,n/a (maker card),,,"When Peanut completes a shift, put 1 Supply by on Peanut."
+Peanut,Squirrel,Food,Barista,mk_peanut_barista_1,character,AF-MAKER-01,1,Uncommon,AF-MAKER-01,1,1,3.6,n/a (maker card),,,"Upgrades Peanut. Whenever one of your Characters finishes a shift, put 1 Supply by on Peanut."
+Peanut,Squirrel,Commerce,Accountant,mk_peanut_accountant_2,character,AF-MAKER-01,2,Super Rare,AF-MAKER-01,1,2,5.69,n/a (maker card),,,Upgrades Peanut. Busy: take every Supply your Characters have put by.
+Peanut,Squirrel,Food,Café Manager,mk_peanut_cafe_manager_4,character,AF-MAKER-01,4,Rare,AF-MAKER-01,2,4,5.14,n/a (maker card),,,"Upgrades Peanut. When you recruit a Character, put 1 Supply by on Peanut, draw 1 card, and your next recruit costs 1 less."
+Peanut,Squirrel,Commerce,Town Comptroller,mk_peanut_comptroller_5,character,AF-MAKER-01,5,Rare,AF-MAKER-01,2,5,5.08,n/a (maker card),,,"Upgrades Peanut. Whenever one of your Characters finishes a shift, gain 1 Supply."

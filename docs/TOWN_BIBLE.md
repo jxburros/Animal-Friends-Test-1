@@ -50,11 +50,27 @@ add to the list.
 
 ## History
 
-*Nothing recorded yet beyond the setting above. The first remade characters will fill this in.*
+- **The café by the Hiring Hall** was a failing counter until Peanut took it over, and is now where
+  the borough's accounts are kept, its prices are compared and its hiring is gossiped about. Any
+  character who works for wages has stood at that counter. [Peanut]
+- **Food is a study.** Feeding the town — counters, kitchens, carts and the café — is recognised work
+  alongside Agriculture and Commerce, not a sideline of either. It was named when Peanut's café
+  became the place half the borough's business got done. [Peanut]
 
 ## Relationships
 
-*Nothing recorded yet. Record here only what both parties would agree happened.*
+- **Peanut keeps the books for half the borough**: the grange's feed bills, the ferry's tolls, the
+  guild's quarterly returns. A character with accounts has plausibly had them audited, kindly, by
+  Peanut. [Peanut]
+
+## Renames
+
+Characters the maker has renamed. The printed name stays here so old cards, decks and notes can still
+be read.
+
+| Now | Printed as | Remade |
+| --- | --- | --- |
+| Peanut | Acorn | 2026-09-13 |
 
 ---
 

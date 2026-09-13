@@ -153,9 +153,14 @@ function matchesStudy(c, study) {
   if (c.type === 'character') return c.study === study;
   return (c.requires || []).some((r) => r.study === study || (r.name && namedVersions(r.name).some((v) => v.study === study)));
 }
-/** Every printed version of a named Character: an Event that requires "Pip" belongs with Squirrels and with Lore. */
+/**
+ * Every version of a named Character, on either shelf: an Event that requires "Pip" belongs with
+ * Squirrels and with Lore. A Maker event requiring a remade name finds its versions on the Maker
+ * shelf, where the printed set has none.
+ */
 function namedVersions(name) {
-  return ctx.set.cards.filter((c) => c.type === 'character' && c.name === name);
+  const maker = (ctx.makerSet && ctx.makerSet.cards) || [];
+  return [...ctx.set.cards, ...maker].filter((c) => c.type === 'character' && c.name === name);
 }
 
 // ---------- remade ticks ----------
@@ -167,6 +172,65 @@ function toggleRemade(def) {
   if (status && status.by === 'maker') return; // a Maker card owns this tick; untick it there
   ctx.marks = setRemade(ctx.marks, def, !status);
   render();
+}
+
+/**
+ * The story panel: a remade character's backstory beside the flavor of every version of them.
+ * Card faces clip long flavor, and a backstory has nowhere to live on a card at all — this is where
+ * the writing the cards came out of is actually read.
+ */
+function characterEntry(name) {
+  return ((ctx.makerSet && ctx.makerSet.characters) || []).find((c) => c.name === name) || null;
+}
+function openStory(def) {
+  const entry = characterEntry(def.name);
+  const versions = ((ctx.makerSet && ctx.makerSet.cards) || [])
+    .filter((c) => characterOf(c) === def.name)
+    .sort((a, b) => (a.cost || 0) - (b.cost || 0));
+  // tabindex: showModal() otherwise focuses the close button at the foot of a long story and
+  // scrolls the panel past the character's name before it is ever read.
+  const dialog = h('dialog', { class: 'db-story', tabindex: '-1', 'aria-label': `The story of ${def.name}` });
+  const head = h('div', { class: 'db-story-head' }, [
+    h('h2', {}, def.name),
+    h('p', { class: 'db-story-sub' }, entry
+      ? [entry.species, (entry.studies || []).join(' · '), entry.pronouns].filter(Boolean).join(' — ')
+      : `${def.species || ''} ${def.study ? `· ${def.study}` : ''}`.trim()),
+  ]);
+  if (entry && entry.renamedFrom) {
+    head.appendChild(h('p', { class: 'db-story-renamed' }, `Remade from ${entry.renamedFrom}.`));
+  }
+  const body = h('div', { class: 'db-story-body' });
+  if (entry) {
+    for (const para of String(entry.backstory || '').split('\n\n')) {
+      if (para.trim()) body.appendChild(h('p', {}, para.trim()));
+    }
+    if (entry.voice) body.appendChild(h('p', { class: 'db-story-note' }, [h('strong', {}, 'Voice. '), entry.voice]));
+    if (entry.arc) body.appendChild(h('p', { class: 'db-story-note' }, [h('strong', {}, 'The arc. '), entry.arc]));
+  } else {
+    body.appendChild(h('p', { class: 'db-empty' }, 'No backstory written for this character yet.'));
+  }
+  if (versions.length) {
+    body.appendChild(h('h3', { class: 'db-story-h3' }, 'The cards, and what they say'));
+    for (const v of versions) {
+      body.appendChild(h('div', { class: `db-story-card${v.id === def.id ? ' current' : ''}` }, [
+        h('div', { class: 'db-story-card-head' }, [
+          h('span', { class: 'db-row-cost' }, String(v.cost ?? 0)),
+          h('span', { class: 'db-story-card-name' }, v.type === 'character' ? `${v.name}, ${v.title}` : v.name),
+          h('span', { class: `rarity-tag rar-${raritySlug(v)}` }, v.rarity || 'Common'),
+        ]),
+        h('p', { class: 'db-story-rules' }, v.text || ''),
+        h('p', { class: 'db-story-flavor' }, v.flavor || ''),
+      ]));
+    }
+  }
+  dialog.appendChild(head);
+  dialog.appendChild(body);
+  dialog.appendChild(h('button', { class: 'primary', type: 'button', onclick: () => dialog.close() }, 'Close the book'));
+  dialog.addEventListener('close', () => dialog.remove());
+  dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+  document.body.appendChild(dialog);
+  dialog.showModal();
+  dialog.scrollTop = 0;
 }
 
 function chip(label, active, onClick, iconName) {
@@ -244,12 +308,19 @@ function buildFilters() {
   }
   return bar;
 }
-/** The species and studies to offer as filters: the printed set's, which the Maker set follows. */
+/**
+ * The species and studies to offer as filters: the printed set's, plus any the Maker set adds.
+ * A remade character may open a study the printed collection never had (Food, on Peanut's cards),
+ * and it has to be filterable the moment it exists or the cards using it are unreachable.
+ */
 function speciesList() {
-  return (ctx.set.species || []).length ? ctx.set.species : [];
+  return union(ctx.set.species, ctx.makerSet && ctx.makerSet.species);
 }
 function studyList() {
-  return (ctx.set.studies || []).length ? ctx.set.studies : [];
+  return union(ctx.set.studies, ctx.makerSet && ctx.makerSet.studies);
+}
+function union(a, b) {
+  return [...new Set([...(a || []), ...(b || [])])];
 }
 
 function buildSlot(def) {
@@ -264,6 +335,12 @@ function buildSlot(def) {
     const olds = remade.map((id) => (ctx.set.cardsById && ctx.set.cardsById[id]) || null);
     slot.appendChild(h('div', { class: 'db-slot-controls maker' }, [
       h('span', { class: 'db-maker-tag', title: 'Maker cards cannot go in a deck yet' }, 'Not playable yet'),
+      h('button', {
+        class: 'small',
+        type: 'button',
+        title: `Read ${def.name}'s backstory and the full flavor of every version`,
+        onclick: (e) => { e.stopPropagation(); openStory(def); },
+      }, 'Story'),
     ]));
     if (remade.length) {
       slot.appendChild(h('div', { class: 'db-maker-note' },
