@@ -59,7 +59,7 @@ function buildMenu() {
   $('fullArtGalleryBtn').onclick = () => openFullArtGallery(rules, cardSet);
   const critters = $('menuCritters');
   critters.innerHTML = '';
-  for (const name of ['Clover', 'Pip', 'Marmalade']) {
+  for (const name of ['Clover', 'Sage', 'Comet']) {
     const wrap = document.createElement('div');
     const def = cardSet.cards.find((card) => card.name === name);
     wrap.innerHTML = cardArtSVG(def);

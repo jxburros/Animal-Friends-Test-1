@@ -14,12 +14,12 @@ Carried over from v0.5.0: the Capital City auction converges on a **pledge ladde
 rising minimum bid; losing bidders are refunded in full; town decks are **40 cards**; **Botany was
 merged into Agriculture**; every species has a **charter** (Section 4a) enforced by `npm run identity`;
 and the market sells **Buildings**, **hired animals** and **Ordinances**.
-Current totals are 375 cards (136 Characters, 88 Events, 9 Statues,
-86 Market cards, 12 Buildings, 10 hired animals, 7 Ordinances
-and 27 on-reveal cards), nine species, five studies, six printed decks and six Market Decks.
-See [WHISKERWOOD.md](WHISKERWOOD.md) and [MANY_HATS.md](MANY_HATS.md) for the expansion content.  
+Current totals are 461 cards (186 Characters, 106 Events, 9 Statues,
+96 Market cards, 14 Buildings, 12 hired animals, 8 Ordinances
+and 30 on-reveal cards), ten species, six studies, eight printed decks and seven Market Decks.
+See [WHISKERWOOD.md](WHISKERWOOD.md), [MANY_HATS.md](MANY_HATS.md) and [NIGHT_SHIFT.md](NIGHT_SHIFT.md) for the expansion content.  
 **Authoritative implementation sources:** `spec/game.json`, `spec/species.json` and `spec/starter_card_set.json`  
-**Last consolidated:** September 13, 2026 (the town cap, three-tier Statues, lay-off and promotion, live Unemployment, Works in the Square)
+**Last consolidated:** September 13, 2026 (Night Shift: the Owl, the Science study, the wake-up call, the deck scry, and the Cat's self-ready used from the wrong side of upright)
 
 This document gathers the decisions, rules, design principles, and current prototype content for **Animal Friends TCG**. It distinguishes between rules implemented in the playtest, agreed design direction, and items still to be designed. It is not yet a final, player-facing rulebook.
 
@@ -141,7 +141,7 @@ which only fired once the display had gone completely dead.
 
 ### Market Decks
 
-The shared market is chosen at setup from six Market Decks. Each is **35 cards**: all nine Statues plus a 26-card sample of its own pool, topped up from that same pool until at least three on-reveal cards are in it, so a market keeps its printed character however the sample falls. The shock count below is the number of cards in that market's pool marked as a shared *shock* — the kind a Badger can brace against.
+The shared market is chosen at setup from seven Market Decks. Each is **35 cards**: all nine Statues plus a 26-card sample of its own pool, topped up from that same pool until at least three on-reveal cards are in it, so a market keeps its printed character however the sample falls. The shock count below is the number of cards in that market's pool marked as a shared *shock* — the kind a Badger can brace against.
 
 | Market Deck | Shocks in pool | Character |
 | --- | ---: | --- |
@@ -177,9 +177,14 @@ against them and fails when two species become indistinguishable or a signature 
 | Otter | tempo | no protection, no disruption | moving a shift from one Character to another |
 | Squirrel | storage | slow starts | caching Supply on a card, safe from shared shocks |
 | Cat | timing | does not co-operate: worst at anything counting friends | ignoring an orientation rule |
+| Owl | the night | earns almost nothing, and does not bid | the wake-up call: one step toward upright, never mid-shift |
 
-The holes matter more than the strengths: they are what stop nine species from collapsing back into
-one. The measured effect of this pass was to take mean pairwise similarity between species from 0.78
+The holes matter more than the strengths: they are what stop ten species from collapsing back into
+one. Owl arrived with Night Shift (v0.7.0) and measures 0.00 against Badger and 0.25 mean similarity
+across the set, because its verbs — the wake-up call and the deck scry — were new to the game; the
+Cat's signature, "ignoring an orientation rule", became literal in the same release, when the Busy
+"readies itself" ability started to be offered from Busy, mid-shift and 180° rather than from upright,
+where it had done nothing. The measured effect of this pass was to take mean pairwise similarity between species from 0.78
 (Rabbit and Cat were at 0.98) down to 0.27.
 
 ### Rarity and the power/cost model

@@ -15,7 +15,9 @@ const EFFECTS = new Set([
   'unemployOpponentCharacter', 'raiseOwnBid',
   // species signature verbs (spec/species.json)
   'storeSupply', 'takeStoredSupply', 'takeFromCityDump', 'protectCharacter', 'moveShift',
-  'selfReady', 'cancelReveal',
+  'selfReady', 'cancelReveal', 'advanceCharacter',
+  // the astronomers' verb (Night Shift): look at your own deck top and bin what you do not want
+  'scryDeck',
   // on-reveal catch-up
   'behindPlayerGains', 'behindPlayerReadies',
   // shared shocks, used by Disruption cards

@@ -49,7 +49,9 @@ An agent is `{ name, choose(state, playerIndex, request) }` returning a value or
 Invalid answers are replaced by a safe default, so agents never crash the engine. `pick` reasons:
 `discard`, `ready`, `readyNextTurn`, `rehire`, `recruitFree`, `eventFromDumpToDeckBottom`, `eventFromDumpToHand`,
 `topdeck` (asked of the *opponent*), `unemployOpponent`, `raiseBidTarget`, `demolish` (which Building to knock
-down), `storeSupply`, `takeFromCityDump`, `protect`, `moveShiftFrom`, `moveShiftTo`.
+down), `storeSupply`, `takeFromCityDump`, `protect`, `moveShiftFrom`, `moveShiftTo`, `advance` (an Owl's
+wake-up call: which Character turns one step toward upright), `scry` (`from: 'deck'`; which of the top
+cards go to the bottom — `min` is 0, so an empty answer keeps them all).
 `confirm` reasons: `raiseBid`, and `mulligan` (answered `true` to throw the opening hand back; the request
 carries `hand`).
 

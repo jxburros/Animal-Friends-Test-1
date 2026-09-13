@@ -4,7 +4,55 @@ Method: `npm run playtest -- --games 720 --decks all --market all`, heuristic AI
 walking the full cross product of 30 ordered deck pairings and 6 Market Decks. Headline figures are
 the **mean of three independent runs** of 720 games, and `origin/main` was measured with the identical
 harness, so the before-and-after is apples to apples. Numbers are from the current `spec/` after the
-v0.6.0 pass.
+v0.6.0 pass; the v0.7.0 section at the top is a single run over the eight-deck, seven-market set.
+
+## v0.7.0 — Night Shift: Owls, Science, and the Cat's trick
+
+One run of `npm run playtest -- --games 1120 --decks all --market all --seed 2026`: the full cross
+product of 56 ordered pairings of the eight printed decks and all seven Market Decks, heuristic AI on
+both sides. A single run, not the mean of three, so read the deck figures as ±3 points.
+
+**The set grew by 86 cards and nothing broke.** 100% of games ended through Statue victories (none hit
+the turn cap), mean length 35.5 turns against 35.3 in v0.6.0, 10.7 recruits and 209 Supply earned per
+player-game, 6.1 on-reveal cards a game. 300 randomized games passed the conservation, orientation,
+nonnegative-economy and escrow invariants across every pairing and market.
+
+**The Cat's signature was a no-op, and now is not.** Building Comet exposed it: "Busy, once per game:
+readies itself" was only ever offered from upright, where going Busy and standing back up is nothing, and
+the effect could not find its own stack through the Busy action's context anyway. It is now offered only
+from Busy, mid-shift or 180°, once, and readying a working Cat cashes its shift. The power model stopped
+weighting a once-per-game effect as a repeating Busy ability, which re-rated Mittens (Legendary → Rare),
+Pippa, Herb Cook and Thimble, Sailmaker (Rare → Uncommon). No printed deck became illegal.
+
+**The Owl is the most distinct species in the set.** `npm run identity`: similarity 0.00 to Badger, and
+the mean across all 45 pairs fell from 0.29 to 0.25, because the wake-up call and the deck scry are verbs
+nobody else has. The creep gate held at 1.06× the base set after eleven cards were trimmed in development
+(mostly Masters' 2 → 4 shifts becoming 2 → 3).
+
+### Deck win rates
+
+| Deck | Win rate | as P0 / as P1 |
+| --- | ---: | --- |
+| Burrow & Bloom | 58.9% | 55.7% / 62.1% |
+| Paws & Papers | 57.5% | 52.1% / 62.9% |
+| Steam & Starlight ✦ | 53.9% | 52.1% / 55.7% |
+| Moon & Mocha ✦ | 53.2% | 49.3% / 57.1% |
+| Bramble & Bastion | 51.4% | 47.9% / 55.0% |
+| Whisker & Willow | 45.0% | 39.3% / 50.7% |
+| Root & Rampart | 41.4% | 36.4% / 46.4% |
+| Ripple & Rune | 38.6% | 37.1% / 40.0% |
+
+Spread 20.3 points across eight decks (24.4 across six in v0.6.0, though that figure was a mean of three
+runs). The two new decks land in the middle of the field, which is where an expansion deck should land.
+Head to head in the Night Market over 400 games with seats swapped, **Steam & Starlight took 62%**: the
+Badgers' 2 → 3 and 3 → 6 shifts out-earn a town of Owls and Cats, which both charters say should happen
+(Owls do not earn; Cats do not co-operate), but it is the widest printed head-to-head and the first thing
+to look at in a balance pass. Night Shift, the Owl Event ("one of your Characters turns one step toward
+upright, then draw 1 card"), was the second most played card in the whole set at 0.83 a game; Coffee
+Round, Owl Post and Telescope Hire were bought about as often as the familiar cards around them, and The
+Late Shift and the Night Market itself were bought least.
+
+**Seat balance** stays with the second player, 53.8% to 46.3%, as in v0.6.0.
 
 ## v0.6.0 — the town cap, three-tier Statues and live Unemployment
 

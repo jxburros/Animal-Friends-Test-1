@@ -3,7 +3,9 @@ import {
   cardDef, topCard, log, nextUid, opponentOf, entryOrientation, rankOf, hasPassive, hasMod, getMod, consumeMod,
   canAct, findStack, cityRule, refillCity, townFootprint, townCap, hasTownRoom, UPRIGHT, BUSY,
 } from './state.js';
-import { ask, gainSupply, draw, discard, makeStack, fireHook, runEffect, matchesFilter } from './effects.js';
+import {
+  ask, gainSupply, draw, discard, makeStack, fireHook, runEffect, matchesFilter, isSelfReadyEffect,
+} from './effects.js';
 
 // ---------- costs & requirements ----------
 export function recruitCost(state, pi, cardId, targetUid = null) {
@@ -287,10 +289,19 @@ export function legalActions(state, pi) {
   }
   // work, abilities
   for (const s of p.town) {
-    if (!canAct(s)) continue;
     const def = topCard(state, s);
+    const busyAb = (def.abilities || []).find((a) => a.trigger === 'busy');
+    if (!canAct(s)) {
+      // The Cat's trick: a bare "readies itself" Busy ability is exactly the one you use when the
+      // Character is *not* upright — Busy, or a Master still rotating in — once per game. Going Busy
+      // and standing straight back up would be nothing, so it is only offered from the wrong side.
+      if (busyAb && isSelfReadyEffect(busyAb.effect) && !s.selfReadyUsed && !s.lockedBid && s.orientation !== UPRIGHT) {
+        acts.push({ type: 'ability', charUid: s.uid, cardId: def.id, selfReady: true });
+      }
+      continue;
+    }
     acts.push({ type: 'work', charUid: s.uid, cardId: def.id, delay: def.shift.delay, output: def.shift.output });
-    if ((def.abilities || []).some((a) => a.trigger === 'busy')) acts.push({ type: 'ability', charUid: s.uid, cardId: def.id });
+    if (busyAb && !isSelfReadyEffect(busyAb.effect)) acts.push({ type: 'ability', charUid: s.uid, cardId: def.id });
   }
   // events
   const waive = eventReduction(state, pi);
@@ -414,13 +425,21 @@ export async function applyAction(state, pi, a) {
     }
     case 'ability': {
       const s = findStack(state, pi, a.charUid);
-      if (!s || !canAct(s)) throw new Error('Character cannot act');
+      if (!s) throw new Error('Character cannot act');
       const def = topCard(state, s);
       const ab = (def.abilities || []).find((x) => x.trigger === 'busy');
       if (!ab) throw new Error('No Busy ability');
-      s.orientation = BUSY;
+      const wake = isSelfReadyEffect(ab.effect);
+      if (!canAct(s)) {
+        // Only the Cat's self-ready may be used from the wrong side of upright, and only once.
+        if (!wake || s.selfReadyUsed || s.lockedBid) throw new Error('Character cannot act');
+      } else if (wake) {
+        throw new Error('Already upright');
+      } else {
+        s.orientation = BUSY;
+      }
       log(state, pi, `${def.name}, ${def.title} uses its Busy ability.`, { kind: 'ability', player: pi, uid: s.uid, cardId: def.id });
-      await runEffect(state, pi, ab.effect, { player: pi, stackUid: s.uid, sourceCardId: def.id });
+      await runEffect(state, pi, ab.effect, { player: pi, stackUid: s.uid, sourceStackUid: s.uid, sourceCardId: def.id });
       return false;
     }
     case 'playEvent': {

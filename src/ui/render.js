@@ -661,7 +661,7 @@ function openCharacterPopover(stack, groups, anchorEl) {
     const work = groups.byCharWork.get(stack.uid);
     if (work) actions.appendChild(h('button', { onclick: () => resolvePending(work) }, `Work a shift (${work.delay} turn${work.delay === 1 ? '' : 's'} → ${work.output} Supply)`));
     const ability = groups.byCharAbility.get(stack.uid);
-    if (ability) actions.appendChild(h('button', { onclick: () => resolvePending(ability) }, 'Use Busy ability'));
+    if (ability) actions.appendChild(h('button', { onclick: () => resolvePending(ability) }, ability.selfReady ? 'Ready itself now (once per game)' : 'Use Busy ability'));
     const announceOpts = groups.byCharAnnounce.get(stack.uid);
     if (announceOpts && announceOpts.length) {
       actions.appendChild(h('button', {
@@ -1092,6 +1092,8 @@ const PICK_REASON_TEXT = {
   protect: 'Choose a Character to keep out of reach',
   moveShiftFrom: 'Move which shift?',
   moveShiftTo: 'Give the shift to whom?',
+  advance: 'Wake someone: turn a Character one step toward upright',
+  scry: 'The top of your deck — choose any to put on the bottom (or keep them all)',
 };
 
 function optionFace(o) {

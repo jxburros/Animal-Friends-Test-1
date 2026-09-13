@@ -4,7 +4,7 @@
 //   node scripts/playtest.mjs [--games N] [--seed S] [--p0 heuristic|random] [--p1 heuristic|random]
 //                             [--decks <a>,<b>|alternate|all] [--market <id>|all] [--verbose] [--aggression A]
 //
-// Deck names may be full ids (burrow-bloom) or short aliases (bb, pp, br, rr, ll, rw, ww, vl, hh, tt). `alternate` swaps the
+// Deck names may be full ids (burrow-bloom) or short aliases (bb, pp, br, rr, ll, rw, ww, vl, hh, tt, mm, ss). `alternate` swaps the
 // first two decks between seats; `all` rotates through every ordered pair of decks in the set.
 // `--market` picks the shared Market Deck (first-boroughs, boom-town, hard-times) or rotates through all.
 //
@@ -22,6 +22,7 @@ const DECK_IDS = set.decks.map((d) => d.id);
 const SHORT_ALIAS = {
   bb: 'burrow-bloom', pp: 'paws-papers', br: 'bramble-bristle', rr: 'ripple-rune', ll: 'lantern-ledger', rw: 'root-rampart',
   ww: 'whisker-willow', vl: 'velvet-ledger', hh: 'hedge-harvest', tt: 'tales-tolls',
+  mm: 'moon-mocha', ss: 'steam-starlight',
 };
 const DECK_ALIAS = { ...SHORT_ALIAS, ...Object.fromEntries(DECK_IDS.map((id) => [id, id])) };
 // Stats are keyed by deck id; the pairings cycle through every ordered pair of distinct decks.

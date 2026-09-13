@@ -196,6 +196,8 @@
     "Top-up refill: the Capital City is dealt back up to five cards as soon as a purchase resolves.",
     "Every card carries a rarity computed from its power-to-opportunity-cost rating (src/engine/power.js): Common, Uncommon, Rare, Super Rare or Legendary. Rarity caps copies in a town deck (3/3/2/1/1).",
     "Species is a design space, not a keyword: each species owns a centre of gravity, a hole and a signature effect (Section 4a), enforced by scripts/identity.mjs rather than by a trait printed on every card.",
-    "Botany was merged into Agriculture; the set has five studies."
+    "Botany was merged into Agriculture; the set has five studies.",
+    "Owl is the tenth species (Night Shift): it owns the night, its signature is the wake-up call (advanceCharacter: one step toward upright, never for a Character mid-shift), and its hole is that it earns little and does not bid. Science is the sixth study.",
+    "A Busy ability that reads \"once per game: readies itself\" (the Cat's signature) is used from the wrong side of upright — while Busy, mid-shift, or still rotating in as a Master — and never from upright, where it would do nothing. Readying a working Character this way completes its shift at once, as any ready does."
   ]
 }

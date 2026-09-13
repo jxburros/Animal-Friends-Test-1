@@ -668,6 +668,51 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       log(state, pi, `${topCard(state, a).name} hands the shift to ${topCard(state, b).name} and steps back upright.`, { kind: 'moveShift', player: pi, from: a.uid, to: b.uid });
       return;
     }
+    case 'advanceCharacter': {
+      // Owl: the wake-up call. A Character turns one step toward upright outside the Ready phase —
+      // a Master at 180° becomes Busy, a Busy Character stands up. It does not touch work in progress:
+      // a shift keeps its Character Busy for its full delay whoever is hooting at it (that is Otter
+      // territory), and a pledged Character stays where it is. Owls wake the ones who are merely asleep.
+      const f = { ...(eff.filter || {}) };
+      const notSelf = f.notSelf;
+      delete f.notSelf;
+      const opts = p.town.filter((st) => st.orientation !== UPRIGHT && !st.lockedBid
+        && !(st.shift && state.rules.shifts.blocksReadyWhileInProgress)
+        && !(notSelf && st.uid === (ctx.sourceStackUid || ctx.stackUid))
+        && matchesFilter(state, st, f));
+      if (!opts.length) return;
+      const max = Math.min(eff.count || 1, opts.length);
+      const chosen = await ask(state, pi, { kind: 'pick', reason: 'advance', from: 'town', options: opts.map((st) => stackOpt(state, st)), min: eff.optional ? 0 : Math.min(1, max), max });
+      const why = ctx.sourceCardId ? cardDef(state, ctx.sourceCardId).name : '';
+      for (const uid of chosen) {
+        const st = findStack(state, pi, uid);
+        if (!st || st.orientation === UPRIGHT || st.lockedBid) continue;
+        const order = state.rules.orientation.advanceOrder;
+        const next = order[Math.min(order.length - 1, order.indexOf(st.orientation) + 1)];
+        if (next === UPRIGHT) {
+          await readyStack(state, pi, st, why);
+        } else {
+          st.orientation = next;
+          log(state, pi, `${topCard(state, st).name} turns one step toward upright${why ? ` (${why})` : ''}.`, { kind: 'ready', player: pi, uids: [], advanced: [st.uid] });
+        }
+      }
+      return;
+    }
+    case 'scryDeck': {
+      // Look at the top cards of your own deck and put any you do not want on the bottom; the rest
+      // stay on top in the same order. Squirrels reorder; astronomers just know what to look past.
+      const n = Math.min(eff.count || 1, p.deck.length);
+      if (n < 1) return;
+      const top = p.deck.slice(0, n);
+      const chosen = await ask(state, pi, { kind: 'pick', reason: 'scry', from: 'deck', options: top.map((c) => inst(state, c)), min: 0, max: n });
+      const bottom = top.filter((c) => chosen.includes(c.uid));
+      if (bottom.length) {
+        p.deck = p.deck.filter((c) => !chosen.includes(c.uid));
+        p.deck.push(...bottom);
+      }
+      log(state, pi, `${p.name} looks at the top ${n} card${n === 1 ? '' : 's'} of the deck${bottom.length ? ` and puts ${bottom.length} on the bottom` : ''}.`, { kind: 'peekDeck', player: pi, count: n, bottomed: bottom.length });
+      return;
+    }
     case 'selfReady': {
       // Cat: act when a Character should not be able to. Once per game per card, tracked on the stack.
       const st = ctx.sourceStackUid ? findStack(state, pi, ctx.sourceStackUid) : null;
@@ -686,6 +731,13 @@ export async function runEffect(state, pi, eff, ctx = {}) {
     default:
       log(state, pi, `Unknown effect ${eff.do} ignored.`);
   }
+}
+
+/** True when an effect is the Cat's bare self-ready (alone, or the first step of a sequence). */
+export function isSelfReadyEffect(eff) {
+  if (!eff) return false;
+  if (eff.do === 'selfReady') return true;
+  return eff.do === 'seq' && Array.isArray(eff.steps) && eff.steps.length > 0 && eff.steps[0].do === 'selfReady';
 }
 
 export { BUSY };
