@@ -69,6 +69,10 @@ add to the list.
 - **Barrow came out from the Capital City** after twenty years cutting stone there, specifically
   because the First Boroughs are not finished being built. The Capital City is therefore a real place
   animals emigrate *from*, and the borough reads as young and growing. [Barrow]
+- **Biff is the town's police force**, and polices it by knowing everyone: he stops the trouble, walks
+  the troublemaker home, and a week later has found them something to do. The beat has the lowest
+  trouble in the First Boroughs. A character who has been in trouble here has been walked home, not
+  taken away. [Biff]
 - **Berry is who the borough calls when something breaks**, and has been for longer than most animals
   in it have been alive. They retired, were back on the bench within a fortnight, and now sit on the
   committee and answer to the Town Workshop when the clock stops. Any character with a mended hinge,
@@ -101,6 +105,7 @@ be read.
 | Oatmeal | Barley | 2026-09-13 |
 | Brett | Bram | 2026-09-13 |
 | Berry | Bramble | 2026-09-13 |
+| Biff | Bristle | 2026-09-13 |
 
 ---
 

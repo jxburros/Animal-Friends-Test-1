@@ -186,6 +186,27 @@
      "workaround": "Berry protects Berry, and shields the whole town from Unemployment at 4 with `unemploymentShield` — which the Hedgehog charter explicitly calls part of the signature."
     }
    ]
+  },
+  {
+   "name": "Biff",
+   "renamedFrom": "Bristle",
+   "species": "Hedgehog",
+   "studies": [
+    "Civics"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Biff grew up on the edge of the borough, on the kind of smallholding where you are big before you are old. He was never top of the class and has never once claimed otherwise — he says it about himself before anyone else can, cheerfully, as though it settles the matter. What he had was the shoulders, the legs, and a completely unembarrassed wish for the place to be better than it was.\n\nSo he took the constable's job, which nobody else wanted, and turned out to be remarkable at it. Not because he is hard: because he is not. Biff knows every animal on his beat by name and most of them by their parents, and he has worked out over twenty years that a town is not made safer by taking animals out of it. He stops the trouble — he is a Hedgehog and he is immovable and the trouble does stop — and then he walks the troublemaker home, and a week later he has found them something to do.\n\nAnimals who came up before him have run out of ways to explain that this is not how policing is supposed to work. Biff listens politely to all of them. The beat has the lowest trouble in the First Boroughs, and he does not think it is because of anything clever he did.",
+   "voice": "Plain, friendly, a bit loud. Calls everyone by name. Apologises for the interruption before stopping you.",
+   "arc": "Two constables, one career. Beat Constable (2) is Biff on the lane: he comes down it and everybody — both towns, his own included — stops where they are until the next day. Chief Constable (4) is Biff having been at it twenty years: the same halt, and then he finds work for somebody who has not got any — at the going rate; Biff finds you the job, he does not pay your wages. The mercy is not a rider on the card, it IS the second half of the card. Both earn badly for their cost — a 1-turn shift for 1 at the bottom, a 2-turn shift for 3 at the top — because the beat is not where Supply comes from. The Chief still rates Legendary: `blockNextReady` is expensive in the model whatever else is on the card (printed Thimble is Legendary with it at cost 2), and stopping both towns and then putting an animal back to work is genuinely the strongest thing Biff does.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "a one-sided `makeBusy` / advance-backwards on an opponent's Character",
+     "why": "The maker asked for abilities that make an OPPONENT'S Characters busy. Nothing in the engine turns a Character back toward Busy: `advanceCharacter` only turns toward upright, and the only way to reach across the table at all is `unemployOpponentCharacter`, which takes the animal's job away.",
+     "workaround": "Used `blockNextReady`, which stops every Character in BOTH towns advancing at the next Ready — the rival's animals stay down a turn longer, which is the effect asked for, and it is the printed pattern (Inkwell, Velvet, Thimble). Taking a job away was ruled out as the opposite of what Biff is for; that it costs Biff's own town the same turn is the reading the backstory wanted anyway."
+    }
+   ]
   }
  ],
  "cards": [
@@ -1101,6 +1122,84 @@
     "score": 5.76,
     "power": 15.04,
     "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_biff_beat_constable_2",
+   "type": "character",
+   "name": "Biff",
+   "title": "Beat Constable",
+   "job": "Beat Constable",
+   "species": "Hedgehog",
+   "study": "Civics",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Biff becomes upright, nobody's Characters advance at the next Ready.",
+   "flavor": "Biff comes down the lane and the whole lane finds something respectable to be doing.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "blockNextReady"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 7
+   },
+   "remakes": "mkt_bristle",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.98,
+    "power": 10.73,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_biff_chief_constable_4",
+   "type": "character",
+   "name": "Biff",
+   "title": "Chief Constable",
+   "job": "Chief Constable",
+   "species": "Hedgehog",
+   "study": "Civics",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Biff. When Biff becomes upright, nobody's Characters advance at the next Ready, and you may rehire a Character from your Unemployment.",
+   "flavor": "He stopped the trouble, walked them home, and by Friday had found them something to do.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "blockNextReady"
+       },
+       {
+        "do": "rehire",
+        "optional": true
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 7
+   },
+   "rarity": "Legendary",
+   "power": {
+    "score": 6.15,
+    "power": 15.46,
+    "opportunityCost": 10
    }
   }
  ],
