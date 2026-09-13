@@ -513,7 +513,11 @@
    "onReveal": {
     "do": "allCharactersToUnemployment"
    },
-   "shock": true
+   "shock": true,
+   "art": {
+    "atlas": "nightskies",
+    "tile": 13
+   }
   },
   {
    "id": "rr_brook_2",
@@ -675,7 +679,7 @@
     }
    ],
    "art": {
-    "atlas": "townlife",
+    "atlas": "nightworkers",
     "tile": 9
    },
    "rarity": "Legendary",
@@ -901,8 +905,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 14
+    "atlas": "nightworkers",
+    "tile": 10
    },
    "rarity": "Super Rare",
    "power": {
@@ -1076,8 +1080,8 @@
     }
    ],
    "art": {
-    "atlas": "monuments",
-    "tile": 0
+    "atlas": "nightworkers",
+    "tile": 1
    },
    "rarity": "Super Rare",
    "power": {
@@ -1663,8 +1667,8 @@
     }
    ],
    "art": {
-    "atlas": "monuments",
-    "tile": 0
+    "atlas": "nightskies",
+    "tile": 4
    },
    "rarity": "Super Rare",
    "power": {
@@ -1768,8 +1772,8 @@
     }
    ],
    "art": {
-    "atlas": "whiskerwood",
-    "tile": 15
+    "atlas": "nightworkers",
+    "tile": 2
    },
    "rarity": "Rare",
    "power": {
@@ -1813,8 +1817,8 @@
     }
    ],
    "art": {
-    "atlas": "townlife",
-    "tile": 9
+    "atlas": "nightworkers",
+    "tile": 13
    },
    "rarity": "Rare",
    "power": {
@@ -2371,8 +2375,8 @@
     }
    ],
    "art": {
-    "atlas": "neighbors",
-    "tile": 1
+    "atlas": "nightworkers",
+    "tile": 11
    },
    "rarity": "Rare",
    "power": {
@@ -3028,7 +3032,11 @@
      }
     ]
    },
-   "shock": false
+   "shock": false,
+   "art": {
+    "atlas": "nightskies",
+    "tile": 11
+   }
   },
   {
    "id": "ns_pip_4",
@@ -3480,8 +3488,8 @@
     }
    ],
    "art": {
-    "atlas": "whiskerwood",
-    "tile": 8
+    "atlas": "nightskies",
+    "tile": 7
    },
    "rarity": "Rare",
    "power": {
@@ -3559,8 +3567,8 @@
     }
    ],
    "art": {
-    "atlas": "townlife",
-    "tile": 7
+    "atlas": "nightworkers",
+    "tile": 2
    },
    "rarity": "Rare",
    "power": {
@@ -3941,8 +3949,8 @@
     }
    ],
    "art": {
-    "atlas": "monuments",
-    "tile": 2
+    "atlas": "nightworkers",
+    "tile": 14
    },
    "rarity": "Rare",
    "power": {
@@ -4015,8 +4023,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 10
+    "atlas": "nightworkers",
+    "tile": 3
    },
    "rarity": "Rare",
    "power": {
@@ -4283,8 +4291,8 @@
     }
    ],
    "art": {
-    "atlas": "whiskerwood",
-    "tile": 2
+    "atlas": "nightworkers",
+    "tile": 1
    },
    "rarity": "Rare",
    "power": {
@@ -4329,8 +4337,8 @@
    },
    "flavor": "Hypothesis: potatoes. Method: potatoes. Conclusion: more potatoes than expected.",
    "art": {
-    "atlas": "neighbors",
-    "tile": 1
+    "atlas": "nightworkers",
+    "tile": 11
    },
    "rarity": "Rare",
    "power": {
@@ -4411,8 +4419,8 @@
     }
    ],
    "art": {
-    "atlas": "monuments",
-    "tile": 2
+    "atlas": "nightworkers",
+    "tile": 12
    },
    "rarity": "Rare",
    "power": {
@@ -5045,8 +5053,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 10
+    "atlas": "nightworkers",
+    "tile": 3
    },
    "rarity": "Uncommon",
    "power": {
@@ -5340,8 +5348,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 10
+    "atlas": "nightworkers",
+    "tile": 5
    },
    "rarity": "Uncommon",
    "power": {
@@ -5449,8 +5457,8 @@
     }
    ],
    "art": {
-    "atlas": "townlife",
-    "tile": 7
+    "atlas": "nightworkers",
+    "tile": 2
    },
    "rarity": "Uncommon",
    "power": {
@@ -5760,8 +5768,8 @@
     }
    ],
    "art": {
-    "atlas": "townlife",
-    "tile": 9
+    "atlas": "nightworkers",
+    "tile": 8
    },
    "rarity": "Uncommon",
    "power": {
@@ -5837,8 +5845,8 @@
     }
    ],
    "art": {
-    "atlas": "townlife",
-    "tile": 13
+    "atlas": "nightskies",
+    "tile": 8
    },
    "rarity": "Uncommon",
    "power": {
@@ -6490,8 +6498,8 @@
     }
    ],
    "art": {
-    "atlas": "townlife",
-    "tile": 8
+    "atlas": "nightworkers",
+    "tile": 6
    },
    "rarity": "Uncommon",
    "power": {
@@ -6828,7 +6836,7 @@
    },
    "flavor": "One small step for a Cat. One enormous mess in the Crafts hall.",
    "art": {
-    "atlas": "townlife",
+    "atlas": "nightworkers",
     "tile": 9
    },
    "rarity": "Uncommon",
@@ -7353,8 +7361,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 12
+    "atlas": "nightskies",
+    "tile": 10
    },
    "rarity": "Uncommon",
    "power": {
@@ -7691,8 +7699,8 @@
     }
    ],
    "art": {
-    "atlas": "whiskerwood",
-    "tile": 3
+    "atlas": "nightworkers",
+    "tile": 15
    },
    "rarity": "Uncommon",
    "power": {
@@ -7775,8 +7783,8 @@
     }
    ],
    "art": {
-    "atlas": "townlife",
-    "tile": 3
+    "atlas": "nightworkers",
+    "tile": 7
    },
    "rarity": "Uncommon",
    "power": {
@@ -7961,8 +7969,8 @@
     }
    ],
    "art": {
-    "atlas": "townlife",
-    "tile": 8
+    "atlas": "nightworkers",
+    "tile": 4
    },
    "rarity": "Uncommon",
    "power": {
@@ -8826,7 +8834,7 @@
     }
    ],
    "art": {
-    "atlas": "neighbors",
+    "atlas": "nightskies",
     "tile": 9
    },
    "rarity": "Uncommon",
@@ -9373,8 +9381,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 10
+    "atlas": "nightworkers",
+    "tile": 0
    },
    "rarity": "Uncommon",
    "power": {
@@ -11028,6 +11036,10 @@
     "score": 2.27,
     "power": 3,
     "opportunityCost": 2
+   },
+   "art": {
+    "atlas": "nightskies",
+    "tile": 13
    }
   },
   {
@@ -11311,8 +11323,8 @@
    },
    "flavor": "Fine, then wet, then a Statue in the afternoon.",
    "art": {
-    "atlas": "townlife",
-    "tile": 13
+    "atlas": "nightskies",
+    "tile": 8
    },
    "rarity": "Common",
    "power": {
@@ -11423,7 +11435,11 @@
      }
     ]
    },
-   "shock": true
+   "shock": true,
+   "art": {
+    "atlas": "nightskies",
+    "tile": 12
+   }
   },
   {
    "id": "st_community",
@@ -11520,8 +11536,8 @@
     "amount": 3
    },
    "art": {
-    "atlas": "boroughs",
-    "tile": 11
+    "atlas": "nightskies",
+    "tile": 15
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Common",
@@ -11545,8 +11561,8 @@
     "amount": 3
    },
    "art": {
-    "atlas": "boroughs",
-    "tile": 11
+    "atlas": "nightskies",
+    "tile": 13
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Common",
@@ -11700,8 +11716,8 @@
    },
    "flavor": "Fifteen minutes. Everybody back on their feet. Possibly slightly vibrating.",
    "art": {
-    "atlas": "townlife",
-    "tile": 7
+    "atlas": "nightworkers",
+    "tile": 2
    },
    "rarity": "Common",
    "power": {
@@ -11737,8 +11753,8 @@
    },
    "flavor": "Everybody behind the wall, please. No, further.",
    "art": {
-    "atlas": "monuments",
-    "tile": 2
+    "atlas": "nightworkers",
+    "tile": 14
    },
    "rarity": "Common",
    "power": {
@@ -12436,8 +12452,8 @@
    },
    "flavor": "“What is that?” “A balloon.” “Whose?” “Comet’s.” “Is Comet in it?” “...”",
    "art": {
-    "atlas": "townlife",
-    "tile": 9
+    "atlas": "nightskies",
+    "tile": 3
    },
    "rarity": "Common",
    "power": {
@@ -12652,8 +12668,8 @@
    },
    "flavor": "Inkwell charts the sky by which stars he can see from the good chair.",
    "art": {
-    "atlas": "whiskerwood",
-    "tile": 2
+    "atlas": "nightskies",
+    "tile": 5
    },
    "rarity": "Common",
    "power": {
@@ -12850,6 +12866,10 @@
       "count": 1
      }
     ]
+   },
+   "art": {
+    "atlas": "nightskies",
+    "tile": 15
    }
   },
   {
@@ -12926,8 +12946,8 @@
    ],
    "flavor": "Three. Two. One. (Comet is still doing up her boots.)",
    "art": {
-    "atlas": "townlife",
-    "tile": 9
+    "atlas": "nightskies",
+    "tile": 3
    },
    "rarity": "Common",
    "power": {
@@ -13255,8 +13275,8 @@
     "do": "blockNextReady"
    },
    "art": {
-    "atlas": "townlife",
-    "tile": 8
+    "atlas": "nightskies",
+    "tile": 0
    },
    "rarity": "Common",
    "power": {
@@ -13288,8 +13308,8 @@
     ]
    },
    "art": {
-    "atlas": "townlife",
-    "tile": 7
+    "atlas": "nightworkers",
+    "tile": 2
    },
    "rarity": "Common",
    "power": {
@@ -13359,8 +13379,8 @@
    ],
    "flavor": "Tonight: fractions, the constellations, and why you should have gone to bed.",
    "art": {
-    "atlas": "boroughs",
-    "tile": 10
+    "atlas": "nightworkers",
+    "tile": 3
    },
    "rarity": "Common",
    "power": {
@@ -13455,8 +13475,8 @@
     ]
    },
    "art": {
-    "atlas": "whiskerwood",
-    "tile": 13
+    "atlas": "nightskies",
+    "tile": 1
    },
    "rarity": "Common",
    "power": {
@@ -13589,8 +13609,8 @@
     ]
    },
    "art": {
-    "atlas": "boroughs",
-    "tile": 8
+    "atlas": "nightskies",
+    "tile": 2
    },
    "rarity": "Common",
    "power": {
@@ -13690,8 +13710,8 @@
     ]
    },
    "art": {
-    "atlas": "monuments",
-    "tile": 0
+    "atlas": "nightskies",
+    "tile": 4
    },
    "rarity": "Common",
    "power": {
@@ -14060,8 +14080,8 @@
     ]
    },
    "art": {
-    "atlas": "townlife",
-    "tile": 10
+    "atlas": "nightskies",
+    "tile": 6
    },
    "rarity": "Common",
    "power": {
@@ -14530,8 +14550,8 @@
    },
    "flavor": "Not so much a drink as an instruction.",
    "art": {
-    "atlas": "townlife",
-    "tile": 7
+    "atlas": "nightworkers",
+    "tile": 2
    },
    "rarity": "Common",
    "power": {
@@ -14746,6 +14766,10 @@
     "do": "rehire",
     "discount": 2,
     "optional": true
+   },
+   "art": {
+    "atlas": "nightskies",
+    "tile": 14
    }
   },
   {
@@ -15436,8 +15460,8 @@
     "count": 3
    },
    "art": {
-    "atlas": "whiskerwood",
-    "tile": 7
+    "atlas": "nightskies",
+    "tile": 5
    },
    "rarity": "Common",
    "power": {
