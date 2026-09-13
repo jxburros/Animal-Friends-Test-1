@@ -3,6 +3,7 @@ import { shuffle } from './rng.js';
 import {
   cardDef, topCard, log, nextUid, opponentOf, entryOrientation, rankOf, abilitySources, hasPassive,
   hasMod, consumeMod, isUpright, speciesInTown, refillCity, UPRIGHT, BUSY, findStack, hasTownRoom,
+  hasBuildingRoom, canDemolishFor,
 } from './state.js';
 
 // ---------- agent I/O ----------
@@ -96,9 +97,19 @@ export function draw(state, pi, n, why = '') {
   const p = state.players[pi];
   let drawn = 0;
   for (let i = 0; i < n; i++) {
+    // A town deck is a clock, and it is meant to outlast the game. When it does run out its Mayor
+    // may shuffle the Town Dump back in, but only as many times as rules.deckOut.maxReshuffles
+    // allows — once — and after that an empty deck simply draws nothing.
     if (p.deck.length === 0 && p.dump.length > 0 && state.rules.deckOut.shuffleTownDumpIntoDeck) {
-      p.deck = shuffle(state, p.dump.splice(0));
-      log(state, pi, `${p.name} shuffles the Town Dump into a new deck.`, { kind: 'reshuffleDeck', player: pi });
+      const allowed = state.rules.deckOut.maxReshuffles;
+      if (typeof allowed !== 'number' || (p.reshuffles || 0) < allowed) {
+        p.reshuffles = (p.reshuffles || 0) + 1;
+        p.deck = shuffle(state, p.dump.splice(0));
+        log(state, pi, `${p.name} shuffles the Town Dump into a new deck${typeof allowed === 'number' ? ' — the one time they may' : ''}.`, { kind: 'reshuffleDeck', player: pi, reshuffles: p.reshuffles });
+      } else if (!p.deckOutAnnounced) {
+        p.deckOutAnnounced = true;
+        log(state, pi, `${p.name} has read their deck to the end and has nothing left to draw.`, { kind: 'deckOut', player: pi });
+      }
     }
     const c = p.deck.shift();
     if (!c) break;
@@ -173,6 +184,17 @@ export async function unemployStack(state, ownerPi, stack, { byEffect = true, so
     stack.stored = 0;
   }
   const [top, ...rest] = stack.cards;
+  // Hired help is retained labour, not a citizen. The moment a hired Character would be sent to
+  // Unemployment they go back to the City Dump instead: they have no house to wait in, and nobody
+  // can rehire or promote them. It makes an Unemployment effect aimed at hired help a demolition.
+  const mc = state.rules.market?.characters;
+  if (rest.length === 0 && cardDef(state, top.cardId).type === 'marketCharacter' && mc?.returnsWhenUnemployed !== false) {
+    if (mc?.returnsTo === 'outOfPlay') state.market.outOfPlay.push(top.cardId);
+    else state.market.cityDump.push(top.cardId);
+    log(state, ownerPi, `${cardDef(state, top.cardId).name}'s work in ${p.name}'s town is over; they go back to the Capital City.`, { kind: 'hireLeaves', player: ownerPi, stackUid: stack.uid, cardId: top.cardId });
+    if (byEffect) await fireHook(state, 'onCharacterUnemployed', { player: ownerPi, listeners: [0, 1], sourcePlayer: sourcePi });
+    return true;
+  }
   if (rest.length === 0) {
     p.unemployment.push(top);
     log(state, ownerPi, `${cardDef(state, top.cardId).name}, ${cardDef(state, top.cardId).title} is sent to Unemployment.`, { kind: 'unemploy', player: ownerPi, stackUid: stack.uid, uid: top.uid, cardId: top.cardId });
@@ -200,23 +222,47 @@ export function checkVictory(state) {
 
 /** Winner gains a Capital City card: statues stay in the Victory Row; market cards resolve and are disposed. */
 /**
- * Put a Building into a town, demolishing one first if the town is already full.
- * The demolished Building goes to the City Dump, where it can be dealt again later.
+ * Demolish one Building to free a place, asking which. Returns false when there is nothing to
+ * demolish: a Statue can never come down, so a town whose eight places are all Statues is simply
+ * full and stays that way. A Capital City Building goes to the City Dump and can be dealt again;
+ * a Town Building goes home to its owner's Town Dump.
  */
-export async function addBuilding(state, pi, cardId) {
+export async function demolishOne(state, pi, { reason = 'demolish' } = {}) {
   const p = state.players[pi];
-  const cap = state.rules.buildings?.maxPerTown ?? Infinity;
+  if (!(p.buildings || []).length) return false;
+  const options = p.buildings.map((b, i) => ({ uid: i, cardId: b.cardId, name: cardDef(state, b.cardId).name }));
+  const picked = await ask(state, pi, { kind: 'pick', reason, from: 'buildings', options, min: 1, max: 1 });
+  const idx = Array.isArray(picked) && picked.length ? Math.max(0, Math.min(p.buildings.length - 1, picked[0])) : 0;
+  const [gone] = p.buildings.splice(idx, 1);
+  if (gone.source === 'deck') p.dump.push({ uid: gone.uid, cardId: gone.cardId });
+  else state.market.cityDump.push(gone.cardId);
+  log(state, pi, `${p.name} demolishes ${cardDef(state, gone.cardId).name} to make room.`, { kind: 'demolish', player: pi, cardId: gone.cardId, source: gone.source });
+  return true;
+}
+
+/**
+ * Put a Building into a town, demolishing one first if all eight places are taken. The Statues in the
+ * Victory Row stand in these places too, so a Mayor two Statues from winning has six places left for
+ * everything else.
+ */
+export async function addBuilding(state, pi, cardId, { source = 'market', uid = null } = {}) {
+  const p = state.players[pi];
   if (!p.buildings) p.buildings = [];
-  if (p.buildings.length >= cap) {
-    const options = p.buildings.map((id, i) => ({ uid: i, cardId: id, name: cardDef(state, id).name }));
-    const picked = await ask(state, pi, { kind: 'pick', reason: 'demolish', from: 'buildings', options, min: 1, max: 1 });
-    const idx = Array.isArray(picked) && picked.length ? Math.max(0, Math.min(p.buildings.length - 1, picked[0])) : 0;
-    const [gone] = p.buildings.splice(idx, 1);
-    state.market.cityDump.push(gone);
-    log(state, pi, `${p.name} demolishes ${cardDef(state, gone).name} to make room.`, { kind: 'demolish', player: pi, cardId: gone });
-  }
-  p.buildings.push(cardId);
-  log(state, pi, `${cardDef(state, cardId).name} is built in ${p.name}'s town.`, { kind: 'build', player: pi, cardId });
+  if (!hasBuildingRoom(state, pi)) await demolishOne(state, pi);
+  p.buildings.push({ uid: uid ?? nextUid(state), cardId, source });
+  log(state, pi, `${cardDef(state, cardId).name} is built in ${p.name}'s town.`, { kind: 'build', player: pi, cardId, source });
+}
+
+/**
+ * Make an empty Building place for a Statue that has just been won, by demolishing if need be.
+ * Returns false when the Mayor has nothing they are willing or able to pull down, in which case the
+ * purchase does not happen at all — a Statue with nowhere to stand is not won.
+ */
+export async function makeStatueRoom(state, pi) {
+  if (hasBuildingRoom(state, pi)) return true;
+  if (!canDemolishFor(state, pi)) return false;
+  await demolishOne(state, pi, { reason: 'demolishForStatue' });
+  return hasBuildingRoom(state, pi);
 }
 
 export async function gainMarketCard(state, pi, cardId, why = '') {
@@ -231,7 +277,7 @@ export async function gainMarketCard(state, pi, cardId, why = '') {
     // A Building stays in town and keeps working. A town holds only so many, so a fourth
     // means demolishing one: the Supply sink is the price, and the cap is the decision.
     if (def.onGain) await runEffect(state, pi, def.onGain, { sourceCardId: cardId });
-    await addBuilding(state, pi, cardId);
+    await addBuilding(state, pi, cardId, { source: 'market' });
   } else if (def.type === 'marketCharacter') {
     // A Character hired out of the Capital City. They are new in town, so they arrive Busy
     // whatever they cost, and they become ladder fuel and a worker from the next turn on.
@@ -248,6 +294,12 @@ export async function gainMarketCard(state, pi, cardId, why = '') {
       log(state, pi, `${def.name} moves into ${p.name}'s town, Busy after the journey${def.leavesAfter ? `, retained for ${def.leavesAfter} turn${def.leavesAfter === 1 ? '' : 's'}` : ''}.`, { kind: 'marketRecruit', player: pi, cardId, uid: stack.uid, term: def.leavesAfter || 0 });
       await fireHook(state, 'onRecruit', { player: pi, stackUid: stack.uid, selfOnly: stack.uid });
     }
+  } else if (def.hold) {
+    // An Event bought to keep. It was paid for at auction, so it waits in hand until the turn that
+    // suits its buyer and then costs nothing and asks for nobody when it comes down.
+    const c = { uid: nextUid(state), cardId };
+    p.hand.push(c);
+    log(state, pi, `${def.name} goes into ${p.name}'s hand, to be played when it suits them.`, { kind: 'holdToHand', player: pi, cardId, uid: c.uid });
   } else {
     if (def.onGain) await runEffect(state, pi, def.onGain, { sourceCardId: cardId });
     if (def.disposal === 'outOfPlay') state.market.outOfPlay.push(cardId);

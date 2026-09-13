@@ -161,15 +161,20 @@ function rulesHTML(rules) {
 
     <h3>Build your own deck</h3>
     <p>The book holds far more cards than the printed decks use. <strong>Build your own deck</strong>
-    on the cover opens the Deck Workshop: pick any Characters and Events from the whole catalogue
-    (${rules.deckbuilding.deckSize} cards, at most ${rules.deckbuilding.maxCopiesPerCard} copies of a card and at least
-    ${rules.deckbuilding.minCharacters} Characters), name it, and it is saved in this browser for later games.
-    Remember that Events need upright Characters of the right species or study to pay for them, so a deck
-    wants Characters that match the Events you chose.</p>
+    on the cover opens the Deck Workshop: pick any Characters, Events and Town Buildings from the whole
+    catalogue (${rules.deckbuilding.minDeckSize} to ${rules.deckbuilding.maxDeckSize} cards, with copies capped
+    by rarity — Common four, Uncommon three, Rare twice, Super Rare once), name it, and it is saved in this
+    browser for later games. There is no floor on animals and no ceiling on Events: the deck is yours to get
+    wrong, and the Workshop only warns you. Remember that Events need upright Characters of the right species
+    or study to pay for them and Town Buildings need a crew to raise them, so a deck with few animals in it
+    is a deck that cannot play its own cards.</p>
 
     <h3>Statues &amp; victory</h3>
-    <p>Statues won from the Capital City sit in your Victory Row and count toward victory. Control
-    ${rules.victory.statuesToWin} of the ${rules.victory.statueTotal} Statues to win the game.</p>
+    <p>Statues won from the Capital City stand among your Buildings and count toward victory. Control
+    ${rules.victory.statuesToWin} of the ${rules.victory.statueTotal} Statues to win the game. A town has
+    ${rules.buildings.maxPerTown} Building places in all, shared by Buildings and Statues alike, so you need an
+    empty place to bid on a Statue and another empty place when that auction resolves. A Building can be pulled
+    down to make room; a Statue never can.</p>
   `;
 }
 

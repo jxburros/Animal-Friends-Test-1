@@ -52,17 +52,27 @@ The current rules specify exactly **two** players, each with a private player de
 
 A town holds at most **ten animals**. The count is the town's whole footprint: animals at work, animals pledged into a Capital City auction, and animals face down in Unemployment all take a place. Rehiring and promoting move an animal between two zones that both count, so they are footprint-neutral and can never be blocked by the cap; only a genuinely new body is refused. The cap is not a fiddly limit for its own sake — it is what makes improving the animal you have a real alternative to fetching another one (Section 7).
 
+### The table
+
+The two towns face each other across the middle of the table, and each Mayor's rows read outward from their
+own chair. The **back row** is furthest from the middle: the deck, the Town Dump and the eight Building
+places, Statues among them. The **front row** is the animals — at work, pledged into an auction, or face
+down out of work — nearest the market they are bidding into. The **middle row** belongs to both Mayors: the
+Market Deck and the City Dump, the five Capital City cards with the animals pledged beneath them, and each
+Mayor's ongoing Events at their own right hand. Events sit in the middle rather than in a town because most
+of them are aimed across the table. A Mayor's hand sits below their own back row.
+
 ### Areas
 
 | Area | Owner | Purpose |
 | --- | --- | --- |
-| Player Deck | Player | Private deck containing that player's Characters and Events. |
+| Player Deck | Player | Private deck of 40 to 50 cards containing that player's Characters, Events and Town Buildings. A Mayor may shuffle their Town Dump back into it **once per game**; after that an empty deck simply draws nothing. |
 | Hand | Player | Cards available to recruit or play. |
 | Your Town | Player | Active Characters, ongoing Events, and acquired Statues/effects. Holds at most ten animals in total, counting those at work, those pledged into an auction and those face down in Unemployment. |
 | Town Dump | Player | That player's discard pile, including discarded Events and removed layers of a Character stack. |
 | Unemployment | Player | Disrupted Characters, held **face down within their owner's town**, not in a separate area. They are inactive until rehired or promoted, they count against the town's cap of ten, and **either Mayor may look at any of them at any time**. |
-| Victory Row | Player | The public area for a player's acquired Statues. |
-| Buildings | Player | Up to three Capital City Buildings, which stay in town and keep working. |
+| Building places | Player | **Eight** places in the back row, shared by Capital City Buildings, Town Buildings built out of the Mayor's own deck, and the Statues in the Victory Row. A Building may be demolished to free a place; a Statue may not, and a Statue cannot be bought at all without a free place. |
+| Victory Row | Player | The Statues a player has won. They stand among the Buildings and take Building places; the Victory Row is a count, not a separate area on the table. |
 | Capital City | Shared | Five face-up Market cards contested by both players. |
 | City Dump | Shared | Used Market cards, which can later be recycled into the market. |
 | Out of Play | Shared | Market cards that explicitly remove themselves permanently. |
@@ -189,8 +199,11 @@ where it had done nothing. The measured effect of this pass was to take mean pai
 
 ### Rarity and the power/cost model
 
-Every card in the set carries a **rarity** — Common, Uncommon, Rare, Super Rare or Legendary — and it is
-derived, not hand-assigned. `src/engine/power.js` rates a card in *Supply-equivalents*:
+Every card in the set carries a **rarity** — Common, Uncommon, Rare or Super Rare — and it is
+derived, not hand-assigned. Rarity is a deck-building limit and nothing more: it says how often a deck may
+repeat a card, not how hard the card is to come by. The fifth tier (Legendary) was retired because it drew a
+line the limits could not see — it capped copies at one exactly as Super Rare does, so it was a label with
+no rule behind it. `src/engine/power.js` rates a card in *Supply-equivalents*:
 
 - **Power** is everything the card gives you: a shift is rated by its throughput (`output / delay`) plus a
   little for the lump sum; an ability is rated by what it does times how often its trigger fires, discounted
@@ -208,6 +221,13 @@ derived, not hand-assigned. `src/engine/power.js` rates a card in *Supply-equiva
   about six rounds, since a game runs about seventeen and a Building is dear enough to be bought in the
   second half. Rating a repeating ability as a one-shot was why every Building in the set scored below a
   cost-0 Rabbit and the agent almost never bought one.
+- **A Building place is a real price too, and a Statue is standing in one.** A town has eight places and a
+  Mayor who means to win spends five of them on Statues, so a Building is charged against the places that
+  are actually free while the decision is being made, not against the cap. Opening the cap from three
+  places to eight is why every Building in the set re-rated upward: the same card now displaces much less.
+- **A Town Building pays in labour.** Its opportunity cost carries the draw, the action, the printed Supply
+  and the animals who go Busy raising it without producing — a crew of four is a round of a town's whole
+  workforce, and it is priced like one.
 - **An effect that reaches into a zone is discounted for how often that zone has anything in it.** "Rehire
   an animal" pays nothing while nobody is out of work. These are measured frequencies, so they move when
   the set does — the Unemployment figure should rise again now that Unemployment is live.
@@ -219,18 +239,21 @@ derived, not hand-assigned. `src/engine/power.js` rates a card in *Supply-equiva
 That exponent split is the design decision. Rarity is *not* raw power: of two cards that give you the same,
 the cheaper one rates higher, and a cost-0 Rabbit with a good shift can out-rate a Master. But efficiency alone
 would make every cheap card legendary, so size still decides between two equally efficient cards. The bands
-were re-derived after the repricing to hold the pyramid, and the set currently reads 49% Common, 25%
-Uncommon, 18% Rare, 5% Super Rare, 3% Legendary.
+were re-derived after the repricing to hold the pyramid. The cuts sit on the quantiles of the cards a deck
+may actually hold — Characters, Events and Town Buildings — because that is where a copy limit bites; the
+set currently reads 55% Common, 24% Uncommon, 15% Rare, 7% Super Rare.
 
 The repricing is what finally made Buildings buyable. Every Building in the set now pays for itself —
 power-to-cost ratios of **1.01 to 1.27**, against 0.13 to 0.57 before — while remaining the dearest cards on
 the board, which is what the design wants from its Supply sink. Five Many Hats cards were trimmed in the
 same pass to hold the 1.08x power-creep gate.
 
-Rarity then does real work at the table: it caps how many copies of a card a 40-card town deck may hold —
-**3 / 3 / 2 / 1 / 1** — so the cards that carry a game are the ones you may least often repeat. The printed
-decks are built to that shape: a base of Commons and Uncommons at three and two copies, a Rare or two at two,
-and at most a single Super Rare or Legendary as the deck's one marquee card.
+Rarity then does real work at the table: it caps how many copies of a card a town deck may hold —
+**4 / 3 / 2 / 1** — so the cards that carry a game are the ones you may least often repeat. That is the only
+thing rarity does, and the copy limits are now the whole of it. The printed decks are built to that shape: a
+base of Commons and Uncommons, a Rare or two at two copies, and at most a single Super Rare as the deck's one
+marquee card. A deck is any size from **40 to 50 cards**, with no Character floor and no Event ceiling — the
+Workshop warns about a full-size deck holding six animals or fewer rather than refusing to build it.
 
 The model is also what the heuristic AI uses to value an unfamiliar card, so a new card is understood the day
 it is printed rather than the day someone adds it to a table. `npm run power` prints the whole set in rating

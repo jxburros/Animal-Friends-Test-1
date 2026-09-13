@@ -55,6 +55,32 @@ new title, move it to a different species — the link still points at the print
 and the Workshop keeps that card ticked off. `npm test` checks every `remakes` id exists, that no
 two maker cards claim the same printed card, and that no maker id collides with a printed one.
 
+### Additions: a card that replaces nothing
+
+Not every maker card is a remake. Some are **additions**, and they carry the other label:
+
+```jsonc
+{
+  "id": "mk_tb_coppers_cellar",
+  "type": "townBuilding",
+  "addition": true,
+  "addedBecause": "The printed set has no Town Buildings at all — the type did not exist when it was printed."
+}
+```
+
+Three kinds of card land here. An **extra rung** in a remade character's arc, where the maker's count
+beat the printed one (Betty's six versions against four printed Burrs). An **added character's** cards
+(Bob, who kept the gate when the printed Gate Hedgehog became two animals) — the character entry
+carries `addition` too, and §*Adding a character* in
+[REMAKING_A_CHARACTER.md](REMAKING_A_CHARACTER.md) covers that. And a card of a **type the printed set
+never had**, which is what every Town Building is.
+
+Every maker card must carry one label or the other, and `npm test` enforces it. That is the point: an
+unlabelled card is indistinguishable from a remake whose `remakes` link was forgotten, so a forgotten
+link can no longer pass itself off as new work. An addition may claim nothing — declaring `addition`
+on a card that also carries `remakes` fails — so the label is not a way out of a remake you did not
+finish. The Workshop shows additions as **Added — replaces nothing**, with the reason.
+
 ## Ticking off the printed cards
 
 Every card on the printed shelf has a **Mark remade** button under it.
@@ -81,13 +107,28 @@ list on the right follows the same sort, so a Character's versions sit together 
 
 ### The market side
 
-Buildings, Market cards, Ordinances and Disruptions are remade too, and they carry `remakes` and are
-ticked off the same list — but they belong to **no character entry**, because a Building is not
-somebody's backstory. `spec/maker_card_set.json` records why each batch of them exists under
+Buildings, Market cards, Ordinances and Disruptions are remade too, and they carry `remakes` (or
+`addition`, above) and are ticked off the same list — but they belong to **no character entry**,
+because a Building is not somebody's backstory. `spec/maker_card_set.json` records why each batch of them exists under
 `townCards` instead. Two things they are for: giving a new study a market side at all (before the
 first batch, neither Food nor Entertainment had a single Building, Event, Market card or Disruption
 anywhere in the collection), and giving the verbs a remade cast leans on something in the Capital
 City that answers them.
+
+**Town Buildings** are the other half of that shelf, and they are all additions: a Town Building is
+played out of a Mayor's own deck for its Supply cost plus a crew of upright animals, and the printed
+set has none, because the type did not exist when it was printed. Write them as *small and personal*
+against the Capital City's civic monuments — a strip, a cellar, a bench, a shed, a gate — and take the
+place from the town bible rather than inventing one. The crew size is the second dial after cost: one
+animal for a building that waits for something, two for one that pays every turn, three only for
+something a town would reorganise itself around. They rate below the printed Capital City band
+(2.8–4.8 against 3.5–5.5), which is right — they are drawn rather than fought for.
+
+A permanent is also **priced by how often its trigger actually comes round**: `permanentRuns` in
+`src/engine/power.js` scales a Building's payouts against the turn start most of them wait for, so a
+card that fires when Supply is taken off you is not paid as though that happened every turn. It never
+mattered while every printed Building triggered at turn start; it started mattering the day a town
+could build one of its own.
 
 A **Building carries one ability**, and that is a balance fact rather than a style note: a second
 standing ability is worth roughly +2 to +3.5 on the rating, which puts a Building straight past the

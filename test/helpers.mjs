@@ -131,6 +131,23 @@ export function giveStatue(state, pi, statueCardId) {
   state.players[pi].victoryRow.push(statueCardId);
 }
 
+/**
+ * Add a card definition to the loaded set for the duration of a test. The printed set carries no
+ * Town Buildings and no held Capital City Events yet — the rules and the engine came first — so the
+ * tests that cover them build the card they need. Returns the definition.
+ */
+export function defineCard(state, def) {
+  state.set.cardsById[def.id] = def;
+  return def;
+}
+
+/** Stand a Building in a town directly, market- or deck-sourced, without paying for it. */
+export function giveBuilding(state, pi, cardId, source = 'market') {
+  const entry = { uid: nextUid(state), cardId, source };
+  state.players[pi].buildings.push(entry);
+  return entry;
+}
+
 export function findAction(actions, pred) {
   return actions.find(pred);
 }

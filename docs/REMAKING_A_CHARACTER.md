@@ -103,7 +103,8 @@ backstory should use them.
 on the shelf instead — Bob was added beside Biff rather than instead of him, because one printed
 Gate Hedgehog turned into two characters and the maker kept both. Such an entry carries
 `"addition": true` and an `addedBecause` line saying where they came from and why they are not a
-remake, and it must carry no `renamedFrom` and claim no printed card in any `remakes`. The
+remake, and it must carry no `renamedFrom` and claim no printed card in any `remakes`. Their cards
+carry the same two fields, for the same reason. The
 printed-version checks are skipped for it — there is nothing to account for — so `addition` is not a
 way out of a remake you did not finish. The town bible records additions in their own table, not in
 Renames.
@@ -140,6 +141,11 @@ A maker card uses exactly the printed schema (see the `$comment` at the top of
 
 - **`remakes`** is an id, or a list of ids, of printed cards this card replaces. **Ids, never names** —
   that is what survives you renaming the card later.
+- **A card that replaces nothing carries `"addition": true` and an `addedBecause` line instead.** Every
+  maker card carries one label or the other and `npm test` enforces it, because an unlabelled card is
+  indistinguishable from a remake whose link was forgotten. Two things land here from a character
+  batch: an extra rung the printed versions never had (the maker's count beats the printed one — see
+  §4), and the cards of an added character. An addition may not also claim a printed card.
 - **`rarity` and `power` are not hand-written.** `npm run stamp -- --maker` computes them (§5).
 - **`art`**: inherit the atlas/tile of the printed card being replaced when the illustration still
   fits the new job. When it doesn't, leave `art` off and add a line to the character entry's
@@ -184,6 +190,12 @@ Every printed version still has to be **accounted for**, so the tick list stays 
 
 A printed card may be claimed by **at most one** maker card (`npm test` enforces it). Retiring is a
 normal outcome, not a failure — say plainly in the reason why the card has no place in the new arc.
+
+The count runs the other way too. Where the new arc has **more** rungs than the printed set did, the
+extra cards replace nothing: each carries `"addition": true` and an `addedBecause` line saying what
+the rung is and why no printed version was doing it. Betty's six versions against four printed Burrs
+are two such cards. This is not a licence to pad a batch — an addition still has to earn its place in
+the arc — it is how the shelf tells a new card apart from a remake whose link was forgotten.
 
 ---
 

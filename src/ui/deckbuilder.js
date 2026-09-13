@@ -8,7 +8,7 @@
 // spec/starter_card_set.json — the only cards a deck may hold. "Maker cards" is the hand-remade
 // collection in spec/maker_card_set.json, shown for comparison and not playable yet. Each printed
 // card can be ticked off as remade (see ./remade.js), so the rebuild can be tracked card by card.
-import { deckRules, deckProblems, maxCopiesOf } from '../engine/deckbuilding.js';
+import { deckRules, deckProblems, deckWarnings, maxCopiesOf, DECK_TYPES } from '../engine/deckbuilding.js';
 import { RARITIES, powerRating } from '../engine/power.js';
 import { groupByCharacter, characterOf } from '../engine/characters.js';
 import { buildCardFace, setPreviewContext, raritySlug } from './render.js';
@@ -40,7 +40,7 @@ function icon(name) {
 }
 
 // ---------- saved decks ----------
-export { deckRules, deckProblems };
+export { deckRules, deckProblems, deckWarnings };
 
 export function loadSavedDecks() {
   try {
@@ -79,15 +79,16 @@ const SORTS = [
 
 function counts() {
   const byId = ctx.set.cardsById || Object.fromEntries(ctx.set.cards.map((c) => [c.id, c]));
-  let total = 0; let chars = 0; let events = 0;
+  let total = 0; let chars = 0; let events = 0; let buildings = 0;
   for (const [id, n] of Object.entries(ctx.list)) {
     if (!n) continue;
     total += n;
     const t = byId[id] && byId[id].type;
     if (t === 'character') chars += n;
     if (t === 'event') events += n;
+    if (t === 'townBuilding') buildings += n;
   }
-  return { total, chars, events };
+  return { total, chars, events, buildings };
 }
 
 function copiesOf(cardId) {
@@ -101,7 +102,7 @@ function addCopy(cardId) {
   const dr = deckRules(ctx.rules);
   const byId = ctx.set.cardsById || Object.fromEntries(ctx.set.cards.map((c) => [c.id, c]));
   const { total } = counts();
-  if (total >= dr.deckSize || copiesOf(cardId) >= limitFor(byId[cardId])) return;
+  if (total >= dr.maxDeckSize || copiesOf(cardId) >= limitFor(byId[cardId])) return;
   ctx.list[cardId] = copiesOf(cardId) + 1;
   render();
 }
@@ -120,7 +121,7 @@ function removeCopy(cardId) {
  */
 function shelfCards() {
   if (section === 'maker') return ((ctx.makerSet && ctx.makerSet.cards) || []);
-  return ctx.set.cards.filter((c) => c.type === 'character' || c.type === 'event');
+  return ctx.set.cards.filter((c) => DECK_TYPES.has(c.type));
 }
 
 function matchesFilters(c) {
@@ -189,6 +190,10 @@ function characterEntry(name) {
 }
 function openStory(def) {
   const entry = characterEntry(def.name);
+  // A town card belongs to nobody: a Building is not somebody's backstory. Rather than apologise for
+  // a character entry it was never going to have, it tells its own story — why it exists, and the
+  // flavor that places it in the town.
+  const townCard = !entry && !def.species;
   const versions = ((ctx.makerSet && ctx.makerSet.cards) || [])
     .filter((c) => characterOf(c) === def.name)
     .sort((a, b) => (a.cost || 0) - (b.cost || 0));
@@ -199,7 +204,8 @@ function openStory(def) {
     h('h2', {}, def.name),
     h('p', { class: 'db-story-sub' }, entry
       ? [entry.species, (entry.studies || []).join(' · '), entry.pronouns].filter(Boolean).join(' — ')
-      : `${def.species || ''} ${def.study ? `· ${def.study}` : ''}`.trim()),
+      : townCard ? (def.title || 'A town card')
+        : `${def.species || ''} ${def.study ? `· ${def.study}` : ''}`.trim()),
   ]);
   if (entry && entry.renamedFrom) {
     head.appendChild(h('p', { class: 'db-story-renamed' }, `Remade from ${entry.renamedFrom}.`));
@@ -211,6 +217,14 @@ function openStory(def) {
     }
     if (entry.voice) body.appendChild(h('p', { class: 'db-story-note' }, [h('strong', {}, 'Voice. '), entry.voice]));
     if (entry.arc) body.appendChild(h('p', { class: 'db-story-note' }, [h('strong', {}, 'The arc. '), entry.arc]));
+  } else if (townCard) {
+    if (def.addedBecause) body.appendChild(h('p', {}, def.addedBecause));
+    if (def.text) body.appendChild(h('p', { class: 'db-story-rules' }, def.text));
+    if (def.flavor) body.appendChild(h('p', { class: 'db-story-flavor' }, def.flavor));
+    body.appendChild(h('p', { class: 'db-story-note' }, [
+      h('strong', {}, 'A town card. '),
+      'It belongs to no character — a Building is not somebody\u2019s backstory. Why each batch of them exists is recorded under townCards in spec/maker_card_set.json.',
+    ]));
   } else {
     body.appendChild(h('p', { class: 'db-empty' }, 'No backstory written for this character yet.'));
   }
@@ -244,7 +258,7 @@ function chip(label, active, onClick, iconName) {
 }
 
 function buildShelfBar() {
-  const printedCount = ctx.set.cards.filter((c) => c.type === 'character' || c.type === 'event').length;
+  const printedCount = ctx.set.cards.filter((c) => DECK_TYPES.has(c.type)).length;
   const makerCount = ((ctx.makerSet && ctx.makerSet.cards) || []).length;
   const progress = remadeProgress(ctx.marks, ctx.makerIndex, ctx.set.cards);
   const bar = h('div', { class: 'db-shelfbar' }, [
@@ -272,6 +286,7 @@ function buildFilters() {
     chip('All cards', filter.type === 'all', () => { filter.type = 'all'; render(); }),
     chip('Characters', filter.type === 'character', () => { filter.type = 'character'; render(); }),
     chip('Events', filter.type === 'event', () => { filter.type = 'event'; render(); }),
+    chip('Town Buildings', filter.type === 'townBuilding', () => { filter.type = 'townBuilding'; render(); }),
   ]);
   const sortRow = h('div', { class: 'db-chiprow' }, [
     h('span', { class: 'db-chiplabel' }, 'Sort by:'),
@@ -350,6 +365,11 @@ function buildSlot(def) {
     if (remade.length) {
       slot.appendChild(h('div', { class: 'db-maker-note' },
         `Remakes ${remade.map((id, i) => (olds[i] ? `${olds[i].name} (${id})` : id)).join(', ')}`));
+    } else if (def.addition) {
+      // An addition replaces nothing, and says why. Without this the shelf showed it exactly like a
+      // remake whose link had been forgotten, which is the one thing the tick list must not do.
+      slot.appendChild(h('div', { class: 'db-maker-note added', title: def.addedBecause || '' },
+        `Added — replaces nothing${def.addedBecause ? `: ${def.addedBecause}` : ''}`));
     }
     return slot;
   }
@@ -407,7 +427,7 @@ function emptyNote() {
   return h('div', { class: 'db-maker-empty' }, [
     h('h3', {}, 'No maker cards yet.'),
     h('p', {}, 'This shelf holds the collection as it is remade, card by card, so a new version can be read beside the printed one. It is empty until the first card is written.'),
-    h('p', {}, 'Add cards to spec/maker_card_set.json using the same fields as the printed set, plus "remakes": the id (or a list of ids) of the printed card the new one replaces. That link ticks the old card off here even after the new card is given a different name.'),
+    h('p', {}, 'Add cards to spec/maker_card_set.json using the same fields as the printed set, plus one of two labels. A card that replaces a printed one carries "remakes": the id (or a list of ids) it replaces — that link ticks the old card off here even after the new card is renamed. A card that replaces nothing carries "addition": true and an "addedBecause" line saying why it is new.'),
     h('p', { class: 'db-empty' }, 'Maker cards cannot be put in a deck yet; the Workshop shows them for comparison only.'),
   ]);
 }
@@ -465,8 +485,11 @@ function suggestFrom(deckId) {
 
 function render() {
   const dr = deckRules(ctx.rules);
-  const { total, chars, events } = counts();
+  const { total, chars, events, buildings } = counts();
   const problems = deckProblems(ctx.rules, ctx.set, ctx.list);
+  // Advice sits beside the rules, not among them: a thin deck is legal, and the Workshop says so
+  // plainly rather than refusing to build it.
+  const warnings = deckWarnings(ctx.rules, ctx.set, ctx.list);
   host.innerHTML = '';
 
   const nameInput = h('input', { type: 'text', id: 'dbName', class: 'seed-input', value: ctx.name, maxlength: '40', placeholder: 'Name your deck' });
@@ -475,7 +498,7 @@ function render() {
   const head = h('div', { class: 'db-head' }, [
     h('div', { class: 'db-head-main' }, [
       h('h2', {}, 'The Deck Workshop'),
-      h('p', { class: 'db-sub' }, `Build a ${dr.deckSize}-card town deck from any Characters and Events in the book — at least ${dr.minCharacters} Characters, and copies capped by rarity: ${RARITIES.map((r) => `${r} ${dr.copiesByRarity[r]}`).join(', ')}.`),
+      h('p', { class: 'db-sub' }, `Build a town deck of ${dr.minDeckSize} to ${dr.maxDeckSize} cards from any Characters, Events and Town Buildings in the book. There is no floor on animals and no ceiling on Events — the deck is yours to get wrong — and copies are capped by rarity: ${RARITIES.map((r) => `${r} ${dr.copiesByRarity[r]}`).join(', ')}.`),
     ]),
     h('div', { class: 'db-head-side' }, [
       h('label', { class: 'menu-label', for: 'dbName' }, 'Deck name'),
@@ -484,11 +507,12 @@ function render() {
   ]);
 
   const counter = h('div', { class: `db-counter${problems.length ? '' : ' ok'}` }, [
-    h('div', { class: 'db-big' }, `${total} / ${dr.deckSize}`),
-    h('div', { class: 'db-counter-sub' }, `${chars} Characters · ${events} Events`),
+    h('div', { class: 'db-big' }, `${total} / ${dr.minDeckSize}–${dr.maxDeckSize}`),
+    h('div', { class: 'db-counter-sub' }, `${chars} Characters · ${events} Events${buildings ? ` · ${buildings} Town Buildings` : ''}`),
     problems.length
       ? h('ul', { class: 'db-problems' }, problems.map((t) => h('li', {}, t)))
       : h('div', { class: 'db-ok' }, 'This deck is ready to play.'),
+    warnings.length ? h('ul', { class: 'db-warnings' }, warnings.map((t) => h('li', {}, t))) : null,
   ]);
 
   const starters = h('div', { class: 'db-chiprow' }, [

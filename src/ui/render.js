@@ -8,7 +8,7 @@
 // around, and the engine is held at its next decision until those animations have played (settle()).
 import {
   cardDef, topCard, canAct, findStack, eventReduction, assignmentCovers, rankOf, pledgeMinCost,
-  townFootprint, townCap, statueTierFor,
+  townFootprint, townCap, statueTierFor, buildingCap, buildingSlotsUsed,
 } from '../engine/index.js';
 import { cardArtSVG, cardBackSVG, iconSVG } from './art.js';
 import { ornamentalFrameSVG } from './painted-art.js';
@@ -204,6 +204,19 @@ function typeIconName(def) {
   if (def.type === 'statue') return 'statue';
   return 'market';
 }
+/** The card type as it is printed along the bottom edge, in words rather than in engine spelling. */
+const TYPE_LABEL = {
+  statue: 'Victory',
+  townBuilding: 'Town Building',
+  building: 'Building',
+  marketCharacter: 'Hire',
+  disruption: 'Disruption',
+  ordinance: 'Ordinance',
+};
+function typeLabel(def) {
+  return TYPE_LABEL[def.type] || def.type;
+}
+
 export function rankLabel(def) {
   const rules = activeRules();
   if (def.type !== 'character' || !rules) return '';
@@ -276,7 +289,10 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
   face.appendChild(banner);
   const subtitle = def.type === 'character' ? def.title : def.type === 'event'
     ? (def.kind === 'limited' ? `Limited Event · ${def.duration} turns` : 'Instant Event')
-    : def.type === 'statue' ? 'Victory · Statue' : def.type === 'disruption' ? 'Shared Disruption' : 'Capital City Market';
+    : def.type === 'statue' ? 'Victory · Statue' : def.type === 'disruption' ? 'Shared Disruption'
+      : def.type === 'townBuilding' ? 'Town Building' : def.type === 'building' ? 'Capital City Building'
+        : def.type === 'marketCharacter' ? (def.title || 'Capital City Hire')
+          : def.hold ? 'Capital City Event · kept' : 'Capital City Market';
   face.appendChild(h('div', { class: 'card-subtitle' }, subtitle || def.type));
   face.appendChild(h('div', { class: 'art', html: cardArtSVG(def) }));
 
@@ -307,8 +323,20 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
     body.appendChild(h('div', { class: 'title' }, 'Disruption'));
     traits.appendChild(h('span', { class: 'trait' }, [icon('market'), 'Strikes both towns on reveal']));
     body.appendChild(traits);
+  } else if (def.type === 'townBuilding') {
+    // What a Town Building asks for is the whole card: Supply, and a crew who go Busy raising it.
+    const animals = (def.build && def.build.animals) || 0;
+    body.appendChild(h('div', { class: 'title' }, 'Town Building'));
+    traits.appendChild(h('span', { class: 'trait' }, [icon('Civics'), `${animals} animal${animals === 1 ? '' : 's'} to raise`]));
+    traits.appendChild(h('span', { class: 'trait' }, [icon('market'), 'Takes a Building place']));
+    body.appendChild(traits);
+  } else if (def.type === 'building') {
+    body.appendChild(h('div', { class: 'title' }, 'Capital City Building'));
+    traits.appendChild(h('span', { class: 'trait' }, [icon('market'), 'Takes a Building place']));
+    body.appendChild(traits);
   } else if (def.type === 'market') {
-    body.appendChild(h('div', { class: 'title' }, 'Capital City card'));
+    body.appendChild(h('div', { class: 'title' }, def.hold ? 'Bought and kept' : 'Capital City card'));
+    if (def.hold) traits.appendChild(h('span', { class: 'trait' }, [icon('hand'), 'Kept in hand']));
     traits.appendChild(h('span', { class: 'trait' }, [icon(def.disposal === 'outOfPlay' ? 'dump' : 'market'), def.disposal === 'outOfPlay' ? 'Goes Out of Play' : 'Returns to the City Dump']));
     body.appendChild(traits);
   }
@@ -320,7 +348,7 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
     face.appendChild(h('div', { class: 'foil-sheen' }));
     if (!fullArt) face.appendChild(h('div', { class: 'foil-tag', title: 'Foil card', html: iconSVG('foil') }));
   }
-  const footer = h('div', { class: 'card-footer' }, [h('span', {}, fullArt ? `Full Art · ${fullArt.number}/12` : def.type === 'statue' ? 'Victory' : def.type)]);
+  const footer = h('div', { class: 'card-footer' }, [h('span', {}, fullArt ? `Full Art · ${fullArt.number}/12` : typeLabel(def))]);
   if (interactive) footer.appendChild(h('button', {
     class: 'inspect-card', type: 'button', 'aria-label': `Read ${def.name}`,
     onclick: (event) => { event.stopPropagation(); inspectCard(def); },
@@ -500,7 +528,8 @@ function groupActionOptions(options) {
   const g = {
     byHandRecruit: new Map(), byCharWork: new Map(), byCharAbility: new Map(),
     byCharAnnounce: new Map(), byCharRaise: new Map(), byEventCard: new Map(),
-    byUnemploymentCard: new Map(), byPromoteTarget: new Map(), byLayOffCard: new Map(), endTurn: null,
+    byUnemploymentCard: new Map(), byPromoteTarget: new Map(), byLayOffCard: new Map(),
+    byBuildCard: new Map(), byHeldCard: new Map(), endTurn: null,
   };
   for (const o of options) {
     switch (o.type) {
@@ -516,6 +545,8 @@ function groupActionOptions(options) {
       case 'announce': pushMulti(g.byCharAnnounce, o.charUid, o); break;
       case 'raise': pushMulti(g.byCharRaise, o.charUid, o); break;
       case 'playEvent': pushMulti(g.byEventCard, o.cardUid, o); break;
+      case 'build': g.byBuildCard.set(o.cardUid, o); break;
+      case 'playHeld': g.byHeldCard.set(o.cardUid, o); break;
       case 'rehire': g.byUnemploymentCard.set(o.cardUid, o); break;
       case 'layOff': g.byLayOffCard.set(o.cardUid, o); break;
       default: break;
@@ -653,6 +684,45 @@ function openEventPopover(def, options, anchorEl) {
   });
 }
 
+/**
+ * Raising a Town Building. The crew is a head count, so any upright animals will do — the popover
+ * offers the cheapest set the engine already picked, or hands the choice over to the player.
+ */
+function openBuildPopover(def, option, anchorEl) {
+  showPopover(anchorEl, (pop) => {
+    pop.appendChild(h('h4', {}, def.name));
+    pop.appendChild(h('div', { class: 'po-sub' }, `${option.cost} Supply and ${option.needed} animal${option.needed === 1 ? '' : 's'}, who go Busy without working a shift.`));
+    const actions = h('div', { class: 'po-actions' });
+    const names = (option.characters || []).map((uid) => {
+      const st = findStack(state, humanIndex, uid);
+      return st ? topCard(state, st).name : '?';
+    });
+    actions.appendChild(h('button', { class: 'primary', onclick: () => resolvePending(option) },
+      names.length ? `Build (with ${names.join(', ')})` : 'Build'));
+    if (option.needed > 0) {
+      actions.appendChild(h('button', {
+        onclick: () => {
+          hidePopoverUI();
+          wizard = { step: 'chooseCrew', kind: 'build', option, def, selected: [] };
+          scheduleRender();
+        },
+      }, 'Choose the crew…'));
+    }
+    pop.appendChild(actions);
+  });
+}
+
+/** A Capital City Event bought and kept: nothing left to decide but when. */
+function openHeldPopover(def, option, anchorEl) {
+  showPopover(anchorEl, (pop) => {
+    pop.appendChild(h('h4', {}, def.name));
+    pop.appendChild(h('div', { class: 'po-sub' }, 'Bought at auction and kept — it costs nothing to play and asks for nobody.'));
+    const actions = h('div', { class: 'po-actions' });
+    actions.appendChild(h('button', { class: 'primary', onclick: () => resolvePending(option) }, 'Play it now'));
+    pop.appendChild(actions);
+  });
+}
+
 function openCharacterPopover(stack, groups, anchorEl) {
   const def = topCard(state, stack);
   showPopover(anchorEl, (pop) => {
@@ -704,7 +774,7 @@ function openBidPopover(option, label, anchorEl) {
 }
 
 function toggleWizardChar(uid) {
-  if (!wizard || wizard.step !== 'chooseEventChars') return;
+  if (!wizard || (wizard.step !== 'chooseEventChars' && wizard.step !== 'chooseCrew')) return;
   const idx = wizard.selected.indexOf(uid);
   if (idx >= 0) wizard.selected.splice(idx, 1);
   else wizard.selected.push(uid);
@@ -797,18 +867,29 @@ function renderPledges(pd) {
   return wrap;
 }
 
+/**
+ * The middle of the table, which both Mayors reach into. Reading from your rival's right hand to
+ * yours: their Events, the City Dump and the Market Deck, the Capital City display with the animals
+ * pledged beneath each card, and your own Events at your right, beside the deck they came out of.
+ * Events live here rather than in a town because most of them are aimed across the table.
+ */
 function renderCapitalCity() {
-  const el = document.getElementById('capitalCity');
+  const el = document.getElementById('middleRow');
   el.innerHTML = '';
   const head = h('div', { class: 'cc-head' });
   head.appendChild(h('div', { class: 'cc-title' }, [icon('market'), 'The Capital City']));
   head.appendChild(h('div', { class: 'cc-sub' }, `A contested market (${state.market.deckName}): announce with an upright Character, then outbid each other until one Mayor lets it go. Each bid sends another animal to stand beneath the card, and every one must cost more than the last — so a bidding war is won with your town, not your purse.`));
+  // The piles the display is dealt from and discarded to ride in the header, so the five cards
+  // themselves get the width: they are the thing both Mayors are reading.
   const piles = h('div', { class: 'cc-piles' });
-  piles.appendChild(pileChip('marketdeck', 'Market Deck', state.market.deck.length));
   piles.appendChild(pileChip('citydump', 'City Dump', state.market.cityDump.length, 'dump'));
-  piles.appendChild(pileChip('outofplay', 'Out of Play', state.market.outOfPlay.length, 'out'));
+  piles.appendChild(pileChip('marketdeck', 'Market Deck', state.market.deck.length));
+  if (state.market.outOfPlay.length) piles.appendChild(pileChip('outofplay', 'Out of Play', state.market.outOfPlay.length, 'out'));
   head.appendChild(piles);
   el.appendChild(head);
+
+  const body = h('div', { class: 'middle-body' });
+  body.appendChild(renderEventCorner(aiIndex));
 
   const slots = h('div', { class: 'cc-slots' });
   if (!state.market.city.length) slots.appendChild(h('div', { class: 'empty-note' }, 'The market square is empty.'));
@@ -862,12 +943,40 @@ function renderCapitalCity() {
     }
     slots.appendChild(slot);
   }
-  el.appendChild(slots);
+  body.appendChild(slots);
+  body.appendChild(renderEventCorner(humanIndex));
+  el.appendChild(body);
 }
 
-// ---------- action bar (bottom of your town) ----------
+// ---------- the action rail, down the right ----------
+/**
+ * What you can do, beside the hand you do it with. The rail also carries whatever the game is
+ * waiting on: a half-finished Event needing Characters, a Building needing a crew, an auction
+ * waiting for a card to be clicked.
+ */
+function renderActionRail(actionGroups) {
+  const el = document.getElementById('actionRail');
+  el.innerHTML = '';
+  el.appendChild(h('div', { class: 'town-sub-title' }, [icon('Civics'), 'Your Move']));
+  el.appendChild(renderActionBar(actionGroups));
+}
+
 function renderActionBar(actionGroups) {
   const bar = h('div', { class: 'action-bar' });
+  if (pending && pending.pi === humanIndex && pending.request.kind === 'resources') {
+    bar.appendChild(h('div', { class: 'ab-text' }, 'Resources phase — choose one:'));
+    bar.appendChild(h('button', { class: 'primary', onclick: () => resolvePending('draw') }, [icon('deck'), ' Draw 1 card']));
+    bar.appendChild(h('button', { class: 'primary', onclick: () => resolvePending('supply') }, [icon('supply'), ' Gain 2 Supply']));
+    return bar;
+  }
+  if (wizard && wizard.kind === 'build') {
+    const crew = wizard.selected.map((uid) => findStack(state, humanIndex, uid)).filter(Boolean);
+    const need = wizard.option.needed;
+    bar.appendChild(h('div', { class: 'ab-text' }, `Choose ${need} animal${need === 1 ? '' : 's'} to raise ${wizard.def.name} — chosen: ${crew.length ? crew.map((st) => topCard(state, st).name).join(', ') : 'nobody yet'}`));
+    bar.appendChild(h('button', { class: 'primary', disabled: crew.length !== need, onclick: () => resolvePending({ ...wizard.option, characters: wizard.selected }) }, 'Start building'));
+    bar.appendChild(h('button', { onclick: () => { wizard = null; scheduleRender(); } }, 'Cancel'));
+    return bar;
+  }
   if (wizard && wizard.kind === 'playEvent') {
     const selectedStacks = wizard.selected.map((uid) => findStack(state, humanIndex, uid)).filter(Boolean);
     const waive = eventReduction(state, humanIndex);
@@ -883,7 +992,7 @@ function renderActionBar(actionGroups) {
     return bar;
   }
   if (actionGroups) {
-    bar.appendChild(h('div', { class: 'ab-text' }, 'Click a glowing card to act: recruit from your hand, work a shift, play an Event, bid in the Capital City.'));
+    bar.appendChild(h('div', { class: 'ab-text' }, 'Click a glowing card to act: recruit from your hand, work a shift, play an Event, raise a Building, bid in the Capital City.'));
     bar.appendChild(h('button', { class: 'primary end-turn-btn', onclick: () => resolvePending(actionGroups.endTurn || { type: 'endTurn' }) }, 'End Turn'));
   } else if (pending && pending.pi === humanIndex) {
     bar.appendChild(h('div', { class: 'ab-text' }, 'Make your choice above…'));
@@ -896,9 +1005,17 @@ function renderActionBar(actionGroups) {
 }
 
 // ---------- hand ----------
+/** Your hand, in its own rail below your back row, where your own half of the table ends. */
+function renderHand(actionGroups) {
+  const el = document.getElementById('handRow');
+  el.innerHTML = '';
+  el.appendChild(renderHandPanel(actionGroups));
+}
+
 function renderHandPanel(actionGroups) {
   const wrap = h('div', { class: 'hand-panel' });
-  wrap.appendChild(h('div', { class: 'town-sub-title' }, [icon('hand'), 'Your Hand']));
+  const p0 = state.players[humanIndex];
+  wrap.appendChild(h('div', { class: 'town-sub-title', 'data-key': `hand:${humanIndex}` }, [icon('hand'), `Your Hand · ${p0.hand.length}`]));
   const row = h('div', { class: 'hand-row' });
   const p = state.players[humanIndex];
   const n = p.hand.length;
@@ -916,6 +1033,12 @@ function renderHandPanel(actionGroups) {
       } else if (def.type === 'event' && actionGroups.byEventCard.has(c.uid)) {
         face.classList.add('clickable');
         face.addEventListener('click', (e) => { e.stopPropagation(); openEventPopover(def, actionGroups.byEventCard.get(c.uid), e.currentTarget); });
+      } else if (def.type === 'townBuilding' && actionGroups.byBuildCard.has(c.uid)) {
+        face.classList.add('clickable');
+        face.addEventListener('click', (e) => { e.stopPropagation(); openBuildPopover(def, actionGroups.byBuildCard.get(c.uid), e.currentTarget); });
+      } else if (actionGroups.byHeldCard.has(c.uid)) {
+        face.classList.add('clickable');
+        face.addEventListener('click', (e) => { e.stopPropagation(); openHeldPopover(def, actionGroups.byHeldCard.get(c.uid), e.currentTarget); });
       }
     }
     slot.appendChild(face);
@@ -930,14 +1053,15 @@ function renderHandPanel(actionGroups) {
 function statChip(key, iconName, text, cls = '', title = '') {
   return h('div', { class: `statchip ${cls}`, 'data-key': key, title }, [icon(iconName), text]);
 }
-function renderTownPanel(pi, elId) {
-  const el = document.getElementById(elId);
-  el.innerHTML = '';
+/**
+ * A town is dealt across two rows, and both Mayors' rows are laid out from their own chair: the back
+ * row — deck, Town Dump and the eight Building places — furthest from the table's middle, the animals
+ * in front of it where the work happens. Your rival's rows are stacked in mirror image above the
+ * middle, so the two towns face each other across the Capital City.
+ */
+function renderTownHead(pi) {
   const p = state.players[pi];
   const isHuman = pi === humanIndex;
-  el.classList.toggle('active-turn', state.active === pi);
-  el.dataset.key = `town:${pi}`;
-
   const head = h('div', { class: 'town-head' });
   const deckName = state.set.decksById[p.deckId] ? state.set.decksById[p.deckId].name : '';
   head.appendChild(h('div', { class: 'pname', 'data-key': `pname:${pi}` }, [
@@ -948,27 +1072,87 @@ function renderTownPanel(pi, elId) {
   stats.appendChild(statChip(`supply:${pi}`, 'supply', `${p.supply} Supply`, 'supply', 'Supply in the wallet'));
   if (p.escrow) stats.appendChild(statChip(`escrow:${pi}`, 'escrow', `${p.escrow} in escrow`, 'escrow', 'Supply committed to open bids'));
   stats.appendChild(statChip(`statues:${pi}`, 'statue', `${p.victoryRow.length} / ${state.rules.victory.statuesToWin} Statues`, 'statues', 'Statues held; control a majority to win'));
-  stats.appendChild(statChip(`hand:${pi}`, 'hand', `${p.hand.length} in hand`, '', 'Cards in hand'));
-  stats.appendChild(statChip(`deck:${pi}`, 'deck', `${p.deck.length} in deck`, '', 'Cards left in the deck'));
-  stats.appendChild(statChip(`dump:${pi}`, 'dump', `${p.dump.length} in dump`, '', 'Cards in the Town Dump'));
+  if (!isHuman) stats.appendChild(statChip(`hand:${pi}`, 'hand', `${p.hand.length} in hand`, '', 'Cards in hand'));
   head.appendChild(stats);
-  el.appendChild(head);
+  return head;
+}
 
-  const actionGroups = isHuman ? currentActionGroups() : null;
+/**
+ * The back row: the deck, the Town Dump, and the eight places where everything permanent stands.
+ * Statues share those places with Buildings — it is the same row on the table — so the Victory Row
+ * is not a zone of its own any more, and a Mayor can see their room for a Statue running out.
+ */
+function renderBackRow(pi, elId) {
+  const el = document.getElementById(elId);
+  el.innerHTML = '';
+  const p = state.players[pi];
+  const isHuman = pi === humanIndex;
+  el.classList.toggle('active-turn', state.active === pi);
+  el.dataset.key = `backrow:${pi}`;
 
-  if (isHuman && pending && pending.pi === humanIndex && pending.request.kind === 'resources') {
-    const resBar = h('div', { class: 'action-bar resources-bar' });
-    resBar.appendChild(h('div', { class: 'ab-text' }, 'Resources phase — choose one:'));
-    resBar.appendChild(h('button', { class: 'primary', onclick: () => resolvePending('draw') }, [icon('deck'), ' Draw 1 card']));
-    resBar.appendChild(h('button', { class: 'primary', onclick: () => resolvePending('supply') }, [icon('supply'), ' Gain 2 Supply']));
-    el.appendChild(resBar);
-  }
+  el.appendChild(renderTownHead(pi));
 
   const row = h('div', { class: 'town-row' });
 
-  // Town (character stacks, with the animals out of work lying face down among them). The title
-  // carries the town's whole footprint against the cap — animals at work, animals pledged into an
-  // auction and animals out of work all take a place, and a full town cannot recruit at all.
+  // Deck and Town Dump, as piles you can count rather than numbers in a bar.
+  const piles = h('div', { class: 'town-sub town-piles' });
+  piles.appendChild(h('div', { class: 'town-sub-title' }, [icon('deck'), 'Deck & Dump']));
+  const pileRow = h('div', { class: 'mini-row' });
+  pileRow.appendChild(pileChip(`deck:${pi}`, 'Deck', p.deck.length));
+  pileRow.appendChild(pileChip(`dump:${pi}`, 'Town Dump', p.dump.length, 'dump'));
+  piles.appendChild(pileRow);
+  if (p.reshuffles) {
+    piles.appendChild(h('div', { class: 'town-note' }, isHuman
+      ? 'You have used your one reshuffle — when this deck runs out, there is nothing left to draw.'
+      : `${p.name} has used their one reshuffle.`));
+  }
+  row.appendChild(piles);
+
+  // The eight Building places, Statues and Buildings together.
+  const cap = buildingCap(state);
+  const used = buildingSlotsUsed(state, pi);
+  const bSub = h('div', { class: `town-sub town-buildings${used >= cap ? ' town-full' : ''}` });
+  bSub.appendChild(h('div', {
+    class: 'town-sub-title',
+    'data-key': `slots:${pi}`,
+    title: 'Buildings and Statues stand in the same places. A Statue needs an empty one, and can never be pulled down to make another.',
+  }, [
+    icon('market'), `Buildings & Statues · ${used} / ${Number.isFinite(cap) ? cap : '∞'}`,
+    used >= cap ? h('span', { class: 'full-tag' }, 'Full') : null,
+  ]));
+  const bRow = h('div', { class: 'mini-row slot-row' });
+  for (const cardId of p.victoryRow) {
+    const box = h('div', { class: 'mini-card statue-slot', 'data-key': `statue:${pi}:${cardId}` });
+    box.appendChild(buildCardFace(cardDef(state, cardId)));
+    bRow.appendChild(box);
+  }
+  for (const b of p.buildings || []) {
+    const box = h('div', { class: `mini-card building-slot${b.source === 'deck' ? ' own-building' : ''}`, 'data-key': `building:${pi}:${b.cardId}` });
+    box.appendChild(buildCardFace(cardDef(state, b.cardId)));
+    if (b.source === 'deck') box.appendChild(h('div', { class: 'badge' }, 'Built'));
+    bRow.appendChild(box);
+  }
+  // The empty places are drawn too: the room a Mayor has left is part of the position.
+  for (let i = used; i < (Number.isFinite(cap) ? cap : used); i++) {
+    bRow.appendChild(h('div', { class: 'mini-card empty-slot' }, h('div', { class: 'slot-ghost' }, '·')));
+  }
+  bSub.appendChild(bRow);
+  row.appendChild(bSub);
+
+  el.appendChild(row);
+}
+
+/** The front row: every animal in the town, at work or face down out of work. */
+function renderFrontRow(pi, elId, actionGroups) {
+  const el = document.getElementById(elId);
+  el.innerHTML = '';
+  const p = state.players[pi];
+  const isHuman = pi === humanIndex;
+  el.classList.toggle('active-turn', state.active === pi);
+  el.dataset.key = `town:${pi}`;
+
+  // The town's whole footprint against the cap — animals at work, animals pledged into an auction
+  // and animals out of work all take a place, and a full town cannot recruit at all.
   const footprint = townFootprint(state, pi);
   const capacity = townCap(state);
   const townFull = footprint >= capacity;
@@ -986,7 +1170,7 @@ function renderTownPanel(pi, elId) {
     let clickable = false;
     let selected = false;
     let onClick = null;
-    if (isHuman && wizard && wizard.step === 'chooseEventChars') {
+    if (isHuman && wizard && (wizard.step === 'chooseEventChars' || wizard.step === 'chooseCrew')) {
       if (canAct(s)) {
         clickable = true;
         selected = wizard.selected.includes(s.uid);
@@ -1002,8 +1186,8 @@ function renderTownPanel(pi, elId) {
     }
     stackRow.appendChild(buildStackEl(s, { clickable, selected, onClick }));
   }
-  // The animals out of work sit in the same row as everybody else — they never left the town, they
-  // are just face down until a Mayor rehires them, promotes them, or waves them off for good.
+  // The animals out of work stand among everybody else — they never left the town, they are just
+  // face down until a Mayor rehires them, promotes them, or waves them off for good.
   for (const c of p.unemployment) {
     stackRow.appendChild(buildUnemployedEl(pi, c, { actionGroups: (isHuman && !wizard && actionGroups) || null }));
   }
@@ -1013,11 +1197,24 @@ function renderTownPanel(pi, elId) {
       ? `Your town is full at ${capacity} animals — nobody new can move in. Promote or upgrade somebody who is already here, or lay off an animal who is out of work to open a place.`
       : `${p.name}'s town is full at ${capacity} animals — nobody new can move in.`));
   }
-  row.appendChild(townSub);
+  el.appendChild(townSub);
 
-  // Limited Events
-  const evSub = h('div', { class: 'town-sub' });
-  evSub.appendChild(h('div', { class: 'town-sub-title' }, [icon('limited'), 'Limited Events']));
+  if (!isHuman) {
+    const handWrap = h('div', { class: 'town-sub opp-hand' });
+    handWrap.appendChild(h('div', { class: 'town-sub-title' }, [icon('hand'), `Hand · ${p.hand.length} card${p.hand.length === 1 ? '' : 's'}`]));
+    const backs = h('div', { class: 'hand-backs', 'data-key': `handbacks:${pi}` });
+    for (let i = 0; i < p.hand.length; i++) backs.appendChild(buildCardBack({ mini: true }));
+    handWrap.appendChild(backs);
+    el.appendChild(handWrap);
+  }
+}
+
+/** One Mayor's Limited Events, which sit in the middle of the table at their own right hand. */
+function renderEventCorner(pi) {
+  const p = state.players[pi];
+  const mine = pi === humanIndex;
+  const wrap = h('div', { class: `event-corner ${mine ? 'you' : 'rival'}` });
+  wrap.appendChild(h('div', { class: 'town-sub-title' }, [icon('limited'), mine ? 'Your Events' : `${p.name}'s Events`]));
   const evRow = h('div', { class: 'mini-row' });
   if (!p.events.length) evRow.appendChild(h('div', { class: 'empty-note' }, 'None active.'));
   for (const e of p.events) {
@@ -1027,51 +1224,8 @@ function renderTownPanel(pi, elId) {
     box.appendChild(h('div', { class: 'badge' }, `${e.remaining} turn${e.remaining === 1 ? '' : 's'} left`));
     evRow.appendChild(box);
   }
-  evSub.appendChild(evRow);
-  row.appendChild(evSub);
-
-  // Buildings: bought from the Capital City and never leaving, up to three to a town.
-  const cap = (state.rules.buildings && state.rules.buildings.maxPerTown) || 3;
-  const bSub = h('div', { class: 'town-sub' });
-  bSub.appendChild(h('div', { class: 'town-sub-title' }, [icon('market'), `Buildings · ${(p.buildings || []).length} / ${cap}`]));
-  const bRow = h('div', { class: 'mini-row' });
-  if (!(p.buildings || []).length) bRow.appendChild(h('div', { class: 'empty-note' }, 'Nothing built yet.'));
-  for (const cardId of p.buildings || []) {
-    const box = h('div', { class: 'mini-card building-slot', 'data-key': `building:${pi}:${cardId}` });
-    box.appendChild(buildCardFace(cardDef(state, cardId)));
-    bRow.appendChild(box);
-  }
-  bSub.appendChild(bRow);
-  row.appendChild(bSub);
-
-  // Victory Row
-  const stSub = h('div', { class: 'town-sub' });
-  stSub.appendChild(h('div', { class: 'town-sub-title' }, [icon('statue'), 'Victory Row']));
-  const stRow = h('div', { class: 'mini-row' });
-  if (!p.victoryRow.length) stRow.appendChild(h('div', { class: 'empty-note' }, 'No Statues yet.'));
-  for (const cardId of p.victoryRow) {
-    const box = h('div', { class: 'mini-card statue-slot', 'data-key': `statue:${pi}:${cardId}` });
-    box.appendChild(buildCardFace(cardDef(state, cardId)));
-    stRow.appendChild(box);
-  }
-  stSub.appendChild(stRow);
-  row.appendChild(stSub);
-
-  // (Unemployment has no zone of its own any more: the face-down animals are in the Town row above.)
-
-  el.appendChild(row);
-
-  if (isHuman) {
-    el.appendChild(renderHandPanel(actionGroups));
-    el.appendChild(renderActionBar(actionGroups));
-  } else {
-    const handWrap = h('div', { class: 'town-sub opp-hand' });
-    handWrap.appendChild(h('div', { class: 'town-sub-title' }, [icon('hand'), `Hand · ${p.hand.length} card${p.hand.length === 1 ? '' : 's'}`]));
-    const backs = h('div', { class: 'hand-backs', 'data-key': `handbacks:${pi}` });
-    for (let i = 0; i < p.hand.length; i++) backs.appendChild(buildCardBack({ mini: true }));
-    handWrap.appendChild(backs);
-    el.appendChild(handWrap);
-  }
+  wrap.appendChild(evRow);
+  return wrap;
 }
 
 // ---------- pick / order / confirm modal ----------
@@ -1244,17 +1398,22 @@ export function renderGame() {
   hidePeek();
   try {
     renderTurnBanner();
-    renderTownPanel(aiIndex, 'oppTown');
+    const actionGroups = currentActionGroups();
+    renderBackRow(aiIndex, 'oppBackRow');
+    renderFrontRow(aiIndex, 'oppFrontRow', null);
     renderCapitalCity();
+    renderFrontRow(humanIndex, 'yourFrontRow', actionGroups);
+    renderBackRow(humanIndex, 'yourBackRow');
+    renderHand(actionGroups);
+    renderActionRail(actionGroups);
     renderLog();
-    renderTownPanel(humanIndex, 'yourTown');
     renderModal();
   } catch (e) {
     // A render bug should never strand the player with no way to act (e.g. a half-built town panel
     // missing its End Turn button). Surface it and fall back to a minimal, always-safe action bar.
     // eslint-disable-next-line no-console
     console.error('renderGame failed:', e);
-    const el = document.getElementById('yourTown');
+    const el = document.getElementById('actionRail');
     if (el) {
       const bar = document.createElement('div');
       bar.className = 'action-bar';

@@ -2,10 +2,11 @@
 import {
   cardDef, topCard, log, nextUid, opponentOf, entryOrientation, rankOf, hasPassive, hasMod, getMod, consumeMod,
   canAct, findStack, cityRule, refillCity, townFootprint, townCap, hasTownRoom, UPRIGHT, BUSY,
-  getModFor, consumeModFor,
+  getModFor, consumeModFor, hasBuildingRoom, canDemolishFor, buildingCap,
 } from './state.js';
 import {
   ask, gainSupply, draw, discard, makeStack, fireHook, runEffect, matchesFilter, isSelfReadyEffect,
+  addBuilding,
 } from './effects.js';
 
 // ---------- costs & requirements ----------
@@ -258,10 +259,39 @@ export function eventCost(state, pi, def) {
   return (def.cost || 0) + (hasPassive(state, pi, 'eventCostPlus1') ? 1 : 0); // Statue of Ingenuity's burden
 }
 
+/**
+ * The animals a Town Building asks for. A head count and nothing more: gating on species or study is
+ * what an Event does, and a Building that read the same way would make the two feel like one card.
+ */
+export function buildAnimalsNeeded(def) {
+  return (def.build && def.build.animals) || 0;
+}
+
+/** The upright animals this Mayor could put to work raising a Building right now. */
+export function buildCrewAvailable(state, pi) {
+  return state.players[pi].town.filter(canAct);
+}
+
+/**
+ * Can this Mayor raise this Town Building? They need the Supply, an empty Building place — or
+ * something they are allowed to pull down to make one — and enough animals standing upright.
+ */
+export function canBuild(state, pi, def) {
+  const p = state.players[pi];
+  if ((def.cost || 0) > p.supply) return false;
+  if (!hasBuildingRoom(state, pi) && !canDemolishFor(state, pi)) return false;
+  return buildCrewAvailable(state, pi).length >= buildAnimalsNeeded(def);
+}
+
 export function rehireCost(state, pi, cardId) {
   const discount = getMod(state.players[pi], 'rehireDiscount')
     + (hasPassive(state, opponentOf(pi), 'opponentRehireDiscount') ? 1 : 0); // Statue of Kindness's burden
   return Math.max(0, cardDef(state, cardId).cost - discount);
+}
+
+/** Whether the Statue rule that ties a Statue to a Building place is switched on. */
+export function statueNeedsRoom(state) {
+  return (state.rules.victory || {}).requiresBuildingSlot !== false;
 }
 
 // ---------- legal actions ----------
@@ -320,6 +350,23 @@ export function legalActions(state, pi) {
     const assign = findEventAssignment(state, pi, def, waive);
     if (assign) acts.push({ type: 'playEvent', cardUid: c.uid, cardId: c.cardId, characters: assign.map((s) => s.uid), cost });
   }
+  // Held Capital City Events: bought at auction, played whenever it suits, free and unconditional.
+  for (const c of p.hand) {
+    const def = cardDef(state, c.cardId);
+    if (def.type !== 'market' || !def.hold || seen.has('h' + c.cardId)) continue;
+    seen.add('h' + c.cardId);
+    acts.push({ type: 'playHeld', cardUid: c.uid, cardId: c.cardId, cost: 0 });
+  }
+  // Town Buildings: your own deck's permanent half. Pay the Supply, put animals to work raising it.
+  for (const c of p.hand) {
+    const def = cardDef(state, c.cardId);
+    if (def.type !== 'townBuilding' || seen.has('b' + c.cardId)) continue;
+    seen.add('b' + c.cardId);
+    if (!canBuild(state, pi, def)) continue;
+    const need = buildAnimalsNeeded(def);
+    const crew = buildCrewAvailable(state, pi).slice(0, need).map((st) => st.uid);
+    acts.push({ type: 'build', cardUid: c.uid, cardId: c.cardId, cost: def.cost || 0, characters: crew, needed: need });
+  }
   // announce purchases
   const pendingIds = new Set(state.market.pending.map((pd) => pd.cardId));
   const uprights = p.town.filter(canAct);
@@ -328,6 +375,10 @@ export function legalActions(state, pi) {
     if (pendingIds.has(cardId)) continue;
     if (cardDef(state, cardId).type === 'ordinance') continue; // an Ordinance is a rule, not a lot
     if (statuesBlocked && cardDef(state, cardId).type === 'statue') continue; // the square is dug up
+    // A Statue stands in a Building place, so there has to be one free — or something to pull down
+    // to free it — before a Mayor may even open the bidding on one.
+    if (cardDef(state, cardId).type === 'statue' && statueNeedsRoom(state)
+      && !hasBuildingRoom(state, pi) && !canDemolishFor(state, pi)) continue;
     const minBid = minBidFor(state, pi, cardId);
     if (minBid > p.supply) continue;
     for (const s of uprights) {
@@ -483,9 +534,58 @@ export async function applyAction(state, pi, a) {
       await fireHook(state, 'onEventPlayed', { player: pi, eventDef: def });
       return false;
     }
+    case 'build': {
+      const idx = p.hand.findIndex((c) => c.uid === a.cardUid);
+      if (idx < 0) throw new Error('Card not in hand');
+      const def = cardDef(state, p.hand[idx].cardId);
+      if (def.type !== 'townBuilding') throw new Error('Not a Town Building');
+      const cost = def.cost || 0;
+      if (cost > p.supply) throw new Error('Cannot afford');
+      if (!hasBuildingRoom(state, pi) && !canDemolishFor(state, pi)) {
+        throw new Error(`Every one of the town's ${buildingCap(state)} Building places is taken by a Statue`);
+      }
+      const need = buildAnimalsNeeded(def);
+      const crew = (a.characters || []).map((uid) => findStack(state, pi, uid));
+      if (crew.length !== need) throw new Error(`${def.name} needs ${need} animal${need === 1 ? '' : 's'} to raise it`);
+      if (new Set(a.characters || []).size !== (a.characters || []).length) throw new Error('Duplicate Characters');
+      if (crew.some((st) => !st || !canAct(st))) throw new Error('The animals raising a Building must be upright');
+      p.supply -= cost;
+      const [c] = p.hand.splice(idx, 1);
+      // The crew goes Busy and rotates back up as normal over the next turn or two. They start no
+      // shift: the Building is what the labour bought, and it pays from here on instead.
+      for (const st of crew) st.orientation = BUSY;
+      p.stats.buildingsRaised = (p.stats.buildingsRaised || 0) + 1;
+      p.turn.buildingsRaised = (p.turn.buildingsRaised || 0) + 1;
+      log(state, pi, `${p.name} builds ${def.name}${crew.length ? `, putting ${crew.map((st) => topCard(state, st).name).join(' and ')} to work raising it` : ''} for ${cost} Supply.`,
+        { kind: 'buildTown', player: pi, cardId: def.id, uid: c.uid, cost, chars: crew.map((st) => st.uid) });
+      if (def.onGain) await runEffect(state, pi, def.onGain, { player: pi, sourceCardId: def.id });
+      await addBuilding(state, pi, def.id, { source: 'deck', uid: c.uid });
+      await fireHook(state, 'onBuild', { player: pi, cardId: def.id });
+      return false;
+    }
+    case 'playHeld': {
+      const idx = p.hand.findIndex((c) => c.uid === a.cardUid);
+      if (idx < 0) throw new Error('Card not in hand');
+      const def = cardDef(state, p.hand[idx].cardId);
+      if (def.type !== 'market' || !def.hold) throw new Error('Not a held Capital City Event');
+      const [c] = p.hand.splice(idx, 1);
+      p.stats.eventsPlayed++;
+      p.turn.eventsPlayed++;
+      log(state, pi, `${p.name} plays ${def.name}, bought and kept for this moment.`, { kind: 'playHeld', player: pi, uid: c.uid, cardId: def.id });
+      if (def.onGain) await runEffect(state, pi, def.onGain, { player: pi, sourceCardId: def.id });
+      if (def.effect) await runEffect(state, pi, def.effect, { player: pi, sourceCardId: def.id });
+      if (def.disposal === 'outOfPlay') state.market.outOfPlay.push(def.id);
+      else state.market.cityDump.push(def.id);
+      await fireHook(state, 'onEventPlayed', { player: pi, eventDef: def });
+      return false;
+    }
     case 'announce': {
       if (cityRule(state, 'blockStatuePurchase') > 0 && cardDef(state, a.cardId).type === 'statue') {
         throw new Error('No Statue may be bought while the square is being worked on');
+      }
+      if (cardDef(state, a.cardId).type === 'statue' && statueNeedsRoom(state)
+        && !hasBuildingRoom(state, pi) && !canDemolishFor(state, pi)) {
+        throw new Error(`A Statue needs one of the town's ${buildingCap(state)} Building places, and yours are all taken`);
       }
       const s = findStack(state, pi, a.charUid);
       if (!s || !canAct(s)) throw new Error('Character cannot announce');

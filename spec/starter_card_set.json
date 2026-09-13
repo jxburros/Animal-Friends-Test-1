@@ -364,7 +364,7 @@
     "tile": 0
    },
    "expansion": "AF-MARKET-02",
-   "rarity": "Legendary",
+   "rarity": "Super Rare",
    "power": {
     "score": 7.63,
     "power": 17,
@@ -380,7 +380,7 @@
    "species": "Squirrel",
    "study": "Lore",
    "cost": 5,
-   "rarity": "Legendary",
+   "rarity": "Super Rare",
    "power": {
     "score": 6.41,
     "power": 16.73,
@@ -452,7 +452,7 @@
     "tile": 1
    },
    "expansion": "AF-MARKET-02",
-   "rarity": "Legendary",
+   "rarity": "Super Rare",
    "power": {
     "score": 6.3,
     "power": 15.45,
@@ -468,7 +468,7 @@
    "species": "Raccoon",
    "study": "Civics",
    "cost": 5,
-   "rarity": "Legendary",
+   "rarity": "Super Rare",
    "power": {
     "score": 6.3,
     "power": 16.45,
@@ -501,7 +501,7 @@
    "type": "disruption",
    "name": "Recession",
    "cost": 0,
-   "rarity": "Legendary",
+   "rarity": "Super Rare",
    "power": {
     "score": 6.06,
     "power": 8,
@@ -528,7 +528,7 @@
    "species": "Otter",
    "study": "Crafts",
    "cost": 5,
-   "rarity": "Legendary",
+   "rarity": "Super Rare",
    "power": {
     "score": 6,
     "power": 15.65,
@@ -568,7 +568,7 @@
    "species": "Rabbit",
    "study": "Agriculture",
    "cost": 5,
-   "rarity": "Legendary",
+   "rarity": "Super Rare",
    "power": {
     "score": 5.98,
     "power": 15.61,
@@ -630,7 +630,7 @@
     "tile": 3
    },
    "expansion": "AF-MARKET-02",
-   "rarity": "Legendary",
+   "rarity": "Super Rare",
    "power": {
     "score": 5.93,
     "power": 12.45,
@@ -682,7 +682,7 @@
     "atlas": "nightworkers",
     "tile": 9
    },
-   "rarity": "Legendary",
+   "rarity": "Super Rare",
    "power": {
     "score": 5.9,
     "power": 15.39,
@@ -717,7 +717,7 @@
     "tile": 3
    },
    "expansion": "AF-WHISKER-01",
-   "rarity": "Legendary",
+   "rarity": "Super Rare",
    "power": {
     "score": 5.84,
     "power": 12.58,
@@ -733,7 +733,7 @@
    "species": "Otter",
    "study": "Civics",
    "cost": 3,
-   "rarity": "Legendary",
+   "rarity": "Super Rare",
    "power": {
     "score": 5.83,
     "power": 13.25,
@@ -1130,6 +1130,44 @@
    }
   },
   {
+   "id": "bld_festival_green",
+   "type": "building",
+   "name": "The Festival Green",
+   "title": "Capital City Building",
+   "cost": 10,
+   "text": "At the start of your turn, gain 1 Supply and draw 1 card.",
+   "flavor": "It was here before this Mayor, and it will be here after.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 1
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 12
+   },
+   "expansion": "AF-MARKET-02",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.51,
+    "power": 15,
+    "opportunityCost": 12.22
+   }
+  },
+  {
    "id": "br_moss_2",
    "type": "character",
    "name": "Moss",
@@ -1200,6 +1238,81 @@
    "art": {
     "atlas": "neighbors",
     "tile": 10
+   }
+  },
+  {
+   "id": "bld_apprentice_school",
+   "type": "building",
+   "name": "Apprentice School",
+   "title": "Capital City Building",
+   "cost": 8,
+   "text": "At the start of your turn, you may ready one Apprentice. Your Masters enter play with one fewer orientation delay.",
+   "flavor": "It was here before this Mayor, and it will be here after.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "masterDelayMinus1"
+    },
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "readyCharacter",
+      "count": 1,
+      "optional": true,
+      "filter": {
+       "rank": "apprentice"
+      }
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 9
+   },
+   "expansion": "AF-MARKET-02",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.45,
+    "power": 13.8,
+    "opportunityCost": 10.22
+   }
+  },
+  {
+   "id": "ns_bld_observatory",
+   "type": "building",
+   "expansion": "AF-NIGHT-01",
+   "name": "The Observatory",
+   "title": "Capital City Building",
+   "cost": 8,
+   "text": "At the start of your turn, look at the top two cards of the Market Deck and draw 1 card.",
+   "flavor": "A brass dome, a long cold staircase, and the best view in the boroughs of what everybody else is about to do.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "peekMarketDeck",
+        "count": 2
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightskies",
+    "tile": 4
+   },
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.45,
+    "power": 13.8,
+    "opportunityCost": 10.22
    }
   },
   {
@@ -1426,44 +1539,6 @@
    }
   },
   {
-   "id": "bld_festival_green",
-   "type": "building",
-   "name": "The Festival Green",
-   "title": "Capital City Building",
-   "cost": 10,
-   "text": "At the start of your turn, gain 1 Supply and draw 1 card.",
-   "flavor": "It was here before this Mayor, and it will be here after.",
-   "abilities": [
-    {
-     "trigger": "onTurnStart",
-     "effect": {
-      "do": "seq",
-      "steps": [
-       {
-        "do": "gainSupply",
-        "amount": 1
-       },
-       {
-        "do": "draw",
-        "count": 1
-       }
-      ]
-     }
-    }
-   ],
-   "art": {
-    "atlas": "monuments",
-    "tile": 12
-   },
-   "expansion": "AF-MARKET-02",
-   "rarity": "Super Rare",
-   "power": {
-    "score": 5.39,
-    "power": 15,
-    "opportunityCost": 12.9
-   }
-  },
-  {
    "id": "mh_nutmeg_4",
    "type": "character",
    "name": "Nutmeg",
@@ -1491,7 +1566,7 @@
     "tile": 11
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 5.39,
     "power": 13.55,
@@ -1530,7 +1605,7 @@
     "tile": 12
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 5.39,
     "power": 14.06,
@@ -1546,7 +1621,7 @@
    "species": "Badger",
    "study": "Crafts",
    "cost": 2,
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 5.32,
     "power": 11.46,
@@ -1570,43 +1645,6 @@
    ]
   },
   {
-   "id": "bld_apprentice_school",
-   "type": "building",
-   "name": "Apprentice School",
-   "title": "Capital City Building",
-   "cost": 8,
-   "text": "At the start of your turn, you may ready one Apprentice. Your Masters enter play with one fewer orientation delay.",
-   "flavor": "It was here before this Mayor, and it will be here after.",
-   "abilities": [
-    {
-     "trigger": "passive",
-     "key": "masterDelayMinus1"
-    },
-    {
-     "trigger": "onTurnStart",
-     "effect": {
-      "do": "readyCharacter",
-      "count": 1,
-      "optional": true,
-      "filter": {
-       "rank": "apprentice"
-      }
-     }
-    }
-   ],
-   "art": {
-    "atlas": "capital",
-    "tile": 9
-   },
-   "expansion": "AF-MARKET-02",
-   "rarity": "Super Rare",
-   "power": {
-    "score": 5.31,
-    "power": 13.8,
-    "opportunityCost": 10.9
-   }
-  },
-  {
    "id": "br_quill_2",
    "type": "character",
    "name": "Quill",
@@ -1615,7 +1653,7 @@
    "species": "Hedgehog",
    "study": "Agriculture",
    "cost": 5,
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 5.31,
     "power": 13.85,
@@ -1637,44 +1675,6 @@
    "art": {
     "atlas": "neighbors",
     "tile": 9
-   }
-  },
-  {
-   "id": "ns_bld_observatory",
-   "type": "building",
-   "expansion": "AF-NIGHT-01",
-   "name": "The Observatory",
-   "title": "Capital City Building",
-   "cost": 8,
-   "text": "At the start of your turn, look at the top two cards of the Market Deck and draw 1 card.",
-   "flavor": "A brass dome, a long cold staircase, and the best view in the boroughs of what everybody else is about to do.",
-   "abilities": [
-    {
-     "trigger": "onTurnStart",
-     "effect": {
-      "do": "seq",
-      "steps": [
-       {
-        "do": "peekMarketDeck",
-        "count": 2
-       },
-       {
-        "do": "draw",
-        "count": 1
-       }
-      ]
-     }
-    }
-   ],
-   "art": {
-    "atlas": "nightskies",
-    "tile": 4
-   },
-   "rarity": "Super Rare",
-   "power": {
-    "score": 5.31,
-    "power": 13.8,
-    "opportunityCost": 10.9
    }
   },
   {
@@ -2716,6 +2716,35 @@
    }
   },
   {
+   "id": "bld_grain_exchange",
+   "type": "building",
+   "name": "Grain Exchange",
+   "title": "Capital City Building",
+   "cost": 7,
+   "text": "At the start of your turn, gain 2 Supply.",
+   "flavor": "It was here before this Mayor, and it will be here after.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 10
+   },
+   "expansion": "AF-MARKET-02",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.94,
+    "power": 12,
+    "opportunityCost": 9.22
+   }
+  },
+  {
    "id": "pp_juniper_1",
    "type": "character",
    "name": "Juniper",
@@ -3008,6 +3037,36 @@
    ]
   },
   {
+   "id": "bld_hiring_hall",
+   "type": "building",
+   "name": "Hiring Hall",
+   "title": "Capital City Building",
+   "cost": 6,
+   "text": "At the start of your turn, you may rehire a Character from your Unemployment for 2 less Supply.",
+   "flavor": "It was here before this Mayor, and it will be here after.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "rehire",
+      "discount": 2,
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 11
+   },
+   "expansion": "AF-MARKET-02",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.88,
+    "power": 11.34,
+    "opportunityCost": 8.22
+   }
+  },
+  {
    "id": "dx_landslide",
    "type": "disruption",
    "name": "Landslide",
@@ -3123,6 +3182,34 @@
    }
   },
   {
+   "id": "bld_salvage_yard",
+   "type": "building",
+   "name": "Salvage Yard",
+   "title": "Capital City Building",
+   "cost": 8,
+   "text": "At the start of your turn, you may take a Market card from the City Dump and gain it.",
+   "flavor": "It was here before this Mayor, and it will be here after.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "takeFromCityDump"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "townlife",
+    "tile": 3
+   },
+   "expansion": "AF-MARKET-02",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.83,
+    "power": 12.24,
+    "opportunityCost": 10.22
+   }
+  },
+  {
    "id": "rw_barley_1",
    "type": "character",
    "name": "Barley",
@@ -3154,35 +3241,6 @@
    "art": {
     "atlas": "neighbors",
     "tile": 10
-   }
-  },
-  {
-   "id": "bld_grain_exchange",
-   "type": "building",
-   "name": "Grain Exchange",
-   "title": "Capital City Building",
-   "cost": 7,
-   "text": "At the start of your turn, gain 2 Supply.",
-   "flavor": "It was here before this Mayor, and it will be here after.",
-   "abilities": [
-    {
-     "trigger": "onTurnStart",
-     "effect": {
-      "do": "gainSupply",
-      "amount": 2
-     }
-    }
-   ],
-   "art": {
-    "atlas": "capital",
-    "tile": 10
-   },
-   "expansion": "AF-MARKET-02",
-   "rarity": "Rare",
-   "power": {
-    "score": 4.8,
-    "power": 12,
-    "opportunityCost": 9.9
    }
   },
   {
@@ -3539,6 +3597,35 @@
    }
   },
   {
+   "id": "bld_long_hall",
+   "type": "building",
+   "name": "The Long Hall",
+   "title": "Capital City Building",
+   "cost": 8,
+   "text": "At the start of your turn, ready one of your Characters.",
+   "flavor": "It was here before this Mayor, and it will be here after.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "readyCharacter",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "townlife",
+    "tile": 2
+   },
+   "expansion": "AF-MARKET-02",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.74,
+    "power": 12,
+    "opportunityCost": 10.22
+   }
+  },
+  {
    "id": "ns_bean_3",
    "type": "character",
    "expansion": "AF-NIGHT-01",
@@ -3645,36 +3732,6 @@
      }
     }
    ]
-  },
-  {
-   "id": "bld_hiring_hall",
-   "type": "building",
-   "name": "Hiring Hall",
-   "title": "Capital City Building",
-   "cost": 6,
-   "text": "At the start of your turn, you may rehire a Character from your Unemployment for 2 less Supply.",
-   "flavor": "It was here before this Mayor, and it will be here after.",
-   "abilities": [
-    {
-     "trigger": "onTurnStart",
-     "effect": {
-      "do": "rehire",
-      "discount": 2,
-      "optional": true
-     }
-    }
-   ],
-   "art": {
-    "atlas": "capital",
-    "tile": 11
-   },
-   "expansion": "AF-MARKET-02",
-   "rarity": "Rare",
-   "power": {
-    "score": 4.73,
-    "power": 11.34,
-    "opportunityCost": 8.9
-   }
   },
   {
    "id": "mh_patch_4",
@@ -3787,34 +3844,6 @@
    "art": {
     "atlas": "neighbors",
     "tile": 14
-   }
-  },
-  {
-   "id": "bld_salvage_yard",
-   "type": "building",
-   "name": "Salvage Yard",
-   "title": "Capital City Building",
-   "cost": 8,
-   "text": "At the start of your turn, you may take a Market card from the City Dump and gain it.",
-   "flavor": "It was here before this Mayor, and it will be here after.",
-   "abilities": [
-    {
-     "trigger": "onTurnStart",
-     "effect": {
-      "do": "takeFromCityDump"
-     }
-    }
-   ],
-   "art": {
-    "atlas": "townlife",
-    "tile": 3
-   },
-   "expansion": "AF-MARKET-02",
-   "rarity": "Rare",
-   "power": {
-    "score": 4.71,
-    "power": 12.24,
-    "opportunityCost": 10.9
    }
   },
   {
@@ -3994,6 +4023,44 @@
    ]
   },
   {
+   "id": "bld_stone_wall",
+   "type": "building",
+   "name": "The Old Wall",
+   "title": "Capital City Building",
+   "cost": 6,
+   "text": "At the start of your turn, gain 1 Supply. Your Characters cannot be sent to Unemployment by an opponent.",
+   "flavor": "It was here before this Mayor, and it will be here after.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "unemploymentShield",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    },
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 12
+   },
+   "expansion": "AF-MARKET-02",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.65,
+    "power": 10.8,
+    "opportunityCost": 8.22
+   }
+  },
+  {
    "id": "ns_tawny_4",
    "type": "character",
    "expansion": "AF-NIGHT-01",
@@ -4042,7 +4109,7 @@
    "species": "Badger",
    "study": "Civics",
    "cost": 5,
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.64,
     "power": 12.1,
@@ -4079,7 +4146,7 @@
    "species": "Fox",
    "study": "Civics",
    "cost": 5,
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.64,
     "power": 12.1,
@@ -4117,7 +4184,7 @@
    "species": "Hedgehog",
    "study": "Crafts",
    "cost": 4,
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.63,
     "power": 11.63,
@@ -4179,7 +4246,7 @@
     "tile": 8
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.63,
     "power": 11.63,
@@ -4220,40 +4287,11 @@
     "atlas": "townlife",
     "tile": 2
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.63,
     "power": 11.63,
     "opportunityCost": 10
-   }
-  },
-  {
-   "id": "bld_long_hall",
-   "type": "building",
-   "name": "The Long Hall",
-   "title": "Capital City Building",
-   "cost": 8,
-   "text": "At the start of your turn, ready one of your Characters.",
-   "flavor": "It was here before this Mayor, and it will be here after.",
-   "abilities": [
-    {
-     "trigger": "onTurnStart",
-     "effect": {
-      "do": "readyCharacter",
-      "count": 1
-     }
-    }
-   ],
-   "art": {
-    "atlas": "townlife",
-    "tile": 2
-   },
-   "expansion": "AF-MARKET-02",
-   "rarity": "Rare",
-   "power": {
-    "score": 4.62,
-    "power": 12,
-    "opportunityCost": 10.9
    }
   },
   {
@@ -4294,7 +4332,7 @@
     "atlas": "nightworkers",
     "tile": 1
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.62,
     "power": 10.51,
@@ -4340,7 +4378,7 @@
     "atlas": "nightworkers",
     "tile": 11
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.61,
     "power": 7.7,
@@ -4381,7 +4419,7 @@
     "tile": 14
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.59,
     "power": 11.98,
@@ -4422,7 +4460,7 @@
     "atlas": "nightworkers",
     "tile": 12
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.59,
     "power": 11.52,
@@ -4461,7 +4499,7 @@
     "tile": 2
    },
    "expansion": "AF-WHISKER-01",
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.59,
     "power": 8.45,
@@ -4477,7 +4515,7 @@
    "species": "Mouse",
    "study": "Agriculture",
    "cost": 2,
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.58,
     "power": 9.85,
@@ -4540,7 +4578,7 @@
     "atlas": "neighbors",
     "tile": 10
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.58,
     "power": 9.85,
@@ -4576,7 +4614,7 @@
     "atlas": "neighbors",
     "tile": 2
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.58,
     "power": 9.85,
@@ -4592,7 +4630,7 @@
    "species": "Fox",
    "study": "Lore",
    "cost": 2,
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.58,
     "power": 9.85,
@@ -4645,7 +4683,7 @@
     "tile": 8
    },
    "expansion": "AF-WHISKER-01",
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.58,
     "power": 9.85,
@@ -4684,7 +4722,7 @@
     "tile": 9
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.57,
     "power": 11.47,
@@ -4704,7 +4742,7 @@
     "do": "everyoneUnemploys",
     "count": 2
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.55,
     "power": 6,
@@ -4740,7 +4778,7 @@
     "atlas": "neighbors",
     "tile": 14
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.55,
     "power": 9.79,
@@ -4779,7 +4817,7 @@
     "tile": 5
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.53,
     "power": 9.75,
@@ -4818,7 +4856,7 @@
     "tile": 1
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.53,
     "power": 9.75,
@@ -4857,7 +4895,7 @@
     "tile": 0
    },
    "expansion": "AF-WHISKER-01",
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.53,
     "power": 9.75,
@@ -4984,44 +5022,6 @@
     "score": 4.51,
     "power": 10.26,
     "opportunityCost": 7.8
-   }
-  },
-  {
-   "id": "bld_stone_wall",
-   "type": "building",
-   "name": "The Old Wall",
-   "title": "Capital City Building",
-   "cost": 6,
-   "text": "At the start of your turn, gain 1 Supply. Your Characters cannot be sent to Unemployment by an opponent.",
-   "flavor": "It was here before this Mayor, and it will be here after.",
-   "abilities": [
-    {
-     "trigger": "onTurnStart",
-     "effect": {
-      "do": "addMod",
-      "key": "unemploymentShield",
-      "value": 1,
-      "expires": "nextTurnStart"
-     }
-    },
-    {
-     "trigger": "onTurnStart",
-     "effect": {
-      "do": "gainSupply",
-      "amount": 1
-     }
-    }
-   ],
-   "art": {
-    "atlas": "capital",
-    "tile": 12
-   },
-   "expansion": "AF-MARKET-02",
-   "rarity": "Uncommon",
-   "power": {
-    "score": 4.5,
-    "power": 10.8,
-    "opportunityCost": 8.9
    }
   },
   {
@@ -5217,35 +5217,6 @@
     "score": 4.48,
     "power": 11.7,
     "opportunityCost": 11
-   }
-  },
-  {
-   "id": "bld_counting_house",
-   "type": "building",
-   "name": "Counting House",
-   "title": "Capital City Building",
-   "cost": 9,
-   "text": "When you complete a shift, gain 2 extra Supply.",
-   "flavor": "It was here before this Mayor, and it will be here after.",
-   "abilities": [
-    {
-     "trigger": "onShiftCompleted",
-     "effect": {
-      "do": "gainSupply",
-      "amount": 2
-     }
-    }
-   ],
-   "art": {
-    "atlas": "capital",
-    "tile": 13
-   },
-   "expansion": "AF-MARKET-02",
-   "rarity": "Uncommon",
-   "power": {
-    "score": 4.46,
-    "power": 12,
-    "opportunityCost": 11.9
    }
   },
   {
@@ -5779,44 +5750,6 @@
    }
   },
   {
-   "id": "bld_auction_house",
-   "type": "building",
-   "name": "The Auction House",
-   "title": "Capital City Building",
-   "cost": 7,
-   "text": "When you announce a purchase, add 1 Supply to your bid and look at the top three cards of the Market Deck.",
-   "flavor": "It was here before this Mayor, and it will be here after.",
-   "abilities": [
-    {
-     "trigger": "onAnnounce",
-     "effect": {
-      "do": "seq",
-      "steps": [
-       {
-        "do": "raiseOwnBid",
-        "amount": 1
-       },
-       {
-        "do": "peekMarketDeck",
-        "count": 3
-       }
-      ]
-     }
-    }
-   ],
-   "art": {
-    "atlas": "capital",
-    "tile": 14
-   },
-   "expansion": "AF-MARKET-02",
-   "rarity": "Uncommon",
-   "power": {
-    "score": 4.32,
-    "power": 10.8,
-    "opportunityCost": 9.9
-   }
-  },
-  {
    "id": "ns_vesper_2",
    "type": "character",
    "expansion": "AF-NIGHT-01",
@@ -6068,6 +6001,36 @@
    ]
   },
   {
+   "id": "bld_winter_stores",
+   "type": "building",
+   "name": "Winter Stores",
+   "title": "Capital City Building",
+   "cost": 7,
+   "text": "At the start of your turn, put 2 Supply by on one of your Characters.",
+   "flavor": "It was here before this Mayor, and it will be here after.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "storeSupply",
+      "amount": 2,
+      "cap": 6
+     }
+    }
+   ],
+   "art": {
+    "atlas": "townlife",
+    "tile": 0
+   },
+   "expansion": "AF-MARKET-02",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.2,
+    "power": 10.2,
+    "opportunityCost": 9.22
+   }
+  },
+  {
    "id": "br_moss_1",
    "type": "character",
    "name": "Moss",
@@ -6290,36 +6253,6 @@
      }
     }
    ]
-  },
-  {
-   "id": "bld_winter_stores",
-   "type": "building",
-   "name": "Winter Stores",
-   "title": "Capital City Building",
-   "cost": 7,
-   "text": "At the start of your turn, put 2 Supply by on one of your Characters.",
-   "flavor": "It was here before this Mayor, and it will be here after.",
-   "abilities": [
-    {
-     "trigger": "onTurnStart",
-     "effect": {
-      "do": "storeSupply",
-      "amount": 2,
-      "cap": 6
-     }
-    }
-   ],
-   "art": {
-    "atlas": "townlife",
-    "tile": 0
-   },
-   "expansion": "AF-MARKET-02",
-   "rarity": "Uncommon",
-   "power": {
-    "score": 4.08,
-    "power": 10.2,
-    "opportunityCost": 9.9
-   }
   },
   {
    "id": "mh_juniper_3",
@@ -6847,6 +6780,35 @@
    }
   },
   {
+   "id": "bld_lending_library",
+   "type": "building",
+   "name": "Lending Library",
+   "title": "Capital City Building",
+   "cost": 6,
+   "text": "At the start of your turn, draw 1 card.",
+   "flavor": "It was here before this Mayor, and it will be here after.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 9
+   },
+   "expansion": "AF-MARKET-02",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.88,
+    "power": 9,
+    "opportunityCost": 8.22
+   }
+  },
+  {
    "id": "ns_thistle_1",
    "type": "character",
    "expansion": "AF-NIGHT-01",
@@ -6978,35 +6940,6 @@
    }
   },
   {
-   "id": "bld_lending_library",
-   "type": "building",
-   "name": "Lending Library",
-   "title": "Capital City Building",
-   "cost": 6,
-   "text": "At the start of your turn, draw 1 card.",
-   "flavor": "It was here before this Mayor, and it will be here after.",
-   "abilities": [
-    {
-     "trigger": "onTurnStart",
-     "effect": {
-      "do": "draw",
-      "count": 1
-     }
-    }
-   ],
-   "art": {
-    "atlas": "monuments",
-    "tile": 9
-   },
-   "expansion": "AF-MARKET-02",
-   "rarity": "Uncommon",
-   "power": {
-    "score": 3.75,
-    "power": 9,
-    "opportunityCost": 8.9
-   }
-  },
-  {
    "id": "bb_poppy_3",
    "type": "character",
    "name": "Poppy",
@@ -7044,6 +6977,39 @@
    "art": {
     "atlas": "neighbors",
     "tile": 0
+   }
+  },
+  {
+   "id": "bld_town_workshop",
+   "type": "building",
+   "name": "Town Workshop",
+   "title": "Capital City Building",
+   "cost": 5,
+   "text": "At the start of your turn, gain 1 Supply. Each of your Events needs one fewer Character.",
+   "flavor": "It was here before this Mayor, and it will be here after.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "eventCharReductionPerTurn"
+    },
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 15
+   },
+   "expansion": "AF-MARKET-02",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.72,
+    "power": 8.2,
+    "opportunityCost": 7.22
    }
   },
   {
@@ -7372,39 +7338,6 @@
    }
   },
   {
-   "id": "bld_town_workshop",
-   "type": "building",
-   "name": "Town Workshop",
-   "title": "Capital City Building",
-   "cost": 5,
-   "text": "At the start of your turn, gain 1 Supply. Each of your Events needs one fewer Character.",
-   "flavor": "It was here before this Mayor, and it will be here after.",
-   "abilities": [
-    {
-     "trigger": "passive",
-     "key": "eventCharReductionPerTurn"
-    },
-    {
-     "trigger": "onTurnStart",
-     "effect": {
-      "do": "gainSupply",
-      "amount": 1
-     }
-    }
-   ],
-   "art": {
-    "atlas": "capital",
-    "tile": 15
-   },
-   "expansion": "AF-MARKET-02",
-   "rarity": "Uncommon",
-   "power": {
-    "score": 3.59,
-    "power": 8.2,
-    "opportunityCost": 7.9
-   }
-  },
-  {
    "id": "mh_agricultural_show",
    "type": "event",
    "name": "Agricultural Show",
@@ -7564,6 +7497,35 @@
    }
   },
   {
+   "id": "ns_bld_all_night_cafe",
+   "type": "building",
+   "expansion": "AF-NIGHT-01",
+   "name": "The All-Night Café",
+   "title": "Capital City Building",
+   "cost": 7,
+   "text": "At the start of your turn, one of your Characters turns one step toward upright.",
+   "flavor": "Open when everything else is shut. Shut, in theory, on a day that has not yet been chosen.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "advanceCharacter",
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 15
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.52,
+    "power": 8.55,
+    "opportunityCost": 9.22
+   }
+  },
+  {
    "id": "pp_patch_1",
    "type": "character",
    "name": "Patch",
@@ -7637,35 +7599,6 @@
     "score": 3.5,
     "power": 8.8,
     "opportunityCost": 10
-   }
-  },
-  {
-   "id": "ns_bld_all_night_cafe",
-   "type": "building",
-   "expansion": "AF-NIGHT-01",
-   "name": "The All-Night Café",
-   "title": "Capital City Building",
-   "cost": 7,
-   "text": "At the start of your turn, one of your Characters turns one step toward upright.",
-   "flavor": "Open when everything else is shut. Shut, in theory, on a day that has not yet been chosen.",
-   "abilities": [
-    {
-     "trigger": "onTurnStart",
-     "effect": {
-      "do": "advanceCharacter",
-      "optional": true
-     }
-    }
-   ],
-   "art": {
-    "atlas": "whiskerwood",
-    "tile": 15
-   },
-   "rarity": "Uncommon",
-   "power": {
-    "score": 3.42,
-    "power": 8.55,
-    "opportunityCost": 9.9
    }
   },
   {
@@ -8183,7 +8116,7 @@
    "species": "Mouse",
    "study": "Agriculture",
    "cost": 0,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.18,
     "power": 5.3,
@@ -8213,12 +8146,41 @@
    ]
   },
   {
+   "id": "bld_counting_house",
+   "type": "building",
+   "name": "Counting House",
+   "title": "Capital City Building",
+   "cost": 9,
+   "text": "When you complete a shift, gain 2 extra Supply.",
+   "flavor": "It was here before this Mayor, and it will be here after.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 13
+   },
+   "expansion": "AF-MARKET-02",
+   "rarity": "Common",
+   "power": {
+    "score": 3.16,
+    "power": 8.31,
+    "opportunityCost": 11.22
+   }
+  },
+  {
    "id": "br_rebuilt_barn",
    "type": "event",
    "name": "Rebuilt Barn",
    "kind": "instant",
    "cost": 0,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.15,
     "power": 5.75,
@@ -8295,7 +8257,7 @@
     "tile": 3
    },
    "expansion": "AF-WHISKER-01",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.12,
     "power": 5.2,
@@ -8311,7 +8273,7 @@
    "species": "Fox",
    "study": "Lore",
    "cost": 1,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.1,
     "power": 5.7,
@@ -8375,7 +8337,7 @@
     "atlas": "neighbors",
     "tile": 5
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.1,
     "power": 5.7,
@@ -8415,7 +8377,7 @@
     "tile": 10
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.09,
     "power": 4.6,
@@ -8457,7 +8419,7 @@
     "atlas": "whiskerwood",
     "tile": 1
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.09,
     "power": 5.15,
@@ -8469,7 +8431,7 @@
    "type": "disruption",
    "name": "Boom Season",
    "cost": 0,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.07,
     "power": 4.05,
@@ -8497,7 +8459,7 @@
    "type": "market",
    "name": "Festival Parade",
    "cost": 4,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.06,
     "power": 6,
@@ -8529,7 +8491,7 @@
    "type": "market",
    "name": "Founder's Grant",
    "cost": 4,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.06,
     "power": 6,
@@ -8575,7 +8537,7 @@
     "atlas": "neighbors",
     "tile": 13
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.06,
     "power": 5.1,
@@ -8613,7 +8575,7 @@
     "tile": 14
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.05,
     "power": 6.4,
@@ -8652,7 +8614,7 @@
     "atlas": "neighbors",
     "tile": 6
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.05,
     "power": 5.61,
@@ -8668,7 +8630,7 @@
    "species": "Badger",
    "study": "Agriculture",
    "cost": 2,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.04,
     "power": 6.55,
@@ -8728,7 +8690,7 @@
     "tile": 3
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.04,
     "power": 5.59,
@@ -8756,7 +8718,7 @@
     "tile": 13
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.04,
     "power": 5.5,
@@ -8768,7 +8730,7 @@
    "type": "disruption",
    "name": "Hard Winter",
    "cost": 0,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.03,
     "power": 4,
@@ -8798,7 +8760,7 @@
     "tile": 13
    },
    "expansion": "AF-MARKET-02",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.03,
     "power": 4,
@@ -8837,7 +8799,7 @@
     "atlas": "nightskies",
     "tile": 9
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3,
     "power": 5,
@@ -8883,7 +8845,7 @@
     "tile": 4
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.96,
     "power": 4.94,
@@ -8923,7 +8885,7 @@
     "tile": 7
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.95,
     "power": 4.92,
@@ -8963,7 +8925,7 @@
     "tile": 11
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.95,
     "power": 4.92,
@@ -8976,7 +8938,7 @@
    "name": "Double Thatch",
    "kind": "instant",
    "cost": 0,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.94,
     "power": 4.9,
@@ -9039,7 +9001,7 @@
     "atlas": "neighbors",
     "tile": 6
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.94,
     "power": 4.9,
@@ -9084,7 +9046,7 @@
     "tile": 14
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.88,
     "power": 4.8,
@@ -9096,7 +9058,7 @@
    "type": "market",
    "name": "Guild Hall",
    "cost": 3,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.87,
     "power": 5.2,
@@ -9125,7 +9087,7 @@
    "name": "Welcome Wagon",
    "kind": "instant",
    "cost": 0,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.82,
     "power": 4.2,
@@ -9187,7 +9149,7 @@
     "tile": 10
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.82,
     "power": 5,
@@ -9224,7 +9186,7 @@
     "atlas": "monuments",
     "tile": 12
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.82,
     "power": 5.93,
@@ -9237,7 +9199,7 @@
    "name": "Fair Hearing",
    "kind": "instant",
    "cost": 0,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.79,
     "power": 4.65,
@@ -9276,7 +9238,7 @@
    "name": "Seed Swap",
    "kind": "instant",
    "cost": 0,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.76,
     "power": 4.6,
@@ -9348,7 +9310,7 @@
     "tile": 5
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.76,
     "power": 4.61,
@@ -9384,7 +9346,7 @@
     "atlas": "nightworkers",
     "tile": 0
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.76,
     "power": 4.6,
@@ -9396,7 +9358,7 @@
    "type": "disruption",
    "name": "The Tax Assessors",
    "cost": 0,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.73,
     "power": 3.6,
@@ -9416,7 +9378,7 @@
    "name": "Greenhouse Favor",
    "kind": "instant",
    "cost": 0,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.7,
     "power": 4.5,
@@ -9484,7 +9446,7 @@
     "atlas": "whiskerwood",
     "tile": 13
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.7,
     "power": 4.5,
@@ -9523,7 +9485,7 @@
     "tile": 14
    },
    "expansion": "AF-WHISKER-01",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.7,
     "power": 4.5,
@@ -9539,7 +9501,7 @@
    "species": "Hedgehog",
    "study": "Crafts",
    "cost": 0,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.64,
     "power": 4.4,
@@ -9592,7 +9554,7 @@
     "tile": 4
    },
    "expansion": "AF-HATS-01",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.64,
     "power": 4.4,
@@ -9605,7 +9567,7 @@
    "name": "Paper Trail",
    "kind": "instant",
    "cost": 0,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.64,
     "power": 4.4,
@@ -9645,7 +9607,7 @@
    "type": "market",
    "name": "Understudy Program",
    "cost": 3,
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 2.6,
     "power": 4.7,
@@ -9698,6 +9660,44 @@
     "score": 2.58,
     "power": 4.3,
     "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "bld_auction_house",
+   "type": "building",
+   "name": "The Auction House",
+   "title": "Capital City Building",
+   "cost": 7,
+   "text": "When you announce a purchase, add 1 Supply to your bid and look at the top three cards of the Market Deck.",
+   "flavor": "It was here before this Mayor, and it will be here after.",
+   "abilities": [
+    {
+     "trigger": "onAnnounce",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "raiseOwnBid",
+        "amount": 1
+       },
+       {
+        "do": "peekMarketDeck",
+        "count": 3
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 14
+   },
+   "expansion": "AF-MARKET-02",
+   "rarity": "Common",
+   "power": {
+    "score": 2.56,
+    "power": 6.23,
+    "opportunityCost": 9.22
    }
   },
   {
@@ -9794,9 +9794,9 @@
    "cost": 2,
    "rarity": "Common",
    "power": {
-    "score": 2.49,
+    "score": 2.46,
     "power": 9.88,
-    "opportunityCost": 31.4
+    "opportunityCost": 32.22
    },
    "text": "At the start of your turn, if you have no more Characters in Unemployment than your opponent, gain 1 Supply.",
    "flavor": "Carved with open paws, it warms the whole square on cold mornings.",
@@ -9819,37 +9819,6 @@
     }
    ],
    "burden": "Burden: your opponent's rehires cost 1 less Supply."
-  },
-  {
-   "id": "st_patience",
-   "type": "statue",
-   "name": "Statue of Patience",
-   "virtue": "Patience",
-   "cost": 3,
-   "rarity": "Common",
-   "power": {
-    "score": 2.47,
-    "power": 9.8,
-    "opportunityCost": 31.4
-   },
-   "text": "Your Masters enter play with one fewer orientation delay (they enter Busy instead of at 180°).",
-   "flavor": "Moss grows on its shoulders, and it does not mind one bit.",
-   "abilities": [
-    {
-     "trigger": "passive",
-     "key": "masterDelayMinus1"
-    },
-    {
-     "trigger": "passive",
-     "key": "apprenticeEntersBusy",
-     "burden": true
-    }
-   ],
-   "burden": "Burden: your Apprentices enter Busy instead of upright.",
-   "art": {
-    "atlas": "monuments",
-    "tile": 1
-   }
   },
   {
    "id": "mk_community_oven",
@@ -9896,6 +9865,37 @@
    "art": {
     "atlas": "monuments",
     "tile": 12
+   }
+  },
+  {
+   "id": "st_patience",
+   "type": "statue",
+   "name": "Statue of Patience",
+   "virtue": "Patience",
+   "cost": 3,
+   "rarity": "Common",
+   "power": {
+    "score": 2.44,
+    "power": 9.8,
+    "opportunityCost": 32.22
+   },
+   "text": "Your Masters enter play with one fewer orientation delay (they enter Busy instead of at 180°).",
+   "flavor": "Moss grows on its shoulders, and it does not mind one bit.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "masterDelayMinus1"
+    },
+    {
+     "trigger": "passive",
+     "key": "apprenticeEntersBusy",
+     "burden": true
+    }
+   ],
+   "burden": "Burden: your Apprentices enter Busy instead of upright.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 1
    }
   },
   {
@@ -9999,37 +9999,6 @@
    }
   },
   {
-   "id": "st_ingenuity",
-   "type": "statue",
-   "name": "Statue of Ingenuity",
-   "virtue": "Ingenuity",
-   "cost": 4,
-   "rarity": "Common",
-   "power": {
-    "score": 2.42,
-    "power": 9.6,
-    "opportunityCost": 31.4
-   },
-   "text": "Once per turn, an Event you play requires one fewer Character.",
-   "flavor": "Stone shaped to celebrate clever paws and minds.",
-   "abilities": [
-    {
-     "trigger": "passive",
-     "key": "eventCharReductionPerTurn"
-    },
-    {
-     "trigger": "passive",
-     "key": "eventCostPlus1",
-     "burden": true
-    }
-   ],
-   "burden": "Burden: your Events cost 1 more Supply.",
-   "art": {
-    "atlas": "monuments",
-    "tile": 2
-   }
-  },
-  {
    "id": "ww_thread_exchange",
    "type": "event",
    "name": "Thread Exchange",
@@ -10093,6 +10062,37 @@
    "art": {
     "atlas": "townlife",
     "tile": 11
+   }
+  },
+  {
+   "id": "st_ingenuity",
+   "type": "statue",
+   "name": "Statue of Ingenuity",
+   "virtue": "Ingenuity",
+   "cost": 4,
+   "rarity": "Common",
+   "power": {
+    "score": 2.39,
+    "power": 9.6,
+    "opportunityCost": 32.22
+   },
+   "text": "Once per turn, an Event you play requires one fewer Character.",
+   "flavor": "Stone shaped to celebrate clever paws and minds.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "eventCharReductionPerTurn"
+    },
+    {
+     "trigger": "passive",
+     "key": "eventCostPlus1",
+     "burden": true
+    }
+   ],
+   "burden": "Burden: your Events cost 1 more Supply.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 2
    }
   },
   {
@@ -10214,98 +10214,6 @@
     "score": 2.36,
     "power": 3.8,
     "opportunityCost": 3.3
-   }
-  },
-  {
-   "id": "st_curiosity",
-   "type": "statue",
-   "name": "Statue of Curiosity",
-   "virtue": "Curiosity",
-   "cost": 2,
-   "rarity": "Common",
-   "power": {
-    "score": 2.36,
-    "power": 9.37,
-    "opportunityCost": 31.4
-   },
-   "text": "On gain: draw 2 cards, then discard 1 card.",
-   "flavor": "Its stone eyes follow whoever wonders loudest what lies beyond the hill.",
-   "onGain": {
-    "do": "seq",
-    "steps": [
-     {
-      "do": "draw",
-      "count": 2
-     },
-     {
-      "do": "discard",
-      "count": 1
-     }
-    ]
-   },
-   "burden": "Burden: at the end of your turn, if you hold more than 6 cards, discard 1.",
-   "abilities": [
-    {
-     "trigger": "onTurnEnd",
-     "condition": {
-      "handAtLeast": 7
-     },
-     "burden": true,
-     "effect": {
-      "do": "discard",
-      "count": 1
-     }
-    }
-   ],
-   "art": {
-    "atlas": "monuments",
-    "tile": 0
-   }
-  },
-  {
-   "id": "st_generosity",
-   "type": "statue",
-   "name": "Statue of Generosity",
-   "virtue": "Generosity",
-   "cost": 4,
-   "rarity": "Common",
-   "power": {
-    "score": 2.36,
-    "power": 9.35,
-    "opportunityCost": 31.4
-   },
-   "text": "On gain: give your opponent 1 Supply and draw 2 cards.",
-   "flavor": "A statue with open arms, sharing freely with all.",
-   "onGain": {
-    "do": "seq",
-    "steps": [
-     {
-      "do": "giveSupplyToOpponent",
-      "amount": 1
-     },
-     {
-      "do": "draw",
-      "count": 2
-     }
-    ]
-   },
-   "burden": "Burden: whenever you gain a Statue, including this one, your opponent gains 2 Supply.",
-   "abilities": [
-    {
-     "trigger": "onGainMarketCard",
-     "condition": {
-      "statue": true
-     },
-     "burden": true,
-     "effect": {
-      "do": "opponentGainSupply",
-      "amount": 2
-     }
-    }
-   ],
-   "art": {
-    "atlas": "monuments",
-    "tile": 3
    }
   },
   {
@@ -10700,6 +10608,52 @@
    }
   },
   {
+   "id": "st_curiosity",
+   "type": "statue",
+   "name": "Statue of Curiosity",
+   "virtue": "Curiosity",
+   "cost": 2,
+   "rarity": "Common",
+   "power": {
+    "score": 2.34,
+    "power": 9.37,
+    "opportunityCost": 32.22
+   },
+   "text": "On gain: draw 2 cards, then discard 1 card.",
+   "flavor": "Its stone eyes follow whoever wonders loudest what lies beyond the hill.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 2
+     },
+     {
+      "do": "discard",
+      "count": 1
+     }
+    ]
+   },
+   "burden": "Burden: at the end of your turn, if you hold more than 6 cards, discard 1.",
+   "abilities": [
+    {
+     "trigger": "onTurnEnd",
+     "condition": {
+      "handAtLeast": 7
+     },
+     "burden": true,
+     "effect": {
+      "do": "discard",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 0
+   }
+  },
+  {
    "id": "mk_masters_lodge",
    "type": "market",
    "name": "Masters' Lodge",
@@ -10737,42 +10691,49 @@
    }
   },
   {
-   "id": "st_joy",
+   "id": "st_generosity",
    "type": "statue",
-   "name": "Statue of Joy",
-   "virtue": "Joy",
-   "cost": 5,
+   "name": "Statue of Generosity",
+   "virtue": "Generosity",
+   "cost": 4,
    "rarity": "Common",
    "power": {
-    "score": 2.31,
-    "power": 9.16,
-    "opportunityCost": 31.4
+    "score": 2.33,
+    "power": 9.35,
+    "opportunityCost": 32.22
    },
-   "text": "On gain: ready up to two of your Apprentices.",
-   "flavor": "Carved in laughter, capturing happiness forever.",
-   "foil": true,
+   "text": "On gain: give your opponent 1 Supply and draw 2 cards.",
+   "flavor": "A statue with open arms, sharing freely with all.",
    "onGain": {
-    "do": "readyCharacter",
-    "filter": {
-     "rank": "apprentice"
-    },
-    "count": 2,
-    "optional": true
-   },
-   "burden": "Burden: at the start of your turn, give 1 Supply to your opponent.",
-   "abilities": [
-    {
-     "trigger": "onTurnStart",
-     "burden": true,
-     "effect": {
+    "do": "seq",
+    "steps": [
+     {
       "do": "giveSupplyToOpponent",
       "amount": 1
+     },
+     {
+      "do": "draw",
+      "count": 2
+     }
+    ]
+   },
+   "burden": "Burden: whenever you gain a Statue, including this one, your opponent gains 2 Supply.",
+   "abilities": [
+    {
+     "trigger": "onGainMarketCard",
+     "condition": {
+      "statue": true
+     },
+     "burden": true,
+     "effect": {
+      "do": "opponentGainSupply",
+      "amount": 2
      }
     }
    ],
    "art": {
     "atlas": "monuments",
-    "tile": 5
+    "tile": 3
    }
   },
   {
@@ -11019,6 +10980,45 @@
    }
   },
   {
+   "id": "st_joy",
+   "type": "statue",
+   "name": "Statue of Joy",
+   "virtue": "Joy",
+   "cost": 5,
+   "rarity": "Common",
+   "power": {
+    "score": 2.28,
+    "power": 9.16,
+    "opportunityCost": 32.22
+   },
+   "text": "On gain: ready up to two of your Apprentices.",
+   "flavor": "Carved in laughter, capturing happiness forever.",
+   "foil": true,
+   "onGain": {
+    "do": "readyCharacter",
+    "filter": {
+     "rank": "apprentice"
+    },
+    "count": 2,
+    "optional": true
+   },
+   "burden": "Burden: at the start of your turn, give 1 Supply to your opponent.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "burden": true,
+     "effect": {
+      "do": "giveSupplyToOpponent",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 5
+   }
+  },
+  {
    "id": "dx_slow_season",
    "type": "disruption",
    "expansion": "AF-STARTER-01",
@@ -11188,39 +11188,6 @@
    }
   },
   {
-   "id": "st_courage",
-   "type": "statue",
-   "name": "Statue of Courage",
-   "virtue": "Courage",
-   "cost": 3,
-   "rarity": "Common",
-   "power": {
-    "score": 2.17,
-    "power": 8.6,
-    "opportunityCost": 31.4
-   },
-   "text": "Your next raise in a Capital City auction costs 1 less Supply to pay.",
-   "flavor": "A monument to those who face their fears bravely.",
-   "onGain": {
-    "do": "addMod",
-    "key": "challengeDiscount",
-    "value": 1,
-    "expires": "untilUsed"
-   },
-   "burden": "Burden: your opponent's first bid each turn is worth 1 more.",
-   "abilities": [
-    {
-     "trigger": "passive",
-     "key": "opponentFirstBidPlus1",
-     "burden": true
-    }
-   ],
-   "art": {
-    "atlas": "monuments",
-    "tile": 4
-   }
-  },
-  {
    "id": "ww_shared_book",
    "type": "event",
    "name": "A Shared Book",
@@ -11380,6 +11347,39 @@
    }
   },
   {
+   "id": "st_courage",
+   "type": "statue",
+   "name": "Statue of Courage",
+   "virtue": "Courage",
+   "cost": 3,
+   "rarity": "Common",
+   "power": {
+    "score": 2.14,
+    "power": 8.6,
+    "opportunityCost": 32.22
+   },
+   "text": "Your next raise in a Capital City auction costs 1 less Supply to pay.",
+   "flavor": "A monument to those who face their fears bravely.",
+   "onGain": {
+    "do": "addMod",
+    "key": "challengeDiscount",
+    "value": 1,
+    "expires": "untilUsed"
+   },
+   "burden": "Burden: your opponent's first bid each turn is worth 1 more.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "opponentFirstBidPlus1",
+     "burden": true
+    }
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 4
+   }
+  },
+  {
    "id": "mk_second_chances",
    "type": "market",
    "expansion": "AF-STARTER-01",
@@ -11439,45 +11439,6 @@
    "art": {
     "atlas": "nightskies",
     "tile": 12
-   }
-  },
-  {
-   "id": "st_community",
-   "type": "statue",
-   "name": "Statue of Community",
-   "virtue": "Community",
-   "cost": 5,
-   "rarity": "Common",
-   "power": {
-    "score": 2.08,
-    "power": 8.24,
-    "opportunityCost": 31.4
-   },
-   "text": "If you control Characters of at least three species, the first shift you complete each turn produces 1 extra Supply.",
-   "flavor": "Standing strong together, a monument to unity.",
-   "foil": true,
-   "abilities": [
-    {
-     "trigger": "onShiftCompleted",
-     "condition": {
-      "minSpeciesInTown": 3
-     },
-     "oncePerTurn": true,
-     "effect": {
-      "do": "gainSupply",
-      "amount": 1
-     }
-    },
-    {
-     "trigger": "passive",
-     "key": "resourceSupplyMinus1",
-     "burden": true
-    }
-   ],
-   "burden": "Burden: choosing Supply in your Resources phase gives you 1 less.",
-   "art": {
-    "atlas": "monuments",
-    "tile": 7
    }
   },
   {
@@ -11595,6 +11556,45 @@
     "score": 2.05,
     "power": 2.7,
     "opportunityCost": 2
+   }
+  },
+  {
+   "id": "st_community",
+   "type": "statue",
+   "name": "Statue of Community",
+   "virtue": "Community",
+   "cost": 5,
+   "rarity": "Common",
+   "power": {
+    "score": 2.05,
+    "power": 8.24,
+    "opportunityCost": 32.22
+   },
+   "text": "If you control Characters of at least three species, the first shift you complete each turn produces 1 extra Supply.",
+   "flavor": "Standing strong together, a monument to unity.",
+   "foil": true,
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "minSpeciesInTown": 3
+     },
+     "oncePerTurn": true,
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    },
+    {
+     "trigger": "passive",
+     "key": "resourceSupplyMinus1",
+     "burden": true
+    }
+   ],
+   "burden": "Burden: choosing Supply in your Resources phase gives you 1 less.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 7
    }
   },
   {
@@ -12390,41 +12390,6 @@
    }
   },
   {
-   "id": "st_harmony",
-   "type": "statue",
-   "name": "Statue of Harmony",
-   "virtue": "Harmony",
-   "cost": 5,
-   "rarity": "Common",
-   "power": {
-    "score": 1.96,
-    "power": 7.8,
-    "opportunityCost": 31.4
-   },
-   "text": "Whenever a purchase you are part of resolves with a tied bid, ready one of your Characters at the start of your next turn.",
-   "flavor": "A peaceful figure, bringing all voices into accord.",
-   "foil": true,
-   "abilities": [
-    {
-     "trigger": "onTiedBid",
-     "effect": {
-      "do": "readyNextTurn",
-      "optional": true
-     }
-    },
-    {
-     "trigger": "passive",
-     "key": "pledgeLadderPlus1",
-     "burden": true
-    }
-   ],
-   "burden": "Burden: every pledge you make in an auction must be one step more expensive than the ladder asks.",
-   "art": {
-    "atlas": "monuments",
-    "tile": 6
-   }
-  },
-  {
    "id": "ns_everybody_looks_up",
    "type": "event",
    "expansion": "AF-NIGHT-01",
@@ -12638,6 +12603,41 @@
     "do": "readyCharacter",
     "count": 2,
     "optional": true
+   }
+  },
+  {
+   "id": "st_harmony",
+   "type": "statue",
+   "name": "Statue of Harmony",
+   "virtue": "Harmony",
+   "cost": 5,
+   "rarity": "Common",
+   "power": {
+    "score": 1.94,
+    "power": 7.8,
+    "opportunityCost": 32.22
+   },
+   "text": "Whenever a purchase you are part of resolves with a tied bid, ready one of your Characters at the start of your next turn.",
+   "flavor": "A peaceful figure, bringing all voices into accord.",
+   "foil": true,
+   "abilities": [
+    {
+     "trigger": "onTiedBid",
+     "effect": {
+      "do": "readyNextTurn",
+      "optional": true
+     }
+    },
+    {
+     "trigger": "passive",
+     "key": "pledgeLadderPlus1",
+     "burden": true
+    }
+   ],
+   "burden": "Burden: every pledge you make in an auction must be one step more expensive than the ladder asks.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 6
    }
   },
   {

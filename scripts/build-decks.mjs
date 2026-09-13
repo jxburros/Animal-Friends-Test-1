@@ -21,14 +21,17 @@ const setUrl = new URL('../spec/starter_card_set.json', import.meta.url);
 const set = JSON.parse(fs.readFileSync(setUrl, 'utf8'));
 const rules = JSON.parse(fs.readFileSync(new URL('../spec/game.json', import.meta.url), 'utf8'));
 const dr = deckRules(rules);
+// A printed deck is built at the smallest legal size: it is a starting point, and the extra ten
+// cards the Workshop now allows are a choice a Mayor makes for themselves.
+const DECK_SIZE = dr.minDeckSize;
 
 /** Characters wanted at each cost. Covers the whole pledge ladder, with the bulk in the middle. */
 const CURVE = { 0: 2, 1: 4, 2: 5, 3: 5, 4: 3, 5: 2 };
 const CHARACTER_TARGET = Object.values(CURVE).reduce((a, b) => a + b, 0);
-const EVENT_TARGET = dr.deckSize - CHARACTER_TARGET;
+const EVENT_TARGET = DECK_SIZE - CHARACTER_TARGET;
 /** Cards in a deck that must produce Supply or draw. Below this a deck simply cannot function. */
 const ECONOMY_FLOOR = 22;
-/** Super Rare + Legendary copies a printed deck may hold: a deck has a marquee card, not a marquee. */
+/** Super Rare copies a printed deck may hold: a deck has a marquee card, not a marquee. */
 const TOP_RARITY_CAP = 3;
 
 const IDENTITIES = [
@@ -76,7 +79,7 @@ function build(ident) {
   }, 0);
   const take = (card, n) => {
     const limit = maxCopiesOf(dr, card);
-    let room = Math.min(n, limit - (list[card.id] || 0), dr.deckSize - count());
+    let room = Math.min(n, limit - (list[card.id] || 0), DECK_SIZE - count());
     // A printed deck leans on its commons: at most TOP_RARITY_CAP of the rarest cards in total.
     if (card.rarity === 'Super Rare' || card.rarity === 'Legendary') {
       room = Math.min(room, TOP_RARITY_CAP - topCopies());
@@ -134,7 +137,7 @@ function build(ident) {
     .sort((a, b) => playability(b) - playability(a) || affinity(b, ident) - affinity(a, ident) || score(b) - score(a));
   let evs = 0;
   for (const c of events) {
-    if (evs >= EVENT_TARGET || count() >= dr.deckSize) break;
+    if (evs >= EVENT_TARGET || count() >= DECK_SIZE) break;
     evs += take(c, Math.min(2, EVENT_TARGET - evs));
   }
   // Every deck needs an engine. Playtests found the decks that lost were not the ones with weaker
@@ -159,7 +162,7 @@ function build(ident) {
     let di = 0;
     for (const c of engines) {
       if (economyCount() >= ECONOMY_FLOOR) break;
-      while (count() >= dr.deckSize && di < droppable.length) {
+      while (count() >= DECK_SIZE && di < droppable.length) {
         const drop = droppable[di];
         if (list[drop.id]) { list[drop.id]--; if (!list[drop.id]) delete list[drop.id]; }
         di++;
@@ -169,11 +172,11 @@ function build(ident) {
   }
 
   // If the identity simply has not got enough payable Events, take Characters instead of dead cards.
-  if (count() < dr.deckSize) {
+  if (count() < DECK_SIZE) {
     const moreChars = cards.filter((c) => c.type === 'character')
       .sort((a, b) => affinity(b, ident) - affinity(a, ident) || score(b) - score(a));
     for (const c of moreChars) {
-      if (count() >= dr.deckSize) break;
+      if (count() >= DECK_SIZE) break;
       take(c, 1);
     }
   }
@@ -181,7 +184,7 @@ function build(ident) {
   for (const pool of [cards.filter((c) => c.type === 'character'), cards.filter((c) => c.type === 'event')]) {
     const sorted = pool.slice().sort((a, b) => affinity(b, ident) - affinity(a, ident) || score(b) - score(a));
     for (const c of sorted) {
-      if (count() >= dr.deckSize) break;
+      if (count() >= DECK_SIZE) break;
       take(c, 1);
     }
   }

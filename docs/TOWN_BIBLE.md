@@ -47,6 +47,10 @@ add to the list.
   Community, Harmony. They are the town's stated virtues; a backstory that touches one should mean it.
 - **The City Dump** and **Unemployment** are where cards and animals go when work runs out. Both are
   ordinary parts of town life, not disgrace.
+- **Places a town builds for itself** — the Allotment Strip, Copper's Cellar, Berry's Bench, Rosabeth's
+  Gate, the Open Mic Room, the Boat Shed and the Gate Hut. These are Town Buildings: small, local, and
+  raised by a Mayor's own animals rather than won in the Capital City. Each one already belonged to
+  somebody in this file before it was a card.
 
 ## History
 
@@ -134,6 +138,12 @@ add to the list.
   study rather than a sideline of Commerce. [town cards]
 - **The Bandstand on the Festival Green was built for speeches** and has never once been used for
   one. It holds a band of five if two of them stand on the step. [town cards]
+- **A town can build for itself, and does.** Alongside the Capital City's civic monuments the borough
+  raises its own small places — a strip, a cellar, a bench, a shed, a gate — paid for by the Mayor and
+  put up by animals taken off their work for a day or two to do it. They are permanent and personal,
+  and a town has room for only so many of them, because the Statues stand in the same places. [town cards]
+- **The Boat Shed is down past the ferry steps**, kept by the lightermen and not strictly the harbour
+  office's business. Brooke has had a key for eight years. [town cards]
 - **The Tax Assessors come out from the Capital City with clipboards**, unannounced, and the borough
   loses Supply when they do. They are the disaster Copper's cellar was stocked against, and he has
   met them four times. [Copper]
@@ -176,6 +186,10 @@ Characters the maker added to the shelf who replace no printed card. They carry 
 | Name | Where they came from | Added |
 | --- | --- | --- |
 | Bob | Bristle's printed Gate Hedgehog became two animals: Biff took the beat and the remake, Bob kept the gate. | 2026-09-13 |
+
+Cards may be additions too — an extra rung in a remade character's arc, or a card of a type the
+printed set never had. All seven **Town Buildings** are the second kind: the type did not exist when
+the collection was printed, so there is nothing for them to remake.
 
 ---
 

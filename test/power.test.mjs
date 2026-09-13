@@ -55,7 +55,7 @@ test('power model', async (t) => {
   await t.test('rarityForScore reads the printed bands', () => {
     for (const [rarity, min] of RARITY_THRESHOLDS) assert.equal(rarityForScore(min), rarity);
     assert.equal(rarityForScore(0), 'Common');
-    assert.equal(rarityForScore(999), 'Legendary');
+    assert.equal(rarityForScore(999), 'Super Rare');
   });
 });
 
@@ -74,8 +74,8 @@ test('the printed set matches the model', async (t) => {
     assert.ok(n('Common') > n('Uncommon'), 'Commons are the base of the set');
     assert.ok(n('Uncommon') > n('Rare'));
     assert.ok(n('Rare') > n('Super Rare'));
-    assert.ok(n('Super Rare') >= n('Legendary'));
-    assert.ok(n('Legendary') >= 1, 'the set has something to chase');
+    assert.ok(n('Super Rare') >= 1, 'the set has something to chase');
+    assert.ok(!SET.cards.some((c) => c.rarity === 'Legendary'), 'the fifth tier is retired');
   });
 
   await t.test('the set file is ordered by rating, strongest for its cost first', () => {
@@ -94,24 +94,25 @@ test('rarity governs deck building', async (t) => {
     for (let i = 1; i < RARITIES.length; i++) {
       assert.ok(dr.copiesByRarity[RARITIES[i]] <= dr.copiesByRarity[RARITIES[i - 1]], `${RARITIES[i]} allows more copies than ${RARITIES[i - 1]}`);
     }
-    assert.equal(dr.copiesByRarity.Legendary, 1, 'a Legendary is a one-of');
+    assert.equal(dr.copiesByRarity['Super Rare'], 1, 'a Super Rare is a one-of');
+    assert.equal(dr.copiesByRarity.Common, 4, 'a Common may be repeated four times');
     assert.deepEqual(dr.copiesByRarity, COPY_LIMITS, 'spec/game.json and the model agree on the limits');
   });
 
   await t.test('maxCopiesOf follows the card, and an unrated card is treated as Common', () => {
     const dr = deckRules(RULES);
     assert.equal(maxCopiesOf(RULES, { rarity: 'Common' }), dr.copiesByRarity.Common);
-    assert.equal(maxCopiesOf(RULES, { rarity: 'Legendary' }), 1);
+    assert.equal(maxCopiesOf(RULES, { rarity: 'Super Rare' }), 1);
     assert.equal(maxCopiesOf(RULES, {}), dr.copiesByRarity.Common, 'no rarity printed: Common');
   });
 
-  await t.test('a fourth Legendary copy is rejected, and the reason names the rarity', () => {
-    const legendary = SET.cards.find((c) => c.rarity === 'Legendary' && (c.type === 'character' || c.type === 'event'));
-    assert.ok(legendary, 'the set has a deck-legal Legendary');
-    const problems = deckProblems(RULES, SET, { [legendary.id]: 2 });
+  await t.test('a second Super Rare copy is rejected, and the reason names the rarity', () => {
+    const superRare = SET.cards.find((c) => c.rarity === 'Super Rare' && (c.type === 'character' || c.type === 'event'));
+    assert.ok(superRare, 'the set has a deck-legal Super Rare');
+    const problems = deckProblems(RULES, SET, { [superRare.id]: 2 });
     const copyProblem = problems.find((p) => p.includes('copies'));
-    assert.ok(copyProblem, 'two copies of a Legendary is a problem');
-    assert.ok(copyProblem.includes('Legendary'), `the message should explain why: ${copyProblem}`);
+    assert.ok(copyProblem, 'two copies of a Super Rare is a problem');
+    assert.ok(copyProblem.includes('Super Rare'), `the message should explain why: ${copyProblem}`);
   });
 
   await t.test('every printed deck respects the rarity limits', () => {
@@ -126,8 +127,8 @@ test('rarity governs deck building', async (t) => {
   await t.test('the printed decks lean on Commons and are sparing with the rest', () => {
     for (const deck of SET.decks) {
       const copies = (r) => Object.entries(deck.list).reduce((a, [id, n]) => a + (byId[id].rarity === r ? n : 0), 0);
-      const top = copies('Super Rare') + copies('Legendary');
-      assert.ok(top <= 3, `${deck.id}: ${top} copies of Super Rare and Legendary cards`);
+      const top = copies('Super Rare');
+      assert.ok(top <= 3, `${deck.id}: ${top} copies of Super Rare cards`);
       assert.ok(copies('Common') + copies('Uncommon') >= 15, `${deck.id} should be built on its commons`);
     }
   });

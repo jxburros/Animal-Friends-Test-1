@@ -1,6 +1,6 @@
 // Turn structure: Start → Resources → Ready → Actions → End, plus the whole-game runner.
-import { cardDef, topCard, log, opponentOf, expireMods, consumeMod, hasMod, hasPassive, refillCity, ageCity, cityRule, freshTurnCounters, UPRIGHT, BUSY, findStack } from './state.js';
-import { ask, draw, gainSupply, completeShift, readyStack, gainMarketCard, fireHook, checkVictory, flushReveals } from './effects.js';
+import { cardDef, topCard, log, opponentOf, expireMods, consumeMod, hasMod, hasPassive, refillCity, ageCity, cityRule, freshTurnCounters, buildingCap, UPRIGHT, BUSY, findStack } from './state.js';
+import { ask, draw, gainSupply, completeShift, readyStack, gainMarketCard, makeStatueRoom, fireHook, checkVictory, flushReveals } from './effects.js';
 import { shuffle } from './rng.js';
 import { legalActions, applyAction, forfeitOf, statueTierFor } from './actions.js';
 
@@ -132,6 +132,19 @@ export async function resolvePurchase(state, pd) {
       win.supply -= shortfall;
       log(state, winner, `${def.name} now costs ${due} Supply to ${win.name}, who holds ${win.victoryRow.length}; they pay ${shortfall} more.`,
         { kind: 'statueTierRise', cardId: pd.cardId, player: winner, due, shortfall });
+    }
+  }
+
+  // A Statue needs an empty Building place at the moment it is won, not only at the moment it was
+  // announced — the places can fill while an auction runs. The winner is offered a demolition; a
+  // Mayor who will not pull anything down, or whose eight places are all Statues, loses the purchase
+  // and keeps their Supply. Buildings make room for themselves inside gainMarketCard.
+  if (def.type === 'statue' && (state.rules.victory || {}).requiresBuildingSlot !== false) {
+    if (!(await makeStatueRoom(state, winner))) {
+      win.supply += pd.committed[winner];
+      log(state, winner, `${win.name} has nowhere to stand ${def.name} — all ${buildingCap(state)} of their Building places are taken — so the purchase fizzles and the bid is returned.`,
+        { kind: 'fizzle', cardId: pd.cardId, player: winner, reason: 'noBuildingSlot' });
+      return;
     }
   }
 
