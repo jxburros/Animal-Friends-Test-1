@@ -360,8 +360,8 @@
     }
    ],
    "art": {
-    "atlas": "neighbors",
-    "tile": 5
+    "atlas": "capital",
+    "tile": 0
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Legendary",
@@ -448,8 +448,8 @@
     }
    ],
    "art": {
-    "atlas": "neighbors",
-    "tile": 5
+    "atlas": "capital",
+    "tile": 1
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Legendary",
@@ -622,8 +622,8 @@
     }
    ],
    "art": {
-    "atlas": "neighbors",
-    "tile": 5
+    "atlas": "capital",
+    "tile": 3
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Legendary",
@@ -1223,8 +1223,8 @@
     }
    ],
    "art": {
-    "atlas": "neighbors",
-    "tile": 5
+    "atlas": "capital",
+    "tile": 4
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Super Rare",
@@ -1591,8 +1591,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 7
+    "atlas": "capital",
+    "tile": 9
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Super Rare",
@@ -1933,7 +1933,7 @@
     }
    ],
    "art": {
-    "atlas": "neighbors",
+    "atlas": "capital",
     "tile": 5
    },
    "expansion": "AF-MARKET-02",
@@ -2006,7 +2006,7 @@
    ],
    "art": {
     "atlas": "neighbors",
-    "tile": 5
+    "tile": 4
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Rare",
@@ -2406,8 +2406,8 @@
     }
    ],
    "art": {
-    "atlas": "neighbors",
-    "tile": 5
+    "atlas": "capital",
+    "tile": 2
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Rare",
@@ -2626,8 +2626,8 @@
     }
    ],
    "art": {
-    "atlas": "neighbors",
-    "tile": 5
+    "atlas": "capital",
+    "tile": 6
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Rare",
@@ -3166,8 +3166,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 7
+    "atlas": "capital",
+    "tile": 10
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Rare",
@@ -3657,8 +3657,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 7
+    "atlas": "capital",
+    "tile": 11
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Rare",
@@ -5005,8 +5005,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 7
+    "atlas": "capital",
+    "tile": 12
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Uncommon",
@@ -5229,8 +5229,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 7
+    "atlas": "capital",
+    "tile": 13
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Uncommon",
@@ -5797,8 +5797,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 7
+    "atlas": "capital",
+    "tile": 14
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Uncommon",
@@ -6197,8 +6197,8 @@
     }
    ],
    "art": {
-    "atlas": "neighbors",
-    "tile": 5
+    "atlas": "capital",
+    "tile": 7
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Uncommon",
@@ -6673,8 +6673,8 @@
     }
    ],
    "art": {
-    "atlas": "neighbors",
-    "tile": 5
+    "atlas": "capital",
+    "tile": 8
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Uncommon",
@@ -7385,8 +7385,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 7
+    "atlas": "capital",
+    "tile": 15
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Uncommon",

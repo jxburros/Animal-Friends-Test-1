@@ -9,8 +9,9 @@ export const WHISKERWOOD_ATLAS_URL = new URL('../../assets/art/whiskerwood-atlas
 export const NEIGHBORS_ATLAS_URL = new URL('../../assets/art/neighbors-atlas.png', import.meta.url).href;
 export const MONUMENTS_ATLAS_URL = new URL('../../assets/art/monuments-atlas.png', import.meta.url).href;
 export const TOWNLIFE_ATLAS_URL = new URL('../../assets/art/townlife-atlas.png', import.meta.url).href;
+export const CAPITAL_ATLAS_URL = new URL('../../assets/art/capital-atlas.png', import.meta.url).href;
 const SPECIES_TILE = { Rabbit: 0, Mouse: 1, Fox: 2, Raccoon: 3, Hedgehog: 4, Badger: 5, Otter: 6, Squirrel: 7 };
-const ATLASES = { boroughs: () => PAINTED_ATLAS_URL, whiskerwood: () => WHISKERWOOD_ATLAS_URL, neighbors: () => NEIGHBORS_ATLAS_URL, monuments: () => MONUMENTS_ATLAS_URL, townlife: () => TOWNLIFE_ATLAS_URL };
+const ATLASES = { boroughs: () => PAINTED_ATLAS_URL, whiskerwood: () => WHISKERWOOD_ATLAS_URL, neighbors: () => NEIGHBORS_ATLAS_URL, monuments: () => MONUMENTS_ATLAS_URL, townlife: () => TOWNLIFE_ATLAS_URL, capital: () => CAPITAL_ATLAS_URL };
 
 /** The explicit atlas tile a card asks for, or null when it leaves the choice to the theme rules. */
 export function explicitTile(def) {
