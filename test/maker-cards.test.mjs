@@ -50,10 +50,21 @@ test('the maker set is a separate, non-playable shelf', () => {
   }
 });
 
-test('every maker card remakes printed cards that exist', () => {
+test('every maker card either remakes a printed card or says why it is new', () => {
   for (const card of MAKER.cards) {
     assert.ok(card.id && card.name && card.type, `maker card needs id, name and type: ${JSON.stringify(card)}`);
     const claims = [].concat(card.remakes || []);
+    // A maker card is one of two things, and it has to say which. Most replace a printed card, and
+    // `remakes` is that link. The rest are additions — a Town Building has no printed original,
+    // because the type did not exist when the set was printed — and an addition carries
+    // `addition: true` with an `addedBecause` line. Silence is the one thing not allowed: an
+    // unlabelled card is indistinguishable from a remake whose link was forgotten.
+    if (card.addition) {
+      assert.equal(claims.length, 0, `${card.id} is an addition but claims printed card(s) ${claims.join(', ')}`);
+      assert.ok(card.addedBecause, `${card.id} is an addition and needs addedBecause: why a new card, not a remake`);
+    } else {
+      assert.ok(claims.length, `${card.id} neither remakes a printed card nor declares addition: true with addedBecause`);
+    }
     for (const id of claims) {
       assert.ok(printedById[id], `maker card ${card.id} remakes unknown printed card ${id}`);
     }

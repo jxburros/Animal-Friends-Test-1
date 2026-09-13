@@ -160,6 +160,9 @@ const TRIGGER_WEIGHT = {
   onAnnounce: 1.5,
   onGainMarketCard: 1.3,
   onCharacterUnemployed: 1.2,
+  // Supply has just been taken off you — by a rival, or by the weather. It happens, and it does not
+  // happen every turn, which is the whole character of a card that waits for it.
+  onSupplyLost: 1.0,
   onTiedBid: 1.0,
   onChallengedByOpponent: 1.2,
   onRecruit: 1.0, // fires once, when the Character arrives
@@ -177,6 +180,20 @@ const TRIGGER_WEIGHT = {
  * is expensive enough that it is usually bought in the second half, so it works for about six of them.
  */
 const BUILDING_RUNS = 6;
+
+/**
+ * How often a permanent's trigger actually comes round, against the turn start that most Buildings
+ * wait for. `BUILDING_RUNS` says how long a Building stands; this says how often it pays while it
+ * stands — and the two are not the same question. A Building that waits for Supply to be taken off
+ * you does not pay six times because it is permanent; it pays when that happens. This never mattered
+ * while every printed Building triggered at turn start, and it started mattering the day a town could
+ * build one of its own out of its deck.
+ */
+function permanentRuns(trigger) {
+  const base = TRIGGER_WEIGHT.onTurnStart;
+  const w = TRIGGER_WEIGHT[trigger] ?? 1;
+  return BUILDING_RUNS * Math.min(1.2, w / base);
+}
 
 /**
  * How often the zone an effect reaches into actually has something in it.
@@ -427,13 +444,15 @@ export function cardPower(card, rules) {
   power += effectPower(card.onGain);
   power += effectPower(card.onReveal);
   const limited = card.type === 'event' && card.kind === 'limited';
+  const permanent = card.type === 'building' || card.type === 'townBuilding';
   let runs;
   if (limited) runs = card.duration || 1;
-  else if (card.type === 'building' || card.type === 'townBuilding') runs = BUILDING_RUNS;
   // A retained hire only fires its abilities for as long as the retainer lasts, and the body goes
   // home with them. `leavesAfter` therefore caps the runs and discounts the whole card.
   else if (card.leavesAfter) runs = card.leavesAfter;
-  for (const ab of card.abilities || []) power += abilityPower(ab, runs);
+  for (const ab of card.abilities || []) {
+    power += abilityPower(ab, permanent ? permanentRuns(ab.trigger) : runs);
+  }
   if (card.leavesAfter) power *= termFactor(card.leavesAfter);
   // A held Event waits in hand for the turn that suits it, and asks for no Characters when it comes
   // down. Playing the same effect exactly when you want it is worth more than playing it on reveal.

@@ -35,6 +35,10 @@ Then read, in this order:
   and build the nearest thing from verbs that exist.
 - Every printed version of the character is either claimed by a new card's `remakes` (an **id**, not
   a name) or listed in `retires` with a reason. None may be left silent.
+- Every card carries one of two labels: `remakes`, or `addition: true` with an `addedBecause` line
+  when the card replaces nothing (a rung the printed versions never had, or an added character's
+  cards). `npm test` fails a card with neither — an unlabelled card looks exactly like a remake whose
+  link was forgotten.
 - **Never hand-write `rarity` or `power`** — `npm run stamp` computes them.
 - Every card's `flavor` references the backstory and could not belong to any other character.
 

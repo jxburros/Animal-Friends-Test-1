@@ -190,6 +190,10 @@ function characterEntry(name) {
 }
 function openStory(def) {
   const entry = characterEntry(def.name);
+  // A town card belongs to nobody: a Building is not somebody's backstory. Rather than apologise for
+  // a character entry it was never going to have, it tells its own story — why it exists, and the
+  // flavor that places it in the town.
+  const townCard = !entry && !def.species;
   const versions = ((ctx.makerSet && ctx.makerSet.cards) || [])
     .filter((c) => characterOf(c) === def.name)
     .sort((a, b) => (a.cost || 0) - (b.cost || 0));
@@ -200,7 +204,8 @@ function openStory(def) {
     h('h2', {}, def.name),
     h('p', { class: 'db-story-sub' }, entry
       ? [entry.species, (entry.studies || []).join(' · '), entry.pronouns].filter(Boolean).join(' — ')
-      : `${def.species || ''} ${def.study ? `· ${def.study}` : ''}`.trim()),
+      : townCard ? (def.title || 'A town card')
+        : `${def.species || ''} ${def.study ? `· ${def.study}` : ''}`.trim()),
   ]);
   if (entry && entry.renamedFrom) {
     head.appendChild(h('p', { class: 'db-story-renamed' }, `Remade from ${entry.renamedFrom}.`));
@@ -212,6 +217,14 @@ function openStory(def) {
     }
     if (entry.voice) body.appendChild(h('p', { class: 'db-story-note' }, [h('strong', {}, 'Voice. '), entry.voice]));
     if (entry.arc) body.appendChild(h('p', { class: 'db-story-note' }, [h('strong', {}, 'The arc. '), entry.arc]));
+  } else if (townCard) {
+    if (def.addedBecause) body.appendChild(h('p', {}, def.addedBecause));
+    if (def.text) body.appendChild(h('p', { class: 'db-story-rules' }, def.text));
+    if (def.flavor) body.appendChild(h('p', { class: 'db-story-flavor' }, def.flavor));
+    body.appendChild(h('p', { class: 'db-story-note' }, [
+      h('strong', {}, 'A town card. '),
+      'It belongs to no character — a Building is not somebody\u2019s backstory. Why each batch of them exists is recorded under townCards in spec/maker_card_set.json.',
+    ]));
   } else {
     body.appendChild(h('p', { class: 'db-empty' }, 'No backstory written for this character yet.'));
   }
@@ -352,6 +365,11 @@ function buildSlot(def) {
     if (remade.length) {
       slot.appendChild(h('div', { class: 'db-maker-note' },
         `Remakes ${remade.map((id, i) => (olds[i] ? `${olds[i].name} (${id})` : id)).join(', ')}`));
+    } else if (def.addition) {
+      // An addition replaces nothing, and says why. Without this the shelf showed it exactly like a
+      // remake whose link had been forgotten, which is the one thing the tick list must not do.
+      slot.appendChild(h('div', { class: 'db-maker-note added', title: def.addedBecause || '' },
+        `Added — replaces nothing${def.addedBecause ? `: ${def.addedBecause}` : ''}`));
     }
     return slot;
   }
@@ -409,7 +427,7 @@ function emptyNote() {
   return h('div', { class: 'db-maker-empty' }, [
     h('h3', {}, 'No maker cards yet.'),
     h('p', {}, 'This shelf holds the collection as it is remade, card by card, so a new version can be read beside the printed one. It is empty until the first card is written.'),
-    h('p', {}, 'Add cards to spec/maker_card_set.json using the same fields as the printed set, plus "remakes": the id (or a list of ids) of the printed card the new one replaces. That link ticks the old card off here even after the new card is given a different name.'),
+    h('p', {}, 'Add cards to spec/maker_card_set.json using the same fields as the printed set, plus one of two labels. A card that replaces a printed one carries "remakes": the id (or a list of ids) it replaces — that link ticks the old card off here even after the new card is renamed. A card that replaces nothing carries "addition": true and an "addedBecause" line saying why it is new.'),
     h('p', { class: 'db-empty' }, 'Maker cards cannot be put in a deck yet; the Workshop shows them for comparison only.'),
   ]);
 }

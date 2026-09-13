@@ -4730,35 +4730,6 @@
    }
   },
   {
-   "id": "bld_counting_house",
-   "type": "building",
-   "name": "Counting House",
-   "title": "Capital City Building",
-   "cost": 9,
-   "text": "When you complete a shift, gain 2 extra Supply.",
-   "flavor": "It was here before this Mayor, and it will be here after.",
-   "abilities": [
-    {
-     "trigger": "onShiftCompleted",
-     "effect": {
-      "do": "gainSupply",
-      "amount": 2
-     }
-    }
-   ],
-   "art": {
-    "atlas": "capital",
-    "tile": 13
-   },
-   "expansion": "AF-MARKET-02",
-   "rarity": "Uncommon",
-   "power": {
-    "score": 4.56,
-    "power": 12,
-    "opportunityCost": 11.22
-   }
-  },
-  {
    "id": "dx_the_reshuffle",
    "type": "disruption",
    "expansion": "AF-STARTER-01",
@@ -5246,44 +5217,6 @@
     "score": 4.48,
     "power": 11.7,
     "opportunityCost": 11
-   }
-  },
-  {
-   "id": "bld_auction_house",
-   "type": "building",
-   "name": "The Auction House",
-   "title": "Capital City Building",
-   "cost": 7,
-   "text": "When you announce a purchase, add 1 Supply to your bid and look at the top three cards of the Market Deck.",
-   "flavor": "It was here before this Mayor, and it will be here after.",
-   "abilities": [
-    {
-     "trigger": "onAnnounce",
-     "effect": {
-      "do": "seq",
-      "steps": [
-       {
-        "do": "raiseOwnBid",
-        "amount": 1
-       },
-       {
-        "do": "peekMarketDeck",
-        "count": 3
-       }
-      ]
-     }
-    }
-   ],
-   "art": {
-    "atlas": "capital",
-    "tile": 14
-   },
-   "expansion": "AF-MARKET-02",
-   "rarity": "Uncommon",
-   "power": {
-    "score": 4.44,
-    "power": 10.8,
-    "opportunityCost": 9.22
    }
   },
   {
@@ -8213,6 +8146,35 @@
    ]
   },
   {
+   "id": "bld_counting_house",
+   "type": "building",
+   "name": "Counting House",
+   "title": "Capital City Building",
+   "cost": 9,
+   "text": "When you complete a shift, gain 2 extra Supply.",
+   "flavor": "It was here before this Mayor, and it will be here after.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 13
+   },
+   "expansion": "AF-MARKET-02",
+   "rarity": "Common",
+   "power": {
+    "score": 3.16,
+    "power": 8.31,
+    "opportunityCost": 11.22
+   }
+  },
+  {
    "id": "br_rebuilt_barn",
    "type": "event",
    "name": "Rebuilt Barn",
@@ -9698,6 +9660,44 @@
     "score": 2.58,
     "power": 4.3,
     "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "bld_auction_house",
+   "type": "building",
+   "name": "The Auction House",
+   "title": "Capital City Building",
+   "cost": 7,
+   "text": "When you announce a purchase, add 1 Supply to your bid and look at the top three cards of the Market Deck.",
+   "flavor": "It was here before this Mayor, and it will be here after.",
+   "abilities": [
+    {
+     "trigger": "onAnnounce",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "raiseOwnBid",
+        "amount": 1
+       },
+       {
+        "do": "peekMarketDeck",
+        "count": 3
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 14
+   },
+   "expansion": "AF-MARKET-02",
+   "rarity": "Common",
+   "power": {
+    "score": 2.56,
+    "power": 6.23,
+    "opportunityCost": 9.22
    }
   },
   {

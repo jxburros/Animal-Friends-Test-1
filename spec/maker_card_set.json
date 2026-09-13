@@ -1,5 +1,5 @@
 {
- "$comment": "Maker Cards (AF-MAKER-01). The hand-remade collection: as each character is remade its backstory and cards are added here, so the new versions can be read beside the printed ones in the Deck Workshop. This set starts empty and is NOT playable yet. The process is docs/REMAKING_A_CHARACTER.md, and the shared world it draws on is docs/TOWN_BIBLE.md. 'characters' holds one entry per remade character: name, species, studies, backstory, voice, arc, plus 'retires' (printed versions with no successor, each with a reason) and 'wantedVerbs' (effects the story wanted that the engine cannot yet do). 'cards' use exactly the schema of spec/starter_card_set.json plus 'remakes': the id (or list of ids) of the printed card(s) this card replaces. That link is an id and never a name, which is what survives a rename. 'rarity' and 'power' are computed by npm run stamp, never hand-written.",
+ "$comment": "Maker Cards (AF-MAKER-01). The hand-remade collection: as each character is remade its backstory and cards are added here, so the new versions can be read beside the printed ones in the Deck Workshop. This set starts empty and is NOT playable yet. The process is docs/REMAKING_A_CHARACTER.md, and the shared world it draws on is docs/TOWN_BIBLE.md. 'characters' holds one entry per remade character: name, species, studies, backstory, voice, arc, plus 'retires' (printed versions with no successor, each with a reason) and 'wantedVerbs' (effects the story wanted that the engine cannot yet do). 'cards' use exactly the schema of spec/starter_card_set.json plus one of two labels. A card that replaces a printed card carries 'remakes': the id (or list of ids) of the printed card(s) — an id and never a name, which is what survives a rename. A card that replaces nothing carries 'addition': true and an 'addedBecause' line saying why it is new: an extra rung in a character's arc, or a card of a type the printed set never had, as every Town Building is. One or the other is required, so a forgotten link cannot pass as a new card. 'rarity' and 'power' are computed by npm run stamp, never hand-written.",
  "setId": "AF-MAKER-01",
  "name": "Maker Cards",
  "playable": false,
@@ -840,7 +840,9 @@
     "score": 5.59,
     "power": 14.58,
     "opportunityCost": 11
-   }
+   },
+   "addition": true,
+   "addedBecause": "Oatmeal's arc runs past the four printed Barleys: the band leader who ends up on the borough council is the top of his ladder, and there was no fifth printed version for it to replace."
   },
   {
    "id": "mk_barnaby_night_auditor_4",
@@ -1254,7 +1256,9 @@
     "score": 4.42,
     "power": 10.05,
     "opportunityCost": 7.8
-   }
+   },
+   "addition": true,
+   "addedBecause": "Berry's five printed versions became six. The consulting rung between the committee volunteer and the workshop elder — the retired tinkerer who cannot say no to a job — had no printed original."
   },
   {
    "id": "mk_berry_workshop_elder_4",
@@ -1419,7 +1423,9 @@
     "score": 6.33,
     "power": 15.9,
     "opportunityCost": 10
-   }
+   },
+   "addition": true,
+   "addedBecause": "One printed Gate Hedgehog became two animals and a gate: mkt_bristle went to Biff's cost-2 beat, so his senior rung replaces nothing."
   },
   {
    "id": "mk_bob_gate_attendant_4",
@@ -1457,7 +1463,9 @@
     "score": 4.7,
     "power": 11,
     "opportunityCost": 8.4
-   }
+   },
+   "addition": true,
+   "addedBecause": "Bob is an added character (see his entry in `characters`): the printed Gate Hedgehog's beat went to Biff, and Bob kept the gate."
   },
   {
    "id": "mk_brooke_dock_hand_1",
@@ -1565,7 +1573,9 @@
     "score": 4.95,
     "power": 11.25,
     "opportunityCost": 7.8
-   }
+   },
+   "addition": true,
+   "addedBecause": "Brooke's ladder to the River Otter licence needed its middle rung; the four printed Brooks skipped cost 3 entirely."
   },
   {
    "id": "mk_brooke_balloonist_4",
@@ -1765,7 +1775,9 @@
     "score": 4.96,
     "power": 10.67,
     "opportunityCost": 6.8
-   }
+   },
+   "addition": true,
+   "addedBecause": "The maker gave Betty six rungs against the printed four. The powder half of her arc starts here, and no printed Burr was doing it."
   },
   {
    "id": "mk_betty_firework_maker_3",
@@ -1878,7 +1890,9 @@
     "score": 5.82,
     "power": 15.19,
     "opportunityCost": 11
-   }
+   },
+   "addition": true,
+   "addedBecause": "Same batch, top of the curve: the printed Burrs stopped at cost 3, and the animal the grange sends for is what Betty grows into."
   },
   {
    "id": "mk_clover_seedling_helper_0",
@@ -2910,10 +2924,10 @@
     "tile": 0
    },
    "remakes": "bld_winter_stores",
-   "rarity": "Rare",
+   "rarity": "Common",
    "power": {
-    "score": 4.94,
-    "power": 12,
+    "score": 1.9,
+    "power": 4.62,
     "opportunityCost": 9.22
    }
   },
@@ -3246,6 +3260,223 @@
     "power": 2.6,
     "opportunityCost": 2
    }
+  },
+  {
+   "id": "mk_tb_allotment_strip",
+   "type": "townBuilding",
+   "name": "The Allotment Strip",
+   "title": "Town Building",
+   "cost": 3,
+   "build": {
+    "animals": 2
+   },
+   "text": "At the start of your turn, if you control an Agriculture Character, gain 2 Supply.",
+   "flavor": "Four generations of Clover's family have held this strip, and Clover is the first of them to write down what it does in a wet year.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Agriculture"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "addition": true,
+   "addedBecause": "The strip is the Agriculture answer: land your own town works, against a Capital City that only ever sold you buildings. And by construction: the printed set has no Town Buildings at all, because the type did not exist when it was printed.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.82,
+    "power": 9.6,
+    "opportunityCost": 10.02
+   }
+  },
+  {
+   "id": "mk_tb_coppers_cellar",
+   "type": "townBuilding",
+   "name": "Copper's Cellar",
+   "title": "Town Building",
+   "cost": 3,
+   "build": {
+    "animals": 1
+   },
+   "text": "Whenever Supply is taken from you, gain 4 Supply.",
+   "flavor": "Under the weights office, stocked since he was an apprentice: salt, lamp oil, candle stock and a shelf of small coin. It was not opened the year the bridge went and it was not opened the winter the Grain Exchange shut — both times the salt went out on the quiet instead.",
+   "abilities": [
+    {
+     "trigger": "onSupplyLost",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 4
+     }
+    }
+   ],
+   "addition": true,
+   "addedBecause": "Copper's cellar was the clearest thing in the bible that is a building and belongs to one town rather than to the Capital City. And by construction: the printed set has no Town Buildings at all, because the type did not exist when it was printed.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.06,
+    "power": 9.23,
+    "opportunityCost": 7.82
+   }
+  },
+  {
+   "id": "mk_tb_berrys_bench",
+   "type": "townBuilding",
+   "name": "Berry's Bench",
+   "title": "Town Building",
+   "cost": 4,
+   "build": {
+    "animals": 2
+   },
+   "text": "At the start of your turn, one of your Characters turns one step toward upright.",
+   "flavor": "Berry retired, and was back on the bench inside a fortnight. Whatever the borough breaks, it ends up here, and so does whoever broke it.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "advanceCharacter",
+      "count": 1
+     }
+    }
+   ],
+   "addition": true,
+   "addedBecause": "The wake-up is the verb the remade Crafts cast leans on hardest, and nothing a town could build answered it. And by construction: the printed set has no Town Buildings at all, because the type did not exist when it was printed.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.45,
+    "power": 9,
+    "opportunityCost": 11.02
+   }
+  },
+  {
+   "id": "mk_tb_rosabeths_gate",
+   "type": "townBuilding",
+   "name": "Rosabeth's Gate",
+   "title": "Town Building",
+   "cost": 3,
+   "build": {
+    "animals": 2
+   },
+   "text": "At the start of your turn, your next rehire this turn costs 2 less.",
+   "flavor": "An animal who has lost a place and stopped getting up ends up at her gate, usually sent by somebody, and is put to work on the beds until they are fit to be somewhere else.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "rehireDiscount",
+      "value": 2,
+      "expires": "turnEnd"
+     }
+    }
+   ],
+   "addition": true,
+   "addedBecause": "Half the Hiring Hall's second chances start at this gate, so the town's own answer to Unemployment should be a thing a Mayor builds. And by construction: the printed set has no Town Buildings at all, because the type did not exist when it was printed.",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.77,
+    "power": 12,
+    "opportunityCost": 10.02
+   }
+  },
+  {
+   "id": "mk_tb_open_mic_room",
+   "type": "townBuilding",
+   "name": "The Open Mic Room",
+   "title": "Town Building",
+   "cost": 3,
+   "build": {
+    "animals": 2
+   },
+   "text": "At the start of your turn, if you control an Entertainment Character, draw 1 card.",
+   "flavor": "Whatever room will have them, a night a week, five in the band if two of them stand on the step. Oatmeal has never once cancelled.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Entertainment"
+      }
+     },
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "addition": true,
+   "addedBecause": "Entertainment had a Market card and an Event and nothing permanent; a study whose whole work is a room needed a room. And by construction: the printed set has no Town Buildings at all, because the type did not exist when it was printed.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.86,
+    "power": 7.2,
+    "opportunityCost": 10.02
+   }
+  },
+  {
+   "id": "mk_tb_boat_shed",
+   "type": "townBuilding",
+   "name": "The Boat Shed",
+   "title": "Town Building",
+   "cost": 4,
+   "build": {
+    "animals": 2
+   },
+   "text": "Whenever one of your Characters finishes a shift, gain 2 Supply.",
+   "flavor": "Down past the ferry steps, where the lightermen keep what the harbour office would rather not know about. Brooke has had a key for eight years.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "addition": true,
+   "addedBecause": "It pays on every shift the town works, which is the one thing a Capital City Building has never done. And by construction: the printed set has no Town Buildings at all, because the type did not exist when it was printed.",
+   "rarity": "Common",
+   "power": {
+    "score": 3.18,
+    "power": 8.31,
+    "opportunityCost": 11.02
+   }
+  },
+  {
+   "id": "mk_tb_gate_hut",
+   "type": "townBuilding",
+   "name": "The Gate Hut",
+   "title": "Town Building",
+   "cost": 2,
+   "build": {
+    "animals": 1
+   },
+   "text": "At the start of your turn, the next card revealed in the Capital City does not affect you.",
+   "flavor": "A bar, a lamp, and a hedgehog asleep behind both. The gate is shut from six and Bob does not care who you say you are.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "cancelNextReveal",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "addition": true,
+   "addedBecause": "Bob keeps the county gate and the borough's weather comes through it; bracing against a shared shock is what a gate is for. And by construction: the printed set has no Town Buildings at all, because the type did not exist when it was printed.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.78,
+    "power": 6,
+    "opportunityCost": 6.82
+   }
   }
  ],
  "newStudies": [
@@ -3263,12 +3494,47 @@
   }
  ],
  "townCards": {
-  "note": "The market side of the shelf: Buildings, Events, Market cards and Disruptions remade to give the remade cast, species and studies something to play with. These carry `remakes` like any other maker card and are ticked off the same list, but they belong to no character entry — a Building is not somebody's backstory. The first batch exists mainly to give Food and Entertainment a market side at all: before it, neither new study had a single Building, Event, Market card or Disruption anywhere in the collection.",
+  "note": "The market side of the shelf: Buildings, Events, Market cards and Disruptions remade to give the remade cast, species and studies something to play with. Most carry `remakes` like any other maker card and are ticked off the same list; the Town Buildings carry `addition: true` and an `addedBecause` line instead, because the type did not exist in the printed set and there is nothing for them to replace, but they belong to no character entry — a Building is not somebody's backstory. The first batch exists mainly to give Food and Entertainment a market side at all: before it, neither new study had a single Building, Event, Market card or Disruption anywhere in the collection. Town Buildings have no art yet: `wantedArt` lists what each one should show, so the illustrations can be commissioned in one batch. A town card has no character entry to hang a wantedArt list on, which is why it lives here.",
   "batches": [
    {
     "date": "2026-09-13",
     "what": "4 Buildings, 5 Events, 3 Market cards, 2 Disruptions",
     "why": "Food and Entertainment had no market side; the rehire, discount and loss-recovery verbs the remade cast now leans on had nothing in the Capital City answering them."
+   },
+   {
+    "date": "2026-09-13",
+    "what": "7 Town Buildings (the first on either shelf)",
+    "why": "Town Buildings are a new card type and the printed set has none, so the maker shelf is where the type gets its first cards. They are the permanent half of a Mayor's own deck — a strip, a cellar, a bench, a gate — against the Capital City's civic monuments, and each one is a place the town bible already established. Every one is an addition: there is no printed Town Building to remake."
+   }
+  ],
+  "wantedArt": [
+   {
+    "id": "mk_tb_allotment_strip",
+    "what": "A long allotment strip in late summer, four generations of tools against the fence, one rabbit writing in a notebook at the end of it."
+   },
+   {
+    "id": "mk_tb_coppers_cellar",
+    "what": "A cellar under a weights office: salt sacks, lamp oil, candle stock and a shelf of small coin, everything squared away and plainly never touched."
+   },
+   {
+    "id": "mk_tb_berrys_bench",
+    "what": "A tinkerer's workbench under a window, half the borough's broken things queued along it, two stools because somebody is always being taught."
+   },
+   {
+    "id": "mk_tb_rosabeths_gate",
+    "what": "A garden gate standing open onto raised beds, an animal being handed a trowel just inside it."
+   },
+   {
+    "id": "mk_tb_open_mic_room",
+    "what": "A back room set out with chairs, a band of five with two of them on the step, a lamp on the piano."
+   },
+   {
+    "id": "mk_tb_boat_shed",
+    "what": "A boat shed past the ferry steps at dusk, lighters tied up, a lamp lit inside and the harbour office's windows dark."
+   },
+   {
+    "id": "mk_tb_gate_hut",
+    "what": "A county gate barred for the night, a lamp on the post and a hedgehog asleep in the hut behind it."
    }
   ]
  }

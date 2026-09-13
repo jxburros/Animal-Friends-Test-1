@@ -204,6 +204,19 @@ function typeIconName(def) {
   if (def.type === 'statue') return 'statue';
   return 'market';
 }
+/** The card type as it is printed along the bottom edge, in words rather than in engine spelling. */
+const TYPE_LABEL = {
+  statue: 'Victory',
+  townBuilding: 'Town Building',
+  building: 'Building',
+  marketCharacter: 'Hire',
+  disruption: 'Disruption',
+  ordinance: 'Ordinance',
+};
+function typeLabel(def) {
+  return TYPE_LABEL[def.type] || def.type;
+}
+
 export function rankLabel(def) {
   const rules = activeRules();
   if (def.type !== 'character' || !rules) return '';
@@ -335,7 +348,7 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
     face.appendChild(h('div', { class: 'foil-sheen' }));
     if (!fullArt) face.appendChild(h('div', { class: 'foil-tag', title: 'Foil card', html: iconSVG('foil') }));
   }
-  const footer = h('div', { class: 'card-footer' }, [h('span', {}, fullArt ? `Full Art · ${fullArt.number}/12` : def.type === 'statue' ? 'Victory' : def.type)]);
+  const footer = h('div', { class: 'card-footer' }, [h('span', {}, fullArt ? `Full Art · ${fullArt.number}/12` : typeLabel(def))]);
   if (interactive) footer.appendChild(h('button', {
     class: 'inspect-card', type: 'button', 'aria-label': `Read ${def.name}`,
     onclick: (event) => { event.stopPropagation(); inspectCard(def); },
