@@ -289,6 +289,38 @@ export function statueCount(state, pi) {
 export function getMod(player, key) {
   return player.mods.filter((m) => m.key === key).reduce((a, m) => a + m.value, 0);
 }
+/**
+ * A mod may carry a `filter` naming what it applies to — `{ study: 'Food' }` on a recruitDiscount is
+ * the café rate, good for Food animals and nobody else. `getModFor` totals only the mods whose
+ * filter matches the card in hand; an unfiltered mod matches everything, as it always did.
+ */
+export function modFilterMatches(mod, def) {
+  const f = mod.filter;
+  if (!f) return true;
+  if (!def) return false;
+  if (f.study && def.study !== f.study) return false;
+  if (f.studyIn && !f.studyIn.includes(def.study)) return false;
+  if (f.species && def.species !== f.species) return false;
+  if (f.type && def.type !== f.type) return false;
+  if (f.maxCost !== undefined && (def.cost || 0) > f.maxCost) return false;
+  return true;
+}
+export function getModFor(player, key, def) {
+  return player.mods.filter((m) => m.key === key && modFilterMatches(m, def)).reduce((a, m) => a + m.value, 0);
+}
+/** Spend `amount` from the mods of this key that apply to `def` (filtered ones included). */
+export function consumeModFor(player, key, def, amount = Infinity) {
+  let used = 0;
+  for (const m of player.mods.slice()) {
+    if (m.key !== key || !modFilterMatches(m, def)) continue;
+    const take = Math.min(m.value, amount - used);
+    used += take;
+    m.value -= take;
+    if (m.value <= 0 || m.expires === 'untilUsed' || m.consumable) player.mods.splice(player.mods.indexOf(m), 1);
+    if (used >= amount) break;
+  }
+  return used;
+}
 export function hasMod(player, key) {
   return player.mods.some((m) => m.key === key);
 }

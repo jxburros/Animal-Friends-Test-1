@@ -1,12 +1,15 @@
 Character,Species,Studies,Jobs,Versions,Costs,Rarities,Expansions,Events naming them,Versions remade,Remade,Card ids
-Acorn,Squirrel,Commerce / Crafts / Agriculture,Stall Runner / Guild Broker / Trade Envoy / Coffee Cart / Nut Runner,5,0 / 1 / 2 / 3 / 5,Uncommon / Super Rare / Rare,AF-HATS-01 / AF-NIGHT-01 / AF-STARTER-01,1,0,0 of 5,mh_acorn_0 ns_acorn_1 rr_acorn_1 rr_acorn_3 rr_acorn_2
-Barley,Badger,Civics / Science / Lore,Town Recorder / Ledger Boy / Geologist / Warren Surveyor,4,1 / 2 / 3 / 4,Rare / Uncommon / Super Rare,AF-STARTER-01 / AF-NIGHT-01 / AF-HATS-01,0,0,0 of 4,rw_barley_1 ns_barley_2 mh_barley_3 rw_barley_2
-Barnaby,Owl,Commerce,Night Auditor,1,4,Uncommon,AF-NIGHT-01,0,0,0 of 1,ns_mkt_barnaby
-Barrow,Badger,Crafts,Stonecutter,1,5,Legendary,AF-MARKET-02,0,0,0 of 1,mkt_barrow
-Bean,Owl,Commerce,Café Proprietor / Barista / Espresso Puller,3,1 / 3 / 5,Uncommon / Rare,AF-NIGHT-01,1,0,0 of 3,ns_bean_1 ns_bean_3 ns_bean_5
-Bram,Badger,Crafts,Journeyman Carter,1,4,Rare,AF-MARKET-02,0,0,0 of 1,mkt_bram
-Bramble,Hedgehog,Civics / Crafts / Science,Guild Warden / Guild Apprentice Master / Master Joiner / Clockmaker / Tinker,5,0 / 1 / 2 / 4 / 5,Uncommon / Rare,AF-STARTER-01 / AF-NIGHT-01 / AF-HATS-01,0,0,0 of 5,br_bramble_1 ns_bramble_1 br_bramble_3 br_bramble_2 mh_bramble_5
-Bristle,Hedgehog,Civics,Gate Hedgehog,1,3,Uncommon,AF-MARKET-02,0,0,0 of 1,mkt_bristle
+Acorn,Squirrel,Commerce / Crafts / Agriculture,Stall Runner / Guild Broker / Trade Envoy / Coffee Cart / Nut Runner,5,0 / 1 / 2 / 3 / 5,Uncommon / Super Rare / Rare,AF-HATS-01 / AF-NIGHT-01 / AF-STARTER-01,1,5,all,mh_acorn_0 ns_acorn_1 rr_acorn_1 rr_acorn_3 rr_acorn_2
+Barley,Badger,Civics / Science / Lore,Town Recorder / Ledger Boy / Geologist / Warren Surveyor,4,1 / 2 / 3 / 4,Rare / Uncommon / Super Rare,AF-STARTER-01 / AF-NIGHT-01 / AF-HATS-01,0,4,all,rw_barley_1 ns_barley_2 mh_barley_3 rw_barley_2
+Barnaby,Owl,Commerce,Night Auditor,1,4,Uncommon,AF-NIGHT-01,0,1,all,ns_mkt_barnaby
+Barrow,Badger,Crafts,Stonecutter,1,5,Legendary,AF-MARKET-02,0,1,all,mkt_barrow
+Bean,Owl,Commerce,Café Proprietor / Barista / Espresso Puller,3,1 / 3 / 5,Uncommon / Rare,AF-NIGHT-01,1,3,all,ns_bean_1 ns_bean_3 ns_bean_5
+Berry,Hedgehog,Crafts / Science / Civics,Retired Tinker / Clockmaker / Committee Volunteer / Consulting Engineer / Workshop Elder / Guild Warden,6,0 / 1 / 2 / 3 / 4 / 5,Uncommon / Rare / Super Rare,AF-STARTER-01,0,0,0 of 6,mk_berry_tinker_0 mk_berry_clockmaker_1 mk_berry_committee_2 mk_berry_engineer_3 mk_berry_workshop_elder_4 mk_berry_guild_warden_5
+Biff,Hedgehog,Civics,Beat Constable / Chief Constable,2,2 / 4,Rare / Legendary,AF-STARTER-01,0,0,0 of 2,mk_biff_beat_constable_2 mk_biff_chief_constable_4
+Bram,Badger,Crafts,Journeyman Carter,1,4,Rare,AF-MARKET-02,0,1,all,mkt_bram
+Bramble,Hedgehog,Civics / Crafts / Science,Guild Warden / Guild Apprentice Master / Master Joiner / Clockmaker / Tinker,5,0 / 1 / 2 / 4 / 5,Uncommon / Rare,AF-STARTER-01 / AF-NIGHT-01 / AF-HATS-01,0,5,all,br_bramble_1 ns_bramble_1 br_bramble_3 br_bramble_2 mh_bramble_5
+Brett,Badger,Civics,Retained Counsel,1,5,Super Rare,AF-STARTER-01,0,0,0 of 1,mk_brett_counsel_5
+Bristle,Hedgehog,Civics,Gate Hedgehog,1,3,Uncommon,AF-MARKET-02,0,1,all,mkt_bristle
 Brook,Otter,Crafts / Science / Lore / Commerce,Riverwright / Balloonist / Ferry Hand / Canal Pilot,4,1 / 2 / 4 / 5,Uncommon / Rare / Legendary,AF-HATS-01 / AF-STARTER-01 / AF-NIGHT-01,0,0,0 of 4,mh_brook_1 rr_brook_1 ns_brook_4 rr_brook_2
 Burr,Hedgehog,Crafts / Science / Agriculture,Whittler / Kite Tester / Cabinetmaker / Barn Sweeper,4,0 / 1 / 2 / 3,Uncommon / Rare,AF-HATS-01 / AF-STARTER-01 / AF-NIGHT-01,0,0,0 of 4,mh_burr_0 br_burr_1 ns_burr_2 br_burr_2
 Clover,Rabbit,Agriculture / Science / Commerce,Master Botanist / Community Gardener / Rocket Botanist / Seedling Helper / Market Gardener,5,0 / 2 / 3 / 4 / 5,Rare / Uncommon / Legendary,AF-STARTER-01 / AF-HATS-01 / AF-NIGHT-01,2,0,0 of 5,bb_clover_1 mh_clover_2 bb_clover_2 ns_clover_4 bb_clover_3
@@ -32,7 +35,9 @@ Nib,Mouse,Lore / Science,Master Cartographer / Star Charter / Canal Cartographer
 Nim,Squirrel,Lore / Civics,Page Runner / Reference Librarian / Chancellor of Records / Night Archivist,4,1 / 2 / 4 / 5,Rare,AF-STARTER-01 / AF-NIGHT-01 / AF-HATS-01,0,0,0 of 4,rr_nim_1 ns_nim_2 rr_nim_2 mh_nim_5
 Nutmeg,Squirrel,Commerce / Agriculture,Festival Florist / Bouquet Weaver / Night-Bloom Florist / Petal Sweeper,4,0 / 2 / 3 / 4,Uncommon / Rare / Super Rare,AF-HATS-01 / AF-WHISKER-01 / AF-NIGHT-01,0,0,0 of 4,mh_nutmeg_0 ww_nutmeg_1 ns_nutmeg_3 mh_nutmeg_4
 Oakley,Badger,Crafts / Civics / Science / Lore,Stonemason / Town Planner / Bridge Engineer / Boundary Surveyor,4,2 / 3 / 4 / 5,Super Rare / Uncommon / Rare,AF-STARTER-01 / AF-HATS-01 / AF-NIGHT-01,0,0,0 of 4,br_oakley_1 mh_oakley_3 ns_oakley_4 br_oakley_2
+Oatmeal,Badger,Civics / Entertainment,Ward Clerk / Safety Inspector / Jazz Singer / Town Warden / Borough Alderman,5,1 / 2 / 3 / 4 / 5,Rare / Uncommon / Super Rare,AF-STARTER-01,0,0,0 of 5,mk_oatmeal_ward_clerk_1 mk_oatmeal_safety_inspector_2 mk_oatmeal_jazz_singer_3 mk_oatmeal_town_warden_4 mk_oatmeal_alderman_5
 Patch,Raccoon,Civics / Commerce / Crafts / Science,Town Auditor / Guild Investigator / Salvage Foreman / Junkyard Inventor / Recycling Scout,5,0 / 2 / 3 / 4 / 5,Uncommon / Rare,AF-STARTER-01 / AF-NIGHT-01 / AF-HATS-01,1,0,0 of 5,pp_patch_1 ns_patch_2 pp_patch_2 mh_patch_4 pp_patch_3
+Peanut,Squirrel,Commerce / Food,Ledger Apprentice / Barista / Accountant / Café Manager / Town Comptroller,5,0 / 1 / 2 / 4 / 5,Uncommon / Super Rare / Rare,AF-STARTER-01,0,0,0 of 5,mk_peanut_ledger_0 mk_peanut_barista_1 mk_peanut_accountant_2 mk_peanut_cafe_manager_4 mk_peanut_comptroller_5
 Pebble,Otter,Civics / Commerce,Harbour Warden / Ferry Master / Night Ferry / Bridge Courier,4,0 / 1 / 3 / 5,Uncommon / Rare / Super Rare,AF-NIGHT-01 / AF-WHISKER-01 / AF-HATS-01,0,0,0 of 4,ns_pebble_0 ww_pebble_1 mh_pebble_3 mh_pebble_5
 Pip,Squirrel,Lore / Commerce / Science,Chief Archivist / Travelling Storyteller / Natural Philosopher / Archivist / Story Collector,5,0 / 2 / 3 / 4 / 5,Uncommon / Rare / Legendary,AF-STARTER-01 / AF-HATS-01 / AF-NIGHT-01,1,0,0 of 5,rr_pip_1 mh_pip_2 rr_pip_2 ns_pip_4 rr_pip_3
 Pippa,Cat,Science / Agriculture,Moon Gardener / Conservatory Keeper / Herb Cook / Glasshouse Curator / Potting Helper,5,0 / 2 / 3 / 4 / 5,Uncommon / Rare / Super Rare,AF-WHISKER-01 / AF-HATS-01 / AF-NIGHT-01,0,0,0 of 5,ww_pippa_1 ww_pippa_2 mh_pippa_3 ww_pippa_3 ns_pippa_5

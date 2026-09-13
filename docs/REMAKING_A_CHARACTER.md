@@ -16,9 +16,12 @@ tick list), [TOWN_BIBLE.md](TOWN_BIBLE.md) (the shared world), and
 
 A request looks like this, and may be much vaguer:
 
-> I want to replace the Acorn cards. His backstory is now: he ran the family nut stall until the
-> bridge tolls ate the margin, so he retrained as a cartwright. I want him to have 3 cards in
-> Commerce and 2 in Crafts.
+> I want to replace the Acorn cards. We are going to rename them Peanut, first. They are a bright,
+> kind accountant who has always had a lot of friends. They should have 3 cards in the Commerce track
+> as an accountant and similar jobs in the same career track at 0, 2 and 5 cost; they should also
+> have 2 cards in a (new) Food category as a barista and café manager at 1 and 4 cost.
+
+(That is the real request that produced Peanut — §9 walks through what the agent filled in.)
 
 Everything stated is **fixed** — the agent does not improve it, second-guess it, or quietly widen it.
 Everything unstated is **the agent's to fill in**, chosen to fit the backstory, the species charter
@@ -35,6 +38,14 @@ and the existing set:
 
 **"Field" means study**: Agriculture, Civics, Commerce, Crafts, Lore, Science. "3 in Commerce and 2
 in Crafts" means three of the five versions have `"study": "Commerce"`.
+
+**A new study is the maker's call, and it is a bigger change than it looks.** Peanut opened **Food**.
+Declare it in the maker set's own `studies` and describe it in `newStudies` (what the study is, who
+introduced it, what is still owed). It is contained while the maker shelf is unplayable — no printed
+card, deck or rule mentions it — but before the maker set can be played, a new study has to be added
+to the printed set's `studies`, given a place in the species charters, and the eight printed decks
+re-checked: they were tuned against six studies. A new study also needs an icon and a card backdrop
+in `src/ui/art.js`, or its cards render as a grey dot on a grey sky.
 
 **Species is fixed.** Acorn is a Squirrel and stays one unless the maker says otherwise — species is
 a design space with a charter (`spec/species.json`), and the charter constrains what the abilities
@@ -65,24 +76,34 @@ The file has two top-level arrays:
 
 ```jsonc
 {
-  "name": "Acorn",
+  "name": "Peanut",
+  "renamedFrom": "Acorn",          // required when the character is renamed — see below
   "species": "Squirrel",
-  "studies": ["Commerce", "Crafts"],
-  "backstory": "Two or three paragraphs. Where he came from, what changed, what he does now, what\nhe is bad at. Written as town history, not as a stat justification.",
-  "voice": "Brisk, over-explains prices, never finishes a sentence about his father.",
+  "studies": ["Commerce", "Food"],
+  "pronouns": "they/them",
+  "backstory": "Two or three paragraphs. Where they came from, what changed, what they do now, what\nthey are bad at. Written as town history, not as a stat justification.",
+  "voice": "Warm, quick, faintly bookkeeperish. Never says 'no', says 'not this quarter'.",
   "arc": "How the versions escalate: what the apprentice has that the master doesn't, and why the master is worth 5 Supply.",
   "remade": "2026-09-13",
   "retires": [
-    { "id": "rr_acorn_2", "why": "The Guild Broker belongs to the old tolls plot; nothing in the new arc carries it." }
+    { "id": "rr_acorn_2", "why": "Nothing in the new arc carries the Guild Broker." }
   ],
   "wantedVerbs": [
-    { "verb": "swapCardWithOpponent", "why": "His cart trades goods; the story wants a swap.", "workaround": "Used draw + opponentTopdeckFromHand instead." }
+    { "verb": "shiftBonusPerCharacter", "why": "The story wants every shift to pay +1 as a standing rule.", "workaround": "An onShiftCompleted ability with no self condition — same outcome, logged per shift." }
   ]
 }
 ```
 
 `backstory`, `voice` and `arc` are what the next agent — and the flavor text — work from. `retires`
-and `wantedVerbs` are covered in §4 and §6.
+and `wantedVerbs` are covered in §4 and §6. `wantedArt` lists cards whose illustration does not exist
+yet (§2, `art`). `pronouns` is worth setting whenever the maker gives them — the flavor and the
+backstory should use them.
+
+**Renaming a character.** The maker may rename anyone (Acorn became Peanut). When they do,
+`renamedFrom` carries the printed name, and it is not optional: everything that checks a remake —
+which printed versions exist, whether any were left unaccounted for, what the spreadsheet shows —
+finds them through that link. The cards themselves carry the **new** name; only `renamedFrom` and the
+`remakes` ids point back. `npm test` fails a renamed character that has no `renamedFrom`.
 
 ### The card
 
@@ -91,18 +112,18 @@ A maker card uses exactly the printed schema (see the `$comment` at the top of
 
 ```jsonc
 {
-  "id": "mk_acorn_cartwright_2",      // mk_<character>_<job>_<cost>; must not collide with a printed id
+  "id": "mk_peanut_accountant_2",     // mk_<character>_<job>_<cost>; must not collide with a printed id
   "type": "character",
-  "name": "Acorn",
-  "title": "Cartwright",
-  "job": "Cartwright",
+  "name": "Peanut",                   // the new name; only `remakes` and `renamedFrom` point back
+  "title": "Accountant",
+  "job": "Accountant",
   "species": "Squirrel",
-  "study": "Crafts",
+  "study": "Commerce",
   "cost": 2,
   "shift": { "delay": 1, "output": 2 },
-  "text": "Upgrades Acorn. Busy: move a shift from one of your Characters to another.",
-  "flavor": "The stall paid for the axles; the axles outlived the stall.",
-  "abilities": [ { "trigger": "busy", "effect": { "do": "moveShift" } } ],
+  "text": "Upgrades Peanut. Busy: take every Supply your Characters have put by.",
+  "flavor": "Peanut calls it 'bringing the tins in', and has never once been wrong about which tin.",
+  "abilities": [ { "trigger": "busy", "effect": { "do": "takeStoredSupply" } } ],
   "art": { "atlas": "neighbors", "tile": 14 },
   "remakes": "rr_acorn_1"
 }
@@ -110,7 +131,7 @@ A maker card uses exactly the printed schema (see the `$comment` at the top of
 
 - **`remakes`** is an id, or a list of ids, of printed cards this card replaces. **Ids, never names** —
   that is what survives you renaming the card later.
-- **`rarity` and `power` are not hand-written.** `npm run stamp` computes them (§5).
+- **`rarity` and `power` are not hand-written.** `npm run stamp -- --maker` computes them (§5).
 - **`art`**: inherit the atlas/tile of the printed card being replaced when the illustration still
   fits the new job. When it doesn't, leave `art` off and add a line to the character entry's
   `wantedArt` so it can be commissioned later. Never point at a tile that depicts a different job.
@@ -180,7 +201,7 @@ Cheap versions do one small thing; expensive ones pay off the arc.
 Printed practice is roughly `delay 1 → output 1–2`, `delay 2 → output 4–5`. A character whose story
 is about patience can sit at the slow end; one whose story is about hustle should not.
 
-**Rarity is computed.** After writing the cards run `npm run stamp`, which rates every card
+**Rarity is computed.** After writing the cards run `npm run stamp -- --maker`, which rates every maker card
 (`power^0.6 × efficiency^0.4`) and stamps `rarity` and `power`. Rarity then caps deck copies —
 Common 3, Uncommon 3, Rare 2, Super Rare 1, Legendary 1 — so it is a balance fact, not a badge.
 If a card comes back Legendary and the story says "ordinary cartwright", the card is too strong:
@@ -204,10 +225,15 @@ not a wish.
 **Effects**: `seq`, `gainSupply`, `opponentGainSupply`, `giveSupplyToOpponent`, `draw`, `discard`,
 `addMod`, `readyCharacter`, `readyNextTurn`, `rehire`, `recruitFromHand`, `reorderDeckTop`,
 `eventFromDumpToDeckBottom`, `eventFromDumpToHand`, `peekMarketDeck`, `opponentTopdeckFromHand`,
-`unemployOpponentCharacter`, `raiseOwnBid`, `scryDeck`, plus the species signatures `storeSupply`,
+`unemployOpponentCharacter`, `raiseOwnBid`, `scryDeck`, `makeBusy`, plus the species signatures `storeSupply`,
 `takeStoredSupply`, `takeFromCityDump`, `protectCharacter`, `moveShift`, `selfReady`, `cancelReveal`,
-`advanceCharacter`. (`test/cardset.test.mjs` is the authority — read it, not this list, if they ever
+`advanceCharacter`. (`test/card-vocabulary.mjs` is the authority — read it, not this list, if they ever
 disagree. Shared-shock verbs like `everyoneLosesSupply` belong to Disruptions, not Characters.)
+
+Some of the vocabulary exists *because* a remake asked for it — `makeBusy`, `scryDeck`'s `to: "dump"`,
+`protectCharacter`'s `notSelf`, filtered mods, `buildingDiscount` and `leavesAfter` were all wishes
+first (see `docs/ENGINE_API.md`, and the `wantedVerbs` of the characters that wanted them). That is the
+route: wish, then approval, then engine, then the card.
 
 **When the story wants something the engine cannot do**: do not invent a verb, and do not write an
 unplayable card. Build the nearest thing out of verbs that exist, and log the gap in the character
@@ -245,15 +271,18 @@ sentence self-contained, since that is what a player reads at a glance.
 ## 8. Before you commit
 
 ```
-npm test                      # card schema, effect vocabulary, maker-set integrity
-npm run stamp                 # compute rarity + power for the new cards
-npm run identity -- --check   # species still play differently; no power creep
-npm run characters            # regenerate docs/characters.csv + docs/character_versions.csv
+npm test                          # card schema, effect vocabulary, maker-set integrity
+npm run stamp -- --maker          # compute rarity + power for the new cards
+npm run identity -- --check       # species still play differently; no power creep
+npm run characters                # regenerate docs/characters.csv + docs/character_versions.csv
 ```
+
+`npm run stamp` with no flag stamps the **printed** set and must not be run in a remake batch.
 
 Then check by eye, in the Deck Workshop (`npm run serve`, **Build your own deck** → **Maker cards**):
 
-- every new card renders, and **Read** shows the full flavor;
+- every new card renders, **Read** shows the full flavor, and **Story** shows the backstory beside
+  every version's flavor — that panel is where the writing is actually judged;
 - on the printed shelf, sorted by **Character**, every old version of this character shows
   `✓ Remade (maker card)` or is listed in `retires`;
 - the counts in the shelf bar moved by the number you expected.
@@ -263,7 +292,24 @@ what was retired and why, and anything logged in `wantedVerbs`.
 
 ---
 
-## 9. The do-nots
+## 9. A worked example
+
+**Peanut** (`spec/maker_card_set.json`) is the first character through this process and the reference
+for the next one. The request was: rename Acorn to Peanut, a bright and kind accountant with a lot of
+friends; three Commerce cards on an accountant track at 0/2/5, two cards in a new Food study as a
+barista and café manager at 1/4; abilities about getting more Supply than normal; the 5 giving every
+Character extra Supply.
+
+What the agent filled in: the café as the reason a Commerce accountant also works in Food, the job
+titles, the shift numbers, all five abilities out of the Squirrel's storage charter (`storeSupply`
+early, `takeStoredSupply` as the payoff), the flavor thread, and the mapping of all five printed
+Acorn versions plus *Acorn's Bidding War* onto the new cards. What the model then corrected: the
+cost-2 first came back **Legendary**, which no ordinary accountant should be, so the deal-making
+half of its ability moved up to the cost-4 where the friends are — and the batch now rates
+2.95 / 3.60 / 5.69 / 5.14 / 5.08, against the printed Acorn's 2.95 / 3.40 / 5.69 / 5.12 / 5.63. No
+creep, and the arc reads upward.
+
+## 10. The do-nots
 
 - **Do not touch `spec/starter_card_set.json`.** The printed set is the control copy.
 - **Do not change `src/engine/`** in a remake batch. New verbs are separate, approved work.

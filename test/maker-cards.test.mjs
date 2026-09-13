@@ -8,9 +8,34 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { SET } from './helpers.mjs';
 import { characterIndex, groupByCharacter, characterOf, isCharacterCard } from '../src/engine/characters.js';
+import { EFFECTS, TRIGGERS, MOD_KEYS, CONDITIONS, PASSIVE_KEYS } from './card-vocabulary.mjs';
 
 const MAKER = JSON.parse(fs.readFileSync(new URL('../spec/maker_card_set.json', import.meta.url), 'utf8'));
 const printedById = Object.fromEntries(SET.cards.map((c) => [c.id, c]));
+
+/** Every study and species a maker card may declare: the printed ones, plus any the maker set adds. */
+const STUDIES = new Set([...SET.studies, ...(MAKER.studies || [])]);
+const SPECIES = new Set([...SET.species, ...(MAKER.species || [])]);
+
+/**
+ * The printed versions of a remade character. A rename is the point of `renamedFrom`: Peanut's
+ * printed versions are Acorn's, and without following that link the checks below would silently
+ * pass on a character whose whole batch is unaccounted for.
+ */
+function printedVersionsOf(entry) {
+  const printedName = entry.renamedFrom || entry.name;
+  return SET.cards.filter((c) => c.name === printedName && (c.type === 'character' || c.type === 'marketCharacter'));
+}
+
+function walkEffect(eff, where) {
+  assert.ok(eff && eff.do, `${where}: effect with no "do"`);
+  assert.ok(EFFECTS.has(eff.do), `${where}: unknown effect "${eff.do}" — the engine does not interpret it`);
+  if (eff.do === 'seq') {
+    assert.ok(Array.isArray(eff.steps) && eff.steps.length, `${where}: seq with no steps`);
+    eff.steps.forEach((st, i) => walkEffect(st, `${where}.steps[${i}]`));
+  }
+  if (eff.do === 'addMod') assert.ok(MOD_KEYS.has(eff.key), `${where}: unknown mod key "${eff.key}"`);
+}
 
 test('the maker set is a separate, non-playable shelf', () => {
   assert.equal(MAKER.setId, 'AF-MAKER-01');
@@ -40,6 +65,35 @@ test('every maker card remakes printed cards that exist', () => {
   }
 });
 
+test('maker cards stay inside the vocabulary the engine interprets', () => {
+  for (const card of MAKER.cards) {
+    if (card.species) assert.ok(SPECIES.has(card.species), `${card.id}: undeclared species ${card.species}`);
+    if (card.study) assert.ok(STUDIES.has(card.study), `${card.id}: undeclared study ${card.study}`);
+    if (card.type === 'character') {
+      assert.ok(card.shift && card.shift.delay >= 1 && card.shift.output >= 0, `${card.id}: a Character needs a shift`);
+      assert.ok(card.cost >= 0 && card.cost <= 5, `${card.id}: cost ${card.cost} is outside 0-5`);
+    }
+    for (const r of card.requires || []) {
+      if (r.study) assert.ok(STUDIES.has(r.study), `${card.id}: requires undeclared study ${r.study}`);
+      if (r.species) assert.ok(SPECIES.has(r.species), `${card.id}: requires undeclared species ${r.species}`);
+    }
+    for (const ab of card.abilities || []) {
+      assert.ok(TRIGGERS.has(ab.trigger), `${card.id}: unknown trigger "${ab.trigger}"`);
+      for (const key of Object.keys(ab.condition || {})) {
+        assert.ok(CONDITIONS.has(key), `${card.id}: unknown condition "${key}"`);
+      }
+      // A passive is a standing rule named by `key`, not an effect that runs.
+      if (ab.trigger === 'passive') {
+        assert.ok(PASSIVE_KEYS.has(ab.key), `${card.id}: unknown passive key "${ab.key}"`);
+        continue;
+      }
+      walkEffect(ab.effect, `${card.id}.abilities`);
+    }
+    if (card.effect) walkEffect(card.effect, `${card.id}.effect`);
+    assert.ok(card.flavor, `${card.id}: every remade card carries flavor that references the backstory`);
+  }
+});
+
 test('every remade character is well formed and accounts for its printed versions', () => {
   const entries = MAKER.characters || [];
   assert.ok(Array.isArray(entries), 'the maker set needs a characters list');
@@ -50,7 +104,8 @@ test('every remade character is well formed and accounts for its printed version
       assert.ok(entry[field], `character entry ${entry.name || '?'} needs ${field}`);
     }
     // Species is fixed: a remade character keeps the species its printed versions had.
-    const printed = SET.cards.filter((c) => c.name === entry.name && (c.type === 'character' || c.type === 'marketCharacter'));
+    const printed = printedVersionsOf(entry);
+    assert.ok(printed.length, `${entry.name}: no printed versions found${entry.renamedFrom ? ` under renamedFrom "${entry.renamedFrom}"` : ' — a renamed character needs renamedFrom'}`);
     if (printed.length) {
       assert.equal(entry.species, printed[0].species, `${entry.name} changed species`);
     }
@@ -62,6 +117,12 @@ test('every remade character is well formed and accounts for its printed version
       assert.ok(printedById[id], `${entry.name} retires unknown printed card ${id}`);
       const claim = MAKER.cards.find((c) => [].concat(c.remakes || []).includes(id));
       assert.ok(!claim, `${entry.name} retires ${id}, but ${claim && claim.id} also remakes it`);
+    }
+    // Cards carry the new name; the printed versions carry the old one.
+    for (const card of MAKER.cards.filter((c) => c.type === 'character')) {
+      if ([].concat(card.remakes || []).some((id) => printed.some((d) => d.id === id))) {
+        assert.equal(card.name, entry.name, `${card.id} remakes one of ${entry.name}'s versions but is named ${card.name}`);
+      }
     }
     // The promise of the process: once a character is remade, no printed version is left silent.
     const claimed = new Set(MAKER.cards.flatMap((c) => [].concat(c.remakes || [])));

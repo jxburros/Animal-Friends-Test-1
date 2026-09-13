@@ -4,9 +4,1237 @@
  "name": "Maker Cards",
  "playable": false,
  "note": "Work in progress: cards here cannot be put in a deck yet.",
- "species": [],
- "studies": [],
+ "species": [
+  "Squirrel",
+  "Badger",
+  "Owl"
+ ],
+ "studies": [
+  "Commerce",
+  "Crafts",
+  "Civics",
+  "Food",
+  "Entertainment"
+ ],
  "decks": [],
- "characters": [],
- "cards": []
+ "characters": [
+  {
+   "name": "Peanut",
+   "renamedFrom": "Acorn",
+   "species": "Squirrel",
+   "studies": [
+    "Commerce",
+    "Food"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Peanut keeps the books, and has kept them since they were small enough to need two paws for the ledger. Half the borough's accounts pass through them: the grange's feed bills, the ferry's tolls, the guild's quarterly returns. Peanut is bright in the plain way that gets noticed late — they find the error, they find the cheaper supplier, and they tell you about both, cheerfully, whether or not you asked.\n\nThe café came second and turned out to be the point. Peanut took the day counter at Bean's family coffeehouse by the Hiring Hall — mostly to have somewhere to spread the ledgers out, and because Bean needed somebody steady behind it — and discovered that if you give the whole town coffee they will tell you what everything costs. Now the café is the office. The accounts get done between orders, the good deals get passed across the counter with the change, and a working animal who stops in for a cup leaves knowing something they did not know before.\n\nWhat Peanut is bad at is spending. Everything goes by — in the till, in the tin, in the café cash box — against a rainy day that a Squirrel is always sure is coming. The town is richer for Peanut and Peanut is poor most of the year, right up until the moment they are not.\n\nPeanut does not own the café and has never wanted to. It is Bean's, inherited and held on to with both wings; Peanut keeps its books, works its counter and, on the days Bean is coming apart, quietly runs it.",
+   "voice": "Warm, quick, faintly bookkeeperish. Gives you the number and then the kinder version of the number. Never says 'no', says 'not this quarter'.",
+   "arc": "Commerce is the career: Ledger Apprentice (0) learns to put a little by, Accountant (2) learns to call it back in when it is needed, Town Comptroller (5) stops working their own desk and makes every animal in town a little better paid. Food is the room the career happens in: Barista (1) takes a coin off every shift that passes the counter, Café Manager (4) turns the café into the place friends are hired from. The 0 and the 1 are deliberately small — the Squirrel hole is slow starts, and Peanut's whole story is that the payoff is later.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "shiftBonusPerCharacter",
+     "why": "The Comptroller wants every Character's shift to pay +1 as a standing rule; `shiftBonus` is a player-level mod that `consumeMod` spends on the next shift only, so it cannot express a permanent per-shift bonus.",
+     "workaround": "Used an `onShiftCompleted` ability with no `self` condition, which fires for every shift the player completes and gains 1 Supply — the same outcome, logged per shift rather than folded into the shift's output.",
+     "resolved": "Not built, deliberately: the Comptroller's `onShiftCompleted` ability already produces exactly the asked-for outcome (+1 on every shift you complete), and a second mechanism for the same thing would be two ways to say one sentence."
+    },
+    {
+     "verb": "recruitDiscountForStudy",
+     "why": "The Café Manager wanted 'your Food and Commerce Characters cost 1 less to recruit'; `recruitDiscount` is untyped and applies to the next recruit of any kind.",
+     "workaround": "Left the discount untyped and put the character in the flavor instead.",
+     "resolved": "Built: a mod may carry a `filter`, and `recruitCost` only counts the mods that match the animal being recruited. The Café Manager's discount is good for Food and Commerce."
+    }
+   ],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_peanut_barista_1",
+      "mk_peanut_cafe_manager_4"
+     ],
+     "why": "No painted tile shows a Squirrel behind a counter. nightworkers tile 2 is Bean's café, but Bean is an Owl. With no `art` set they fall back to the painted Squirrel forager scene, not the new Food backdrop — the painted species tile always wins over the drawn one. A Squirrel behind a counter would fix it."
+    }
+   ]
+  },
+  {
+   "name": "Oatmeal",
+   "renamedFrom": "Barley",
+   "species": "Badger",
+   "studies": [
+    "Civics",
+    "Entertainment"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Oatmeal is the oldest of nine, and it shows in everything he does. He was the one who counted heads at the door, who stood between the little ones and whatever was coming, who learned early that the way to keep everybody safe is to know the rules better than the trouble does. The habit never left him; it just got a desk.\n\nHe works for the town now — the ward office, the safety notices, the register of who lives where and who to call when the river comes up. Badgers dig in, and Oatmeal digs in on other animals' behalf: when a shock passes through the borough, the households that come through it unbothered are usually the ones he got to first. He is not fast and he is not clever about it. He is simply always already there.\n\nTuesdays he sings. The band is four of his own brothers and sisters and a Fox on the piano, the venue is whatever room will have them, and Oatmeal — who spends every other night of the week being the most responsible animal in the First Boroughs — stands up in front of a room and is, for an hour, somebody's favourite singer. His family has never missed a show.",
+   "voice": "Careful, unhurried, faintly official — until he is on a stage, where he is none of those things.",
+   "arc": "Civics is the duty: Ward Clerk (1) braces the town once, Safety Inspector (2) makes his neighbours untouchable for a turn, Town Warden (4) braces it every single turn, and Borough Alderman (5) does both at once for the whole town. Entertainment is the Tuesday: Jazz Singer (3) protects nobody from anything except despair, and turns out to be worth something anyway. Every ability is the same instinct — stand between the shock and whoever is behind you — and all of it is the Badger signature, `cancelReveal`, which is exactly what the charter says a Badger is for.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "protectOtherPlayerCharacter",
+     "why": "'Protecting other animals' wants a shield another Mayor's Characters could also stand behind; every protective verb in the engine is scoped to the player who plays the card.",
+     "workaround": "Protected his own town instead — `cancelReveal` for shared shocks and `unemploymentShield` for effects, which is the same instinct within the rules.",
+     "resolved": "Not built, deliberately: a shield another Mayor's Characters could stand behind would help the rival in a two-player game. The intent — protecting the OTHER animals in your own town — is now expressible with `protectCharacter` + `notSelf`; Oatmeal keeps `unemploymentShield`, which covers his whole town at once."
+    }
+   ],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_oatmeal_jazz_singer_3"
+     ],
+     "why": "No painted tile shows anyone on a stage. With no `art` set, a Badger character falls back to the painted Badger workbench scene rather than the new Entertainment backdrop — the painted species tile always wins over the drawn one. An open-mic painting would fix it."
+    }
+   ]
+  },
+  {
+   "name": "Barnaby",
+   "species": "Owl",
+   "studies": [
+    "Commerce"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Nobody knows where Barnaby came from, and Barnaby has never once been unhelpful about it — they answer every question pleasantly and afterwards you notice you have learned nothing. They arrived with a ledger case and a hat, they audit the night's books better than anyone in the Capital City, and they are gone before the first shift bell. The Hiring Hall has no address for them. The Counting House has stopped asking.\n\nTwo cracks in it. Put an apple pie in front of Barnaby and something goes wrong with them — the hands go still, the voice goes strange, and they will not say why, and they will not eat it, and they will not let anyone take it away either. And mention anime, and you meet a completely different animal: bright, loud, talking with both wings about episodes nobody else in the borough has seen, for as long as you will let them. Then the hat goes back on.\n\nThe town has settled on liking them and not prying, which is the most First Boroughs solution possible to a genuine mystery.",
+   "voice": "Pleasant, precise, entirely uninformative — except on exactly two subjects.",
+   "arc": "One card, as printed: a Capital City hire who sees further down your deck than anyone and bins what he does not like the look of. The mystery is the flavor; the auditing is the mechanism. His shift is poor — two turns for two — because what you are hiring is the eyes.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "scryDeck to the Town Dump",
+     "why": "The maker asked for 'look at the top 4 and send any you want to the town dump'. `scryDeck` can only put the cards you do not want on the BOTTOM of your deck — nothing in the engine moves a card from your deck to your Town Dump.",
+     "workaround": "Kept the look at four and the choice of which to get rid of, with the unwanted cards going to the bottom of the deck instead of the Dump. The card's text says what it really does. A `binDeckCards` (or a `to: \"dump\"` option on scryDeck) would be a small engine change and would make this card exactly right.",
+     "resolved": "Built. `scryDeck` takes `to: \"dump\"`, and the card now says what the maker asked for."
+    }
+   ]
+  },
+  {
+   "name": "Barrow",
+   "species": "Badger",
+   "studies": [
+    "Crafts"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Barrow cut stone in the Capital City for twenty years — frontages, stairs, the kind of work that goes up behind hoardings and is admired by animals who will never know your name. He was good at it and it was killing him by inches: too loud, too fast, too many buildings that were finished before he had finished looking at them.\n\nSo he came out to the First Boroughs, where the work is smaller and the town is not finished. That is the whole appeal. Barrow wanted to be somewhere still being built — somewhere a wall he sets this spring will still be the wall everyone walks past in thirty years, and somewhere the animals walking past it will know who set it. He is slow to talk, quick to help, and has opinions about foundations that he will share whether or not you have asked.\n\nHe bids on every lot that comes up with a roof on it.",
+   "voice": "Few words, all of them load-bearing. Warms up completely on the subject of mortar.",
+   "arc": "One card, as printed: a Capital City hire, and the most expensive animal in the game. His whole pull is toward the Capital City's lots — he wins them slightly more often, and pays you for every one that is not a Statue.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "buildingDiscount / a `building` condition",
+     "why": "The maker asked for an ability that helps you get more Buildings specifically. The engine can only discount a Building through a city rule (`buildingCostDelta`, which only an Ordinance may set), and the only card-level conditions on a Capital City card are `statue` and `nonStatue` — there is no way to say 'a Building' on a Character.",
+     "workaround": "Bid higher and get paid for what you win: `firstBidPlus1` while Barrow is upright, and 1 Supply whenever you gain a non-Statue Capital City card. Buildings are bought at auction like everything else, so this is the nearest honest thing — it just also helps with Market cards.",
+     "resolved": "Built as a `buildingDiscount` mod, which `cardCostFor` applies to Buildings only. Barrow now makes a Building 1 cheaper at the start of each of your turns."
+    }
+   ]
+  },
+  {
+   "name": "Bean",
+   "species": "Owl",
+   "studies": [
+    "Food"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Bean's parents ran the coffeehouse by the Hiring Hall for thirty years, and then retired to the tropics on a Tuesday with four days' notice and a postcard that said 'you'll be marvellous'. Bean was not consulted. Bean has not stopped moving since.\n\nThey open before the early shift and they are still wiping down when the night workers come off, and in between they are three orders behind and completely convinced the whole thing is about to come apart. It never quite does. The coffee is good, the room is warm, and every animal in the borough has at some point been got back on their feet by Bean putting something hot in front of them without being asked — which is the one thing Bean does not think of as work, and the one thing the town would miss most.\n\nThey keep it open for their parents, who are not coming back, and who would not have minded either way. Peanut keeps the books, works the counter, and takes over on the days Bean is coming apart.",
+   "voice": "Fast, apologetic, mid-sentence about something else. Calms down entirely while actually making coffee.",
+   "arc": "Unchanged from the printed cards at the maker's word — the same wake-up-call Owl at 1, 3 and 5 — and moved into Food, which is the study the café should always have been.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": []
+  },
+  {
+   "name": "Brett",
+   "renamedFrom": "Bram",
+   "species": "Badger",
+   "studies": [
+    "Civics"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Brett practises in the Capital City, where the fees are the size of a small town's year and the waiting room has its own waiting room. He does not live in the First Boroughs and has never pretended he might. He comes out when the borough needs somebody who knows exactly how the Capital City's rules are written — which lots may be challenged, which tie goes to whom, what the word 'pending' is actually doing in a clause — argues it, wins it, bills for it, and takes the evening coach home.\n\nThe town has complicated feelings about this. He is expensive, he is faintly amused by all of them, and he has never once lost them a lot they asked him to take. The Counting House budgets for him a year ahead. Oatmeal, who does the same work for a ward salary and no applause, is professionally polite to him and privately unimpressed.\n\nHe is the other half of Barrow's story: the same big city, the opposite decision. Barrow came out and stayed because the town was still being built. Brett comes out, does the work better than anyone available, and goes back.",
+   "voice": "Dry, fast, expensive. Explains the rule once, then explains what the rule is for, and the second explanation is the one that wins.",
+   "arc": "One card, and deliberately the top of the ladder: a Capital City hire at the highest cost in the game, retained for three of your turns and then gone. He works hard while he is here — a full master's shift — because there is no second season of Brett. What you buy is the ties and the challenge income, for as long as the retainer runs. At two turns the model rated him 3.46 and no Mayor would ever have hired him; at three he sits at 5.81, against printed Bram's 5.19 for an animal who never leaves.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "a hire with a term (e.g. `leavesAfter`)",
+     "why": "The maker asked for a lawyer hired TEMPORARILY. A Character hired out of the Capital City moves into your town and stays there for the rest of the game; nothing in the engine gives a Character a term, a contract length or an exit. Only Limited Events expire (`duration`).",
+     "workaround": "Delivered the 'hired from the big city' half, which is real — he is a Capital City hire, not a townsfolk — and put the temporariness in the backstory and flavor. The nearest true mechanism would be a Limited Event ('Brett's Retainer', 2 turns of his courtroom passives) instead of, or alongside, the Character; that is a new card rather than a remake, so it is the maker's call.",
+     "resolved": "Built as `leavesAfter` on the card: the hire arrives with a term, it ticks down at the end of each of its Mayor's turns, and when it runs out they go back to the Capital City. Brett is retained for two turns."
+    },
+    {
+     "verb": "a Civics-typed challenge bonus",
+     "why": "His help is meant to be civic — the town's case, not any purchase. `winTiesAsChallenger` applies to every challenge you make.",
+     "workaround": "Left it untyped, as the printed cards that use this passive do.",
+     "resolved": "Not built: a challenge is made on a Capital City lot, and a lot has no study to type the bonus by. The Building discount Barrow got is the nearest thing the Capital City can express, and it belongs to a stonecutter rather than a lawyer."
+    }
+   ]
+  },
+  {
+   "name": "Berry",
+   "renamedFrom": "Bramble",
+   "species": "Hedgehog",
+   "studies": [
+    "Crafts",
+    "Civics",
+    "Science"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Berry retired. There was a party, a speech, a clock from the guild, and a plan involving the allotment and a great many naps. The retirement lasted about a fortnight, which everyone who knows Berry had privately predicted, because the trouble with being the animal who can fix it is that the borough knows where you live.\n\nIt starts small — somebody's hinge, somebody's pump — and by the spring they are on the committee, and by midsummer they are the one the Town Workshop calls when the clock stops and nobody under fifty can say why. Berry says yes. Berry has never in their long life managed to say the other thing. They arrive with their own tools and a tin of something baked, they work quietly and much faster than anyone expects, and they will not hear a word about payment beyond the tea.\n\nWhat the town sometimes forgets, because Berry is so kind about it, is that they are the cleverest animal in the First Boroughs. The clock they mended at ninety keeps better time than the one that replaced it. Younger animals come to them for the answer and leave having been gently walked into working it out themselves, which is a harder trick and takes longer, and Berry has all the time in the world for it.",
+   "voice": "Unhurried, warm, faintly amused. Asks after your family first. Gives the answer as a question so you can have it as your own idea.",
+   "arc": "Six cards across three studies, and one continuous joke: Berry keeps being pulled back in. Crafts is the bench — Retired Tinker (0) and Workshop Elder (4), the quills-out protection the Hedgehog charter is built on. Science is the mind — Clockmaker (1) orders what is coming, Consulting Engineer (3) makes the next machine pay double. Civics is the part they never volunteered for and cannot get out of — Committee Volunteer (2) drags somebody else back out of Unemployment with them, and Guild Warden (5) does it for free and puts the quills up while they are at it.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "protectCharacter with a `notSelf` filter",
+     "why": "The grandparently half of Berry wants to put the quills around somebody ELSE. `protectCharacter` auto-picks the source Character whenever it is a legal option, and `matchesFilter` has no `notSelf` key (only `advanceCharacter` and `readyNextTurn` handle notSelf, and they do it in their own code).",
+     "workaround": "Berry protects Berry, and shields the whole town from Unemployment at 4 with `unemploymentShield` — which the Hedgehog charter explicitly calls part of the signature.",
+     "resolved": "Built. `protectCharacter` honours `filter: { notSelf: true }`, and the Guild Warden puts the quills around somebody else."
+    }
+   ]
+  },
+  {
+   "name": "Biff",
+   "renamedFrom": "Bristle",
+   "species": "Hedgehog",
+   "studies": [
+    "Civics"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Biff grew up on the edge of the borough, on the kind of smallholding where you are big before you are old. He was never top of the class and has never once claimed otherwise — he says it about himself before anyone else can, cheerfully, as though it settles the matter. What he had was the shoulders, the legs, and a completely unembarrassed wish for the place to be better than it was.\n\nSo he took the constable's job, which nobody else wanted, and turned out to be remarkable at it. Not because he is hard: because he is not. Biff knows every animal on his beat by name and most of them by their parents, and he has worked out over twenty years that a town is not made safer by taking animals out of it. He stops the trouble — he is a Hedgehog and he is immovable and the trouble does stop — and then he walks the troublemaker home, and a week later he has found them something to do.\n\nAnimals who came up before him have run out of ways to explain that this is not how policing is supposed to work. Biff listens politely to all of them. The beat has the lowest trouble in the First Boroughs, and he does not think it is because of anything clever he did.",
+   "voice": "Plain, friendly, a bit loud. Calls everyone by name. Apologises for the interruption before stopping you.",
+   "arc": "Two constables, one career. Beat Constable (2) is Biff on the lane: he comes down it and one of the rival's animals goes back to work. Chief Constable (4) is Biff after twenty years: two of them go back to work, and then he finds a job for somebody who has not got one — at the going rate; Biff finds you the job, he does not pay your wages. `makeBusy` never touches an animal mid-shift, never one pledged into an auction and never one behind a Hedgehog's quills, which is the whole of Biff's method: he stops you, he does not take anything from you.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "a one-sided `makeBusy` / advance-backwards on an opponent's Character",
+     "why": "The maker asked for abilities that make an OPPONENT'S Characters busy. Nothing in the engine turns a Character back toward Busy: `advanceCharacter` only turns toward upright, and the only way to reach across the table at all is `unemployOpponentCharacter`, which takes the animal's job away.",
+     "workaround": "Used `blockNextReady`, which stops every Character in BOTH towns advancing at the next Ready — the rival's animals stay down a turn longer, which is the effect asked for, and it is the printed pattern (Inkwell, Velvet, Thimble). Taking a job away was ruled out as the opposite of what Biff is for; that it costs Biff's own town the same turn is the reading the backstory wanted anyway.",
+     "resolved": "Built as `makeBusy`: turns an opponent's Character one step away from upright. It keeps advanceCharacter's manners — never a Character mid-shift, never one pledged, never one behind a Hedgehog's quills. Both of Biff's cards now use it instead of blockNextReady."
+    }
+   ]
+  }
+ ],
+ "cards": [
+  {
+   "id": "mk_peanut_ledger_0",
+   "type": "character",
+   "name": "Peanut",
+   "title": "Ledger Apprentice",
+   "job": "Ledger Apprentice",
+   "species": "Squirrel",
+   "study": "Commerce",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Peanut completes a shift, put 1 Supply by on Peanut.",
+   "flavor": "Two paws for the ledger, and a tin behind the desk that nobody is allowed to ask about.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "storeSupply",
+      "amount": 1,
+      "cap": 4
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 14
+   },
+   "remakes": "mh_acorn_0",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.95,
+    "power": 4.92,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_peanut_barista_1",
+   "type": "character",
+   "name": "Peanut",
+   "title": "Barista",
+   "job": "Barista",
+   "species": "Squirrel",
+   "study": "Food",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Upgrades Peanut. Whenever one of your Characters finishes a shift, put 1 Supply by on Peanut.",
+   "flavor": "Everyone coming off a shift walks past the counter, and nobody walks past the counter for free.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "effect": {
+      "do": "storeSupply",
+      "amount": 1,
+      "cap": 4
+     }
+    }
+   ],
+   "remakes": "ns_acorn_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.6,
+    "power": 6.63,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_peanut_accountant_2",
+   "type": "character",
+   "name": "Peanut",
+   "title": "Accountant",
+   "job": "Accountant",
+   "species": "Squirrel",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Peanut. Busy: take every Supply your Characters have put by.",
+   "flavor": "Peanut calls it 'bringing the tins in', and has never once been wrong about which tin.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "takeStoredSupply"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 14
+   },
+   "remakes": "rr_acorn_1",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.69,
+    "power": 12.25,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_peanut_cafe_manager_4",
+   "type": "character",
+   "name": "Peanut",
+   "title": "Café Manager",
+   "job": "Café Manager",
+   "species": "Squirrel",
+   "study": "Food",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Peanut. When you recruit a Character, put 1 Supply by on Peanut, draw 1 card, and your next Food or Commerce recruit costs 1 less.",
+   "flavor": "Nobody is hired in this town without someone at the café saying they were worth it, and the second one always comes cheaper.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "storeSupply",
+        "amount": 1,
+        "cap": 4
+       },
+       {
+        "do": "draw",
+        "count": 1
+       },
+       {
+        "do": "addMod",
+        "key": "recruitDiscount",
+        "value": 1,
+        "filter": {
+         "studyIn": [
+          "Food",
+          "Commerce"
+         ]
+        },
+        "expires": "nextTurnStart",
+        "consumable": true
+       }
+      ]
+     }
+    }
+   ],
+   "remakes": "rr_acorn_3",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.14,
+    "power": 12.9,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_peanut_comptroller_5",
+   "type": "character",
+   "name": "Peanut",
+   "title": "Town Comptroller",
+   "job": "Town Comptroller",
+   "species": "Squirrel",
+   "study": "Commerce",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Peanut. Whenever one of your Characters finishes a shift, gain 1 Supply.",
+   "flavor": "Peanut audited the whole borough, found everyone underpaid by a little, and fixed it in an afternoon.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 14
+   },
+   "remakes": "rr_acorn_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.08,
+    "power": 13.25,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_peanuts_standing_round",
+   "type": "event",
+   "name": "Peanut's Standing Round",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Peanut"
+    },
+    {
+     "study": "Commerce"
+    }
+   ],
+   "text": "Requires Peanut and a Commerce Character. Gain 2 Supply, then you may pay 2 Supply to raise one of your open bids by 2.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "raiseOwnBid",
+      "amount": 2,
+      "optional": true
+     }
+    ]
+   },
+   "flavor": "Peanut buys the round, the room talks, and by the third cup everyone knows what the lot is really worth.",
+   "remakes": "mh_acorns_bidding_war",
+   "rarity": "Common",
+   "power": {
+    "score": 1.56,
+    "power": 2.6,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_oatmeal_ward_clerk_1",
+   "type": "character",
+   "name": "Oatmeal",
+   "title": "Ward Clerk",
+   "job": "Ward Clerk",
+   "species": "Badger",
+   "study": "Civics",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "When Oatmeal is recruited, your town braces: the next shared shock passes it over.",
+   "flavor": "Nine of them at the table and never once a head uncounted.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "cancelReveal"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 10
+   },
+   "remakes": "rw_barley_1",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.83,
+    "power": 8.9,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_oatmeal_safety_inspector_2",
+   "type": "character",
+   "name": "Oatmeal",
+   "title": "Safety Inspector",
+   "job": "Safety Inspector",
+   "species": "Badger",
+   "study": "Civics",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Oatmeal. Busy: your Characters cannot be sent to Unemployment by an effect until your next turn.",
+   "flavor": "He walks the ward every morning of his life and writes down what he finds, every morning of his life.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "addMod",
+      "key": "unemploymentShield",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 10
+   },
+   "remakes": "ns_barley_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.58,
+    "power": 9.85,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_oatmeal_jazz_singer_3",
+   "type": "character",
+   "name": "Oatmeal",
+   "title": "Jazz Singer",
+   "job": "Jazz Singer",
+   "species": "Badger",
+   "study": "Entertainment",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Oatmeal. When Oatmeal becomes upright, the next 2 Supply an opponent's effect would take from you is not taken.",
+   "flavor": "Four of his brothers and sisters behind him, a Fox on the piano, and a room that forgets what week it has had.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "addMod",
+      "key": "lossShield",
+      "value": 2,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "remakes": "mh_barley_3",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.33,
+    "power": 9.85,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_oatmeal_town_warden_4",
+   "type": "character",
+   "name": "Oatmeal",
+   "title": "Town Warden",
+   "job": "Town Warden",
+   "species": "Badger",
+   "study": "Civics",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Oatmeal. At the start of your turn, your town braces: the next shared shock passes it over.",
+   "flavor": "The river came up twice this spring. Both times the ward was sandbagged before the bell went.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "cancelReveal"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 10
+   },
+   "remakes": "rw_barley_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.84,
+    "power": 12.15,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_oatmeal_alderman_5",
+   "type": "character",
+   "name": "Oatmeal",
+   "title": "Borough Alderman",
+   "job": "Borough Alderman",
+   "species": "Badger",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Oatmeal. At the start of your turn, your town braces for the next shared shock, and your Characters cannot be sent to Unemployment by an effect until your next turn.",
+   "flavor": "Oatmeal took the chain of office, thanked eight people by name, and asked whether the crossing outside the school had been repainted.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "cancelReveal"
+       },
+       {
+        "do": "addMod",
+        "key": "unemploymentShield",
+        "value": 1,
+        "expires": "nextTurnStart"
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 10
+   },
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.59,
+    "power": 14.58,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_barnaby_night_auditor_4",
+   "type": "marketCharacter",
+   "name": "Barnaby",
+   "title": "Night Auditor",
+   "job": "Night Auditor",
+   "species": "Owl",
+   "study": "Commerce",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "Hired from the Capital City; enters Busy. At the start of your turn, look at the top four cards of your deck and send any of them to your Town Dump.",
+   "flavor": "Ask about the ledgers and learn nothing. Ask about the serials and lose an hour.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "scryDeck",
+      "count": 4,
+      "to": "dump"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 5
+   },
+   "remakes": "ns_mkt_barnaby",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.45,
+    "power": 12.77,
+    "opportunityCost": 8.4
+   }
+  },
+  {
+   "id": "mk_barrow_stonecutter_5",
+   "type": "marketCharacter",
+   "name": "Barrow",
+   "title": "Stonecutter",
+   "job": "Stonecutter",
+   "species": "Badger",
+   "study": "Crafts",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Hired from the Capital City; enters Busy. While Barrow is upright, your first bid each turn counts as 1 higher. At the start of your turn, Buildings cost you 1 less.",
+   "flavor": "He priced the whole lot from the pavement, in his head, and was under by nothing at all.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "firstBidPlus1",
+     "requiresUpright": true
+    },
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "buildingDiscount",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 1
+   },
+   "remakes": "mkt_barrow",
+   "rarity": "Legendary",
+   "power": {
+    "score": 6.6,
+    "power": 16.17,
+    "opportunityCost": 9.4
+   }
+  },
+  {
+   "id": "mk_bean_espresso_1",
+   "type": "character",
+   "name": "Bean",
+   "title": "Espresso Puller",
+   "job": "Espresso Puller",
+   "species": "Owl",
+   "study": "Food",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Busy: one of your other Characters turns one step toward upright.",
+   "flavor": "Bean has not sat down since the postcard arrived.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "advanceCharacter",
+      "filter": {
+       "notSelf": true
+      }
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 2
+   },
+   "remakes": "ns_bean_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.4,
+    "power": 8.1,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_bean_barista_3",
+   "type": "character",
+   "name": "Bean",
+   "title": "Barista",
+   "job": "Barista",
+   "species": "Owl",
+   "study": "Food",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "When Bean becomes upright, one of your other Characters turns one step toward upright.",
+   "flavor": "Three orders behind, certain it is all coming apart, and somehow everybody is served.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "advanceCharacter",
+      "filter": {
+       "notSelf": true
+      },
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 2
+   },
+   "remakes": "ns_bean_3",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.74,
+    "power": 10.79,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_bean_proprietor_5",
+   "type": "character",
+   "name": "Bean",
+   "title": "Café Proprietor",
+   "job": "Café Proprietor",
+   "species": "Owl",
+   "study": "Food",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "At the start of your turn, one of your other Characters turns one step toward upright.",
+   "flavor": "Their parents' name is still over the door. Bean has never once considered taking it down.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "advanceCharacter",
+      "filter": {
+       "notSelf": true
+      },
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 2
+   },
+   "remakes": "ns_bean_5",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.21,
+    "power": 13.61,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_beans_coffee_break",
+   "type": "event",
+   "name": "Bean’s Coffee Break",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Bean"
+    }
+   ],
+   "text": "Requires Bean. Two of your other Characters each turn one step toward upright.",
+   "flavor": "Whatever it is, Bean has decided you are having a cup first.",
+   "effect": {
+    "do": "advanceCharacter",
+    "count": 2,
+    "filter": {
+     "notSelf": true
+    }
+   },
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 2
+   },
+   "remakes": "ns_beans_coffee_break",
+   "rarity": "Common",
+   "power": {
+    "score": 2.02,
+    "power": 3,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_brett_counsel_5",
+   "type": "marketCharacter",
+   "name": "Brett",
+   "title": "Retained Counsel",
+   "job": "Retained Counsel",
+   "species": "Badger",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Hired from the Capital City; enters Busy, and goes home after three of your turns. Your challenge bids win ties. When an opponent challenges one of your purchases, gain 2 Supply.",
+   "flavor": "Three days of his time is what the borough can afford, and three days is what it takes.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "winTiesAsChallenger"
+    },
+    {
+     "trigger": "onChallengedByOpponent",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 5
+   },
+   "remakes": "mkt_bram",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.81,
+    "power": 14.25,
+    "opportunityCost": 9.4
+   },
+   "leavesAfter": 3
+  },
+  {
+   "id": "mk_berry_tinker_0",
+   "type": "character",
+   "name": "Berry",
+   "title": "Retired Tinker",
+   "job": "Retired Tinker",
+   "species": "Hedgehog",
+   "study": "Crafts",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Berry is recruited, Berry cannot be targeted by an opponent's effect until your next turn.",
+   "flavor": "The retirement lasted a fortnight. The clock from the guild is already in pieces on the bench, improved.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "protectCharacter"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 8
+   },
+   "remakes": "br_bramble_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.64,
+    "power": 4.4,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_berry_clockmaker_1",
+   "type": "character",
+   "name": "Berry",
+   "title": "Clockmaker",
+   "job": "Clockmaker",
+   "species": "Hedgehog",
+   "study": "Science",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Upgrades Berry. When Berry becomes upright, look at the top three cards of your deck and put them back in any order.",
+   "flavor": "Berry does not guess what is coming next. Berry simply knows what order things go in.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "reorderDeckTop",
+      "count": 3
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightskies",
+    "tile": 10
+   },
+   "remakes": "ns_bramble_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.02,
+    "power": 7.41,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_berry_committee_2",
+   "type": "character",
+   "name": "Berry",
+   "title": "Committee Volunteer",
+   "job": "Committee Volunteer",
+   "species": "Hedgehog",
+   "study": "Civics",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Berry. When Berry is recruited, you may rehire a Character from your Unemployment for 2 less Supply.",
+   "flavor": "They went to the meeting to object to being put on the committee and came home as its secretary.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "rehire",
+      "discount": 2,
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 8
+   },
+   "remakes": "br_bramble_3",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.71,
+    "power": 10.14,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_berry_engineer_3",
+   "type": "character",
+   "name": "Berry",
+   "title": "Consulting Engineer",
+   "job": "Consulting Engineer",
+   "species": "Hedgehog",
+   "study": "Science",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Berry. Busy: the next shift you complete produces 1 extra Supply.",
+   "flavor": "Berry listened to the boiler for a while, tightened one thing, and would not say which.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "addMod",
+      "key": "shiftBonus",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightskies",
+    "tile": 10
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.42,
+    "power": 10.05,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_berry_workshop_elder_4",
+   "type": "character",
+   "name": "Berry",
+   "title": "Workshop Elder",
+   "job": "Workshop Elder",
+   "species": "Hedgehog",
+   "study": "Crafts",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Berry. While Berry is in town, your Characters cannot be sent to Unemployment by an effect.",
+   "flavor": "Nobody is let go from a bench Berry is standing at. It has been tried.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "unemploymentShield",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 8
+   },
+   "remakes": "br_bramble_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.63,
+    "power": 11.63,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_berry_guild_warden_5",
+   "type": "character",
+   "name": "Berry",
+   "title": "Guild Warden",
+   "job": "Guild Warden",
+   "species": "Hedgehog",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Berry. When Berry becomes upright, you may rehire a Character from your Unemployment for 3 less Supply, and one of your other Characters cannot be targeted by an opponent until your next turn.",
+   "flavor": "Berry stands in front of the youngest one on the bench and asks, mildly, what exactly the guild thinks it is doing.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "rehire",
+        "discount": 3,
+        "optional": true
+       },
+       {
+        "do": "protectCharacter",
+        "filter": {
+         "notSelf": true
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 8
+   },
+   "remakes": "mh_bramble_5",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.76,
+    "power": 15.04,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_biff_beat_constable_2",
+   "type": "character",
+   "name": "Biff",
+   "title": "Beat Constable",
+   "job": "Beat Constable",
+   "species": "Hedgehog",
+   "study": "Civics",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "When Biff becomes upright, one of your opponent's Characters is put back to work, turning one step away from upright.",
+   "flavor": "Biff comes down the lane and everybody finds something respectable to be doing.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "makeBusy"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 7
+   },
+   "remakes": "mkt_bristle",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.16,
+    "power": 11.11,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_biff_chief_constable_4",
+   "type": "character",
+   "name": "Biff",
+   "title": "Chief Constable",
+   "job": "Chief Constable",
+   "species": "Hedgehog",
+   "study": "Civics",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Biff. When Biff becomes upright, two of your opponent's Characters are each put back to work, and you may rehire a Character from your Unemployment.",
+   "flavor": "He stopped the trouble, walked them home, and by Friday had found them something to do.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "makeBusy",
+        "count": 2
+       },
+       {
+        "do": "rehire",
+        "optional": true
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 7
+   },
+   "rarity": "Legendary",
+   "power": {
+    "score": 6.33,
+    "power": 15.9,
+    "opportunityCost": 10
+   }
+  }
+ ],
+ "newStudies": [
+  {
+   "name": "Food",
+   "introducedBy": "Peanut",
+   "blurb": "Feeding the town: counters, kitchens, carts and the café. Where Commerce counts the money and Agriculture grows the crop, Food is the animal who hands it over and knows everyone's order.",
+   "note": "A seventh study, declared on the maker shelf only. Before the maker set can be played, Food must be added to the printed set's `studies`, given a place in the species charters and deck tooling, and the printed decks re-checked — they were tuned against six."
+  },
+  {
+   "name": "Entertainment",
+   "introducedBy": "Oatmeal",
+   "blurb": "The town's evenings: stages, bands, open mic nights, the halls people fill when the shift is over. Civics keeps the town working and Entertainment keeps it worth working for.",
+   "note": "An eighth study, declared on the maker shelf only. Like Food it must be added to the printed set's `studies`, given a place in the species charters and the deck tooling, and the printed decks re-checked before the maker set can be played."
+  }
+ ]
 }

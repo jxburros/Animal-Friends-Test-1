@@ -50,11 +50,62 @@ add to the list.
 
 ## History
 
-*Nothing recorded yet beyond the setting above. The first remade characters will fill this in.*
+- **The café by the Hiring Hall** is Bean's — their parents ran it for thirty years and left it to
+  them without warning. It is where the borough's accounts are kept, its prices are compared and its
+  hiring is gossiped about; any character who works for wages has stood at that counter. Peanut keeps
+  its books and works the day counter; Bean owns it and never stops moving. [Bean, Peanut]
+  *(Supersedes the earlier note that Peanut took the café over — the maker gave it to Bean.)*
+- **Food is a study.** Feeding the town — counters, kitchens, carts and the café — is recognised work
+  alongside Agriculture and Commerce, not a sideline of either. It was named when Peanut's café
+  became the place half the borough's business got done. [Peanut]
+
+- **Oatmeal's family is large and close**: he is the oldest of nine, and four of his brothers and
+  sisters play in his band. A large Badger family in the wards is an established fact other
+  characters may have grown up next door to. [Oatmeal]
+- **Open mic nights** happen in whatever room will have them, and are a fixture of the town's
+  evenings rather than a rarity. [Oatmeal]
+- **Entertainment is a study.** The town's evenings — stages, bands, halls — are recognised work.
+  [Oatmeal]
+- **Barrow came out from the Capital City** after twenty years cutting stone there, specifically
+  because the First Boroughs are not finished being built. The Capital City is therefore a real place
+  animals emigrate *from*, and the borough reads as young and growing. [Barrow]
+- **Biff is the town's police force**, and polices it by knowing everyone: he stops the trouble, walks
+  the troublemaker home, and a week later has found them something to do. The beat has the lowest
+  trouble in the First Boroughs. A character who has been in trouble here has been walked home, not
+  taken away. [Biff]
+- **Berry is who the borough calls when something breaks**, and has been for longer than most animals
+  in it have been alive. They retired, were back on the bench within a fortnight, and now sit on the
+  committee and answer to the Town Workshop when the clock stops. Any character with a mended hinge,
+  a working pump or an apprenticeship has plausibly had Berry's help, and been walked into working it
+  out themselves rather than simply told. [Berry]
+- **The Capital City has its own professional class**, and the borough buys it by the day: Brett
+  practises there, comes out when the town needs someone who knows how the Capital City's rules are
+  written, and goes home the same evening. The Counting House budgets for him a year ahead. He is the
+  counterweight to Barrow — same city, opposite decision. [Brett]
+- **Nobody knows where Barnaby is from.** They audit the Capital City's night books, they have no
+  address on file at the Hiring Hall, and the town has collectively decided not to pry. Anyone may
+  find this strange; nobody gets an answer. [Barnaby]
 
 ## Relationships
 
-*Nothing recorded yet. Record here only what both parties would agree happened.*
+- **Bean owns the café; Peanut runs its counter.** Bean inherited it, Peanut keeps the books, and on
+  the days Bean is coming apart Peanut quietly takes over. [Bean, Peanut]
+- **Peanut keeps the books for half the borough**: the grange's feed bills, the ferry's tolls, the
+  guild's quarterly returns. A character with accounts has plausibly had them audited, kindly, by
+  Peanut. [Peanut]
+
+## Renames
+
+Characters the maker has renamed. The printed name stays here so old cards, decks and notes can still
+be read.
+
+| Now | Printed as | Remade |
+| --- | --- | --- |
+| Peanut | Acorn | 2026-09-13 |
+| Oatmeal | Barley | 2026-09-13 |
+| Brett | Bram | 2026-09-13 |
+| Berry | Bramble | 2026-09-13 |
+| Biff | Bristle | 2026-09-13 |
 
 ---
 

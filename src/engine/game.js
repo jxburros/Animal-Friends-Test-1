@@ -218,6 +218,23 @@ export async function endPhase(state, pi) {
       log(state, pi, `${cardDef(state, e.cardId).name} expires.`, { kind: 'eventExpire', player: pi, uid: e.uid, cardId: e.cardId });
     }
   }
+  // A retained hire's term runs down alongside the Limited Events, and for the same reason: both
+  // are things the town has for a while rather than for good. A Character pledged into an open
+  // auction stays until the auction resolves — the town cannot send home what it has bid.
+  for (const s of p.town.slice()) {
+    if (!s.termRemaining || s.lockedBid) continue;
+    s.termRemaining--;
+    if (s.termRemaining > 0) {
+      log(state, pi, `${topCard(state, s).name} has ${s.termRemaining} turn${s.termRemaining === 1 ? '' : 's'} left on the retainer.`, { kind: 'termTick', player: pi, uid: s.uid, remaining: s.termRemaining });
+      continue;
+    }
+    const idx = p.town.indexOf(s);
+    if (idx < 0) continue;
+    p.town.splice(idx, 1);
+    if (s.stored) { gainSupply(state, pi, s.stored, 'a cache coming home'); s.stored = 0; }
+    for (const c of s.cards) state.market.cityDump.push(c.cardId);
+    log(state, pi, `${topCard(state, s).name}'s retainer is up; they go back to the Capital City.`, { kind: 'termEnd', player: pi, uid: s.uid, cardId: s.cards[0].cardId });
+  }
   await fireHook(state, 'onTurnEnd', { player: pi });
   expireMods(p, 'turnEnd');
   log(state, pi, `${p.name} ends the turn.`, { kind: 'turnEnd', player: pi });

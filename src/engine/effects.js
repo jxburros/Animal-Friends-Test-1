@@ -225,7 +225,10 @@ export async function gainMarketCard(state, pi, cardId, why = '') {
       log(state, pi, `${def.name} has nowhere to live in ${p.name}'s full town and moves on.`, { kind: 'marketRecruitRefused', player: pi, cardId });
     } else {
       const stack = makeStack(state, pi, { uid: nextUid(state), cardId }, BUSY);
-      log(state, pi, `${def.name} moves into ${p.name}'s town, Busy after the journey.`, { kind: 'marketRecruit', player: pi, cardId, uid: stack.uid });
+      // A hire with a term is retained, not resident: `leavesAfter` counts down at the end of each
+      // of its Mayor's turns, and when it runs out the animal goes back to the Capital City.
+      if (def.leavesAfter) stack.termRemaining = def.leavesAfter;
+      log(state, pi, `${def.name} moves into ${p.name}'s town, Busy after the journey${def.leavesAfter ? `, retained for ${def.leavesAfter} turn${def.leavesAfter === 1 ? '' : 's'}` : ''}.`, { kind: 'marketRecruit', player: pi, cardId, uid: stack.uid, term: def.leavesAfter || 0 });
       await fireHook(state, 'onRecruit', { player: pi, stackUid: stack.uid, selfOnly: stack.uid });
     }
   } else {
@@ -365,7 +368,7 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       await discard(state, pi, eff.count);
       return;
     case 'addMod':
-      p.mods.push({ key: eff.key, value: eff.value, expires: eff.expires || 'untilUsed', consumable: !!eff.consumable, source: ctx.sourceCardId || null });
+      p.mods.push({ key: eff.key, value: eff.value, expires: eff.expires || 'untilUsed', consumable: !!eff.consumable, filter: eff.filter || null, source: ctx.sourceCardId || null });
       log(state, pi, `${p.name} gains an ongoing effect: ${eff.key} (${eff.value}).`, { kind: 'mod', player: pi, key: eff.key, value: eff.value });
       return;
     case 'readyCharacter': {
@@ -466,6 +469,30 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       const c = o.hand.splice(o.hand.findIndex((x) => x.uid === chosen[0]), 1)[0];
       o.deck.unshift(c);
       log(state, oi, `${o.name} puts a card from hand on top of the deck.`, { kind: 'topdeck', player: oi, uid: c.uid });
+      return;
+    }
+    case 'makeBusy': {
+      // The constable's verb: turn an opponent's Character one step AWAY from upright — upright
+      // becomes Busy, Busy becomes a Master's half-turn — so it is a turn of tempo, not a job lost.
+      // It is the mirror of advanceCharacter and keeps the same manners: never a Character mid-shift
+      // (the work is not the animal's fault), never one pledged into an auction, and never one a
+      // Hedgehog has quilled.
+      const order = state.rules.orientation.advanceOrder;
+      const opts = o.town.filter((st) => !st.lockedBid && !isProtected(state, st)
+        && !(st.shift && state.rules.shifts.blocksReadyWhileInProgress)
+        && order.indexOf(st.orientation) > 0
+        && matchesFilter(state, st, eff.filter));
+      if (!opts.length) return;
+      const max = Math.min(eff.count || 1, opts.length);
+      const chosen = await ask(state, pi, { kind: 'pick', reason: 'makeBusy', from: 'opponentTown', options: opts.map((st) => stackOpt(state, st)), min: eff.optional ? 0 : Math.min(1, max), max });
+      for (const uid of chosen) {
+        const st = findStack(state, oi, uid);
+        if (!st || st.lockedBid) continue;
+        const at = order.indexOf(st.orientation);
+        if (at <= 0) continue;
+        st.orientation = order[at - 1];
+        log(state, pi, `${topCard(state, st).name} is put back to work in ${o.name}'s town.`, { kind: 'makeBusy', player: oi, uid: st.uid, orientation: st.orientation });
+      }
       return;
     }
     case 'unemployOpponentCharacter': {
@@ -639,9 +666,15 @@ export async function runEffect(state, pi, eff, ctx = {}) {
     }
     case 'protectCharacter': {
       // Hedgehog: a Character an opponent's effect simply cannot reach, until this player's next turn.
-      const opts = p.town.filter((st) => matchesFilter(state, st, eff.filter));
+      // `filter: { notSelf: true }` is the grandparently version: the quills go around somebody else.
+      // Without it the source Character protects itself whenever it legally can, as it always has.
+      const pf = { ...(eff.filter || {}) };
+      const protectNotSelf = pf.notSelf;
+      delete pf.notSelf;
+      const self = ctx.sourceStackUid || ctx.stackUid;
+      const opts = p.town.filter((st) => matchesFilter(state, st, pf) && !(protectNotSelf && st.uid === self));
       if (!opts.length) return;
-      const chosen = ctx.sourceStackUid && opts.some((st) => st.uid === ctx.sourceStackUid)
+      const chosen = !protectNotSelf && ctx.sourceStackUid && opts.some((st) => st.uid === ctx.sourceStackUid)
         ? [ctx.sourceStackUid]
         : await ask(state, pi, { kind: 'pick', reason: 'protect', from: 'town', options: opts.map((st) => stackOpt(state, st)), min: 1, max: 1 });
       const st = findStack(state, pi, chosen[0]);
@@ -705,12 +738,17 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       if (n < 1) return;
       const top = p.deck.slice(0, n);
       const chosen = await ask(state, pi, { kind: 'pick', reason: 'scry', from: 'deck', options: top.map((c) => inst(state, c)), min: 0, max: n });
-      const bottom = top.filter((c) => chosen.includes(c.uid));
-      if (bottom.length) {
+      const picked = top.filter((c) => chosen.includes(c.uid));
+      // `to: 'dump'` is the auditor's version: what you do not want is out of the deck for good
+      // (until the Town Dump is shuffled back in), rather than merely postponed to the bottom.
+      const toDump = eff.to === 'dump';
+      if (picked.length) {
         p.deck = p.deck.filter((c) => !chosen.includes(c.uid));
-        p.deck.push(...bottom);
+        if (toDump) p.dump.push(...picked);
+        else p.deck.push(...picked);
       }
-      log(state, pi, `${p.name} looks at the top ${n} card${n === 1 ? '' : 's'} of the deck${bottom.length ? ` and puts ${bottom.length} on the bottom` : ''}.`, { kind: 'peekDeck', player: pi, count: n, bottomed: bottom.length });
+      const what = picked.length ? ` and ${toDump ? `sends ${picked.length} to the Town Dump` : `puts ${picked.length} on the bottom`}` : '';
+      log(state, pi, `${p.name} looks at the top ${n} card${n === 1 ? '' : 's'} of the deck${what}.`, { kind: 'peekDeck', player: pi, count: n, bottomed: toDump ? 0 : picked.length, dumped: toDump ? picked.length : 0 });
       return;
     }
     case 'selfReady': {
