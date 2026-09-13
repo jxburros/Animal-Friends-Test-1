@@ -2,17 +2,24 @@
 
 **Status:** living design reference and playable-prototype guide  
 **Current prototype set:** *Animal Friends: First Boroughs* (`AF-STARTER-01`)  
-**v0.5.0 — the auction, the Statue race and species identity.** The Capital City auction now converges
-on a **pledge ladder** rather than a rising minimum bid; Statues carry a **two-tier price**; losing
-bidders are refunded in full; town decks are **40 cards**; **Botany was merged into Agriculture**;
-every species has a **charter** (Section 4a) enforced by `npm run identity`; and the market sells
-**Buildings**, **hired animals** and **Ordinances** in a display that **ages** every round.
-Current totals are 368 cards (136 Characters, 88 Events, 9 Statues,
-84 Market cards, 12 Buildings, 10 hired animals, 6 Ordinances
-and 23 on-reveal cards), nine species, five studies, six printed decks and six Market Decks.
+**v0.6.0 — the town has a size, and Unemployment has something to do.** A town holds **ten animals**,
+counting those at work, those pledged into an auction and those face down in Unemployment, which is
+what gives the **upgrade path** a reason to exist. Statues carry a **three-tier price** (10 / 20 / 30), charged at the moment an auction **resolves**.
+A Mayor may **lay off** a face-down animal, or **promote** one straight out of Unemployment back into
+work. Unemployment is **face down inside the town** rather than a separate area. Six new cards and a
+shared verb make Unemployment a live mechanic; a new Ordinance, **Works in the Square**, blocks Statue
+purchases until two animals have cleared it. Market Decks are **35 cards**, the power model prices the
+**body** as well as the Supply, and the display now ages at the start of the **second player's** turn.
+Carried over from v0.5.0: the Capital City auction converges on a **pledge ladder** rather than a
+rising minimum bid; losing bidders are refunded in full; town decks are **40 cards**; **Botany was
+merged into Agriculture**; every species has a **charter** (Section 4a) enforced by `npm run identity`;
+and the market sells **Buildings**, **hired animals** and **Ordinances**.
+Current totals are 375 cards (136 Characters, 88 Events, 9 Statues,
+86 Market cards, 12 Buildings, 10 hired animals, 7 Ordinances
+and 27 on-reveal cards), nine species, five studies, six printed decks and six Market Decks.
 See [WHISKERWOOD.md](WHISKERWOOD.md) and [MANY_HATS.md](MANY_HATS.md) for the expansion content.  
 **Authoritative implementation sources:** `spec/game.json`, `spec/species.json` and `spec/starter_card_set.json`  
-**Last consolidated:** September 13, 2026 (the pledge ladder, two-tier Statues, 40-card decks, species charters)
+**Last consolidated:** September 13, 2026 (the town cap, three-tier Statues, lay-off and promotion, live Unemployment, Works in the Square)
 
 This document gathers the decisions, rules, design principles, and current prototype content for **Animal Friends TCG**. It distinguishes between rules implemented in the playtest, agreed design direction, and items still to be designed. It is not yet a final, player-facing rulebook.
 
@@ -30,7 +37,7 @@ The game is meant to be competitive without turning into a lockout experience.
 
 - **Build a town, not a prison.** Player-deck cards should primarily improve their controller's town. Direct denial is limited.
 - **Shared disruption is healthier.** Broad disruption should usually come from the shared Capital City and affect both players equally, rewarding preparation rather than repeatedly targeting one opponent.
-- **No recurring lockouts.** Cards and loops must not prevent a player from meaningfully playing the game, especially by repeatedly sending freshly played Characters to Unemployment.
+- **No recurring lockouts.** Cards and loops must not prevent a player from meaningfully playing the game, especially by repeatedly sending freshly played Characters to Unemployment. Now that a town has a size, this pillar also governs the cap: **lay off** exists so that a town buried under shared shocks can always free a place and keep recruiting.
 - **Every strong Character gets a chance.** A Character should normally have an opportunity to act at least once before an opponent can remove it.
 - **Deep, but natural.** The board state should communicate the important information; the game should not depend on hidden scoring or heavy bookkeeping.
 - **A loss should still be satisfying.** Building an appealing town and accomplishing a personal plan should feel worthwhile even when another Mayor wins the statues.
@@ -41,7 +48,9 @@ Animal identity should be easy to read and original. Broad traits are welcome wh
 
 ### Players and decks
 
-The current rules specify exactly **two** players, each with a private player deck and a public town. The *First Boroughs* starter prototype gives each player a **40-card deck** and starts each at 6 Supply with six cards in hand; the second player draws one extra card. Each Mayor may **mulligan once, for free**, before the first turn. The shared Market Deck is chosen from six (see Section 4), each nine Statues plus a sampled pool.
+The current rules specify exactly **two** players, each with a private player deck and a public town. The *First Boroughs* starter prototype gives each player a **40-card deck** and starts each at 6 Supply with six cards in hand; the second player draws one extra card. Each Mayor may **mulligan once, for free**, before the first turn. The shared Market Deck is chosen from six (see Section 4), each **35 cards**: all nine Statues plus a 26-card sample of its own pool.
+
+A town holds at most **ten animals**. The count is the town's whole footprint: animals at work, animals pledged into a Capital City auction, and animals face down in Unemployment all take a place. Rehiring and promoting move an animal between two zones that both count, so they are footprint-neutral and can never be blocked by the cap; only a genuinely new body is refused. The cap is not a fiddly limit for its own sake — it is what makes improving the animal you have a real alternative to fetching another one (Section 7).
 
 ### Areas
 
@@ -49,9 +58,9 @@ The current rules specify exactly **two** players, each with a private player de
 | --- | --- | --- |
 | Player Deck | Player | Private deck containing that player's Characters and Events. |
 | Hand | Player | Cards available to recruit or play. |
-| Your Town | Player | Active Characters, ongoing Events, and acquired Statues/effects. |
+| Your Town | Player | Active Characters, ongoing Events, and acquired Statues/effects. Holds at most ten animals in total, counting those at work, those pledged into an auction and those face down in Unemployment. |
 | Town Dump | Player | That player's discard pile, including discarded Events and removed layers of a Character stack. |
-| Unemployment | Player | Public holding area for disrupted Characters; they are inactive until rehired. |
+| Unemployment | Player | Disrupted Characters, held **face down within their owner's town**, not in a separate area. They are inactive until rehired or promoted, they count against the town's cap of ten, and **either Mayor may look at any of them at any time**. |
 | Victory Row | Player | The public area for a player's acquired Statues. |
 | Buildings | Player | Up to three Capital City Buildings, which stay in town and keep working. |
 | Capital City | Shared | Five face-up Market cards contested by both players. |
@@ -98,29 +107,50 @@ The Capital City sells four things besides Statues.
   while it is there: moving the whole pledge ladder up or down a rung, discounting or taxing Statues
   or Buildings, or closing the bidding so that every announcement stands. It leaves when the display
   ages it out, so the Capital City's own rules vary from game to game and turn to turn.
+  **Works in the Square** is the one Ordinance that can be answered rather than waited out: while it
+  is displayed **no Statue may be bought**, and either Mayor may put an upright Character to work
+  clearing it. When two animals have been put to work — between the two towns, or by one Mayor
+  alone — the works finish and the card leaves. That one Mayor can finish the job alone is what stops
+  it deadlocking: blocking Statues hurts whoever is closest to winning, so a rule requiring both
+  Mayors to pay would let the trailing one refuse forever. The animals go **Busy**, not out of work,
+  which is cheap enough that the leader reliably pays and the race keeps moving; and the card still
+  ages out of the display normally, as a backstop.
 
 **On-reveal cards** (historically "Disruptions") are also never bought: they resolve the moment they
 are dealt and go to the City Dump. They are no longer only shared shocks — some pay the Mayor who is
 behind, some just set the weather. A card marked as a *shock* is one a Badger can brace against.
 
+The shared verb most of the set's Unemployment now uses is the gentle one: **each Mayor lets one or
+two animals go, choosing for themselves**. Recession empties both towns outright; *A Slow Season*,
+*The Damp* and *The Great Reshuffle* are weather that falls on both towns and rewards the Mayor who
+prepared, rather than a removal aimed at one player — which is what pillar 2 asks for. The ways back
+are on-reveal too (*Hiring Season* lets each Mayor rehire one animal free) or for sale in the market
+(*Second Chances*, *Open Positions*). Unemployment events run **3.8 a game**, against almost none
+before; Hedgehog's protection and Badger's endurance charters finally have something to answer.
+
 ### The display ages
 
-At the start of each round, the oldest card in the Capital City that nobody is bidding on is
-discarded and replaced (a Statue goes back into the Market Deck rather than out of the game). Cards
+Once a round — at the start of the **second player's** turn — the oldest card in the Capital City
+that nobody is bidding on is discarded and replaced (a Statue goes back into the Market Deck rather
+than out of the game). It fires on the second player's turn rather than the first because whoever the
+aging fires for gets first sight of the card dealt in, and that edge belongs to the Mayor who moves
+second: on a matched comparison it moved the seat bias from +2.8 to −0.7. Cards
 visibly age out, so the display always turns over, on-reveal cards keep flowing, and an interesting
 card is a decision *now* rather than forever. This replaced the old six-turn stale-market sweep,
 which only fired once the display had gone completely dead.
 
 ### Market Decks
 
-The shared market is chosen at setup from four Market Decks, each containing all nine Statues plus its own pool:
+The shared market is chosen at setup from six Market Decks. Each is **35 cards**: all nine Statues plus a 26-card sample of its own pool, topped up from that same pool until at least three on-reveal cards are in it, so a market keeps its printed character however the sample falls. The shock count below is the number of cards in that market's pool marked as a shared *shock* — the kind a Badger can brace against.
 
-| Market Deck | Character |
-| --- | --- |
-| **First Boroughs** | The classic mix of growth, card flow and pointed disruption. No shared shocks. |
-| **Boom Town** | Prosperity and momentum: Supply flows freely, direct disruption is rare, and the shared shocks are mostly good news. |
-| **Hard Times** | Recessions, hard winters and backlogs strike both towns alike, and the cards that survive them are worth fighting over. |
-| **Founders' Fair** | Auction tools, understudies and second chances, with fair weather and nothing that empties a town. |
+| Market Deck | Shocks in pool | Character |
+| --- | ---: | --- |
+| **First Boroughs** | 3 | The classic mix of growth, card flow and pointed disruption, with a lean month and a slow season in it. |
+| **Boom Town** | 4 | Prosperity and momentum: Supply flows freely, direct disruption is rare, and the shared shocks are mostly good news. |
+| **Hard Times** | 13 | Recessions, hard winters and backlogs strike both towns alike, and the cards that survive them are worth fighting over. |
+| **Founders' Fair** | 2 | Auction tools, understudies and second chances: fair weather, and nothing that empties a town. |
+| **Whiskerwood Fair** | 2 | A welcoming artisan district: ten new shops and six familiar favourites. |
+| **Many Hats Fair** | 3 | A hiring fair for every trade: ten halls that ready, retrain and rehire, and six familiar favourites. |
 
 ### 4a. Species charters: a design space, not a keyword
 
@@ -161,14 +191,36 @@ derived, not hand-assigned. `src/engine/power.js` rates a card in *Supply-equiva
   little for the lump sum; an ability is rated by what it does times how often its trigger fires, discounted
   for every condition attached to it; a Statue adds the value of being a fifth of a victory; a Statue's burden
   subtracts.
+- **A body is worth something in itself.** Supply is not the only currency, and it is not the scarce one:
+  across the printed decks, how many Characters a Mayor got into town predicted their win rate far better
+  than how much Supply they earned (r = 0.96 against 0.90), while the model, pricing everything in Supply,
+  managed 0.67. Every genuinely scarce thing in the game is an animal-action — a shift, an Event's
+  requirement, a rung of the pledge ladder, a purchase announcement — so an animal is worth a fixed amount
+  over and above whatever is printed on it, and recruiting or rehiring one is worth a body.
+- **A town place is a real price.** Now that a town holds only ten animals, a card that puts a body in town
+  pays for the place it takes, and the tighter the cap the dearer that place is.
+- **A Building is priced for permanence**, not at an Event's trigger weight: it is rated as working for
+  about six rounds, since a game runs about seventeen and a Building is dear enough to be bought in the
+  second half. Rating a repeating ability as a one-shot was why every Building in the set scored below a
+  cost-0 Rabbit and the agent almost never bought one.
+- **An effect that reaches into a zone is discounted for how often that zone has anything in it.** "Rehire
+  an animal" pays nothing while nobody is out of work. These are measured frequencies, so they move when
+  the set does — the Unemployment figure should rise again now that Unemployment is live.
 - **Opportunity cost** is everything it asks for: the Supply, the action, the turns a Master spends rotating
-  into work, the Characters an Event taps, the slot the card takes in a 40-card deck.
+  into work, the Characters an Event taps, the town place a body occupies, the slot the card takes in a
+  40-card deck.
 - **Rating** is `power^0.6 × efficiency^0.4`, where efficiency is power over opportunity cost.
 
 That exponent split is the design decision. Rarity is *not* raw power: of two cards that give you the same,
 the cheaper one rates higher, and a cost-0 Rabbit with a good shift can out-rate a Master. But efficiency alone
-would make every cheap card legendary, so size still decides between two equally efficient cards. Bands are
-set so the set reads as a pyramid (about 50% Common, 25% Uncommon, 18% Rare, 5% Super Rare, 3% Legendary).
+would make every cheap card legendary, so size still decides between two equally efficient cards. The bands
+were re-derived after the repricing to hold the pyramid, and the set currently reads 49% Common, 23%
+Uncommon, 22% Rare, 4% Super Rare, 2% Legendary.
+
+The repricing is what finally made Buildings buyable. Every Building in the set now pays for itself —
+power-to-cost ratios of **1.01 to 1.27**, against 0.13 to 0.57 before — while remaining the dearest cards on
+the board, which is what the design wants from its Supply sink. Five Many Hats cards were trimmed in the
+same pass to hold the 1.08x power-creep gate.
 
 Rarity then does real work at the table: it caps how many copies of a card a 40-card town deck may hold —
 **3 / 3 / 2 / 1 / 1** — so the cards that carry a game are the ones you may least often repeat. The printed
@@ -194,7 +246,7 @@ The game uses card orientation—not generic turn counters—to display availabi
 - At the start of its owner's turn, every non-upright Character rotates clockwise by one quarter turn: 180° → 270° → 0°.
 - A Character must be upright to work, announce a purchase, challenge a purchase, activate a Busy ability, or satisfy an Event requirement.
 
-This implementation supersedes older notes that used general turn counters. The exact physical card-rotation convention remains an open presentation decision, but the rules data use the orientation values above.
+This implementation supersedes older notes that used general turn counters. The rules data use the orientation values above. **Unemployment is not a rotation**: an animal out of work is turned **face down** in its own town, because rotation means "this clears by itself after a known number of turns" and Unemployment clears only when somebody pays. That also keeps 90° free for a possible three-turn Busy later.
 
 ### Rank and arrival delay
 
@@ -204,7 +256,7 @@ This implementation supersedes older notes that used general turn counters. The 
 | Journeyman | 2–3 | Busy / 270° | Becomes ready at the start of its owner's next turn. |
 | Master | 4–5 | 180° | Takes two owner-turn orientation advances to become ready. |
 
-Rehired Characters return from Unemployment **upright** after their full Supply cost is paid. This is an explicit current rule.
+Rehired Characters return from Unemployment **upright** after their full Supply cost is paid. This is an explicit current rule, and it applies equally to an animal **promoted** out of Unemployment by a higher version of itself (Section 7).
 
 ## 6. Turn flow and actions
 
@@ -224,7 +276,7 @@ All Characters can work. To start a shift, make an upright Character Busy. Its c
 
 ### Recruiting
 
-Recruit a Character from hand by paying its Supply cost and putting it into town at the orientation dictated by its rank. Recruitment abilities may trigger when it enters. The current prototype also contains effects that reduce a recruitment cost or recruit a cost-0 Character exceptionally.
+Recruit a Character from hand by paying its Supply cost and putting it into town at the orientation dictated by its rank. Recruitment abilities may trigger when it enters. The current prototype also contains effects that reduce a recruitment cost or recruit a cost-0 Character exceptionally. Recruiting adds a **new body**, so it is refused when the town already holds ten animals; rehiring and promoting are not, because they move an animal between two zones that both count.
 
 ### Upgrades
 
@@ -234,7 +286,17 @@ Higher-cost versions of the same named Character can upgrade a lower-cost versio
 - Pay only the difference between the new cost and the current version's cost.
 - Place the new card as the new top of that Character's stack.
 
-This supports recurring residents progressing through their careers.
+This supports recurring residents progressing through their careers. It is also, since the town cap,
+a real alternative to recruiting: a better animal costs no town place, another animal does. With an
+unlimited field the choice was never close — upgrades ran at 0.19 a game across both players while
+the set prints a second version of all 38 named Characters. They now run at 2.66.
+
+**Promotion out of Unemployment.** The target of an upgrade may sit in Unemployment as well as in
+town. The animal is promoted straight back into work, upright, for the plain printed difference, in
+a single action. This is not a flat discount — against a cost-0 base version a plain rehire is still
+the cheaper way back. What it saves is the *action*: rehiring pays the full printed cost of the
+**old** version and then still needs a second action, plus the difference, to upgrade it. The
+knockdown rule below is what puts the material there in the first place.
 
 ### Transfers
 
@@ -244,7 +306,13 @@ Characters with the same name and the same cost can be **Transferred**. This con
 
 Effects can send a Character from town to Unemployment. A Character there cannot work, become Busy, go to the Capital City, or otherwise function as an active town Character.
 
-To rehire one, pay its full printed Supply cost and return it to town upright. Effects can create specific discounts or exceptions.
+Unemployment is **not a separate board area**. The animal stays in its own town, turned **face down**, and it still counts against the town's cap of ten. **Either Mayor may look at any face-down animal at any time**: this is a visual state, not hidden information, and rehiring, promoting and the cards that compare the two queues all need to see who is there.
+
+There are three ways out:
+
+1. **Rehire.** Pay the full printed Supply cost and return it to town upright. Effects can create specific discounts or exceptions.
+2. **Promote.** Play a higher version of that Character over it, paying the printed difference, and it comes back into work upright in one action (see Upgrades, above).
+3. **Lay off.** Send one face-down animal to the Town Dump for good, as a free action, freeing its place. This is the release valve: with the town capped and shared shocks falling on both towns, a Mayor whose Unemployment has silted up must never be locked out of recruiting. In automated play it is used almost never — the agent can nearly always rehire or promote instead — which is the right shape for a guarantee.
 
 If a stacked Character is sent to Unemployment:
 
@@ -287,6 +355,13 @@ still holding the lead when your own turn comes round means your rival had a tur
 - **the loser is refunded everything they escrowed** and gets their animals back;
 - the winner gains and resolves the card before their resource choice.
 
+A Statue's price tier is read **here**, at resolution, against the winner's Victory Row as it stands
+now rather than as it stood when the bid was announced; the winner tops up any rise out of Supply,
+and if they cannot cover it the purchase fizzles and the bid is returned. Several auctions run at
+once, so without this a Mayor holding three Statues could open auctions on two of them in the same
+turn, lock both in at the middle tier, and win the game without ever paying the top tier — exactly
+the purchase that tier exists to make expensive.
+
 There is no forfeit. A bid is already a real promise, because a bid you cannot follow through on has
 cost you an expensive animal for the whole auction — and because the next rung of the ladder is
 always dearer than the last. "One Mayor can no longer bid" is usually literal: they have nobody left
@@ -304,13 +379,18 @@ Statues are visible Victory cards that remain in the controller's Victory Row. T
 
 ### What a Statue costs
 
-A Statue has no single price. It costs the first of `victory.statueCostTiers` to a Mayor holding
-fewer than `statueCostTierBreak` Statues, and the second once they hold that many or more — currently
-**10 below two Statues, 20 at two or more**. The two Mayors can face different prices for the same
-card in the same auction, and the fifth and winning Statue is always bought at the higher price.
+A Statue has no single price. `victory.statueCostTiers` lists the prices and
+`victory.statueCostTierBreaks` the holdings at which the price steps up — currently **10 / 20 / 30**,
+stepping at **two and four** Statues held. A Mayor holding none or one pays 10, a Mayor holding two
+or three pays 20, and the Mayor holding four — buying the Statue that wins the game — pays **30**.
+The two Mayors can face different prices for the same card in the same auction, and the winning
+purchase is the dearest thing in the game by a wide margin.
 
-This is the design's main brake on a runaway. Before it, over half of all games ended 5-0 or 5-1;
-with it, 71% end 5-3 or 5-4 and the lead changes hands into the last quarter of the game.
+This is the design's main brake on a runaway. Before Statue tiering, over half of all games ended 5-0
+or 5-1; with two tiers, 71% ended 5-3 or 5-4 and the lead changed hands into the last quarter of the
+game. The third tier was added for the same reason the first two were, and to give the endgame
+something to do with the Supply that otherwise piles up unspent — it helped there, but less than
+hoped (see the playtest notes).
 
 ### Boons and burdens
 
@@ -332,7 +412,7 @@ Statues are not automatically safe. Expensive theft or return effects can interf
 
 ## 10. Current starter set: First Boroughs
 
-The set holds **368 cards**: 136 Characters, 88 Events, 9 Statues, a 84-card one-shot Market pool, 12 Buildings, 10 hired animals, 6 Ordinances and 23 on-reveal cards. A game uses two 40-card player decks and a 29-card Capital City deck (nine Statues and twenty cards sampled from the chosen Market Deck's pool).
+The set holds **375 cards**: 136 Characters, 88 Events, 9 Statues, an 86-card one-shot Market pool, 12 Buildings, 10 hired animals, 7 Ordinances and 27 on-reveal cards. A game uses two 40-card player decks and a **35-card** Capital City deck (nine Statues and twenty-six cards sampled from the chosen Market Deck's pool, topped up from that pool until at least three of them are on-reveal cards).
 
 Six printed decks are provided: **Burrow & Bloom** (Rabbit/Mouse, Agriculture/Lore), **Paws & Papers** (Raccoon/Fox, Commerce/Civics), **Bramble & Bastion** (Hedgehog/Badger, Crafts/Agriculture), **Ripple & Rune** (Otter/Squirrel, Lore/Commerce), **Whisker & Willow** (Cat/Mouse, Lore/Crafts) and **Root & Rampart** (Badger/Rabbit, Civics/Crafts). They are not hand-listed: `npm run decks` builds each from its stated identity out of the rated card set, so they track the set as it changes.
 
@@ -417,7 +497,7 @@ Digital achievements are a future companion-app or player-profile feature, **not
 
 These details need decisions before this can become a finished rulebook:
 
-- The exact physical rotation convention. (How a table shows a pledged Character is settled: it moves to the Capital City and stands under the card it is bidding on.)
+- The exact physical rotation convention. Two parts of it are now settled: a pledged Character moves to the Capital City and stands under the card it is bidding on, and an animal out of work lies **face down in its own town** rather than rotated — rotation is reserved for states that clear by themselves after a known number of turns, and **90°** is being held for a possible three-turn Busy.
 - The exact Transfer effect.
 - Card schema details for shift outputs/delays and Limited Event duration as the broader card pool grows.
 - Starting-deck composition, starting hand, and Market Deck composition outside the current prototype.
@@ -437,11 +517,14 @@ These details need decisions before this can become a finished rulebook:
 | **Ready / upright** | A Character at 0° orientation that may act. |
 | **Apprentice / Journeyman / Master** | Cost-based Character ranks: 0–1 / 2–3 / 4–5 Supply. |
 | **Work shift** | A Busy action that produces Supply after the Character's listed delay. |
-| **Capital City** | The shared five-card contested market. |
+| **Capital City** | The shared five-card contested market, dealt from a 35-card Market Deck. |
 | **Town Dump / City Dump** | A player's discard pile / the shared discard pile for used Market cards. |
-| **Unemployment** | Public inactive zone for disrupted Characters. |
-| **Statue** | A Victory card; a strict majority wins. |
+| **Unemployment** | Disrupted Characters, face down within their owner's town. Public — either Mayor may look — inactive, and counted against the town's cap of ten. |
+| **Statue** | A Victory card; a strict majority wins. Priced in tiers (10 / 20 / 30) from the buyer's own Victory Row, charged at resolution. |
 | **Transfer** | Same-name, same-cost Character interaction; exact effect is still draft. |
+| **Lay off** | A free action: send one face-down animal to the Town Dump for good, freeing its place in town. |
+| **Promote** | Play a higher version of a Character over a copy of it in Unemployment, bringing it back into work upright for the printed difference, in one action. |
+| **Town footprint** | Everything a town's cap of ten counts: animals at work, animals pledged into an auction, and animals face down in Unemployment. |
 
 ## 14. Source and precedence notes
 
