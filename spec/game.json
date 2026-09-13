@@ -9,7 +9,7 @@
     "startingSupply": 6,
     "secondPlayerBonusSupply": 0,
     "startingHand": 6,
-    "marketDeckSize": 29,
+    "marketDeckSize": 35,
     "capitalCitySize": 5,
     "secondPlayerBonusCards": 1,
     "mulligan": {
@@ -41,10 +41,15 @@
     "statuesCarryBurdens": true,
     "statueCostTiers": [
       10,
-      20
+      20,
+      30
+    ],
+    "statueCostTierBreaks": [
+      2,
+      4
     ],
     "statueCostTierBreak": 2,
-    "$comment": "Every Statue costs the first figure while its buyer holds fewer than statueCostTierBreak Statues, and the second figure once they hold that many or more — so a Mayor holding 0 or 1 pays 10, and a Mayor holding 2, 3 or 4 pays 20. The fifth and winning Statue is therefore always bought at the higher price. Each Statue also grants a boon and imposes a burden that lasts as long as its Mayor controls it, so collecting Statues taxes the town that is winning twice over.",
+    "$comment": "Statues are priced in tiers read from the buyer's own Victory Row. statueCostTierBreaks lists the holdings at which the price steps up, so with tiers [10,20,30] and breaks [2,4] a Mayor holding 0-1 pays 10, one holding 2-3 pays 20, and one holding 4 — buying the Statue that wins the game — pays 30. The fifth and winning Statue is therefore always the dearest thing in the game by a wide margin, which is the main brake on a runaway. statueCostTierBreak is the retired single-break form, kept only so older saves still read. Each Statue also grants a boon and imposes a burden that lasts as long as its Mayor controls it, so collecting Statues taxes the town that is winning twice over.",
     "$comment2": "The tier is read from the bidder's own Victory Row, so the two Mayors can face different prices for the same card in the same auction."
   },
   "orientation": {
@@ -102,6 +107,13 @@
     "maxPerTown": 3,
     "demolishToCityDump": true
   },
+  "town": {
+    "$comment": "A town holds at most maxCharacters animals. The count is the town's whole footprint: animals at work, animals pledged into a Capital City auction, and animals face down in Unemployment all take a slot. Capping bodies is what gives the upgrade path a reason to exist — with an unlimited field, recruiting a second animal always beat improving the one you had, and upgrades ran at a quarter of one per game. Rehiring and promoting move an animal from Unemployment back into work, so both are footprint-neutral and the cap can never block them; only a genuinely new body is refused. layOffToDump is the release valve: a Mayor may send one face-down animal to the Town Dump for good, as a free action, so a town buried under shared shocks is never locked out of recruiting.",
+    "maxCharacters": 10,
+    "countsPledged": true,
+    "countsUnemployment": true,
+    "layOffToDump": true
+  },
   "market": {
     "$comment": "Section 8. Whenever a card leaves the Capital City, deal from the Market Deck until the display is back to setup.capitalCitySize (top-up refill; the earlier refill-only-when-empty rule let the display silt up with unwanted cards). Reshuffle the City Dump into the Market Deck when the Market Deck runs out mid-deal; cards in use and Out of Play never return.",
     "refillToFull": true,
@@ -110,8 +122,9 @@
     "tiesGoToAnnouncer": true,
     "bidsAreEscrowed": true,
     "aging": {
-      "$comment": "The display ages. At the start of each round (each time the first player's turn comes round) the oldest card in the Capital City that nobody is bidding on is discarded and replaced. Cards visibly age out, so the display always turns over, on-reveal cards keep flowing, and 'buy it now or lose it' is a real decision. This replaces the old six-turn stale-market sweep, which only fired when the display had gone completely dead.",
+      "$comment": "The display ages. Once a round — at the start of the turn belonging to `agesAt`, the second player by default — the oldest card in the Capital City that nobody is bidding on is discarded and replaced. Whoever the aging fires for gets first sight of the card dealt to replace it, and that edge belongs to the Mayor who moves second, as part of their compensation for going second. Cards visibly age out, so the display always turns over, on-reveal cards keep flowing, and 'buy it now or lose it' is a real decision. This replaces the old six-turn stale-market sweep, which only fired when the display had gone completely dead.",
       "enabled": true,
+      "agesAt": 1,
       "cardsPerRound": 1,
       "statuesReturnToDeck": true,
       "skipCardsUnderAuction": true
@@ -138,6 +151,9 @@
     }
   },
   "unemployment": {
+    "$faceDownComment": "Unemployed animals are not a separate board area: they stay in their town, turned face down. Either Mayor may look at a face-down animal at any time — this is a visual state, not hidden information, and rehiring, promoting and the cards that compare the two queues all need to see who is there. Face down rather than rotated, because rotation means 'this clears by itself after a known number of turns' and Unemployment does not clear until somebody pays. That also keeps 90 degrees free for a future three-turn Busy.",
+    "faceDown": true,
+    "inspectableByBothPlayers": true,
     "rehireCostsFullPrintedCost": true,
     "rehiredEntersUpright": true,
     "stackKnockdown": "top card to Town Dump, next card to Unemployment, rest to Town Dump",
@@ -145,6 +161,8 @@
     "$comment": "Anti-lockout guardrail (Section 2 / 12): a Character that has not yet been upright during one of its owner's turns cannot be targeted by an opponent's Unemployment effect."
   },
   "upgrades": {
+    "$comment": "A higher-cost version of a named Character may be played over a lower-cost one. fromUnemployment lets that target sit in Unemployment as well as in town: the animal is promoted straight back into work rather than rehired. It costs the plain printed difference, and brings the promoted animal straight back into work in a single action — where rehiring pays the full printed cost for the *old* version and then still needs a second action and the difference to upgrade it. That saved action, not a flat discount, is what makes the upgrade path worth taking; against a cost-0 base version a plain rehire is still the cheaper way back. The knockdown rule (top card to the Town Dump, the version beneath it to Unemployment) is what puts the material there in the first place. An animal promoted out of Unemployment enters upright, like a rehire.",
+    "fromUnemployment": true,
     "sameNameHigherCost": true,
     "payDifference": true,
     "keepsOrientation": true,
@@ -166,9 +184,9 @@
     "The pledge ladder: your Nth pledge in an auction must be a Character costing at least N, so no Mayor can bid more than five times in one auction and cost-0 Characters cannot bid at all.",
     "Pledged Characters move to the Capital City beneath the card they are bidding on and stay there until the auction ends.",
     "A losing bidder is refunded their escrow in full and gets their animals back; there is no forfeit.",
-    "Statues cost 10 to a Mayor holding fewer than 2, and 20 to a Mayor holding 2 or more, so the fifth Statue is always bought at the higher price.",
+    "Statues cost 10 to a Mayor holding fewer than 2, 20 to one holding 2 or 3, and 30 to one holding 4, so the Statue that wins the game is always the dearest. The tier is read again when the auction resolves, against the Victory Row as it stands then, so several auctions opened at once cannot all be locked in at a cheaper tier.",
     "Every Statue carries a burden as well as a boon; burdens apply while the Statue sits in that player's Victory Row.",
-    "The Capital City ages: one card that nobody is bidding on is discarded and replaced at the start of each round.",
+    "The Capital City ages: one card that nobody is bidding on is discarded and replaced once a round, at the start of the second player's turn, so first sight of the replacement belongs to the Mayor who moves second.",
     "Buildings bought from the Capital City stay in their buyer's town, up to three; buying a fourth demolishes one.",
     "On-reveal Market cards resolve as they are dealt and are never purchasable.",
     "Upgrading keeps the stack's current orientation and re-triggers the new card's recruit abilities.",

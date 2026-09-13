@@ -1,10 +1,113 @@
 # Playtest notes (prototype, automated)
 
-Method: `npm run playtest -- --games 360 --seed 101 --decks all --market all`, heuristic AI on both
-sides, rotating every ordered deck pairing across all six Market Decks. Numbers are from the current
-`spec/` after the v0.5.0 pass.
+Method: `npm run playtest -- --games 720 --decks all --market all`, heuristic AI on both sides,
+walking the full cross product of 30 ordered deck pairings and 6 Market Decks. Headline figures are
+the **mean of three independent runs** of 720 games, and `origin/main` was measured with the identical
+harness, so the before-and-after is apples to apples. Numbers are from the current `spec/` after the
+v0.6.0 pass.
+
+## v0.6.0 — the town cap, three-tier Statues and live Unemployment
+
+Two measuring tools were wrong, and both had been quietly distorting the published numbers. Say this
+first, because it invalidates figures printed in the v0.5.0 section below.
+
+- **`scripts/playtest.mjs` indexed the deck pairing and the Market Deck on the same counter.** There
+  are 30 ordered deck pairs and 6 markets, and 6 divides 30, so **every deck pairing was only ever
+  played on one market**. Five sixths of the matrix was never sampled, and what the notes called a
+  deck's win rate was really its win rate on a single market. The harness now walks the full cross
+  product. **The 27-point deck spread reported for v0.5.0 is an artefact of this bug**; re-measured
+  properly, `origin/main` had a spread of 33.2 points.
+- **`scripts/invariants.mjs` never counted hired Market animals** that reach a player's deck by way of
+  a Town Dump reshuffle — which laying off makes common.
+
+### What the pass did, measured
+
+| Measure | origin/main | after |
+| --- | ---: | ---: |
+| Deck win-rate spread | 33.2 pts | 24.4 pts |
+| End-of-game Supply per player | 56 | 51 |
+| Upgrades per game (both players) | 0.19 | 2.69 |
+| Recruits per player | 14.1 | 10.4 |
+| Mean turns | 31.9 | 35.3 |
+
+**The town cap is what made upgrading exist.** A town holds ten animals, counting those at work,
+those pledged into an auction and those face down in Unemployment. With an unlimited field, recruiting
+a second animal always beat improving the one you had, and upgrades ran at **0.19 a game across both
+players** while the set prints a second version of all 38 named Characters. They now run at **2.69**,
+of which 2.41 are in-town upgrades. Recruits fell from 14.1 to 10.4 per player, which is the same
+change seen from the other side: a place in town is now a thing worth spending on twice.
+
+**Unemployment is a live mechanic.** A new shared verb — each Mayor lets one or two animals go,
+choosing for themselves — and six new cards, weighted to each market's printed character (Hard Times
+carries 13 shocks; Founders' Fair keeps its fair weather at 2 and takes only the recovery cards).
+Unemployment events now run **3.8 a game**, against about none before. This is what Hedgehog's
+*protection* and Badger's *endurance* charters were printed to answer, and until now had almost
+nothing to answer.
+
+**The Statue tier is charged at resolution**, not when the auction opens. Several auctions run at
+once, so without this a Mayor holding three Statues could open auctions on two of them in the same
+turn, lock both in at the middle tier, and win the game without ever paying the top tier — exactly
+the purchase the third tier exists to make expensive.
+
+**Works in the Square** blocks all Statue purchases until two animals have been put to work clearing
+it. One Mayor can finish the job alone, which is what stops it deadlocking: blocking Statues hurts
+whoever is closest to winning, so a rule requiring both Mayors to pay would let the trailing one
+refuse forever. Cleared **0.41 times a game**.
+
+**The display now ages at the start of the second player's turn.** Whoever the aging fires for gets
+first sight of the replacement card, and that edge belongs to the Mayor who moves second: on a matched
+comparison it moved seat bias from +2.8 to −0.7.
+
+**Buildings finally pay for themselves.** The power model learned the game's second currency — an
+animal is worth something for simply being one, and pays for the town place it occupies — and a
+Building's repeating ability is now priced for permanence rather than at an Event's trigger weight.
+Building power-to-cost ratios went from 0.13–0.57 to **1.01–1.27** while they remain the dearest cards
+on the board. Five Many Hats cards were trimmed to hold the 1.08× power-creep gate.
+
+### Deck win rates
+
+| Deck | Win rate |
+| --- | ---: |
+| Paws & Papers | 60.7% |
+| Burrow & Bloom | 60.4% |
+| Bramble & Bastion | 52.9% |
+| Ripple & Rune | 42.8% |
+| Whisker & Willow | 42.4% |
+| Root & Rampart | 40.8% |
+
+**Read the spread honestly.** It is noisy run to run: the three runs after the pass gave 27.5, 22.1
+and 23.8 points, and the three runs on `origin/main` gave 35.8, 31.7 and 32.1. The mean improvement of
+about 8.8 points is larger than the noise and every run after the pass beat every run before it, so
+this one is real — but 24.4 points is still nowhere near a solved problem.
+
+### Seat balance and game shape
+
+Seat bias is within a couple of points of even, and inside the run-to-run noise: the three runs after
+the pass read −0.1, +1.9 and −2.6 (mean −0.3), and the three on `origin/main` read +0.1, 0.0 and +2.1
+(mean +0.7). No single figure here should be quoted as precise.
+
+| Measure | v0.6.0 |
+| --- | --- |
+| Mean turns | 35.3 |
+| Contested auctions | 3.07/game (was 2.00) |
+| Final Statue count | 5–4 in the plurality of games |
+| Unemployment events | 3.8/game |
+| In-town upgrades | 2.41/game |
+| Promotions out of Unemployment | 0.07/game |
+| Works in the Square cleared | 0.41/game |
+| Lay-offs | ~0/game |
+
+Lay-offs sit at about zero in AI play, and that is the intended shape: the agent can nearly always
+rehire or promote instead, so the action is a guarantee against lockout rather than a frequent play.
+
+Card conservation holds over 200 random-vs-random games (`npm run invariants`), now also counting
+hired Market animals that reach a player's deck through a Town Dump reshuffle.
 
 ## v0.5.0 — the auction rewrite, two-tier Statues, species charters
+
+Kept as the record of that pass. Every per-deck figure in it was measured with the broken harness
+described above, so each deck's win rate is really its win rate on one market; the auction, game
+length and identity figures are unaffected.
 
 The headline change is that **games are now close**. The old design was decided around halfway and
 then played out: over half of all games ended 5–0 or 5–1. The two-tier Statue price fixed that.
@@ -60,9 +163,9 @@ Card conservation holds over 200 random-vs-random games across all six Market De
 
 ## Still open
 
-1. **Deck balance is the remaining problem, and it did not improve.** The six rebuilt decks land at
-   Burrow & Bloom 63%, Whisker & Willow 60%, Paws & Papers 55%, Bramble & Bastion 49%, Ripple & Rune
-   37%, Root & Rampart 36% — a 27-point spread against 26 points before the pass.
+1. **Deck balance is still the biggest problem.** 24.4 points of spread is a real improvement on the
+   33.2 on `origin/main` — every run after the pass beat every run before it — but nothing about it is
+   solved: Root & Rampart still sits at 40.8% and Paws & Papers at 60.7%.
 
    The diagnosis is documented because it is more useful than the number. Win rate tracks **Events
    played per game** almost exactly (the top deck plays 10, the bottom 3), and Events played tracks
@@ -75,19 +178,23 @@ Card conservation holds over 200 random-vs-random games across all six Market De
    - An economy floor: every deck must hold at least 22 cards that produce Supply or draw. This
      lifted Bramble & Bastion from 34% to 59%.
 
-   What remains is that some species charters are simply worth more than others in this set. Notably
-   **the power model is currently anti-correlated with deck win rate**: it rated Bramble & Bastion
-   the strongest deck while it won least. The cause is that the model priced protection and shock
-   resistance as though there were much to defend against, when seven cards in the whole set send a
-   Character to Unemployment. Those values were repriced down, which helped, but the deeper answer is
-   content: **the set needs real interaction before defensive species can be worth their charter.**
+   What remains is that some species charters are simply worth more than others in this set. The
+   defensive species were the clearest case: the model priced protection and shock resistance as
+   though there were much to defend against, when almost nothing in the set sent a Character to
+   Unemployment. The v0.6.0 pass answered that with content rather than with a coefficient —
+   Unemployment events now run 3.8 a game — but the decks have not been rebuilt against the new
+   ratings. Bramble & Bastion did move, from near the bottom to 52.9%, once the rarity thresholds were
+   re-derived against the finished set and the printed decks were rebuilt on the new ratings.
 
-2. **Supply still inflates**, and removing the forfeiture made it worse by deleting the game's largest
-   sink (about 47 Supply per game). Buildings are the designated replacement sink and are now in the
-   set, but the AI buys them rarely; they need pricing work and the agent needs to value permanence
-   properly before this can be called fixed.
+2. **Supply still inflates.** 51 per player unspent at the end, down only 5 from 56. The third Statue
+   tier and the repriced Buildings were the two designated fixes and both helped less than hoped; the
+   game still hands out more Supply than it has places to spend it.
 
-3. **The heuristic AI was retuned for the ladder but not re-tuned from scratch.** It now prices the
-   ladder rung it is about to spend, penalises over-qualified pledges, and answers the new prompts,
-   but its weights were fitted to the old game. Every number here understates how tight human play
-   would be.
+3. **Promotions out of Unemployment are rare — 0.07 a game.** The mechanic works and is tested, but
+   the queue is small and a promotion needs the right card in hand at the right moment. Either the
+   queue has to be larger or the payoff more reachable before this path carries any weight.
+
+4. **The heuristic AI was extended, not retuned.** It understands the new actions — laying off,
+   promoting out of Unemployment, clearing the square, and valuing an in-town upgrade higher as the
+   town fills — but its weights were fitted to the old game. Every number here understates how tight
+   human play would be.

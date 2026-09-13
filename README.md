@@ -4,15 +4,54 @@ A two-player town-building trading card game where each player is the **Mayor** 
 
 This repo replaced the earlier single-file "Critter Town" game (archived at `docs/legacy-critter-town.html`).
 
-**New in v0.5.0:** the auction, the Statue race and species identity were rebuilt.
+**New in v0.6.0:** the town got a size, and Unemployment got something to do.
+
+- **A town holds ten animals.** The count is the town's whole footprint: animals at work, animals
+  pledged into an auction, and animals face down in Unemployment. Capping bodies is what gives the
+  upgrade path a reason to exist — with an unlimited field a second animal always beat a better one,
+  and **upgrades ran at 0.19 per game** while the set prints a second version of all 38 named
+  Characters. They now run at **2.69**.
+- **Statues cost 10 / 20 / 30**, stepping up at two and four held, so the fifth and winning Statue is
+  the dearest thing in the game by a wide margin. **The tier is charged when the auction resolves**,
+  not when it opens: several auctions can run at once, and without this a Mayor holding three Statues
+  could open two of them in one turn, lock both in at the middle tier, and win without ever paying
+  the top tier — exactly the purchase that tier exists to make expensive.
+- **Lay off** is a free action: send one face-down animal to the Town Dump for good and free its
+  place, so a town buried under shared shocks is never locked out of recruiting.
+- **Promote out of Unemployment.** A higher version may be played onto an animal in Unemployment,
+  bringing it straight back into work upright for the plain printed difference, in one action.
+- **Unemployment is face down inside the town**, not a separate area, and either Mayor may inspect
+  any face-down animal at any time.
+- **Unemployment is a live mechanic at last.** A new shared verb — each Mayor lets one or two animals
+  go, choosing for themselves — and six new cards, weighted to each market's character. Unemployment
+  events run **3.8 a game, up from about none**, which is what Hedgehog's protection and Badger's
+  endurance were printed to answer.
+- **Works in the Square**, an Ordinance that blocks every Statue purchase until two animals have been
+  put to work clearing it. Either Mayor may contribute, and one Mayor can finish the job alone.
+- **Market Decks are 35 cards** (nine Statues and a 26-card sample), each guaranteeing at least three
+  on-reveal cards drawn from its own pool.
+- **The power model learned the game's second currency**: an animal is worth something for simply
+  being one, and pays for the town place it occupies. **Every Building now pays for itself** —
+  power-to-cost ratios of 1.01-1.27, against 0.13-0.57 before.
+- **The display ages at the start of the second player's turn.** Whoever it fires for gets first
+  sight of the replacement card, and that edge belongs to the Mayor who moves second.
+
+Measured against the previous set with the same harness on both — the mean of three independent runs
+of 720 balanced games each: deck win-rate spread **33.2 → 24.4 points**, end-of-game Supply
+**56 → 51** per player, recruits **14.1 → 10.4** per player, mean game length **31.9 → 35.3** turns.
+The spread is noisy run to run, so treat that improvement as real but modest; the
+[playtest notes](docs/PLAYTEST_NOTES.md) give the individual runs.
+
+**Earlier, in v0.5.0:** the auction, the Statue race and species identity were rebuilt.
 
 - **The pledge ladder.** A raise only has to beat the standing bid — the growing increment is gone.
   What ends an auction is that **your Nth pledge must cost at least N**, and cost-0 animals cannot bid
   at all. The longest auction seen fell from 36 bids to 11.
 - **Pledged animals stand in the Capital City**, underneath the card they are bidding on, until it
   settles.
-- **Statues cost 10 or 20**, depending on how many you already hold, so the fifth and winning one is
-  always the dearest. Over half of all games used to end 5-0 or 5-1; **71% now end 5-3 or 5-4**.
+- **Statues cost 10 or 20** (since extended to three tiers), depending on how many you already hold,
+  so the fifth and winning one is always the dearest. Over half of all games used to end 5-0 or 5-1;
+  **71% then ended 5-3 or 5-4**.
 - **No forfeiture.** A losing bidder is refunded in full; the ladder is the price of a bid you cannot
   finish.
 - **40-card decks**, a free single mulligan, and six rebuilt starter decks.
@@ -43,21 +82,23 @@ What ends an auction is the **pledge ladder**: **your Nth pledge in an auction m
 
 Every pledged Character **moves to the Capital City and stands beneath the card it is bidding on** until the auction ends; it does not advance at Ready and no effect can wake it. "Cannot bid any more" is usually literal — nobody left whose cost reaches the next rung. When you are still the high bidder at the start of your own turn the card is yours; ties stay with the standing bid. **The loser is refunded in full** — the animals were the price, not the Supply.
 
-Whenever a card leaves the display, cards are dealt from the Market Deck until the display is back to five; if the Market Deck runs out, the City Dump is shuffled in. **The display also ages**: at the start of each round the oldest card nobody is bidding on is discarded and replaced, so the market always turns over and an interesting card is a decision now rather than forever.
+Whenever a card leaves the display, cards are dealt from the Market Deck until the display is back to five; if the Market Deck runs out, the City Dump is shuffled in. **The display also ages**: once a round — at the start of the second player's turn — the oldest card nobody is bidding on is discarded and replaced, so the market always turns over and an interesting card is a decision now rather than forever. It fires on the second player's turn on purpose: whoever the aging fires for gets first sight of the replacement, and that edge belongs to the Mayor who moves second.
 
-Besides one-shot Market cards and Statues, the Capital City sells **Buildings** (permanent, the most expensive cards in the game, three to a town, the design's Supply sink), **hires animals** (they join your town Busy whatever they cost), and posts **Ordinances** (never bought; while displayed they change the rules of every auction — moving the pledge ladder, taxing or discounting Statues, or closing the bidding).
+Besides one-shot Market cards and Statues, the Capital City sells **Buildings** (permanent, the most expensive cards in the game, three to a town, the design's Supply sink), **hires animals** (they join your town Busy whatever they cost), and posts **Ordinances** (never bought; while displayed they change the rules of every auction — moving the pledge ladder, taxing or discounting Statues, or closing the bidding). **Works in the Square** blocks every Statue purchase until two animals have been put to work clearing it; either Mayor may contribute an upright Character, which goes Busy rather than out of work, and one Mayor may finish the job alone.
 
-**On-reveal cards** live in every Market Deck. They are never bought: the moment one is dealt it resolves and goes to the City Dump. Some are shared shocks (Recession empties both towns, Hard Winter abandons every shift), some pay the Mayor who is behind, and some just set the weather. A shock is the kind a Badger can brace against.
+**On-reveal cards** live in every Market Deck. They are never bought: the moment one is dealt it resolves and goes to the City Dump. Some are shared shocks (Recession empties both towns, Hard Winter abandons every shift, A Slow Season and The Damp put one animal in each town out of work), some pay the Mayor who is behind, and some just set the weather. A shock is the kind a Badger can brace against.
 
-**Unemployment** disrupts Characters. Rehire for the full printed cost to return upright.
+**A town holds ten animals.** The count is the whole footprint: animals at work, animals pledged into a Capital City auction, and animals face down in Unemployment. Rehiring and promoting move an animal between two zones that both count, so they are footprint-neutral and stay legal in a full town — only a genuinely new body is refused. The cap is what gives upgrading a reason to exist: a better animal costs no place, another animal does.
 
-**Upgrades** let higher-cost versions of the same Character replace lower ones; pay only the difference.
+**Unemployment** holds disrupted Characters **face down inside their own town**, not in a separate area, and either Mayor may look at any face-down animal at any time — it is a visual state, not hidden information. Face down rather than rotated, because rotation means "this clears by itself in N turns" and Unemployment clears only when somebody pays; it also keeps 90° free for a future three-turn Busy. Rehire for the full printed cost to return upright, or **lay off** a face-down animal as a free action, sending it to the Town Dump for good and freeing its place, so a town buried under shared shocks is never locked out of recruiting.
 
-**Statues** are the victory cards. Control 5 of 9 to win. **A Statue costs 10 while you hold fewer than two, and 20 once you hold two or more**, so the fifth and winning one is always the dearest thing you buy — this is the main brake on a runaway. Each Statue also carries a **boon and a burden** lasting as long as you hold it: Community's extra shift Supply comes with a thinner Resources choice, Patience speeds your Masters but slows your Apprentices, and Harmony puts every pledge you make one rung higher up the ladder.
+**Upgrades** let higher-cost versions of the same Character replace lower ones; pay only the difference. A higher version may also be played onto an animal **in Unemployment**, promoting it straight back into work upright for the same plain difference. That is not a flat discount — against a cost-0 base version a plain rehire is still cheaper — it is a saved action: rehiring pays the full printed cost of the *old* version and then still needs a second action, plus the difference, to upgrade it.
 
-**Market Decks** — six shared markets to choose from at setup, all containing every Statue: **First Boroughs** (the classic mix, no shared shocks), **Boom Town** (prosperity and momentum; its shocks are mostly good news), **Hard Times** (recessions, hard winters and backlogs strike both towns alike), **Founders' Fair** (auction tools, understudies and second chances, with fair weather and nothing that empties a town), **Whiskerwood Fair** (ten artisan shops with six familiar favorites and no shared shocks) and **Many Hats Fair** (a hiring fair of halls that ready, retrain and rehire Characters by rank; no shared shocks).
+**Statues** are the victory cards. Control 5 of 9 to win. **A Statue costs 10 while you hold fewer than two, 20 once you hold two or three, and 30 at four** — so the purchase that wins the game is the dearest thing in the game by a wide margin. The price is read from your Victory Row **at the moment the auction resolves**, not when you announced it, so if a fourth Statue arrived while this auction was running you top up the difference out of Supply at resolution. If you cannot cover the risen price, the purchase fizzles and your bid comes back — this is the main brake on a runaway. Each Statue also carries a **boon and a burden** lasting as long as you hold it: Community's extra shift Supply comes with a thinner Resources choice, Patience speeds your Masters but slows your Apprentices, and Harmony puts every pledge you make one rung higher up the ladder.
 
-**Rarity** — every card is rated by what it gives you against what it asks for, and that rating sets its rarity: Common, Uncommon, Rare, Super Rare, Legendary. Rarity is not raw power. The model scores a card `power^0.6 × efficiency^0.4`, so of two cards that do the same thing the cheaper one rates higher, while of two equally efficient cards the bigger one does — a cost-0 Rabbit with a good shift can out-rate a Master. Rarity then caps how often a card may repeat in a deck: **3 / 3 / 2 / 1 / 1** copies. See `src/engine/power.js` and `npm run power`.
+**Market Decks** — six shared markets to choose from at setup, each 35 cards: all nine Statues plus a 26-card sample of its own pool, topped up so that at least three on-reveal cards are always in it. **First Boroughs** (the classic mix; three shocks), **Boom Town** (prosperity and momentum; four shocks, mostly good news), **Hard Times** (recessions, hard winters and backlogs strike both towns alike; thirteen shocks), **Founders' Fair** (auction tools, understudies and second chances; fair weather at two shocks and nothing that empties a town), **Whiskerwood Fair** (ten artisan shops with six familiar favorites; two shocks) and **Many Hats Fair** (a hiring fair of halls that ready, retrain and rehire Characters by rank; three shocks).
+
+**Rarity** — every card is rated by what it gives you against what it asks for, and that rating sets its rarity: Common, Uncommon, Rare, Super Rare, Legendary. Rarity is not raw power. The model scores a card `power^0.6 × efficiency^0.4`, so of two cards that do the same thing the cheaper one rates higher, while of two equally efficient cards the bigger one does — a cost-0 Rabbit with a good shift can out-rate a Master. The set reads as a pyramid: 49% Common, 25% Uncommon, 18% Rare, 5% Super Rare, 3% Legendary. Rarity then caps how often a card may repeat in a deck: **3 / 3 / 2 / 1 / 1** copies. See `src/engine/power.js` and `npm run power`.
 
 **Characters by name** — some cards ask for a particular friend: Nim, Chancellor of Records pays out while you control Pip (any version of him), and Pip's Reading Hour can only be played with an upright Pip. A named requirement or condition matches whichever version of that Character is on top of a stack.
 
@@ -86,7 +127,7 @@ npm run serve -- --port 9000   # another port (or PORT=9000 npm run serve)
 ```
 Then open http://localhost:8080/ in any modern browser. During play, use the **Pace** control (menu or bottom right) to choose animation speed: Storybook (slow, watch every card), Brisk (quicker), or Instant (no animations).
 
-The server (`scripts/serve.mjs`, no dependencies) sends every file with `Cache-Control: no-store`, so each reload plays exactly what is on disk. When it starts it prints the version and the folder it is serving; the book cover shows the same version line (e.g. `v0.4.0 · Animal Friends: First Boroughs · 332 cards · 10 decks · 6 Market Decks`). If the two disagree, the browser is showing an old copy.
+The server (`scripts/serve.mjs`, no dependencies) sends every file with `Cache-Control: no-store`, so each reload plays exactly what is on disk. When it starts it prints the version and the folder it is serving; the book cover shows the same version line (e.g. `v0.6.0 · Animal Friends: First Boroughs · 375 cards · 6 decks · 6 Market Decks`). If the two disagree, the browser is showing an old copy.
 
 ### Testing a fresh download
 
@@ -104,7 +145,7 @@ If you test by downloading the ZIP from GitHub and unzipping it:
 - `docs/ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md` - design reference and source of truth
 - `spec/game.json` - rules constants and prototype decisions
 - `spec/species.json` - the nine species charters (centre of gravity, hole, signature); the contract `npm run identity` checks
-- `spec/starter_card_set.json` - all 368 cards: 136 Characters, 88 Events, 9 Statues, 84 Market cards, 12 Buildings, 10 hired animals, 6 Ordinances and 23 on-reveal cards, plus six printed 40-card decks and six Market Decks. Every card carries its `rarity` and the `power` rating that earned it, and the file is ordered by that rating, strongest for its cost first. A Market Deck is dealt as all 9 Statues plus a random sample of its own pool, so it keeps one size while the display varies from game to game.
+- `spec/starter_card_set.json` - all 375 cards: 136 Characters, 88 Events, 9 Statues, 86 Market cards, 12 Buildings, 10 hired animals, 7 Ordinances and 27 on-reveal cards, plus six printed 40-card decks and six Market Decks. Every card carries its `rarity` and the `power` rating that earned it, and the file is ordered by that rating, strongest for its cost first. A Market Deck is dealt as all 9 Statues plus a 26-card sample of its own pool — 35 cards — topped up from that pool until at least three on-reveal cards are in it, so every market keeps one size and its own printed character while the display varies from game to game.
 - `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`. `power.js` is the power/cost model that rates every card and assigns its rarity
 - `src/ai/` - agents: `random.js` (baseline), `heuristic.js` (opponent)
 - `src/ui/` - browser interface: `main.js`, `humanAgent.js`, `render.js`, `deckbuilder.js` (the Deck Workshop), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations)
@@ -129,7 +170,7 @@ npm run stamp -- --check                    # ...or just fail if any printed rar
 npm run playtest -- --games 200            # Playtest 200 AI matches
 npm run playtest -- --games 100 --seed 42 # Use fixed seed for reproducibility
 npm run playtest -- --p0 random --p1 heuristic  # Choose agents
-npm run playtest -- --games 240 --decks all     # Rotate through every ordered deck pairing
+npm run playtest -- --games 720 --decks all --market all   # Walk the full 30-pairing x 6-market cross product
 npm run playtest -- --decks br,rr               # One matchup (bb, pp, br, rr, ll, rw, ww, vl, hh, tt or full deck ids)
 npm run playtest -- --market hard-times          # Choose the shared Market Deck (or `all` to rotate)
 ```
@@ -143,10 +184,15 @@ The `assumptions` array in `spec/game.json` documents current prototype choices:
 - The pledge ladder: your Nth pledge in an auction must be a Character costing at least N, so cost-0 Characters cannot bid and nobody bids more than five times
 - Pledged Characters move to the Capital City beneath the card and stay there until the auction ends
 - A losing bidder is refunded in full; there is no forfeit
-- Statues cost 10 below two held and 20 at two or more, so the winning fifth is always the dearest
+- Statues cost 10 below two held, 20 at two or three, and 30 at four, so the winning fifth is always the dearest
+- A Statue's price tier is read at the moment the auction resolves, not when it is announced; the winner tops up any rise out of Supply, and if they cannot the purchase fizzles and the bid is returned
 - Statues carry burdens as well as boons
-- The Capital City ages: one card nobody is bidding on is discarded and replaced each round
+- The Capital City ages: one card nobody is bidding on is discarded and replaced once a round, at the start of the second player's turn
 - Buildings stay in their buyer's town, three to a town; a fourth demolishes one
+- A town holds at most 10 animals, counting those at work, those pledged into an auction and those face down in Unemployment; rehiring and promoting are footprint-neutral and always legal
+- A Mayor may lay off one face-down animal to the Town Dump as a free action
+- A higher version may be played onto an animal in Unemployment, promoting it back into work upright for the printed difference in one action
+- Unemployment is face down within the town, inspectable by either Mayor at any time
 - Hired Market animals enter Busy whatever they cost
 - Ordinances are never bought and change every auction while displayed
 - On-reveal Market cards resolve as they are dealt and are never purchasable
@@ -173,7 +219,7 @@ share this presentation. Select **Read** on any visible card to open its full ar
 burden in a keyboard- and touch-accessible reading view; Escape closes it.
 
 `src/ui/painted-art.js` selects a painted scene by explicit atlas/tile when a card names one (`art: { atlas: "boroughs" | "whiskerwood" | "neighbors", tile }`), or by species
-and theme for other cards. These are **48 paintings, not 332 unique illustrations**: related cards retain different printed names, jobs,
+and theme for other cards. These are **48 paintings, not 375 unique illustrations**: related cards retain different printed names, jobs,
 stats and effects while sharing art. The twelve Full Art selections override their shared painting
 with an individual PNG from `assets/art/full-art/`, retaining the atlas and vector layers as fallbacks.
 All three PNG atlases and the twelve portraits ship with the game; no image

@@ -16,6 +16,7 @@ const cheapest = (cost) => SET.cards.find((c) => c.type === 'character' && c.cos
 describe('the pledge ladder', () => {
   test('your Nth pledge in an auction must cost at least N', () => {
     const state = newGame();
+    setCity(state, []); // no Ordinance in force: measure the printed ladder
     assert.equal(pledgeMinCost(state, null, 0), 1, 'the opening bid needs a cost-1 animal');
     const fake = { chars: [[1, 2], []] };
     assert.equal(pledgeMinCost(state, fake, 0), 3, 'after two pledges the next must cost 3');
@@ -58,22 +59,27 @@ describe('the pledge ladder', () => {
   });
 });
 
-describe('two-tier Statue pricing', () => {
-  test('a Statue costs the first tier below the break and the second at or above it', () => {
+describe('three-tier Statue pricing', () => {
+  test('the price steps up at each break in the buyer\'s own Victory Row', () => {
     const state = newGame();
-    const [low, high] = RULES.victory.statueCostTiers;
+    const [low, mid, top] = RULES.victory.statueCostTiers;
     assert.equal(cardCostFor(state, 0, 'st_kindness'), low, 'a Mayor with no Statues pays the low tier');
     giveStatue(state, 0, 'st_joy');
     assert.equal(cardCostFor(state, 0, 'st_kindness'), low, 'one Statue still pays the low tier');
     giveStatue(state, 0, 'st_curiosity');
-    assert.equal(cardCostFor(state, 0, 'st_kindness'), high, 'two Statues pays the high tier');
+    assert.equal(cardCostFor(state, 0, 'st_kindness'), mid, 'two Statues pays the middle tier');
+    giveStatue(state, 0, 'st_courage');
+    assert.equal(cardCostFor(state, 0, 'st_kindness'), mid, 'three Statues still pays the middle tier');
+    giveStatue(state, 0, 'st_patience');
+    assert.equal(cardCostFor(state, 0, 'st_kindness'), top, 'four Statues pays the top tier');
     assert.equal(cardCostFor(state, 1, 'st_kindness'), low, 'and the rival still pays their own price');
   });
 
-  test('the winning fifth Statue is always bought at the high tier', () => {
+  test('the winning fifth Statue is always bought at the dearest tier', () => {
     const state = newGame();
     for (const id of ['st_joy', 'st_curiosity', 'st_courage', 'st_patience']) giveStatue(state, 0, id);
-    assert.equal(cardCostFor(state, 0, 'st_kindness'), RULES.victory.statueCostTiers[1]);
+    const tiers = RULES.victory.statueCostTiers;
+    assert.equal(cardCostFor(state, 0, 'st_kindness'), tiers[tiers.length - 1]);
   });
 });
 
@@ -165,6 +171,7 @@ describe('Ordinances', () => {
     assert.ok(ord, 'the set prints an Ordinance that moves the ladder');
     const state = newGame();
     setSupply(state, 0, 20);
+    setCity(state, []); // clear the opening display so `plain` is the unmodified ladder
     const plain = pledgeMinCost(state, null, 0);
     setCity(state, [ord.id, 'mk_festival_grant']);
     const delta = ord.abilities.find((a) => a.key === 'pledgeLadderDelta').value;

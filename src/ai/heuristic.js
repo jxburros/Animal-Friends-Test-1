@@ -27,7 +27,7 @@
 
 import {
   cardDef, topCard, canAct, opponentOf, statueCount, findEventAssignment, eventReduction, rankOf, hasPassive,
-  pledgeMinCost,
+  pledgeMinCost, townFootprint, townCap, hasTownRoom, rehireCost, cityRule,
 } from '../engine/index.js';
 import { cardPower, effectPower } from '../engine/power.js';
 
@@ -318,17 +318,32 @@ function scoreAction(state, ctx, a, agg, out, P) {
       const d = def(state, a.cardId);
       if (!d) return -1;
       if (a.upgrade) {
+        if (a.fromUnemployment) {
+          // Promoting brings an idle animal back as the better version, in one action, and costs no
+          // town slot — so it is worth the whole animal, not just the difference over what it was.
+          const s = rateOf(d) * P.rateWeight * horizon - a.cost * P.costWeight + P.bodyBonus + P.upgradeBonus;
+          out.why = `promote ${d.name} out of Unemployment`;
+          return s;
+        }
         const target = findStack(state, ctx.pi, a.targetUid);
         const cur = target ? stackTop(state, target) : null;
         const gain = rateOf(d) - rateOf(cur);
         let s = gain * P.rateWeight * horizon - a.cost * P.costWeight + P.upgradeBonus;
         if (d.abilities && d.abilities.some((x) => x.trigger === 'passive')) s += 5;
+        // With the field capped, improving an animal you already have costs no slot, while another
+        // body does. That is the whole reason the upgrade path exists, so it is worth more as the
+        // town fills up.
+        if (!hasTownRoom(state, ctx.pi)) s += P.upgradeBonus;
         out.why = `upgrade ${d.name} (+${gain.toFixed(1)}/turn)`;
         return s;
       }
       const delay = entryDelayTurns(state, d);
       let s = rateOf(d) * P.rateWeight * Math.max(0, horizon - delay) - a.cost * P.costWeight + P.bodyBonus;
-      if (p.town.length >= 6) s -= 4; // diminishing returns on a crowded town
+      // Diminishing returns as the town fills: the last places are worth keeping free for a better
+      // animal than the one in hand.
+      const cap = townCap(state);
+      if (Number.isFinite(cap) && townFootprint(state, ctx.pi) >= cap - 2) s -= 4;
+      else if (p.town.length >= 6) s -= 4;
       out.why = `recruit ${d.name} (${rateOf(d).toFixed(1)}/turn)`;
       return s;
     }
@@ -509,6 +524,32 @@ function scoreAction(state, ctx, a, agg, out, P) {
       if (!d) return -1;
       let s = rateOf(d) * P.rateWeight * horizon - a.cost * P.costWeight + P.bodyBonus;
       out.why = `rehire ${d.name}`;
+      return s;
+    }
+
+    case 'layOff': {
+      // Giving up on an animal for good is a last resort: only worth it when the town is full and
+      // this one is the least worth bringing back, and never while there is still room to recruit.
+      const d = def(state, a.cardId);
+      if (!d) return -1;
+      if (hasTownRoom(state, ctx.pi)) return -1;
+      const worth = rateOf(d) * P.rateWeight * horizon;
+      const s = P.bodyBonus - worth - rehireCost(state, ctx.pi, a.cardId) * 0.5;
+      out.why = `lay off ${d.name} to free a place`;
+      return s;
+    }
+
+    case 'clearOrdinance': {
+      // Putting an animal to work on the square costs a turn of its time. Worth it in proportion to
+      // how badly this Mayor wants the thing the Ordinance is holding up — which, for the Statue
+      // blocker, means the closer they are to winning the more they should be willing to pay.
+      const held = p.victoryRow.length;
+      const wantStatue = cityRule(state, 'blockStatuePurchase') > 0;
+      if (!wantStatue) return -1;
+      const urgency = 1 + held * 1.5; // a Mayor one Statue from home wants the hole filled in
+      const nearlyDone = a.needed <= 1 ? 4 : 0; // finishing it yourself beats half-finishing it
+      const s = P.bodyBonus * 0.5 * urgency + nearlyDone - P.workBase * 0.6;
+      out.why = `clear the square (${a.needed} more)`;
       return s;
     }
 

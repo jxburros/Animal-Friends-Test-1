@@ -8,6 +8,7 @@
 // around, and the engine is held at its next decision until those animations have played (settle()).
 import {
   cardDef, topCard, canAct, findStack, eventReduction, assignmentCovers, rankOf, pledgeMinCost,
+  townFootprint, townCap, statueTierFor,
 } from '../engine/index.js';
 import { cardArtSVG, cardBackSVG, iconSVG } from './art.js';
 import { ornamentalFrameSVG } from './painted-art.js';
@@ -134,6 +135,7 @@ function computeSignature() {
     state.log.length, state.active, state.phase, state.winner, state.turnNumber,
     pending ? pending.request.kind : '', wizard ? `${wizard.kind}:${wizard.step}:${(wizard.selected || []).join('-')}` : '',
     p0.supply, p1.supply, p0.hand.length, p1.hand.length, p0.town.length, p1.town.length,
+    p0.unemployment.length, p1.unemployment.length,
     p0.town.map((s) => `${s.uid}:${s.orientation}:${s.shift ? s.shift.remaining : ''}:${s.lockedBid || ''}`).join(','),
     p1.town.map((s) => `${s.uid}:${s.orientation}:${s.shift ? s.shift.remaining : ''}:${s.lockedBid || ''}`).join(','),
     state.market.city.join(','), pend,
@@ -203,6 +205,26 @@ export function raritySlug(def) {
   return def && def.rarity ? def.rarity.toLowerCase().replace(/\s+/g, '-') : 'common';
 }
 
+/**
+ * One phrase per Statue price tier, read from `victory.statueCostTierBreaks` — the holdings at which
+ * the price steps up. With tiers [10,20,30] and breaks [2,4] that reads "10 while you hold fewer than
+ * 2 Statues, 20 while you hold 2–3, 30 once you hold 4 or more". A single legacy `statueCostTierBreak`
+ * is read as a one-entry list, exactly as the engine's statueTierFor does, so older rule files still
+ * describe themselves correctly.
+ */
+function statueBands(victory, tiers) {
+  const breaks = Array.isArray(victory.statueCostTierBreaks) && victory.statueCostTierBreaks.length
+    ? victory.statueCostTierBreaks
+    : [victory.statueCostTierBreak ?? 2];
+  return tiers.map((cost, i) => {
+    if (i === 0) return `${cost} while you hold fewer than ${breaks[0]} Statues`;
+    const from = breaks[i - 1];
+    const to = breaks[i];
+    if (from === undefined) return `${cost} beyond that`;
+    return to === undefined ? `${cost} once you hold ${from} or more` : `${cost} while you hold ${from}–${to - 1}`;
+  });
+}
+
 export function buildCardFace(def, { large = false, interactive = true } = {}) {
   const fullArt = fullArtFor(def);
   const rank = def.type === 'character' && activeRules() ? rankOf(activeRules(), def.cost) : null;
@@ -213,15 +235,19 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
   });
   const banner = h('div', { class: 'banner' });
   if (def.cost !== undefined) {
-    // A Statue has no single price: it costs the first tier to a Mayor holding fewer than two and
-    // the second to a Mayor holding more, so the card shows both and the tooltip explains which.
-    const tiers = def.type === 'statue' && activeRules() && activeRules().victory && activeRules().victory.statueCostTiers;
-    const brk = tiers ? (activeRules().victory.statueCostTierBreak ?? 2) : 0;
-    const label = tiers ? `${tiers[0]}/${tiers[1]}` : String(def.cost);
-    const title = tiers
-      ? `Costs ${tiers[0]} Supply while you hold fewer than ${brk} Statues, ${tiers[1]} once you hold ${brk} or more`
-      : `Cost ${def.cost} Supply`;
-    banner.appendChild(h('div', { class: `cost${tiers ? ' tiered' : ''}`, title }, label));
+    // A Statue has no single price: it is read from the buyer's own Victory Row, so the card shows
+    // every tier and the tooltip names the band each one covers — and, in a game, what you pay now.
+    const victory = (activeRules() && activeRules().victory) || {};
+    const tiers = def.type === 'statue' && Array.isArray(victory.statueCostTiers) && victory.statueCostTiers.length
+      ? victory.statueCostTiers : null;
+    const label = tiers ? tiers.join('/') : String(def.cost);
+    let title = `Cost ${def.cost} Supply`;
+    if (tiers) {
+      title = `Costs ${statueBands(victory, tiers).join(', ')}`;
+      // The price is per-Mayor, so in a live game say plainly which tier is yours today.
+      if (state) title += ` — you pay ${statueTierFor(state.rules, state.players[humanIndex].victoryRow.length)} today`;
+    }
+    banner.appendChild(h('div', { class: `cost${tiers ? ` tiered tiers-${tiers.length}` : ''}`, title }, label));
   }
   banner.appendChild(h('div', { class: 'cname', title: def.name }, def.name));
   banner.appendChild(h('div', { class: 'ticon', html: iconSVG(typeIconName(def)) }));
@@ -328,6 +354,68 @@ function buildStackEl(stack, { clickable = false, selected = false, onClick = nu
   return wrap;
 }
 
+/**
+ * An animal out of work, lying face down in its own town. Face down rather than rotated: a rotated
+ * card means "this clears by itself after so many turns", and Unemployment clears only when somebody
+ * pays for it — so the card simply lies on its back, still taking up one of the town's slots.
+ *
+ * Turning it over is open to either Mayor at any time (click, or tab to it and press): who is out of
+ * work is a visual state, not hidden information, and both players need to be able to read it.
+ */
+function buildUnemployedEl(pi, c, { actionGroups = null } = {}) {
+  const def = cardDef(state, c.cardId);
+  const whose = pi === humanIndex ? 'your town' : `${state.players[pi].name}'s town`;
+  const rehire = actionGroups ? actionGroups.byUnemploymentCard.get(c.uid) : null;
+  const promote = (actionGroups && actionGroups.byPromoteTarget.get(c.uid)) || [];
+  const layOff = actionGroups ? actionGroups.byLayOffCard.get(c.uid) : null;
+  const canDo = Boolean(rehire) || promote.length > 0 || Boolean(layOff);
+  const wrap = h('div', { class: `stack unemployed${canDo ? ' actionable' : ''}`, 'data-key': `unemp:${c.uid}` });
+  // orient-0: never rotated. 90° is deliberately kept free for a future three-turn Busy.
+  const flip = h('div', { class: 'stack-flip orient-0' });
+  const look = h('button', {
+    class: 'facedown', type: 'button',
+    title: `Out of work in ${whose} — turn them over and read them`,
+    'aria-label': `Read ${def.name}, ${def.title}, out of work in ${whose}`,
+    onclick: (event) => { event.stopPropagation(); inspectCard(def); },
+  }, [buildCardBack(), h('div', { class: 'fd-label' }, [
+    h('span', { class: 'fd-out' }, 'Out of work'),
+    h('span', { class: 'fd-read' }, 'Read'),
+  ])]);
+  flip.appendChild(look);
+  wrap.appendChild(flip);
+  const badges = h('div', { class: 'stack-badges' });
+  if (rehire) {
+    badges.appendChild(h('button', {
+      class: 'small', title: `Pays ${def.name}'s full printed cost; they come back to work upright, as they are now.`,
+      onclick: () => resolvePending(rehire),
+    }, `Rehire (${rehire.cost})`));
+  }
+  if (promote.length === 1) {
+    badges.appendChild(h('button', { class: 'small primary', title: promoteHint(promote[0]), onclick: () => resolvePending(promote[0]) }, promoteLabel(promote[0])));
+  } else if (promote.length > 1) {
+    badges.appendChild(h('button', {
+      class: 'small primary',
+      onclick: (event) => { event.stopPropagation(); openPromotePopover(def, promote, event.currentTarget); },
+    }, 'Promote…'));
+  }
+  if (layOff) {
+    badges.appendChild(h('button', {
+      class: 'small', title: 'A free action — it does not end your turn.',
+      onclick: (event) => { event.stopPropagation(); openLayOffPopover(layOff, event.currentTarget); },
+    }, 'Lay off…'));
+  }
+  wrap.appendChild(badges);
+  return wrap;
+}
+
+/** The button text for one "promote out of Unemployment" option: the version they come back as. */
+function promoteLabel(o) {
+  return `Promote to ${cardDef(state, o.cardId).title} (${o.cost})`;
+}
+function promoteHint(o) {
+  return `Promote out of Unemployment: pay the ${o.cost} Supply difference and ${cardDef(state, o.cardId).name} comes straight back to work upright, with the better card on top — one action, where a rehire and then an upgrade would take two.`;
+}
+
 // ---------- hover peek (enlarged card preview) ----------
 let peekTimer = null;
 let peekFor = null;
@@ -397,18 +485,24 @@ function groupActionOptions(options) {
   const g = {
     byHandRecruit: new Map(), byCharWork: new Map(), byCharAbility: new Map(),
     byCharAnnounce: new Map(), byCharRaise: new Map(), byEventCard: new Map(),
-    byUnemploymentCard: new Map(), endTurn: null,
+    byUnemploymentCard: new Map(), byPromoteTarget: new Map(), byLayOffCard: new Map(), endTurn: null,
   };
   for (const o of options) {
     switch (o.type) {
       case 'endTurn': g.endTurn = o; break;
-      case 'recruit': pushMulti(g.byHandRecruit, o.cardUid, o); break;
+      // A recruit that promotes out of Unemployment is also indexed by the animal it picks back up,
+      // so the face-down card can offer it as well as the hand card that pays for it.
+      case 'recruit':
+        pushMulti(g.byHandRecruit, o.cardUid, o);
+        if (o.fromUnemployment) pushMulti(g.byPromoteTarget, o.targetUid, o);
+        break;
       case 'work': g.byCharWork.set(o.charUid, o); break;
       case 'ability': g.byCharAbility.set(o.charUid, o); break;
       case 'announce': pushMulti(g.byCharAnnounce, o.charUid, o); break;
       case 'raise': pushMulti(g.byCharRaise, o.charUid, o); break;
       case 'playEvent': pushMulti(g.byEventCard, o.cardUid, o); break;
       case 'rehire': g.byUnemploymentCard.set(o.cardUid, o); break;
+      case 'layOff': g.byLayOffCard.set(o.cardUid, o); break;
       default: break;
     }
   }
@@ -470,7 +564,13 @@ function openRecruitPopover(handCard, options, anchorEl) {
     pop.appendChild(h('h4', {}, `${def.name}, ${def.title}`));
     const actions = h('div', { class: 'po-actions' });
     for (const o of options) {
-      if (o.upgrade) {
+      if (o.fromUnemployment) {
+        // A promotion, not an in-town upgrade: the target is lying face down, and comes back upright.
+        const card = state.players[humanIndex].unemployment.find((u) => u.uid === o.targetUid);
+        const targetDef = card ? cardDef(state, card.cardId) : null;
+        actions.appendChild(h('button', { title: promoteHint(o), onclick: () => resolvePending(o) },
+          `Promote ${targetDef ? targetDef.title : 'them'} out of Unemployment → ${def.title} (cost ${o.cost})`));
+      } else if (o.upgrade) {
         const targetStack = findStack(state, humanIndex, o.targetUid);
         const targetDef = targetStack ? topCard(state, targetStack) : null;
         actions.appendChild(h('button', { onclick: () => resolvePending(o) }, `Upgrade ${targetDef ? targetDef.title : 'Character'} → ${def.title} (cost ${o.cost})`));
@@ -478,6 +578,38 @@ function openRecruitPopover(handCard, options, anchorEl) {
         actions.appendChild(h('button', { class: 'primary', onclick: () => resolvePending(o) }, `Recruit (cost ${o.cost})`));
       }
     }
+    pop.appendChild(actions);
+    // Why there is no plain "Recruit" button: a full town has no room for a brand-new body, and only
+    // an upgrade or a promotion — which take a place that is already spoken for — can bring them in.
+    if (!options.some((o) => !o.upgrade) && townFootprint(state, humanIndex) >= townCap(state)) {
+      pop.appendChild(h('div', { class: 'modal-sub' }, `Your town is full at ${townCap(state)} animals, so nobody new can move in.`));
+    }
+  });
+}
+
+/** Which card in hand pays for the promotion, when more than one version could pick this animal up. */
+function openPromotePopover(def, options, anchorEl) {
+  showPopover(anchorEl, (pop) => {
+    pop.appendChild(h('h4', {}, `Promote ${def.name} out of Unemployment`));
+    pop.appendChild(h('div', { class: 'modal-sub' }, 'They come straight back to work upright, with the better card on top.'));
+    const actions = h('div', { class: 'po-actions' });
+    for (const o of options) actions.appendChild(h('button', { class: 'primary', title: promoteHint(o), onclick: () => resolvePending(o) }, promoteLabel(o)));
+    pop.appendChild(actions);
+  });
+}
+
+/**
+ * Laying off is free and it is forever, so it always asks twice: the animal goes to the Town Dump and
+ * never comes back, and the slot they were taking up in the town opens again.
+ */
+function openLayOffPopover(option, anchorEl) {
+  const def = cardDef(state, option.cardId);
+  showPopover(anchorEl, (pop) => {
+    pop.appendChild(h('h4', {}, `Lay off ${def.name}?`));
+    pop.appendChild(h('div', { class: 'modal-sub' }, `${def.name}, ${def.title} leaves town for good — off to the Town Dump, with no way back. It frees their place in your town, and it does not use up your turn.`));
+    const actions = h('div', { class: 'po-actions' });
+    actions.appendChild(h('button', { class: 'danger', onclick: () => resolvePending(option) }, 'Yes — wave them off'));
+    actions.appendChild(h('button', { onclick: () => { hidePopoverUI(); wizard = null; scheduleRender(); } }, 'No, keep them'));
     pop.appendChild(actions);
   });
 }
@@ -819,11 +951,22 @@ function renderTownPanel(pi, elId) {
 
   const row = h('div', { class: 'town-row' });
 
-  // Town (character stacks)
-  const townSub = h('div', { class: 'town-sub town-main' });
-  townSub.appendChild(h('div', { class: 'town-sub-title' }, [icon('Civics'), 'Town']));
+  // Town (character stacks, with the animals out of work lying face down among them). The title
+  // carries the town's whole footprint against the cap — animals at work, animals pledged into an
+  // auction and animals out of work all take a place, and a full town cannot recruit at all.
+  const footprint = townFootprint(state, pi);
+  const capacity = townCap(state);
+  const townFull = footprint >= capacity;
+  const townSub = h('div', { class: `town-sub town-main${townFull ? ' town-full' : ''}` });
+  townSub.appendChild(h('div', {
+    class: 'town-sub-title', 'data-key': `footprint:${pi}`,
+    title: `Animals at work, pledged into an auction, or out of work — all of them take up one of the town's ${Number.isFinite(capacity) ? capacity : 'places'}.`,
+  }, [
+    icon('Civics'), `Town · ${footprint} / ${Number.isFinite(capacity) ? capacity : '∞'} animals${townFull ? ' ' : ''}`,
+    townFull ? h('span', { class: 'full-tag' }, 'Full') : null,
+  ]));
   const stackRow = h('div', { class: 'stack-row' });
-  if (!p.town.length) stackRow.appendChild(h('div', { class: 'empty-note' }, 'No Characters have moved in yet.'));
+  if (!p.town.length && !p.unemployment.length) stackRow.appendChild(h('div', { class: 'empty-note' }, 'No Characters have moved in yet.'));
   for (const s of p.town) {
     let clickable = false;
     let selected = false;
@@ -844,7 +987,17 @@ function renderTownPanel(pi, elId) {
     }
     stackRow.appendChild(buildStackEl(s, { clickable, selected, onClick }));
   }
+  // The animals out of work sit in the same row as everybody else — they never left the town, they
+  // are just face down until a Mayor rehires them, promotes them, or waves them off for good.
+  for (const c of p.unemployment) {
+    stackRow.appendChild(buildUnemployedEl(pi, c, { actionGroups: (isHuman && !wizard && actionGroups) || null }));
+  }
   townSub.appendChild(stackRow);
+  if (townFull) {
+    townSub.appendChild(h('div', { class: 'town-full-note' }, isHuman
+      ? `Your town is full at ${capacity} animals — nobody new can move in. Promote or upgrade somebody who is already here, or lay off an animal who is out of work to open a place.`
+      : `${p.name}'s town is full at ${capacity} animals — nobody new can move in.`));
+  }
   row.appendChild(townSub);
 
   // Limited Events
@@ -889,23 +1042,7 @@ function renderTownPanel(pi, elId) {
   stSub.appendChild(stRow);
   row.appendChild(stSub);
 
-  // Unemployment
-  const unSub = h('div', { class: 'town-sub' });
-  unSub.appendChild(h('div', { class: 'town-sub-title' }, [icon('busy'), 'Unemployment']));
-  const unRow = h('div', { class: 'mini-row' });
-  if (!p.unemployment.length) unRow.appendChild(h('div', { class: 'empty-note' }, 'Everyone is employed.'));
-  for (const c of p.unemployment) {
-    const def = cardDef(state, c.cardId);
-    const box = h('div', { class: 'mini-card unemployed', 'data-key': `unemp:${c.uid}` });
-    box.appendChild(buildCardFace(def));
-    if (isHuman && !wizard && actionGroups && actionGroups.byUnemploymentCard.has(c.uid)) {
-      const opt = actionGroups.byUnemploymentCard.get(c.uid);
-      box.appendChild(h('button', { class: 'small primary', onclick: () => resolvePending(opt) }, `Rehire (${opt.cost})`));
-    }
-    unRow.appendChild(box);
-  }
-  unSub.appendChild(unRow);
-  row.appendChild(unSub);
+  // (Unemployment has no zone of its own any more: the face-down animals are in the Town row above.)
 
   el.appendChild(row);
 

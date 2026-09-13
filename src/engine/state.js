@@ -71,12 +71,37 @@ export function resolveMarketDeck(set, ref) {
  * `{ always, pool, poolSize }`: every `always` card plus a random `poolSize` of `pool`,
  * so the deck keeps one size while the Capital City pool varies from game to game.
  */
+/**
+ * Build a Market Deck: everything in `always` (the nine Statues) plus a `poolSize` sample of the
+ * market's own pool.
+ *
+ * `minDisruptions` guarantees the sample carries at least that many on-reveal cards, so every game
+ * gets some shared weather however the shuffle falls. The floor is topped up from the same market's
+ * pool, so a market keeps its own character: Hard Times tops up with recessions and hard winters,
+ * Founders' Fair with its fair-weather windfalls. Nothing is moved out of the pool to achieve this,
+ * so each market's printed shock ratio is unchanged.
+ */
 export function buildMarketDeck(state, spec) {
   if (Array.isArray(spec)) return spec.slice();
   const always = (spec.always || []).slice();
   const pool = shuffle(state, (spec.pool || []).slice());
   const want = spec.poolSize === undefined ? pool.length : Math.min(spec.poolSize, pool.length);
-  return always.concat(pool.slice(0, want));
+  const picked = pool.slice(0, want);
+  const min = spec.minDisruptions || 0;
+  if (min > 0 && state.set) {
+    const isReveal = (id) => state.set.cardsById?.[id]?.type === 'disruption';
+    let have = picked.filter(isReveal).length;
+    if (have < min) {
+      const spare = pool.slice(want).filter(isReveal);
+      // Swap each missing on-reveal card in over a non-reveal pick, keeping the deck the same size.
+      for (let i = picked.length - 1; i >= 0 && have < min && spare.length; i--) {
+        if (isReveal(picked[i])) continue;
+        picked[i] = spare.shift();
+        have++;
+      }
+    }
+  }
+  return always.concat(picked);
 }
 
 function makePlayer(state, index, name, deckRef) {
@@ -134,7 +159,7 @@ export function createGame(rules, set, opts = {}) {
     active: 0,
     phase: 'setup',
     players: [],
-    market: { deckId: null, deckName: '', deck: [], city: [], cityDump: [], outOfPlay: [], pending: [], revealQueue: [], turnsSinceGain: 0 },
+    market: { deckId: null, deckName: '', deck: [], city: [], cityDump: [], outOfPlay: [], pending: [], revealQueue: [], clearing: {}, turnsSinceGain: 0 },
     log: [],
     winner: null,
     result: null,
@@ -184,6 +209,7 @@ export function ageCity(state) {
     const [cardId] = m.city.splice(idx, 1);
     const def = cardDef(state, cardId);
     // A Statue is never lost to the game: it goes back into the Market Deck to be dealt again.
+    delete m.clearing[cardId]; // work done on an Ordinance does not follow it out of the display
     if (def.type === 'statue' && aging.statuesReturnToDeck !== false) m.deck.push(cardId);
     else m.cityDump.push(cardId);
     log(state, null, `${def.name} has stood in the Capital City long enough and moves on.`, { kind: 'age', cardId });
@@ -311,6 +337,36 @@ export function abilitySources(state, pi) {
  * It is never bought — it occupies a slot until the display ages it out — so both Mayors play under it.
  * Returns the summed value of `key` across the displayed Ordinances (0 if none carry it).
  */
+// ---------- the town cap ----------
+/**
+ * How many town places this Mayor is using. Animals at work, animals pledged into an auction and
+ * animals face down in Unemployment all count, so the cap bites on the town's whole footprint.
+ *
+ * This lives in state.js because both actions.js and effects.js need it, and keeping one copy here
+ * is deliberate: there were briefly two, under two names, and a caller that reached for the wrong
+ * one silently lost every upgrade in the game.
+ */
+export function townFootprint(state, pi) {
+  const p = state.players[pi];
+  const t = state.rules.town || {};
+  const inTown = t.countsPledged === false ? p.town.filter((s) => s.lockedBid == null).length : p.town.length;
+  return inTown + (t.countsUnemployment === false ? 0 : p.unemployment.length);
+}
+
+/** The town's limit, or Infinity when no cap is configured. */
+export function townCap(state) {
+  const n = (state.rules.town || {}).maxCharacters;
+  return typeof n === 'number' && n > 0 ? n : Infinity;
+}
+
+/**
+ * Is there room for one more *new* body? Rehiring and promoting out of Unemployment move an animal
+ * between two zones that both count, so they are footprint-neutral and never consult this.
+ */
+export function hasTownRoom(state, pi) {
+  return townFootprint(state, pi) < townCap(state);
+}
+
 export function cityRule(state, key) {
   let total = 0;
   for (const cardId of state.market.city) {

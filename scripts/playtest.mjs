@@ -133,14 +133,24 @@ export async function runPlaytest(opts = {}) {
   const t0 = Date.now();
   for (let g = 0; g < games; g++) {
     let decks;
-    if (deckMode === 'all') decks = DECK_PAIRS[g % DECK_PAIRS.length];
+    // With `--decks all --market all`, walk the full deck-pair x market cross product rather than
+    // advancing both on the same counter. There are 30 ordered pairs and 6 markets, and 6 divides 30,
+    // so indexing both by `g` locked every pairing to a single market: five sixths of the matrix was
+    // never played, and a deck's win rate was really its win rate on one market.
+    const comboCount = DECK_PAIRS.length * MARKET_DECK_IDS.length;
+    const combo = g % comboCount;
+    if (deckMode === 'all') decks = DECK_PAIRS[combo % DECK_PAIRS.length];
     else if (deckMode === 'alternate') decks = g % 2 === 0 ? [DECK_IDS[0], DECK_IDS[1]] : [DECK_IDS[1], DECK_IDS[0]];
     else {
       const parts = String(deckMode).split(',').map((x) => DECK_ALIAS[x.trim()]).filter(Boolean);
       decks = parts.length === 2 ? parts : [DECK_IDS[0], DECK_IDS[1]];
     }
     const seed = baseSeed + g;
-    const market = marketMode === 'all' ? MARKET_DECK_IDS[g % MARKET_DECK_IDS.length] : marketMode;
+    const market = marketMode !== 'all'
+      ? marketMode
+      : (deckMode === 'all'
+        ? MARKET_DECK_IDS[Math.floor(combo / DECK_PAIRS.length) % MARKET_DECK_IDS.length]
+        : MARKET_DECK_IDS[g % MARKET_DECK_IDS.length]);
     const state = createGame(rules, set, { seed, decks, market, names: ['P0', 'P1'] });
     const sink = (pi, action) => {
       if (action.type === 'recruit' || action.type === 'playEvent') {

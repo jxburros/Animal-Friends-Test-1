@@ -111,7 +111,9 @@ const handlers = {
     await fx.fly(face(e.cardId), from, to, { dur: 650, fade: true, scaleTo: 0.6 });
   },
   prepare_recruit(e) {
-    if (!e.upgrade) fx.hide(`stack:${e.uid}`);
+    // A promotion out of Unemployment builds a brand-new stack too (the animal was lying face down),
+    // so it is hidden and flown in like an arrival rather than swapped in place like an upgrade.
+    if (!e.upgrade || e.fromUnemployment) fx.hide(`stack:${e.uid}`);
   },
   async recruit(e, prev) {
     const def = deps.cardDef(e.cardId);
@@ -124,8 +126,12 @@ const handlers = {
     const to = fx.rectOf(key);
     if (e.cost) fx.pop(chip(e.player, 'supply'), `−${e.cost} Supply`, 'fx-pop-loss', { hold: 0 });
     await fx.fly(face(e.cardId), from, to, { dur: 750, arc: 80 });
-    const el = fx.reveal(key, e.upgrade ? 'fx-upgrade' : 'fx-arrive', 1200);
-    if (e.upgrade) {
+    const el = fx.reveal(key, e.upgrade && !e.fromUnemployment ? 'fx-upgrade' : 'fx-arrive', 1200);
+    if (e.fromUnemployment) {
+      fx.sparkle(to, { count: 14, color: '#6f4a8a', glyphs: ['✦', '❀', '•'] });
+      await fx.arrive(el);
+      await fx.pop(to, `Promoted out of Unemployment — ${def.title}, and upright!`, 'fx-pop-good', { hold: 600 });
+    } else if (e.upgrade) {
       fx.sparkle(to, { count: 14, color: '#6f4a8a' });
       await fx.pop(to, `Upgraded to ${def.title}!`, 'fx-pop-good', { hold: 600 });
     } else {
@@ -152,6 +158,22 @@ const handlers = {
     fx.sparkle(to, { count: 8, color: '#8fd18c' });
     await fx.arrive(el);
     await fx.pop(to, 'Back to work!', 'fx-pop-good', { hold: 350 });
+  },
+  async layOff(e, prev) {
+    const def = deps.cardDef(e.cardId);
+    const from = prev.get(`unemp:${e.cardUid}`) || chip(e.player, 'hand');
+    fx.pop(from, `${def.name} leaves town for good`, 'fx-pop-note', { hold: 0 });
+    await fx.fly(deps.cardBack(), from, chip(e.player, 'dump'), { dur: 750, fade: true, scaleTo: 0.5, wobble: true });
+    fx.flash(fx.byKey(`dump:${e.player}`), 'fx-chip-loss', 800);
+    // The place they were taking up is free again — which is the whole point of laying anybody off.
+    await fx.pop(fx.rectOf(`footprint:${e.player}`), 'A place opens up in the town', 'fx-pop-note', { hold: 350 });
+  },
+  /** A hired animal with nowhere to live: the town was already full when the Market handed them over. */
+  async marketRecruitRefused(e) {
+    const el = fx.byKey(`footprint:${e.player}`) || fx.byKey(`town:${e.player}`);
+    await fx.bringIntoView(el);
+    fx.flash(el, 'fx-town-full', 1200);
+    await fx.pop(el && el.getBoundingClientRect(), `${deps.cardDef(e.cardId).name} finds the town full and moves on`, 'fx-pop-challenge', { hold: 700 });
   },
   async shiftStart(e) {
     const el = fx.byKey(`stack:${e.uid}`);
@@ -365,7 +387,9 @@ const handlers = {
       fx.pop(from, 'Sent to Unemployment!', 'fx-pop-challenge', { hold: 0 });
     }
     await fx.fly(face(e.cardId), from, fx.rectOf(key), { dur: 900, arc: 20, wobble: true });
+    // They land face down where they stand: still in the town, still taking up a place.
     const el = fx.reveal(key, 'fx-gray', 1400);
+    await fx.flipIn(el, 500);
     await fx.shake(el, 500);
   },
   async shield(e) {
