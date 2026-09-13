@@ -3,10 +3,19 @@
 // The builder owns its own screen and knows nothing about a running game: it hands a plain
 // `{ id, name, list: { cardId: count } }` deck back through onSave, which is exactly what
 // createGame accepts in place of a deck id (see engine/state.js resolveDeck).
+//
+// Two shelves stand side by side. "The printed book" is the published collection in
+// spec/starter_card_set.json — the only cards a deck may hold. "Maker cards" is the hand-remade
+// collection in spec/maker_card_set.json, shown for comparison and not playable yet. Each printed
+// card can be ticked off as remade (see ./remade.js), so the rebuild can be tracked card by card.
 import { deckRules, deckProblems, maxCopiesOf } from '../engine/deckbuilding.js';
 import { RARITIES, powerRating } from '../engine/power.js';
+import { groupByCharacter, characterOf } from '../engine/characters.js';
 import { buildCardFace, setPreviewContext, raritySlug } from './render.js';
 import { iconSVG } from './art.js';
+import {
+  loadRemade, setRemade, makerRemakesIndex, remadeStatus, remadeProgress, downloadRemade,
+} from './remade.js';
 
 const STORE_KEY = 'af-custom-decks';
 
@@ -56,8 +65,17 @@ export function deleteSavedDeck(id) {
 
 // ---------- the screen ----------
 let host = null;
-let ctx = null; // { rules, set, list, name, id, onSave, onCancel }
-let filter = { type: 'all', species: null, study: null, rarity: null };
+let ctx = null; // { rules, set, makerSet, list, name, id, marks, makerIndex, onSave, onCancel }
+let filter = { type: 'all', species: null, study: null, rarity: null, remade: 'any' };
+let sort = 'power'; // 'power' | 'character' | 'cost' | 'name'
+let section = 'printed'; // 'printed' | 'maker'
+
+const SORTS = [
+  ['power', 'Power'],
+  ['character', 'Character'],
+  ['cost', 'Cost'],
+  ['name', 'Name'],
+];
 
 function counts() {
   const byId = ctx.set.cardsById || Object.fromEntries(ctx.set.cards.map((c) => [c.id, c]));
@@ -94,18 +112,35 @@ function removeCopy(cardId) {
   render();
 }
 
+/** Every card of the shelf being browsed, before filtering: only deckable card types. */
+function shelfCards() {
+  const set = section === 'maker' ? ctx.makerSet : ctx.set;
+  return ((set && set.cards) || []).filter((c) => c.type === 'character' || c.type === 'event');
+}
+
+function matchesFilters(c) {
+  if (filter.type !== 'all' && c.type !== filter.type) return false;
+  if (filter.species && !matchesSpecies(c, filter.species)) return false;
+  if (filter.study && !matchesStudy(c, filter.study)) return false;
+  if (filter.rarity && (c.rarity || 'Common') !== filter.rarity) return false;
+  // "Remade" is a fact about a printed card; the Maker shelf is the remakes themselves.
+  if (section === 'printed' && filter.remade !== 'any') {
+    const done = !!statusOf(c.id);
+    if (filter.remade === 'yes' && !done) return false;
+    if (filter.remade === 'no' && done) return false;
+  }
+  return true;
+}
+
+function compare(a, b) {
+  if (sort === 'cost') return (a.cost || 0) - (b.cost || 0) || a.name.localeCompare(b.name);
+  if (sort === 'name') return a.name.localeCompare(b.name) || (a.cost || 0) - (b.cost || 0);
+  // Strongest for its cost first: the book is browsed down the power curve.
+  return score(b) - score(a) || a.name.localeCompare(b.name);
+}
+
 function poolCards() {
-  return ctx.set.cards
-    .filter((c) => {
-      if (c.type !== 'character' && c.type !== 'event') return false;
-      if (filter.type !== 'all' && c.type !== filter.type) return false;
-      if (filter.species && !matchesSpecies(c, filter.species)) return false;
-      if (filter.study && !matchesStudy(c, filter.study)) return false;
-      if (filter.rarity && (c.rarity || 'Common') !== filter.rarity) return false;
-      return true;
-    })
-    // Strongest for its cost first: the book is browsed down the power curve.
-    .sort((a, b) => score(b) - score(a) || a.name.localeCompare(b.name));
+  return shelfCards().filter(matchesFilters).sort(compare);
 }
 function score(def) {
   return (def.power && def.power.score) || powerRating(def);
@@ -123,9 +158,43 @@ function namedVersions(name) {
   return ctx.set.cards.filter((c) => c.type === 'character' && c.name === name);
 }
 
+// ---------- remade ticks ----------
+function statusOf(cardId) {
+  return remadeStatus(ctx.marks, ctx.makerIndex, cardId);
+}
+function toggleRemade(def) {
+  const status = statusOf(def.id);
+  if (status && status.by === 'maker') return; // a Maker card owns this tick; untick it there
+  ctx.marks = setRemade(ctx.marks, def, !status);
+  render();
+}
+
 function chip(label, active, onClick, iconName) {
   return h('button', { class: `db-chip${active ? ' on' : ''}`, type: 'button', onclick: onClick },
     iconName ? [icon(iconName), label] : [label]);
+}
+
+function buildShelfBar() {
+  const printedCount = ctx.set.cards.filter((c) => c.type === 'character' || c.type === 'event').length;
+  const makerCount = ((ctx.makerSet && ctx.makerSet.cards) || []).length;
+  const progress = remadeProgress(ctx.marks, ctx.makerIndex, ctx.set.cards);
+  const bar = h('div', { class: 'db-shelfbar' }, [
+    h('div', { class: 'db-chiprow' }, [
+      h('span', { class: 'db-chiplabel' }, 'Shelf:'),
+      chip(`The printed book · ${printedCount}`, section === 'printed', () => { section = 'printed'; render(); }),
+      chip(`Maker cards · ${makerCount}`, section === 'maker', () => { section = 'maker'; render(); }),
+    ]),
+    h('div', { class: 'db-progress' }, [
+      h('span', {}, `Remade ${progress.done} of ${progress.total} cards in the printed collection.`),
+      h('button', {
+        class: 'small',
+        type: 'button',
+        title: 'Download the remade list as JSON — ids first, so it still reads after a rename',
+        onclick: () => downloadRemade(ctx.marks, ctx.makerIndex, ctx.set),
+      }, 'Export remade list'),
+    ]),
+  ]);
+  return bar;
 }
 
 function buildFilters() {
@@ -135,16 +204,20 @@ function buildFilters() {
     chip('Characters', filter.type === 'character', () => { filter.type = 'character'; render(); }),
     chip('Events', filter.type === 'event', () => { filter.type = 'event'; render(); }),
   ]);
+  const sortRow = h('div', { class: 'db-chiprow' }, [
+    h('span', { class: 'db-chiplabel' }, 'Sort by:'),
+    ...SORTS.map(([key, label]) => chip(label, sort === key, () => { sort = key; render(); })),
+  ]);
   const speciesRow = h('div', { class: 'db-chiprow' }, [
     chip('Any species', !filter.species, () => { filter.species = null; render(); }),
-    ...ctx.set.species.map((sp) => chip(sp, filter.species === sp, () => {
+    ...speciesList().map((sp) => chip(sp, filter.species === sp, () => {
       filter.species = filter.species === sp ? null : sp;
       render();
     }, sp)),
   ]);
   const studyRow = h('div', { class: 'db-chiprow' }, [
     chip('Any study', !filter.study, () => { filter.study = null; render(); }),
-    ...ctx.set.studies.map((st) => chip(st, filter.study === st, () => {
+    ...studyList().map((st) => chip(st, filter.study === st, () => {
       filter.study = filter.study === st ? null : st;
       render();
     }, st)),
@@ -157,32 +230,104 @@ function buildFilters() {
     })),
   ]);
   bar.appendChild(typeRow);
+  bar.appendChild(sortRow);
   bar.appendChild(speciesRow);
   bar.appendChild(studyRow);
   bar.appendChild(rarityRow);
+  if (section === 'printed') {
+    bar.appendChild(h('div', { class: 'db-chiprow' }, [
+      h('span', { class: 'db-chiplabel' }, 'Remade:'),
+      chip('Any', filter.remade === 'any', () => { filter.remade = 'any'; render(); }),
+      chip('Remade', filter.remade === 'yes', () => { filter.remade = 'yes'; render(); }),
+      chip('Not yet', filter.remade === 'no', () => { filter.remade = 'no'; render(); }),
+    ]));
+  }
   return bar;
+}
+/** The species and studies to offer as filters: the printed set's, which the Maker set follows. */
+function speciesList() {
+  return (ctx.set.species || []).length ? ctx.set.species : [];
+}
+function studyList() {
+  return (ctx.set.studies || []).length ? ctx.set.studies : [];
+}
+
+function buildSlot(def) {
+  const status = statusOf(def.id);
+  const isMaker = section === 'maker';
+  const n = isMaker ? 0 : copiesOf(def.id);
+  const slot = h('div', { class: `db-slot${n ? ' in-deck' : ''}${status && !isMaker ? ' remade' : ''}${isMaker ? ' maker' : ''}` });
+  const face = buildCardFace(def, { interactive: true });
+  slot.appendChild(face);
+  if (isMaker) {
+    const remade = [].concat(def.remakes || []);
+    const olds = remade.map((id) => (ctx.set.cardsById && ctx.set.cardsById[id]) || null);
+    slot.appendChild(h('div', { class: 'db-slot-controls maker' }, [
+      h('span', { class: 'db-maker-tag', title: 'Maker cards cannot go in a deck yet' }, 'Not playable yet'),
+    ]));
+    if (remade.length) {
+      slot.appendChild(h('div', { class: 'db-maker-note' },
+        `Remakes ${remade.map((id, i) => (olds[i] ? `${olds[i].name} (${id})` : id)).join(', ')}`));
+    }
+    return slot;
+  }
+  face.classList.add('clickable');
+  const limit = limitFor(def);
+  slot.appendChild(h('div', { class: 'db-slot-controls' }, [
+    h('button', { class: 'small', type: 'button', title: 'Remove a copy', disabled: !n, onclick: (e) => { e.stopPropagation(); removeCopy(def.id); } }, '−'),
+    h('span', { class: 'db-count', title: `${def.rarity || 'Common'}: at most ${limit} in a deck` }, `${n}/${limit}`),
+    h('button', { class: 'small', type: 'button', title: 'Add a copy', disabled: n >= limit, onclick: (e) => { e.stopPropagation(); addCopy(def.id); } }, '+'),
+  ]));
+  const byMaker = status && status.by === 'maker';
+  slot.appendChild(h('button', {
+    class: `db-remade${status ? ' on' : ''}`,
+    type: 'button',
+    disabled: byMaker,
+    title: byMaker
+      ? `Remade as the Maker card ${status.makerCard.name} (${status.makerCard.id}) — the link lives in spec/maker_card_set.json`
+      : `Tick ${def.name} (${def.id}) off once it has been remade`,
+    onclick: (e) => { e.stopPropagation(); toggleRemade(def); },
+  }, status ? `✓ Remade${byMaker ? ' (maker card)' : ''}` : 'Mark remade'));
+  slot.addEventListener('click', () => addCopy(def.id));
+  return slot;
 }
 
 function buildPool() {
-  const dr = deckRules(ctx.rules);
-  const grid = h('div', { class: 'db-pool' });
-  for (const def of poolCards()) {
-    const n = copiesOf(def.id);
-    const slot = h('div', { class: `db-slot${n ? ' in-deck' : ''}` });
-    const face = buildCardFace(def, { interactive: true });
-    face.classList.add('clickable');
-    slot.appendChild(face);
-    const limit = limitFor(def);
-    slot.appendChild(h('div', { class: 'db-slot-controls' }, [
-      h('button', { class: 'small', type: 'button', title: 'Remove a copy', disabled: !n, onclick: (e) => { e.stopPropagation(); removeCopy(def.id); } }, '−'),
-      h('span', { class: 'db-count', title: `${def.rarity || 'Common'}: at most ${limit} in a deck` }, `${n}/${limit}`),
-      h('button', { class: 'small', type: 'button', title: 'Add a copy', disabled: n >= limit, onclick: (e) => { e.stopPropagation(); addCopy(def.id); } }, '+'),
-    ]));
-    slot.addEventListener('click', () => addCopy(def.id));
-    grid.appendChild(slot);
+  const cards = poolCards();
+  if (!cards.length) return h('div', { class: 'db-pool-wrap' }, [emptyNote()]);
+  if (sort !== 'character') {
+    const grid = h('div', { class: 'db-pool' });
+    for (const def of cards) grid.appendChild(buildSlot(def));
+    return grid;
   }
-  if (!grid.childNodes.length) grid.appendChild(h('p', { class: 'db-empty' }, 'No cards match these filters.'));
-  return grid;
+  // By Character: every version of a name together, in one run, cheapest first.
+  const wrap = h('div', { class: 'db-pool-wrap' });
+  for (const group of groupByCharacter(cards)) {
+    const heading = group.name || 'No named Character';
+    const chars = group.cards.filter((c) => c.type === 'character').length;
+    wrap.appendChild(h('div', { class: 'db-group-title' }, [
+      h('span', { class: 'db-group-name' }, heading),
+      h('span', { class: 'db-group-count' }, group.name
+        ? `${chars} version${chars === 1 ? '' : 's'}${group.cards.length > chars ? ` · ${group.cards.length - chars} Event${group.cards.length - chars === 1 ? '' : 's'}` : ''}`
+        : `${group.cards.length} card${group.cards.length === 1 ? '' : 's'}`),
+    ]));
+    const grid = h('div', { class: 'db-pool' });
+    for (const def of group.cards) grid.appendChild(buildSlot(def));
+    wrap.appendChild(grid);
+  }
+  return wrap;
+}
+
+function emptyNote() {
+  if (section !== 'maker') return h('p', { class: 'db-empty' }, 'No cards match these filters.');
+  const total = ((ctx.makerSet && ctx.makerSet.cards) || []).length;
+  if (total) return h('p', { class: 'db-empty' }, 'No maker cards match these filters.');
+  return h('div', { class: 'db-maker-empty' }, [
+    h('h3', {}, 'No maker cards yet.'),
+    h('p', {}, 'This shelf holds the collection as it is remade, card by card, so a new version can be read beside the printed one. It is empty until the first card is written.'),
+    h('p', {}, 'Add cards to spec/maker_card_set.json using the same fields as the printed set, plus "remakes": the id (or a list of ids) of the printed card the new one replaces. That link ticks the old card off here even after the new card is given a different name.'),
+    h('p', { class: 'db-empty' }, 'Maker cards cannot be put in a deck yet; the Workshop shows them for comparison only.'),
+  ]);
 }
 
 function buildDeckList() {
@@ -192,12 +337,20 @@ function buildDeckList() {
   for (const [type, label] of groups) {
     const rows = Object.entries(ctx.list)
       .filter(([id, n]) => n > 0 && byId[id] && byId[id].type === type)
-      .sort((a, b) => (byId[a[0]].cost || 0) - (byId[b[0]].cost || 0) || byId[a[0]].name.localeCompare(byId[b[0]].name));
+      .sort((a, b) => deckRowOrder(byId[a[0]], byId[b[0]]));
     const n = rows.reduce((a, [, c]) => a + c, 0);
     wrap.appendChild(h('div', { class: 'db-list-title' }, `${label} · ${n}`));
     if (!rows.length) wrap.appendChild(h('div', { class: 'db-empty' }, `No ${label.toLowerCase()} yet.`));
+    let lastHeading = null;
     for (const [id, copies] of rows) {
       const def = byId[id];
+      if (sort === 'character') {
+        const heading = characterOf(def) || 'No named Character';
+        if (heading !== lastHeading) {
+          wrap.appendChild(h('div', { class: 'db-list-sub' }, heading));
+          lastHeading = heading;
+        }
+      }
       wrap.appendChild(h('div', { class: 'db-row' }, [
         h('span', { class: 'db-row-n' }, `${copies}×`),
         h('span', { class: 'db-row-cost', title: `Cost ${def.cost}` }, String(def.cost || 0)),
@@ -209,6 +362,15 @@ function buildDeckList() {
     }
   }
   return wrap;
+}
+/** The deck list follows the pool's sort, so a Character's versions sit together there too. */
+function deckRowOrder(a, b) {
+  if (sort === 'character') {
+    const an = characterOf(a) || '￿';
+    const bn = characterOf(b) || '￿';
+    if (an !== bn) return an.localeCompare(bn);
+  }
+  return (a.cost || 0) - (b.cost || 0) || a.name.localeCompare(b.name);
 }
 
 function suggestFrom(deckId) {
@@ -260,27 +422,39 @@ function render() {
 
   host.appendChild(head);
   host.appendChild(h('div', { class: 'db-body' }, [
-    h('div', { class: 'db-left page' }, [starters, buildFilters(), buildPool()]),
+    h('div', { class: 'db-left page' }, [buildShelfBar(), section === 'printed' ? starters : null, buildFilters(), buildPool()]),
     h('div', { class: 'db-right page' }, [counter, buildDeckList(), actions]),
   ]));
 }
 
 /**
  * Open the builder in `hostEl`.
- * @param opts { rules, set, deck?, onSave(deck), onCancel() }
+ * @param opts { rules, set, makerSet?, deck?, onSave(deck), onCancel() }
  */
 export function openDeckBuilder(hostEl, opts) {
-  setPreviewContext(opts.rules, opts.set);
   host = hostEl;
+  const makerSet = opts.makerSet || { setId: 'AF-MAKER-01', name: 'Maker Cards', cards: [] };
+  // Card previews look cards up by id, so the preview index carries both shelves: a Maker card is
+  // read on hover exactly like a printed one. Printed ids win — nothing here changes the game.
+  const printedById = opts.set.cardsById || Object.fromEntries(opts.set.cards.map((c) => [c.id, c]));
+  setPreviewContext(opts.rules, {
+    ...opts.set,
+    cardsById: { ...Object.fromEntries((makerSet.cards || []).map((c) => [c.id, c])), ...printedById },
+  });
   ctx = {
     rules: opts.rules,
     set: opts.set,
+    makerSet,
+    marks: loadRemade(),
+    makerIndex: makerRemakesIndex(makerSet),
     id: (opts.deck && opts.deck.id) || `custom-${Date.now().toString(36)}`,
     name: (opts.deck && opts.deck.name) || 'My Town',
     list: { ...((opts.deck && opts.deck.list) || {}) },
     onSave: opts.onSave,
     onCancel: opts.onCancel,
   };
-  filter = { type: 'all', species: null, study: null, rarity: null };
+  filter = { type: 'all', species: null, study: null, rarity: null, remade: 'any' };
+  sort = 'power';
+  section = 'printed';
   render();
 }

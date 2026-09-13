@@ -14,10 +14,14 @@ import * as fx from './fx.js';
 
 const RULES_URL = new URL('../../spec/game.json', import.meta.url);
 const SET_URL = new URL('../../spec/starter_card_set.json', import.meta.url);
+const MAKER_SET_URL = new URL('../../spec/maker_card_set.json', import.meta.url);
 const PACKAGE_URL = new URL('../../package.json', import.meta.url);
 
 let rules = null;
 let cardSet = null;
+// The hand-remade collection. Shown on its own shelf in the Deck Workshop and never played: no deck
+// draws from it, so a missing or broken file only empties that shelf.
+let makerSet = { setId: 'AF-MAKER-01', name: 'Maker Cards', cards: [] };
 let chosenDeckId = null;
 let chosenMarketId = null;
 let customDecks = [];
@@ -119,6 +123,7 @@ function openWorkshop(deck) {
   openDeckBuilder($('deckBuilder'), {
     rules,
     set: cardSet,
+    makerSet,
     deck,
     onSave: (saved) => {
       customDecks = saveDeck(saved).map((d) => ({ ...d }));
@@ -302,6 +307,23 @@ async function loadSpec(url, label) {
   }
 }
 
+/**
+ * The maker card set: the collection as it is being remade, card by card. It is optional — the game
+ * plays without it — so a missing or unreadable file leaves an empty shelf rather than failing to
+ * start. Cards in it cannot go in a deck yet.
+ */
+async function loadMakerSet() {
+  const empty = { setId: 'AF-MAKER-01', name: 'Maker Cards', playable: false, cards: [] };
+  try {
+    const set = await loadSpec(MAKER_SET_URL, 'the maker card set (spec/maker_card_set.json)');
+    return { ...empty, ...set, cards: Array.isArray(set.cards) ? set.cards : [] };
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.warn(`Maker cards not loaded: ${e.message}`);
+    return empty;
+  }
+}
+
 /** The version from package.json, or null when it cannot be read (some hosts do not serve it). */
 async function loadVersion() {
   try {
@@ -326,6 +348,7 @@ function stampEdition(version) {
     `${cardSet.cards.length} cards`,
     `${cardSet.decks.length} decks`,
     `${(cardSet.marketDecks || []).length} Market Decks`,
+    `${(makerSet.cards || []).length} maker cards`,
   ];
   const line = parts.join(' · ');
   const el = $('edition');
@@ -336,15 +359,17 @@ function stampEdition(version) {
 }
 
 async function main() {
-  const [loadedRules, loadedSet, version] = await Promise.all([
+  const [loadedRules, loadedSet, loadedMaker, version] = await Promise.all([
     loadSpec(RULES_URL, 'the rules (spec/game.json)'),
     loadSpec(SET_URL, 'the card set (spec/starter_card_set.json)'),
+    loadMakerSet(),
     loadVersion(),
   ]);
   rules = loadedRules;
   if (!Array.isArray(loadedSet.cards) || !loadedSet.cards.length) throw new Error('The card set has no cards.');
   if (!Array.isArray(loadedSet.decks) || !loadedSet.decks.length) throw new Error('The card set has no town decks.');
   cardSet = indexSet(loadedSet);
+  makerSet = loadedMaker;
   stampEdition(version);
   // Drop saved decks that no longer match the card set (a card was renamed or removed).
   customDecks = loadSavedDecks().filter((d) => Object.keys(d.list).every((id) => cardSet.cardsById[id]));
