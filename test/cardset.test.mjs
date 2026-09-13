@@ -13,6 +13,11 @@ const EFFECTS = new Set([
   'readyCharacter', 'readyNextTurn', 'rehire', 'recruitFromHand', 'reorderDeckTop',
   'eventFromDumpToDeckBottom', 'eventFromDumpToHand', 'peekMarketDeck', 'opponentTopdeckFromHand',
   'unemployOpponentCharacter', 'raiseOwnBid',
+  // species signature verbs (spec/species.json)
+  'storeSupply', 'takeStoredSupply', 'takeFromCityDump', 'protectCharacter', 'moveShift',
+  'selfReady', 'cancelReveal',
+  // on-reveal catch-up
+  'behindPlayerGains', 'behindPlayerReadies',
   // shared shocks, used by Disruption cards
   'allCharactersToUnemployment', 'endAllShifts', 'everyoneLosesSupply', 'everyoneGainsSupply',
   'everyoneDraws', 'everyoneDiscardsDownTo', 'blockNextReady', 'everyoneRehiresFree',
@@ -21,18 +26,23 @@ const TRIGGERS = new Set([
   'passive', 'busy', 'onRecruit', 'onTurnStart', 'onTurnEnd', 'onReady', 'onShiftStarted', 'onShiftCompleted',
   'onEventPlayed', 'onAnnounce', 'onChallengedByOpponent', 'onGainMarketCard', 'onCharacterUnemployed',
   'onTiedBid',
+  // an Ordinance changes the rules while it sits in the Capital City
+  'displayed',
 ]);
 const PASSIVE_KEYS = new Set([
   'blockOpponentBidRaise', 'firstAnnounceMinBidMinus1', 'firstBidPlus1', 'winTiesAsChallenger',
   'masterDelayMinus1', 'eventCharReductionPerTurn',
   // Statue burdens
   'opponentRehireDiscount', 'opponentFirstBidPlus1', 'apprenticeEntersBusy', 'eventCostPlus1',
-  'resourceSupplyMinus1', 'losingBidsPayFull',
+  'resourceSupplyMinus1', 'losingBidsPayFull', 'pledgeLadderPlus1',
 ]);
 const MOD_KEYS = new Set([
   'recruitDiscount', 'challengeDiscount', 'rehireDiscount', 'shiftBonus', 'extraAdvance', 'lossShield',
   'unemploymentShield', 'unchallengeable', 'cancelNextChallenge', 'eventCharReduction', 'skipNextAdvance',
+  'cancelNextReveal',
 ]);
+/** Keys an Ordinance may change while it is displayed; read by cityRule() in the engine. */
+const CITY_RULE_KEYS = new Set(['pledgeLadderDelta', 'statueCostDelta', 'buildingCostDelta', 'noRaises']);
 const CONDITIONS = new Set([
   'self', 'announcerIsSelf', 'onlyUprightOfSpecies', 'otherCharacterInTown', 'eventRequiresStudy',
   'nonStatue', 'statue', 'handAtLeast', 'unemploymentNotMoreThanOpponent', 'minSpeciesInTown',
@@ -56,7 +66,7 @@ test('card set', async (t) => {
     for (const c of SET.cards) {
       assert.ok(!seen.has(c.id), `duplicate card id ${c.id}`);
       seen.add(c.id);
-      assert.ok(['character', 'event', 'statue', 'market', 'disruption'].includes(c.type), `${c.id}: bad type ${c.type}`);
+      assert.ok(['character', 'event', 'statue', 'market', 'disruption', 'building', 'marketCharacter', 'ordinance'].includes(c.type), `${c.id}: bad type ${c.type}`);
       assert.ok(c.name, `${c.id}: no name`);
       assert.ok(c.text, `${c.id}: no rules text`);
     }
@@ -94,6 +104,7 @@ test('card set', async (t) => {
       for (const [i, ab] of (c.abilities || []).entries()) {
         const where = `${c.id}.abilities[${i}]`;
         assert.ok(TRIGGERS.has(ab.trigger), `${where}: unknown trigger "${ab.trigger}"`);
+        if (ab.trigger === 'displayed') { assert.ok(CITY_RULE_KEYS.has(ab.key), `${where}: unknown Capital City rule "${ab.key}"`); continue; }
         if (ab.trigger === 'passive') assert.ok(PASSIVE_KEYS.has(ab.key), `${where}: unknown passive key "${ab.key}"`);
         else walkEffect(ab.effect, `${where}.effect`);
         for (const k of Object.keys(ab.condition || {})) assert.ok(CONDITIONS.has(k), `${where}: unknown condition "${k}"`);
@@ -190,12 +201,21 @@ test('custom decks', async (t) => {
   });
 
   await t.test('a custom deck built from several boroughs plays a full game', async () => {
-    // Two species, two studies, drawn from two different printed decks plus new cards.
-    const list = {
-      bb_clover_1: 3, bb_mabel_1: 3, br_bramble_1: 3, br_thistle_1: 2, rr_pip_1: 2, rr_willow_1: 2,
-      pp_hazel_1: 2, rr_acorn_1: 2, br_moss_2: 1, bb_community_garden: 2, rr_river_market: 2,
-      br_tool_lending: 2, bb_blooming_confidence: 2, rr_acorn_cache: 2,
-    };
+    // A town built out of several boroughs at once: take from two printed decks until the deck is
+    // the printed size, respecting the rarity copy caps. Built from the set rather than hand-listed,
+    // so it keeps working as the card pool changes.
+    const dr = deckRules(RULES);
+    const list = {};
+    let total = 0;
+    for (const src of [SET.decks[0], SET.decks[2], SET.decks[4]]) {
+      for (const [id, n] of Object.entries(src.list)) {
+        if (total >= dr.deckSize) break;
+        const card = SET.cards.find((c) => c.id === id);
+        const room = Math.min(n, maxCopiesOf(dr, card) - (list[id] || 0), dr.deckSize - total);
+        if (room > 0) { list[id] = (list[id] || 0) + room; total += room; }
+      }
+    }
+    assert.deepEqual(deckProblems(RULES, SET, list), [], 'the mixed deck is legal');
     assert.equal(Object.values(list).reduce((a, n) => a + n, 0), RULES.setup.deckSize);
     const state = createGame(RULES, SET, { seed: 3, decks: [{ id: 'custom-test', name: 'Six Boroughs', list }, 'paws-papers'] });
     assert.equal(state.players[0].deckName, 'Six Boroughs');

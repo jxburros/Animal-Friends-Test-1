@@ -7,7 +7,7 @@
 // data-key attribute; choreo.js compares the pre-render rectangles with the new DOM to fly cards
 // around, and the engine is held at its next decision until those animations have played (settle()).
 import {
-  cardDef, topCard, canAct, findStack, eventReduction, assignmentCovers, rankOf,
+  cardDef, topCard, canAct, findStack, eventReduction, assignmentCovers, rankOf, pledgeMinCost,
 } from '../engine/index.js';
 import { cardArtSVG, cardBackSVG, iconSVG } from './art.js';
 import { ornamentalFrameSVG } from './painted-art.js';
@@ -212,7 +212,17 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
     'data-peek': interactive && !large ? '1' : null,
   });
   const banner = h('div', { class: 'banner' });
-  if (def.cost !== undefined) banner.appendChild(h('div', { class: 'cost', title: `Cost ${def.cost} Supply` }, String(def.cost)));
+  if (def.cost !== undefined) {
+    // A Statue has no single price: it costs the first tier to a Mayor holding fewer than two and
+    // the second to a Mayor holding more, so the card shows both and the tooltip explains which.
+    const tiers = def.type === 'statue' && activeRules() && activeRules().victory && activeRules().victory.statueCostTiers;
+    const brk = tiers ? (activeRules().victory.statueCostTierBreak ?? 2) : 0;
+    const label = tiers ? `${tiers[0]}/${tiers[1]}` : String(def.cost);
+    const title = tiers
+      ? `Costs ${tiers[0]} Supply while you hold fewer than ${brk} Statues, ${tiers[1]} once you hold ${brk} or more`
+      : `Cost ${def.cost} Supply`;
+    banner.appendChild(h('div', { class: `cost${tiers ? ' tiered' : ''}`, title }, label));
+  }
   banner.appendChild(h('div', { class: 'cname', title: def.name }, def.name));
   banner.appendChild(h('div', { class: 'ticon', html: iconSVG(typeIconName(def)) }));
   if (def.rarity) {
@@ -305,7 +315,9 @@ function buildStackEl(stack, { clickable = false, selected = false, onClick = nu
   if (stack.cards.length > 1) flip.appendChild(h('div', { class: 'stack-under' }));
   wrap.appendChild(flip);
   const badges = h('div', { class: 'stack-badges' });
-  if (stack.lockedBid) badges.appendChild(h('div', { class: 'badge bidding' }, [icon('market'), 'Pledged to a bid']));
+  if (stack.stored) badges.appendChild(h('div', { class: 'badge stored' }, [icon('supply'), `${stack.stored} put by`]));
+  if (stack.protectedUntil && state.turnNumber < stack.protectedUntil) badges.appendChild(h('div', { class: 'badge protected' }, 'Cannot be targeted'));
+  if (stack.lockedBid) badges.appendChild(h('div', { class: 'badge bidding' }, [icon('market'), 'Standing in the Capital City']));
   else if (stack.shift) badges.appendChild(h('div', { class: 'badge shift' }, [icon('shift'), `${stack.shift.remaining} → `, icon('supply'), `${stack.shift.output}`]));
   else if (stack.orientation === 270) badges.appendChild(h('div', { class: 'badge busy' }, 'Busy'));
   else if (stack.orientation === 180) badges.appendChild(h('div', { class: 'badge busy' }, 'Arriving'));
@@ -613,12 +625,37 @@ function pileChip(key, label, count, cls = '') {
   chip.appendChild(h('div', { class: 'pile-text' }, [h('div', { class: 'pile-count' }, String(count)), h('div', { class: 'pile-label' }, label)]));
   return chip;
 }
+/**
+ * The animals standing in the Capital City beneath the card they are bidding on. This is the
+ * auction's whole state made visible: whose animals are committed, in what order, and — because
+ * each pledge costs more than the last — what the next bid will have to be.
+ */
+function renderPledges(pd) {
+  const wrap = h('div', { class: 'cc-pledges', 'data-key': `pledges:${pd.cardId}` });
+  for (let pi = 0; pi < 2; pi++) {
+    if (!pd.chars[pi].length) continue;
+    const mine = pi === humanIndex;
+    const row = h('div', { class: `pledge-row ${mine ? 'you' : 'rival'}` });
+    row.appendChild(h('div', { class: 'pledge-who' }, mine ? 'You' : state.players[pi].name));
+    for (const uid of pd.chars[pi]) {
+      const stack = findStack(state, pi, uid);
+      const def = stack ? topCard(state, stack) : null;
+      const chip = h('div', { class: 'pledge-chip', title: def ? `${def.name} — cost ${def.cost}` : 'pledged' });
+      chip.appendChild(h('span', { class: 'pledge-cost' }, def ? String(def.cost) : '?'));
+      chip.appendChild(h('span', { class: 'pledge-name' }, def ? def.name : 'pledged'));
+      row.appendChild(chip);
+    }
+    wrap.appendChild(row);
+  }
+  return wrap;
+}
+
 function renderCapitalCity() {
   const el = document.getElementById('capitalCity');
   el.innerHTML = '';
   const head = h('div', { class: 'cc-head' });
   head.appendChild(h('div', { class: 'cc-title' }, [icon('market'), 'The Capital City']));
-  head.appendChild(h('div', { class: 'cc-sub' }, `A contested market (${state.market.deckName}): announce with an upright Character, then outbid each other until one Mayor lets it go. Every bid pledges another animal until the auction ends.`));
+  head.appendChild(h('div', { class: 'cc-sub' }, `A contested market (${state.market.deckName}): announce with an upright Character, then outbid each other until one Mayor lets it go. Each bid sends another animal to stand beneath the card, and every one must cost more than the last — so a bidding war is won with your town, not your purse.`));
   const piles = h('div', { class: 'cc-piles' });
   piles.appendChild(pileChip('marketdeck', 'Market Deck', state.market.deck.length));
   piles.appendChild(pileChip('citydump', 'City Dump', state.market.cityDump.length, 'dump'));
@@ -651,7 +688,15 @@ function renderCapitalCity() {
       }
       const stake = pd.committed[humanIndex];
       if (stake && !mine) {
-        info.appendChild(h('div', { class: 'pi-line pi-forfeit' }, `You forfeit ${Math.ceil(stake / 2)} of ${stake} if you let it go`));
+        info.appendChild(h('div', { class: 'pi-line pi-refund' }, `Your ${stake} Supply comes back if you let it go`));
+      }
+      // The ladder is the thing a player most needs to see: what their next bid here will cost them.
+      if (!pd.unchallengeable && !mine) {
+        const need = pledgeMinCost(state, pd, humanIndex);
+        const ready = state.players[humanIndex].town.filter((st) => canAct(st) && topCard(state, st).cost >= need);
+        info.appendChild(h('div', { class: `pi-line pi-ladder${ready.length ? '' : ' spent'}` }, ready.length
+          ? `Your next bid here needs a Character costing ${need} or more — you have ${ready.length}`
+          : `Your next bid here needs a Character costing ${need} or more — you have none left`));
       }
       if (pd.unchallengeable) {
         info.appendChild(h('div', { class: 'pi-line' }, 'Cannot be outbid'));
@@ -666,6 +711,7 @@ function renderCapitalCity() {
         }
       }
       slot.appendChild(info);
+      slot.appendChild(renderPledges(pd));
     }
     slots.appendChild(slot);
   }
@@ -816,6 +862,20 @@ function renderTownPanel(pi, elId) {
   evSub.appendChild(evRow);
   row.appendChild(evSub);
 
+  // Buildings: bought from the Capital City and never leaving, up to three to a town.
+  const cap = (state.rules.buildings && state.rules.buildings.maxPerTown) || 3;
+  const bSub = h('div', { class: 'town-sub' });
+  bSub.appendChild(h('div', { class: 'town-sub-title' }, [icon('market'), `Buildings · ${(p.buildings || []).length} / ${cap}`]));
+  const bRow = h('div', { class: 'mini-row' });
+  if (!(p.buildings || []).length) bRow.appendChild(h('div', { class: 'empty-note' }, 'Nothing built yet.'));
+  for (const cardId of p.buildings || []) {
+    const box = h('div', { class: 'mini-card building-slot', 'data-key': `building:${pi}:${cardId}` });
+    box.appendChild(buildCardFace(cardDef(state, cardId)));
+    bRow.appendChild(box);
+  }
+  bSub.appendChild(bRow);
+  row.appendChild(bSub);
+
   // Victory Row
   const stSub = h('div', { class: 'town-sub' });
   stSub.appendChild(h('div', { class: 'town-sub-title' }, [icon('statue'), 'Victory Row']));
@@ -874,6 +934,12 @@ const PICK_REASON_TEXT = {
   topdeck: 'Put a card from your hand on top of your deck',
   unemployOpponent: "Send an opponent's Character to Unemployment (or skip)",
   raiseBidTarget: 'Choose which pending bid to raise',
+  demolish: 'Your town is full — choose a Building to knock down',
+  storeSupply: 'Choose who puts the Supply by',
+  takeFromCityDump: 'Take a Market card from the City Dump',
+  protect: 'Choose a Character to keep out of reach',
+  moveShiftFrom: 'Move which shift?',
+  moveShiftTo: 'Give the shift to whom?',
 };
 
 function optionFace(o) {
@@ -956,6 +1022,22 @@ function buildOrderModal(box, req) {
 }
 
 function buildConfirmModal(box, req) {
+  if (req.reason === 'mulligan') {
+    box.appendChild(h('div', { class: 'modal-title' }, 'Keep this hand?'));
+    box.appendChild(h('div', { class: 'modal-sub' }, 'You may shuffle it back and draw the same number again — once, and it costs you nothing.'));
+    const hand = h('div', { class: 'mini-row mulligan-hand' });
+    for (const c of req.hand || []) {
+      const box2 = h('div', { class: 'mini-card', 'data-key': `mull:${c.uid}` });
+      box2.appendChild(buildCardFace(cardDef(state, c.cardId)));
+      hand.appendChild(box2);
+    }
+    box.appendChild(hand);
+    const actions = h('div', { class: 'modal-actions' });
+    actions.appendChild(h('button', { class: 'primary', onclick: () => resolvePending(false) }, 'Keep it'));
+    actions.appendChild(h('button', { onclick: () => resolvePending(true) }, 'Draw a new hand'));
+    box.appendChild(actions);
+    return;
+  }
   box.appendChild(h('div', { class: 'modal-title' }, req.reason === 'raiseBid' ? 'Raise a pending bid?' : 'Confirm'));
   if (req.options && req.options.length) {
     box.appendChild(h('div', { class: 'modal-sub' }, `Affects: ${req.options.map((o) => cardDef(state, o.cardId).name).join(', ')}`));

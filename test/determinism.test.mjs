@@ -57,16 +57,35 @@ describe('determinism', () => {
   });
 });
 
+/** Market cards that have joined this player's own zones, which do not belong to their deck count. */
+function ownHired(state, p) {
+  const isHired = (c) => (state.set.cardsById[c.cardId] || {}).type === 'marketCharacter';
+  return p.town.reduce((b, st) => b + st.cards.filter(isHired).length, 0)
+    + p.dump.filter(isHired).length + p.unemployment.filter(isHired).length + p.hand.filter(isHired).length;
+}
+
 // ---------- whole-game invariants (mirrors scripts/invariants.mjs) ----------
 function checkInvariants(state, seed, marketSize) {
   const m = state.market;
+  // Market cards can now come to rest in three more places: a Building stands in a town, a hired
+  // animal joins it as a Character stack, and a pending auction holds nothing (the card stays
+  // displayed), so every one of those has to be counted for conservation to mean anything.
+  const hired = state.players.reduce(
+    (a, p) => a + p.town.reduce((b, st) => b + st.cards.filter((c) => {
+      const def = state.set.cardsById[c.cardId];
+      return def && def.type === 'marketCharacter';
+    }).length, 0)
+    + p.dump.filter((c) => (state.set.cardsById[c.cardId] || {}).type === 'marketCharacter').length
+    + p.unemployment.filter((c) => (state.set.cardsById[c.cardId] || {}).type === 'marketCharacter').length,
+    0,
+  );
   const marketTotal = m.deck.length + m.city.length + m.cityDump.length + m.outOfPlay.length + m.revealQueue.length
-    + state.players.reduce((a, p) => a + p.victoryRow.length, 0);
+    + state.players.reduce((a, p) => a + p.victoryRow.length + (p.buildings || []).length, 0) + hired;
   assert.equal(marketTotal, marketSize, `seed ${seed} turn ${state.turnNumber}: market card total`);
   for (const p of state.players) {
     const n = p.deck.length + p.hand.length + p.dump.length + p.unemployment.length + p.events.length
       + p.town.reduce((a, s) => a + s.cards.length, 0);
-    assert.equal(n, 30, `seed ${seed} turn ${state.turnNumber}: ${p.name} total card count`);
+    assert.equal(n - ownHired(state, p), RULES.setup.deckSize, `seed ${seed} turn ${state.turnNumber}: ${p.name} total card count`);
     assert.ok(p.supply >= 0, `seed ${seed}: negative supply`);
     assert.ok(p.escrow >= 0, `seed ${seed}: negative escrow`);
     const esc = m.pending.reduce((a, pd) => a + pd.committed[p.index], 0);
@@ -91,8 +110,11 @@ describe('whole game', () => {
         await playTurn(state);
         checkInvariants(state, seed, marketSize);
       }
-      assert.ok(state.winner === 0 || state.winner === 1 || (state.turnNumber >= cap && state.result === 'turnLimit'),
-        `seed ${seed} should end decided or hit the documented turn limit`);
+      // This loop drives playTurn directly, so the turn-limit tiebreak (playGame's job) never runs:
+      // the game either finds a winner or runs out of turns. Random agents reach the cap more often
+      // now that a Statue costs 10 or 20 rather than 2 to 5.
+      assert.ok(state.winner === 0 || state.winner === 1 || state.turnNumber >= cap,
+        `seed ${seed} should end decided or run out the turn limit`);
     }
   });
 

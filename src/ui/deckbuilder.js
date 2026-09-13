@@ -1,4 +1,4 @@
-// The Deck Workshop: build a legal 30-card deck out of the whole Character and Event catalogue.
+// The Deck Workshop: build a legal 40-card deck out of the whole Character and Event catalogue.
 //
 // The builder owns its own screen and knows nothing about a running game: it hands a plain
 // `{ id, name, list: { cardId: count } }` deck back through onSave, which is exactly what

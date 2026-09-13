@@ -2,7 +2,7 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  newGame, addStack, addToHand, setSupply, giveStatue, addMod, UPRIGHT, BUSY,
+  newGame, addStack, addToHand, setSupply, giveStatue, addMod, SET, UPRIGHT, BUSY,
 } from './helpers.mjs';
 import { applyAction, legalActions, cardDef } from '../src/engine/index.js';
 
@@ -81,31 +81,44 @@ describe('Town Charter discount', () => {
   });
 });
 
-describe("Clover, Seedling Helper's recruit trigger", () => {
-  test('only fires when another Agriculture character is already in town', async () => {
-    const state = newGame();
-    setSupply(state, 0, 10);
-    const c = addToHand(state, 0, 'bb_clover_1');
-    begin(state, 0);
-    const handBefore = state.players[0].hand.length;
-    await applyAction(state, 0, { type: 'recruit', cardUid: c.uid, cardId: c.cardId, cost: 0 });
-    // No other Agriculture character in town yet: draw/discard should not fire (hand count net unchanged,
-    // aside from the recruited card leaving the hand).
-    assert.equal(state.players[0].hand.length, handBefore - 1, 'recruit trigger did not fire');
+describe('a conditional recruit trigger only fires when its condition holds', () => {
+  // The species pass moves abilities between cards, so this finds a Character whose recruit trigger
+  // is gated on another Character being in town, rather than naming one. The rule under test is the
+  // condition machinery, not any particular card.
+  const gated = SET.cards.find((c) => c.type === 'character'
+    && (c.abilities || []).some((a) => a.trigger === 'onRecruit' && a.condition && a.condition.otherCharacterInTown));
+
+  test('the set still prints a gated recruit trigger', () => {
+    assert.ok(gated, 'at least one Character has a conditional recruit trigger');
   });
 
-  test('fires (draw 1, discard 1) when another Agriculture character is present', async () => {
-    const state = newGame();
-    setSupply(state, 0, 10);
-    addStack(state, 0, 'bb_mabel_1', UPRIGHT); // Mabel, Seed Keeper: Mouse/Agriculture
-    const c = addToHand(state, 0, 'bb_clover_1'); // Rabbit/Agriculture
-    begin(state, 0);
-    state.agents = [{ choose: async (s, pi, req) => (req.kind === 'pick' ? [req.options[0].uid] : undefined) }, {}];
-    const handBefore = state.players[0].hand.length;
-    await applyAction(state, 0, { type: 'recruit', cardUid: c.uid, cardId: c.cardId, cost: 0 });
-    // hand: -1 (recruited) +1 (draw) -1 (discard) = -1 net, but let's check draw/discard actually ran
-    // by checking the dump gained a card and the deck lost one (draw then discard nets to -1 net hand
-    // change identical to the no-trigger case, so check dump/deck directly instead).
-    assert.equal(state.players[0].dump.length, 1, 'discarded a card into the Town Dump');
+  test('it does nothing on its own, and fires once the condition is met', async () => {
+    const need = gated.abilities.find((a) => a.trigger === 'onRecruit' && a.condition).condition.otherCharacterInTown;
+    const partner = SET.cards.find((c) => c.type === 'character' && c.id !== gated.id
+      && (!need.species || c.species === need.species) && (!need.study || c.study === need.study) && (!need.name || c.name === need.name));
+    assert.ok(partner, 'the set prints a Character matching the condition');
+
+    const alone = newGame();
+    setSupply(alone, 0, 10);
+    const c1 = addToHand(alone, 0, gated.id);
+    begin(alone, 0);
+    const supplyBefore = alone.players[0].supply;
+    const handBefore = alone.players[0].hand.length;
+    alone.agents = [{ choose: async (s, pi, req) => (req.kind === 'pick' ? [] : undefined) }, {}];
+    await applyAction(alone, 0, { type: 'recruit', cardUid: c1.uid, cardId: c1.cardId, cost: gated.cost });
+    const aloneDelta = (alone.players[0].supply - supplyBefore + gated.cost) + (alone.players[0].hand.length - (handBefore - 1));
+
+    const together = newGame();
+    setSupply(together, 0, 10);
+    addStack(together, 0, partner.id, UPRIGHT);
+    const c2 = addToHand(together, 0, gated.id);
+    begin(together, 0);
+    const supplyBefore2 = together.players[0].supply;
+    const handBefore2 = together.players[0].hand.length;
+    together.agents = [{ choose: async (s, pi, req) => (req.kind === 'pick' ? [] : undefined) }, {}];
+    await applyAction(together, 0, { type: 'recruit', cardUid: c2.uid, cardId: c2.cardId, cost: gated.cost });
+    const togetherDelta = (together.players[0].supply - supplyBefore2 + gated.cost) + (together.players[0].hand.length - (handBefore2 - 1));
+
+    assert.ok(togetherDelta > aloneDelta, 'the trigger pays only when its condition is met');
   });
 });

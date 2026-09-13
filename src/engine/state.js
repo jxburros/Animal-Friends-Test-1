@@ -99,6 +99,7 @@ function makePlayer(state, index, name, deckRef) {
     dump: [], // town dump: card instances
     unemployment: [], // card instances
     victoryRow: [], // statue card ids
+    buildings: [], // market cards that stay in town: card ids, capped by rules.buildings.maxPerTown
     held: [], // market cards whose effect is still pending (for display)
     supply: 0,
     escrow: 0,
@@ -166,21 +167,30 @@ export function createGame(rules, set, opts = {}) {
 }
 
 /**
- * Stale-market rule: if nobody has gained a Capital City card for `market.staleTurns` turns, sweep the display
- * and deal a fresh one. With the top-up refill below this is a rare safety valve for an unwanted display.
+ * The Capital City ages. At the start of each round one card that nobody is bidding on leaves the display
+ * and is replaced, so the market always turns over, on-reveal cards keep flowing, and an interesting card
+ * is a decision now rather than forever. `city` is kept in deal order, so the front of it is the oldest.
+ * This replaced the old six-turn stale sweep, which only fired once the display had gone completely dead.
  */
-export function sweepStaleCity(state) {
+export function ageCity(state) {
   const m = state.market;
-  const limit = state.rules.market.staleTurns;
-  if (!limit || m.pending.length || m.city.length === 0 || m.turnsSinceGain < limit) return false;
-  for (const id of m.city.splice(0)) {
-    if (cardDef(state, id).type === 'statue') m.deck.push(id); // Statues stay in circulation
-    else m.cityDump.push(id);
+  const aging = state.rules.market.aging;
+  if (!aging || !aging.enabled || !m.city.length) return 0;
+  const underAuction = new Set(m.pending.map((pd) => pd.cardId));
+  let aged = 0;
+  for (let n = 0; n < (aging.cardsPerRound || 1); n++) {
+    const idx = m.city.findIndex((id) => !(aging.skipCardsUnderAuction && underAuction.has(id)));
+    if (idx < 0) break;
+    const [cardId] = m.city.splice(idx, 1);
+    const def = cardDef(state, cardId);
+    // A Statue is never lost to the game: it goes back into the Market Deck to be dealt again.
+    if (def.type === 'statue' && aging.statuesReturnToDeck !== false) m.deck.push(cardId);
+    else m.cityDump.push(cardId);
+    log(state, null, `${def.name} has stood in the Capital City long enough and moves on.`, { kind: 'age', cardId });
+    aged++;
   }
-  m.turnsSinceGain = 0;
-  log(state, null, `Nobody has bought from the Capital City for ${limit} turns; the display is swept and redealt.`, { kind: 'sweep' });
-  refillCity(state);
-  return true;
+  if (aged) refillCity(state);
+  return aged;
 }
 
 /**
@@ -289,7 +299,28 @@ export function abilitySources(state, pi) {
     const def = cardDef(state, id);
     for (const [i, ab] of (def.abilities || []).entries()) out.push({ kind: 'statue', def, ability: ab, key: `s${j}:${i}` });
   }
+  for (const [j, id] of (p.buildings || []).entries()) {
+    const def = cardDef(state, id);
+    for (const [i, ab] of (def.abilities || []).entries()) out.push({ kind: 'building', def, ability: ab, key: `b${j}:${i}` });
+  }
   return out;
+}
+
+/**
+ * An Ordinance sits in the Capital City and changes the rules of every auction while it is displayed.
+ * It is never bought — it occupies a slot until the display ages it out — so both Mayors play under it.
+ * Returns the summed value of `key` across the displayed Ordinances (0 if none carry it).
+ */
+export function cityRule(state, key) {
+  let total = 0;
+  for (const cardId of state.market.city) {
+    const def = state.set.cardsById[cardId];
+    if (!def || def.type !== 'ordinance') continue;
+    for (const ab of def.abilities || []) {
+      if (ab.trigger === 'displayed' && ab.key === key) total += ab.value === undefined ? 1 : ab.value;
+    }
+  }
+  return total;
 }
 
 export function hasPassive(state, pi, key) {

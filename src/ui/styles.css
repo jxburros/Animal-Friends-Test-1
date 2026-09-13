@@ -491,3 +491,40 @@ input[type=range]{width:100%;accent-color:var(--gold)}
   80% { transform: translate3d(3px, 3px, 0); }
 }
 .fx-shock { animation: af-shock 620ms ease-in-out; }
+
+
+/* ---- the Capital City auction: animals standing under the card they are bidding on ---- */
+.cc-pledges { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+.pledge-row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.pledge-who {
+  font-variant: small-caps; letter-spacing: .04em; font-size: 11px;
+  opacity: .75; min-width: 52px;
+}
+.pledge-row.you .pledge-who { color: #2f6b45; }
+.pledge-row.rival .pledge-who { color: #8a3b34; }
+.pledge-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 6px 2px 3px; border-radius: 999px;
+  background: rgba(255, 252, 243, .92); border: 1px solid rgba(120, 96, 62, .45);
+  font-size: 11px; line-height: 1.4; max-width: 132px;
+}
+.pledge-row.you .pledge-chip { border-color: rgba(47, 107, 69, .5); }
+.pledge-row.rival .pledge-chip { border-color: rgba(138, 59, 52, .5); }
+.pledge-cost {
+  display: inline-grid; place-items: center; width: 16px; height: 16px; border-radius: 50%;
+  background: #6b5a3a; color: #fffdf6; font-weight: 700; font-size: 10px;
+}
+.pledge-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pi-ladder { font-size: 11px; opacity: .9; }
+.pi-ladder.spent { color: #8a3b34; font-weight: 600; }
+.pi-refund { font-size: 11px; opacity: .8; }
+.badge.stored { background: rgba(214, 178, 92, .25); }
+.badge.protected { background: rgba(96, 128, 176, .22); }
+
+@media (max-width: 600px) {
+  .pledge-who { min-width: 0; }
+  .pledge-chip { max-width: 96px; }
+}
+
+.card-face .cost.tiered { font-size: 11px; letter-spacing: -.02em; }
+.card-face.large .cost.tiered { font-size: 15px; }

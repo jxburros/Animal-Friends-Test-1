@@ -1,6 +1,6 @@
 // Bootstraps the menu, builds the game, and drives the turn loop. All rules logic lives in
 // src/engine/*; this file only wires the menu, builds agents, and re-renders the screen.
-import { createGame, playTurn, log, indexSet } from '../engine/index.js';
+import { createGame, playTurn, mulliganPhase, log, indexSet } from '../engine/index.js';
 import { makeHumanAgent } from './humanAgent.js';
 import {
   setGame, stopGame, isGameActive, scheduleRender, renderIfChanged, settle,
@@ -273,6 +273,8 @@ let quitRequested = false;
 
 async function runGame(state, agents) {
   state.agents = agents;
+  await mulliganPhase(state);
+  scheduleRender();
   const cap = rules.simulation.maxTurnsPerPlayer * 2;
   while (state.winner === null && state.turnNumber < cap && !quitRequested) {
     // eslint-disable-next-line no-await-in-loop

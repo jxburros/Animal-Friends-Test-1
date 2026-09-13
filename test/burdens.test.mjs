@@ -3,7 +3,7 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  newGame, addStack, addToHand, addToUnemployment, setSupply, setCity, giveStatue, legalActionsFor, UPRIGHT, BUSY,
+  newGame, addStack, addToHand, addToUnemployment, setSupply, setCity, giveStatue, legalActionsFor, UPRIGHT, BUSY, addBidder,
 } from './helpers.mjs';
 import {
   applyAction, legalActions, startPhase, resourcesPhase, endPhase, gainMarketCard,
@@ -41,7 +41,7 @@ describe('Statue burdens', () => {
     const state = newGame();
     setSupply(state, 1, 10);
     setCity(state, ['mk_festival_grant']);
-    const s = addStack(state, 1, 'pp_patch_1', UPRIGHT);
+    const s = addBidder(state, 1, 2);
     giveStatue(state, 0, 'st_courage');
     state.phase = 'actions';
     state.active = 1;

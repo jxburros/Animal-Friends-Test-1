@@ -5,7 +5,7 @@ The engine is a headless, deterministic, data-driven ES-module implementation of
 Rules constants come from `spec/game.json`; cards from `spec/starter_card_set.json`.
 
 ```js
-import { createGame, playGame, playTurn, legalActions, applyAction, cardDef, topCard, cloneState } from './src/engine/index.js';
+import { createGame, playGame, playTurn, mulliganPhase, legalActions, applyAction, cardDef, topCard, cloneState } from './src/engine/index.js';
 const state = createGame(rules, set, { seed: 42, decks: ['burrow-bloom', 'paws-papers'], names: ['You', 'Rival'] });
 await playGame(state, [agent0, agent1]);          // runs to completion; state.winner = 0 | 1 | null, state.result
 ```
@@ -22,6 +22,12 @@ custom deck. `deckProblems(rules, set, list)` returns the deck's legality proble
 and `buildMarketDeck` deals every `always` card (all nine Statues) plus a seeded random `poolSize` of `pool`, so a
 Market Deck keeps one size while its contents vary per game. A plain array of card ids is still accepted, as is the
 legacy single `set.marketDeck` field.
+
+Card types: `character`, `event` (town decks); `statue`, `market`, `building`, `marketCharacter`,
+`ordinance`, `disruption` (the Market Deck). A `building` goes to its buyer's town (capped by
+`rules.buildings.maxPerTown`, demolishing one if full); a `marketCharacter` joins the town as a Busy
+stack; an `ordinance` occupies a display slot, cannot be announced on, and applies `cityRule` keys while
+it is there.
 
 A `disruption` card is never displayed or bought. When `refillCity` deals one it goes to `market.revealQueue`
 and dealing continues past it; `await flushReveals(state)` then resolves each one against both towns and moves it
@@ -42,7 +48,30 @@ An agent is `{ name, choose(state, playerIndex, request) }` returning a value or
 
 Invalid answers are replaced by a safe default, so agents never crash the engine. `pick` reasons:
 `discard`, `ready`, `readyNextTurn`, `rehire`, `recruitFree`, `eventFromDumpToDeckBottom`, `eventFromDumpToHand`,
-`topdeck` (asked of the *opponent*), `unemployOpponent`, `raiseBidTarget`. `confirm` reason: `raiseBid`.
+`topdeck` (asked of the *opponent*), `unemployOpponent`, `raiseBidTarget`, `demolish` (which Building to knock
+down), `storeSupply`, `takeFromCityDump`, `protect`, `moveShiftFrom`, `moveShiftTo`.
+`confirm` reasons: `raiseBid`, and `mulligan` (answered `true` to throw the opening hand back; the request
+carries `hand`).
+
+`await mulliganPhase(state)` runs the free single mulligan before the first turn. `playGame` calls it; a
+caller driving `playTurn` itself should call it first.
+
+## The pledge ladder
+
+`pledgeMinCost(state, pending, pi)` is the cost a Character must have to be that player's next pledge in
+that auction (`pending` is `null` for opening one): their Nth pledge must cost at least N, shifted by any
+displayed Ordinance and by the Statue of Harmony's burden. `canPledge(state, pi, pending, stack)` applies
+it to a stack, and `hasPledgeAvailable(state, pi, pending)` says whether they have anyone left who could
+answer. `legalActions` already filters by this, so an agent never sees an illegal pledge.
+
+`cardCostFor(state, pi, cardId)` is what a card costs *that* player — the two-tier Statue price is read
+from the bidder's own Victory Row, so the two Mayors can face different prices in the same auction.
+
+`cityRule(state, key)` sums the rule changes of the Ordinances currently displayed
+(`pledgeLadderDelta`, `statueCostDelta`, `buildingCostDelta`, `noRaises`).
+
+`ageCity(state)` discards the oldest displayed card nobody is bidding on and refills; `startPhase` calls
+it once a round.
 
 ## Actions (Actions phase)
 
@@ -65,10 +94,14 @@ announce/raise — raise `bid` if you want). `applyAction(state, pi, action)` va
 ```
 state = { seed, rng, turnNumber, active, phase, players:[P,P], market, log:[{turn,player,text,fx?}], winner, result }
 P = { index, name, deckId, deck:[Card], hand:[Card], town:[Stack], events:[{uid,cardId,remaining}], dump:[Card],
-      unemployment:[Card], victoryRow:[cardId], supply, escrow, mods:[{key,value,expires}], turn:{...counters}, stats }
+      unemployment:[Card], victoryRow:[cardId], buildings:[cardId], supply, escrow, mods:[{key,value,expires}],
+      turn:{...counters}, stats }
 Card  = { uid, cardId }                       // cardDef(state, cardId) gives the definition
 Stack = { uid, cards:[Card top-first], orientation:0|180|270, shift:null|{remaining,output}, hasBeenUpright,
-          readyNextTurn, lockedBid }   // lockedBid = the auction id this Character is pledged to, if any
+          readyNextTurn, lockedBid,  // lockedBid = the auction this Character is standing in, if any
+          stored,                    // Supply put by on this card (a Squirrel's cache)
+          protectedUntil,            // turn number until which an opponent cannot target it
+          selfReadyUsed }            // a Cat's once-per-game self-ready
 market = { deckId, deckName, deck:[cardId], city:[cardId], cityDump:[cardId], outOfPlay:[cardId], revealQueue:[cardId],
            pending:[{id, cardId, announcer, high, bid, bonus, committed:[n,n], chars:[[uid],[uid]],
                      rounds:[{player,bid,bonus,turn}], unchallengeable, turnAnnounced, lastBidTurn}] }
