@@ -138,6 +138,26 @@ function openWorkshop(deck) {
   });
 }
 
+/**
+ * The Statue price ladder in words, read from victory.statueCostTiers and the holdings at which the
+ * price steps up (statueCostTierBreaks). With tiers [10,20,30] and breaks [2,4] this reads
+ * "10 Supply while you hold fewer than 2 Statues, 20 while you hold 2–3, 30 once you hold 4 or more".
+ */
+function statuePriceSentence() {
+  const v = rules.victory || {};
+  const tiers = Array.isArray(v.statueCostTiers) ? v.statueCostTiers : [];
+  if (!tiers.length) return 'every Statue costs the same';
+  const breaks = Array.isArray(v.statueCostTierBreaks) && v.statueCostTierBreaks.length
+    ? v.statueCostTierBreaks : [v.statueCostTierBreak ?? 2];
+  return tiers.map((cost, i) => {
+    if (i === 0) return `<strong>${cost} Supply</strong> while you hold fewer than ${breaks[0]}`;
+    const from = breaks[i - 1];
+    const to = breaks[i];
+    if (from === undefined) return `<strong>${cost}</strong> beyond that`;
+    return to === undefined ? `<strong>${cost}</strong> once you hold ${from} or more` : `<strong>${cost}</strong> while you hold ${from}–${to - 1}`;
+  }).join(', ');
+}
+
 function buildHowToPlay() {
   $('howToPlayBody').innerHTML = `
     <h3>The goal</h3>
@@ -181,14 +201,20 @@ function buildHowToPlay() {
     <p>Make an upright Character Busy, pick a Capital City card, and bid at least its cost — that opens an
     auction. On their own turn your rival may <strong>outbid</strong> you by pledging an upright Character of
     their own and bidding higher; then you may answer, and so on for as many rounds as you can both afford.
-    The required step grows as the bidding wears on. When you are still the high bidder at the start of your
+    A raise need only beat the standing bid. When you are still the high bidder at the start of your
     own turn, your rival has had their chance and the card is yours.</p>
-    <p><strong>Bidding costs animals as well as Supply.</strong> Every Character you pledge stays Busy until
-    the auction ends — it will not advance at Ready and nothing can wake it — so a long war leaves your town
-    with nobody left to work. And a bid is a promise: the winner pays in full, and the <strong>loser forfeits
-    half</strong> of everything they pledged. Bidding beyond your means is expensive even when you walk away.</p>
+    <p><strong>Bidding costs animals, not Supply you cannot get back.</strong> Every Character you pledge
+    stays Busy until the auction ends — it will not advance at Ready and nothing can wake it — so a long war
+    leaves your town with nobody left to work. The winner pays their bid in full; the <strong>loser is
+    refunded everything</strong> and gets their animals back. What ends a bidding war is the
+    <strong>pledge ladder</strong>: your Nth bid in an auction must be made with a Character costing at
+    least N, so a cost-0 animal cannot bid at all and nobody bids more than five times. Your deck's curve
+    is your bidding range.</p>
 
     <h3>Statues: a boon and a burden</h3>
+    <p>A Statue is priced from your own Victory Row, so the two Mayors can face different prices for the same
+    card in the same auction: ${statuePriceSentence()}. The Statue that wins the game is always the dearest
+    thing on the table.</p>
     <p>Every Statue grants its Mayor a lasting gift and a lasting cost — cheaper rehires for your rival,
     dearer Events, a thinner Resources choice. Five of the nine still win the game, but collecting them
     taxes the town that is winning.</p>
@@ -206,10 +232,23 @@ function buildHowToPlay() {
     <strong>Pace</strong> control to slow things down (Storybook), speed them up (Brisk) or skip animations
     (Instant). Foil cards shimmer when you move the pointer across them.</p>
 
-    <h3>Unemployment</h3>
-    <p>Disruptive effects can send a Character to Unemployment. Rehire it for its full printed cost to
-    return it upright. A freshly-played Character that hasn't yet been upright on your turn is protected
-    from being targeted this way.</p>
+    <h3>How many animals a town holds</h3>
+    <p>A town has room for <strong>${rules.town.maxCharacters} animals</strong>, and everybody counts: animals
+    at work, animals standing in the Capital City on a bid, and animals out of work. The counter above your
+    town reads your whole footprint — when it is full, nobody new can move in, so improving an animal you
+    already have beats hiring another one.</p>
+
+    <h3>Out of work</h3>
+    <p>Disruptive effects can put a Character out of work. They do not leave: they stay in your town,
+    <strong>turned face down</strong>, still taking up their place. Either Mayor may turn a face-down animal
+    over and read them at any time — it is a state, not a secret. A freshly-played Character that hasn't yet
+    been upright on your turn is protected from being put out of work.</p>
+    <p>Three things bring the town back to life. <strong>Rehire</strong> pays their full printed cost and
+    stands them back up as they are. <strong>Promote</strong> plays a better version of that same animal from
+    your hand over them for the printed difference — one action instead of a rehire and then an upgrade, and
+    they come back upright. Or <strong>lay them off</strong>: they leave town for good, to the Town Dump, and
+    their place opens up again. Laying off is free and does not end your turn — it is the way out of a town
+    so full it cannot hire anybody.</p>
 
     <h3>Build your own deck</h3>
     <p>The book holds far more cards than the four printed decks use. <strong>Build your own deck</strong>

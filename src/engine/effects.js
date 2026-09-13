@@ -2,7 +2,7 @@
 import { shuffle } from './rng.js';
 import {
   cardDef, topCard, log, nextUid, opponentOf, entryOrientation, rankOf, abilitySources, hasPassive,
-  hasMod, consumeMod, isUpright, speciesInTown, refillCity, UPRIGHT, BUSY, findStack,
+  hasMod, consumeMod, isUpright, speciesInTown, refillCity, UPRIGHT, BUSY, findStack, hasTownRoom,
 } from './state.js';
 
 // ---------- agent I/O ----------
@@ -107,24 +107,6 @@ export async function discard(state, pi, n, { byOpponent = false } = {}) {
     log(state, pi, `${p.name} discards ${cardDef(state, c.cardId).name}.`, { kind: 'discard', player: pi, uid: c.uid, cardId: c.cardId });
   }
   return chosen.length;
-}
-
-/**
- * Town-slot footprint and whether a *new* body fits. Duplicated from actions.js rather than imported
- * because effects.js is upstream of it; both read the same `rules.town` block. Rehiring and promoting
- * move an animal between two zones that both count, so neither consults this.
- */
-export function townFootprintOf(state, pi) {
-  const p = state.players[pi];
-  const t = state.rules.town || {};
-  const inTown = t.countsPledged === false ? p.town.filter((s) => s.lockedBid == null).length : p.town.length;
-  return inTown + (t.countsUnemployment === false ? 0 : p.unemployment.length);
-}
-
-export function townHasRoom(state, pi) {
-  const n = (state.rules.town || {}).maxCharacters;
-  if (!(typeof n === 'number' && n > 0)) return true;
-  return townFootprintOf(state, pi) < n;
 }
 
 export function makeStack(state, pi, cardInst, orientation) {
@@ -237,7 +219,7 @@ export async function gainMarketCard(state, pi, cardId, why = '') {
     // A Character hired out of the Capital City. They are new in town, so they arrive Busy
     // whatever they cost, and they become ladder fuel and a worker from the next turn on.
     if (def.onGain) await runEffect(state, pi, def.onGain, { sourceCardId: cardId });
-    if (!townHasRoom(state, pi)) {
+    if (!hasTownRoom(state, pi)) {
       // A full town has nowhere to put them; the hire is paid for but cannot move in.
       state.market.cityDump.push(cardId);
       log(state, pi, `${def.name} has nowhere to live in ${p.name}'s full town and moves on.`, { kind: 'marketRecruitRefused', player: pi, cardId });
@@ -427,7 +409,7 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       return;
     }
     case 'recruitFromHand': {
-      if (!townHasRoom(state, pi)) return; // a full town cannot take another body
+      if (!hasTownRoom(state, pi)) return; // a full town cannot take another body
       const opts = p.hand.filter((c) => {
         const d = cardDef(state, c.cardId);
         return d.type === 'character' && (eff.filter?.maxCost === undefined || d.cost <= eff.filter.maxCost);
@@ -501,6 +483,29 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       return;
     }
     // ---- shared shocks (Disruption cards): these always hit both towns, whoever is active ----
+    case 'everyoneUnemploys': {
+      // The gentle shared shock. Recession empties both towns; this asks each Mayor to let one or two
+      // animals go, choosing for themselves. It is the shape most of the set's Unemployment should
+      // take: weather that falls on both towns and rewards the Mayor who prepared, rather than a
+      // pointed removal aimed at one player (Section 2, "build a town, not a prison").
+      const count = eff.count ?? 1;
+      for (const pl of state.players) {
+        if (hasMod(pl, 'unemploymentShield')) {
+          log(state, pl.index, `${pl.name}'s Characters are protected from Unemployment.`, { kind: 'shield', player: pl.index });
+          continue;
+        }
+        for (let k = 0; k < count; k++) {
+          const opts = pl.town.filter((st) => (!state.rules.unemployment.protectNewCharacters || st.hasBeenUpright)
+            && !isProtected(state, st)
+            && (eff.maxCost === undefined || topCard(state, st).cost <= eff.maxCost));
+          if (!opts.length) break;
+          const chosen = await ask(state, pl.index, { kind: 'pick', reason: 'unemployOwn', from: 'town', options: opts.map((st) => stackOpt(state, st)), min: 1, max: 1 });
+          const target = chosen.length ? findStack(state, pl.index, chosen[0]) : opts[0];
+          await unemployStack(state, pl.index, target, { byEffect: true, sourcePi: null });
+        }
+      }
+      return;
+    }
     case 'allCharactersToUnemployment': {
       for (const pl of state.players) {
         for (const s of pl.town.slice()) await unemployStack(state, pl.index, s, { byEffect: true, sourcePi: null });

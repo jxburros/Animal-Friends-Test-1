@@ -1,7 +1,7 @@
 // Legal action enumeration and action application for the Actions phase.
 import {
   cardDef, topCard, log, nextUid, opponentOf, entryOrientation, rankOf, hasPassive, hasMod, getMod, consumeMod,
-  canAct, findStack, cityRule, UPRIGHT, BUSY,
+  canAct, findStack, cityRule, refillCity, townFootprint, townCap, hasTownRoom, UPRIGHT, BUSY,
 } from './state.js';
 import { ask, gainSupply, draw, discard, makeStack, fireHook, runEffect, matchesFilter } from './effects.js';
 
@@ -148,37 +148,36 @@ export function cardCostFor(state, pi, cardId) {
   return Math.max(0, def.cost + (def.type === 'building' ? cityRule(state, 'buildingCostDelta') : 0));
 }
 
-// ---------- the town cap ----------
-/**
- * How many town slots this Mayor is using. Animals at work, animals pledged into an auction and
- * animals face down in Unemployment all count, so the cap bites on the town's whole footprint.
- */
-export function townFootprint(state, pi) {
-  const p = state.players[pi];
-  const t = state.rules.town || {};
-  const pledged = t.countsPledged === false ? p.town.filter((s) => s.lockedBid == null).length : p.town.length;
-  return pledged + (t.countsUnemployment === false ? 0 : p.unemployment.length);
-}
-
-/** The town's slot limit, or Infinity when no cap is configured. */
-export function townCap(state) {
-  const n = (state.rules.town || {}).maxCharacters;
-  return typeof n === 'number' && n > 0 ? n : Infinity;
-}
-
-/**
- * Is there room for one more *new* body? Rehiring and promoting out of Unemployment move an animal
- * between zones that both count, so they are footprint-neutral and never consult this.
- */
-export function hasTownRoom(state, pi) {
-  return townFootprint(state, pi) < townCap(state);
-}
 
 export function minBidFor(state, pi, cardId) {
   const p = state.players[pi];
   let min = cardCostFor(state, pi, cardId);
   if (p.turn.announcements === 0 && hasPassive(state, pi, 'firstAnnounceMinBidMinus1')) min = Math.max(0, min - 1);
   return min;
+}
+
+// ---------- clearing an Ordinance ----------
+/**
+ * Animals still needed to finish the works on a displayed Ordinance, or 0 if it cannot be cleared.
+ *
+ * An Ordinance with a `clearing` block is a shared civic problem rather than a lot: nobody buys it,
+ * and it sits in the display changing everyone's auctions until enough animals have been put to work
+ * on it. Either Mayor may contribute, and one Mayor may finish it alone — which is the whole reason
+ * it cannot deadlock. A Mayor one Statue from winning will always rather pay than wait, so it works
+ * as a tax on whoever is ahead, while the trailing Mayor chooses between chipping in to end it
+ * sooner and making their rival carry the whole job.
+ */
+export function clearingNeeded(state, cardId) {
+  const def = cardDef(state, cardId);
+  const want = def?.clearing?.animals || 0;
+  if (!want) return 0;
+  const done = (state.market.clearing[cardId] || []).length;
+  return Math.max(0, want - done);
+}
+
+/** Every Ordinance in the display that still needs work. */
+export function clearableOrdinances(state) {
+  return state.market.city.filter((id) => clearingNeeded(state, id) > 0);
 }
 
 // ---------- the pledge ladder ----------
@@ -307,9 +306,11 @@ export function legalActions(state, pi) {
   // announce purchases
   const pendingIds = new Set(state.market.pending.map((pd) => pd.cardId));
   const uprights = p.town.filter(canAct);
+  const statuesBlocked = cityRule(state, 'blockStatuePurchase') > 0;
   for (const cardId of state.market.city) {
     if (pendingIds.has(cardId)) continue;
     if (cardDef(state, cardId).type === 'ordinance') continue; // an Ordinance is a rule, not a lot
+    if (statuesBlocked && cardDef(state, cardId).type === 'statue') continue; // the square is dug up
     const minBid = minBidFor(state, pi, cardId);
     if (minBid > p.supply) continue;
     for (const s of uprights) {
@@ -329,6 +330,11 @@ export function legalActions(state, pi) {
       if (!canPledge(state, pi, pd, s)) continue;
       acts.push({ type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: s.uid, bid: minBid, minBid, maxBid });
     }
+  }
+  // Put an animal to work clearing an Ordinance that is holding the Capital City up.
+  for (const cardId of clearableOrdinances(state)) {
+    const needed = clearingNeeded(state, cardId);
+    for (const st of uprights) acts.push({ type: 'clearOrdinance', cardId, charUid: st.uid, needed });
   }
   // rehire
   for (const c of p.unemployment) {
@@ -453,6 +459,9 @@ export async function applyAction(state, pi, a) {
       return false;
     }
     case 'announce': {
+      if (cityRule(state, 'blockStatuePurchase') > 0 && cardDef(state, a.cardId).type === 'statue') {
+        throw new Error('No Statue may be bought while the square is being worked on');
+      }
       const s = findStack(state, pi, a.charUid);
       if (!s || !canAct(s)) throw new Error('Character cannot announce');
       if (!canPledge(state, pi, null, s)) throw new Error(`Opening a bid needs a Character costing at least ${pledgeMinCost(state, null, pi)}`);
@@ -536,6 +545,31 @@ export async function applyAction(state, pi, a) {
       const [c] = p.unemployment.splice(idx, 1);
       const s = makeStack(state, pi, c, UPRIGHT);
       log(state, pi, `${p.name} rehires ${def.name}, ${def.title} for ${cost} Supply (upright).`, { kind: 'rehire', player: pi, uid: s.uid, cardUid: c.uid, cardId: def.id, cost });
+      return false;
+    }
+    case 'clearOrdinance': {
+      const cardId = a.cardId;
+      if (!state.market.city.includes(cardId)) throw new Error('That card is not in the Capital City');
+      if (clearingNeeded(state, cardId) <= 0) throw new Error('Those works need no more help');
+      const st = findStack(state, pi, a.charUid);
+      if (!st || !canAct(st)) throw new Error('Character cannot work the square');
+      st.orientation = BUSY;
+      const done = state.market.clearing[cardId] || (state.market.clearing[cardId] = []);
+      done.push({ player: pi, uid: st.uid });
+      const def = cardDef(state, cardId);
+      const left = clearingNeeded(state, cardId);
+      log(state, pi, `${topCard(state, st).name} goes to work clearing ${def.name}${left ? `; ${left} more animal${left === 1 ? '' : 's'} needed.` : '.'}`,
+        { kind: 'clearWork', player: pi, cardId, uid: st.uid, remaining: left });
+      if (left === 0) {
+        const helpers = done.map((h) => h.player);
+        const shared = helpers.some((x) => x !== helpers[0]);
+        state.market.city.splice(state.market.city.indexOf(cardId), 1);
+        delete state.market.clearing[cardId];
+        state.market.cityDump.push(cardId);
+        log(state, pi, `The works on ${def.name} are finished${shared ? ', both towns having lent a hand' : `, ${p.name}'s town having done the whole job`}.`,
+          { kind: 'ordinanceCleared', player: pi, cardId, shared });
+        refillCity(state);
+      }
       return false;
     }
     case 'layOff': {

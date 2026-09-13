@@ -241,6 +241,10 @@ export function effectPower(eff) {
       return 0.55 * READY * n(eff.count);
     // Shared shocks hit both towns, so they are rated by how much they move the table, not by
     // how much they hand one player. A Disruption is never owned; it is weather.
+    case 'everyoneUnemploys':
+      // A shared shock rated by how much it moves the table, not by what it hands one Mayor. Each
+      // animal put out of work costs its town a body and the Supply to bring it back.
+      return 3.0 * (typeof eff.count === 'number' ? eff.count : 1);
     case 'allCharactersToUnemployment':
       return 8.0;
     case 'endAllShifts':

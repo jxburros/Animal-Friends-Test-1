@@ -93,12 +93,28 @@ export function addLimitedEvent(state, pi, cardId, remaining) {
  * the Market Deck / City Dump / Out of Play so a card can't accidentally exist in two places at
  * once (e.g. get dealt back into the City a second time when it refills during the test).
  */
-export function setCity(state, cardIds) {
+/**
+ * Cards a refill can safely deal into a test's Capital City: ordinary Market cards with no on-reveal
+ * effect and no ability that changes the rules. A test that pins the display to fewer than five cards
+ * will have the rest dealt from the Market Deck the moment anything refills it, and if that deal turns
+ * up an on-reveal card or an Ordinance it lands in the middle of whatever the test was measuring.
+ */
+const BENIGN_FILLER = ['mk_town_bell', 'mk_supply_depot', 'mk_public_gardens', 'mk_courier_network', 'mk_library_annex', 'mk_town_clock'];
+
+/**
+ * Pin the Capital City to exactly these cards.
+ *
+ * Unless `keepDeck` is set, the Market Deck is also restocked with filler that is safe to deal, so a
+ * test only ever sees the cards it asked for. Pass `deck` to control the refill explicitly.
+ */
+export function setCity(state, cardIds, { deck, keepDeck = false } = {}) {
   const ids = new Set(cardIds);
   state.market.city = cardIds.slice();
   state.market.deck = state.market.deck.filter((id) => !ids.has(id));
   state.market.cityDump = state.market.cityDump.filter((id) => !ids.has(id));
   state.market.outOfPlay = state.market.outOfPlay.filter((id) => !ids.has(id));
+  if (deck) state.market.deck = deck.slice();
+  else if (!keepDeck) state.market.deck = BENIGN_FILLER.filter((id) => !ids.has(id));
 }
 
 export function setSupply(state, pi, n) {

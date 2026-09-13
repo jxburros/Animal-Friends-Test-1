@@ -127,7 +127,6 @@ input[type=range]{width:100%;accent-color:var(--gold)}
 .stack-row{display:flex;gap:30px;flex-wrap:wrap;min-height:8px;padding:6px 28px 4px}
 .mini-row{display:flex;gap:8px;flex-wrap:wrap;min-height:8px;padding:4px 0}
 .mini-card{display:flex;flex-direction:column;align-items:center;gap:3px}
-.mini-card.unemployed .card-face{filter:grayscale(.55) sepia(.2);opacity:.85}
 .empty-note{font-size:12px;color:var(--muted);font-style:italic;padding:4px 2px}
 
 /* character stacks: fixed box, rotation is purely visual so the layout never jumps */
@@ -528,3 +527,57 @@ input[type=range]{width:100%;accent-color:var(--gold)}
 
 .card-face .cost.tiered { font-size: 11px; letter-spacing: -.02em; }
 .card-face.large .cost.tiered { font-size: 15px; }
+
+/* ---------- out of work: face-down animals, still inside the town ---------- */
+.stack.unemployed .facedown {
+  width: var(--card-w); height: var(--card-h);
+  padding: 0; border: none; border-radius: 10px; background: none;
+  box-shadow: none; position: relative; overflow: hidden; display: block; cursor: pointer;
+}
+.stack.unemployed .facedown:hover { transform: translateY(-2px); }
+.stack.unemployed .facedown:active { transform: translateY(1px); box-shadow: none; }
+.stack.unemployed .card-back { filter: grayscale(.45) brightness(.92); box-shadow: var(--shadow2); }
+.stack.unemployed .fd-label {
+  position: absolute; left: 0; right: 0; bottom: 8%;
+  display: flex; flex-direction: column; align-items: center; gap: 2px; pointer-events: none;
+}
+.fd-out {
+  font-family: var(--sans); font-size: 10px; font-weight: bold; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ink);
+  background: rgba(255, 250, 240, .94); border: 1px solid var(--line2);
+  border-radius: 8px; padding: 1px 8px; box-shadow: 0 1px 0 rgba(60, 40, 10, .25);
+}
+.fd-read { font-family: var(--sans); font-size: 9px; color: #fff3d6; opacity: .85; letter-spacing: .05em; }
+.stack.unemployed .facedown:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+/* There is something to do with this animal: rehire, promote, or wave them off. */
+.stack.unemployed.actionable .card-back {
+  filter: none;
+  box-shadow: 0 0 0 3px var(--gold2), 0 0 18px rgba(230, 164, 0, .5), var(--shadow2);
+}
+.stack.unemployed .stack-badges button { margin-top: 1px; }
+
+/* ---------- the town cap: the whole footprint, against the places there are ---------- */
+.town-sub-title .full-tag {
+  font-family: var(--sans); font-size: 9px; font-weight: bold; letter-spacing: .08em;
+  text-transform: uppercase; color: #fff3d6; background: var(--red);
+  border-radius: 7px; padding: 1px 6px; margin-left: 2px;
+}
+.town-sub.town-full > .town-sub-title { color: var(--red); border-bottom-color: var(--red); }
+.town-full-note {
+  font-size: 12px; font-style: italic; color: var(--red);
+  background: var(--red2); border: 1px solid var(--red); border-radius: 9px;
+  padding: 4px 9px; margin: 2px 0 4px;
+}
+.fx-town-full { color: var(--red) !important; background: var(--red2); border-radius: 8px; }
+
+/* a face-down animal greys out on the way in, like the card face used to */
+.fx-gray .card-back { filter: grayscale(1) brightness(.8); }
+
+/* three Statue price tiers ("10/20/30") need a little more room in the cost bead than two */
+.card-face .cost.tiered.tiers-3 { font-size: 8.5px; letter-spacing: -.06em; }
+.card-face.large .cost.tiered.tiers-3 { font-size: 11px; letter-spacing: -.04em; }
+
+@media (max-width: 700px) {
+  .fd-out { font-size: 9px; padding: 1px 5px; }
+  .fd-read { display: none; }
+}

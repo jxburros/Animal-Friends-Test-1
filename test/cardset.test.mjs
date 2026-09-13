@@ -21,6 +21,7 @@ const EFFECTS = new Set([
   // shared shocks, used by Disruption cards
   'allCharactersToUnemployment', 'endAllShifts', 'everyoneLosesSupply', 'everyoneGainsSupply',
   'everyoneDraws', 'everyoneDiscardsDownTo', 'blockNextReady', 'everyoneRehiresFree',
+  'everyoneUnemploys',
 ]);
 const TRIGGERS = new Set([
   'passive', 'busy', 'onRecruit', 'onTurnStart', 'onTurnEnd', 'onReady', 'onShiftStarted', 'onShiftCompleted',
@@ -42,7 +43,9 @@ const MOD_KEYS = new Set([
   'cancelNextReveal',
 ]);
 /** Keys an Ordinance may change while it is displayed; read by cityRule() in the engine. */
-const CITY_RULE_KEYS = new Set(['pledgeLadderDelta', 'statueCostDelta', 'buildingCostDelta', 'noRaises']);
+const CITY_RULE_KEYS = new Set(['pledgeLadderDelta', 'statueCostDelta', 'buildingCostDelta', 'noRaises',
+  'blockStatuePurchase',
+]);
 const CONDITIONS = new Set([
   'self', 'announcerIsSelf', 'onlyUprightOfSpecies', 'otherCharacterInTown', 'eventRequiresStudy',
   'nonStatue', 'statue', 'handAtLeast', 'unemploymentNotMoreThanOpponent', 'minSpeciesInTown',
