@@ -127,6 +127,25 @@ npm run serve -- --port 9000   # another port (or PORT=9000 npm run serve)
 ```
 Then open http://localhost:8080/ in any modern browser. During play, use the **Pace** control (menu or bottom right) to choose animation speed: Storybook (slow, watch every card), Brisk (quicker), or Instant (no animations).
 
+### Learning the game
+
+- **Welcome.** The first visit opens on a short introduction — who you are, what you do on a turn, how
+  you win — with three doors: the tutorial, the How to Play book, or straight to the cover. It can be
+  reopened any time with **Welcome** on the cover.
+- **Tutorial.** **Play the tutorial** (on the cover, in the welcome, or in the How to Play book) starts a
+  short predetermined match against Mayor Sable. A coach chip at the top of the page says what to do and
+  why for every move; the board only offers that move, a wrong click is answered with a nudge, and
+  **Do it for me** makes the move for you. Over seven turns it covers the Resources choice, recruiting at
+  every rank, an arrival talent, shifts, Events, outbidding and the pledge ladder, the refund, the aging
+  display, bidding for a Statue and upgrading an animal, and ends with your first Statue. You can then
+  keep playing the same match freely (the rival switches to its usual brain) or go back to the cover.
+  The match is built from the two printed starter decks with the hands and the Capital City arranged in
+  a fixed order (`src/tutorial/scenario.js`); `test/tutorial.test.mjs` plays it headlessly so a change to
+  the cards or rules that breaks the lesson fails the tests.
+- **How to play.** The book on the cover (and the **?** button in a game) has three tabs: a one-page
+  **Quick start**, **The rules** in full, and **Questions & answers** — the twenty questions new Mayors
+  ask most, from "why can't my cost-0 animal bid?" to "why did a card vanish from the Capital City?".
+
 The server (`scripts/serve.mjs`, no dependencies) sends every file with `Cache-Control: no-store`, so each reload plays exactly what is on disk. When it starts it prints the version and the folder it is serving; the book cover shows the same version line (e.g. `v0.6.0 · Animal Friends: First Boroughs · 375 cards · 6 decks · 6 Market Decks`). If the two disagree, the browser is showing an old copy.
 
 ### Testing a fresh download
@@ -148,7 +167,8 @@ If you test by downloading the ZIP from GitHub and unzipping it:
 - `spec/starter_card_set.json` - all 375 cards: 136 Characters, 88 Events, 9 Statues, 86 Market cards, 12 Buildings, 10 hired animals, 7 Ordinances and 27 on-reveal cards, plus six printed 40-card decks and six Market Decks. Every card carries its `rarity` and the `power` rating that earned it, and the file is ordered by that rating, strongest for its cost first. A Market Deck is dealt as all 9 Statues plus a 26-card sample of its own pool — 35 cards — topped up from that pool until at least three on-reveal cards are in it, so every market keeps one size and its own printed character while the display varies from game to game.
 - `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`. `power.js` is the power/cost model that rates every card and assigns its rarity
 - `src/ai/` - agents: `random.js` (baseline), `heuristic.js` (opponent)
-- `src/ui/` - browser interface: `main.js`, `humanAgent.js`, `render.js`, `deckbuilder.js` (the Deck Workshop), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations)
+- `src/ui/` - browser interface: `main.js`, `humanAgent.js`, `render.js`, `deckbuilder.js` (the Deck Workshop), `help.js` (the welcome, quick start, rules and FAQ), `tutorial.js` (the coach chips), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations)
+- `src/tutorial/scenario.js` - the tutorial mini-match: the arranged decks and market, the step script (what to do and why, and which moves are allowed), and the rival's plan; DOM-free so the tests can play it
 - `index.html` - playable game
 - `scripts/` - test utilities: `smoke.mjs` (one game log), `invariants.mjs` (card conservation), `playtest.mjs` (AI vs AI), `power.mjs` (the card set sorted by power/cost), `stamp.mjs` (restamp every card's rarity and rating after editing the set), `identity.mjs` (species/study identity and power-creep gate), `build-decks.mjs` (rebuild the printed decks from the ratings)
 - `test/` - unit tests (`node --test`)

@@ -581,3 +581,71 @@ input[type=range]{width:100%;accent-color:var(--gold)}
   .fd-out { font-size: 9px; padding: 1px 5px; }
   .fd-read { display: none; }
 }
+
+/* ================= COVER LINKS ================= */
+.cover-links{display:flex;gap:8px;flex-wrap:wrap}
+.cover-links button{flex:1 1 auto;font-size:15px}
+#howToPlayBtn{width:auto}
+
+/* ================= WELCOME ================= */
+.welcome-box{text-align:center}
+.welcome-box .cover-orn{font-size:28px;margin-bottom:4px}
+.welcome{text-align:left}
+.welcome h3{color:var(--plum);font-variant:small-caps;letter-spacing:.5px;margin-bottom:4px;font-size:17px}
+.welcome p{font-family:var(--sans);font-size:14px;margin:0 0 8px}
+.welcome-lead{font-size:16px !important;font-family:var(--serif) !important;font-style:italic;text-align:center;margin:4px 0 14px !important}
+.welcome-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 10px}
+@media (max-width:640px){.welcome-cols{grid-template-columns:1fr}}
+.welcome-col{background:#fffaf0;border:1.5px solid var(--line2);border-radius:12px;padding:10px 12px}
+.welcome-tip{background:var(--gold3);border:1.5px solid var(--gold);border-radius:10px;padding:8px 12px;margin-top:10px !important}
+.welcome-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.welcome-actions button{flex:1 1 180px}
+
+/* ================= HOW TO PLAY: tabs, quick start, questions ================= */
+.help-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 4px;border-bottom:2px solid var(--line2);padding-bottom:6px}
+.help-tab{font-size:14px;padding:5px 12px;box-shadow:0 2px 0 var(--ink);font-variant:small-caps;letter-spacing:.5px;background:#fffaf0}
+.help-tab.on{background:linear-gradient(#fff2b8,#f6d27a);border-color:var(--ink);font-weight:bold}
+.help-tab[aria-selected="true"]{cursor:default}
+.help-intro{font-style:italic;color:var(--muted)}
+.help-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:14px}
+.quick-steps{font-family:var(--sans);font-size:14px;padding-left:22px;margin:8px 0}
+.quick-steps li{margin:0 0 8px;padding-left:4px}
+.quick-steps li::marker{color:var(--gold);font-weight:bold;font-family:var(--serif);font-size:16px}
+.faq{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.faq-item{background:#fffaf0;border:1.5px solid var(--line2);border-radius:10px;padding:0}
+.faq-item summary{cursor:pointer;padding:8px 12px;font-weight:bold;list-style:none;display:flex;align-items:center;gap:8px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::before{content:"❧";color:var(--gold);flex:none;transition:transform .2s}
+.faq-item[open] summary::before{transform:rotate(90deg)}
+.faq-item[open] summary{border-bottom:1px dotted var(--line2)}
+.faq-item p{margin:0;padding:8px 12px 10px 34px;font-family:var(--sans);font-size:13.5px}
+
+/* ================= THE COACH (tutorial chips) ================= */
+.coach{position:sticky;top:8px;z-index:210;display:flex;align-items:flex-start;gap:12px;padding:0 4px}
+.coach[hidden]{display:none}
+.coach-portrait{flex:none;width:76px;height:76px;border-radius:50%;overflow:hidden;background:var(--paper2);border:3px double var(--gold);box-shadow:var(--shadow);margin-top:6px}
+.coach-portrait svg{width:100%;height:100%;display:block}
+.coach-bubble{position:relative;flex:1;min-width:0;background:var(--paper2) var(--noise);border:2px solid var(--ink);border-radius:16px;padding:10px 14px 12px;box-shadow:0 8px 24px rgba(40,24,10,.35),inset 0 0 0 3px var(--paper2),inset 0 0 0 4px var(--gold3)}
+.coach-bubble::before{content:"";position:absolute;left:-14px;top:26px;border:8px solid transparent;border-right-color:var(--ink);border-left:0}
+.coach-bubble::after{content:"";position:absolute;left:-10px;top:28px;border:6px solid transparent;border-right-color:var(--paper2);border-left:0}
+.coach-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.coach-step{font-family:var(--sans);font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);background:#fffaf0;border:1px solid var(--line2);border-radius:8px;padding:1px 8px}
+.coach-title{font-weight:bold;font-size:18px;font-variant:small-caps;letter-spacing:.5px;color:var(--plum)}
+.coach-leave{margin-left:auto;font-variant:normal;font-size:11px;padding:2px 8px}
+.coach-text,.coach-do,.coach-why{margin:4px 0;font-size:14px;line-height:1.4}
+.coach-do{font-size:15px}
+.coach-do strong{color:var(--green)}
+.coach-why{font-family:var(--sans);font-size:13px;color:var(--ink2)}
+.coach-why strong{color:var(--plum);font-family:var(--serif)}
+.coach-nudge{margin:6px 0 0;font-size:14px;font-weight:bold;color:var(--red);background:var(--red2);border:1.5px solid var(--red);border-radius:8px;padding:5px 10px}
+.coach.nudged .coach-bubble{animation:coach-shake calc(.5s * max(var(--fx-scale),.01)) ease-in-out}
+@keyframes coach-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.coach-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.coach-actions button{font-size:14px}
+.coach.final .coach-bubble{box-shadow:0 0 0 4px var(--gold3),0 8px 24px rgba(40,24,10,.35),inset 0 0 0 3px var(--paper2),inset 0 0 0 4px var(--gold)}
+@media (max-width:700px){
+  .coach{gap:8px}
+  .coach-portrait{width:52px;height:52px}
+  .coach-bubble{padding:8px 10px 10px}
+  .coach-title{font-size:16px}
+}
