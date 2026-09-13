@@ -137,6 +137,32 @@
    "remade": "2026-09-13",
    "retires": [],
    "wantedVerbs": []
+  },
+  {
+   "name": "Brett",
+   "renamedFrom": "Bram",
+   "species": "Badger",
+   "studies": [
+    "Civics"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Brett practises in the Capital City, where the fees are the size of a small town's year and the waiting room has its own waiting room. He does not live in the First Boroughs and has never pretended he might. He comes out when the borough needs somebody who knows exactly how the Capital City's rules are written — which lots may be challenged, which tie goes to whom, what the word 'pending' is actually doing in a clause — argues it, wins it, bills for it, and takes the evening coach home.\n\nThe town has complicated feelings about this. He is expensive, he is faintly amused by all of them, and he has never once lost them a lot they asked him to take. The Counting House budgets for him a year ahead. Oatmeal, who does the same work for a ward salary and no applause, is professionally polite to him and privately unimpressed.\n\nHe is the other half of Barrow's story: the same big city, the opposite decision. Barrow came out and stayed because the town was still being built. Brett comes out, does the work better than anyone available, and goes back.",
+   "voice": "Dry, fast, expensive. Explains the rule once, then explains what the rule is for, and the second explanation is the one that wins.",
+   "arc": "One card, and deliberately the top of the ladder: a Capital City hire at the highest cost in the game, who turns the Capital City's own procedure to your side. He is a poor earner on purpose — a 2-turn shift for 3 Supply, less than animals costing half as much — because he is not doing your work, he is doing your paperwork and billing you for it. What you buy is the ties and the challenge income. Loaded with a full master's shift he rated Legendary and 23% above the card he replaces; trimmed, he sits at 5.12 against printed Bram's 5.19. There is no cheap Brett — that is the joke.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "a hire with a term (e.g. `leavesAfter`)",
+     "why": "The maker asked for a lawyer hired TEMPORARILY. A Character hired out of the Capital City moves into your town and stays there for the rest of the game; nothing in the engine gives a Character a term, a contract length or an exit. Only Limited Events expire (`duration`).",
+     "workaround": "Delivered the 'hired from the big city' half, which is real — he is a Capital City hire, not a townsfolk — and put the temporariness in the backstory and flavor. The nearest true mechanism would be a Limited Event ('Brett's Retainer', 2 turns of his courtroom passives) instead of, or alongside, the Character; that is a new card rather than a remake, so it is the maker's call."
+    },
+    {
+     "verb": "a Civics-typed challenge bonus",
+     "why": "His help is meant to be civic — the town's case, not any purchase. `winTiesAsChallenger` applies to every challenge you make.",
+     "workaround": "Left it untyped, as the printed cards that use this passive do."
+    }
+   ]
   }
  ],
  "cards": [
@@ -784,6 +810,46 @@
     "score": 2.02,
     "power": 3,
     "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_brett_counsel_5",
+   "type": "marketCharacter",
+   "name": "Brett",
+   "title": "Retained Counsel",
+   "job": "Retained Counsel",
+   "species": "Badger",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Hired from the Capital City; enters Busy. Your challenge bids win ties. When an opponent challenges one of your purchases, gain 2 Supply.",
+   "flavor": "He reads the lot notice twice, says 'that clause does not do what they think it does', and is right.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "winTiesAsChallenger"
+    },
+    {
+     "trigger": "onChallengedByOpponent",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 5
+   },
+   "remakes": "mkt_bram",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.12,
+    "power": 12.55,
+    "opportunityCost": 9.4
    }
   }
  ],

@@ -69,6 +69,10 @@ add to the list.
 - **Barrow came out from the Capital City** after twenty years cutting stone there, specifically
   because the First Boroughs are not finished being built. The Capital City is therefore a real place
   animals emigrate *from*, and the borough reads as young and growing. [Barrow]
+- **The Capital City has its own professional class**, and the borough buys it by the day: Brett
+  practises there, comes out when the town needs someone who knows how the Capital City's rules are
+  written, and goes home the same evening. The Counting House budgets for him a year ahead. He is the
+  counterweight to Barrow — same city, opposite decision. [Brett]
 - **Nobody knows where Barnaby is from.** They audit the Capital City's night books, they have no
   address on file at the Hiring Hall, and the town has collectively decided not to pry. Anyone may
   find this strange; nobody gets an answer. [Barnaby]
@@ -90,6 +94,7 @@ be read.
 | --- | --- | --- |
 | Peanut | Acorn | 2026-09-13 |
 | Oatmeal | Barley | 2026-09-13 |
+| Brett | Bram | 2026-09-13 |
 
 ---
 
