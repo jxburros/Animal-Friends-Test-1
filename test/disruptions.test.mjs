@@ -2,7 +2,8 @@
 // never enter the display, and hit both towns equally.
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { RULES, SET, newGame, addStack, addToHand, setSupply, setCity } from './helpers.mjs';
+import { RULES, SET, newGame, addStack, addToHand, setSupply, setCity, addBidder,
+} from './helpers.mjs';
 import { createGame, flushReveals, refillCity, startPhase, UPRIGHT, BUSY } from '../src/engine/index.js';
 
 /** Put `cardId` on top of the Market Deck, empty a display slot, and deal it out. */
@@ -32,9 +33,9 @@ describe('revealing a Disruption', () => {
     const state = newGame();
     state.market.deck = [];
     state.market.city = ['mk_towpath'];
-    addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    addBidder(state, 0, 1);
     addStack(state, 0, 'bb_mabel_1', BUSY);
-    addStack(state, 1, 'pp_patch_1', UPRIGHT);
+    addBidder(state, 1, 2);
     await reveal(state, 'dx_recession');
     for (const p of state.players) {
       assert.equal(p.town.length, 0, `${p.name} keeps nobody`);
@@ -47,8 +48,8 @@ describe('revealing a Disruption', () => {
     const state = newGame();
     state.market.deck = [];
     state.market.city = ['mk_towpath'];
-    addStack(state, 0, 'bb_clover_1', UPRIGHT);
-    addStack(state, 1, 'pp_patch_1', UPRIGHT);
+    addBidder(state, 0, 1);
+    addBidder(state, 1, 2);
     state.players[0].mods.push({ key: 'unemploymentShield', value: 1, expires: 'nextTurnStart' });
     await reveal(state, 'dx_recession');
     assert.equal(state.players[0].town.length, 1, 'the shielded town rides it out');
@@ -113,7 +114,7 @@ describe('revealing a Disruption', () => {
     setSupply(state, 0, 10);
     setCity(state, ['mk_festival_grant']);
     state.market.deck = ['dx_rent_hike', 'mk_towpath', 'mk_town_bell', 'mk_supply_depot', 'mk_library_annex'];
-    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    const s = addBidder(state, 0, 1);
     state.phase = 'actions';
     state.active = 0;
     const { applyAction, resolvePurchase } = await import('../src/engine/index.js');
@@ -139,11 +140,19 @@ describe('market decks', () => {
     assert.throws(() => createGame(RULES, SET, { seed: 1, market: 'no-such-market' }), /Unknown market deck/);
   });
 
-  test('only Hard Times and Boom Town carry Disruptions; First Boroughs is the clean market', () => {
-    const typeOf = (id) => SET.cards.find((c) => c.id === id).type;
+  test('every market carries on-reveal cards, and only Hard Times leans on the shocks', () => {
+    // On-reveal cards used to mean "shared shock", and First Boroughs carried none. They now also
+    // pay the Mayor who is behind and set the weather, so every market has some; what separates the
+    // markets is how many of them actually hurt.
+    const cardOf = (id) => SET.cards.find((c) => c.id === id);
     const byId = Object.fromEntries(SET.marketDecks.map((d) => [d.id, d]));
-    assert.equal(byId['first-boroughs'].pool.filter((id) => typeOf(id) === 'disruption').length, 0);
-    assert.ok(byId['hard-times'].pool.filter((id) => typeOf(id) === 'disruption').length >= 5);
-    assert.ok(byId['boom-town'].pool.filter((id) => typeOf(id) === 'disruption').length >= 1);
+    const reveals = (deck) => deck.pool.filter((id) => cardOf(id).type === 'disruption');
+    const shocks = (deck) => reveals(deck).filter((id) => cardOf(id).shock);
+    for (const deck of SET.marketDecks) {
+      assert.ok(reveals(deck).length >= 1, `${deck.id} should deal some on-reveal cards`);
+    }
+    assert.ok(shocks(byId['hard-times']).length >= 5, 'Hard Times is the harsh market');
+    assert.ok(shocks(byId['hard-times']).length > shocks(byId['boom-town']).length, 'Boom Town is kinder than Hard Times');
+    assert.ok(shocks(byId['founders-fair']).length <= 2, "Founders' Fair keeps its fair weather");
   });
 });

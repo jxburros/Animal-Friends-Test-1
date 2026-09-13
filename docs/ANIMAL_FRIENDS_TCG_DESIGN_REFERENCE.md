@@ -2,15 +2,17 @@
 
 **Status:** living design reference and playable-prototype guide  
 **Current prototype set:** *Animal Friends: First Boroughs* (`AF-STARTER-01`)  
-**v0.3.0 expansion:** *Whiskerwood* (`AF-WHISKER-01`) adds 52 cards, Cats, two starter decks,
-and a fifth Market Deck. **v0.4.0 expansion:** *Many Hats* (`AF-HATS-01`) adds 72 cards built on the existing
-Characters: a new version of every named Character (new studies and new levels), Events and conditions that
-name a specific Character, two starter decks and a sixth Market Deck. Current totals are 332 cards, nine
-species, ten decks and six Market Decks. The earlier counts below describe the pre-expansion design; see
-[WHISKERWOOD.md](WHISKERWOOD.md) and [MANY_HATS.md](MANY_HATS.md) for expansion content. The original
-208 cards and the nine-Statue victory structure are unchanged.
-**Authoritative implementation sources:** `spec/game.json` and `spec/starter_card_set.json`  
-**Last consolidated:** September 11, 2026 (the power/cost model and rarity, a doubled card set, six printed decks and four Market Decks)
+**v0.5.0 — the auction, the Statue race and species identity.** The Capital City auction now converges
+on a **pledge ladder** rather than a rising minimum bid; Statues carry a **two-tier price**; losing
+bidders are refunded in full; town decks are **40 cards**; **Botany was merged into Agriculture**;
+every species has a **charter** (Section 4a) enforced by `npm run identity`; and the market sells
+**Buildings**, **hired animals** and **Ordinances** in a display that **ages** every round.
+Current totals are 368 cards (136 Characters, 88 Events, 9 Statues,
+84 Market cards, 12 Buildings, 10 hired animals, 6 Ordinances
+and 23 on-reveal cards), nine species, five studies, six printed decks and six Market Decks.
+See [WHISKERWOOD.md](WHISKERWOOD.md) and [MANY_HATS.md](MANY_HATS.md) for the expansion content.  
+**Authoritative implementation sources:** `spec/game.json`, `spec/species.json` and `spec/starter_card_set.json`  
+**Last consolidated:** September 13, 2026 (the pledge ladder, two-tier Statues, 40-card decks, species charters)
 
 This document gathers the decisions, rules, design principles, and current prototype content for **Animal Friends TCG**. It distinguishes between rules implemented in the playtest, agreed design direction, and items still to be designed. It is not yet a final, player-facing rulebook.
 
@@ -39,7 +41,7 @@ Animal identity should be easy to read and original. Broad traits are welcome wh
 
 ### Players and decks
 
-The current rules specify exactly **two** players, each with a private player deck and a public town. The *First Boroughs* starter prototype gives each player a 30-card deck and starts each at 6 Supply with five cards in hand; the second player draws one extra card. The shared Market Deck is chosen from three (see Section 4), each nine Statues plus a sampled pool.
+The current rules specify exactly **two** players, each with a private player deck and a public town. The *First Boroughs* starter prototype gives each player a **40-card deck** and starts each at 6 Supply with six cards in hand; the second player draws one extra card. Each Mayor may **mulligan once, for free**, before the first turn. The shared Market Deck is chosen from six (see Section 4), each nine Statues plus a sampled pool.
 
 ### Areas
 
@@ -51,6 +53,7 @@ The current rules specify exactly **two** players, each with a private player de
 | Town Dump | Player | That player's discard pile, including discarded Events and removed layers of a Character stack. |
 | Unemployment | Player | Public holding area for disrupted Characters; they are inactive until rehired. |
 | Victory Row | Player | The public area for a player's acquired Statues. |
+| Buildings | Player | Up to three Capital City Buildings, which stay in town and keep working. |
 | Capital City | Shared | Five face-up Market cards contested by both players. |
 | City Dump | Shared | Used Market cards, which can later be recycled into the market. |
 | Out of Play | Shared | Market cards that explicitly remove themselves permanently. |
@@ -80,6 +83,34 @@ The shared Market Deck contains ordinary **Market** cards, **Statues** and **Dis
 
 **Disruptions** are never bought and never occupy a display slot. The moment one is dealt into the Capital City it resolves against **both** towns at once and goes to the City Dump, and another card is dealt in its place. They are the design's main instrument of shared disruption (Section 2): a Recession sends every Character in both towns to Unemployment, a Hard Winter abandons every shift in progress, a Boom Season pays both Mayors. A Disruption dealt while the market is first laid out is set aside unresolved, since there is no game state yet to disrupt.
 
+### Buildings, hired animals and Ordinances
+
+The Capital City sells four things besides Statues.
+
+- **Market cards** are the one-shots: they resolve and go to the City Dump.
+- **Buildings** stay in their buyer's town and keep working. They are the most expensive cards in the
+  game and a town holds only three, so buying a fourth means knocking one down. Buildings are the
+  design's Supply sink: the thing a rich Mayor can spend on that keeps paying.
+- **Market Characters** are animals hired out of the Capital City. They arrive **Busy whatever they
+  cost** — they are new in town — and from the next turn they are workers and ladder rungs like
+  anyone else. They are the only animals that enter play from outside a player's own deck.
+- **Ordinances** are never bought. One sits in the display and changes the rules of *every* auction
+  while it is there: moving the whole pledge ladder up or down a rung, discounting or taxing Statues
+  or Buildings, or closing the bidding so that every announcement stands. It leaves when the display
+  ages it out, so the Capital City's own rules vary from game to game and turn to turn.
+
+**On-reveal cards** (historically "Disruptions") are also never bought: they resolve the moment they
+are dealt and go to the City Dump. They are no longer only shared shocks — some pay the Mayor who is
+behind, some just set the weather. A card marked as a *shock* is one a Badger can brace against.
+
+### The display ages
+
+At the start of each round, the oldest card in the Capital City that nobody is bidding on is
+discarded and replaced (a Statue goes back into the Market Deck rather than out of the game). Cards
+visibly age out, so the display always turns over, on-reveal cards keep flowing, and an interesting
+card is a decision *now* rather than forever. This replaced the old six-turn stale-market sweep,
+which only fired once the display had gone completely dead.
+
 ### Market Decks
 
 The shared market is chosen at setup from four Market Decks, each containing all nine Statues plus its own pool:
@@ -91,6 +122,36 @@ The shared market is chosen at setup from four Market Decks, each containing all
 | **Hard Times** | Recessions, hard winters and backlogs strike both towns alike, and the cards that survive them are worth fighting over. |
 | **Founders' Fair** | Auction tools, understudies and second chances, with fair weather and nothing that empties a town. |
 
+### 4a. Species charters: a design space, not a keyword
+
+**Species is what a card *is*; study is what it *does*.** Species is the vertical axis — it spans the
+whole curve, 0 to 5, so a deck could be built out of one — and it owns a *play pattern*. Study is the
+horizontal axis: it cuts across species and owns the *payoff web*, which cards count and reward each
+other. A deck is one or two species and one or two studies. Both fields hold a single value, which is
+deliberate: two single-valued axes give two independent synergy handles without the complexity of a
+multi-valued field.
+
+Nothing is printed on every card of a species. A species is a charter — a centre of gravity, a hole,
+and a signature — that its cards express in varied ways, in the manner of an ink colour or a faction.
+The machine-readable charters live in `spec/species.json`; `npm run identity` measures the card set
+against them and fails when two species become indistinguishable or a signature falls out of use.
+
+| Species | Owns | Hole | Signature |
+| --- | --- | --- | --- |
+| Rabbit | numbers | low output per animal; a cheap curve runs out of ladder | recruiting more Characters out of hand |
+| Mouse | Events | weak shifts, no market presence | replaying Events, discounting requirements |
+| Badger | endurance | slow, almost no card flow | shrugging off an on-reveal Market card |
+| Hedgehog | protection | no reach: cannot touch the rival's town at all | making a Character untargetable |
+| Raccoon | the dumps | fragile, poor at shifts | taking a card out of the shared City Dump |
+| Fox | the auction | poor raw economy | changing a bid or an auction's terms after it opens |
+| Otter | tempo | no protection, no disruption | moving a shift from one Character to another |
+| Squirrel | storage | slow starts | caching Supply on a card, safe from shared shocks |
+| Cat | timing | does not co-operate: worst at anything counting friends | ignoring an orientation rule |
+
+The holes matter more than the strengths: they are what stop nine species from collapsing back into
+one. The measured effect of this pass was to take mean pairwise similarity between species from 0.78
+(Rabbit and Cat were at 0.98) down to 0.27.
+
 ### Rarity and the power/cost model
 
 Every card in the set carries a **rarity** — Common, Uncommon, Rare, Super Rare or Legendary — and it is
@@ -101,7 +162,7 @@ derived, not hand-assigned. `src/engine/power.js` rates a card in *Supply-equiva
   for every condition attached to it; a Statue adds the value of being a fifth of a victory; a Statue's burden
   subtracts.
 - **Opportunity cost** is everything it asks for: the Supply, the action, the turns a Master spends rotating
-  into work, the Characters an Event taps, the slot the card takes in a 30-card deck.
+  into work, the Characters an Event taps, the slot the card takes in a 40-card deck.
 - **Rating** is `power^0.6 × efficiency^0.4`, where efficiency is power over opportunity cost.
 
 That exponent split is the design decision. Rarity is *not* raw power: of two cards that give you the same,
@@ -109,7 +170,7 @@ the cheaper one rates higher, and a cost-0 Rabbit with a good shift can out-rate
 would make every cheap card legendary, so size still decides between two equally efficient cards. Bands are
 set so the set reads as a pyramid (about 50% Common, 25% Uncommon, 18% Rare, 5% Super Rare, 3% Legendary).
 
-Rarity then does real work at the table: it caps how many copies of a card a 30-card town deck may hold —
+Rarity then does real work at the table: it caps how many copies of a card a 40-card town deck may hold —
 **3 / 3 / 2 / 1 / 1** — so the cards that carry a game are the ones you may least often repeat. The printed
 decks are built to that shape: a base of Commons and Uncommons at three and two copies, a Rare or two at two,
 and at most a single Super Rare or Legendary as the deck's one marquee card.
@@ -201,25 +262,35 @@ Five Market cards are displayed in the Capital City. It is deliberately a contes
 
 During Actions, choose an upright Character, make it Busy, select an available Capital City card, and announce a bid at least equal to that card's listed cost. This opens an **auction** on that card; the card remains in the Capital City while the auction runs.
 
-### Raising
+### Raising, and the pledge ladder
 
-On their own turn, a Mayor who is **not** the current high bidder may pledge another upright Character, making it Busy, and bid above the standing bid. There is no limit on rounds: the announcer may answer a raise, the rival may answer that, and so on for as long as both can pay. To keep a war from crawling upward one Supply at a time, the required step grows by one every two bids. Ties stay with the standing bid; a special effect can let a raiser take the lead on a tie.
+On their own turn, a Mayor who is **not** the current high bidder may pledge another upright
+Character and bid above the standing bid. A raise need only beat the standing bid — there is no
+growing minimum increment. What converges an auction is the **pledge ladder**:
 
-An auction settles at the start of the **high bidder's** turn. Because the Mayors alternate turns, still holding the lead when your own turn comes round means your rival has had a turn and declined to answer.
+> Your Nth pledge in a given auction must be a Character costing at least N.
+
+Your opening bid needs a cost-1 animal, your second a cost-2, and so on, so no Mayor can bid more
+than five times in one auction, and only then if their town runs the whole curve. **Cost-0 Characters
+cannot bid at all**: they are pure economy. A Mayor's deck curve is therefore also their bidding
+range, which gives the cost printed on a Character a second job beyond its arrival delay.
+
+Every pledged Character **physically moves to the Capital City and stands beneath the card it is
+bidding on**, where it stays until the auction ends. It does not advance at Ready and no effect can
+wake it. The row of animals under a card is the auction's whole state made visible: who is committed,
+in what order, and what the next bid will have to cost.
+
+An auction settles at the start of the **high bidder's** turn. Because the Mayors alternate turns,
+still holding the lead when your own turn comes round means your rival had a turn and declined.
 
 - the high bidder wins and pays their bid in full;
-- the loser **forfeits half** of everything they escrowed, rounded up, and is refunded the rest;
+- **the loser is refunded everything they escrowed** and gets their animals back;
 - the winner gains and resolves the card before their resource choice.
 
-### The cost of bidding
-
-A bid costs animals as much as Supply, and this is the mechanism that ends auctions.
-
-- **Every Character pledged to an auction stays Busy until that auction ends.** It does not advance at Ready, and effects that would ready a Character cannot free it. A Mayor four rounds into a bidding war has four animals standing in the Capital City instead of working, satisfying Events, or bidding elsewhere.
-- Because escrow is forfeit by half, entering a war you cannot finish is genuinely expensive: walking away costs real Supply, not just tempo.
-- So "one Mayor can no longer bid" is usually literal — they have nobody upright left to pledge.
-
-Cards and abilities can protect an announcement from raises, cancel a raise, modify bids, or respond to one. A player can also bid simply to deny an opponent a disruptive card, even if they do not plan to use it.
+There is no forfeit. A bid is already a real promise, because a bid you cannot follow through on has
+cost you an expensive animal for the whole auction — and because the next rung of the ladder is
+always dearer than the last. "One Mayor can no longer bid" is usually literal: they have nobody left
+whose cost reaches the next rung.
 
 ### Market refresh and disposal
 
@@ -230,6 +301,16 @@ This top-up refill replaced the earlier refill-only-when-empty rule: playtests f
 ## 9. Statues, victory, theft, and the endgame
 
 Statues are visible Victory cards that remain in the controller's Victory Row. The total number of Statues should always be odd so that the goal is obvious. The current starter set has nine; control of five is a strict majority and wins.
+
+### What a Statue costs
+
+A Statue has no single price. It costs the first of `victory.statueCostTiers` to a Mayor holding
+fewer than `statueCostTierBreak` Statues, and the second once they hold that many or more — currently
+**10 below two Statues, 20 at two or more**. The two Mayors can face different prices for the same
+card in the same auction, and the fifth and winning Statue is always bought at the higher price.
+
+This is the design's main brake on a runaway. Before it, over half of all games ended 5-0 or 5-1;
+with it, 71% end 5-3 or 5-4 and the lead changes hands into the last quarter of the game.
 
 ### Boons and burdens
 
@@ -244,21 +325,16 @@ Every Statue grants its controller a lasting **boon** and imposes a lasting **bu
 | Generosity | On gain, give 1 Supply and draw 2 | Every Statue you gain, this one included, pays your opponent 2 Supply |
 | Ingenuity | Once per turn, an Event needs one fewer Character | Your Events cost 1 more Supply |
 | Community | With three species, your first completed shift each turn gains 1 | Choosing Supply in Resources gives 1 less |
-| Harmony | Ready a Character after a tied bid | You pay your losing bids in full instead of forfeiting half |
+| Harmony | Ready a Character after a tied bid | Every pledge you make sits one rung higher on the ladder |
 | Joy | On gain, ready up to two Apprentices | Give your opponent 1 Supply at the start of each of your turns |
 
 Statues are not automatically safe. Expensive theft or return effects can interfere with Victory Rows, but must include a significant cost, requirement, restriction, or drawback. A player may **not** steal the final opponent Statue in a way that immediately gives them the winning majority. This boundary prevents the game ending purely through taking an opponent's last needed Statue.
 
 ## 10. Current starter set: First Boroughs
 
-The set holds **208 cards**: 68 Characters, 52 Events, 9 Statues, a 64-card Capital City pool and 15
-Disruptions. A game uses two 30-card player decks and a 25-card Capital City deck (nine Statues and sixteen
-other cards sampled from the chosen Market Deck's pool).
+The set holds **368 cards**: 136 Characters, 88 Events, 9 Statues, a 84-card one-shot Market pool, 12 Buildings, 10 hired animals, 6 Ordinances and 23 on-reveal cards. A game uses two 40-card player decks and a 29-card Capital City deck (nine Statues and twenty cards sampled from the chosen Market Deck's pool).
 
-Six printed decks are provided: **Burrow & Bloom** (Rabbit/Mouse, Agriculture/Botany), **Paws & Papers**
-(Raccoon/Fox, Commerce/Civics), **Bramble & Bristle** (Hedgehog/Badger, Crafts/Agriculture), **Ripple & Rune**
-(Otter/Squirrel, Lore/Commerce), **Lantern & Ledger** (Fox/Otter, Lore/Commerce) and **Root & Rampart**
-(Badger/Rabbit, Civics/Crafts).
+Six printed decks are provided: **Burrow & Bloom** (Rabbit/Mouse, Agriculture/Lore), **Paws & Papers** (Raccoon/Fox, Commerce/Civics), **Bramble & Bastion** (Hedgehog/Badger, Crafts/Agriculture), **Ripple & Rune** (Otter/Squirrel, Lore/Commerce), **Whisker & Willow** (Cat/Mouse, Lore/Crafts) and **Root & Rampart** (Badger/Rabbit, Civics/Crafts). They are not hand-listed: `npm run decks` builds each from its stated identity out of the rated card set, so they track the set as it changes.
 
 The tables below are the two founding decks, kept as worked examples of the card shapes; every other card
 lives in `spec/starter_card_set.json`, which is the contract. Most Characters now have a third version — a
@@ -341,8 +417,7 @@ Digital achievements are a future companion-app or player-profile feature, **not
 
 These details need decisions before this can become a finished rulebook:
 
-- The exact physical rotation convention and player-facing explanation of orientation, including how a table shows that a Character is pledged to an open auction rather than merely Busy.
-- Whether an auction should have a hard round cap for tournament play, or whether running out of upright animals is limit enough.
+- The exact physical rotation convention. (How a table shows a pledged Character is settled: it moves to the Capital City and stands under the card it is bidding on.)
 - The exact Transfer effect.
 - Card schema details for shift outputs/delays and Limited Event duration as the broader card pool grows.
 - Starting-deck composition, starting hand, and Market Deck composition outside the current prototype.

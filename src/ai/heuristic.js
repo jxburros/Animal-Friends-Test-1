@@ -7,7 +7,7 @@
 //    never simply "sniped" — the answer to being outbid is to bid again, and the real limits are
 //    Supply and upright bodies. Announcing at the minimum is therefore fine; a big opening bid
 //    mostly wastes Supply we could have spent one round at a time.
-//  * Losing an auction is NOT free: the loser forfeits half of everything they escrowed. Every
+//  * Losing an auction costs no Supply (it is refunded in full), but it costs the animals, and every
 //    raise is a real commitment, so we only enter a bidding war we expect to be able to finish,
 //    and we value a card against the possibility of paying half of the bid for nothing.
 //  * The Capital City tops back up after every purchase, so cycling it is cheap upkeep rather
@@ -27,6 +27,7 @@
 
 import {
   cardDef, topCard, canAct, opponentOf, statueCount, findEventAssignment, eventReduction, rankOf, hasPassive,
+  pledgeMinCost,
 } from '../engine/index.js';
 import { cardPower, effectPower } from '../engine/power.js';
 
@@ -48,7 +49,8 @@ const DEFAULT_PARAMS = {
   winNow: 140, // this purchase would win the game
   riskPenalty: 26, // announcing a Statue the opponent can profitably steal
   challengeBase: 70, // appetite for taking the lead in an auction
-  forfeitRisk: 0.5, // weight on "we may be outbid again and forfeit half of this"
+  ladderCost: 0.7, // weight on "the next bid in this auction needs a dearer animal than the last"
+  ladderStrand: 2.0, // penalty for pledging our last animal that could bid again in this auction
   statueBurden: 4, // a Statue's burden, discounted against its boon and the win it buys
   // Walk-away ceilings. Raises are made one step at a time (losing early is cheaper than losing
   // late), so without a ceiling two Mayors who both price a Statue at "almost anything" trade +1
@@ -169,6 +171,32 @@ function situationFactor(state, pi, d) {
   return f;
 }
 
+/**
+ * What entering (or continuing) an auction costs us in ladder position. Under the cost ladder our
+ * Nth pledge must cost at least N, so every bid both spends an animal and raises the price of the
+ * next one. Bidding is cheap while we have the curve for it and very expensive once we do not —
+ * which is the whole reason there is no arithmetic increment any more.
+ */
+function pledgeLadderCost(state, ctx, pending) {
+  const p = state.players[ctx.pi];
+  const need = pledgeMinCost(state, pending, ctx.pi);
+  const canBidAgain = p.town.filter((st) => canAct(st) && (stackTop(state, st) || { cost: -1 }).cost >= need + 1).length;
+  const P = ctx.P;
+  // The rung we are about to spend, plus a penalty if it strands us with nobody to answer a re-raise.
+  return P.ladderCost * need + (canBidAgain === 0 ? P.ladderStrand : 0);
+}
+
+/**
+ * What a Market card is worth beyond its printed effect, because of where it ends up. A one-shot
+ * goes to the City Dump; a Building stays in town and keeps paying; a hired animal is a worker and
+ * a rung on every future pledge ladder. The power model rates the effect — this rates the permanence.
+ */
+function permanenceBonus(state, d) {
+  if (d.type === 'building') return 6.0;
+  if (d.type === 'marketCharacter') return 3.0 + d.cost * 0.4;
+  return 0;
+}
+
 /** Corrections the power model cannot see, because they are about this engine's auctions. */
 function auctionBonus(d) {
   let b = 0;
@@ -179,7 +207,7 @@ function auctionBonus(d) {
 
 // Rough "supply equivalent" of gaining a non-Statue Market card.
 function marketCardValue(state, pi, d) {
-  const base = cardPower(d) * 0.9 + auctionBonus(d);
+  const base = cardPower(d, state.rules) * 0.9 + auctionBonus(d) + permanenceBonus(state, d);
   return Math.max(0.2, base * situationFactor(state, pi, d));
 }
 
@@ -192,7 +220,7 @@ function plainBusyEffect(eff) {
 }
 
 function eventValue(state, pi, d) {
-  const base = cardPower(d) + 1.0 + auctionBonus(d);
+  const base = cardPower(d, state.rules) + 1.0 + auctionBonus(d);
   const v = base * situationFactor(state, pi, d);
   // A Limited Event that only pays out on later turns is worth less the closer the game is to over.
   return d.kind === 'limited' ? v * 0.9 : v;
@@ -262,7 +290,7 @@ function buildContext(state, pi, P) {
   const myPending = state.market.pending.filter((pd) => pd.high === pi);
   const oppPending = state.market.pending.filter((pd) => pd.high === oi && !pd.unchallengeable);
   return {
-    pi, oi, p, o, horizon,
+    pi, oi, p, o, horizon, P,
     myStatues: statueCount(state, pi),
     oppStatues: statueCount(state, oi),
     upright: p.town.filter(canAct),
@@ -378,7 +406,10 @@ function scoreAction(state, ctx, a, agg, out, P) {
       const d = def(state, a.cardId);
       if (!d) return -1;
       const stack = findStack(state, ctx.pi, a.charUid);
-      const charCost = stack ? stackRate(state, stack) * 2.2 : 0;
+      // Pledging an animal dearer than the ladder asks for throws away a rung we will want if this
+      // becomes a war, so an over-qualified pledge is penalised on top of the work it is not doing.
+      const overQualified = stack ? Math.max(0, (stackTop(state, stack) || { cost: 0 }).cost - pledgeMinCost(state, null, ctx.pi)) : 0;
+      const charCost = (stack ? stackRate(state, stack) * 2.2 : 0) + overQualified * ctx.P.ladderCost;
       const minBid = a.minBid;
       const maxBid = Math.min(a.maxBid, p.supply);
       if (minBid > maxBid) return -1;
@@ -393,7 +424,7 @@ function scoreAction(state, ctx, a, agg, out, P) {
         const ceiling = bidCeiling(state, ctx, d, P, minBid);
         const bid = clamp(Math.floor(Math.min(deter, ceiling, minBid + premiumCap)), minBid, maxBid);
         const safe = bid >= ctx.oppSupplyEst || ctx.oppUpright === 0;
-        let s = P.statueBase + P.statuePerMine * ctx.myStatues - bid * P.bidCost - charCost;
+        let s = P.statueBase + P.statuePerMine * ctx.myStatues - bid * P.bidCost - charCost - pledgeLadderCost(state, ctx, null);
         s -= statueBurdenCost(ctx, d, P, winsGame);
         if (ctx.oppStatues >= 3) s += P.denial3;
         if (ctx.oppStatues >= 4) s += P.denial4;
@@ -423,7 +454,7 @@ function scoreAction(state, ctx, a, agg, out, P) {
         cycle = Math.max(0, cycle) * (1 + (5 - cityLeft) * 0.25) - d.cost * 1.2;
       }
       const bid = clamp(minBid, minBid, maxBid);
-      let s = marketCardValue(state, ctx.pi, d) * 2.6 + cycle - bid * P.bidCost - charCost;
+      let s = marketCardValue(state, ctx.pi, d) * 2.6 + cycle - bid * P.bidCost - charCost - pledgeLadderCost(state, ctx, null);
       if (ctx.upright.length === 1 && ctx.statueThreat && p.supply >= 3) s -= P.reservePenalty;
       out.bid = bid;
       out.why = `announce ${d.name} @${bid}${cycle ? ' (cycle)' : ''}`;
@@ -436,7 +467,9 @@ function scoreAction(state, ctx, a, agg, out, P) {
       const stack = findStack(state, ctx.pi, a.charUid);
       // Pledging a Character to an auction takes it off the board until the bidding ends, which is
       // far dearer than the single Busy turn a shift or an Event costs.
-      const charCost = stack ? stackRate(state, stack) * P.lockedBodyCost : 0;
+      const pdForLadder = state.market.pending.find((x) => x.id === a.pendingId);
+      const overQualified = stack ? Math.max(0, (stackTop(state, stack) || { cost: 0 }).cost - pledgeMinCost(state, pdForLadder, ctx.pi)) : 0;
+      const charCost = (stack ? stackRate(state, stack) * P.lockedBodyCost : 0) + overQualified * P.ladderCost;
       // Take the lead on the raw numbers rather than trusting our own bid bonus: `raiseMinBid`
       // credits a firstBidPlus1 that would leave us tied, and a tie stays with the standing bidder.
       const pd = state.market.pending.find((x) => x.id === a.pendingId);
@@ -446,15 +479,14 @@ function scoreAction(state, ctx, a, agg, out, P) {
       if (bid > a.maxBid || bid < needed) return -1; // cannot actually take the lead
       // Raise one step at a time, and fold once the price passes what the card is worth to us.
       if (bid > bidCeiling(state, ctx, d, P, def(state, a.cardId)?.cost ?? bid)) return -1;
-      // If we take the lead and are then outbid again, we forfeit half of everything escrowed.
-      // The deeper the war and the richer the opponent, the more that costs us.
-      const escrowed = pd ? pd.committed[ctx.pi] + (bid - pd.committed[ctx.pi]) : bid;
-      const mayBeOutbid = ctx.oppSupplyEst > bid && ctx.oppUpright > 0;
-      const forfeitRisk = mayBeOutbid ? P.forfeitRisk * (escrowed / 2) : 0;
+      // Losing a bid costs no Supply any more — it is refunded in full. What a raise really costs is
+      // the animal: it stands in the Capital City until the auction ends, and the next raise after
+      // this one will need a dearer animal still. That is priced in `charCost` and `ladderCost`.
+      const ladderCost = pledgeLadderCost(state, ctx, pd);
 
       if (d.type === 'statue') {
         const winsGame = ctx.myStatues + 1 >= (state.rules.victory.statuesToWin || 5);
-        let s = P.challengeBase + P.statuePerMine * ctx.myStatues - bid * P.bidCost - charCost - forfeitRisk;
+        let s = P.challengeBase + P.statuePerMine * ctx.myStatues - bid * P.bidCost - charCost - ladderCost;
         s -= statueBurdenCost(ctx, d, P, winsGame);
         if (ctx.oppStatues >= 3) s += P.denial3;
         if (ctx.oppStatues >= 4) s += P.denial4;
@@ -464,7 +496,7 @@ function scoreAction(state, ctx, a, agg, out, P) {
         out.why = `raise STATUE ${d.name} @${bid}`;
         return s;
       }
-      let s = marketCardValue(state, ctx.pi, d) * 2.2 - bid * P.bidCost - charCost - forfeitRisk - P.challengeGate * (1 - agg);
+      let s = marketCardValue(state, ctx.pi, d) * 2.2 - bid * P.bidCost - charCost - ladderCost - P.challengeGate * (1 - agg);
       // Denying a card the opponent clearly wants is worth a little on its own.
       s += 4 * (agg - 0.5);
       out.bid = bid;
@@ -610,6 +642,54 @@ export function makeHeuristicAgent(options = {}) {
           return t.cost * 1.2 + rateOf(t) * 2.5 + (s.orientation === 0 ? 3 : 0) + (s.cards.length > 1 ? 2 : 0);
         }, req);
 
+      case 'demolish':
+        // Knock down the Building that is doing the least for us.
+        return pickWorst(opts, (o) => {
+          const d = def(state, o.cardId);
+          return d ? cardPower(d, state.rules) : 0;
+        }, req);
+
+      case 'storeSupply':
+        // Put Supply by on someone who will not be pledged away: a cheap animal cannot bid at all,
+        // so it is the safest vault in town.
+        return pickBest(opts, (o) => {
+          const st = findStack(state, pi, o.uid);
+          if (!st) return 0.1;
+          const t = stackTop(state, st);
+          return 5 - (t ? t.cost : 0) + (st.shift ? 0 : 1);
+        }, req);
+
+      case 'takeFromCityDump':
+        return pickBest(opts, (o) => {
+          const d = def(state, o.cardId);
+          return d ? marketCardValue(state, pi, d) : 0.1;
+        }, req);
+
+      case 'protect':
+        // Quill the Character that would hurt most to lose: the dearest upright one.
+        return pickBest(opts, (o) => {
+          const st = findStack(state, pi, o.uid);
+          if (!st) return 0.1;
+          const t = stackTop(state, st);
+          return (t ? t.cost * 1.5 + rateOf(t) * 2 : 0) + (st.orientation === 0 ? 2 : 0);
+        }, req);
+
+      case 'moveShiftFrom':
+        // Free up the animal we most want back: the one that can bid highest.
+        return pickBest(opts, (o) => {
+          const st = findStack(state, pi, o.uid);
+          const t = st ? stackTop(state, st) : null;
+          return (t ? t.cost * 1.6 : 0) + (st && st.shift ? st.shift.remaining : 0);
+        }, req);
+
+      case 'moveShiftTo':
+        // Give the work to the animal we least need upright.
+        return pickWorst(opts, (o) => {
+          const st = findStack(state, pi, o.uid);
+          const t = st ? stackTop(state, st) : null;
+          return t ? t.cost * 1.6 : 0;
+        }, req);
+
       case 'raiseBidTarget':
         return pickBest(opts, (o) => {
           const d = def(state, o.cardId);
@@ -630,6 +710,20 @@ export function makeHeuristicAgent(options = {}) {
   }
 
   function chooseConfirm(state, pi, req) {
+    if (req.reason === 'mulligan') {
+      // Keep a hand that can pay for itself: something cheap to play now, and something that can
+      // eventually bid. A hand of nothing but Events or nothing but Masters is a mulligan.
+      const hand = (req.hand || []).map((c) => def(state, c.cardId)).filter(Boolean);
+      if (!hand.length) return false;
+      const chars = hand.filter((d) => d.type === 'character');
+      const cheap = chars.filter((d) => d.cost <= 2).length;
+      const ladder = chars.filter((d) => d.cost >= 3).length;
+      const totalValue = hand.reduce((a, d) => a + rateOf(d), 0) / hand.length;
+      if (chars.length < 2) return true;
+      if (cheap === 0) return true;
+      if (ladder === 0 && chars.length < 4) return true;
+      return totalValue < 1.2;
+    }
     if (req.reason === 'raiseBid') {
       // Juniper's +1: cheap insurance, but only on a Statue we are contesting.
       const p = state.players[pi];

@@ -9,11 +9,11 @@ import {
 } from '../src/engine/index.js';
 
 describe('setup', () => {
-  test('30-card decks, Supply, hands, market deck and Capital City sizes', () => {
+  test('deck, Supply, hand, market deck and Capital City sizes match the rules', () => {
     const state = newGame();
     for (const [i, p] of state.players.entries()) {
       const total = p.deck.length + p.hand.length + p.dump.length + p.unemployment.length + p.town.length;
-      assert.equal(total, 30, `player ${i} should have 30 total cards`);
+      assert.equal(total, RULES.setup.deckSize, `player ${i} should hold a full deck`);
       assert.equal(p.hand.length, RULES.setup.startingHand + (i === 1 ? RULES.setup.secondPlayerBonusCards || 0 : 0), `player ${i} starting hand size`);
     }
     assert.equal(state.players[0].supply, RULES.setup.startingSupply, 'player 1 starts with base Supply');
@@ -22,7 +22,7 @@ describe('setup', () => {
       RULES.setup.startingSupply + RULES.setup.secondPlayerBonusSupply,
       'player 2 gets the second-player Supply bonus',
     );
-    assert.equal(state.market.deck.length + state.market.city.length, 25, '25-card market deck total');
+    assert.equal(state.market.deck.length + state.market.city.length + state.market.cityDump.length, RULES.setup.marketDeckSize, `${RULES.setup.marketDeckSize}-card market deck total`);
     assert.equal(state.market.city.length, 5, '5 cards dealt into the Capital City');
   });
 });

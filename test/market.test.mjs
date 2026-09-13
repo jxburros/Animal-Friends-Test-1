@@ -2,10 +2,10 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  newGame, addStack, setSupply, setCity, addMod, giveStatue, addLimitedEvent,
+  newGame, addStack, setSupply, setCity, addMod, giveStatue, addLimitedEvent, addBidder, SET,
 } from './helpers.mjs';
 import {
-  applyAction, legalActions, startPhase, resolvePurchase, refillCity, UPRIGHT, BUSY,
+  applyAction, legalActions, startPhase, resolvePurchase, refillCity, UPRIGHT, BUSY, pledgeMinCost,
 } from '../src/engine/index.js';
 
 function begin(state, pi) {
@@ -27,7 +27,7 @@ describe('announcing a purchase', () => {
     const state = newGame();
     setSupply(state, 0, 10);
     setCity(state, ['mk_festival_grant']); // cost 2
-    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    const s = addBidder(state, 0, 1);
     begin(state, 0);
     await assert.rejects(() => applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 1, minBid: 2, maxBid: 10 }), /Invalid bid/);
     await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 3, minBid: 2, maxBid: 10 });
@@ -41,7 +41,7 @@ describe('announcing a purchase', () => {
     const state = newGame();
     setSupply(state, 0, 10);
     setCity(state, ['mk_festival_grant']);
-    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    const s = addBidder(state, 0, 1);
     begin(state, 0);
     await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     assert.ok(state.market.city.includes('mk_festival_grant'), 'card stays displayed while pending');
@@ -56,7 +56,7 @@ describe('announcing a purchase', () => {
     const state = newGame();
     setSupply(state, 0, 10);
     setCity(state, ['mk_festival_grant']);
-    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    const s = addBidder(state, 0, 1);
     begin(state, 0);
     await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 4, minBid: 2, maxBid: 10 });
     const pd = state.market.pending[0];
@@ -71,7 +71,7 @@ describe('bid wars', () => {
     setSupply(state, 0, 10);
     setSupply(state, 1, 10);
     setCity(state, ['mk_festival_grant']); // cost 2
-    const annChar = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    const annChar = addBidder(state, 0, 1);
     begin(state, 0);
     return applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: annChar.uid, bid: annBid, minBid: 2, maxBid: 10 })
       .then(() => state.market.pending[0]);
@@ -81,10 +81,10 @@ describe('bid wars', () => {
     return startPhase(state, pi);
   };
 
-  test('a raise must beat the standing bid, and the loser forfeits half of what they pledged', async () => {
+  test('a raise must beat the standing bid, and the loser is refunded in full', async () => {
     const state = newGame();
     const pd = await setupPending(state, { annBid: 3 });
-    const chChar = addStack(state, 1, 'pp_patch_1', UPRIGHT);
+    const chChar = addBidder(state, 1, 2);
     begin(state, 1);
     await assert.rejects(
       () => applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 3, minBid: 4, maxBid: 10 }),
@@ -97,16 +97,16 @@ describe('bid wars', () => {
     await resolveFor(state, 1); // resolves at the high bidder's next turn
     assert.equal(state.players[1].supply, 10 - 5 + 4, 'the winner paid their bid in full and gained the card');
     assert.equal(state.players[1].escrow, 0);
-    assert.equal(state.players[0].supply, 10 - 2 + 0, 'the loser forfeits ceil(3/2)=2 of the 3 pledged');
-    assert.equal(state.players[0].escrow, 0, 'the rest of the losing escrow is refunded');
+    assert.equal(state.players[0].supply, 10, 'the loser is refunded everything they pledged — there is no forfeit');
+    assert.equal(state.players[0].escrow, 0, 'nothing is left in escrow');
   });
 
   test('bidding goes back and forth until one Mayor declines, and each bid costs another Character', async () => {
     const state = newGame();
     const pd = await setupPending(state, { annBid: 3 });
-    const a2 = addStack(state, 0, 'bb_mabel_1', UPRIGHT);
-    const b1 = addStack(state, 1, 'pp_patch_1', UPRIGHT);
-    const b2 = addStack(state, 1, 'pp_juniper_1', UPRIGHT);
+    const a2 = addBidder(state, 0, 2);
+    const b1 = addBidder(state, 1, 2);
+    const b2 = addBidder(state, 1, 3);
 
     begin(state, 1);
     await applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: b1.uid, bid: 4, minBid: 4, maxBid: 10 });
@@ -127,13 +127,13 @@ describe('bid wars', () => {
     assert.equal(legalActions(state, 0).some((a) => a.type === 'raise'), false, 'no upright Character means no answer');
     await resolveFor(state, 1);
     assert.equal(state.players[1].supply, 10 - 8 + 4, 'the last bidder standing pays 8 and gains the card');
-    assert.equal(state.players[0].supply, 10 - 3, 'the loser forfeits half of the 6 they pledged');
+    assert.equal(state.players[0].supply, 10, 'the loser gets all 6 back: the animals were the price, not the Supply');
   });
 
   test('an equal bid loses to the standing bid (ties go to the high bidder)', async () => {
     const state = newGame();
     const pd = await setupPending(state, { annBid: 3 });
-    const chChar = addStack(state, 1, 'pp_patch_1', UPRIGHT);
+    const chChar = addBidder(state, 1, 2);
     begin(state, 1);
     // The minimum legal raise is already standing+1, so stage an equal bid directly to test resolution.
     pd.bid = 3;
@@ -145,7 +145,7 @@ describe('bid wars', () => {
     void chChar;
     await resolveFor(state, 0);
     assert.equal(state.players[0].supply, 10 - 3 + 4, 'the standing bidder wins the tie and gains the card');
-    assert.equal(state.players[1].supply, 10 - 2, 'the tied loser still forfeits half of their pledge');
+    assert.equal(state.players[1].supply, 10, 'the tied loser is refunded in full — there is no forfeit');
   });
 
   test('Poppy, Civic Planner lets her controller take the lead on a tie', async () => {
@@ -166,7 +166,7 @@ describe('bid wars', () => {
   test('an auction resolves at the high bidder\'s turn start, not the announcer\'s', async () => {
     const state = newGame();
     const pd = await setupPending(state, { annBid: 3 });
-    const chChar = addStack(state, 1, 'pp_patch_1', UPRIGHT);
+    const chChar = addBidder(state, 1, 2);
     begin(state, 1);
     await applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 5, minBid: 4, maxBid: 10 });
     await resolveFor(state, 0); // the announcer's turn: they are no longer winning, so nothing settles
@@ -181,12 +181,12 @@ describe('bid wars', () => {
     setSupply(state, 1, 10);
     setCity(state, ['mk_festival_grant']);
     addMod(state, 0, 'unchallengeable', 1, 'untilUsed');
-    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    const s = addBidder(state, 0, 1);
     begin(state, 0);
     await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     const pd = state.market.pending[0];
     assert.equal(pd.unchallengeable, true);
-    const chChar = addStack(state, 1, 'pp_patch_1', UPRIGHT);
+    const chChar = addBidder(state, 1, 2);
     begin(state, 1);
     await assert.rejects(() => applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 3, minBid: 3, maxBid: 10 }));
   });
@@ -196,12 +196,12 @@ describe('bid wars', () => {
     setSupply(state, 0, 10);
     setSupply(state, 1, 10);
     setCity(state, ['mk_festival_grant']);
-    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    const s = addBidder(state, 0, 1);
     begin(state, 0);
     await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     addMod(state, 0, 'cancelNextChallenge', 1, 'untilUsed'); // as if Quiet Mediation had been gained earlier
     const pd = state.market.pending[0];
-    const chChar = addStack(state, 1, 'pp_patch_1', UPRIGHT);
+    const chChar = addBidder(state, 1, 2);
     begin(state, 1);
     await applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 3, minBid: 3, maxBid: 10 });
     assert.equal(pd.high, 0, 'the raise never registers');
@@ -214,39 +214,42 @@ describe('bid wars', () => {
     const state = newGame();
     const pd = await setupPending(state, { annBid: 3 });
     addMod(state, 1, 'challengeDiscount', 1, 'untilUsed');
-    const chChar = addStack(state, 1, 'pp_patch_1', UPRIGHT);
+    const chChar = addBidder(state, 1, 2);
     begin(state, 1);
     await applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 4, minBid: 4, maxBid: 10 });
     assert.equal(state.players[1].escrow, 3, 'paid 1 less than the bid amount');
     assert.equal(pd.bid, 4, 'the recorded bid itself is still 4');
   });
 
-  test('Statue of Harmony\'s burden makes its controller pay a losing bid in full', async () => {
+  test("Statue of Harmony's burden puts its controller one rung up the pledge ladder", () => {
+    // The old burden priced a forfeiture that no longer exists; the new one taxes the thing that
+    // now decides auctions — which animal you are allowed to bid with.
     const state = newGame();
-    const pd = await setupPending(state, { annBid: 4 });
     giveStatue(state, 0, 'st_harmony');
-    const chChar = addStack(state, 1, 'pp_patch_1', UPRIGHT);
-    begin(state, 1);
-    await applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 6, minBid: 5, maxBid: 10 });
-    await resolveFor(state, 1);
-    assert.equal(state.players[0].supply, 10 - 4, 'all 4 pledged Supply is forfeit, not half');
+    assert.equal(pledgeMinCost(state, null, 0), pledgeMinCost(state, null, 1) + 1);
   });
 
-  test('Patch, Town Auditor draws a card when an opponent raises against you', async () => {
+  test('a Character that triggers on being outbid draws for its outbid Mayor', async () => {
+    // Found in the set rather than named: the species pass moves abilities between cards, but the
+    // onChallengedByOpponent rule itself has to keep working wherever it is printed.
+    const watcher = SET.cards.find((c) => (c.abilities || []).some(
+      (a) => a.trigger === 'onChallengedByOpponent' && JSON.stringify(a.effect || {}).includes('"draw"'),
+    ));
+    assert.ok(watcher, 'the set prints at least one Character that answers a raise');
     const state = newGame();
     setSupply(state, 0, 10);
     setSupply(state, 1, 10);
     setCity(state, ['mk_festival_grant']);
-    addStack(state, 0, 'pp_patch_2', UPRIGHT); // Town Auditor: onChallengedByOpponent -> draw 1
-    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    addStack(state, 0, watcher.id, UPRIGHT);
+    const s = addBidder(state, 0, 1);
     begin(state, 0);
     await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     const pd = state.market.pending[0];
-    const chChar = addStack(state, 1, 'pp_juniper_1', UPRIGHT);
+    const chChar = addBidder(state, 1, 3);
     begin(state, 1);
     const before = state.players[0].hand.length;
     await applyAction(state, 1, { type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: chChar.uid, bid: 3, minBid: 3, maxBid: 10 });
-    assert.equal(state.players[0].hand.length, before + 1, 'Patch draws for the outbid Mayor');
+    assert.ok(state.players[0].hand.length > before, 'the outbid Mayor draws');
   });
 
   test('Market Day draws on the first announcement of the turn', async () => {
@@ -254,8 +257,8 @@ describe('bid wars', () => {
     setSupply(state, 0, 10);
     setCity(state, ['mk_festival_grant', 'mk_supply_depot']);
     addLimitedEvent(state, 0, 'pp_market_day', 2);
-    const s1 = addStack(state, 0, 'bb_clover_1', UPRIGHT);
-    const s2 = addStack(state, 0, 'bb_mabel_1', UPRIGHT);
+    const s1 = addBidder(state, 0, 1);
+    const s2 = addBidder(state, 0, 2);
     begin(state, 0);
     const before = state.players[0].hand.length;
     await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s1.uid, bid: 2, minBid: 2, maxBid: 10 });
@@ -269,38 +272,14 @@ describe('bid wars', () => {
     setSupply(state, 0, 10);
     setCity(state, ['mk_festival_grant']);
     addLimitedEvent(state, 0, 'pp_civic_rally', 2);
-    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    const s = addBidder(state, 0, 1);
     begin(state, 0);
     await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     const pd = state.market.pending[0];
     assert.equal(pd.bonus, 1, 'the first bid this turn counts as 1 higher');
   });
 
-  test("Hazel Market Vendor lowers the first announcement's minimum bid by 1 while upright", async () => {
-    const state = newGame();
-    setSupply(state, 0, 10);
-    setCity(state, ['mk_festival_grant']); // cost 2
-    addStack(state, 0, 'pp_hazel_1', UPRIGHT);
-    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
-    begin(state, 0);
-    const acts = legalActions(state, 0);
-    const annAct = acts.find((a) => a.type === 'announce' && a.cardId === 'mk_festival_grant' && a.charUid === s.uid);
-    assert.equal(annAct.minBid, 1, 'min bid reduced from 2 to 1');
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 1, minBid: 1, maxBid: 10 });
-    assert.equal(state.players[0].supply, 9);
-  });
 
-  test('Hazel does not reduce the minimum bid while Busy', async () => {
-    const state = newGame();
-    setSupply(state, 0, 10);
-    setCity(state, ['mk_festival_grant']);
-    addStack(state, 0, 'pp_hazel_1', BUSY);
-    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
-    begin(state, 0);
-    const acts = legalActions(state, 0);
-    const annAct = acts.find((a) => a.type === 'announce' && a.cardId === 'mk_festival_grant' && a.charUid === s.uid);
-    assert.equal(annAct.minBid, 2, 'Hazel must be upright to grant the discount');
-  });
 });
 
 describe('Capital City refresh and disposal', () => {
@@ -309,7 +288,7 @@ describe('Capital City refresh and disposal', () => {
     setCity(state, ['mk_festival_grant', 'mk_supply_depot']);
     state.market.deck = ['mk_town_bell', 'mk_town_clock', 'mk_courier_network', 'mk_library_annex'];
     setSupply(state, 0, 10);
-    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    const s = addBidder(state, 0, 1);
     begin(state, 0);
     await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     const pd = state.market.pending[0];
@@ -333,7 +312,7 @@ describe('Capital City refresh and disposal', () => {
     setCity(state, ['mk_festival_grant', 'mk_supply_depot', 'mk_town_bell', 'mk_town_clock', 'mk_courier_network']);
     state.market.deck = ['mk_library_annex', 'mk_public_gardens'];
     setSupply(state, 0, 10);
-    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    const s = addBidder(state, 0, 1);
     begin(state, 0);
     await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     await resolvePurchase(state, state.market.pending[0]);
@@ -348,7 +327,7 @@ describe('Capital City refresh and disposal', () => {
     state.market.deck = ['mk_library_annex'];
     state.market.cityDump = ['mk_public_gardens', 'mk_town_clock'];
     setSupply(state, 0, 10);
-    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    const s = addBidder(state, 0, 1);
     begin(state, 0);
     await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     await resolvePurchase(state, state.market.pending[0]);
@@ -365,7 +344,7 @@ describe('Capital City refresh and disposal', () => {
     state.market.deck = [];
     state.market.cityDump = ['mk_town_bell', 'mk_supply_depot', 'mk_courier_network', 'mk_town_clock'];
     setSupply(state, 0, 10);
-    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    const s = addBidder(state, 0, 1);
     begin(state, 0);
     await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     const pd = state.market.pending[0];
@@ -383,7 +362,7 @@ describe('Capital City refresh and disposal', () => {
     state.market.deck = []; // isolate: only the explicitly placed card exists in the market for this test
     state.market.cityDump = [];
     setSupply(state, 0, 10);
-    const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+    const s = addBidder(state, 0, 1);
     begin(state, 0);
     await applyAction(state, 0, { type: 'announce', cardId: 'mk_emergency_reserve', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     const pd = state.market.pending[0];

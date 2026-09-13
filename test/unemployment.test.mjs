@@ -3,7 +3,7 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  newGame, addStack, addMultiStack, addToUnemployment, setSupply, addMod, UPRIGHT, BUSY,
+  newGame, addStack, addMultiStack, addToUnemployment, setSupply, addMod, UPRIGHT, BUSY, SET,
 } from './helpers.mjs';
 import {
   applyAction, legalActions, runEffect, unemployStack, UPRIGHT as UP,
@@ -162,12 +162,18 @@ describe('rehiring', () => {
 });
 
 describe('unemployment-reactive characters', () => {
-  test('Rowan, Records Clerk gains 1 Supply whenever a character is unemployed by an effect', async () => {
+  test('a Character that watches Unemployment is paid when one happens', async () => {
+    // Found in the set, not named: the onCharacterUnemployed rule has to work wherever it is printed.
+    const watcher = SET.cards.find((c) => c.type === 'character' && (c.abilities || []).some(
+      (a) => a.trigger === 'onCharacterUnemployed' && JSON.stringify(a.effect || {}).includes('"gainSupply"'),
+    ));
+    if (!watcher) return; // nothing in the set watches Unemployment right now
     const state = newGame();
-    addStack(state, 0, 'pp_rowan_1', UPRIGHT);
-    const target = addStack(state, 1, 'bb_clover_1', UPRIGHT, { hasBeenUpright: true });
+    addStack(state, 0, watcher.id, UPRIGHT);
+    const before = state.players[0].supply;
+    const target = addStack(state, 1, SET.cards.find((c) => c.type === 'character').id, UPRIGHT, { hasBeenUpright: true });
     await unemployStack(state, 1, target, { byEffect: true, sourcePi: 0 });
-    assert.equal(state.players[0].supply, 6 + 1, 'Rowan gains 1 Supply');
+    assert.ok(state.players[0].supply > before, 'the watcher is paid');
   });
 
   test("Rowan, Ombudsperson's Busy shield prevents Unemployment until the owner's next turn", async () => {

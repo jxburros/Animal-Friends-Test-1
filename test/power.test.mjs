@@ -63,7 +63,7 @@ test('the printed set matches the model', async (t) => {
   await t.test('every card carries a rarity the model agrees with', () => {
     for (const c of SET.cards) {
       assert.ok(RARITIES.includes(c.rarity), `${c.id}: rarity ${c.rarity}`);
-      const rated = rateCard(c);
+      const rated = rateCard(c, RULES);
       assert.equal(c.rarity, rated.rarity, `${c.id}: printed ${c.rarity}, model says ${rated.rarity} (score ${rated.score})`);
       assert.ok(c.power && c.power.score === rated.score, `${c.id}: printed score is stale`);
     }
@@ -81,7 +81,7 @@ test('the printed set matches the model', async (t) => {
   await t.test('the set file is ordered by rating, strongest for its cost first', () => {
     const scores = SET.cards.map((c) => c.power.score);
     for (let i = 1; i < scores.length; i++) assert.ok(scores[i] <= scores[i - 1], `card ${i} (${SET.cards[i].id}) is out of order`);
-    assert.equal(rateSet(SET)[0].id, SET.cards[0].id, 'the first card is the highest rated');
+    assert.equal(rateSet(SET, RULES)[0].id, SET.cards[0].id, 'the first card is the highest rated');
   });
 });
 

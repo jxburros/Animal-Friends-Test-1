@@ -111,7 +111,7 @@ export async function discard(state, pi, n, { byOpponent = false } = {}) {
 
 export function makeStack(state, pi, cardInst, orientation) {
   const p = state.players[pi];
-  const s = { uid: nextUid(state), cards: [cardInst], orientation, shift: null, enteredTurn: state.turnNumber, hasBeenUpright: orientation === UPRIGHT, readyNextTurn: false, lockedBid: null };
+  const s = { uid: nextUid(state), cards: [cardInst], orientation, shift: null, enteredTurn: state.turnNumber, hasBeenUpright: orientation === UPRIGHT, readyNextTurn: false, lockedBid: null, stored: 0, protectedUntil: 0, selfReadyUsed: false };
   p.town.push(s);
   return s;
 }
@@ -150,6 +150,11 @@ export async function unemployStack(state, ownerPi, stack, { byEffect = true, so
   const idx = p.town.indexOf(stack);
   if (idx < 0) return false;
   p.town.splice(idx, 1);
+  // A Squirrel's cache is not lost when they lose the job: the stored Supply comes home.
+  if (stack.stored) {
+    gainSupply(state, ownerPi, stack.stored, 'a cache coming home');
+    stack.stored = 0;
+  }
   const [top, ...rest] = stack.cards;
   if (rest.length === 0) {
     p.unemployment.push(top);
@@ -177,6 +182,26 @@ export function checkVictory(state) {
 }
 
 /** Winner gains a Capital City card: statues stay in the Victory Row; market cards resolve and are disposed. */
+/**
+ * Put a Building into a town, demolishing one first if the town is already full.
+ * The demolished Building goes to the City Dump, where it can be dealt again later.
+ */
+export async function addBuilding(state, pi, cardId) {
+  const p = state.players[pi];
+  const cap = state.rules.buildings?.maxPerTown ?? Infinity;
+  if (!p.buildings) p.buildings = [];
+  if (p.buildings.length >= cap) {
+    const options = p.buildings.map((id, i) => ({ uid: i, cardId: id, name: cardDef(state, id).name }));
+    const picked = await ask(state, pi, { kind: 'pick', reason: 'demolish', from: 'buildings', options, min: 1, max: 1 });
+    const idx = Array.isArray(picked) && picked.length ? Math.max(0, Math.min(p.buildings.length - 1, picked[0])) : 0;
+    const [gone] = p.buildings.splice(idx, 1);
+    state.market.cityDump.push(gone);
+    log(state, pi, `${p.name} demolishes ${cardDef(state, gone).name} to make room.`, { kind: 'demolish', player: pi, cardId: gone });
+  }
+  p.buildings.push(cardId);
+  log(state, pi, `${cardDef(state, cardId).name} is built in ${p.name}'s town.`, { kind: 'build', player: pi, cardId });
+}
+
 export async function gainMarketCard(state, pi, cardId, why = '') {
   const p = state.players[pi];
   const def = cardDef(state, cardId);
@@ -185,6 +210,18 @@ export async function gainMarketCard(state, pi, cardId, why = '') {
     p.victoryRow.push(cardId);
     if (def.onGain) await runEffect(state, pi, def.onGain, { sourceCardId: cardId });
     checkVictory(state);
+  } else if (def.type === 'building') {
+    // A Building stays in town and keeps working. A town holds only so many, so a fourth
+    // means demolishing one: the Supply sink is the price, and the cap is the decision.
+    if (def.onGain) await runEffect(state, pi, def.onGain, { sourceCardId: cardId });
+    await addBuilding(state, pi, cardId);
+  } else if (def.type === 'marketCharacter') {
+    // A Character hired out of the Capital City. They are new in town, so they arrive Busy
+    // whatever they cost, and they become ladder fuel and a worker from the next turn on.
+    if (def.onGain) await runEffect(state, pi, def.onGain, { sourceCardId: cardId });
+    const stack = makeStack(state, pi, { uid: nextUid(state), cardId }, BUSY);
+    log(state, pi, `${def.name} moves into ${p.name}'s town, Busy after the journey.`, { kind: 'marketRecruit', player: pi, cardId, uid: stack.uid });
+    await fireHook(state, 'onRecruit', { player: pi, stackUid: stack.uid, selfOnly: stack.uid });
   } else {
     if (def.onGain) await runEffect(state, pi, def.onGain, { sourceCardId: cardId });
     if (def.disposal === 'outOfPlay') state.market.outOfPlay.push(cardId);
@@ -209,6 +246,14 @@ export async function flushReveals(state) {
   while (m.revealQueue.length) {
     const cardId = m.revealQueue.shift();
     const def = cardDef(state, cardId);
+    const braced = state.players.findIndex((pl) => hasMod(pl, 'cancelNextReveal'));
+    if (braced >= 0 && def.shock) {
+      consumeMod(state.players[braced], 'cancelNextReveal');
+      log(state, null, `${def.name} arrives, and ${state.players[braced].name}'s town has already dug in: it passes over both towns.`, { kind: 'disruptionCancelled', cardId, player: braced });
+      m.cityDump.push(cardId);
+      resolved++;
+      continue;
+    }
     log(state, null, `${def.name} sweeps through both towns: ${def.text}`, { kind: 'disruption', cardId });
     await runEffect(state, 0, def.onReveal, { sourceCardId: cardId, global: true });
     m.cityDump.push(cardId);
@@ -280,6 +325,12 @@ export function matchesFilter(state, stack, f = {}) {
 }
 
 // ---------- effect interpreter ----------
+
+/** A Character a Hedgehog has quilled: an opponent's effect cannot choose it until its owner's next turn. */
+export function isProtected(state, stack) {
+  return !!stack.protectedUntil && state.turnNumber < stack.protectedUntil;
+}
+
 export async function runEffect(state, pi, eff, ctx = {}) {
   if (!eff) return;
   const p = state.players[pi];
@@ -416,7 +467,7 @@ export async function runEffect(state, pi, eff, ctx = {}) {
         return;
       }
       if (eff.discardFirst && p.hand.length < eff.discardFirst) return;
-      const opts = o.town.filter((s) => (!state.rules.unemployment.protectNewCharacters || s.hasBeenUpright) && (eff.maxCost === undefined || topCard(state, s).cost <= eff.maxCost));
+      const opts = o.town.filter((s) => (!state.rules.unemployment.protectNewCharacters || s.hasBeenUpright) && !isProtected(state, s) && (eff.maxCost === undefined || topCard(state, s).cost <= eff.maxCost));
       if (!opts.length) return;
       const chosen = await ask(state, pi, { kind: 'pick', reason: 'unemployOpponent', from: 'opponentTown', options: opts.map((s) => stackOpt(state, s)), min: eff.optional ? 0 : 1, max: 1 });
       if (!chosen.length) return;
@@ -475,6 +526,131 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       pd.committed[pi] += eff.amount;
       pd.bid += eff.amount;
       log(state, pi, `${p.name} raises the bid on ${cardDef(state, pd.cardId).name} by ${eff.amount}.`, { kind: 'raiseBid', player: pi, cardId: pd.cardId, amount: eff.amount });
+      return;
+    }
+    case 'behindPlayerGains': {
+      // On-reveal catch-up: the Mayor with fewer Statues (nobody, on a tie) gets the help.
+      const [a, b] = state.players;
+      if (a.victoryRow.length === b.victoryRow.length) return;
+      const bi = a.victoryRow.length < b.victoryRow.length ? 0 : 1;
+      if (eff.supply) gainSupply(state, bi, eff.supply, 'word from the Capital');
+      if (eff.cards) draw(state, bi, eff.cards, 'word from the Capital');
+      return;
+    }
+    case 'behindPlayerReadies': {
+      const [a, b] = state.players;
+      if (a.victoryRow.length === b.victoryRow.length) return;
+      const bi = a.victoryRow.length < b.victoryRow.length ? 0 : 1;
+      const opts = state.players[bi].town.filter((st) => st.orientation !== UPRIGHT && !st.lockedBid);
+      if (!opts.length) return;
+      const chosen = await ask(state, bi, { kind: 'pick', reason: 'ready', from: 'town', options: opts.map((st) => stackOpt(state, st)), min: 1, max: Math.min(eff.count || 1, opts.length) });
+      for (const uid of chosen) await readyStack(state, bi, findStack(state, bi, uid), 'word from the Capital');
+      return;
+    }
+    // ---- species signature verbs (see spec/species.json) ----
+    case 'storeSupply': {
+      // Squirrel: cache Supply on a Character. Stored Supply is out of the economy — it cannot be bid,
+      // and no shared shock can take it — until its owner draws it back down.
+      const amount = Math.min(eff.amount ?? 1, p.supply);
+      if (amount <= 0) return;
+      const opts = p.town.filter((st) => matchesFilter(state, st, eff.filter));
+      if (!opts.length) return;
+      const chosen = ctx.sourceStackUid && opts.some((st) => st.uid === ctx.sourceStackUid)
+        ? [ctx.sourceStackUid]
+        : await ask(state, pi, { kind: 'pick', reason: 'storeSupply', from: 'town', options: opts.map((st) => stackOpt(state, st)), min: 1, max: 1 });
+      const st = findStack(state, pi, chosen[0]);
+      if (!st) return;
+      const cap = eff.cap ?? 3;
+      const room = Math.max(0, cap - (st.stored || 0));
+      const put = Math.min(amount, room);
+      if (put <= 0) return;
+      p.supply -= put;
+      st.stored = (st.stored || 0) + put;
+      log(state, pi, `${topCard(state, st).name} puts ${put} Supply by (${st.stored} stored).`, { kind: 'store', player: pi, uid: st.uid, amount: put, stored: st.stored });
+      // A full cache opens itself, with half again in interest. Without this a Squirrel had to spend
+      // an action to get its own Supply back, which made the whole plan cost more than it paid.
+      if (st.stored >= cap) {
+        const total = st.stored + Math.floor(st.stored / 2);
+        st.stored = 0;
+        gainSupply(state, pi, total, `${topCard(state, st).name}'s cache, opened with interest`);
+      }
+      return;
+    }
+    case 'takeStoredSupply': {
+      const opts = p.town.filter((st) => (st.stored || 0) > 0);
+      if (!opts.length) return;
+      let taken = 0;
+      for (const st of opts) {
+        taken += st.stored;
+        st.stored = 0;
+      }
+      // A hoard grows: half again on what was put by. This is what pays a Squirrel back for being
+      // the slowest species in the game, and it is why storing is a plan rather than a delay.
+      const interest = Math.floor(taken / 2);
+      gainSupply(state, pi, taken + interest, interest ? 'a hoard opened, with interest' : 'stored Supply');
+      return;
+    }
+    case 'takeFromCityDump': {
+      // Raccoon: the shared City Dump is nobody's and therefore a Raccoon's.
+      const dump = state.market.cityDump;
+      if (!dump.length) return;
+      // Only ordinary Market cards: a Raccoon scavenges, it does not walk off with a Building.
+      const legal = dump.filter((id) => cardDef(state, id).type === 'market');
+      if (!legal.length) return;
+      const chosen = await ask(state, pi, {
+        kind: 'pick', reason: 'takeFromCityDump', from: 'cityDump',
+        options: legal.map((id, i) => ({ uid: i, cardId: id, name: cardDef(state, id).name })), min: 1, max: 1,
+      });
+      const cardId = legal[Math.max(0, Math.min(legal.length - 1, chosen[0] ?? 0))];
+      dump.splice(dump.indexOf(cardId), 1);
+      log(state, pi, `${p.name} fishes ${cardDef(state, cardId).name} out of the City Dump.`, { kind: 'scavenge', player: pi, cardId });
+      await gainMarketCard(state, pi, cardId, 'salvaged');
+      return;
+    }
+    case 'protectCharacter': {
+      // Hedgehog: a Character an opponent's effect simply cannot reach, until this player's next turn.
+      const opts = p.town.filter((st) => matchesFilter(state, st, eff.filter));
+      if (!opts.length) return;
+      const chosen = ctx.sourceStackUid && opts.some((st) => st.uid === ctx.sourceStackUid)
+        ? [ctx.sourceStackUid]
+        : await ask(state, pi, { kind: 'pick', reason: 'protect', from: 'town', options: opts.map((st) => stackOpt(state, st)), min: 1, max: 1 });
+      const st = findStack(state, pi, chosen[0]);
+      if (!st) return;
+      st.protectedUntil = state.turnNumber + 2;
+      log(state, pi, `${topCard(state, st).name} cannot be targeted by ${state.players[oi].name} until ${p.name}'s next turn.`, { kind: 'protect', player: pi, uid: st.uid });
+      return;
+    }
+    case 'moveShift': {
+      // Otter: hand the work to somebody else. The shift keeps its remaining time and output.
+      const working = p.town.filter((st) => st.shift && !st.lockedBid);
+      const free = p.town.filter((st) => !st.shift && !st.lockedBid && st.orientation === UPRIGHT);
+      if (!working.length || !free.length) return;
+      const from = await ask(state, pi, { kind: 'pick', reason: 'moveShiftFrom', from: 'town', options: working.map((st) => stackOpt(state, st)), min: 1, max: 1 });
+      const to = await ask(state, pi, { kind: 'pick', reason: 'moveShiftTo', from: 'town', options: free.map((st) => stackOpt(state, st)), min: 1, max: 1 });
+      const a = findStack(state, pi, from[0]);
+      const b = findStack(state, pi, to[0]);
+      if (!a || !b || a === b || !a.shift) return;
+      b.shift = a.shift;
+      a.shift = null;
+      b.orientation = BUSY;
+      a.orientation = UPRIGHT;
+      a.hasBeenUpright = true;
+      log(state, pi, `${topCard(state, a).name} hands the shift to ${topCard(state, b).name} and steps back upright.`, { kind: 'moveShift', player: pi, from: a.uid, to: b.uid });
+      return;
+    }
+    case 'selfReady': {
+      // Cat: act when a Character should not be able to. Once per game per card, tracked on the stack.
+      const st = ctx.sourceStackUid ? findStack(state, pi, ctx.sourceStackUid) : null;
+      if (!st || st.lockedBid) return;
+      if (eff.oncePerGame && st.selfReadyUsed) return;
+      st.selfReadyUsed = true;
+      await readyStack(state, pi, st, cardDef(state, ctx.sourceCardId).name);
+      return;
+    }
+    case 'cancelReveal': {
+      // Badger: stand in the way of the next on-reveal Market card.
+      p.mods.push({ key: 'cancelNextReveal', value: 1, expires: 'nextTurnStart', consumable: true, source: ctx.sourceCardId || null });
+      log(state, pi, `${p.name}'s town braces for the next shock from the Capital City.`, { kind: 'mod', player: pi, key: 'cancelNextReveal', value: 1 });
       return;
     }
     default:

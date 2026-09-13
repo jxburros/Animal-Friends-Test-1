@@ -1,7 +1,7 @@
 // Legal action enumeration and action application for the Actions phase.
 import {
   cardDef, topCard, log, nextUid, opponentOf, entryOrientation, rankOf, hasPassive, hasMod, getMod, consumeMod,
-  canAct, findStack, UPRIGHT, BUSY,
+  canAct, findStack, cityRule, UPRIGHT, BUSY,
 } from './state.js';
 import { ask, gainSupply, draw, discard, makeStack, fireHook, runEffect, matchesFilter } from './effects.js';
 
@@ -31,7 +31,11 @@ export function eventReduction(state, pi) {
   const p = state.players[pi];
   let n = getMod(p, 'eventCharReduction');
   if (!p.turn.ingenuityUsed && hasPassive(state, pi, 'eventCharReductionPerTurn')) n += 1;
-  return n;
+  // An Event may be discounted by at most one Character, however many discounts you are holding.
+  // Without this cap a town of Mice stacked reductions until its Events cost nothing at all, and
+  // the Event deck won three games in four — bodies are the currency, so a discount on bodies has
+  // to be a discount, not an exemption.
+  return Math.min(n, state.rules.deckbuilding?.maxEventReduction ?? 1);
 }
 
 function requirementUnits(def) {
@@ -95,11 +99,53 @@ export function findEventAssignment(state, pi, def, waive, avoid = new Set()) {
   return rec(0);
 }
 
+/**
+ * What this card costs *this* player. A Statue is priced from the buyer's own Victory Row: the first
+ * figure in `victory.statueCostTiers` while they hold fewer than `statueCostTierBreak`, the second once
+ * they hold that many or more. The two Mayors can therefore face different prices in the same auction,
+ * and the fifth and winning Statue is always bought at the higher price.
+ */
+export function cardCostFor(state, pi, cardId) {
+  const def = cardDef(state, cardId);
+  const v = state.rules.victory || {};
+  if (def.type === 'statue' && Array.isArray(v.statueCostTiers) && v.statueCostTiers.length >= 2) {
+    const held = state.players[pi].victoryRow.length;
+    const tier = held < (v.statueCostTierBreak ?? 2) ? v.statueCostTiers[0] : v.statueCostTiers[1];
+    return Math.max(0, tier + cityRule(state, 'statueCostDelta'));
+  }
+  return Math.max(0, def.cost + (def.type === 'building' ? cityRule(state, 'buildingCostDelta') : 0));
+}
+
 export function minBidFor(state, pi, cardId) {
   const p = state.players[pi];
-  let min = cardDef(state, cardId).cost;
+  let min = cardCostFor(state, pi, cardId);
   if (p.turn.announcements === 0 && hasPassive(state, pi, 'firstAnnounceMinBidMinus1')) min = Math.max(0, min - 1);
   return min;
+}
+
+// ---------- the pledge ladder ----------
+/**
+ * The cost a Character must have to be this player's next pledge in `pending` (null = opening an auction).
+ * Your Nth pledge must cost at least N, so a Mayor bids at most five times in one auction and only if their
+ * town runs the whole curve; cost-0 Characters cannot bid at all. This, not the price, is what converges a
+ * bidding war — which is why there is no growing minimum increment any more.
+ */
+export function pledgeMinCost(state, pending, pi) {
+  const a = state.rules.market.auction || {};
+  if (a.pledgeLadder !== 'cost') return 0;
+  const already = pending ? pending.chars[pi].length : 0;
+  const harmony = hasPassive(state, pi, 'pledgeLadderPlus1') ? 1 : 0; // Statue of Harmony's burden
+  return Math.max(0, already + (a.minPledgeCost ?? 1) + cityRule(state, 'pledgeLadderDelta') + harmony);
+}
+
+/** Can this Character be pledged as the player's next bid in this auction? */
+export function canPledge(state, pi, pending, stack) {
+  return topCard(state, stack).cost >= pledgeMinCost(state, pending, pi);
+}
+
+/** Does this player have anyone left who could make their next bid in this auction? */
+export function hasPledgeAvailable(state, pi, pending) {
+  return state.players[pi].town.some((s) => canAct(s) && canPledge(state, pi, pending, s));
 }
 export function bidBonus(state, pi) {
   const p = state.players[pi];
@@ -133,8 +179,10 @@ export function raisePayment(state, pi, pending, bid) {
 /** What a losing bidder actually forfeits of their escrow (the rest is refunded). */
 export function forfeitOf(state, pi, escrowed) {
   if (escrowed <= 0) return 0;
-  if (hasPassive(state, pi, 'losingBidsPayFull')) return escrowed; // Statue of Harmony's burden
   const a = state.rules.market.auction || {};
+  // A losing bidder is refunded in full: the pledge ladder, not a forfeit, is what makes a bid a real promise.
+  if (a.losingBidRefundsInFull) return 0;
+  if (hasPassive(state, pi, 'losingBidsPayFull')) return escrowed;
   const num = a.losingBidForfeitNumerator ?? 1;
   const den = a.losingBidForfeitDenominator ?? 2;
   const raw = (escrowed * num) / den;
@@ -192,18 +240,26 @@ export function legalActions(state, pi) {
   const uprights = p.town.filter(canAct);
   for (const cardId of state.market.city) {
     if (pendingIds.has(cardId)) continue;
+    if (cardDef(state, cardId).type === 'ordinance') continue; // an Ordinance is a rule, not a lot
     const minBid = minBidFor(state, pi, cardId);
     if (minBid > p.supply) continue;
-    for (const s of uprights) acts.push({ type: 'announce', cardId, charUid: s.uid, bid: minBid, minBid, maxBid: p.supply });
+    for (const s of uprights) {
+      if (!canPledge(state, pi, null, s)) continue;
+      acts.push({ type: 'announce', cardId, charUid: s.uid, bid: minBid, minBid, maxBid: p.supply });
+    }
   }
   // raise an auction someone else is currently winning — as often as you can pay for it
   for (const pd of state.market.pending) {
     if (pd.high === pi || pd.unchallengeable) continue;
+    if (cityRule(state, 'noRaises')) continue; // an Ordinance has closed the bidding
     const minBid = raiseMinBid(state, pi, pd);
     const pay = raisePayment(state, pi, pd, minBid);
     if (pay > p.supply) continue;
     const maxBid = minBid + (p.supply - pay);
-    for (const s of uprights) acts.push({ type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: s.uid, bid: minBid, minBid, maxBid });
+    for (const s of uprights) {
+      if (!canPledge(state, pi, pd, s)) continue;
+      acts.push({ type: 'raise', pendingId: pd.id, cardId: pd.cardId, charUid: s.uid, bid: minBid, minBid, maxBid });
+    }
   }
   // rehire
   for (const c of p.unemployment) {
@@ -315,6 +371,7 @@ export async function applyAction(state, pi, a) {
     case 'announce': {
       const s = findStack(state, pi, a.charUid);
       if (!s || !canAct(s)) throw new Error('Character cannot announce');
+      if (!canPledge(state, pi, null, s)) throw new Error(`Opening a bid needs a Character costing at least ${pledgeMinCost(state, null, pi)}`);
       if (!state.market.city.includes(a.cardId)) throw new Error('Card not in Capital City');
       if (state.market.pending.some((pd) => pd.cardId === a.cardId)) throw new Error('Card already pending');
       const minBid = minBidFor(state, pi, a.cardId);
@@ -354,6 +411,7 @@ export async function applyAction(state, pi, a) {
       if (pd.unchallengeable) throw new Error('This auction cannot be raised against');
       const s = findStack(state, pi, a.charUid);
       if (!s || !canAct(s)) throw new Error('Character cannot bid');
+      if (!canPledge(state, pi, pd, s)) throw new Error(`Bid ${pd.chars[pi].length + 1} in this auction needs a Character costing at least ${pledgeMinCost(state, pd, pi)}`);
       const minBid = raiseMinBid(state, pi, pd);
       const bid = Math.floor(a.bid ?? minBid);
       const pay = raisePayment(state, pi, pd, bid);

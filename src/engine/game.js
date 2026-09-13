@@ -1,9 +1,41 @@
 // Turn structure: Start → Resources → Ready → Actions → End, plus the whole-game runner.
-import { cardDef, topCard, log, opponentOf, expireMods, consumeMod, hasMod, hasPassive, refillCity, sweepStaleCity, freshTurnCounters, UPRIGHT, BUSY, findStack } from './state.js';
+import { cardDef, topCard, log, opponentOf, expireMods, consumeMod, hasMod, hasPassive, refillCity, ageCity, freshTurnCounters, UPRIGHT, BUSY, findStack } from './state.js';
 import { ask, draw, gainSupply, completeShift, readyStack, gainMarketCard, fireHook, checkVictory, flushReveals } from './effects.js';
+import { shuffle } from './rng.js';
 import { legalActions, applyAction, forfeitOf } from './actions.js';
 
 const MAX_ACTIONS_PER_TURN = 60;
+
+/**
+ * Opening hands. Each Mayor may mulligan once, for free: the hand goes back into the deck, the deck is
+ * shuffled, and they draw the same number again. There is no card penalty and no second mulligan, so a
+ * player is never punished for an unplayable opening — the choice is simply "is this hand workable?".
+ * Safe to call twice; it does nothing once the opening has been settled.
+ */
+export async function mulliganPhase(state) {
+  const m = state.rules.setup.mulligan;
+  if (!m || !m.allowed || state.mulliganDone) return;
+  state.mulliganDone = true;
+  for (let pi = 0; pi < state.players.length; pi++) {
+    const p = state.players[pi];
+    const size = p.hand.length;
+    const take = await ask(state, pi, {
+      kind: 'confirm',
+      reason: 'mulligan',
+      hand: p.hand.map((c) => ({ uid: c.uid, cardId: c.cardId, name: cardDef(state, c.cardId).name })),
+      default: false,
+    });
+    if (!take) continue;
+    p.deck.push(...p.hand.splice(0));
+    shuffle(state, p.deck);
+    const penalty = m.cardPenalty || 0;
+    for (let k = 0; k < size - penalty; k++) {
+      const c = p.deck.shift();
+      if (c) p.hand.push(c);
+    }
+    log(state, pi, `${p.name} takes a mulligan and draws ${p.hand.length} fresh cards.`, { kind: 'mulligan', player: pi, cards: p.hand.length });
+  }
+}
 
 export async function startPhase(state, pi) {
   const p = state.players[pi];
@@ -20,7 +52,8 @@ export async function startPhase(state, pi) {
     await resolvePurchase(state, pd);
   }
   state.market.turnsSinceGain++;
-  sweepStaleCity(state);
+  // The display ages once a round, at the start of the first player's turn.
+  if (pi === 0 && state.turnNumber > 2) ageCity(state);
   await flushReveals(state);
   // Characters flagged to be ready at the start of this turn.
   for (const s of p.town.slice()) if (s.readyNextTurn) await readyStack(state, pi, s, 'ready-next-turn effect');
@@ -38,9 +71,9 @@ export function releaseBidders(state, pd) {
 }
 
 /**
- * Settle a finished auction. The winner spends everything they escrowed; the loser forfeits half of
- * theirs (Statue of Harmony's burden makes them pay it all) and is refunded the rest, so a bidding war
- * you walk away from still costs you.
+ * Settle a finished auction. The winner spends everything they escrowed; the loser is refunded theirs
+ * in full. Walking away from a war costs no Supply — it cost the animals, which stood in the Capital
+ * City instead of working, and the ladder rungs they used up.
  */
 export async function resolvePurchase(state, pd) {
   const m = state.market;
@@ -183,6 +216,7 @@ export async function playTurn(state) {
  */
 export async function playGame(state, agents, { maxTurnsPerPlayer } = {}) {
   state.agents = agents;
+  await mulliganPhase(state);
   const cap = (maxTurnsPerPlayer || state.rules.simulation.maxTurnsPerPlayer) * 2;
   while (state.winner === null && state.turnNumber < cap) await playTurn(state);
   if (state.winner === null) {

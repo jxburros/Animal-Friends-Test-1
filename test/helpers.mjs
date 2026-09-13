@@ -174,3 +174,25 @@ export function pickAgentFor(reason, uidsOrFn) {
 }
 
 export { UPRIGHT, BUSY };
+
+/**
+ * An upright Character able to make the `n`th pledge in an auction — that is, costing at least `n`
+ * (the pledge ladder). Picked from the set rather than named, so these tests keep working when the
+ * card pool changes. Returns the stack.
+ */
+export function addBidder(state, pi, rung = 1) {
+  const want = Math.max(rung, RULES.market.auction.minPledgeCost ?? 1);
+  // Prefer a Character with no abilities: a bidder that also triggers on announcing would make
+  // every escrow assertion in these tests about that Character rather than about the auction.
+  const plain = (c) => c.type === 'character' && !(c.abilities || []).length;
+  const card = SET.cards.find((c) => plain(c) && c.cost === want)
+    || SET.cards.find((c) => plain(c) && c.cost >= want)
+    || SET.cards.find((c) => c.type === 'character' && c.cost === want);
+  if (!card) throw new Error(`no Character costs ${want}`);
+  return addStack(state, pi, card.id, UPRIGHT);
+}
+
+/** A Character that cannot bid at all: cost 0, below the bottom of the pledge ladder. */
+export function cheapestCardId() {
+  return SET.cards.find((c) => c.type === 'character' && c.cost === 0).id;
+}

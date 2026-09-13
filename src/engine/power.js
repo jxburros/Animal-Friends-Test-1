@@ -3,7 +3,7 @@
 // Every number here is in "Supply-equivalents": one point is roughly one Supply gained on the turn
 // you wanted it. A card's *power* is everything it gives you; its *opportunity cost* is everything
 // it asks for — Supply, the turns a big Character spends rotating into work, the Characters an
-// Event demands, the slot the card takes in a 30-card deck.
+// Event demands, the slot the card takes in a 40-card deck.
 //
 // Rarity is deliberately not raw power. A cost-0 Character that pays for itself twice over is a
 // better card than a cost-5 Character that pays for itself once, but it is not a more *exciting*
@@ -15,15 +15,15 @@
 
 export const RARITIES = ['Common', 'Uncommon', 'Rare', 'Super Rare', 'Legendary'];
 
-/** Copies of a card of each rarity that a 30-card town deck may hold. */
+/** Copies of a card of each rarity that a 40-card town deck may hold. */
 export const COPY_LIMITS = { Common: 3, Uncommon: 3, Rare: 2, 'Super Rare': 1, Legendary: 1 };
 
 /** Score at or above which a card lands in each rarity. Tuned to a pyramid on the printed set. */
 export const RARITY_THRESHOLDS = [
-  ['Legendary', 5.4],
-  ['Super Rare', 4.5],
-  ['Rare', 3.6],
-  ['Uncommon', 2.4],
+  ['Legendary', 5.7],
+  ['Super Rare', 5.0],
+  ['Rare', 4.1],
+  ['Uncommon', 2.6],
   ['Common', 0],
 ];
 
@@ -53,12 +53,13 @@ const MOD_VALUE = {
   rehireDiscount: 1.0,
   shiftBonus: 1.2,
   extraAdvance: 1.5,
-  lossShield: 0.8,
-  unemploymentShield: 2.0,
+  lossShield: 0.5,
+  unemploymentShield: 0.8, // little in this set to shield from — see the note above
   unchallengeable: 2.0,
   cancelNextChallenge: 2.2,
   eventCharReduction: 1.6,
   skipNextAdvance: -1.5,
+  cancelNextReveal: 1.0,
 };
 
 const PASSIVE_VALUE = {
@@ -75,6 +76,7 @@ const PASSIVE_VALUE = {
   eventCostPlus1: 1.6,
   resourceSupplyMinus1: 2.2,
   losingBidsPayFull: 1.4,
+  pledgeLadderPlus1: 2.6,
 };
 
 // How many times a trigger is expected to pay out over a game, relative to a one-shot.
@@ -147,6 +149,30 @@ export function effectPower(eff) {
       return 4.0 + (eff.maxCost === undefined ? 1.0 : 0.3 * eff.maxCost) - 0.9 * n(eff.discardFirst, 0);
     case 'raiseOwnBid':
       return 0.6;
+    // ---- species signature verbs ----
+    case 'storeSupply':
+      // Supply put by comes back with half again on it once the cache fills, so storing is a slow
+      // 1.5x on the coin, plus the safety of it being out of reach of a shared shock in the meantime.
+      return 0.85 * n(eff.amount);
+    case 'takeStoredSupply':
+      return 2.0; // the cache, plus half again in interest
+    case 'takeFromCityDump':
+      // A free Market card, chosen — but only from the ordinary ones that have already been used.
+      return 2.4;
+    case 'protectCharacter':
+      return 0.7; // worth what there is to be protected from, which is not much yet
+    case 'moveShift':
+      // Frees a working Character and keeps the work: worth most of a ready, plus the tempo.
+      return READY * 0.9;
+    case 'selfReady':
+      // Once per game, but exactly when you need it — including as ladder fuel mid-auction.
+      return eff.oncePerGame ? 2.2 : READY;
+    case 'cancelReveal':
+      return 1.0; // on-reveal cards fire about three times a game, and only some are shocks
+    case 'behindPlayerGains':
+      return 0.55 * (n(eff.supply, 0) + DRAW * n(eff.cards, 0));
+    case 'behindPlayerReadies':
+      return 0.55 * READY * n(eff.count);
     // Shared shocks hit both towns, so they are rated by how much they move the table, not by
     // how much they hand one player. A Disruption is never owned; it is weather.
     case 'allCharactersToUnemployment':
@@ -184,6 +210,19 @@ export function abilityPower(ab, runs) {
   return ab.burden ? -Math.abs(value) : value;
 }
 
+/**
+ * What being able to bid is worth to a Character. Under the pledge ladder a Character's cost is also
+ * its rank in an auction: a cost-0 animal cannot bid at all, and each step up the curve buys one more
+ * round of a bidding war. This is a real part of what an expensive animal is for, so it is priced here
+ * rather than left to show up as a mystery in the playtest.
+ */
+function ladderPower(card, rules) {
+  const minPledge = rules?.market?.auction?.minPledgeCost ?? 1;
+  if (rules?.market?.auction?.pledgeLadder !== 'cost') return 0;
+  if (card.cost < minPledge) return -0.9; // cannot bid: pure economy, and a dead card in an auction
+  return 0.5 + 0.35 * (card.cost - minPledge);
+}
+
 /** A shift is worth its throughput plus a little for the lump sum it arrives in. */
 export function shiftPower(shift) {
   if (!shift) return 0;
@@ -203,8 +242,8 @@ function requirePips(card) {
 }
 
 /** Everything a card asks of you, in the same Supply-equivalents as its power. */
-export function opportunityCost(card) {
-  const slot = 1.0; // any card in a 30-card deck costs a draw you could have spent elsewhere
+export function opportunityCost(card, statueCost) {
+  const slot = 1.0; // any card in a 40-card deck costs a draw you could have spent elsewhere
   switch (card.type) {
     case 'character':
       return slot + ACTION + card.cost + 1.2 * entryTurns(card.cost);
@@ -212,8 +251,19 @@ export function opportunityCost(card) {
       // Events cost no Supply; their requirements are the whole price, and a Limited Event has to
       // survive on the table to pay out at all.
       return slot + ACTION + 0.9 * requirePips(card) + (card.kind === 'limited' ? 0.6 : 0);
-    case 'market':
+    case 'marketCharacter':
+      // Hired at auction and arrives Busy whatever it costs, so it pays the bid and a turn of delay.
+      return card.cost + ACTION + 0.6 + 1.2;
+    case 'building':
+      // The most expensive thing on the board, and it takes one of only three town slots.
+      return card.cost + ACTION + 0.6 + 1.5;
+    case 'ordinance':
+      return 2.0; // never bought; it is weather, like an on-reveal card
     case 'statue':
+      // A Statue's price is not printed on it: it is the two-tier price in spec/game.json, and the
+      // one that matters is the second — the fifth and winning Statue is always bought at it.
+      return (statueCost || card.cost) + ACTION + 0.6;
+    case 'market':
       // Bought at auction: announcing costs an action and makes one of your Characters Busy until
       // the auction ends. The printed cost is the minimum bid, so it already carries the Supply.
       return card.cost + ACTION + 0.6 + (card.disposal === 'outOfPlay' ? 0.4 : 0);
@@ -225,9 +275,12 @@ export function opportunityCost(card) {
 }
 
 /** Everything a card gives you, in Supply-equivalents. */
-export function cardPower(card) {
+export function cardPower(card, rules) {
   let power = 0;
-  if (card.type === 'character') power += shiftPower(card.shift);
+  if (card.type === 'character' || card.type === 'marketCharacter') {
+    power += shiftPower(card.shift);
+    power += ladderPower(card, rules);
+  }
   if (card.type === 'statue') power += STATUE_VICTORY;
   power += effectPower(card.effect);
   power += effectPower(card.onGain);
@@ -242,9 +295,9 @@ export function cardPower(card) {
  * `score = power^0.6 * (power / opportunityCost)^0.4` — of two cards that give you the same, the
  * cheaper one rates higher; of two equally efficient cards, the bigger one rates higher.
  */
-export function powerRating(card) {
-  const power = cardPower(card);
-  const cost = opportunityCost(card);
+export function powerRating(card, rules) {
+  const power = cardPower(card, rules);
+  const cost = opportunityCost(card, rules?.victory?.statueCostTiers?.[1]);
   const efficiency = power / cost;
   if (power <= 0 || efficiency <= 0) return 0;
   return power ** 0.6 * efficiency ** 0.4;
@@ -257,10 +310,10 @@ export function rarityForScore(score) {
 }
 
 /** The full rating of a card: power, what it asked for, the ratio, the score and the rarity. */
-export function rateCard(card) {
-  const power = round(cardPower(card));
-  const cost = round(opportunityCost(card));
-  const score = round(powerRating(card));
+export function rateCard(card, rules) {
+  const power = round(cardPower(card, rules));
+  const cost = round(opportunityCost(card, rules?.victory?.statueCostTiers?.[1]));
+  const score = round(powerRating(card, rules));
   return { id: card.id, type: card.type, power, cost, ratio: round(power / cost), score, rarity: rarityForScore(score) };
 }
 
@@ -270,8 +323,8 @@ export function copyLimit(card, limits = COPY_LIMITS) {
 }
 
 /** Every card in a set, rated and sorted from most to least powerful for its cost. */
-export function rateSet(set) {
-  return set.cards.map(rateCard).sort((a, b) => b.score - a.score || a.id.localeCompare(b.id));
+export function rateSet(set, rules) {
+  return set.cards.map((c) => rateCard(c, rules)).sort((a, b) => b.score - a.score || a.id.localeCompare(b.id));
 }
 
 function round(n) {

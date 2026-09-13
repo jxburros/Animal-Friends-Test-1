@@ -1,21 +1,26 @@
 {
   "$comment": "Authoritative rules constants for the Animal Friends TCG prototype. Read by src/engine. Section numbers refer to docs/ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md.",
-  "id": "AF-RULES-01",
+  "id": "AF-RULES-02",
   "name": "Animal Friends TCG",
   "setId": "AF-STARTER-01",
   "players": 2,
   "setup": {
-    "deckSize": 30,
+    "deckSize": 40,
     "startingSupply": 6,
     "secondPlayerBonusSupply": 0,
-    "startingHand": 5,
-    "marketDeckSize": 25,
+    "startingHand": 6,
+    "marketDeckSize": 29,
     "capitalCitySize": 5,
-    "secondPlayerBonusCards": 1
+    "secondPlayerBonusCards": 1,
+    "mulligan": {
+      "$comment": "Each Mayor may mulligan once, for free: shuffle the opening hand back and draw the same number again. There is no card penalty and no second mulligan.",
+      "allowed": 1,
+      "cardPenalty": 0
+    }
   },
   "deckbuilding": {
-    "$comment": "Prototype decision: the Deck Workshop lets a player build any 30-card deck from the Character and Event catalogue. Copy and Character limits keep a custom deck playable — a deck of pure Events could never pay its own requirements. Copies are further capped by the card's rarity (maxCopiesByRarity), which src/engine/power.js derives from its power-to-opportunity-cost rating: the cards that carry a game are the ones you may least often repeat.",
-    "deckSize": 30,
+    "$comment": "Prototype decision: the Deck Workshop lets a player build any 40-card deck from the Character and Event catalogue. Copy and Character limits keep a custom deck playable — a deck of pure Events could never pay its own requirements. Copies are further capped by the card's rarity (maxCopiesByRarity), which src/engine/power.js derives from its power-to-opportunity-cost rating: the cards that carry a game are the ones you may least often repeat. The Character floor and Event ceiling scale with the 40-card deck (was 12/18 at 30 cards). An Event's Character requirement can be reduced by at most maxEventReduction, however many reductions a player holds.",
+    "deckSize": 40,
     "maxCopiesPerCard": 3,
     "maxCopiesByRarity": {
       "Common": 3,
@@ -24,8 +29,9 @@
       "Super Rare": 1,
       "Legendary": 1
     },
-    "minCharacters": 12,
-    "maxEvents": 18
+    "minCharacters": 16,
+    "maxEvents": 24,
+    "maxEventReduction": 1
   },
   "victory": {
     "statueTotal": 9,
@@ -33,7 +39,13 @@
     "rule": "strict majority of Statues",
     "forbidStealingFinalStatue": true,
     "statuesCarryBurdens": true,
-    "$comment": "Every Statue grants a boon and imposes a burden that lasts as long as its Mayor controls it. Collecting Statues therefore taxes the town that is winning, which keeps a Statue lead from compounding into a runaway."
+    "statueCostTiers": [
+      10,
+      20
+    ],
+    "statueCostTierBreak": 2,
+    "$comment": "Every Statue costs the first figure while its buyer holds fewer than statueCostTierBreak Statues, and the second figure once they hold that many or more — so a Mayor holding 0 or 1 pays 10, and a Mayor holding 2, 3 or 4 pays 20. The fifth and winning Statue is therefore always bought at the higher price. Each Statue also grants a boon and imposes a burden that lasts as long as its Mayor controls it, so collecting Statues taxes the town that is winning twice over.",
+    "$comment2": "The tier is read from the bidder's own Victory Row, so the two Mayors can face different prices for the same card in the same auction."
   },
   "orientation": {
     "upright": 0,
@@ -85,28 +97,41 @@
     "blocksReadyWhileInProgress": true,
     "readyEffectCompletesShift": true
   },
+  "buildings": {
+    "$comment": "Buildings are Capital City cards that stay in their buyer's town instead of going to the City Dump. They are the game's Supply sink: they are the most expensive thing on the board and they keep paying, so a Mayor with Supply to spare has somewhere to spend it. A town holds at most maxPerTown; buying another means demolishing one first (the demolished card goes to the City Dump).",
+    "maxPerTown": 3,
+    "demolishToCityDump": true
+  },
   "market": {
-    "$comment": "Section 8. Whenever a card leaves the Capital City, deal from the Market Deck until the display is back to setup.capitalCitySize (top-up refill; the earlier refill-only-when-empty rule let the display silt up with unwanted cards). Reshuffle the City Dump into the Market Deck when the Market Deck runs out mid-deal; cards in use and Out of Play never return. Prototype addition: if no Capital City card has been gained for market.staleTurns consecutive turns (and nothing is pending), the display is swept (Statues return to the Market Deck, other cards go to the City Dump) and redealt.",
+    "$comment": "Section 8. Whenever a card leaves the Capital City, deal from the Market Deck until the display is back to setup.capitalCitySize (top-up refill; the earlier refill-only-when-empty rule let the display silt up with unwanted cards). Reshuffle the City Dump into the Market Deck when the Market Deck runs out mid-deal; cards in use and Out of Play never return.",
     "refillToFull": true,
     "refillWhenEmpty": false,
     "minimumBidIsCardCost": true,
     "tiesGoToAnnouncer": true,
     "bidsAreEscrowed": true,
-    "staleTurns": 6,
+    "aging": {
+      "$comment": "The display ages. At the start of each round (each time the first player's turn comes round) the oldest card in the Capital City that nobody is bidding on is discarded and replaced. Cards visibly age out, so the display always turns over, on-reveal cards keep flowing, and 'buy it now or lose it' is a real decision. This replaces the old six-turn stale-market sweep, which only fired when the display had gone completely dead.",
+      "enabled": true,
+      "cardsPerRound": 1,
+      "statuesReturnToDeck": true,
+      "skipCardsUnderAuction": true
+    },
     "auction": {
-      "$comment": "Section 8. An announcement opens an auction rather than a one-shot challenge. On your own turn you may raise any auction you are not already winning by making another upright Character Busy and bidding above the standing bid; there is no limit on rounds, but the required step grows by 1 every incrementGrowsEveryNRounds bids so a war converges. Every Character pledged to an auction stays Busy until that auction ends -- it does not advance at Ready and effects cannot ready it -- so a long bidding war costs a Mayor their whole workforce, and 'cannot bid any more' usually means 'has nobody left to bid with'. Because the players alternate turns, being the high bidder at the start of your own turn means your rival had a turn and declined to answer, so the auction resolves then. A bid is a real commitment: escrow is topped up to the bid when it is made, the winner pays it all, and the loser forfeits half (rounded up) of everything they escrowed.",
+      "$comment": "Section 8. An announcement opens an auction rather than a one-shot challenge. On your own turn you may raise any auction you are not already winning by pledging another upright Character and bidding above the standing bid. There is no arithmetic increment: a raise need only beat the standing bid. What converges a war is the pledge ladder below, not the price.",
       "unlimitedRaises": true,
       "raiseRequiresUprightCharacter": true,
       "raiseMustExceedStandingBid": true,
-      "incrementGrowsEveryNRounds": 2,
+      "incrementGrowsEveryNRounds": 0,
       "resolvesAtHighBidderStart": true,
-      "losingBidForfeitNumerator": 1,
-      "losingBidForfeitDenominator": 2,
-      "losingBidForfeitRounding": "up",
-      "biddersLockedUntilAuctionEnds": true
+      "biddersLockedUntilAuctionEnds": true,
+      "pledgeLadder": "cost",
+      "minPledgeCost": 1,
+      "$pledgeComment": "The pledge ladder: your Nth pledge in a given auction must be a Character costing at least N. Your opening bid needs a cost-1 animal, your second a cost-2, and so on, so a Mayor can bid at most five times in one auction and only if their town runs the whole curve. Cost-0 Characters cannot bid at all — they are pure economy. Every pledged Character moves to the Capital City beneath the card it is bidding on and stays there until the auction ends: it does not advance at Ready and no effect can wake it. This, not the price, is what ends a bidding war.",
+      "losingBidRefundsInFull": true,
+      "$refundComment": "A losing bidder is refunded everything they escrowed and gets their animals back. The old half-forfeit existed to punish a frivolous bid; the pledge ladder does that job better, because a bid you cannot follow through on has already cost you an expensive animal for the whole auction."
     },
     "disruptions": {
-      "$comment": "Disruption cards are shared shocks in the Market Deck. They are never bought: the moment one is dealt into the Capital City it resolves against both towns at once and goes to the City Dump, and another card is dealt in its place. Disruptions dealt during setup are set aside without resolving, since there is no game state yet to disrupt.",
+      "$comment": "On-reveal cards (historically 'Disruptions') are never bought: the moment one is dealt into the Capital City it resolves and goes to the City Dump, and another card is dealt in its place. Some strike both towns at once, some pay the Mayor who is behind, and some set a condition for the next auction. One dealt during setup is set aside unresolved, since there is no game state yet.",
       "resolveOnReveal": true,
       "disposal": "cityDump",
       "skipDuringSetup": true
@@ -134,18 +159,25 @@
     "$comment": "Safety cap for automated playtests; a game that reaches the cap is scored by Statue count, then Supply."
   },
   "assumptions": [
-    "The second player starts with one extra card and no extra Supply (setup.secondPlayerBonusSupply / secondPlayerBonusCards). The earlier +2 Supply offset was tuned for the one-shot challenge; once Supply became ammunition for a multi-round auction it handed the second seat a 57% win rate, and 480-game passes put the first player at 50.0% with cards alone.",
-    "A player may have several auctions running at once (one per Capital City card); each may be raised any number of times, but only on the raiser's own turn and only by a player who is not already the high bidder. Each bid pledges another upright Character, and pledged Characters stay Busy until that auction ends.",
-    "Committed bids are escrowed as they are made. The winner pays their bid in full; the loser forfeits half of everything they escrowed (rounded up) and is refunded the rest, so bidding beyond your means still costs something.",
+    "The second player starts with one extra card and no extra Supply (setup.secondPlayerBonusSupply / secondPlayerBonusCards).",
+    "Each Mayor may mulligan their opening hand once, for free, drawing the same number of cards again.",
+    "A player may have several auctions running at once (one per Capital City card); each may be raised any number of times, but only on the raiser's own turn and only by a player who is not already the high bidder.",
+    "A raise need only exceed the standing bid; there is no growing minimum increment. Auctions converge on the pledge ladder instead.",
+    "The pledge ladder: your Nth pledge in an auction must be a Character costing at least N, so no Mayor can bid more than five times in one auction and cost-0 Characters cannot bid at all.",
+    "Pledged Characters move to the Capital City beneath the card they are bidding on and stay there until the auction ends.",
+    "A losing bidder is refunded their escrow in full and gets their animals back; there is no forfeit.",
+    "Statues cost 10 to a Mayor holding fewer than 2, and 20 to a Mayor holding 2 or more, so the fifth Statue is always bought at the higher price.",
     "Every Statue carries a burden as well as a boon; burdens apply while the Statue sits in that player's Victory Row.",
-    "Disruption cards resolve on reveal against both towns and are never purchasable.",
-    "The Market Deck is chosen at setup from three decks (First Boroughs, Boom Town, Hard Times); all three contain every Statue.",
+    "The Capital City ages: one card that nobody is bidding on is discarded and replaced at the start of each round.",
+    "Buildings bought from the Capital City stay in their buyer's town, up to three; buying a fourth demolishes one.",
+    "On-reveal Market cards resolve as they are dealt and are never purchasable.",
     "Upgrading keeps the stack's current orientation and re-triggers the new card's recruit abilities.",
     "Readying a Character that is mid-shift completes the shift at once.",
-    "Reactive abilities (Rowan, Ombudsperson; Rumor Control; Emergency Reserve) are implemented as shields set on your own turn that last until your next turn starts.",
+    "Reactive abilities are implemented as shields set on your own turn that last until your next turn starts.",
     "When the player deck is empty, the Town Dump is shuffled into it.",
-    "Top-up refill: the Capital City is dealt back up to five cards as soon as a purchase resolves, so the Market Deck keeps flowing instead of waiting for the whole display to be bought out.",
-    "Stale market: if nobody gains a Capital City card for six consecutive turns, the display is swept and redealt so the game cannot stall on unwanted cards.",
-    "Every card carries a rarity computed from its power-to-opportunity-cost rating (src/engine/power.js): Common, Uncommon, Rare, Super Rare or Legendary. Rarity is not raw power — a card is rated power^0.6 x efficiency^0.4, so an efficient cheap card can out-rate an expensive one. Rarity caps copies in a town deck (3/3/2/1/1)."
+    "Top-up refill: the Capital City is dealt back up to five cards as soon as a purchase resolves.",
+    "Every card carries a rarity computed from its power-to-opportunity-cost rating (src/engine/power.js): Common, Uncommon, Rare, Super Rare or Legendary. Rarity caps copies in a town deck (3/3/2/1/1).",
+    "Species is a design space, not a keyword: each species owns a centre of gravity, a hole and a signature effect (Section 4a), enforced by scripts/identity.mjs rather than by a trait printed on every card.",
+    "Botany was merged into Agriculture; the set has five studies."
   ]
 }

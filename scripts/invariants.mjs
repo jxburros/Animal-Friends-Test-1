@@ -3,13 +3,22 @@ import { createGame, playTurn, cardDef } from '../src/engine/index.js';
 import { makeRandomAgent } from '../src/ai/random.js';
 const rules = JSON.parse(fs.readFileSync(new URL('../spec/game.json', import.meta.url)));
 const set = JSON.parse(fs.readFileSync(new URL('../spec/starter_card_set.json', import.meta.url)));
+/** Market cards that have come to rest in a player's own zones (hired animals). */
+function hiredIn(state, p) {
+  const isHired = (c) => (cardDef(state, c.cardId) || {}).type === 'marketCharacter';
+  return p.town.reduce((a, s) => a + s.cards.filter(isHired).length, 0)
+    + p.dump.filter(isHired).length + p.unemployment.filter(isHired).length + p.hand.filter(isHired).length;
+}
+
 function check(state, seed, marketSize) {
   const m = state.market;
-  const total = m.deck.length + m.city.length + m.cityDump.length + m.outOfPlay.length + m.revealQueue.length + state.players.reduce((a, p) => a + p.victoryRow.length, 0);
+  // Market cards now also come to rest as Buildings in a town and as hired animals in it.
+  const total = m.deck.length + m.city.length + m.cityDump.length + m.outOfPlay.length + m.revealQueue.length
+    + state.players.reduce((a, p) => a + p.victoryRow.length + (p.buildings || []).length + hiredIn(state, p), 0);
   if (total !== marketSize) throw new Error(`seed ${seed} turn ${state.turnNumber}: market card count ${total} (expected ${marketSize})`);
   for (const p of state.players) {
-    const n = p.deck.length + p.hand.length + p.dump.length + p.unemployment.length + p.events.length + p.town.reduce((a, s) => a + s.cards.length, 0);
-    if (n !== 30) throw new Error(`seed ${seed} turn ${state.turnNumber}: ${p.name} has ${n} deck cards`);
+    const n = p.deck.length + p.hand.length + p.dump.length + p.unemployment.length + p.events.length + p.town.reduce((a, s) => a + s.cards.length, 0) - hiredIn(state, p);
+    if (n !== rules.setup.deckSize) throw new Error(`seed ${seed} turn ${state.turnNumber}: ${p.name} has ${n} deck cards`);
     if (p.supply < 0) throw new Error(`seed ${seed}: negative supply ${p.supply}`);
     if (p.escrow < 0) throw new Error(`seed ${seed}: negative escrow`);
     const esc = m.pending.reduce((a, pd) => a + pd.committed[p.index], 0);
