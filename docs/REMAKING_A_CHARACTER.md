@@ -225,10 +225,15 @@ not a wish.
 **Effects**: `seq`, `gainSupply`, `opponentGainSupply`, `giveSupplyToOpponent`, `draw`, `discard`,
 `addMod`, `readyCharacter`, `readyNextTurn`, `rehire`, `recruitFromHand`, `reorderDeckTop`,
 `eventFromDumpToDeckBottom`, `eventFromDumpToHand`, `peekMarketDeck`, `opponentTopdeckFromHand`,
-`unemployOpponentCharacter`, `raiseOwnBid`, `scryDeck`, plus the species signatures `storeSupply`,
+`unemployOpponentCharacter`, `raiseOwnBid`, `scryDeck`, `makeBusy`, plus the species signatures `storeSupply`,
 `takeStoredSupply`, `takeFromCityDump`, `protectCharacter`, `moveShift`, `selfReady`, `cancelReveal`,
 `advanceCharacter`. (`test/card-vocabulary.mjs` is the authority — read it, not this list, if they ever
 disagree. Shared-shock verbs like `everyoneLosesSupply` belong to Disruptions, not Characters.)
+
+Some of the vocabulary exists *because* a remake asked for it — `makeBusy`, `scryDeck`'s `to: "dump"`,
+`protectCharacter`'s `notSelf`, filtered mods, `buildingDiscount` and `leavesAfter` were all wishes
+first (see `docs/ENGINE_API.md`, and the `wantedVerbs` of the characters that wanted them). That is the
+route: wish, then approval, then engine, then the card.
 
 **When the story wants something the engine cannot do**: do not invent a verb, and do not write an
 unplayable card. Build the nearest thing out of verbs that exist, and log the gap in the character

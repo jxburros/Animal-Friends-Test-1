@@ -10,6 +10,8 @@ export const EFFECTS = new Set([
   'readyCharacter', 'readyNextTurn', 'rehire', 'recruitFromHand', 'reorderDeckTop',
   'eventFromDumpToDeckBottom', 'eventFromDumpToHand', 'peekMarketDeck', 'opponentTopdeckFromHand',
   'unemployOpponentCharacter', 'raiseOwnBid',
+  // the constable's verb: turn an opponent's Character one step back toward Busy
+  'makeBusy',
   // species signature verbs (spec/species.json)
   'storeSupply', 'takeStoredSupply', 'takeFromCityDump', 'protectCharacter', 'moveShift',
   'selfReady', 'cancelReveal', 'advanceCharacter',
@@ -40,6 +42,8 @@ export const MOD_KEYS = new Set([
   'recruitDiscount', 'challengeDiscount', 'rehireDiscount', 'shiftBonus', 'extraAdvance', 'lossShield',
   'unemploymentShield', 'unchallengeable', 'cancelNextChallenge', 'eventCharReduction', 'skipNextAdvance',
   'cancelNextReveal',
+  // a Building bought cheaper: the one Capital City card a Character may discount
+  'buildingDiscount',
 ]);
 /** Keys an Ordinance may change while it is displayed; read by cityRule() in the engine. */
 export const CITY_RULE_KEYS = new Set(['pledgeLadderDelta', 'statueCostDelta', 'buildingCostDelta', 'noRaises',

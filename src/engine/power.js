@@ -82,6 +82,7 @@ function statuePriceFor(rules) {
 
 const MOD_VALUE = {
   recruitDiscount: 1.0,
+  buildingDiscount: 1.2, // a Building is bought at auction against a rival, so a discount on one is a bid
   challengeDiscount: 1.0,
   rehireDiscount: 1.0,
   shiftBonus: 1.2,
@@ -241,7 +242,14 @@ export function effectPower(eff) {
       return 0.75 * READY * n(eff.count) * (eff.optional ? 0.95 : 1);
     case 'scryDeck':
       // Seeing the top of your own deck and binning what you do not want: card quality, not cards.
-      return 0.45 * n(eff.count);
+      // Sending them to the Town Dump is worth more than bottoming them — the card is gone until the
+      // Dump is shuffled back in, rather than merely postponed.
+      return 0.45 * n(eff.count) * (eff.to === 'dump' ? 1.35 : 1);
+    case 'makeBusy':
+      // The mirror of advanceCharacter, pointed across the table: a turn of the rival's tempo, not a
+      // job taken. Worth a little less than waking your own animal, because it never touches a
+      // Character mid-shift and the rival chooses nothing about it.
+      return 0.65 * READY * n(eff.count) * (eff.optional ? 0.95 : 1);
     case 'behindPlayerGains':
       return 0.55 * (n(eff.supply, 0) + DRAW * n(eff.cards, 0));
     case 'behindPlayerReadies':
@@ -377,8 +385,21 @@ export function cardPower(card, rules) {
   let runs;
   if (limited) runs = card.duration || 1;
   else if (card.type === 'building') runs = BUILDING_RUNS;
+  // A retained hire only fires its abilities for as long as the retainer lasts, and the body goes
+  // home with them. `leavesAfter` therefore caps the runs and discounts the whole card.
+  else if (card.leavesAfter) runs = card.leavesAfter;
   for (const ab of card.abilities || []) power += abilityPower(ab, runs);
+  if (card.leavesAfter) power *= termFactor(card.leavesAfter);
   return power;
+}
+
+/**
+ * What a Character is worth when the town only has them for a while. A game runs a dozen turns or
+ * so a side, so a 2-turn retainer is a fraction of a resident animal; the curve flattens as the term
+ * grows and never quite reaches 1, because a hire that leaves can never be upgraded or bid with late.
+ */
+function termFactor(turns) {
+  return Math.min(0.95, 0.32 + 0.14 * turns);
 }
 
 /**

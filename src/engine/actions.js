@@ -2,6 +2,7 @@
 import {
   cardDef, topCard, log, nextUid, opponentOf, entryOrientation, rankOf, hasPassive, hasMod, getMod, consumeMod,
   canAct, findStack, cityRule, refillCity, townFootprint, townCap, hasTownRoom, UPRIGHT, BUSY,
+  getModFor, consumeModFor,
 } from './state.js';
 import {
   ask, gainSupply, draw, discard, makeStack, fireHook, runEffect, matchesFilter, isSelfReadyEffect,
@@ -19,7 +20,9 @@ export function recruitCost(state, pi, cardId, targetUid = null) {
     const under = s ? topCard(state, s) : cardDef(state, p.unemployment.find((c) => c.uid === targetUid).cardId);
     cost = def.cost - under.cost;
   }
-  cost = Math.max(0, cost - getMod(p, 'recruitDiscount'));
+  // A recruit discount may be typed (the café rate applies to Food animals only); an untyped one
+  // applies to everybody, exactly as before.
+  cost = Math.max(0, cost - getModFor(p, 'recruitDiscount', def));
   return cost;
 }
 
@@ -147,7 +150,10 @@ export function cardCostFor(state, pi, cardId) {
     const tier = statueTierFor(state.rules, state.players[pi].victoryRow.length);
     if (tier !== null) return Math.max(0, tier + cityRule(state, 'statueCostDelta'));
   }
-  return Math.max(0, def.cost + (def.type === 'building' ? cityRule(state, 'buildingCostDelta') : 0));
+  if (def.type !== 'building') return Math.max(0, def.cost);
+  // A Building is the one Capital City card a Character may make cheaper: the stonecutter knows
+  // what a roof is worth. City rules (an Ordinance) and a `buildingDiscount` mod both apply.
+  return Math.max(0, def.cost + cityRule(state, 'buildingCostDelta') - getMod(state.players[pi], 'buildingDiscount'));
 }
 
 
@@ -388,7 +394,7 @@ export async function applyAction(state, pi, a) {
       const cost = recruitCost(state, pi, def.id, a.targetUid || null);
       if (cost > p.supply) throw new Error('Cannot afford');
       p.supply -= cost;
-      if (getMod(p, 'recruitDiscount')) consumeMod(p, 'recruitDiscount');
+      if (getModFor(p, 'recruitDiscount', def)) consumeModFor(p, 'recruitDiscount', def);
       const [c] = p.hand.splice(idx, 1);
       p.stats.recruits++;
       p.turn.recruits++;

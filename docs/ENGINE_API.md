@@ -176,8 +176,36 @@ Passive keys: `winTiesAsChallenger`, `blockOpponentBidRaise`, `firstAnnounceMinB
 `eventCharReductionPerTurn`, `firstBidPlus1`, and the Statue burdens `opponentRehireDiscount`,
 `opponentFirstBidPlus1`, `apprenticeEntersBusy`, `eventCostPlus1`, `resourceSupplyMinus1`, `losingBidsPayFull`.
 
+Opponent-facing ops: `unemployOpponentCharacter`, `opponentTopdeckFromHand`, `makeBusy`.
+
 Disruption effect ops (global, both players): `allCharactersToUnemployment`, `endAllShifts`, `everyoneLosesSupply`,
 `everyoneGainsSupply`, `everyoneDraws`, `everyoneDiscardsDownTo`, `blockNextReady`, `everyoneRehiresFree`.
+
+## Card data: the remade collection's verbs (v0.7.1)
+
+Six additions, each written because a character in `spec/maker_card_set.json` needed something the
+engine could not say (`docs/REMAKING_A_CHARACTER.md`; the wish that produced each one is kept in that
+character's `wantedVerbs`). Nothing in the printed set uses them, so every printed rating is unchanged.
+
+- **`makeBusy`** — the mirror of `advanceCharacter`, pointed across the table: an opponent's Character
+  turns one step *away* from upright. Takes `count`, `filter` and `optional`. It keeps
+  `advanceCharacter`'s manners: never a Character mid-shift, never one pledged into an auction, never
+  one a Hedgehog has quilled (`isProtected`), and never past the entry face.
+- **`scryDeck: { to: "dump" }`** — what you do not want goes to your Town Dump instead of the bottom of
+  your deck. Without `to` the verb behaves exactly as it always has.
+- **`protectCharacter: { filter: { notSelf: true } }`** — the quills go around another Character. Without
+  it the source protects itself whenever it legally can, as before.
+- **Filtered mods** — `addMod` may carry a `filter` (`study`, `studyIn`, `species`, `type`, `maxCost`)
+  naming what the mod applies to. `getModFor` / `consumeModFor` in `state.js` total and spend only the
+  mods that match the card in hand; an unfiltered mod matches everything. `recruitCost` uses them, so a
+  recruit discount can be good for one study and not another.
+- **`buildingDiscount`** — a mod key `cardCostFor` applies to Buildings only, alongside an Ordinance's
+  `buildingCostDelta`. The one Capital City price a Character may move.
+- **`leavesAfter: N`** on a card — a hire with a term. A `marketCharacter` carrying it arrives with
+  `stack.termRemaining`, which ticks down in `endPhase` (where Limited Events expire) and sends the
+  animal back to the Capital City's City Dump when it runs out. A Character pledged into an open
+  auction does not tick: the town cannot send home what it has bid. `power.js` caps such a card's
+  ability runs at the term and discounts the whole card by `termFactor`.
 
 ## Card data: naming a Character (v0.4.0)
 
