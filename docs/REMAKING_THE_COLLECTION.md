@@ -24,6 +24,10 @@ as they are.
 
 ## Writing a maker card
 
+Cards are written a character at a time, out of that character's backstory — the process is
+[REMAKING_A_CHARACTER.md](REMAKING_A_CHARACTER.md), and `/remake-character` loads it for an agent.
+This section is just the file format.
+
 Add an object to `cards` in `spec/maker_card_set.json`. It uses the same fields as a printed card
 (see the `$comment` at the top of `spec/starter_card_set.json`), plus one:
 
@@ -36,12 +40,13 @@ Add an object to `cards` in `spec/maker_card_set.json`. It uses the same fields 
   "species": "Squirrel",
   "study": "Commerce",
   "cost": 2,
-  "rarity": "Super Rare",
   "shift": { "delay": 1, "output": 2 },
   "text": "Busy: take every Supply your Characters have put by.",
   "remakes": "rr_acorn_1"          // the printed card this replaces — an id, or a list of ids
 }
 ```
+
+`rarity` and `power` are left off: `npm run stamp` computes them from the card and writes them in.
 
 `remakes` is the point of the whole thing: it is **an id, not a name**. Rename the card, give it a
 new title, move it to a different species — the link still points at the printed card it came from,
@@ -94,7 +99,10 @@ Regenerate them after every batch of remade cards: the "Remade" columns are fill
 
 | File | What it does |
 | --- | --- |
-| `spec/maker_card_set.json` | the remade collection (starts empty) |
+| `docs/REMAKING_A_CHARACTER.md` | the process for remaking one character |
+| `docs/TOWN_BIBLE.md` | the shared world every backstory must agree with |
+| `.claude/skills/remake-character/SKILL.md` | loads the process for an agent |
+| `spec/maker_card_set.json` | the remade collection: backstories and cards (starts empty) |
 | `src/engine/characters.js` | Characters and their versions — used by the sort and the spreadsheet |
 | `src/ui/remade.js` | the tick list: storage, the maker-card link, export/import |
 | `src/ui/deckbuilder.js` | the shelves, the sort row and the tick buttons |

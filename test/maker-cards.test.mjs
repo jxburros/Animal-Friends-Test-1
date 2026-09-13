@@ -40,6 +40,40 @@ test('every maker card remakes printed cards that exist', () => {
   }
 });
 
+test('every remade character is well formed and accounts for its printed versions', () => {
+  const entries = MAKER.characters || [];
+  assert.ok(Array.isArray(entries), 'the maker set needs a characters list');
+  const names = entries.map((c) => c.name);
+  assert.equal(new Set(names).size, names.length, 'a character is remade once');
+  for (const entry of entries) {
+    for (const field of ['name', 'species', 'backstory']) {
+      assert.ok(entry[field], `character entry ${entry.name || '?'} needs ${field}`);
+    }
+    // Species is fixed: a remade character keeps the species its printed versions had.
+    const printed = SET.cards.filter((c) => c.name === entry.name && (c.type === 'character' || c.type === 'marketCharacter'));
+    if (printed.length) {
+      assert.equal(entry.species, printed[0].species, `${entry.name} changed species`);
+    }
+    const retired = (entry.retires || []).map((r) => (typeof r === 'string' ? r : r.id));
+    for (const r of entry.retires || []) {
+      if (typeof r !== 'string') assert.ok(r.why, `${entry.name} retires ${r.id} with no reason`);
+    }
+    for (const id of retired) {
+      assert.ok(printedById[id], `${entry.name} retires unknown printed card ${id}`);
+      const claim = MAKER.cards.find((c) => [].concat(c.remakes || []).includes(id));
+      assert.ok(!claim, `${entry.name} retires ${id}, but ${claim && claim.id} also remakes it`);
+    }
+    // The promise of the process: once a character is remade, no printed version is left silent.
+    const claimed = new Set(MAKER.cards.flatMap((c) => [].concat(c.remakes || [])));
+    for (const def of printed) {
+      assert.ok(
+        claimed.has(def.id) || retired.includes(def.id),
+        `${entry.name} is remade but printed version ${def.id} is neither remade nor retired`,
+      );
+    }
+  }
+});
+
 test('the printed set is unaffected by the maker shelf', () => {
   // The game's own decks still resolve entirely out of the printed set.
   for (const deck of SET.decks) {
