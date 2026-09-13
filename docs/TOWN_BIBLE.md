@@ -111,6 +111,24 @@ add to the list.
   animals down. It turned Comet down twice before she got the seat on her third application. Comet
   is also the animal the Science hall asks before it bids on anything, because she has read the
   Capital City's manifests, the dock lists and the Observatory's own order book. [Comet]
+- **Copper keeps the borough's weights and measures**, and under the weights office is a cellar he
+  has been stocking since he was an apprentice — salt, lamp oil, candle stock and a shelf of small
+  coin. It has never been opened. It was not opened the year the bridge went, and it was not opened
+  the winter the Grain Exchange shut for six weeks; both times Copper lent out the salt on the quiet
+  and said there would be worse. Animals who know about the cellar have asked. [Copper]
+- **The Grain Exchange shut for six weeks one winter**, and the bridge went in another year. Both are
+  the borough's reference points for a bad season, and any character old enough may have been caught
+  by either. [Copper]
+- **Dylan holds the River Otter licence** and has since he was very young, by means he has never
+  stated — he answers the question with a story instead, and the story changes. He comes up the
+  river on no schedule, is hired by the day, and is gone inside a week. Asked plainly for help he
+  gives it and gives it well, which is the one reliable fact about him. Brooke, who is working toward
+  the same licence, has met him twice. [Dylan, Brooke]
+- **Rosabeth's garden is where animals are put back together.** An animal who has lost a place and
+  stopped getting up ends up at her gate, usually sent by somebody, and is set to work on the beds
+  until they are fit to be somewhere else; half the Hiring Hall's second chances started there. Her
+  tinctures are the only remedies in the First Boroughs that reliably work, and the Science hall has
+  twice failed to account for why. She charges for the tincture and never for the rest. [Rosabeth]
 
 ## Relationships
 
@@ -119,6 +137,8 @@ add to the list.
 - **Bob and Betty are twins**, born the same morning at the far end of the borough, and are as
   unlike as two hedgehogs can be: Bob stops, Betty goes. They are on good terms and see each other
   rarely, which both of them regard as the natural order. [Bob, Betty]
+- **Rosabeth sings to her plants**, out loud, in full view, and has for thirty years. The borough
+  stopped finding it strange in about the second decade and now regards it as weather. [Rosabeth]
 - **Peanut keeps the books for half the borough**: the grange's feed bills, the ferry's tolls, the
   guild's quarterly returns. A character with accounts has plausibly had them audited, kindly, by
   Peanut. [Peanut]
@@ -137,6 +157,8 @@ be read.
 | Biff | Bristle | 2026-09-13 |
 | Brooke | Brook | 2026-09-13 |
 | Betty | Burr | 2026-09-13 |
+| Dylan | Dabble | 2026-09-13 |
+| Rosabeth | Dill | 2026-09-13 |
 
 ## Additions
 

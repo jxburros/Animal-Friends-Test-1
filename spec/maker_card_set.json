@@ -6,6 +6,7 @@
  "note": "Work in progress: cards here cannot be put in a deck yet.",
  "species": [
   "Rabbit",
+  "Mouse",
   "Hedgehog",
   "Badger",
   "Otter",
@@ -342,6 +343,72 @@
    "remade": "2026-09-13",
    "retires": [],
    "wantedVerbs": []
+  },
+  {
+   "name": "Copper",
+   "species": "Cat",
+   "studies": [
+    "Commerce",
+    "Civics"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Copper keeps the borough's weights and measures, and has never in his life spent a coin he could put away instead. This is not meanness — ask anyone he has quietly carried through a bad quarter — it is a settled conviction that something is coming. He does not say what. He has never said what. He simply believes, with the calm of an animal who has thought it through, that the town is one bad winter from finding out how little it set aside, and that somebody had better be ready.\n\nThe cellar under the weights office is the proof. It has been filling since he was an apprentice: salt, lamp oil, candle stock, a shelf of small coin nobody has counted but Copper. Twice now the borough has had exactly the kind of season he stocked it for — the year the bridge went, and the winter the Grain Exchange shut for six weeks — and both times the animals who knew about the cellar came and asked, and both times Copper said the same thing. Not yet. This is bad. There will be worse. He lent them the salt on the quiet and did not open the shelf.\n\nWhat this makes him, at the market, is the cheapest animal in the borough to do business with. Copper has read every schedule of fees the Capital City prints and knows which of them can be got round; he buys at the bottom of the day, rehires at the bottom of the month, and has a way of announcing a price so mild that the room takes a moment to notice it was a price. He is not chasing a bargain. He is building the cellar, and the bargains are just how far his coin goes.",
+   "voice": "Quiet, mild, apologetic about numbers. Says 'not yet' and 'we'll see' and means both. Never raises his voice and never rounds up.",
+   "arc": "Five versions, one unopened cellar. The Penny Counter at 0 keeps the Cat signature the printed set gave him — Copper gets up when he should not, because he has remembered something he did not put away. The three in the middle are the cellar doing its work at ordinary scale: the next animal recruited costs less (1), the next raid on your Supply simply does not land (2), the first price he names each turn is a penny under what it should be (3). The Market Steward at 5 is all of it at once, plus the one thing the whole story is about — when a rival challenges him and it costs him, Copper gets it back. Nobody has ever seen the shelf.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "a trigger that fires when Supply is taken from you",
+     "why": "The maker asked for effects that RECOVER lost Supply. Nothing in the engine notices a loss as it happens: there is no `onSupplyLost`, so a card cannot say 'whenever an opponent takes Supply from you, take half of it back'. `lossShield` prevents the loss instead, which is a different promise and reads as caution rather than recovery.",
+     "workaround": "Both halves, separately. `lossShield` on the cost-2 is the cellar stopping the loss, and `onChallengedByOpponent → gainSupply` on the cost-5 is the nearest thing the engine has to being paid back for a raid — the one moment a rival reliably costs you Supply and the game tells the card about it."
+    },
+    {
+     "verb": "`storeSupply` on a Cat",
+     "why": "'Saving for a rainy day' is literally the Squirrel's signature — caching Supply on a card, safe from shared shocks, to be spent later — and it is exactly Copper's cellar. It is off-limits here: spec/species.json gives `storeSupply` to Squirrels as the one thing only they do, and handing it to a Cat blurs two species for the sake of one joke.",
+     "workaround": "Built the cellar as discounts and shields rather than as a cache. Copper's Supply is not put by, it simply goes further — which is the same story from the other end, and leaves the Squirrels their verb."
+    }
+   ]
+  },
+  {
+   "name": "Dylan",
+   "renamedFrom": "Dabble",
+   "species": "Otter",
+   "studies": [
+    "Commerce"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Dylan holds the River Otter licence, which is the thing half the docks are working toward and which he has had since he was absurdly young. He will not tell you how. He will tell you a story about how, and it will be a very good story, and it will be different the next time, and somewhere in the third or fourth telling you will notice that he has never once actually said.\n\nHe comes up the river on no schedule anybody has established, ties up, and within an hour is the most talked-about animal in the borough. The tales are the point: the tide that ran backwards, the cargo he will not describe, the winter he spent somewhere with no name. Half the borough is a little in love with him and the other half is pretending not to be. He is warm to everyone, promises nothing to anyone, and has broken no hearts on any account the Registrar can find, which several animals regard as suspicious in itself.\n\nThe thing the borough has slowly worked out about Dylan, under all of it, is that he is not actually playing with anyone. Ask him for help — plainly, out loud, for something real — and he puts the story down mid-sentence and does it, and does it better and faster than the animal who asked could have. Then he is gone again, usually before the week is out, and the next anyone hears is a rumour off a barge. Brooke has met him twice and has taken notes both times.",
+   "voice": "Low, unhurried, amused. Answers a direct question with a better story. The one time he is plain is the one time it matters.",
+   "arc": "One hired animal, because that is what he is — he is never in a town long enough to have versions. He arrives already able to do the Otter's whole trick: the work slides off whoever is carrying it onto whoever is free, and somebody is up and about tomorrow who had no business being. And then the term runs out and he goes back to the river, which is the only honest way to print him.",
+   "remade": "2026-09-13",
+   "retires": [],
+   "wantedVerbs": []
+  },
+  {
+   "name": "Rosabeth",
+   "renamedFrom": "Dill",
+   "species": "Mouse",
+   "studies": [
+    "Agriculture",
+    "Science",
+    "Civics",
+    "Lore"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Rosabeth talks to her plants. She sings to them too, and on a good morning she dances down the rows doing it, and she has been doing this for thirty years in full view of a borough that gave up being surprised about it some time in the second decade. There is a persistent and not entirely unfair joke that she likes the garden better than the animals in it. Rosabeth has heard the joke and finds it funny and has never bothered to correct it.\n\nShe ought to be correcting it, because the whole point of the garden is the shelf it fills. Rosabeth's tinctures are half herb and half something she will describe as the moon, or the mood of the bed, or what the rosemary told her, and they are the only remedies in the First Boroughs that reliably work. Nobody can account for it. The Science hall has been through her notes twice and come away with a list of ingredients and no method. She is entirely relaxed about this and says the method is the singing.\n\nWhat she is actually for, and what the borough forgets to say out loud, is getting animals back on their feet. An animal who has lost a place and stopped getting up in the morning ends up at Rosabeth's gate sooner or later, usually sent by somebody, and Rosabeth puts a mug of something in their paws and sets them to work on the beds until they are fit to be somewhere else. Half the Hiring Hall's second chances started in that garden. She charges for the tincture and never for the rest of it.",
+   "voice": "Warm, dreamy, faintly sing-song. Talks to the plants mid-conversation and does not treat it as an interruption. Absolutely certain about things she cannot explain.",
+   "arc": "Four versions and one job under all of them: getting an animal back into work. It escalates by how much of the cost she absorbs — at 0 a shift in the garden knocks a Supply off the next rehire, at 2 she brings somebody back herself for a Supply less, at 5 she brings them back for nothing and reads something out of it besides. The Apothecary at 3 is the one card that does not rehire, and it keeps the Mouse's signature the printed Dill was built on: every recipe comes back out of the Town Dump eventually, because Rosabeth never throws a recipe away.",
+   "remade": "2026-09-13",
+   "notes": "The printed Herbalist Surgeon (mh_dill_5) drew a card when you also controlled Fern, and credited her field notes. Dropped: the link is not in Rosabeth's story, and Fern has not been remade, so a `name: 'Fern'` condition on a maker card would be pointing at a name the maker may yet change.",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "`rehire` with a filter on who it can bring back",
+     "why": "`rehire` filters only on cost (`cost`, `maxCost`). Rosabeth's garden takes the animal who has been down longest, not the cheapest one, and the story wanted to say so — oldest in Unemployment, or a Character of a named study.",
+     "workaround": "Left the choice open on every rehire: the Mayor picks, which is what the printed set does everywhere and reads as Rosabeth taking whoever came to the gate."
+    }
+   ]
   }
  ],
  "cards": [
@@ -2301,6 +2368,403 @@
     "score": 1.86,
     "power": 3,
     "opportunityCost": 3.3
+   }
+  },
+  {
+   "id": "mk_copper_penny_counter_0",
+   "type": "character",
+   "name": "Copper",
+   "title": "Penny Counter",
+   "job": "Penny Counter",
+   "species": "Cat",
+   "study": "Commerce",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Busy, once per game: Copper readies himself.",
+   "flavor": "Counts the till twice and sleeps in it once. The second count is never about the till; it is about something he meant to put away and did not.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "selfReady",
+      "oncePerGame": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "townlife",
+    "tile": 15
+   },
+   "remakes": "ns_copper_0",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.53,
+    "power": 5.9,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_copper_scale_polisher_1",
+   "type": "character",
+   "name": "Copper",
+   "title": "Scale Polisher",
+   "job": "Scale Polisher",
+   "species": "Cat",
+   "study": "Commerce",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Copper. When Copper is recruited, the next Character you recruit costs 1 less.",
+   "flavor": "An honest measure makes a lasting friendship, and a lasting friendship makes a better price. Copper has never seen any tension between those two things.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 5
+   },
+   "remakes": "ww_copper_1",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.83,
+    "power": 8.9,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_copper_weights_inspector_2",
+   "type": "character",
+   "name": "Copper",
+   "title": "Weights Inspector",
+   "job": "Weights Inspector",
+   "species": "Cat",
+   "study": "Civics",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Copper. When Copper becomes upright, the next 2 Supply an opponent's effect would take from you is not taken.",
+   "flavor": "The merchants who used to lean on his scales learned to stop. Whatever they try next, Copper has already worked out what it would cost and put that much aside.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "addMod",
+      "key": "lossShield",
+      "value": 2,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 5
+   },
+   "remakes": "mh_copper_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.85,
+    "power": 10.45,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_copper_arcade_merchant_3",
+   "type": "character",
+   "name": "Copper",
+   "title": "Arcade Merchant",
+   "job": "Arcade Merchant",
+   "species": "Cat",
+   "study": "Commerce",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Copper. The first purchase you announce each turn may be announced for 1 less.",
+   "flavor": "He names a figure so mildly that the arcade takes a moment to notice it was a figure, and by then he has moved on to the weather.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "firstAnnounceMinBidMinus1"
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 5
+   },
+   "remakes": "ww_copper_2",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.07,
+    "power": 9.25,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_copper_market_steward_5",
+   "type": "character",
+   "name": "Copper",
+   "title": "Market Steward",
+   "job": "Market Steward",
+   "species": "Cat",
+   "study": "Commerce",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Copper. At the start of your turn, the next Character you recruit costs 1 less. Whenever an opponent challenges one of your purchases, gain 2 Supply.",
+   "flavor": "The year the bridge went, they came and asked him to open the shelf. He said not yet. He said there will be worse. He lent them the salt on the quiet and the shelf is still shut.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    },
+    {
+     "trigger": "onChallengedByOpponent",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 5
+   },
+   "remakes": "ww_copper_3",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.71,
+    "power": 14.9,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_dylan_river_otter_4",
+   "type": "marketCharacter",
+   "name": "Dylan",
+   "title": "River Otter",
+   "job": "River Otter",
+   "species": "Otter",
+   "study": "Commerce",
+   "cost": 4,
+   "shift": {
+    "delay": 1,
+    "output": 3
+   },
+   "leavesAfter": 3,
+   "text": "Hired from the Capital City; enters Busy, and goes back to the river after three of your turns. When Dylan is recruited, another Character you control is upright at the start of your next turn. Busy: move a shift from one of your Characters to another.",
+   "flavor": "He has held the licence since he was absurdly young and will not tell you how. He will tell you a story about how, and it is a very good story, and it is different every time.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "readyNextTurn",
+      "filter": {
+       "notSelf": true
+      },
+      "optional": true
+     }
+    },
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "moveShift"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 0
+   },
+   "remakes": "mkt_dabble",
+   "rarity": "Legendary",
+   "power": {
+    "score": 6.74,
+    "power": 15.8,
+    "opportunityCost": 8.4
+   }
+  },
+  {
+   "id": "mk_rosabeth_herb_gatherer_0",
+   "type": "character",
+   "name": "Rosabeth",
+   "title": "Herb Gatherer",
+   "job": "Herb Gatherer",
+   "species": "Mouse",
+   "study": "Agriculture",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Rosabeth completes a shift, rehiring a Character from your Unemployment costs 1 less until your next turn.",
+   "flavor": "A basket twice her size, mint and thyme and something she will not name, and a song the whole row seems to know the end of.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "addMod",
+      "key": "rehireDiscount",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 2
+   },
+   "remakes": "bb_dill_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.08,
+    "power": 5.14,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_rosabeth_tincture_maker_2",
+   "type": "character",
+   "name": "Rosabeth",
+   "title": "Tincture Maker",
+   "job": "Tincture Maker",
+   "species": "Mouse",
+   "study": "Science",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Rosabeth. When Rosabeth is recruited, you may rehire a Character from your Unemployment for 1 less Supply.",
+   "flavor": "The Science hall has been through her notes twice and come away with a list of ingredients and no method. She is entirely relaxed about this. The method, she says, is the singing.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "rehire",
+      "discount": 1,
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 2
+   },
+   "remakes": "ns_dill_2",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.5,
+    "power": 9.69,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_rosabeth_apothecary_3",
+   "type": "character",
+   "name": "Rosabeth",
+   "title": "Apothecary",
+   "job": "Apothecary",
+   "species": "Mouse",
+   "study": "Civics",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Rosabeth. Busy: return an Event from your Town Dump to your hand.",
+   "flavor": "She closes the shop by putting every jar back where the jar wants to be, which takes a while, and she has never once thrown a recipe away.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "eventFromDumpToHand",
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 2
+   },
+   "remakes": "bb_dill_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.77,
+    "power": 10.85,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_rosabeth_herbalist_physician_5",
+   "type": "character",
+   "name": "Rosabeth",
+   "title": "Herbalist Physician",
+   "job": "Herbalist Physician",
+   "species": "Mouse",
+   "study": "Lore",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "Upgrades Rosabeth. When Rosabeth becomes upright, you may rehire a Character from your Unemployment for free, then draw 1 card.",
+   "flavor": "Half the Hiring Hall's second chances started at her gate with a mug of something and an afternoon on the beds. She charges for the tincture and never for the rest of it.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "rehire",
+        "free": true,
+        "optional": true
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 2
+   },
+   "remakes": "mh_dill_5",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.77,
+    "power": 15.05,
+    "opportunityCost": 11
    }
   }
  ],
