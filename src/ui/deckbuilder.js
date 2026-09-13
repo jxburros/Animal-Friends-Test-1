@@ -112,10 +112,15 @@ function removeCopy(cardId) {
   render();
 }
 
-/** Every card of the shelf being browsed, before filtering: only deckable card types. */
+/**
+ * Every card of the shelf being browsed, before filtering.
+ * The printed shelf shows only what a deck may hold. The Maker shelf holds nothing deckable yet, so
+ * it shows everything on it — including the Capital City hires (`marketCharacter`), which are part
+ * of a remade character's set and would otherwise be invisible.
+ */
 function shelfCards() {
-  const set = section === 'maker' ? ctx.makerSet : ctx.set;
-  return ((set && set.cards) || []).filter((c) => c.type === 'character' || c.type === 'event');
+  if (section === 'maker') return ((ctx.makerSet && ctx.makerSet.cards) || []);
+  return ctx.set.cards.filter((c) => c.type === 'character' || c.type === 'event');
 }
 
 function matchesFilters(c) {

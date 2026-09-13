@@ -417,6 +417,27 @@ function foodBackdrop(grand) {
   return s;
 }
 
+/** Entertainment: a lit stage, a stand microphone and the room's lanterns. */
+function entertainmentBackdrop(grand) {
+  const skyC = grand ? '#2f2747' : '#4a3d63';
+  let s = sky(skyC, 62);
+  s += `<ellipse cx="80" cy="60" rx="46" ry="26" fill="${grand ? '#ffe9a8' : '#f3d98f'}" opacity="0.5"/>`;
+  s += ground('#6b4a3a', 62);
+  s += `<rect x="0" y="62" width="160" height="4" fill="${INK}" opacity="0.45"/>`;
+  for (const x of [16, 144]) {
+    s += `<line x1="${x}" y1="6" x2="${x}" y2="18" stroke="${INK}" stroke-width="1.4"/>`;
+    s += `<circle cx="${x}" cy="22" r="5" fill="${CREAM}" stroke="${INK}" stroke-width="1.4"/>`;
+  }
+  s += `<line x1="80" y1="52" x2="80" y2="92" stroke="${INK}" stroke-width="2"/>`;
+  s += `<ellipse cx="80" cy="49" rx="5" ry="7" fill="#8f8f9c" stroke="${INK}" stroke-width="1.6"/>`;
+  s += `<path d="M70 92 H90" stroke="${INK}" stroke-width="2.4" stroke-linecap="round"/>`;
+  if (grand) {
+    s += bunting(20, 10, 120, [GOLD, CREAM, PLUM]);
+    s += starDot(46, 30, 1, '#fff3c2') + starDot(116, 34, 0.9, '#fff3c2');
+  }
+  return s;
+}
+
 function studyBackdrop(study, grand) {
   if (study === 'Science') return scienceBackdrop(grand);
   if (study === 'Agriculture') return agricultureBackdrop(grand);
@@ -426,6 +447,7 @@ function studyBackdrop(study, grand) {
   if (study === 'Crafts') return craftsBackdrop(grand);
   if (study === 'Lore') return loreBackdrop(grand);
   if (study === 'Food') return foodBackdrop(grand);
+  if (study === 'Entertainment') return entertainmentBackdrop(grand);
   return sky('#e6e6ee', 60) + ground('#cfc7d9', 60);
 }
 
@@ -1428,6 +1450,7 @@ const ICONS = {
   Commerce: () => `<line x1="10" y1="2" x2="10" y2="16" stroke="currentColor" stroke-width="1.6"/><line x1="4" y1="6" x2="16" y2="6" stroke="currentColor" stroke-width="1.6"/><path d="M4 6 L1.5 12 A3 3 0 0 0 6.5 12 Z" fill="currentColor"/><path d="M16 6 L13.5 12 A3 3 0 0 0 18.5 12 Z" fill="currentColor"/><rect x="7" y="16" width="6" height="2" fill="currentColor"/>`,
   Science: () => `<path d="M8 2 H12 M9 2 V8 L4 16 Q3 18 5 18 H15 Q17 18 16 16 L11 8 V2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M6.5 13 H13.5 L15.4 16.6 H4.6 Z" fill="currentColor"/><circle cx="14" cy="4" r="1.2" fill="currentColor"/><circle cx="17" cy="8" r="0.9" fill="currentColor"/>`,
   Food: () => `<path d="M4 7 H14 V13 Q14 16 11 16 H7 Q4 16 4 13 Z" fill="currentColor"/><path d="M14 8.5 Q18 8.5 18 11 Q18 13.5 14 13.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 5 Q8.6 3 7 1 M11 5 Q12.6 3 11 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>`,
+  Entertainment: () => `<path d="M8 16 V4 L16 2 V13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><ellipse cx="5.6" cy="16" rx="3.4" ry="2.6" transform="rotate(-18 5.6 16)" fill="currentColor"/><ellipse cx="13.6" cy="13" rx="3.4" ry="2.6" transform="rotate(-18 13.6 13)" fill="currentColor"/>`,
   Civics: () => `<polygon points="10,2 17,7 3,7" fill="currentColor"/><rect x="4" y="8" width="2" height="8" fill="currentColor"/><rect x="9" y="8" width="2" height="8" fill="currentColor"/><rect x="14" y="8" width="2" height="8" fill="currentColor"/><rect x="3" y="16" width="14" height="2" fill="currentColor"/>`,
   apprentice: () => iconStarShape(10, 10, 7),
   journeyman: () => iconStarShape(6, 11, 5) + iconStarShape(14, 11, 5),

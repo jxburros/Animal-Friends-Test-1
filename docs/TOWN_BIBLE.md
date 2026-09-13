@@ -50,15 +50,33 @@ add to the list.
 
 ## History
 
-- **The café by the Hiring Hall** was a failing counter until Peanut took it over, and is now where
-  the borough's accounts are kept, its prices are compared and its hiring is gossiped about. Any
-  character who works for wages has stood at that counter. [Peanut]
+- **The café by the Hiring Hall** is Bean's — their parents ran it for thirty years and left it to
+  them without warning. It is where the borough's accounts are kept, its prices are compared and its
+  hiring is gossiped about; any character who works for wages has stood at that counter. Peanut keeps
+  its books and works the day counter; Bean owns it and never stops moving. [Bean, Peanut]
+  *(Supersedes the earlier note that Peanut took the café over — the maker gave it to Bean.)*
 - **Food is a study.** Feeding the town — counters, kitchens, carts and the café — is recognised work
   alongside Agriculture and Commerce, not a sideline of either. It was named when Peanut's café
   became the place half the borough's business got done. [Peanut]
 
+- **Oatmeal's family is large and close**: he is the oldest of nine, and four of his brothers and
+  sisters play in his band. A large Badger family in the wards is an established fact other
+  characters may have grown up next door to. [Oatmeal]
+- **Open mic nights** happen in whatever room will have them, and are a fixture of the town's
+  evenings rather than a rarity. [Oatmeal]
+- **Entertainment is a study.** The town's evenings — stages, bands, halls — are recognised work.
+  [Oatmeal]
+- **Barrow came out from the Capital City** after twenty years cutting stone there, specifically
+  because the First Boroughs are not finished being built. The Capital City is therefore a real place
+  animals emigrate *from*, and the borough reads as young and growing. [Barrow]
+- **Nobody knows where Barnaby is from.** They audit the Capital City's night books, they have no
+  address on file at the Hiring Hall, and the town has collectively decided not to pry. Anyone may
+  find this strange; nobody gets an answer. [Barnaby]
+
 ## Relationships
 
+- **Bean owns the café; Peanut runs its counter.** Bean inherited it, Peanut keeps the books, and on
+  the days Bean is coming apart Peanut quietly takes over. [Bean, Peanut]
 - **Peanut keeps the books for half the borough**: the grange's feed bills, the ferry's tolls, the
   guild's quarterly returns. A character with accounts has plausibly had them audited, kindly, by
   Peanut. [Peanut]
@@ -71,6 +89,7 @@ be read.
 | Now | Printed as | Remade |
 | --- | --- | --- |
 | Peanut | Acorn | 2026-09-13 |
+| Oatmeal | Barley | 2026-09-13 |
 
 ---
 

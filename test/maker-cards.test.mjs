@@ -8,7 +8,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { SET } from './helpers.mjs';
 import { characterIndex, groupByCharacter, characterOf, isCharacterCard } from '../src/engine/characters.js';
-import { EFFECTS, TRIGGERS, MOD_KEYS, CONDITIONS } from './card-vocabulary.mjs';
+import { EFFECTS, TRIGGERS, MOD_KEYS, CONDITIONS, PASSIVE_KEYS } from './card-vocabulary.mjs';
 
 const MAKER = JSON.parse(fs.readFileSync(new URL('../spec/maker_card_set.json', import.meta.url), 'utf8'));
 const printedById = Object.fromEntries(SET.cards.map((c) => [c.id, c]));
@@ -81,6 +81,11 @@ test('maker cards stay inside the vocabulary the engine interprets', () => {
       assert.ok(TRIGGERS.has(ab.trigger), `${card.id}: unknown trigger "${ab.trigger}"`);
       for (const key of Object.keys(ab.condition || {})) {
         assert.ok(CONDITIONS.has(key), `${card.id}: unknown condition "${key}"`);
+      }
+      // A passive is a standing rule named by `key`, not an effect that runs.
+      if (ab.trigger === 'passive') {
+        assert.ok(PASSIVE_KEYS.has(ab.key), `${card.id}: unknown passive key "${ab.key}"`);
+        continue;
       }
       walkEffect(ab.effect, `${card.id}.abilities`);
     }
