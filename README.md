@@ -212,22 +212,23 @@ on the book cover to browse the collection. The same treatment appears in play, 
 and card readers. Printed rarities and gameplay are unchanged. See the
 [collection and validation notes](docs/FULL_ART_COLLECTION.md) and [all twelve rendered cards](docs/screenshots/full-art-collection.png).
 
-The painted storybook edition uses three bundled atlases with 48 paintings, parchment nameplates,
+The painted storybook edition uses five bundled atlases with 80 paintings, parchment nameplates,
 botanical borders, and distinct type colors: forest-green Characters, midnight-blue Events,
 vermilion Market cards, and antique-gold Statues. The cover, game, card previews and Deck Workshop
 share this presentation. Select **Read** on any visible card to open its full artwork, rules and
 burden in a keyboard- and touch-accessible reading view; Escape closes it.
 
-`src/ui/painted-art.js` selects a painted scene by explicit atlas/tile when a card names one (`art: { atlas: "boroughs" | "whiskerwood" | "neighbors", tile }`), or by species
-and theme for other cards. These are **48 paintings, not 375 unique illustrations**: related cards retain different printed names, jobs,
+`src/ui/painted-art.js` selects a painted scene by explicit atlas/tile when a card names one (`art: { atlas: "boroughs" | "whiskerwood" | "neighbors" | "monuments" | "townlife", tile }`), or by species
+and theme for other cards. These are **80 atlas paintings**: related cards retain different printed names, jobs,
 stats and effects while sharing art. The twelve Full Art selections override their shared painting
 with an individual PNG from `assets/art/full-art/`, retaining the atlas and vector layers as fallbacks.
-All three PNG atlases and the twelve portraits ship with the game; no image
+All five PNG atlases and the twelve portraits ship with the game; no image
 service or external font request is needed to play. `src/ui/art.js` preserves the original per-card
 vector illustrations underneath the painted layer as a fallback for missing art or unknown species.
 `src/ui/storybook.css` owns the painted edition's presentation without changing rules or animation timing.
 
-See [the art direction and validation notes](docs/PAINTED_EDITION.md) for scene coverage and the
+See [the new monument and town scene assignments](docs/TOWN_SCENES_ART.md), or
+[the original art direction and validation notes](docs/PAINTED_EDITION.md) for scene coverage and the
 generation prompt, and [the rendered card preview](docs/screenshots/painted-cards.png).
 
 The user-supplied [Neighbors sheet](docs/NEIGHBORS_ART.md) adds 16 job-specific paintings assigned

@@ -1262,8 +1262,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 7
+    "atlas": "monuments",
+    "tile": 12
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Super Rare",
@@ -3117,8 +3117,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 7
+    "atlas": "townlife",
+    "tile": 3
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Rare",
@@ -3440,8 +3440,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 7
+    "atlas": "townlife",
+    "tile": 2
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Rare",
@@ -4377,6 +4377,10 @@
       "optional": true
      }
     ]
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 6
    }
   },
   {
@@ -4832,8 +4836,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 7
+    "atlas": "townlife",
+    "tile": 0
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Uncommon",
@@ -4938,7 +4942,11 @@
      }
     ]
    },
-   "shock": false
+   "shock": false,
+   "art": {
+    "atlas": "monuments",
+    "tile": 14
+   }
   },
   {
    "id": "rr_pip_1",
@@ -5295,7 +5303,11 @@
      }
     ]
    },
-   "shock": true
+   "shock": true,
+   "art": {
+    "atlas": "monuments",
+    "tile": 12
+   }
   },
   {
    "id": "bld_lending_library",
@@ -5315,8 +5327,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 7
+    "atlas": "monuments",
+    "tile": 9
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Uncommon",
@@ -5690,8 +5702,8 @@
    },
    "flavor": "There is always a chair at the long table for somebody who has been away.",
    "art": {
-    "atlas": "boroughs",
-    "tile": 8
+    "atlas": "monuments",
+    "tile": 13
    },
    "expansion": "AF-HATS-01",
    "rarity": "Uncommon",
@@ -6033,6 +6045,10 @@
       "optional": true
      }
     ]
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 9
    }
   },
   {
@@ -6159,6 +6175,10 @@
       "count": 1
      }
     ]
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 12
    }
   },
   {
@@ -6329,6 +6349,10 @@
       "count": 2
      }
     ]
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 12
    }
   },
   {
@@ -6523,8 +6547,8 @@
     "do": "endAllShifts"
    },
    "art": {
-    "atlas": "boroughs",
-    "tile": 11
+    "atlas": "townlife",
+    "tile": 13
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Uncommon",
@@ -6766,6 +6790,10 @@
     "free": true,
     "orientation": 270,
     "optional": true
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 2
    }
   },
   {
@@ -6922,6 +6950,10 @@
       "amount": 1
      }
     ]
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 5
    }
   },
   {
@@ -7163,6 +7195,10 @@
       "do": "opponentTopdeckFromHand"
      }
     ]
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 1
    }
   },
   {
@@ -7334,7 +7370,11 @@
      "burden": true
     }
    ],
-   "burden": "Burden: your Apprentices enter Busy instead of upright."
+   "burden": "Burden: your Apprentices enter Busy instead of upright.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 1
+   }
   },
   {
    "id": "mk_community_oven",
@@ -7377,6 +7417,10 @@
    "onGain": {
     "do": "gainSupply",
     "amount": 4
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 12
    }
   },
   {
@@ -7435,6 +7479,10 @@
       "expires": "untilUsed"
      }
     ]
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 8
    }
   },
   {
@@ -7500,7 +7548,11 @@
      "burden": true
     }
    ],
-   "burden": "Burden: your Events cost 1 more Supply."
+   "burden": "Burden: your Events cost 1 more Supply.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 2
+   }
   },
   {
    "id": "ww_thread_exchange",
@@ -7562,7 +7614,11 @@
      }
     ]
    },
-   "shock": true
+   "shock": true,
+   "art": {
+    "atlas": "townlife",
+    "tile": 11
+   }
   },
   {
    "id": "bb_early_riser",
@@ -7629,8 +7685,8 @@
    ],
    "flavor": "Pip reads to the whole square, and pauses at the good bits to see who is coming up the road.",
    "art": {
-    "atlas": "boroughs",
-    "tile": 10
+    "atlas": "monuments",
+    "tile": 9
    },
    "expansion": "AF-HATS-01",
    "rarity": "Common",
@@ -7680,7 +7736,11 @@
       "count": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 0
+   }
   },
   {
    "id": "st_generosity",
@@ -7722,7 +7782,11 @@
       "amount": 2
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 3
+   }
   },
   {
    "id": "bb_borrowed_basket",
@@ -7756,6 +7820,10 @@
       "count": 1
      }
     ]
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 6
    }
   },
   {
@@ -7790,6 +7858,10 @@
       "count": 1
      }
     ]
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 3
    }
   },
   {
@@ -8019,6 +8091,10 @@
       "optional": true
      }
     ]
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 12
    }
   },
   {
@@ -8097,6 +8173,10 @@
       "optional": true
      }
     ]
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 2
    }
   },
   {
@@ -8169,7 +8249,11 @@
       "amount": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 5
+   }
   },
   {
    "id": "mh_clovers_seed_drive",
@@ -8201,8 +8285,8 @@
    },
    "flavor": "Every packet Clover hands out comes back as a basket in the autumn.",
    "art": {
-    "atlas": "boroughs",
-    "tile": 9
+    "atlas": "townlife",
+    "tile": 5
    },
    "expansion": "AF-HATS-01",
    "rarity": "Common",
@@ -8227,8 +8311,8 @@
     "cards": 1
    },
    "art": {
-    "atlas": "boroughs",
-    "tile": 11
+    "atlas": "monuments",
+    "tile": 15
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Common",
@@ -8396,6 +8480,10 @@
       "do": "opponentTopdeckFromHand"
      }
     ]
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 15
    }
   },
   {
@@ -8446,6 +8534,10 @@
    "onGain": {
     "do": "gainSupply",
     "amount": 4
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 7
    }
   },
   {
@@ -8514,7 +8606,11 @@
      "key": "opponentFirstBidPlus1",
      "burden": true
     }
-   ]
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 4
+   }
   },
   {
    "id": "ww_shared_book",
@@ -8585,6 +8681,10 @@
       "count": 1
      }
     ]
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 10
    }
   },
   {
@@ -8627,6 +8727,10 @@
       "count": 1
      }
     ]
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 4
    }
   },
   {
@@ -8720,7 +8824,11 @@
      "burden": true
     }
    ],
-   "burden": "Burden: choosing Supply in your Resources phase gives you 1 less."
+   "burden": "Burden: choosing Supply in your Resources phase gives you 1 less.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 7
+   }
   },
   {
    "id": "dx_clear_skies",
@@ -8739,7 +8847,11 @@
     "do": "everyoneDraws",
     "count": 2
    },
-   "shock": false
+   "shock": false,
+   "art": {
+    "atlas": "monuments",
+    "tile": 15
+   }
   },
   {
    "id": "dx_rent_hike",
@@ -8824,8 +8936,8 @@
     "count": 2
    },
    "art": {
-    "atlas": "boroughs",
-    "tile": 11
+    "atlas": "townlife",
+    "tile": 10
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Common",
@@ -9253,6 +9365,10 @@
       "count": 1
      }
     ]
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 9
    }
   },
   {
@@ -9288,6 +9404,10 @@
       "count": 1
      }
     ]
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 15
    }
   },
   {
@@ -9506,7 +9626,11 @@
      "burden": true
     }
    ],
-   "burden": "Burden: every pledge you make in an auction must be one step more expensive than the ladder asks."
+   "burden": "Burden: every pledge you make in an auction must be one step more expensive than the ladder asks.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 6
+   }
   },
   {
    "id": "rr_bottomless_satchel",
@@ -9797,6 +9921,10 @@
     "maxCost": 2,
     "discardFirst": 1,
     "optional": true
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 3
    }
   },
   {
@@ -9876,6 +10004,10 @@
       "consumable": true
      }
     ]
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 4
    }
   },
   {
@@ -10038,8 +10170,8 @@
    },
    "flavor": "A new hat, the milliner says, is the first day of a new job.",
    "art": {
-    "atlas": "whiskerwood",
-    "tile": 15
+    "atlas": "monuments",
+    "tile": 11
    },
    "expansion": "AF-HATS-01",
    "rarity": "Common",
@@ -10066,6 +10198,10 @@
    "onGain": {
     "do": "gainSupply",
     "amount": 3
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 6
    }
   },
   {
@@ -10085,6 +10221,10 @@
    "onGain": {
     "do": "gainSupply",
     "amount": 3
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 0
    }
   },
   {
@@ -10127,6 +10267,10 @@
       "amount": 1
      }
     ]
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 14
    }
   },
   {
@@ -10166,7 +10310,11 @@
    "onReveal": {
     "do": "blockNextReady"
    },
-   "shock": false
+   "shock": false,
+   "art": {
+    "atlas": "townlife",
+    "tile": 13
+   }
   },
   {
    "id": "mk_whiskerwood_guildhall",
@@ -10229,8 +10377,8 @@
    },
    "flavor": "Sealed in wax and read aloud twice a year, whether anyone is listening or not.",
    "art": {
-    "atlas": "boroughs",
-    "tile": 10
+    "atlas": "townlife",
+    "tile": 2
    },
    "expansion": "AF-HATS-01",
    "rarity": "Common",
@@ -10432,6 +10580,10 @@
       "count": 1
      }
     ]
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 4
    }
   },
   {
@@ -10506,6 +10658,10 @@
       "count": 1
      }
     ]
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 1
    }
   },
   {
@@ -10559,7 +10715,11 @@
     "do": "everyoneDiscardsDownTo",
     "count": 3
    },
-   "shock": true
+   "shock": true,
+   "art": {
+    "atlas": "townlife",
+    "tile": 1
+   }
   },
   {
    "id": "mh_acorns_bidding_war",
@@ -10821,6 +10981,10 @@
       "count": 1
      }
     ]
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 5
    }
   },
   {
@@ -10914,6 +11078,10 @@
    "onGain": {
     "do": "gainSupply",
     "amount": 2
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 10
    }
   },
   {
@@ -11087,8 +11255,8 @@
    },
    "flavor": "Another welcoming corner of Whiskerwood.",
    "art": {
-    "atlas": "whiskerwood",
-    "tile": 15
+    "atlas": "townlife",
+    "tile": 7
    },
    "expansion": "AF-WHISKER-01",
    "rarity": "Common",
@@ -11150,6 +11318,10 @@
     "do": "readyCharacter",
     "count": 1,
     "optional": true
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 4
    }
   },
   {
@@ -11176,6 +11348,10 @@
     "do": "readyCharacter",
     "count": 1,
     "optional": true
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 10
    }
   },
   {
@@ -11233,6 +11409,10 @@
     "do": "rehire",
     "discount": 2,
     "optional": true
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 8
    }
   },
   {
@@ -11345,7 +11525,11 @@
       "amount": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 14
+   }
   },
   {
    "id": "ww_rooftop_supper",
@@ -11486,8 +11670,8 @@
    },
    "flavor": "Another welcoming corner of Whiskerwood.",
    "art": {
-    "atlas": "whiskerwood",
-    "tile": 5
+    "atlas": "townlife",
+    "tile": 15
    },
    "expansion": "AF-WHISKER-01",
    "rarity": "Common",
@@ -11587,6 +11771,10 @@
      "maxCost": 2
     },
     "optional": true
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 13
    }
   },
   {
@@ -11610,6 +11798,10 @@
      "cost": 1
     },
     "optional": true
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 13
    }
   },
   {
@@ -11725,6 +11917,10 @@
    "onGain": {
     "do": "draw",
     "count": 1
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 10
    }
   },
   {
@@ -11889,6 +12085,10 @@
    "onGain": {
     "do": "reorderDeckTop",
     "count": 5
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 10
    }
   },
   {
@@ -11909,6 +12109,10 @@
     "do": "readyCharacter",
     "count": 1,
     "optional": true
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 14
    }
   },
   {
@@ -11930,6 +12134,10 @@
     "key": "lossShield",
     "value": 3,
     "expires": "untilUsed"
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 0
    }
   },
   {
@@ -12033,6 +12241,10 @@
    "onGain": {
     "do": "reorderDeckTop",
     "count": 4
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 9
    }
   },
   {
@@ -12051,6 +12263,10 @@
    "flavor": "One coin and a wave through, unless the gatekeeper has questions.",
    "onGain": {
     "do": "opponentTopdeckFromHand"
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 11
    }
   },
   {
@@ -12118,6 +12334,10 @@
     "key": "shiftBonus",
     "value": 1,
     "expires": "untilUsed"
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 8
    }
   },
   {
@@ -12156,6 +12376,10 @@
    "onGain": {
     "do": "eventFromDumpToHand",
     "optional": true
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 1
    }
   },
   {
@@ -12263,6 +12487,10 @@
    "onGain": {
     "do": "eventFromDumpToDeckBottom",
     "optional": true
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 0
    }
   },
   {
@@ -12301,8 +12529,8 @@
     "count": 5
    },
    "art": {
-    "atlas": "boroughs",
-    "tile": 11
+    "atlas": "townlife",
+    "tile": 0
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Common",
@@ -12341,7 +12569,11 @@
       "count": 1
      }
     }
-   ]
+   ],
+   "art": {
+    "atlas": "townlife",
+    "tile": 15
+   }
   },
   {
    "id": "mk_hedgerow_shortcut",
@@ -12381,6 +12613,10 @@
     "key": "unemploymentShield",
     "value": 1,
     "expires": "nextTurnStart"
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 8
    }
   },
   {
@@ -12402,6 +12638,10 @@
     "key": "unemploymentShield",
     "value": 1,
     "expires": "nextTurnStart"
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 8
    }
   },
   {
@@ -12449,8 +12689,8 @@
     }
    ],
    "art": {
-    "atlas": "boroughs",
-    "tile": 3
+    "atlas": "townlife",
+    "tile": 12
    },
    "expansion": "AF-MARKET-02",
    "rarity": "Common",
@@ -12618,6 +12858,10 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 2
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 14
    }
   }
  ],
