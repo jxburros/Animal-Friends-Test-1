@@ -21,6 +21,10 @@ export const MAKER_CIVIC_ATLAS_URL = new URL('../../assets/art/maker-civic-atlas
 export const MAKER_HARVEST_ATLAS_URL = new URL('../../assets/art/maker-harvest-atlas.png', import.meta.url).href;
 export const MAKER_WORKSHOP_ATLAS_URL = new URL('../../assets/art/maker-workshop-atlas.png', import.meta.url).href;
 export const MAKER_PLACES_ATLAS_URL = new URL('../../assets/art/maker-places-atlas.png', import.meta.url).href;
+export const MAKER_TOKENS_ATLAS_URL = new URL('../../assets/art/maker-tokens-atlas.png', import.meta.url).href;
+export const MAKER_BAKERY_LIBRARY_ATLAS_URL = new URL('../../assets/art/maker-bakery-library-atlas.png', import.meta.url).href;
+export const MAKER_RECORDS_ROOTS_ATLAS_URL = new URL('../../assets/art/maker-records-roots-atlas.png', import.meta.url).href;
+export const MAKER_ROLES_ATLAS_URL = new URL('../../assets/art/maker-roles-atlas.png', import.meta.url).href;
 const SPECIES_TILE = { Rabbit: 0, Mouse: 1, Fox: 2, Raccoon: 3, Hedgehog: 4, Badger: 5, Otter: 6, Squirrel: 7 };
 const ATLASES = {
   boroughs: () => PAINTED_ATLAS_URL,
@@ -39,6 +43,10 @@ const ATLASES = {
   makerharvest: () => MAKER_HARVEST_ATLAS_URL,
   makerworkshop: () => MAKER_WORKSHOP_ATLAS_URL,
   makerplaces: () => MAKER_PLACES_ATLAS_URL,
+  makertokens: () => MAKER_TOKENS_ATLAS_URL,
+  makerbakerylibrary: () => MAKER_BAKERY_LIBRARY_ATLAS_URL,
+  makerrecordsroots: () => MAKER_RECORDS_ROOTS_ATLAS_URL,
+  makerroles: () => MAKER_ROLES_ATLAS_URL,
 };
 
 // Presentation-only corrections for Maker shelf cards. Keeping these assignments here lets the
@@ -180,6 +188,74 @@ export const MAKER_ART_TILES = Object.freeze({
   mk_tb_observatory_steps: { atlas: 'makerplaces', tile: 13 },
   mk_tb_counting_house: { atlas: 'makerplaces', tile: 14 },
   mk_tb_quill_wall: { atlas: 'makerplaces', tile: 15 },
+
+  mk_tok_rabbit: { atlas: 'makertokens', tile: 0 },
+  mk_tok_mouse: { atlas: 'makertokens', tile: 1 },
+  mk_tok_hedgehog: { atlas: 'makertokens', tile: 2 },
+  mk_tok_badger: { atlas: 'makertokens', tile: 3 },
+  mk_tok_otter: { atlas: 'makertokens', tile: 4 },
+  mk_tok_squirrel: { atlas: 'makertokens', tile: 5 },
+  mk_tok_cat: { atlas: 'makertokens', tile: 6 },
+  mk_tok_owl: { atlas: 'makertokens', tile: 7 },
+  mk_tok_fox: { atlas: 'makertokens', tile: 8 },
+  mk_tok_raccoon: { atlas: 'makertokens', tile: 9 },
+  mk_tok_agriculture: { atlas: 'makertokens', tile: 10 },
+  mk_tok_civics: { atlas: 'makertokens', tile: 11 },
+  mk_tok_commerce: { atlas: 'makertokens', tile: 12 },
+  mk_tok_crafts: { atlas: 'makertokens', tile: 13 },
+  mk_tok_lore: { atlas: 'makertokens', tile: 14 },
+  mk_tok_science: { atlas: 'makertokens', tile: 15 },
+
+  mk_tok_food: { atlas: 'makerbakerylibrary', tile: 0 },
+  mk_tok_entertainment: { atlas: 'makerbakerylibrary', tile: 1 },
+  mk_tok_building: { atlas: 'makerbakerylibrary', tile: 2 },
+  mk_marmalade_night_baker_0: { atlas: 'makerbakerylibrary', tile: 3 },
+  mk_marmalade_dough_kneader_1: { atlas: 'makerbakerylibrary', tile: 4 },
+  mk_marmalade_market_baker_2: { atlas: 'makerbakerylibrary', tile: 5 },
+  mk_marmalade_neighborhood_baker_3: { atlas: 'makerbakerylibrary', tile: 6 },
+  mk_marmalade_harvest_head_baker_5: { atlas: 'makerbakerylibrary', tile: 7 },
+  mk_fresh_batch: { atlas: 'makerbakerylibrary', tile: 8 },
+  mk_mkt_community_oven: { atlas: 'makerbakerylibrary', tile: 9 },
+  mk_inkwell_bookmark_keeper_1: { atlas: 'makerbakerylibrary', tile: 10 },
+  mk_inkwell_storyteller_2: { atlas: 'makerbakerylibrary', tile: 11 },
+  mk_inkwell_night_librarian_3: { atlas: 'makerbakerylibrary', tile: 12 },
+  mk_inkwell_keeper_of_stories_5: { atlas: 'makerbakerylibrary', tile: 13 },
+  mk_inkwells_late_shift: { atlas: 'makerbakerylibrary', tile: 14 },
+  mk_lynnette_night_printer_0: { atlas: 'makerbakerylibrary', tile: 15 },
+
+  mk_lynnette_bookbinder_1: { atlas: 'makerrecordsroots', tile: 0 },
+  mk_lynnette_lending_librarian_3: { atlas: 'makerrecordsroots', tile: 1 },
+  mk_lynnette_master_printer_5: { atlas: 'makerrecordsroots', tile: 2 },
+  mk_maribel_seed_keeper_1: { atlas: 'makerrecordsroots', tile: 3 },
+  mk_maribel_seed_bank_clerk_2: { atlas: 'makerrecordsroots', tile: 4 },
+  mk_maribel_seed_vault_scientist_3: { atlas: 'makerrecordsroots', tile: 5 },
+  mk_maribel_seed_bank_director_5: { atlas: 'makerrecordsroots', tile: 6 },
+  mk_daniel_ink_mixer_0: { atlas: 'makerrecordsroots', tile: 7 },
+  mk_daniel_canal_cartographer_2: { atlas: 'makerrecordsroots', tile: 8 },
+  mk_daniel_star_charter_3: { atlas: 'makerrecordsroots', tile: 9 },
+  mk_daniel_master_cartographer_4: { atlas: 'makerrecordsroots', tile: 10 },
+  mk_ned_page_runner_1: { atlas: 'makerrecordsroots', tile: 11 },
+  mk_ned_night_archivist_2: { atlas: 'makerrecordsroots', tile: 12 },
+  mk_ned_reference_librarian_4: { atlas: 'makerrecordsroots', tile: 13 },
+  mk_ned_chancellor_of_records_5: { atlas: 'makerrecordsroots', tile: 14 },
+  mk_daisy_petal_sweeper_0: { atlas: 'makerrecordsroots', tile: 15 },
+
+  mk_daisy_bouquet_weaver_2: { atlas: 'makerroles', tile: 0 },
+  mk_daisy_night_bloom_florist_3: { atlas: 'makerroles', tile: 1 },
+  mk_daisy_festival_florist_4: { atlas: 'makerroles', tile: 2 },
+  mk_bean_espresso_1: { atlas: 'makerroles', tile: 3 },
+  mk_bean_barista_3: { atlas: 'makerroles', tile: 4 },
+  mk_beans_coffee_break: { atlas: 'makerroles', tile: 5 },
+  mk_biff_beat_constable_2: { atlas: 'makerroles', tile: 6 },
+  mk_biff_chief_constable_4: { atlas: 'makerroles', tile: 7 },
+  mk_bob_gate_attendant_4: { atlas: 'makerroles', tile: 8 },
+  mk_clover_rocket_botanist_4: { atlas: 'makerroles', tile: 9 },
+  mk_clovers_potato_experiment: { atlas: 'makerroles', tile: 10 },
+  mk_comet_astronaut_5: { atlas: 'makerroles', tile: 11 },
+  mk_one_small_step: { atlas: 'makerroles', tile: 12 },
+  mk_juniper_messenger_1: { atlas: 'makerroles', tile: 13 },
+  mk_juniper_courier_captain_2: { atlas: 'makerroles', tile: 14 },
+  mk_brooke_balloonist_4: { atlas: 'makerroles', tile: 15 },
 });
 
 function explicitArt(def) {

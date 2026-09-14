@@ -1,6 +1,6 @@
 # Maker card artwork atlases
 
-Eight 4 × 4 painted sheets add 128 card-specific scenes for the Maker shelf. The built-in image-generation tool produced the sheets using existing project atlases as style and layout references only. The second set of four covers every remaining non-token Maker card that had no explicit art, plus replacement scenes for two cards whose shared fallback was not specific enough.
+Twelve 4 × 4 painted sheets add 192 card-specific scenes for the Maker shelf. The built-in image-generation tool produced the sheets using existing project atlases as style and layout references only. The second set of four covers every remaining non-token Maker card that had no explicit art. The third set gives every token commissioned art and replaces 45 older shared images with scenes specific to the card.
 
 The generated sheets are bundled unchanged:
 
@@ -12,6 +12,10 @@ The generated sheets are bundled unchanged:
 - `assets/art/maker-harvest-atlas.png`
 - `assets/art/maker-workshop-atlas.png`
 - `assets/art/maker-places-atlas.png`
+- `assets/art/maker-tokens-atlas.png`
+- `assets/art/maker-bakery-library-atlas.png`
+- `assets/art/maker-records-roots-atlas.png`
+- `assets/art/maker-roles-atlas.png`
 
 Tile indices are zero-based and row-major. The presentation-only assignments live in `src/ui/painted-art.js`; Maker rules and authoring data remain unchanged.
 
@@ -19,7 +23,7 @@ Tile indices are zero-based and row-major. The presentation-only assignments liv
 
 > Create one square production game-art atlas for Animal Friends TCG, divided into an exact seamless 4-column by 4-row grid of 16 equally sized square full-bleed paintings, read strictly row-major. No gutters, margins, borders, grid strokes, captions, text, letters, numbers, labels, signs, readable paperwork, logos, watermarks, card frames, or UI. Use richly detailed hand-painted watercolor and gouache with fine warm ink detail, tactile paper and brush texture, premium antique storybook trading-card illustration. Show cozy cottage-and-small-town life with lush floral and leafy accents, gentle modern flair, affectionate visual humor, and expressive but believable clothed woodland animals. Any technology is whimsical practical steampunk in brass, copper, dark wood, leather, glass, visible gears and pipes—never sleek modern plastic. Keep each named identifying animal, face, hands, and principal prop within the central 70% of its tile for portrait card cropping. Make species anatomy and occupations unmistakable. Fill every square edge to edge and maintain tile boundaries precisely. No humans.
 
-The second wave used all four first-wave Maker atlases as visual references and the same shared prompt. The scene lists below are the complete per-tile prompt additions.
+The later waves used the first four Maker atlases as visual references and the same shared prompt. The scene lists below are the complete per-tile prompt additions.
 
 ## Maker Civic
 
@@ -188,4 +192,88 @@ The second wave used all four first-wave Maker atlases as visual references and 
 | 13 | `mk_tb_open_mic_room` | A crowded cottage stage with a badger jazz singer and four animal siblings while a fox plays piano. |
 | 14 | `mk_tb_boat_shed` | A secretive flower-framed riverside shed full of ropes, oars, half-built hull and brass winch; Brooke holds the key. |
 | 15 | `mk_tb_gate_hut` | A tiny ivy-covered hut at dusk; a sleepy hedgehog attendant ignores an overdressed traveler beyond the barrier. |
+
+## Maker Tokens
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_tok_rabbit` | Friendly cream rabbit gardener holding one carrot beside clover and roses. |
+| 1 | `mk_tok_mouse` | Bright field mouse carrying one berry beside tiny daisies and fern curls. |
+| 2 | `mk_tok_hedgehog` | Cheerful hedgehog with a comically oversized button in a cottage sewing nook. |
+| 3 | `mk_tok_badger` | Sturdy kind badger with a small timber mallet among bluebells. |
+| 4 | `mk_tok_otter` | Lively brown otter holding coiled rope on a willow-edged quay. |
+| 5 | `mk_tok_squirrel` | Red squirrel balancing one acorn and a tiny ledger under flowering branches. |
+| 6 | `mk_tok_cat` | Curious calico cat inspecting one brass gear beside ivy. |
+| 7 | `mk_tok_owl` | Wise barn owl holding a lantern and closed book among moonflowers. |
+| 8 | `mk_tok_fox` | Red fox courier with satchel and folded blank map on a flowered lane. |
+| 9 | `mk_tok_raccoon` | Clever raccoon holding an unlikely brass key at a twilight market. |
+| 10 | `mk_tok_agriculture` | Glowing wheat sheaf, hand trowel, watering can, seedlings and rich allotment soil. |
+| 11 | `mk_tok_civics` | Warm timber town hall, brass bell, shared keys and welcoming open door framed by ivy. |
+| 12 | `mk_tok_commerce` | Fairweight scales balance produce and coins at a floral market stall. |
+| 13 | `mk_tok_crafts` | Crossed tools, wood shavings, brass gear and half-repaired clockwork watering can. |
+| 14 | `mk_tok_lore` | Open blank storybook, ribbon bookmarks, candle and star globe in a vine-covered library. |
+| 15 | `mk_tok_science` | Brass microscope, flask, field magnifier and specimen leaves on a botanical desk. |
+
+## Maker Bakery & Library
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_tok_food` | Steaming cottage soup pot, bread, herbs and a comically impatient mouse at a communal table. |
+| 1 | `mk_tok_entertainment` | Flower-decked bandstand with brass microphone, fiddle, drum and animals dancing at dusk. |
+| 2 | `mk_tok_building` | Welcoming timber-and-stone guild hall miniature with brass hinges, roses and builder's mallet. |
+| 3 | `mk_marmalade_night_baker_0` | Ginger cat shapes a lopsided hedgehog loaf at one in the morning beside banked ovens. |
+| 4 | `mk_marmalade_dough_kneader_1` | Mischievous young ginger cat fiercely kneads an enormous bowl of dough. |
+| 5 | `mk_marmalade_market_baker_2` | Warm ginger cat listens to every customer while a pastry queue tangles around the stall. |
+| 6 | `mk_marmalade_neighborhood_baker_3` | Ginger cat passes the first tray to eager kittens before anyone can pay. |
+| 7 | `mk_marmalade_harvest_head_baker_5` | Flour-dusted ginger cat commands three ovens and six recipes during harvest week. |
+| 8 | `mk_fresh_batch` | Hot rolls arrive at dawn as a delighted squirrel reaches the counter. |
+| 9 | `mk_mkt_community_oven` | Shared brick ovens open to neighbors carrying dough bowls, firewood and baskets. |
+| 10 | `mk_inkwell_bookmark_keeper_1` | Black cat librarian tends four open books with four ribbons at a candlelit desk. |
+| 11 | `mk_inkwell_storyteller_2` | Black cat tells an impossible tale to nine spellbound youngsters on the library floor. |
+| 12 | `mk_inkwell_night_librarian_3` | Black cat reads behind a late desk while sleepy patrons remain in deep chairs. |
+| 13 | `mk_inkwell_keeper_of_stories_5` | Dignified black cat guards fantastical maps and story volumes beside a brass globe. |
+| 14 | `mk_inkwells_late_shift` | Black cat returns to a quiet chapter after the last sleeping youngster is carried home. |
+| 15 | `mk_lynnette_night_printer_0` | Determined rabbit runs a hand-and-steam press at night beside stacks of fresh pages. |
+
+## Maker Records & Roots
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_lynnette_bookbinder_1` | Rabbit repairs a worn book spine with thread, glue and a small brass press. |
+| 1 | `mk_lynnette_lending_librarian_3` | Rabbit performs every voice while reading to a crowded floor of young animals. |
+| 2 | `mk_lynnette_master_printer_5` | Confident rabbit oversees a great brass-and-wood press through the night. |
+| 3 | `mk_maribel_seed_keeper_1` | Tiny brown mouse protects a young oak while older committee animals argue beyond it. |
+| 4 | `mk_maribel_seed_bank_clerk_2` | Meticulous mouse refiles rescued seed packets into wooden drawers after a storm. |
+| 5 | `mk_maribel_seed_vault_scientist_3` | Mouse scientist inspects seed jars and cool stone vault drawers with a magnifier. |
+| 6 | `mk_maribel_seed_bank_director_5` | Mouse presents stored seeds and an old blank petition with proof growing nearby. |
+| 7 | `mk_daniel_ink_mixer_0` | Mouse grinds oak gall into deep ink for a careful blank canal map. |
+| 8 | `mk_daniel_canal_cartographer_2` | Mouse charts a canal from a lighterman's directions using dividers and a long map. |
+| 9 | `mk_daniel_star_charter_3` | Mouse maps constellations from a closed observatory window with brass instruments. |
+| 10 | `mk_daniel_master_cartographer_4` | Master mouse equips a nervous rabbit apprentice with a route map and satchel. |
+| 11 | `mk_ned_page_runner_1` | Brisk squirrel carries a dated bundle of records through a hedge-lined civic corridor. |
+| 12 | `mk_ned_night_archivist_2` | Exacting squirrel corrects one misplaced record in an empty midnight archive. |
+| 13 | `mk_ned_reference_librarian_4` | Squirrel presents the exact open book and page to a surprised visitor. |
+| 14 | `mk_ned_chancellor_of_records_5` | Formal squirrel reveals an orderly sequence of records to a stunned committee. |
+| 15 | `mk_daisy_petal_sweeper_0` | Thrifty squirrel sweeps fallen petals and hangs them over a flower-shop door. |
+
+## Maker Roles
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_daisy_bouquet_weaver_2` | Squirrel florist braids a meaningful posy while reading a shy customer's expression. |
+| 1 | `mk_daisy_night_bloom_florist_3` | Squirrel cuts luminous wedding flowers at two in the morning. |
+| 2 | `mk_daisy_festival_florist_4` | Determined squirrel hangs the final enormous garland across the town square. |
+| 3 | `mk_bean_espresso_1` | Anxious barn owl works a copper espresso machine while a travel postcard rests nearby. |
+| 4 | `mk_bean_barista_3` | Barn owl serves three orders at once with controlled panic. |
+| 5 | `mk_beans_coffee_break` | Gentle barn owl firmly sets tea and pastry before an exhausted worker. |
+| 6 | `mk_biff_beat_constable_2` | Hedgehog constable walks a lane as every bystander finds respectable work. |
+| 7 | `mk_biff_chief_constable_4` | Senior hedgehog settles a quarrel, escorts both animals home and offers an apron. |
+| 8 | `mk_bob_gate_attendant_4` | Sleepy hedgehog naps against a lowered gate while a patient cart waits. |
+| 9 | `mk_clover_rocket_botanist_4` | Cream rabbit studies vigorous potatoes in a brass-and-glass rocket greenhouse. |
+| 10 | `mk_clovers_potato_experiment` | Rabbit compares two potato beds while a newcomer holds an overflowing sack. |
+| 11 | `mk_comet_astronaut_5` | Brave calico cat in brass-and-canvas space suit floats above a tiny town. |
+| 12 | `mk_one_small_step` | Calico astronaut makes one proud bootprint while craft tools tumble behind her. |
+| 13 | `mk_juniper_messenger_1` | Swift red fox courier runs a rain-swept flowered lane with sealed satchel. |
+| 14 | `mk_juniper_courier_captain_2` | Red fox directs eleven couriers around a route board with a brass star clock. |
+| 15 | `mk_brooke_balloonist_4` | Brown otter pilots a patchwork hot-air balloon above the winding river. |
 
