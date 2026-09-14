@@ -24,6 +24,9 @@ export const EFFECTS = new Set([
   // the third round of wishes (docs/ENGINE_API.md): the ha'penny, the fed animal, the pairing,
   // the yard's trade, and the one pair of hands that reaches the other town's Dump
   'coinFlip', 'giveToUnemployed', 'pairCharacters', 'swapBuilding', 'eventFromOpponentDump',
+  // the fourth round of wishes (docs/ENGINE_API.md): the whole bin rather than the Events in it,
+  // the Supply taken off a rival, and the hardship the rival gets to pick between
+  'cardFromDumpToHand', 'opponentLosesSupply', 'opponentChoice',
   // on-reveal catch-up
   'behindPlayerGains', 'behindPlayerReadies',
   // shared shocks, used by Disruption cards
@@ -45,6 +48,10 @@ export const PASSIVE_KEYS = new Set([
   'masterDelayMinus1', 'eventCharReductionPerTurn',
   // the actuary's standing rate: every shift this town finishes pays `value` more while it is in force
   'townShiftBonus',
+  // the wage-setter's standing rate: every recruit costs `value` less while this animal stands
+  'townRecruitDiscount',
+  // the tailor's rule: the pledge ladder is a rung heavier for the OTHER Mayor, and not for you
+  'opponentPledgeLadderPlus1',
   // Statue burdens
   'opponentRehireDiscount', 'opponentFirstBidPlus1', 'apprenticeEntersBusy', 'eventCostPlus1',
   'resourceSupplyMinus1', 'losingBidsPayFull', 'pledgeLadderPlus1',

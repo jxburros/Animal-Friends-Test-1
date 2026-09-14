@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { FULL_ART_CARDS, fullArtFor } from '../src/ui/full-art.js';
+import { FULL_ART_CARDS, fullArtFor, fullArtIds } from '../src/ui/full-art.js';
 import { paintedArtSVG } from '../src/ui/painted-art.js';
 import { SET } from './helpers.mjs';
 
@@ -48,8 +48,9 @@ test('other versions and unselected cards keep their original art treatment', ()
     }
     assert.equal(JSON.stringify(card), before, 'rendering never changes the definition');
   }
+  const inherited = new Set(Object.values(FULL_ART_CARDS).map((a) => a.remadeAs).filter(Boolean));
   for (const card of MAKER.cards) {
-    if (!Object.hasOwn(FULL_ART_CARDS, card.id)) {
+    if (!Object.hasOwn(FULL_ART_CARDS, card.id) && !inherited.has(card.id)) {
       assert.equal(fullArtFor(card), null);
       assert.ok(!paintedArtSVG(card, '<svg/>').includes('full-art-painting'), card.id);
     }
@@ -57,4 +58,39 @@ test('other versions and unselected cards keep their original art treatment', ()
   assert.equal(fullArtFor(null), null);
   assert.equal(fullArtFor({ id: 'toString' }), null);
   assert.equal(fullArtFor({ id: 'bb_clover_1' }), null);
+});
+
+test('a painting carries over to the Maker card that remade its printed card', () => {
+  const printedById = Object.fromEntries(SET.cards.map((c) => [c.id, c]));
+  const makerById = Object.fromEntries(MAKER.cards.map((c) => [c.id, c]));
+  let carried = 0;
+  for (const [id, art] of Object.entries(FULL_ART_CARDS)) {
+    if (!art.remadeAs) continue;
+    carried++;
+    const printed = printedById[id];
+    const remake = makerById[art.remadeAs];
+    assert.ok(remake, `${art.remadeAs} is not a Maker card`);
+    // The link is the remake's own `remakes`, not a second list kept in the UI: a painting follows
+    // the card it was commissioned for, so the registry may only point at the card that claims it.
+    assert.ok([].concat(remake.remakes || []).includes(id), `${remake.id} does not remake ${id}`);
+    // And the scene still has to fit. The animal in the painting is not negotiable — a painting of a
+    // ginger cat cannot be inherited by an otter. A remake may carry a different name, which is what
+    // `renamedFrom` is for and what Bramble's Guild Warden becoming Berry's looks like. A different
+    // job title or a different study has to be accounted for in `remadeNote`, so that nothing
+    // inherits a painting of somebody else's work by accident.
+    if (printed.type === 'character') {
+      assert.equal(remake.species, printed.species, `${remake.id} is not the animal in the painting`);
+      const sameWork = remake.title === printed.title && remake.study === printed.study;
+      assert.ok(sameWork || art.remadeNote,
+        `${remake.id} changed the work and says nothing about why the painting still fits`);
+    }
+    // One painting, one collection number, on whichever shelf the reader is standing at.
+    assert.equal(fullArtFor(remake), art);
+    assert.equal(fullArtFor(printed), art);
+    assert.deepEqual(fullArtIds(id), [id, art.remadeAs]);
+    assert.ok(paintedArtSVG(remake, '<svg data-fallback="original"/>').includes(art.url), remake.id);
+  }
+  assert.ok(carried >= 10, 'the paintings whose remakes still fit them are carried over');
+  // A remake that is a different animal or a different job inherits nothing.
+  assert.equal(fullArtFor({ id: 'mk_peanut_ledger_0' }), null);
 });

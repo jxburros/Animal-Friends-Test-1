@@ -245,8 +245,17 @@ export async function endPhase(state, pi) {
     if (idx < 0) continue;
     p.town.splice(idx, 1);
     if (s.stored) { gainSupply(state, pi, s.stored, 'a cache coming home'); s.stored = 0; }
-    for (const c of s.cards) state.market.cityDump.push(c.cardId);
-    log(state, pi, `${topCard(state, s).name}'s retainer is up; they go back to the Capital City.`, { kind: 'termEnd', player: pi, uid: s.uid, cardId: s.cards[0].cardId });
+    // Where a hire goes when the retainer is up. Ordinarily the City Dump, and out of the game: the
+    // Capital City has finished with them. A card printed `returnsToMarket` goes to the bottom of
+    // the Market Deck instead — the animal is back on the road rather than done, and the next time
+    // the deck comes round to them either Mayor may take them on again.
+    const back = topCard(state, s);
+    const returning = !!back.returnsToMarket;
+    for (const c of s.cards) {
+      if (returning && c.cardId === back.id) state.market.deck.push(c.cardId);
+      else state.market.cityDump.push(c.cardId);
+    }
+    log(state, pi, `${back.name}'s retainer is up; they ${returning ? 'take to the road, and may come round again' : 'go back to the Capital City'}.`, { kind: 'termEnd', player: pi, uid: s.uid, cardId: s.cards[0].cardId, returned: returning });
   }
   await fireHook(state, 'onTurnEnd', { player: pi });
   expireMods(p, 'turnEnd');

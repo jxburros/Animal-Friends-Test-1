@@ -11,7 +11,29 @@ in the [finish preview](src/ui/foil-preview.html) after starting the local serve
 The [painted app surroundings](docs/APP_SURROUNDINGS.md) extend the card illustrations into the menu,
 Capital City banner, welcome screen and deck workshop, with locally bundled artwork and matching parchment frames.
 
-**New in v0.8.0 — Three doors:** the book now opens on three ways in.
+**New in v0.9.0 — the shelf's own market, and the last of the wishes.** Two things finish here.
+
+- **Every `wantedVerb` is built.** The Maker shelf logs what a character's story wanted and the engine
+  could not say; three rounds had cleared most of the list and eight were still waiting. All eight are
+  in the engine now — the Capital City deck put back in a chosen order (Sage), a standing recruit rate
+  nobody spends (Eric), the whole Town Dump rather than the Events in it (Benjamin), a hire who takes
+  to the road and may be taken on again (Jake), a pledge rule that binds the rival alone (Faustus), a
+  rate that counts what the town has built (Velvet), an animal who arrives upright whatever she cost
+  (Mandee), and Supply taken off a rival plus the hardship they get to choose between (Willow) — and
+  the sixteen cards that asked for them now say what their stories always said. Nothing in the printed
+  set uses any of them, so every printed rating is unchanged. See
+  [ENGINE_API.md](docs/ENGINE_API.md) → *the fourth round of wishes*.
+- **Twenty-five new Market cards, Events, Buildings and Disruptions**, written for the cast already on
+  the Maker shelf rather than taken off the printed list, and painted out of the last twenty-five
+  atlas scenes the Maker line had not used: Andrew's late desk, Willow's harbour office, Quill's cider
+  social, Maribel's seed bank, Liz's weighbridge, Orien's engine in the Counting House, Hazel's seat on
+  the market committee, Faustus's fitting room, and the borough's own weather — the winter the Grain
+  Exchange shut, the year the bridge went, the eclipse, the midges off the water.
+- **Eleven paintings carried over.** Where the Maker shelf remade a card that had a commissioned
+  portrait and the scene still fits, the remake now shows the painting rather than a shared atlas
+  tile. One painting, one collection number, on whichever shelf you are reading.
+
+**Earlier, in v0.8.0 — Three doors:** the book now opens on three ways in.
 
 - **Classic** is the printed collection, played exactly as published: eight decks, seven Capital
   Cities, 461 cards, and no Maker card anywhere in it. The Deck Workshop builds out of the printed
@@ -318,7 +340,9 @@ Book — and hairlines and leaf edges have to survive all of them.
 **Full Art Collection:** twenty-four selected cards have their own portrait paintings, edge-to-edge
 artwork, fine gold frames and subtle pointer-responsive foil. Choose **Explore the Full Art cards**
 on a collection's cover, or filter the Book by the **Full Card Art** printing. The same treatment
-appears in play, the Deck Workshop and card readers. Printed rarities and gameplay are unchanged. See the
+appears in play, the Deck Workshop and card readers, and eleven of the paintings are shown on the
+Maker card that remade the printed one as well, where the scene still fits. Printed rarities and
+gameplay are unchanged. See the
 [collection and validation notes](docs/FULL_ART_COLLECTION.md) and [all twelve rendered cards](docs/screenshots/full-art-collection.png).
 
 The painted storybook edition uses eight bundled atlases with 128 paintings, parchment nameplates,

@@ -253,7 +253,8 @@ so it is the only place the key means anything — on a Character in a town it i
 `eventFromDumpToDeckBottom`, `eventFromDumpToHand`, `peekMarketDeck`, `opponentTopdeckFromHand`,
 `unemployOpponentCharacter`, `raiseOwnBid`, `scryDeck`, `makeBusy`, `peekOpponentHand`, `gainToken`,
 `spendToken`, `coinFlip`, `giveToUnemployed`, `pairCharacters`, `swapBuilding`,
-`eventFromOpponentDump`, plus the species signatures `storeSupply`,
+`eventFromOpponentDump`, `cardFromDumpToHand`, `opponentLosesSupply`, `opponentChoice`,
+plus the species signatures `storeSupply`,
 `takeStoredSupply`, `takeFromCityDump`, `protectCharacter`, `moveShift`, `selfReady`, `cancelReveal`,
 `advanceCharacter`. (`test/card-vocabulary.mjs` is the authority — read it, not this list, if they ever
 disagree. Shared-shock verbs like `everyoneLosesSupply` belong to Disruptions, not Characters.)
@@ -264,12 +265,23 @@ may carry `decay` and `minOutput`: the animal burns out, and every shift they wo
 one before. A mod's `filter` may carry `upgradesOwn`, which is good only for a recruit that upgrades a
 Character the town already has.
 
+**A card itself may carry three things besides its abilities.** `leavesAfter: N` is a hire with a
+term, and `returnsToMarket: true` sends them back to the bottom of the Market Deck rather than the
+City Dump when it runs out, so they may be taken on again. `entersUpright: true` is an animal who
+arrives ready whatever their cost. A mod may be counted rather than printed: `addMod` takes
+`valuePer: "buildingsBuilt"` with a `max`, which is a rate that scales with what the town has
+raised — always print the `max`, or the card cannot be rated.
+
 Some of the vocabulary exists *because* a remake asked for it — `makeBusy`, `scryDeck`'s `to: "dump"`,
 `protectCharacter`'s `notSelf`, filtered mods, `buildingDiscount`, `leavesAfter`, and then the second
 round: `buildingsAtMost` (Bella), `peekOpponentHand` (Inkwell), `shift.decay` (Kevin) and the
 `upgradesOwn` mod filter (Lynnette), and then the third: `coinFlip` (Roger and Earl),
 `giveToUnemployed` (Marmalade), `pairCharacters` (Daisy), the `townShiftBonus` passive (Orien),
-`swapBuilding` (Patch), `eventFromOpponentDump` (Pockets) and `gainToken`'s `per` (Pebble) — all wishes
+`swapBuilding` (Patch), `eventFromOpponentDump` (Pockets) and `gainToken`'s `per` (Pebble), and then
+the fourth, which cleared the list: `peekMarketDeck`'s `reorder` (Sage), the `townRecruitDiscount`
+passive (Eric), `cardFromDumpToHand` (Benjamin), `returnsToMarket` (Jake), the
+`opponentPledgeLadderPlus1` passive (Faustus), `addMod`'s `valuePer` (Velvet), `entersUpright`
+(Mandee) and `opponentLosesSupply` with `opponentChoice` (Willow) — all wishes
 first (see `docs/ENGINE_API.md`, and the `wantedVerbs` of the characters that wanted them). That is the
 route: wish, then approval, then engine, then the card. A character entry's `wantedVerbs` entry gains a
 `resolved` line when its wish is built, saying what was built and what the card says now; a wish that

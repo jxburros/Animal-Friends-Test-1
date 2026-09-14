@@ -202,10 +202,13 @@ Mod keys (player.mods): `recruitDiscount`, `rehireDiscount`, `eventCharReduction
 `skipNextAdvance`.
 Passive keys: `winTiesAsChallenger`, `blockOpponentBidRaise`, `firstAnnounceMinBidMinus1`, `masterDelayMinus1`,
 `eventCharReductionPerTurn`, `firstBidPlus1`, `townShiftBonus` (carries a `value`), and the Statue burdens `opponentRehireDiscount`,
-`opponentFirstBidPlus1`, `apprenticeEntersBusy`, `eventCostPlus1`, `resourceSupplyMinus1`, `losingBidsPayFull`.
+`opponentFirstBidPlus1`, `apprenticeEntersBusy`, `eventCostPlus1`, `resourceSupplyMinus1`, `losingBidsPayFull`,
+`townRecruitDiscount` (carries a `value`) and `opponentPledgeLadderPlus1`.
 
 Opponent-facing ops: `unemployOpponentCharacter`, `opponentTopdeckFromHand`, `makeBusy`, `peekOpponentHand`,
-`eventFromOpponentDump`.
+`eventFromOpponentDump`, `opponentLosesSupply`, `opponentChoice`.
+
+Town Dump ops: `eventFromDumpToHand`, `eventFromDumpToDeckBottom`, `cardFromDumpToHand`.
 
 Token ops: `gainToken`, `spendToken` (see **Tokens** below).
 
@@ -293,6 +296,57 @@ of them, so every printed rating is unchanged.
   "charactersReadied"` counts the Characters who have stood up in this town this turn (`p.turn.readied`,
   bumped by the Ready phase and by any effect that readies one); `per: "uprightCharacters"` counts who
   is standing right now. `count` multiplies it.
+
+## Card data: the fourth round of wishes (v0.9.0)
+
+The eight `wantedVerbs` the third round left unbuilt — every wish on the shelf that was still waiting
+for one. Same rule as the three rounds before it: nothing in the printed set uses any of them, so
+every printed rating is unchanged.
+
+- **`peekMarketDeck: { reorder: true }`** — looking at the Capital City's deck ends with putting it
+  back in a chosen order, the way `reorderDeckTop` does for a town's own deck. It uses the same
+  `order` request, and without `reorder` the verb behaves exactly as it always has. Sage's wish, and
+  the one verb in the collection that sets what *both* Mayors will be bidding on next, which is why
+  `power.js` prices it at twice a plain look.
+- **`townRecruitDiscount`** — a passive with a `value`, read by `recruitCost` through `passiveTotal`
+  alongside the `recruitDiscount` mods. The difference is the whole point of it: a mod is a discount
+  you are holding and the first recruit it applies to spends it; a passive is what hiring costs in
+  this town while a particular animal is standing in it, and nobody spends a rate. `requiresUpright`
+  makes it stop when they sit down. Eric's wish.
+- **`cardFromDumpToHand`** — any card of yours in the Town Dump, not only the Events. Takes `count`,
+  `optional` and a `filter` (`type`, `typeIn`, `maxCost`, `study`, `species`, `name`) for a card that
+  should reach less far. `eventFromDumpToHand` stays the narrow verb and stays on the cards that only
+  ever meant Events. Benjamin's wish.
+- **`returnsToMarket: true`** on a card with `leavesAfter` — when the retainer runs out the animal
+  goes to the bottom of the **Market Deck** instead of the City Dump, so the next time the deck comes
+  round to them either Mayor may take them on again. A Character pledged into an open auction still
+  does not tick. `power.js` pays it a little, because it is a chance and not a second term: the rival
+  may be the one who takes it. Jake's wish.
+- **`opponentPledgeLadderPlus1`** — a passive that raises the *other* Mayor's pledge ladder by a rung
+  and leaves its own alone, read in `pledgeMinCost` beside the Statue of Harmony's burden. The
+  displayed `pledgeLadderDelta` is a rule of the room and falls on everybody in it, whoever put the
+  card there; this is the same rule written against one side of the table. Faustus's wish.
+- **`addMod: { valuePer, max }`** — a mod's value counted rather than printed. `valuePer:
+  "buildingsBuilt"` multiplies `value` by the Buildings this Mayor has raised (the same count
+  `buildingsAtLeast` reads, so the Statues do not count), and `max` caps it. A rate that comes to
+  zero adds no mod at all. `max` is not optional in practice: `power.js` rates a scaling mod on the
+  row a Mayor usually has up and honours the ceiling, and a value with no ceiling is a card nobody
+  can price. Velvet's wish.
+- **`entersUpright: true`** on a card — the animal arrives ready, whatever the cost says. Entry
+  orientation is otherwise read off the cost alone (`entryOrientation`) before the card is on the
+  table, so this is the only thing that can say otherwise; it is read by the recruit action and by
+  `recruitFromHand`, so a free recruit out of hand arrives ready too. The Statue of Patience's burden
+  still sits such an animal down, because that is a rule of the town and this is a fact about one
+  animal. `power.js` takes the entry turns off the card's opportunity cost, which is exactly what the
+  field buys. Mandee's wish.
+- **`opponentLosesSupply`** and **`opponentChoice`** — the two halves of Willow's wish. The first
+  takes Supply off a rival (nothing on a Character could, before this: `everyoneLosesSupply` is a
+  Disruption's shared shock and `giveSupplyToOpponent` runs the other way); it takes what is there
+  and no more, and fires `onSupplyLost` for them, because a loss nobody is told about is one nobody
+  can play around. The second puts branches on the table — `options: [{ label, effect }, …]` — and
+  asks the **rival** which one happens; the branches are written from the playing Mayor's side, as
+  they read on the card. `power.js` pays the card the least of its branches, because the rival picks,
+  which is also the design rule: print two you would be happy with.
 
 ## Tokens (v0.7.2)
 
