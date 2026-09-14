@@ -16,6 +16,10 @@ export const MAKER_BOROUGH_ATLAS_URL = new URL('../../assets/art/maker-borough-a
 export const MAKER_FIELD_ATLAS_URL = new URL('../../assets/art/maker-field-atlas.png', import.meta.url).href;
 export const MAKER_WOODLAND_ATLAS_URL = new URL('../../assets/art/maker-woodland-atlas.png', import.meta.url).href;
 export const MAKER_NIGHT_ATLAS_URL = new URL('../../assets/art/maker-night-atlas.png', import.meta.url).href;
+export const MAKER_CIVIC_ATLAS_URL = new URL('../../assets/art/maker-civic-atlas.png', import.meta.url).href;
+export const MAKER_HARVEST_ATLAS_URL = new URL('../../assets/art/maker-harvest-atlas.png', import.meta.url).href;
+export const MAKER_WORKSHOP_ATLAS_URL = new URL('../../assets/art/maker-workshop-atlas.png', import.meta.url).href;
+export const MAKER_PLACES_ATLAS_URL = new URL('../../assets/art/maker-places-atlas.png', import.meta.url).href;
 const SPECIES_TILE = { Rabbit: 0, Mouse: 1, Fox: 2, Raccoon: 3, Hedgehog: 4, Badger: 5, Otter: 6, Squirrel: 7 };
 const ATLASES = {
   boroughs: () => PAINTED_ATLAS_URL,
@@ -30,6 +34,10 @@ const ATLASES = {
   makerfield: () => MAKER_FIELD_ATLAS_URL,
   makerwoodland: () => MAKER_WOODLAND_ATLAS_URL,
   makernight: () => MAKER_NIGHT_ATLAS_URL,
+  makercivic: () => MAKER_CIVIC_ATLAS_URL,
+  makerharvest: () => MAKER_HARVEST_ATLAS_URL,
+  makerworkshop: () => MAKER_WORKSHOP_ATLAS_URL,
+  makerplaces: () => MAKER_PLACES_ATLAS_URL,
 };
 
 // Presentation-only corrections for Maker shelf cards. Keeping these assignments here lets the
@@ -103,6 +111,74 @@ export const MAKER_ART_TILES = Object.freeze({
   mk_tb_open_mic_room: { atlas: 'makernight', tile: 13 },
   mk_tb_boat_shed: { atlas: 'makernight', tile: 14 },
   mk_tb_gate_hut: { atlas: 'makernight', tile: 15 },
+
+  mk_peanut_barista_1: { atlas: 'makercivic', tile: 0 },
+  mk_oatmeal_jazz_singer_3: { atlas: 'makercivic', tile: 1 },
+  mk_biff_cadet_constable_0: { atlas: 'makercivic', tile: 2 },
+  mk_copper_cellar_keeper_4: { atlas: 'makercivic', tile: 3 },
+  mk_bella_science_hall_fellow_4: { atlas: 'makercivic', tile: 4 },
+  mk_hazel_market_committee_chair_4: { atlas: 'makercivic', tile: 5 },
+  mk_beck_ward_clerk_2: { atlas: 'makercivic', tile: 6 },
+  mk_beck_keeper_of_the_ward_book_5: { atlas: 'makercivic', tile: 7 },
+  mk_beck_candlelight_reader_4: { atlas: 'makercivic', tile: 8 },
+  mk_ned_ward_recorder_3: { atlas: 'makercivic', tile: 9 },
+  mk_cassadee_stage_hand_0: { atlas: 'makercivic', tile: 10 },
+  mk_cassadee_hall_manager_3: { atlas: 'makercivic', tile: 11 },
+  mk_andrew_night_copyist_0: { atlas: 'makercivic', tile: 12 },
+  mk_andrew_keeper_of_the_late_desk_2: { atlas: 'makercivic', tile: 13 },
+  mk_bean_proprietor_5: { atlas: 'makercivic', tile: 14 },
+  mk_bld_long_room: { atlas: 'makercivic', tile: 15 },
+
+  mk_brooke_mooring_hand_0: { atlas: 'makerharvest', tile: 0 },
+  mk_clover_plot_sharer_1: { atlas: 'makerharvest', tile: 1 },
+  mk_rosabeth_garden_hand_1: { atlas: 'makerharvest', tile: 2 },
+  mk_maribel_seed_sorter_0: { atlas: 'makerharvest', tile: 3 },
+  mk_maribel_horticulturist_4: { atlas: 'makerharvest', tile: 4 },
+  mk_marmalade_oven_keeper_4: { atlas: 'makerharvest', tile: 5 },
+  mk_morty_mill_kitchen_cook_1: { atlas: 'makerharvest', tile: 6 },
+  mk_morty_grain_miller_2: { atlas: 'makerharvest', tile: 7 },
+  mk_peter_hedge_cutter_0: { atlas: 'makerharvest', tile: 8 },
+  mk_peter_hedgelayer_3: { atlas: 'makerharvest', tile: 9 },
+  mk_liz_scale_hand_1: { atlas: 'makerharvest', tile: 10 },
+  mk_liz_weighbridge_keeper_4: { atlas: 'makerharvest', tile: 11 },
+  mk_taco_cart_cook_1: { atlas: 'makerharvest', tile: 12 },
+  mk_taco_quayside_cook_3: { atlas: 'makerharvest', tile: 13 },
+  mk_cookie_biscuit_maker_0: { atlas: 'makerharvest', tile: 14 },
+  mk_cookie_winter_stores_cook_3: { atlas: 'makerharvest', tile: 15 },
+
+  mk_betty_firework_maker_3: { atlas: 'makerworkshop', tile: 0 },
+  mk_comet_bolt_sorter_0: { atlas: 'makerworkshop', tile: 1 },
+  mk_lynnette_press_feeder_2: { atlas: 'makerworkshop', tile: 2 },
+  mk_moss_toolsmith_2: { atlas: 'makerworkshop', tile: 3 },
+  mk_moss_bridgewright_5: { atlas: 'makerworkshop', tile: 4 },
+  mk_moss_timber_hand_0: { atlas: 'makerworkshop', tile: 5 },
+  mk_daniel_chart_copier_1: { atlas: 'makerworkshop', tile: 6 },
+  mk_osh_sharpener_s_boy_0: { atlas: 'makerworkshop', tile: 7 },
+  mk_osh_edge_grinder_2: { atlas: 'makerworkshop', tile: 8 },
+  mk_adam_road_mender_1: { atlas: 'makerworkshop', tile: 9 },
+  mk_adam_surveyor_of_ways_4: { atlas: 'makerworkshop', tile: 10 },
+  mk_annabelle_paper_sorter_0: { atlas: 'makerworkshop', tile: 11 },
+  mk_annabelle_salvage_archivist_3: { atlas: 'makerworkshop', tile: 12 },
+  mk_sota_lens_grinder_1: { atlas: 'makerworkshop', tile: 13 },
+  mk_sota_telescope_fitter_3: { atlas: 'makerworkshop', tile: 14 },
+  mk_bld_guild_hall: { atlas: 'makerworkshop', tile: 15 },
+
+  mk_barrows_measure: { atlas: 'makerplaces', tile: 0 },
+  mk_biffs_beat: { atlas: 'makerplaces', tile: 1 },
+  mk_rosabeths_rounds: { atlas: 'makerplaces', tile: 2 },
+  mk_oatmeals_benefit_night: { atlas: 'makerplaces', tile: 3 },
+  mk_coppers_stocktake: { atlas: 'makerplaces', tile: 4 },
+  mk_warren_muster: { atlas: 'makerplaces', tile: 5 },
+  mk_night_round: { atlas: 'makerplaces', tile: 6 },
+  mk_bins_at_dawn: { atlas: 'makerplaces', tile: 7 },
+  mk_guild_night: { atlas: 'makerplaces', tile: 8 },
+  mk_hall_lecture: { atlas: 'makerplaces', tile: 9 },
+  mk_ledger_day: { atlas: 'makerplaces', tile: 10 },
+  mk_tb_barrows_yard: { atlas: 'makerplaces', tile: 11 },
+  mk_tb_the_warren: { atlas: 'makerplaces', tile: 12 },
+  mk_tb_observatory_steps: { atlas: 'makerplaces', tile: 13 },
+  mk_tb_counting_house: { atlas: 'makerplaces', tile: 14 },
+  mk_tb_quill_wall: { atlas: 'makerplaces', tile: 15 },
 });
 
 function explicitArt(def) {

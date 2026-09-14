@@ -1,6 +1,6 @@
 # Maker card artwork atlases
 
-Four new 4 × 4 painted sheets add 64 card-specific scenes for the Maker shelf. The built-in image-generation tool produced the sheets using `boroughs-atlas.png`, `townlife-atlas.png`, and `nightworkers-atlas.png` as style and layout references only.
+Eight 4 × 4 painted sheets add 128 card-specific scenes for the Maker shelf. The built-in image-generation tool produced the sheets using existing project atlases as style and layout references only. The second set of four covers every remaining non-token Maker card that had no explicit art, plus replacement scenes for two cards whose shared fallback was not specific enough.
 
 The generated sheets are bundled unchanged:
 
@@ -8,12 +8,102 @@ The generated sheets are bundled unchanged:
 - `assets/art/maker-field-atlas.png`
 - `assets/art/maker-woodland-atlas.png`
 - `assets/art/maker-night-atlas.png`
+- `assets/art/maker-civic-atlas.png`
+- `assets/art/maker-harvest-atlas.png`
+- `assets/art/maker-workshop-atlas.png`
+- `assets/art/maker-places-atlas.png`
 
 Tile indices are zero-based and row-major. The presentation-only assignments live in `src/ui/painted-art.js`; Maker rules and authoring data remain unchanged.
 
 ## Shared generation prompt
 
 > Create one square production game-art atlas for Animal Friends TCG, divided into an exact seamless 4-column by 4-row grid of 16 equally sized square full-bleed paintings, read strictly row-major. No gutters, margins, borders, grid strokes, captions, text, letters, numbers, labels, signs, readable paperwork, logos, watermarks, card frames, or UI. Use richly detailed hand-painted watercolor and gouache with fine warm ink detail, tactile paper and brush texture, premium antique storybook trading-card illustration. Show cozy cottage-and-small-town life with lush floral and leafy accents, gentle modern flair, affectionate visual humor, and expressive but believable clothed woodland animals. Any technology is whimsical practical steampunk in brass, copper, dark wood, leather, glass, visible gears and pipes—never sleek modern plastic. Keep each named identifying animal, face, hands, and principal prop within the central 70% of its tile for portrait card cropping. Make species anatomy and occupations unmistakable. Fill every square edge to edge and maintain tile boundaries precisely. No humans.
+
+The second wave used all four first-wave Maker atlases as visual references and the same shared prompt. The scene lists below are the complete per-tile prompt additions.
+
+## Maker Civic
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_peanut_barista_1` | Red squirrel barista intercepts tired workers with three mugs at a copper café machine amid herbs and flowers. |
+| 1 | `mk_oatmeal_jazz_singer_3` | Badger jazz singer, four badger siblings, fox pianist and brass microphone fill a tiny benefit-night stage. |
+| 2 | `mk_biff_cadet_constable_0` | Young hedgehog cadet walks two paces behind a senior constable through a flower-lined market. |
+| 3 | `mk_copper_cellar_keeper_4` | Tabby cellar keeper counts salt, lamp oil, candles, preserves and a modest coin shelf. |
+| 4 | `mk_bella_science_hall_fellow_4` | Field mouse fellow speaks up in a cozy science-hall committee room beside wildlife recordings. |
+| 5 | `mk_hazel_market_committee_chair_4` | Raccoon committee chair brings a shy night vendor to a daylight meeting, still in a rumpled night-market coat. |
+| 6 | `mk_beck_ward_clerk_2` | Raccoon ward clerk patiently finds the exact old minute in a civic office. |
+| 7 | `mk_beck_keeper_of_the_ward_book_5` | Older Beck rests both paws on an enormous ward book as a candlelit records room falls quiet. |
+| 8 | `mk_beck_candlelight_reader_4` | Beck locates the needed water-stained volume in a precarious candlelit heap. |
+| 9 | `mk_ned_ward_recorder_3` | Squirrel recorder produces the decisive hedgerow record from an immaculate archive. |
+| 10 | `mk_cassadee_stage_hand_0` | Young hedgehog stage hand manages chairs, lamps and a blank running order behind the curtain. |
+| 11 | `mk_cassadee_hall_manager_3` | Cassadee orchestrates a midnight hall cleanup from the wings without stepping onstage. |
+| 12 | `mk_andrew_night_copyist_0` | Owl copyist makes an immaculate manuscript copy by oil lamp in a sleeping library. |
+| 13 | `mk_andrew_keeper_of_the_late_desk_2` | Owl keeps the tiny after-hours library desk with a kettle and a mountain of useful work. |
+| 14 | `mk_bean_proprietor_5` | Barn owl proprietor directs a bustling all-night café and serves dawn workers. |
+| 15 | `mk_bld_long_room` | The Lending Library's warm upper room holds ribbons, tall shelves, ivy and lamps never all extinguished. |
+
+## Maker Harvest
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_brooke_mooring_hand_0` | Young otter catches a ferry at a flower-edged quay with rope, bollard and fender. |
+| 1 | `mk_clover_plot_sharer_1` | Cream rabbit shares seedlings and a key from a four-generation allotment. |
+| 2 | `mk_rosabeth_garden_hand_1` | Singing brown mouse tends medicinal beds while a newcomer discovers useful work. |
+| 3 | `mk_maribel_seed_sorter_0` | Mouse sorts one seed variety at a time with trays and tweezers at dusk. |
+| 4 | `mk_maribel_horticulturist_4` | Maribel directs a seed-bank glasshouse with mature plants, seed drawers and brass botanical instruments. |
+| 5 | `mk_marmalade_oven_keeper_4` | Ginger cat banks shared brick ovens overnight and serves kittens first at dawn. |
+| 6 | `mk_morty_mill_kitchen_cook_1` | Badger cooks beside millstones and feeds animals arriving with grain. |
+| 7 | `mk_morty_grain_miller_2` | Morty dresses a millstone as sacks arrive and flour leaves. |
+| 8 | `mk_peter_hedge_cutter_0` | Young rabbit keeps pace with a billhook, leaving an unexpectedly neat hedge. |
+| 9 | `mk_peter_hedgelayer_3` | Seasoned Peter cuts, bends and pegs a living country hedge. |
+| 10 | `mk_liz_scale_hand_1` | Fox chocks Grain Exchange cart wheels and watches the weighbridge beam settle. |
+| 11 | `mk_liz_weighbridge_keeper_4` | Liz commands the brass weighing platform, reading both gauge and carter. |
+| 12 | `mk_taco_cart_cook_1` | Otter cooks one-pan food on a moving handcart as vegetables bounce. |
+| 13 | `mk_taco_quayside_cook_3` | Taco serves lightermen before dawn from a mysteriously relocated riverside cart. |
+| 14 | `mk_cookie_biscuit_maker_0` | Squirrel bakes tough twice-fired ship biscuits and tests one like a roof tile. |
+| 15 | `mk_cookie_winter_stores_cook_3` | Cookie stacks durable food in winter stores while a mouse reaches for this year's batch. |
+
+## Maker Workshop
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_betty_firework_maker_3` | Hedgehog assembles bright rockets at a careful powder bench with oversized ear defenders. |
+| 1 | `mk_comet_bolt_sorter_0` | Young calico sorts many kinds of bolt into tins on a brass rocket-hangar floor. |
+| 2 | `mk_lynnette_press_feeder_2` | Rabbit feeds blank sheets through a hand-and-steam printing press. |
+| 3 | `mk_moss_toolsmith_2` | Badger forges and fits a clever workshop bench jig amid safe sparks and flowers. |
+| 4 | `mk_moss_bridgewright_5` | Moss inspects his elegant light bridge while rejected plans remain under one arm. |
+| 5 | `mk_moss_timber_hand_0` | Young Moss stacks planks in an ingenious pattern that surprises older workers. |
+| 6 | `mk_daniel_chart_copier_1` | Mouse traces a survey accurately onto four copies with brass dividers. |
+| 7 | `mk_osh_sharpener_s_boy_0` | Tiny mouse heroically carries a grinding wheel almost as large as he is. |
+| 8 | `mk_osh_edge_grinder_2` | Osh expertly sharpens a queue of shears and billhooks at a treadle wheel. |
+| 9 | `mk_adam_road_mender_1` | Badger resets market cobbles before dawn with barrow, rake and steaming pot. |
+| 10 | `mk_adam_surveyor_of_ways_4` | Adam surveys an efficient county-gate route with level, map and wagon. |
+| 11 | `mk_annabelle_paper_sorter_0` | Young raccoon rescues and sorts rain-wet papers beneath a gate-side awning. |
+| 12 | `mk_annabelle_salvage_archivist_3` | Annabelle flattens, dries and shelves rescued records, keeping one hopeless scrap. |
+| 13 | `mk_sota_lens_grinder_1` | Calico polishes a single glass blank slowly enough for a nearby vine to grow. |
+| 14 | `mk_sota_telescope_fitter_3` | Sota reseats a great brass telescope in an ivy-covered observatory workshop. |
+| 15 | `mk_bld_guild_hall` | A timber-and-stone guild hall hosts a cutaway steam-engine course while a badger critiques the foundations. |
+
+## Maker Places
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_barrows_measure` | Badger stonecutter measures a building lot alone before returning one decisive auction estimate. |
+| 1 | `mk_biffs_beat` | Hedgehog constable ends a quarrel and kindly walks the rattled animals home. |
+| 2 | `mk_rosabeths_rounds` | Rosabeth tends herb beds, then guides a newly confident worker toward another job. |
+| 3 | `mk_oatmeals_benefit_night` | Badger benefit singer, siblings and fox pianist hand the evening's coin jar to a family. |
+| 4 | `mk_coppers_stocktake` | Cheerful tabby weighs an entire cellar and sends useless odds to the yard. |
+| 5 | `mk_warren_muster` | A conversation becomes a nine-rabbit work party outside the Lending Library. |
+| 6 | `mk_night_round` | Three owls open the café, check doors and audit a ledger before dawn. |
+| 7 | `mk_bins_at_dawn` | Hazel pulls the exact needed brass part from a cart of city salvage. |
+| 8 | `mk_guild_night` | Craftsfolk pass a broken mechanism around until Berry quietly offers the tiny fix. |
+| 9 | `mk_hall_lecture` | Curious calico Comet raises a paw twice during a packed science lecture. |
+| 10 | `mk_ledger_day` | Peanut serves coffee while explaining borough accounts with coins and an abacus. |
+| 11 | `mk_tb_barrows_yard` | Ordered stone yard, sand tarpaulin, carts and roofs surround an appraising badger. |
+| 12 | `mk_tb_the_warren` | Ancient cozy rabbit tunnels link a family garden and a press beneath a cottage lane. |
+| 13 | `mk_tb_observatory_steps` | Black cat librarian and calico engineer meet on moonflower-covered observatory steps before dawn. |
+| 14 | `mk_tb_counting_house` | Copper weighs goods while Peanut values them at a long two-lamp desk. |
+| 15 | `mk_tb_quill_wall` | A sleepy hedgehog guards a charmingly unimpressive, twice-mended ivy wall. |
 
 ## Maker Borough
 
