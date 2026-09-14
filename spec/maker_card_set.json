@@ -3,7 +3,7 @@
  "setId": "AF-MAKER-01",
  "name": "Maker Cards",
  "playable": true,
- "note": "Maker Mode plays this shelf: the two decks above, a deck of your own out of the Deck Workshop, and the one Capital City below. The nine Statues are still the printed ones — the shelf has none of its own yet — and they are borrowed by id through `borrowsFromPrinted`.",
+ "note": "Maker Mode plays this shelf: the two decks above, a deck of your own out of the Deck Workshop, and the one Capital City below. It borrows nothing from the printed book any more — the nine Statues are the shelf’s own as of 2026-09-14, which is what struck `borrowsFromPrinted` off this file.",
  "species": [
   "Rabbit",
   "Mouse",
@@ -141,7 +141,8 @@
       "mk_peanut_barista_1",
       "mk_peanut_cafe_manager_4"
      ],
-     "why": "No painted tile shows a Squirrel behind a counter. nightworkers tile 2 is Bean's café, but Bean is an Owl. With no `art` set they fall back to the painted Squirrel forager scene, not the new Food backdrop — the painted species tile always wins over the drawn one. A Squirrel behind a counter would fix it."
+     "why": "No painted tile shows a Squirrel behind a counter. nightworkers tile 2 is Bean's café, but Bean is an Owl. With no `art` set they fall back to the painted Squirrel forager scene, not the new Food backdrop — the painted species tile always wins over the drawn one. A Squirrel behind a counter would fix it.",
+     "painted": "Painted. mk_peanut_barista_1 → the makercivic atlas, tile 0, and a Full Art portrait of its own; mk_peanut_cafe_manager_4 → the makerborough atlas, tile 2. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ]
   },
@@ -172,7 +173,8 @@
      "cards": [
       "mk_oatmeal_jazz_singer_3"
      ],
-     "why": "No painted tile shows anyone on a stage. With no `art` set, a Badger character falls back to the painted Badger workbench scene rather than the new Entertainment backdrop — the painted species tile always wins over the drawn one. An open-mic painting would fix it."
+     "why": "No painted tile shows anyone on a stage. With no `art` set, a Badger character falls back to the painted Badger workbench scene rather than the new Entertainment backdrop — the painted species tile always wins over the drawn one. An open-mic painting would fix it.",
+     "painted": "Painted. mk_oatmeal_jazz_singer_3 → the makercivic atlas, tile 1, and a Full Art portrait of its own. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ]
   },
@@ -350,7 +352,8 @@
    "wantedArt": [
     {
      "card": "mk_brooke_regatta_caller_3",
-     "why": "The Regatta Caller is a new job — Entertainment, on a starting barge with a horn. No printed Brook tile shows it; neighbors/12 is the ferry and would be the wrong animal at the wrong end of the river."
+     "why": "The Regatta Caller is a new job — Entertainment, on a starting barge with a horn. No printed Brook tile shows it; neighbors/12 is the ferry and would be the wrong animal at the wrong end of the river.",
+     "painted": "Painted. mk_brooke_regatta_caller_3 → the makerfield atlas, tile 2. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ],
    "wantedVerbs": []
@@ -373,19 +376,23 @@
    "wantedArt": [
     {
      "card": "mk_betty_stump_blaster_2",
-     "why": "New job — Agriculture with a charge and a fuse. boroughs/4 is the barn sweeper and townlife/9 is the kite; neither is an animal clearing a field with powder."
+     "why": "New job — Agriculture with a charge and a fuse. boroughs/4 is the barn sweeper and townlife/9 is the kite; neither is an animal clearing a field with powder.",
+     "painted": "Painted. mk_betty_stump_blaster_2 → the makerfield atlas, tile 6. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     },
     {
      "card": "mk_betty_firework_maker_3",
-     "why": "neighbors/8 is Burr at the bench with a chisel, which is the Whittler's tile. The Firework Maker is a different job and needs its own."
+     "why": "neighbors/8 is Burr at the bench with a chisel, which is the Whittler's tile. The Firework Maker is a different job and needs its own.",
+     "painted": "Painted. mk_betty_firework_maker_3 → the makerworkshop atlas, tile 0, and a Full Art portrait of its own. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     },
     {
      "card": "mk_betty_powder_chemist_4",
-     "why": "townlife/9 shows the kite test it replaces, not a bench of powders and scales."
+     "why": "townlife/9 shows the kite test it replaces, not a bench of powders and scales.",
+     "painted": "Painted. mk_betty_powder_chemist_4 → the makerfield atlas, tile 7. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     },
     {
      "card": "mk_betty_land_clearer_5",
-     "why": "The reclaimed strip is new ground in every sense — no printed Burr tile shows the job."
+     "why": "The reclaimed strip is new ground in every sense — no printed Burr tile shows the job.",
+     "painted": "Painted. mk_betty_land_clearer_5 → the makerfield atlas, tile 8. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ],
    "wantedVerbs": []
@@ -529,7 +536,8 @@
       "mk_bella_wildlife_warden_3",
       "mk_bella_ecologist_5"
      ],
-     "why": "neighbors tile 2 is the Mouse herbalist at a bench of jars, inherited from the printed Fern, and it now reads as Rosabeth's apothecary rather than Bella's. Nothing in any atlas shows an animal sitting in the leaf litter with a notebook and a recorder, which is the whole character. A forest-floor scene would fix all five at once."
+     "why": "neighbors tile 2 is the Mouse herbalist at a bench of jars, inherited from the printed Fern, and it now reads as Rosabeth's apothecary rather than Bella's. Nothing in any atlas shows an animal sitting in the leaf litter with a notebook and a recorder, which is the whole character. A forest-floor scene would fix all five at once.",
+     "painted": "Painted. mk_bella_forager_0 → the makerwoodland atlas, tile 8; mk_bella_field_scientist_1 → the makerwoodland atlas, tile 9; mk_bella_field_recorder_2 → the makerwoodland atlas, tile 10; mk_bella_wildlife_warden_3 → the makerwoodland atlas, tile 11; mk_bella_ecologist_5 → the makerwoodland atlas, tile 12. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ]
   },
@@ -695,7 +703,8 @@
    "wantedArt": [
     {
      "card": "mk_beck_keeper_of_the_ward_book_5",
-     "why": "New job, and the printed Registrar General it replaces never had a tile. boroughs/3 is the clerk at the lamplighters' desk, which is the cost-3; the Keeper is the same raccoon at home with one candle and the ward book open on his knees."
+     "why": "New job, and the printed Registrar General it replaces never had a tile. boroughs/3 is the clerk at the lamplighters' desk, which is the cost-3; the Keeper is the same raccoon at home with one candle and the ward book open on his knees.",
+     "painted": "Painted. mk_beck_keeper_of_the_ward_book_5 → the makercivic atlas, tile 7. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ]
   },
@@ -716,7 +725,8 @@
     {
      "verb": "giveToUnemployed (handing food to an animal out of work)",
      "why": "The story wants the buns to reach the animals with nothing — a Character in your Unemployment turning back up because Marmalade fed it.",
-     "workaround": "The Neighborhood Baker readies a Character already in town instead: the same gesture, aimed at an animal who is at least standing. `rehire` is the Badger's verb and it costs Supply, which is exactly what Marmalade does not charge."
+     "workaround": "The Neighborhood Baker readies a Character already in town instead: the same gesture, aimed at an animal who is at least standing. `rehire` is the Badger's verb and it costs Supply, which is exactly what Marmalade does not charge.",
+     "resolved": "Built as `giveToUnemployed`, and pointedly not a rehire: an animal in your own Unemployment is fed and turns back up Busy, and no Supply changes hands, so a rehire discount neither helps nor applies. The Neighborhood Baker hands the tray to whoever costs 2 or less — the kittens first, as the flavor always said."
     }
    ]
   },
@@ -753,7 +763,8 @@
    "wantedArt": [
     {
      "card": "mk_morty_mill_kitchen_cook_1",
-     "why": "New job — Food at the end of a working mill. whiskerwood/9 is the Grain Miller on the mill floor, which is the machinery and not the stove; a badger in a flour-dusted apron cooking beside the gear housing would fix it."
+     "why": "New job — Food at the end of a working mill. whiskerwood/9 is the Grain Miller on the mill floor, which is the machinery and not the stove; a badger in a flour-dusted apron cooking beside the gear housing would fix it.",
+     "painted": "Painted. mk_morty_mill_kitchen_cook_1 → the makerharvest atlas, tile 6. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ],
    "wantedVerbs": []
@@ -823,7 +834,8 @@
     {
      "verb": "pairCharacters (two Characters in a town who are worth more to each other)",
      "why": "Daisy's whole story is the sweeping-off-her-feet that has not happened yet, and the card wanted to notice the animal she is standing next to.",
-     "workaround": "Left as the Squirrel's storage thread — she puts by, and the Festival pays out — with the romance carried in the flavor. `otherCharacterInTown` can name one animal, but Daisy does not know who it is yet, which is the point of her."
+     "workaround": "Left as the Squirrel's storage thread — she puts by, and the Festival pays out — with the romance carried in the flavor. `otherCharacterInTown` can name one animal, but Daisy does not know who it is yet, which is the point of her.",
+     "resolved": "Built as `pairCharacters`: Daisy and one other animal are worth 1 more to each other on every shift either of them works, for as long as both keep standing in the town. The bond is read back through the partner rather than promised, so it lapses on its own the moment one of them is unemployed, upgraded away or sent home — which is the other half of the sweeping-off-her-feet that has not happened yet."
     }
    ]
   },
@@ -848,7 +860,8 @@
       "mk_peter_hedge_cutter_0",
       "mk_peter_hedgelayer_3"
      ],
-     "why": "Peter is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Rabbit scene, which is the right species doing the wrong work."
+     "why": "Peter is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Rabbit scene, which is the right species doing the wrong work.",
+     "painted": "Painted. mk_peter_hedge_cutter_0 → the makerharvest atlas, tile 8; mk_peter_hedgelayer_3 → the makerharvest atlas, tile 9. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ]
   },
@@ -873,7 +886,8 @@
       "mk_osh_sharpener_s_boy_0",
       "mk_osh_edge_grinder_2"
      ],
-     "why": "Osh is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Mouse scene, which is the right species doing the wrong work."
+     "why": "Osh is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Mouse scene, which is the right species doing the wrong work.",
+     "painted": "Painted. mk_osh_sharpener_s_boy_0 → the makerworkshop atlas, tile 7; mk_osh_edge_grinder_2 → the makerworkshop atlas, tile 8. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ]
   },
@@ -898,7 +912,8 @@
       "mk_adam_road_mender_1",
       "mk_adam_surveyor_of_ways_4"
      ],
-     "why": "Adam is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Badger scene, which is the right species doing the wrong work."
+     "why": "Adam is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Badger scene, which is the right species doing the wrong work.",
+     "painted": "Painted. mk_adam_road_mender_1 → the makerworkshop atlas, tile 9; mk_adam_surveyor_of_ways_4 → the makerworkshop atlas, tile 10. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ]
   },
@@ -923,7 +938,8 @@
       "mk_cassadee_stage_hand_0",
       "mk_cassadee_hall_manager_3"
      ],
-     "why": "Cassadee is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Hedgehog scene, which is the right species doing the wrong work."
+     "why": "Cassadee is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Hedgehog scene, which is the right species doing the wrong work.",
+     "painted": "Painted. mk_cassadee_stage_hand_0 → the makercivic atlas, tile 10; mk_cassadee_hall_manager_3 → the makercivic atlas, tile 11. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ]
   },
@@ -948,7 +964,8 @@
       "mk_annabelle_paper_sorter_0",
       "mk_annabelle_salvage_archivist_3"
      ],
-     "why": "Annabelle is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Raccoon scene, which is the right species doing the wrong work."
+     "why": "Annabelle is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Raccoon scene, which is the right species doing the wrong work.",
+     "painted": "Painted. mk_annabelle_paper_sorter_0 → the makerworkshop atlas, tile 11; mk_annabelle_salvage_archivist_3 → the makerworkshop atlas, tile 12. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ]
   },
@@ -973,7 +990,8 @@
       "mk_liz_scale_hand_1",
       "mk_liz_weighbridge_keeper_4"
      ],
-     "why": "Liz is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Fox scene, which is the right species doing the wrong work."
+     "why": "Liz is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Fox scene, which is the right species doing the wrong work.",
+     "painted": "Painted. mk_liz_scale_hand_1 → the makerharvest atlas, tile 10; mk_liz_weighbridge_keeper_4 → the makerharvest atlas, tile 11. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ]
   },
@@ -998,7 +1016,8 @@
       "mk_taco_cart_cook_1",
       "mk_taco_quayside_cook_3"
      ],
-     "why": "Taco is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Otter scene, which is the right species doing the wrong work."
+     "why": "Taco is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Otter scene, which is the right species doing the wrong work.",
+     "painted": "Painted. mk_taco_cart_cook_1 → the makerharvest atlas, tile 12; mk_taco_quayside_cook_3 → the makerharvest atlas, tile 13. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ]
   },
@@ -1023,7 +1042,8 @@
       "mk_cookie_biscuit_maker_0",
       "mk_cookie_winter_stores_cook_3"
      ],
-     "why": "Cookie is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Squirrel scene, which is the right species doing the wrong work."
+     "why": "Cookie is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Squirrel scene, which is the right species doing the wrong work.",
+     "painted": "Painted. mk_cookie_biscuit_maker_0 → the makerharvest atlas, tile 14; mk_cookie_winter_stores_cook_3 → the makerharvest atlas, tile 15. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ]
   },
@@ -1048,7 +1068,8 @@
       "mk_sota_lens_grinder_1",
       "mk_sota_telescope_fitter_3"
      ],
-     "why": "Sota is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Cat scene, which is the right species doing the wrong work."
+     "why": "Sota is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Cat scene, which is the right species doing the wrong work.",
+     "painted": "Painted. mk_sota_lens_grinder_1 → the makerworkshop atlas, tile 13; mk_sota_telescope_fitter_3 → the makerworkshop atlas, tile 14, and a Full Art portrait of its own. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ]
   },
@@ -1073,7 +1094,8 @@
       "mk_andrew_night_copyist_0",
       "mk_andrew_keeper_of_the_late_desk_2"
      ],
-     "why": "Andrew is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Owl scene, which is the right species doing the wrong work."
+     "why": "Andrew is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Owl scene, which is the right species doing the wrong work.",
+     "painted": "Painted. mk_andrew_night_copyist_0 → the makercivic atlas, tile 12; mk_andrew_keeper_of_the_late_desk_2 → the makercivic atlas, tile 13. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ]
   },
@@ -1095,14 +1117,16 @@
    "wantedArt": [
     {
      "card": "mk_orien_survey_computer_4",
-     "why": "The Survey Computer is a new job: a badger at a home-built calculating engine at two in the morning, tape everywhere. townlife/2 is the bridge engineer's site and is the wrong room entirely."
+     "why": "The Survey Computer is a new job: a badger at a home-built calculating engine at two in the morning, tape everywhere. townlife/2 is the bridge engineer's site and is the wrong room entirely.",
+     "painted": "Painted. mk_orien_survey_computer_4 → the townlife atlas, tile 2. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ],
    "wantedVerbs": [
     {
      "verb": "shiftBonusPerCharacter",
      "why": "The story wants Orien's tables to pay the town a standing rate — every shift, every turn, because the figures are simply better now.",
-     "workaround": "A turn-long `shiftBonus` mod on the cost-4, re-applied each turn he is upright. Same outcome while he is working, and it stops when he does."
+     "workaround": "A turn-long `shiftBonus` mod on the cost-4, re-applied each turn he is upright. Same outcome while he is working, and it stops when he does.",
+     "resolved": "Built as the `townShiftBonus` passive, which carries a value: every shift the town finishes pays that much more while the rule is in force. The Survey Computer no longer re-applies a turn-long mod each morning — the figures are simply better now, and they stop being better the moment he sits down. `passiveTotal` in state.js is the general form of `hasPassive` for a standing rule with a quantity."
     }
    ]
   },
@@ -1124,14 +1148,16 @@
    "wantedArt": [
     {
      "card": "mk_patch_valuer_3",
-     "why": "The Valuer is the yard's counter, not the town hall: an animal handing a broken thing over a plank and waiting for the verdict. neighbors/4 is the salvage portrait and is close, but the scene is the counter."
+     "why": "The Valuer is the yard's counter, not the town hall: an animal handing a broken thing over a plank and waiting for the verdict. neighbors/4 is the salvage portrait and is close, but the scene is the counter.",
+     "painted": "Painted. mk_patch_valuer_3 → the neighbors atlas, tile 4. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ],
    "wantedVerbs": [
     {
      "verb": "swapBuilding",
      "why": "The maker asked for abilities about swapping Buildings: return a Building your town has raised to the City Dump and raise another in its place, which is exactly Patch's trade — the old mangle out, the mended one in.",
-     "workaround": "The two halves of the swap, built from verbs that exist: `takeFromCityDump` takes the Market card back out of the shared Dump, and a `buildingDiscount` mod makes putting the replacement up cheap. The town ends up with the better Building; it just cannot hand the old one back."
+     "workaround": "The two halves of the swap, built from verbs that exist: `takeFromCityDump` takes the Market card back out of the shared Dump, and a `buildingDiscount` mod makes putting the replacement up cheap. The town ends up with the better Building; it just cannot hand the old one back.",
+     "resolved": "Built as `swapBuilding`: one of your Buildings comes down — a bought one to the City Dump, a built one home to your own Town Dump — and a Building somebody else threw away goes up in the place it left. Both halves or neither, so a town with nothing up has nothing to trade and an empty Dump nothing to trade for. The old mangle out, the mended one in, and the Reclamation Merchant is the card that does it."
     }
    ]
   },
@@ -1153,7 +1179,8 @@
     {
      "verb": "tokenPerPassenger",
      "why": "The story wants a chit for every animal who crosses — a token per Character the town readies or moves, not a flat one per shift.",
-     "workaround": "A fixed `gainToken` count on each version, rising with the rung. The tin fills at the same rate on a busy turn and a quiet one, which is the one thing a ferry never does."
+     "workaround": "A fixed `gainToken` count on each version, rising with the rung. The tin fills at the same rate on a busy turn and a quiet one, which is the one thing a ferry never does.",
+     "resolved": "Built as `gainToken: { per: \"charactersReadied\" }`: a chit for every animal who actually crossed. `p.turn.readied` counts the Characters who have stood up in this town this turn — in the Ready phase or by any effect that put one back on its feet — and the Harbour Warden reads it at the end of the turn, when the count is what really happened. A busy turn fills the tin and a quiet one does not, which is the one thing a ferry never used to do."
     }
    ]
   },
@@ -1175,7 +1202,8 @@
    "wantedArt": [
     {
      "card": "mk_scott_pamphleteer_2",
-     "why": "The Pamphleteer is the press floor at Lynnette's with a squirrel reading a wet proof, not the road: neighbors/15 is the travelling storyteller and is the previous job."
+     "why": "The Pamphleteer is the press floor at Lynnette's with a squirrel reading a wet proof, not the road: neighbors/15 is the travelling storyteller and is the previous job.",
+     "painted": "Painted. mk_scott_pamphleteer_2 → the neighbors atlas, tile 15. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ],
    "wantedVerbs": []
@@ -1212,14 +1240,16 @@
    "wantedArt": [
     {
      "card": "mk_pockets_odd_lot_dealer_3",
-     "why": "The Odd-Lot Dealer is a raccoon at the gate at dusk with a barrow under a sheet, dealing with a carter who is not getting down. neighbors/4 is the salvage portrait his brother already uses."
+     "why": "The Odd-Lot Dealer is a raccoon at the gate at dusk with a barrow under a sheet, dealing with a carter who is not getting down. neighbors/4 is the salvage portrait his brother already uses.",
+     "painted": "Painted. mk_pockets_odd_lot_dealer_3 → the neighbors atlas, tile 4. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ],
    "wantedVerbs": [
     {
      "verb": "playEventFromCityDump",
      "why": "The maker asked for an Event or a Building out of the City Dump. The Building half exists — `takeFromCityDump` — but an Event in the City Dump cannot be reached at all: Events go to a town's own Dump, and nothing on either shelf crosses from one town's Dump to the other's.",
-     "workaround": "The two Dumps he can reach: `eventFromDumpToHand` for the Event, out of your own Town Dump, and `takeFromCityDump` for the Market card. It is the same pair of hands doing the same trick; it just never goes through the rival's bin."
+     "workaround": "The two Dumps he can reach: `eventFromDumpToHand` for the Event, out of your own Town Dump, and `takeFromCityDump` for the Market card. It is the same pair of hands doing the same trick; it just never goes through the rival's bin.",
+     "resolved": "Built as `eventFromOpponentDump`, which is the half that was genuinely unreachable: an Event in the rival's own Town Dump, into your hand. Events still never reach the City Dump — that would be a different card type in a different bin — so the Odd-Lot Dealer now works the two bins that actually have something in them: the shared City Dump for a Market card, and the rival's for the Event they have already shown you is worth playing."
     }
    ]
   },
@@ -1258,7 +1288,8 @@
    "wantedArt": [
     {
      "card": "mk_quill_cider_maker_3",
-     "why": "The Cider Maker is the barn in September with the press going and thirty animals in it — a Food scene the printed orchard tiles (neighbors/9, the keeper among the trees) do not have."
+     "why": "The Cider Maker is the barn in September with the press going and thirty animals in it — a Food scene the printed orchard tiles (neighbors/9, the keeper among the trees) do not have.",
+     "painted": "Painted. mk_quill_cider_maker_3 → the nightskies atlas, tile 9. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ],
    "wantedVerbs": []
@@ -1301,7 +1332,8 @@
    "wantedArt": [
     {
      "card": "mk_quinn_keeper_of_the_record_5",
-     "why": "The Keeper of the Record is the archive at night, one mouse and four years of shelving open at once. capital/4 is the Capital City's hiring portrait and is the job below it."
+     "why": "The Keeper of the Record is the archive at night, one mouse and four years of shelving open at once. capital/4 is the Capital City's hiring portrait and is the job below it.",
+     "painted": "Painted. mk_quinn_keeper_of_the_record_5 → the capital atlas, tile 4. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ],
    "wantedVerbs": []
@@ -1324,14 +1356,16 @@
    "wantedArt": [
     {
      "card": "mk_roger_fair_broker_4",
-     "why": "The Fair Broker is two traders and a fox between them with a coin in the air. neighbors/6 is the bench portrait and boroughs/2 is the lock bench; neither has the toss in it."
+     "why": "The Fair Broker is two traders and a fox between them with a coin in the air. neighbors/6 is the bench portrait and boroughs/2 is the lock bench; neither has the toss in it.",
+     "painted": "Painted. mk_roger_fair_broker_4 → the neighbors atlas, tile 6. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
     }
    ],
    "wantedVerbs": [
     {
      "verb": "coinFlip",
      "why": "The maker asked for chance: an effect that tosses Roger's ha'penny and does one thing on heads and another on tails — the borough's actual method for a call that will not come down on its own.",
-     "workaround": "The one genuine coin toss the engine already has: the tied bid. `onTiedBid` fires exactly when two Mayors have put up the same number and neither is right, which is the situation Roger is for, and everything he does hangs off it. It is chance the players walked into rather than chance he can call on demand."
+     "workaround": "The one genuine coin toss the engine already has: the tied bid. `onTiedBid` fires exactly when two Mayors have put up the same number and neither is right, which is the situation Roger is for, and everything he does hangs off it. It is chance the players walked into rather than chance he can call on demand.",
+     "resolved": "Built as `coinFlip`: `{ heads, tails }`, each side an effect of its own. It draws on the same seeded rng every shuffle uses, so a game is still replayable from its seed and the toss goes in the log rather than hiding inside the effect. The Fair Broker tosses on a tied bid, which is still the situation he is for — but the ha'penny is a real one now, and somebody else calls it, exactly as his flavor always said."
     }
    ]
   },
@@ -1355,7 +1389,8 @@
     {
      "verb": "coinFlip",
      "why": "The maker asked for a favourable coin flip before Earl helps anybody upgrade: the toss is whether the animal is ready, and Earl leans on it.",
-     "workaround": "The one genuine coin toss the engine already has: the tied bid. `onTiedBid` fires exactly when two Mayors have put up the same number and neither is right, which is the situation Roger is for, and everything he does hangs off it. It is chance the players walked into rather than chance he can call on demand."
+     "workaround": "The one genuine coin toss the engine already has: the tied bid. `onTiedBid` fires exactly when two Mayors have put up the same number and neither is right, which is the situation Roger is for, and everything he does hangs off it. It is chance the players walked into rather than chance he can call on demand.",
+     "resolved": "Built as `coinFlip`, the same verb Roger asked for. Earl leans on his where the story put it: the Coffee Roaster tosses when he finishes a shift, and heads is the favourable call — the upgrade rate — while tails is the Supply he would have made anyway. An even call about whether an animal is ready, settled the way the borough settles one."
     }
    ]
   }
@@ -7739,14 +7774,16 @@
     "delay": 2,
     "output": 3
    },
-   "text": "Upgrades Marmalade. When Marmalade becomes upright, you may ready one of your Characters.",
+   "text": "Upgrades Marmalade. When Marmalade becomes upright, you may feed a Character costing 2 or less in your Unemployment; it comes back to work Busy, for nothing.",
    "flavor": "The tray goes round the kittens first and is empty before anybody has paid for anything. He knows exactly what a kitten with nothing to do turns into.",
    "abilities": [
     {
      "trigger": "onReady",
      "effect": {
-      "do": "readyCharacter",
-      "count": 1,
+      "do": "giveToUnemployed",
+      "filter": {
+       "maxCost": 2
+      },
       "optional": true
      }
     }
@@ -7758,8 +7795,8 @@
    "remakes": "ww_marmalade_2",
    "rarity": "Rare",
    "power": {
-    "score": 5.2,
-    "power": 11.83,
+    "score": 4.77,
+    "power": 10.85,
     "opportunityCost": 7.8
    }
   },
@@ -8767,14 +8804,14 @@
     "delay": 1,
     "output": 2
    },
-   "text": "When Daisy becomes upright, look at the top three cards of your deck and put them back in any order.",
+   "text": "When Daisy is recruited, she and one other Character you control work together: while both are in your town, each of their shifts pays 1 more Supply.",
    "flavor": "She can tell you what the posy is saying and what the animal who ordered it thinks it is saying, and she is never wrong twice.",
    "abilities": [
     {
-     "trigger": "onReady",
+     "trigger": "onRecruit",
      "effect": {
-      "do": "reorderDeckTop",
-      "count": 3
+      "do": "pairCharacters",
+      "bonus": 1
      }
     }
    ],
@@ -8785,8 +8822,8 @@
    "remakes": "ww_nutmeg_1",
    "rarity": "Rare",
    "power": {
-    "score": 4.91,
-    "power": 10.56,
+    "score": 4.95,
+    "power": 10.65,
     "opportunityCost": 6.8
    }
   },
@@ -9478,17 +9515,14 @@
     "delay": 2,
     "output": 4
    },
-   "text": "Upgrades Orien. At the start of your turn, every shift your Characters complete this turn pays 1 more Supply.",
+   "text": "Upgrades Orien. While Orien is upright, every shift your Characters complete pays 1 more Supply.",
    "flavor": "The machine in his back room is on its fourth rebuild, half Observatory cast-offs and half whatever Patch would sell him, and it clicks all night. It is also why he is never at the bonfire.",
    "abilities": [
     {
-     "trigger": "onTurnStart",
-     "effect": {
-      "do": "addMod",
-      "key": "shiftBonus",
-      "value": 1,
-      "expires": "nextTurnStart"
-     }
+     "trigger": "passive",
+     "key": "townShiftBonus",
+     "value": 1,
+     "requiresUpright": true
     }
    ],
    "art": {
@@ -9498,8 +9532,8 @@
    "remakes": "ns_oakley_4",
    "rarity": "Rare",
    "power": {
-    "score": 5.04,
-    "power": 12.67,
+    "score": 4.92,
+    "power": 12.35,
     "opportunityCost": 10
    }
   },
@@ -9707,7 +9741,7 @@
     "delay": 2,
     "output": 4
    },
-   "text": "Upgrades Patch. Busy: take a Market card from the City Dump and gain it, and your next Building costs 1 less Supply.",
+   "text": "Upgrades Patch. Busy: pull one of your Buildings down and put a Building from the City Dump up in its place, then your next Building costs 1 less Supply.",
    "flavor": "He will tell you he is only a raccoon with a yard, and then tell you to keep the lease and sell the cart. You will, and it will have been the right way round.",
    "abilities": [
     {
@@ -9716,7 +9750,7 @@
       "do": "seq",
       "steps": [
        {
-        "do": "takeFromCityDump"
+        "do": "swapBuilding"
        },
        {
         "do": "addMod",
@@ -9735,8 +9769,8 @@
    "remakes": "pp_patch_3",
    "rarity": "Super Rare",
    "power": {
-    "score": 6.28,
-    "power": 16.38,
+    "score": 6.8,
+    "power": 17.74,
     "opportunityCost": 11
    }
   },
@@ -9918,16 +9952,16 @@
     "delay": 2,
     "output": 5
    },
-   "text": "Upgrades Pebble. At the start of your turn, take an Otter token. When Pebble becomes upright, if you hold at least three Otter tokens, gain 2 Supply.",
+   "text": "Upgrades Pebble. At the end of your turn, take an Otter token for each of your Characters who stood up this turn. When Pebble becomes upright, if you hold at least three Otter tokens, gain 2 Supply.",
    "flavor": "Willow asked three times. Pebble took it on the third and only on terms: the post, the office, the whole harbour if you like — and the boat, four crossings an hour, every morning, as before.",
    "abilities": [
     {
-     "trigger": "onTurnStart",
+     "trigger": "onTurnEnd",
      "effect": {
       "do": "gainToken",
       "of": "species",
       "species": "Otter",
-      "count": 1
+      "per": "charactersReadied"
      }
     },
     {
@@ -9952,8 +9986,8 @@
    "remakes": "mh_pebble_5",
    "rarity": "Super Rare",
    "power": {
-    "score": 6.33,
-    "power": 16.53,
+    "score": 7.12,
+    "power": 18.57,
     "opportunityCost": 11
    }
   },
@@ -10464,7 +10498,7 @@
     "delay": 2,
     "output": 3
    },
-   "text": "Upgrades Pockets. When Pockets is recruited, take a Market card from the City Dump and gain it, and you may return an Event from your Town Dump to your hand.",
+   "text": "Upgrades Pockets. When Pockets is recruited, take a Market card from the City Dump and gain it, and you may take an Event out of your opponent's Town Dump into your hand.",
    "flavor": "Patch sells you back your own mangle, mended. Pockets sells you somebody else's and does not say whose. Nothing he does is quite a crime; several things are the shape of one, seen from a distance, in poor light.",
    "abilities": [
     {
@@ -10476,7 +10510,7 @@
         "do": "takeFromCityDump"
        },
        {
-        "do": "eventFromDumpToHand",
+        "do": "eventFromOpponentDump",
         "optional": true
        }
       ]
@@ -10491,8 +10525,8 @@
    "addedBecause": "The middle rung of a one-card character: the trade at full range, working both Dumps at once. No printed Pockets stood at cost 3, because there was only ever the one.",
    "rarity": "Rare",
    "power": {
-    "score": 4.96,
-    "power": 11.29,
+    "score": 5.03,
+    "power": 11.45,
     "opportunityCost": 7.8
    }
   },
@@ -11226,15 +11260,21 @@
     "delay": 2,
     "output": 4
    },
-   "text": "Upgrades Roger. Whenever a bid of yours is tied, you may pay 2 Supply to raise one of your open bids by 2.",
+   "text": "Upgrades Roger. Whenever a bid of yours is tied, toss Roger's ha'penny: heads, raise one of your open bids by 2; tails, gain 2 Supply.",
    "flavor": "Somebody else calls it in the air. He has never called it himself, not once, on the grounds that calling it would be taking a side.",
    "abilities": [
     {
      "trigger": "onTiedBid",
      "effect": {
-      "do": "raiseOwnBid",
-      "amount": 2,
-      "optional": true
+      "do": "coinFlip",
+      "heads": {
+       "do": "raiseOwnBid",
+       "amount": 2
+      },
+      "tails": {
+       "do": "gainSupply",
+       "amount": 2
+      }
      }
     }
    ],
@@ -11245,8 +11285,8 @@
    "remakes": "pp_rowan_3",
    "rarity": "Uncommon",
    "power": {
-    "score": 4.04,
-    "power": 10.15,
+    "score": 4.32,
+    "power": 10.85,
     "opportunityCost": 10
    }
   },
@@ -11400,29 +11440,27 @@
     "delay": 2,
     "output": 3
    },
-   "text": "Upgrades Earl. Whenever a bid of yours is tied, gain 1 Supply and your next recruit costs 2 less Supply if it upgrades a Character you already have.",
+   "text": "Upgrades Earl. When Earl completes a shift, toss for it: heads, your next recruit costs 2 less Supply if it upgrades a Character you already have; tails, gain 1 Supply.",
    "flavor": "This is Earl before the first cup: four in the morning, the urn in one paw, three steps too many in the plan. When it is an even call whether an animal is ready, this is the Earl who leans on it.",
    "abilities": [
     {
-     "trigger": "onTiedBid",
+     "trigger": "onShiftCompleted",
      "effect": {
-      "do": "seq",
-      "steps": [
-       {
-        "do": "gainSupply",
-        "amount": 1
+      "do": "coinFlip",
+      "heads": {
+       "do": "addMod",
+       "key": "recruitDiscount",
+       "value": 2,
+       "filter": {
+        "upgradesOwn": true
        },
-       {
-        "do": "addMod",
-        "key": "recruitDiscount",
-        "value": 2,
-        "filter": {
-         "upgradesOwn": true
-        },
-        "expires": "untilUsed",
-        "consumable": true
-       }
-      ]
+       "expires": "untilUsed",
+       "consumable": true
+      },
+      "tails": {
+       "do": "gainSupply",
+       "amount": 1
+      }
      }
     }
    ],
@@ -11431,10 +11469,10 @@
     "tile": 7
    },
    "remakes": "ns_russet_3",
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
-    "score": 4.68,
-    "power": 10.65,
+    "score": 4.55,
+    "power": 10.35,
     "opportunityCost": 7.8
    }
   },
@@ -11479,6 +11517,1483 @@
     "power": 13.95,
     "opportunityCost": 10
    }
+  },
+  {
+   "type": "statue",
+   "id": "mk_st_kindness",
+   "virtue": "Kindness",
+   "cost": 2,
+   "name": "Statue of Kindness",
+   "text": "On gain: feed a Character costing 1 or less in your Unemployment; it comes back to work Busy, for nothing. At the start of your turn, if you have no more Characters in Unemployment than your opponent, gain 1 Supply.",
+   "flavor": "Open paws, and a tray held out at the height of a kitten. Marmalade's ovens are two streets away and the square smells of them on a cold morning, which the mason did not plan and would not change.",
+   "onGain": {
+    "do": "giveToUnemployed",
+    "filter": {
+     "maxCost": 1
+    },
+    "optional": true
+   },
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "unemploymentNotMoreThanOpponent": true
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    },
+    {
+     "trigger": "passive",
+     "key": "opponentRehireDiscount",
+     "value": 1,
+     "burden": true
+    }
+   ],
+   "burden": "Burden: your opponent's rehires cost 1 less Supply.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 15
+   },
+   "remakes": "st_kindness",
+   "rarity": "Common",
+   "power": {
+    "score": 2.83,
+    "power": 11.33,
+    "opportunityCost": 32.22
+   }
+  },
+  {
+   "type": "statue",
+   "id": "mk_st_curiosity",
+   "virtue": "Curiosity",
+   "cost": 2,
+   "name": "Statue of Curiosity",
+   "text": "On gain: draw 2 cards, then discard 1 card. At the start of your turn, look at the top card of your deck and you may send it to your Town Dump.",
+   "flavor": "Its stone eyes are set on the hill road out of the borough, which is where Comet was looking the two times the board turned her down and the third time it did not.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 2
+     },
+     {
+      "do": "discard",
+      "count": 1
+     }
+    ]
+   },
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "scryDeck",
+      "count": 1,
+      "to": "dump"
+     }
+    },
+    {
+     "trigger": "onTurnEnd",
+     "condition": {
+      "handAtLeast": 7
+     },
+     "burden": true,
+     "effect": {
+      "do": "discard",
+      "count": 1
+     }
+    }
+   ],
+   "burden": "Burden: at the end of your turn, if you hold more than 6 cards, discard 1.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 0
+   },
+   "remakes": "st_curiosity",
+   "rarity": "Common",
+   "power": {
+    "score": 2.73,
+    "power": 10.95,
+    "opportunityCost": 32.22
+   }
+  },
+  {
+   "type": "statue",
+   "id": "mk_st_courage",
+   "virtue": "Courage",
+   "cost": 3,
+   "name": "Statue of Courage",
+   "text": "On gain: your next raise in a Capital City auction costs 1 less Supply to pay. Whenever a bid of yours is tied, toss for it: heads, gain 2 Supply; tails, one of your Characters turns one step toward upright.",
+   "flavor": "Roger will not call it in the air and never has, but he walks past this one on the way to the fair and everybody in the borough has seen him do it.",
+   "onGain": {
+    "do": "addMod",
+    "key": "challengeDiscount",
+    "value": 1,
+    "expires": "untilUsed"
+   },
+   "abilities": [
+    {
+     "trigger": "onTiedBid",
+     "effect": {
+      "do": "coinFlip",
+      "heads": {
+       "do": "gainSupply",
+       "amount": 2
+      },
+      "tails": {
+       "do": "advanceCharacter",
+       "optional": true
+      }
+     }
+    },
+    {
+     "trigger": "passive",
+     "key": "opponentFirstBidPlus1",
+     "burden": true
+    }
+   ],
+   "burden": "Burden: your opponent's first bid each turn is worth 1 more.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 4
+   },
+   "remakes": "st_courage",
+   "rarity": "Common",
+   "power": {
+    "score": 2.57,
+    "power": 10.31,
+    "opportunityCost": 32.22
+   }
+  },
+  {
+   "type": "statue",
+   "id": "mk_st_patience",
+   "virtue": "Patience",
+   "cost": 3,
+   "name": "Statue of Patience",
+   "text": "Your Masters enter play with one fewer orientation delay (they enter Busy instead of at 180°). At the end of your turn, take a Building token.",
+   "flavor": "Moss on its shoulders and a chip out of one ear that Barrow has offered four times to mend. It has been there longer than the borough has, and the borough is not finished being built.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "masterDelayMinus1"
+    },
+    {
+     "trigger": "onTurnEnd",
+     "effect": {
+      "do": "gainToken",
+      "of": "building",
+      "count": 1
+     }
+    },
+    {
+     "trigger": "passive",
+     "key": "apprenticeEntersBusy",
+     "burden": true
+    }
+   ],
+   "burden": "Burden: your Apprentices enter Busy instead of upright.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 1
+   },
+   "remakes": "st_patience",
+   "rarity": "Common",
+   "power": {
+    "score": 2.8,
+    "power": 11.24,
+    "opportunityCost": 32.22
+   }
+  },
+  {
+   "type": "statue",
+   "id": "mk_st_generosity",
+   "virtue": "Generosity",
+   "cost": 4,
+   "name": "Statue of Generosity",
+   "text": "On gain: give your opponent 1 Supply and draw 2 cards. Whenever Supply is taken from you, gain 1 Supply.",
+   "flavor": "Arms open and nothing in them. Copper's cellar list is carved on the plinth in letters small enough that you have to kneel, which he says was not his idea and has never asked anyone to take off.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "giveSupplyToOpponent",
+      "amount": 1
+     },
+     {
+      "do": "draw",
+      "count": 2
+     }
+    ]
+   },
+   "abilities": [
+    {
+     "trigger": "onSupplyLost",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    },
+    {
+     "trigger": "onGainMarketCard",
+     "condition": {
+      "statue": true
+     },
+     "burden": true,
+     "effect": {
+      "do": "opponentGainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "burden": "Burden: whenever you gain a Statue, including this one, your opponent gains 2 Supply.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 3
+   },
+   "remakes": "st_generosity",
+   "rarity": "Common",
+   "power": {
+    "score": 2.58,
+    "power": 10.35,
+    "opportunityCost": 32.22
+   }
+  },
+  {
+   "type": "statue",
+   "id": "mk_st_ingenuity",
+   "virtue": "Ingenuity",
+   "cost": 4,
+   "name": "Statue of Ingenuity",
+   "text": "On gain: take 2 Building tokens. Once per turn, an Event you play requires one fewer Character.",
+   "flavor": "Clever paws, and a mechanism in the stone that has not turned since anybody can remember. Berry looked at it once, said it was never meant to, and went back to the bench.",
+   "onGain": {
+    "do": "gainToken",
+    "of": "building",
+    "count": 2
+   },
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "eventCharReductionPerTurn"
+    },
+    {
+     "trigger": "passive",
+     "key": "eventCostPlus1",
+     "burden": true
+    }
+   ],
+   "burden": "Burden: your Events cost 1 more Supply.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 2
+   },
+   "remakes": "st_ingenuity",
+   "rarity": "Common",
+   "power": {
+    "score": 2.69,
+    "power": 10.8,
+    "opportunityCost": 32.22
+   }
+  },
+  {
+   "type": "statue",
+   "id": "mk_st_community",
+   "virtue": "Community",
+   "cost": 5,
+   "name": "Statue of Community",
+   "text": "On gain: two of your Characters work together — while both are in your town, each of their shifts pays 1 more Supply. If you control Characters of at least three species, the first shift you complete each turn produces 1 extra Supply.",
+   "flavor": "Nine figures on one plinth, which is more than the commission asked for and exactly the number of Oatmeal's family. The mason was at the open mic the week before and would not be talked out of it.",
+   "onGain": {
+    "do": "pairCharacters",
+    "bonus": 1
+   },
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "minSpeciesInTown": 3
+     },
+     "oncePerTurn": true,
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    },
+    {
+     "trigger": "passive",
+     "key": "resourceSupplyMinus1",
+     "burden": true
+    }
+   ],
+   "burden": "Burden: choosing Supply in your Resources phase gives you 1 less.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 7
+   },
+   "remakes": "st_community",
+   "rarity": "Common",
+   "power": {
+    "score": 2.65,
+    "power": 10.64,
+    "opportunityCost": 32.22
+   }
+  },
+  {
+   "type": "statue",
+   "id": "mk_st_harmony",
+   "virtue": "Harmony",
+   "cost": 5,
+   "name": "Statue of Harmony",
+   "text": "Whenever a purchase you are part of resolves with a tied bid, ready one of your Characters at the start of your next turn and gain 2 Supply.",
+   "flavor": "A figure with its head tilted, listening. The regatta's called starts are given from its steps, and no cup has ever been argued about twice.",
+   "abilities": [
+    {
+     "trigger": "onTiedBid",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "readyNextTurn",
+        "optional": true
+       },
+       {
+        "do": "gainSupply",
+        "amount": 2
+       }
+      ]
+     }
+    },
+    {
+     "trigger": "passive",
+     "key": "pledgeLadderPlus1",
+     "burden": true
+    }
+   ],
+   "burden": "Burden: every pledge you make in an auction must be one step more expensive than the ladder asks.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 6
+   },
+   "remakes": "st_harmony",
+   "rarity": "Common",
+   "power": {
+    "score": 2.44,
+    "power": 9.8,
+    "opportunityCost": 32.22
+   }
+  },
+  {
+   "type": "statue",
+   "id": "mk_st_joy",
+   "virtue": "Joy",
+   "cost": 5,
+   "name": "Statue of Joy",
+   "text": "On gain: ready up to two of your Apprentices. At the end of your turn, take an Entertainment token.",
+   "flavor": "Carved mid-laugh, which is harder than it sounds and took two winters. It stands where the bandstand's lanterns end, and on open mic nights somebody always puts a hat on it.",
+   "foil": true,
+   "onGain": {
+    "do": "readyCharacter",
+    "filter": {
+     "rank": "apprentice"
+    },
+    "count": 2,
+    "optional": true
+   },
+   "abilities": [
+    {
+     "trigger": "onTurnEnd",
+     "effect": {
+      "do": "gainToken",
+      "of": "study",
+      "study": "Entertainment",
+      "count": 1
+     }
+    },
+    {
+     "trigger": "onTurnStart",
+     "burden": true,
+     "effect": {
+      "do": "giveSupplyToOpponent",
+      "amount": 1
+     }
+    }
+   ],
+   "burden": "Burden: at the start of your turn, give 1 Supply to your opponent.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 5
+   },
+   "remakes": "st_joy",
+   "rarity": "Common",
+   "power": {
+    "score": 2.64,
+    "power": 10.6,
+    "opportunityCost": 32.22
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_second_founding",
+   "name": "Second Founding",
+   "cost": 5,
+   "text": "Gain 4 Supply, draw 2 cards, ready one of your Characters, and take a Building token.",
+   "flavor": "The borough has been founded twice: once on the hill, and once the spring Barrow came out from the Capital City and said, in front of everybody, that it was not finished.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 4
+     },
+     {
+      "do": "draw",
+      "count": 2
+     },
+     {
+      "do": "readyCharacter",
+      "count": 1,
+      "optional": true
+     },
+     {
+      "do": "gainToken",
+      "of": "building",
+      "count": 1
+     }
+    ]
+   },
+   "remakes": "mk_second_founding",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.52,
+    "power": 9.5,
+    "opportunityCost": 6.4
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 12
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_founders_grant",
+   "name": "Founder's Grant",
+   "cost": 4,
+   "text": "Gain 5 Supply and take a Building token.",
+   "flavor": "Voted at the Counting House, paid in one lump, and spent by most towns inside a fortnight. The chit is the part that lasts.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 5
+     },
+     {
+      "do": "gainToken",
+      "of": "building",
+      "count": 1
+     }
+    ]
+   },
+   "remakes": "mk_founders_grant",
+   "rarity": "Common",
+   "power": {
+    "score": 2.85,
+    "power": 5.6,
+    "opportunityCost": 5.4
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 12
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_apprentice_fair",
+   "name": "Apprentice Fair",
+   "cost": 3,
+   "text": "Recruit a Character costing 1 or less from your hand for free; it enters upright.",
+   "flavor": "Held on the green the first fine Saturday in March. Half the borough's trades were settled in an afternoon, and Berry has never once come away without somebody.",
+   "onGain": {
+    "do": "recruitFromHand",
+    "filter": {
+     "maxCost": 1
+    },
+    "free": true,
+    "orientation": 0,
+    "optional": true
+   },
+   "remakes": "mk_apprentice_fair",
+   "rarity": "Common",
+   "power": {
+    "score": 3.04,
+    "power": 5.5,
+    "opportunityCost": 4.4
+   },
+   "art": {
+    "atlas": "capital",
+    "tile": 9
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_guild_intake",
+   "name": "Guild Intake",
+   "cost": 3,
+   "text": "Recruit a Character costing 2 or less from your hand for free; it enters Busy.",
+   "flavor": "The engine course runs twice a year and the intake list goes up on the Guild Hall door the week before. Comet took it twice and would take it again.",
+   "onGain": {
+    "do": "recruitFromHand",
+    "filter": {
+     "maxCost": 2
+    },
+    "free": true,
+    "orientation": 270,
+    "optional": true
+   },
+   "remakes": "mk_guild_hall",
+   "rarity": "Common",
+   "power": {
+    "score": 2.87,
+    "power": 5.2,
+    "opportunityCost": 4.4
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 2
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_spare_room",
+   "name": "The Spare Room",
+   "cost": 3,
+   "text": "Draw 2 cards, then look at the top two cards of your deck and send any of them to your Town Dump.",
+   "flavor": "Above the Lending Library, and whoever has it has it until they do not need it. Three of the names on the ward book got their start in it.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 2
+     },
+     {
+      "do": "scryDeck",
+      "count": 2,
+      "to": "dump"
+     }
+    ]
+   },
+   "remakes": "mk_spare_room",
+   "rarity": "Common",
+   "power": {
+    "score": 2.33,
+    "power": 4.22,
+    "opportunityCost": 4.4
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 9
+   }
+  },
+  {
+   "type": "market",
+   "id": "mk_mkt_second_chances",
+   "name": "Second Chances",
+   "cost": 3,
+   "text": "Rehire up to two Characters, each for 2 less Supply.",
+   "flavor": "Biff's whole method, written down as a line in the budget: stop the trouble, walk them home, and a week later have found them something to do.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "rehire",
+      "discount": 2,
+      "optional": true
+     },
+     {
+      "do": "rehire",
+      "discount": 2,
+      "optional": true
+     }
+    ]
+   },
+   "remakes": "mk_second_chances",
+   "rarity": "Common",
+   "power": {
+    "score": 2.09,
+    "power": 3.78,
+    "opportunityCost": 4.4
+   },
+   "art": {
+    "atlas": "capital",
+    "tile": 11
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_old_friends_reunion",
+   "name": "Old Friends' Reunion",
+   "cost": 4,
+   "text": "Rehire a Character from your Unemployment for free; it enters upright. Then gain 1 Supply.",
+   "flavor": "The Hiring Hall's back room, once a year, and nobody has ever called it a reunion to its face. Half its second chances were somebody else's first.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "rehire",
+      "free": true,
+      "optional": true
+     },
+     {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    ]
+   },
+   "remakes": "mk_old_friends_reunion",
+   "rarity": "Common",
+   "power": {
+    "score": 1.66,
+    "power": 3.25,
+    "opportunityCost": 5.4
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 13
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_harvest_fair",
+   "name": "Harvest Fair",
+   "cost": 3,
+   "text": "Gain 4 Supply and take a Food token. Your opponent gains 1 Supply.",
+   "flavor": "Quill's press goes all week and the barn holds thirty animals and a queue. Nobody has ever been turned away from it, which is why the neighbouring borough always comes off better than it should.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 4
+     },
+     {
+      "do": "gainToken",
+      "of": "study",
+      "study": "Food",
+      "count": 1
+     },
+     {
+      "do": "opponentGainSupply",
+      "amount": 1
+     }
+    ]
+   },
+   "remakes": "mk_harvest_fair",
+   "rarity": "Common",
+   "power": {
+    "score": 2.21,
+    "power": 4,
+    "opportunityCost": 4.4
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 6
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_watermill",
+   "name": "The Watermill",
+   "cost": 3,
+   "text": "Gain 2 Supply, and the next shift you complete produces 2 extra Supply.",
+   "flavor": "Morty dresses the stone twice a year and will tell you, at length, that the mill is the wheel and not the building. He is right, and it does not help.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "addMod",
+      "key": "shiftBonus",
+      "value": 2,
+      "expires": "untilUsed"
+     }
+    ]
+   },
+   "remakes": "mk_watermill",
+   "rarity": "Common",
+   "power": {
+    "score": 2.43,
+    "power": 4.4,
+    "opportunityCost": 4.4
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 8
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_ledger_audit",
+   "name": "Ledger Audit",
+   "cost": 4,
+   "text": "Draw 2 cards and look at your opponent's hand.",
+   "flavor": "Barnaby arrives at four, works through to the morning, and leaves the books squared and a note in the margin about something nobody mentioned. Nobody knows where they are from and the town has decided not to pry.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 2
+     },
+     {
+      "do": "peekOpponentHand"
+     }
+    ]
+   },
+   "remakes": "mk_ledger_audit",
+   "rarity": "Common",
+   "power": {
+    "score": 2.14,
+    "power": 4.2,
+    "opportunityCost": 5.4
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 15
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "outOfPlay",
+   "id": "mk_mkt_town_archives",
+   "name": "The Town Archives",
+   "cost": 5,
+   "text": "Return an Event from your Town Dump to your hand, then draw 1 card. Goes Out of Play.",
+   "flavor": "Quinn has four years of it open at once and can put a paw on the one minute you need. He is a mouse and the children are settled that he is a mage, and the archive does nothing to help.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "eventFromDumpToHand",
+      "optional": true
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "remakes": "mk_town_archives",
+   "rarity": "Common",
+   "power": {
+    "score": 1.44,
+    "power": 3.1,
+    "opportunityCost": 6.8
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 1
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_lucky_horseshoe",
+   "name": "The Lucky Horseshoe",
+   "cost": 3,
+   "text": "Toss for it: heads, the next raise against an auction you are winning is cancelled; tails, gain 3 Supply.",
+   "flavor": "Nailed over the Auction House door the wrong way up, which half the borough says lets the luck out and the other half says pours it on whoever is standing underneath.",
+   "onGain": {
+    "do": "coinFlip",
+    "heads": {
+     "do": "addMod",
+     "key": "cancelNextChallenge",
+     "value": 1,
+     "expires": "untilUsed"
+    },
+    "tails": {
+     "do": "gainSupply",
+     "amount": 3
+    }
+   },
+   "remakes": "mk_lucky_horseshoe",
+   "rarity": "Common",
+   "power": {
+    "score": 1.44,
+    "power": 2.6,
+    "opportunityCost": 4.4
+   },
+   "art": {
+    "atlas": "capital",
+    "tile": 14
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_scrap_yard",
+   "name": "The Salvage Yard",
+   "cost": 4,
+   "text": "You may discard a card to send an opponent's Character with cost 2 or less to Unemployment. (Cannot target a Character that has not yet been upright on its owner's turn.)",
+   "flavor": "Patch's counter is a plank across two barrels and the verdict comes over it in about four seconds. What he will not take, Pockets will, and does not say whose it was.",
+   "onGain": {
+    "do": "unemployOpponentCharacter",
+    "maxCost": 2,
+    "discardFirst": 1,
+    "optional": true
+   },
+   "remakes": "mk_scrap_yard",
+   "rarity": "Common",
+   "power": {
+    "score": 1.88,
+    "power": 3.7,
+    "opportunityCost": 5.4
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 3
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_courier_network",
+   "name": "The Courier Network",
+   "cost": 3,
+   "text": "Look at the top five cards of your deck and put them back in any order.",
+   "flavor": "Pebble's tin, Hoot's list and whoever is going that way anyway. It has never been written down and has never once lost anything.",
+   "onGain": {
+    "do": "reorderDeckTop",
+    "count": 5
+   },
+   "remakes": "mk_courier_network",
+   "rarity": "Common",
+   "power": {
+    "score": 0.97,
+    "power": 1.75,
+    "opportunityCost": 4.4
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 10
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_night_market",
+   "name": "The Night Market",
+   "cost": 3,
+   "text": "Gain 2 Supply, then look at the top two cards of your deck and send any of them to your Town Dump.",
+   "flavor": "It sets up after the gate is shut and packs before the gate is open, and Hazel brought one of its vendors to a daylight committee meeting still in a rumpled night coat.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "scryDeck",
+      "count": 2,
+      "to": "dump"
+     }
+    ]
+   },
+   "remakes": "ns_mk_night_market",
+   "rarity": "Common",
+   "power": {
+    "score": 1.78,
+    "power": 3.22,
+    "opportunityCost": 4.4
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 8
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_telescope_hire",
+   "name": "Telescope Hire",
+   "cost": 2,
+   "text": "Look at the top three cards of the Market Deck, then draw 1 card.",
+   "flavor": "Sota reseats the great brass one before he will let anybody near it, and the hire book is kept in Juniper's hand at the top of the observatory steps.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "peekMarketDeck",
+      "count": 3
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "remakes": "ns_mk_telescope_hire",
+   "rarity": "Common",
+   "power": {
+    "score": 1.65,
+    "power": 2.7,
+    "opportunityCost": 3.4
+   },
+   "art": {
+    "atlas": "nightskies",
+    "tile": 4
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_double_shift_horn",
+   "name": "The Double Shift Horn",
+   "cost": 4,
+   "text": "Two of your Characters work together: while both are in your town, each of their shifts pays 1 more Supply. Then the next shift you complete produces 1 extra Supply.",
+   "flavor": "One horn, two animals, and the yard's oldest arrangement: whoever answers it second is working with whoever answered it first, and that is the whole of the rota.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "pairCharacters",
+      "bonus": 1
+     },
+     {
+      "do": "addMod",
+      "key": "shiftBonus",
+      "value": 1,
+      "expires": "untilUsed"
+     }
+    ]
+   },
+   "remakes": "mk_double_shift_horn",
+   "rarity": "Common",
+   "power": {
+    "score": 1.83,
+    "power": 3.6,
+    "opportunityCost": 5.4
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 15
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_ironwood_palisade",
+   "name": "The Ironwood Palisade",
+   "cost": 5,
+   "text": "Prevent up to 5 Supply you would lose to opponent effects, and your Characters cannot be sent to Unemployment until your next turn.",
+   "flavor": "Twice-mended, ivy to the top, and charmingly unimpressive until you try to get over it. Quill leans on the inside of it and is asleep, and nothing has got past yet.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "addMod",
+      "key": "lossShield",
+      "value": 5,
+      "expires": "untilUsed"
+     },
+     {
+      "do": "addMod",
+      "key": "unemploymentShield",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    ]
+   },
+   "remakes": "mk_ironwood_palisade",
+   "rarity": "Common",
+   "power": {
+    "score": 1.09,
+    "power": 2.3,
+    "opportunityCost": 6.4
+   },
+   "art": {
+    "atlas": "capital",
+    "tile": 12
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_town_bell",
+   "name": "The Town Bell",
+   "cost": 1,
+   "text": "Ready one of your Apprentices.",
+   "flavor": "Rung at six and at six, and once in between for something the borough will talk about for a year. Every apprentice in the wards can tell the difference in their sleep.",
+   "onGain": {
+    "do": "readyCharacter",
+    "filter": {
+     "rank": "apprentice"
+    },
+    "count": 1,
+    "optional": true
+   },
+   "remakes": "mk_town_bell",
+   "rarity": "Common",
+   "power": {
+    "score": 1.34,
+    "power": 1.9,
+    "opportunityCost": 2.4
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 9
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_penny_jar",
+   "name": "The Penny Jar",
+   "cost": 1,
+   "text": "Gain 1 Supply and draw 1 card.",
+   "flavor": "Peanut keeps one on the café counter and will not say what it is for. It has been emptied three times, always for somebody else, always the week they needed it.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 1
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "remakes": "mk_penny_jar",
+   "rarity": "Common",
+   "power": {
+    "score": 1.76,
+    "power": 2.5,
+    "opportunityCost": 2.4
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 7
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_chit_tin",
+   "name": "The Chit Tin",
+   "cost": 2,
+   "text": "Take 2 Building tokens and draw 1 card.",
+   "flavor": "Barrow's, kept on the yard wall, and every chit in it is a lot he has measured and priced and not bid on. He says the tin is the useful part.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainToken",
+      "of": "building",
+      "count": 2
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "The first cards on either shelf that spend a token. The counter was built ahead of them on purpose (see `tokens`), and these are the three it was built for: the town that has built before, Food paying for Food, and a warren that is worth something to itself.",
+   "rarity": "Common",
+   "power": {
+    "score": 1.65,
+    "power": 2.7,
+    "opportunityCost": 3.4
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 14
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_surveyors_table",
+   "name": "The Surveyor's Table",
+   "cost": 3,
+   "text": "Draw 1 card. Then spend 2 Building tokens: your next Building costs 3 less Supply.",
+   "flavor": "Adam lays the level across it and the whole county gate road comes off the same sheet. A town that has built before does not pay what a town that has not pays.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 1
+     },
+     {
+      "do": "spendToken",
+      "of": "building",
+      "count": 2,
+      "then": {
+       "do": "addMod",
+       "key": "buildingDiscount",
+       "value": 3,
+       "expires": "nextTurnStart"
+      }
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "The first cards on either shelf that spend a token. The counter was built ahead of them on purpose (see `tokens`), and these are the three it was built for: the town that has built before, Food paying for Food, and a warren that is worth something to itself.",
+   "rarity": "Common",
+   "power": {
+    "score": 1.88,
+    "power": 3.4,
+    "opportunityCost": 4.4
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 12
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_ovens_account",
+   "name": "The Ovens' Account",
+   "cost": 2,
+   "text": "Gain 2 Supply. Then spend 2 Food tokens: ready one of your Food Characters and gain 2 more Supply.",
+   "flavor": "The borough's ovens are banked overnight and shared out by morning, and the account of who banked what is kept in chalk on the oven door. Food pays for Food; it always has.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "spendToken",
+      "of": "study",
+      "study": "Food",
+      "count": 2,
+      "then": {
+       "do": "seq",
+       "steps": [
+        {
+         "do": "readyCharacter",
+         "count": 1,
+         "filter": {
+          "study": "Food"
+         },
+         "optional": true
+        },
+        {
+         "do": "gainSupply",
+         "amount": 2
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "The first cards on either shelf that spend a token. The counter was built ahead of them on purpose (see `tokens`), and these are the three it was built for: the town that has built before, Food paying for Food, and a warren that is worth something to itself.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.53,
+    "power": 4.13,
+    "opportunityCost": 3.4
+   },
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 1
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_warren_muster",
+   "name": "Warren Muster",
+   "cost": 3,
+   "text": "Take a Rabbit token. Then spend 3 Rabbit tokens: recruit a Character costing 2 or less from your hand for free; it enters upright.",
+   "flavor": "A conversation outside the Lending Library becomes nine rabbits and a work party, and nobody can say afterwards who called it. Your Rabbits are worth something to each other, which is the only thing one Rabbit is not.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainToken",
+      "of": "species",
+      "species": "Rabbit",
+      "count": 1
+     },
+     {
+      "do": "spendToken",
+      "of": "species",
+      "species": "Rabbit",
+      "count": 3,
+      "then": {
+       "do": "recruitFromHand",
+       "filter": {
+        "maxCost": 2
+       },
+       "free": true,
+       "orientation": 0,
+       "optional": true
+      }
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "The first cards on either shelf that spend a token. The counter was built ahead of them on purpose (see `tokens`), and these are the three it was built for: the town that has built before, Food paying for Food, and a warren that is worth something to itself.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.16,
+    "power": 3.9,
+    "opportunityCost": 4.4
+   },
+   "art": {
+    "atlas": "capital",
+    "tile": 3
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_hapenny",
+   "name": "Roger's Ha'penny",
+   "cost": 2,
+   "text": "Toss for it: heads, gain 4 Supply; tails, draw 2 cards.",
+   "flavor": "He has never called it himself, not once, on the grounds that calling it would be taking a side. Somebody else calls it and everybody abides by it, and that is the borough's method for a thing that will not come down on its own.",
+   "onGain": {
+    "do": "coinFlip",
+    "heads": {
+     "do": "gainSupply",
+     "amount": 4
+    },
+    "tails": {
+     "do": "draw",
+     "count": 2
+    }
+   },
+   "addition": true,
+   "addedBecause": "A verb built for the third round of remakes, carried by one Character and by nothing a whole town could buy. A Capital City that answers the cast is the point of the market side.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.15,
+    "power": 3.5,
+    "opportunityCost": 3.4
+   },
+   "art": {
+    "atlas": "neighbors",
+    "tile": 6
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_long_table",
+   "name": "The Long Table",
+   "cost": 3,
+   "text": "Feed two Characters costing 2 or less in your Unemployment; each comes back to work Busy, for nothing.",
+   "flavor": "Marmalade sets it down the middle of the room on a Sunday and the tray goes round the kittens first. Nobody is hired at it and nobody is paid; they are simply fed, and on Monday they turn up.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "giveToUnemployed",
+      "filter": {
+       "maxCost": 2
+      },
+      "optional": true
+     },
+     {
+      "do": "giveToUnemployed",
+      "filter": {
+       "maxCost": 2
+      },
+      "optional": true
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "A verb built for the third round of remakes, carried by one Character and by nothing a whole town could buy. A Capital City that answers the cast is the point of the market side.",
+   "rarity": "Common",
+   "power": {
+    "score": 1.61,
+    "power": 2.91,
+    "opportunityCost": 4.4
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 13
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_understudys_shelf",
+   "name": "The Understudy's Shelf",
+   "cost": 2,
+   "text": "Take a Lore token, then look at the top three cards of your deck and send any of them to your Town Dump.",
+   "flavor": "Andrew keeps it by the late desk: the four books somebody will want at two in the morning, and nothing else, because everything else is upstairs.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainToken",
+      "of": "study",
+      "study": "Lore",
+      "count": 1
+     },
+     {
+      "do": "scryDeck",
+      "count": 3,
+      "to": "dump"
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "The printed market is ninety-six cards of gain-Supply-and-draw, and the Maker Capital City had seventeen. This is the spread the shelf was short of.",
+   "rarity": "Common",
+   "power": {
+    "score": 1.48,
+    "power": 2.42,
+    "opportunityCost": 3.4
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 9
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_bin_round",
+   "name": "Bin Round",
+   "cost": 3,
+   "text": "Take an Event out of your opponent's Town Dump into your hand, then draw 1 card.",
+   "flavor": "Pockets at the gate at dusk with a barrow under a sheet, dealing with a carter who is not getting down. Nothing he does is quite a crime; several things are the shape of one, seen from a distance, in poor light.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "eventFromOpponentDump",
+      "optional": true
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "A verb built for the third round of remakes, carried by one Character and by nothing a whole town could buy. A Capital City that answers the cast is the point of the market side.",
+   "rarity": "Common",
+   "power": {
+    "score": 1.8,
+    "power": 3.26,
+    "opportunityCost": 4.4
+   },
+   "art": {
+    "atlas": "neighbors",
+    "tile": 4
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_mended_mangle",
+   "name": "The Mended Mangle",
+   "cost": 3,
+   "text": "Pull one of your Buildings down and put a Building from the City Dump up in its place.",
+   "flavor": "He sells you back your own mangle, mended, and you thank him for it. The old one goes on the pile and somebody else's comes off it, and the yard is exactly as full as it was.",
+   "onGain": {
+    "do": "swapBuilding"
+   },
+   "addition": true,
+   "addedBecause": "A verb built for the third round of remakes, carried by one Character and by nothing a whole town could buy. A Capital City that answers the cast is the point of the market side.",
+   "rarity": "Common",
+   "power": {
+    "score": 1.5,
+    "power": 2.72,
+    "opportunityCost": 4.4
+   },
+   "art": {
+    "atlas": "townlife",
+    "tile": 3
+   }
+  },
+  {
+   "type": "market",
+   "disposal": "cityDump",
+   "id": "mk_mkt_late_ferry",
+   "name": "The Late Ferry",
+   "cost": 2,
+   "text": "Take an Otter token for each of your Characters who stood up this turn, then gain 1 Supply.",
+   "flavor": "Four crossings an hour, every morning, and one more after the gate is shut for whoever is still on the wrong bank. The tin fills on a busy night and does not on a quiet one, which is the whole of the ferry's accounts.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainToken",
+      "of": "species",
+      "species": "Otter",
+      "per": "charactersReadied"
+     },
+     {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "The printed market is ninety-six cards of gain-Supply-and-draw, and the Maker Capital City had seventeen. This is the spread the shelf was short of.",
+   "rarity": "Common",
+   "power": {
+    "score": 1.53,
+    "power": 2.5,
+    "opportunityCost": 3.4
+   },
+   "art": {
+    "atlas": "monuments",
+    "tile": 10
+   }
+  },
+  {
+   "id": "mk_dx_hard_winter",
+   "type": "disruption",
+   "name": "A Hard Winter",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: every shift in progress in both towns ends at once and produces nothing. Goes to the City Dump.",
+   "onReveal": {
+    "do": "endAllShifts"
+   },
+   "flavor": "The year the bridge went, and the cellar under the weights office was not opened. Copper will tell you the list is longer now. He will not tell you what is on the bottom shelf.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 14
+   },
+   "remakes": "dx_hard_winter",
+   "rarity": "Common",
+   "power": {
+    "score": 3.03,
+    "power": 4,
+    "opportunityCost": 2
+   }
   }
  ],
  "newStudies": [
@@ -11496,7 +13011,7 @@
   }
  ],
  "townCards": {
-  "note": "The market side of the shelf: Buildings, Events, Market cards and Disruptions remade to give the remade cast, species and studies something to play with. Most carry `remakes` like any other maker card and are ticked off the same list; the Town Buildings carry `addition: true` and an `addedBecause` line instead, because the type did not exist in the printed set and there is nothing for them to replace, but they belong to no character entry — a Building is not somebody's backstory. The first batch exists mainly to give Food and Entertainment a market side at all: before it, neither new study had a single Building, Event, Market card or Disruption anywhere in the collection. Town Buildings have no art yet: `wantedArt` lists what each one should show, so the illustrations can be commissioned in one batch. A town card has no character entry to hang a wantedArt list on, which is why it lives here.",
+  "note": "The market side of the shelf: Buildings, Events, Market cards and Disruptions remade to give the remade cast, species and studies something to play with. Most carry `remakes` like any other maker card and are ticked off the same list; the Town Buildings carry `addition: true` and an `addedBecause` line instead, because the type did not exist in the printed set and there is nothing for them to replace, but they belong to no character entry — a Building is not somebody's backstory. The first batch exists mainly to give Food and Entertainment a market side at all: before it, neither new study had a single Building, Event, Market card or Disruption anywhere in the collection. The Statues are here too, as of the third batch, which is what struck `borrowsFromPrinted` off the shelf altogether: the Maker collection is now won with its own cards. Town Buildings have no art yet: `wantedArt` lists what each one should show, so the illustrations can be commissioned in one batch. A town card has no character entry to hang a wantedArt list on, which is why it lives here.",
   "batches": [
    {
     "date": "2026-09-13",
@@ -11517,69 +13032,89 @@
     "date": "2026-09-14",
     "what": "19 Tokens, the first on either shelf",
     "why": "A new card type again, for the same reason as the Town Buildings: the printed set has none, so the maker shelf is where the type gets its first cards. What they are and why they exist before the cards that spend them is in the `tokens` block."
+   },
+   {
+    "date": "2026-09-14",
+    "what": "9 Statues, 20 remade Market cards, 10 new ones, 1 Disruption",
+    "why": "The Statues were the last thing the Maker shelf borrowed, and a collection that cannot be won with its own cards is not a collection. They are remade around the third round of verbs rather than re-typed: Kindness feeds an animal out of work, Curiosity bins what it does not want, Courage tosses for it, Patience and Ingenuity and Joy keep chits, Community puts two animals together. The Market cards are the same again at the other end of the Capital City — the printed ninety-six are largely gain-Supply-and-draw, and the Maker shelf had three of its own — and ten of them are new, including the first three cards on either shelf that spend a token. The Disruption is the third the shelf has, which is what the Capital City’s `minDisruptions` floor of 3 actually needs; two could not fill it. Art: the Statues keep the monuments the printed cards used — they are the same nine monuments in the same square — and the Market cards take printed tiles by theme, the way the printed set has always shared them, so no new wish is logged for them."
    }
   ],
   "wantedArt": [
    {
     "id": "mk_tb_allotment_strip",
-    "what": "A long allotment strip in late summer, four generations of tools against the fence, one rabbit writing in a notebook at the end of it."
+    "what": "A long allotment strip in late summer, four generations of tools against the fence, one rabbit writing in a notebook at the end of it.",
+    "painted": "Painted. mk_tb_allotment_strip → the makerfield atlas, tile 15. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
    },
    {
     "id": "mk_tb_coppers_cellar",
-    "what": "A cellar under a weights office: salt sacks, lamp oil, candle stock and a shelf of small coin, everything squared away and plainly never touched."
+    "what": "A cellar under a weights office: salt sacks, lamp oil, candle stock and a shelf of small coin, everything squared away and plainly never touched.",
+    "painted": "Painted. mk_tb_coppers_cellar → the makerwoodland atlas, tile 13. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
    },
    {
     "id": "mk_tb_berrys_bench",
-    "what": "A tinkerer's workbench under a window, half the borough's broken things queued along it, two stools because somebody is always being taught."
+    "what": "A tinkerer's workbench under a window, half the borough's broken things queued along it, two stools because somebody is always being taught.",
+    "painted": "Painted. mk_tb_berrys_bench → the makerwoodland atlas, tile 15. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
    },
    {
     "id": "mk_tb_rosabeths_gate",
-    "what": "A garden gate standing open onto raised beds, an animal being handed a trowel just inside it."
+    "what": "A garden gate standing open onto raised beds, an animal being handed a trowel just inside it.",
+    "painted": "Painted. mk_tb_rosabeths_gate → the makerwoodland atlas, tile 14. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
    },
    {
     "id": "mk_tb_open_mic_room",
-    "what": "A back room set out with chairs, a band of five with two of them on the step, a lamp on the piano."
+    "what": "A back room set out with chairs, a band of five with two of them on the step, a lamp on the piano.",
+    "painted": "Painted. mk_tb_open_mic_room → the makernight atlas, tile 13. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
    },
    {
     "id": "mk_tb_boat_shed",
-    "what": "A boat shed past the ferry steps at dusk, lighters tied up, a lamp lit inside and the harbour office's windows dark."
+    "what": "A boat shed past the ferry steps at dusk, lighters tied up, a lamp lit inside and the harbour office's windows dark.",
+    "painted": "Painted. mk_tb_boat_shed → the makernight atlas, tile 14. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
    },
    {
     "id": "mk_tb_gate_hut",
-    "what": "A county gate barred for the night, a lamp on the post and a hedgehog asleep in the hut behind it."
+    "what": "A county gate barred for the night, a lamp on the post and a hedgehog asleep in the hut behind it.",
+    "painted": "Painted. mk_tb_gate_hut → the makernight atlas, tile 15. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
    },
    {
     "id": "mk_tb_barrows_yard",
-    "what": "A stonecutter's yard: stone stacked by size, the good sand under a tarpaulin, a Badger with a rule in his paw looking at a lot over the fence."
+    "what": "A stonecutter's yard: stone stacked by size, the good sand under a tarpaulin, a Badger with a rule in his paw looking at a lot over the fence.",
+    "painted": "Painted. mk_tb_barrows_yard → the makerplaces atlas, tile 11. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
    },
    {
     "id": "mk_tb_the_warren",
-    "what": "A hillside with a dozen doors in it at dusk and a printing shed built over one end, more rabbits arriving than leaving."
+    "what": "A hillside with a dozen doors in it at dusk and a printing shed built over one end, more rabbits arriving than leaving.",
+    "painted": "Painted. mk_tb_the_warren → the makerplaces atlas, tile 12. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
    },
    {
     "id": "mk_tb_observatory_steps",
-    "what": "Long stone steps up to an observatory door at four in the morning, a lamp at the top, a swept broom left against the rail."
+    "what": "Long stone steps up to an observatory door at four in the morning, a lamp at the top, a swept broom left against the rail.",
+    "painted": "Painted. mk_tb_observatory_steps → the makerplaces atlas, tile 13. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
    },
    {
     "id": "mk_tb_counting_house",
-    "what": "A long desk under two lamps, the borough's quarterly returns stacked in order of age, scales at one end and a coffee cup at the other."
+    "what": "A long desk under two lamps, the borough's quarterly returns stacked in order of age, scales at one end and a coffee cup at the other.",
+    "painted": "Painted. mk_tb_counting_house → the makerplaces atlas, tile 14. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
    },
    {
     "id": "mk_tb_quill_wall",
-    "what": "A low wall at night with a hedgehog leaning on it and a lamp beyond. Nothing dramatic, and nothing getting over it."
+    "what": "A low wall at night with a hedgehog leaning on it and a lamp beyond. Nothing dramatic, and nothing getting over it.",
+    "painted": "Painted. mk_tb_quill_wall → the makerplaces atlas, tile 15. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
    },
    {
     "id": "mk_bld_guild_hall",
-    "what": "A trade hall mid-lesson: an engine in pieces on the floor, the benches full, a Badger at the back with his arms folded."
+    "what": "A trade hall mid-lesson: an engine in pieces on the floor, the benches full, a Badger at the back with his arms folded.",
+    "painted": "Painted. mk_bld_guild_hall → the makerworkshop atlas, tile 15. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
    },
    {
     "id": "mk_bld_long_room",
-    "what": "The Lending Library's upper floor: ribbons in a long drawer, the reading lamps still lit, one chair that is plainly somebody's."
+    "what": "The Lending Library's upper floor: ribbons in a long drawer, the reading lamps still lit, one chair that is plainly somebody's.",
+    "painted": "Painted. mk_bld_long_room → the makercivic atlas, tile 15. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
    }
-  ]
+  ],
+  "wantedArtNote": "Audited 2026-09-14: every wish on this list has since been painted — the eight Maker atlases (docs/MAKER_ATLAS_ART.md) cover all fourteen Town Buildings and Capital City Buildings, and each entry now carries a `painted` line naming the tile that answers it. They are kept rather than deleted because the wish is what the tile was painted from."
  },
  "tokens": {
-  "note": "The token shelf. A token is a marker a Mayor holds beside their Supply — never drawn, never bid on, never part of a deck — and each kind is declared by one card here: ten species, eight studies, and one for Buildings. The rules are spec/game.json `tokens`; the engine holds the counts in `player.tokens` and gives, spends and reads them with `gainToken`, `spendToken` and the `tokensAtLeast` condition. Nothing on either shelf spends one yet, and that is deliberate. Tokens are the obvious answer to a whole family of cards the collection keeps reaching for — 'your Rabbits are worth something to each other', 'Food pays for Food', 'the town has built before and it shows' — and every one of those cards wants the same counter underneath it. Building the counter once, before any of them exist, is what stops the first three of them each inventing their own.",
+  "note": "The token shelf. A token is a marker a Mayor holds beside their Supply — never drawn, never bid on, never part of a deck — and each kind is declared by one card here: ten species, eight studies, and one for Buildings. The rules are spec/game.json `tokens`; the engine holds the counts in `player.tokens` and gives, spends and reads them with `gainToken`, `spendToken` and the `tokensAtLeast` condition. The counter was built before any card spent one, deliberately, because tokens are the obvious answer to a whole family of cards the collection keeps reaching for — 'your Rabbits are worth something to each other', 'Food pays for Food', 'the town has built before and it shows' — and every one of those cards wants the same counter underneath it. Those three cards now exist and they are the Warren Muster, the Ovens' Account and the Surveyor's Table: one counter, three cards, none of them inventing their own. Each spends what another card gives — the Chit Tin and the two Founders' cards hand out Building chits, the Harvest Fair a Food chit, the Warren Muster its own first Rabbit — and a price a town cannot meet is not paid at all, so a short holding spends nothing and the card's other half still happens.",
   "kinds": {
    "species": 10,
    "study": 8,
@@ -11618,37 +13153,24 @@
     "id": "mk_tok_building",
     "what": "A single surveyor's chit, larger than the rest and stamped with a roofline, lying on the corner of a plan with a tin of them behind it."
    }
-  ]
- },
- "borrowsFromPrinted": {
-  "note": "Cards the Maker set has none of yet and cannot be played without. They are read out of spec/starter_card_set.json by id and added to the Maker collection at load time; nothing is copied, so remaking one is a matter of writing the Maker card and dropping the id from here.",
-  "cards": [
-   "st_kindness",
-   "st_curiosity",
-   "st_courage",
-   "st_patience",
-   "st_generosity",
-   "st_ingenuity",
-   "st_community",
-   "st_harmony",
-   "st_joy"
-  ]
+  ],
+  "wantedArtNote": "Audited 2026-09-14: still outstanding, and the only art wish on either shelf that is. The eight Maker atlases were painted for cards, and a token is not a card anybody plays — the nineteen chits want one sheet of their own, struck in the same hand."
  },
  "marketDecks": [
   {
    "id": "mk-first-workings",
    "name": "The First Workings",
-   "blurb": "The Maker shelf’s own Capital City: a hiring hall, an all-night café, a bandstand and the assessors at the door. Small, and every lot in it is somebody’s.",
+   "blurb": "The Maker shelf's own Capital City, and now its own nine Statues: a hiring hall, an all-night café, a bandstand, the assessors at the door, and fifty-one lots to deal twenty-six from, so no two games put the same market in front of you.",
    "always": [
-    "st_kindness",
-    "st_curiosity",
-    "st_courage",
-    "st_patience",
-    "st_generosity",
-    "st_ingenuity",
-    "st_community",
-    "st_harmony",
-    "st_joy"
+    "mk_st_kindness",
+    "mk_st_curiosity",
+    "mk_st_courage",
+    "mk_st_patience",
+    "mk_st_generosity",
+    "mk_st_ingenuity",
+    "mk_st_community",
+    "mk_st_harmony",
+    "mk_st_joy"
    ],
    "pool": [
     "mk_barnaby_night_auditor_4",
@@ -11658,25 +13180,51 @@
     "mk_dylan_river_otter_4",
     "mk_hoot_night_porter_2",
     "mk_kevin_hired_hand_3",
-    "mk_mittens_rooftop_cat_4",
     "mk_bld_all_night_cafe",
     "mk_bld_festival_green",
     "mk_bld_hiring_hall",
     "mk_bld_winter_stores",
+    "mk_mkt_community_oven",
+    "mk_mkt_bandstand",
+    "mk_mkt_emergency_reserve",
+    "mk_dx_tax_assessors",
+    "mk_dx_open_hiring",
     "mk_bld_guild_hall",
     "mk_bld_long_room",
-    "mk_mkt_community_oven",
-    "mk_mkt_bandstand",
-    "mk_mkt_emergency_reserve",
-    "mk_dx_tax_assessors",
-    "mk_dx_open_hiring",
-    "mk_mkt_community_oven",
-    "mk_mkt_bandstand",
-    "mk_mkt_emergency_reserve",
-    "mk_dx_tax_assessors",
-    "mk_dx_open_hiring",
-    "mk_bld_hiring_hall",
-    "mk_bld_winter_stores"
+    "mk_mittens_rooftop_cat_4",
+    "mk_pockets_salvage_raccoon_4",
+    "mk_quinn_town_scrivener_3",
+    "mk_mkt_second_founding",
+    "mk_mkt_founders_grant",
+    "mk_mkt_apprentice_fair",
+    "mk_mkt_guild_intake",
+    "mk_mkt_spare_room",
+    "mk_mkt_second_chances",
+    "mk_mkt_old_friends_reunion",
+    "mk_mkt_harvest_fair",
+    "mk_mkt_watermill",
+    "mk_mkt_ledger_audit",
+    "mk_mkt_town_archives",
+    "mk_mkt_lucky_horseshoe",
+    "mk_mkt_scrap_yard",
+    "mk_mkt_courier_network",
+    "mk_mkt_night_market",
+    "mk_mkt_telescope_hire",
+    "mk_mkt_double_shift_horn",
+    "mk_mkt_ironwood_palisade",
+    "mk_mkt_town_bell",
+    "mk_mkt_penny_jar",
+    "mk_mkt_chit_tin",
+    "mk_mkt_surveyors_table",
+    "mk_mkt_ovens_account",
+    "mk_mkt_warren_muster",
+    "mk_mkt_hapenny",
+    "mk_mkt_long_table",
+    "mk_mkt_understudys_shelf",
+    "mk_mkt_bin_round",
+    "mk_mkt_mended_mangle",
+    "mk_mkt_late_ferry",
+    "mk_dx_hard_winter"
    ],
    "poolSize": 26,
    "minDisruptions": 3

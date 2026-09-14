@@ -319,7 +319,7 @@ input[type=range]{width:100%;accent-color:var(--gold)}
 @keyframes foil-twinkle{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.25) rotate(20deg)}}
 
 /* card backs */
-.card-back{width:var(--card-w);height:var(--card-h);border-radius:10px;overflow:hidden;box-shadow:var(--shadow2);background:#7d3428;flex:none}
+.card-back{width:var(--card-w);height:var(--card-h);border-radius:10px;overflow:hidden;box-shadow:var(--shadow2);background:#154524;flex:none}
 .card-back svg{width:100%;height:100%;display:block}
 .card-back.mini{width:34px;height:48px;border-radius:5px}
 .hand-backs{display:flex;padding:4px 0 0 14px}

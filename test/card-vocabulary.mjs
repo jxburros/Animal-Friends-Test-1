@@ -21,6 +21,9 @@ export const EFFECTS = new Set([
   'peekOpponentHand',
   // tokens: the small change of the town, one kind per species, per study, and one for Buildings
   'gainToken', 'spendToken',
+  // the third round of wishes (docs/ENGINE_API.md): the ha'penny, the fed animal, the pairing,
+  // the yard's trade, and the one pair of hands that reaches the other town's Dump
+  'coinFlip', 'giveToUnemployed', 'pairCharacters', 'swapBuilding', 'eventFromOpponentDump',
   // on-reveal catch-up
   'behindPlayerGains', 'behindPlayerReadies',
   // shared shocks, used by Disruption cards
@@ -40,6 +43,8 @@ export const TRIGGERS = new Set([
 export const PASSIVE_KEYS = new Set([
   'blockOpponentBidRaise', 'firstAnnounceMinBidMinus1', 'firstBidPlus1', 'winTiesAsChallenger',
   'masterDelayMinus1', 'eventCharReductionPerTurn',
+  // the actuary's standing rate: every shift this town finishes pays `value` more while it is in force
+  'townShiftBonus',
   // Statue burdens
   'opponentRehireDiscount', 'opponentFirstBidPlus1', 'apprenticeEntersBusy', 'eventCostPlus1',
   'resourceSupplyMinus1', 'losingBidsPayFull', 'pledgeLadderPlus1',

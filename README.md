@@ -15,9 +15,9 @@ Capital City banner, welcome screen and deck workshop, with locally bundled artw
 - **Maker** is the same game played entirely with the remade cards: the Maker cast, **two decks of
   their own** (Ledger & Larder, Bench & Bandstand), a Capital City of their own (**The First
   Workings**), and a Deck Workshop that builds out of the Maker collection. The two collections are
-  never mixed in a deck. The nine Statues are still borrowed from the printed book — the Maker shelf
-  has none of its own yet — and `borrowsFromPrinted` in `spec/maker_card_set.json` says so out loud,
-  by id, so each one drops off that list the moment it is remade.
+  never mixed in a deck. It borrows nothing any more: the nine Statues are the Maker shelf's own as
+  of the third batch, which struck `borrowsFromPrinted` out of `spec/maker_card_set.json` altogether,
+  and the Maker collection is now won entirely with Maker cards.
 - **Book** is the gallery: every card in the game, Classic and Maker alike, at reading size, with
   filters for shelf, type, species, study and printing, and a search over names and rules text. It
   is also where the rebuild is tracked now — a printed card's `✓ Remade` tick, the **Story** panel
@@ -225,7 +225,7 @@ If you test by downloading the ZIP from GitHub and unzipping it:
 - `docs/ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md` - design reference and source of truth
 - `spec/game.json` - rules constants and prototype decisions
 - `spec/species.json` - the ten species charters (centre of gravity, hole, signature); the contract `npm run identity` checks
-- `spec/maker_card_set.json` - the hand-remade collection, and what **Maker Mode** plays: its own decks, its own Capital City, and `borrowsFromPrinted` naming the printed cards it cannot yet do without (today, the nine Statues). It holds each remade character's backstory alongside their cards, and every card carries `remakes`, the id of the printed card it replaces, which is what ticks that card off even after a rename. It also carries the card types the printed set never had — Town Buildings, and now the nineteen Tokens — and each remade character's `wantedVerbs`, the effects their story wanted, with a `resolved` line once the engine can say it. The rebuild is documented in three files: [REMAKING_A_CHARACTER.md](docs/REMAKING_A_CHARACTER.md) (the process an agent follows to remake one character), [TOWN_BIBLE.md](docs/TOWN_BIBLE.md) (the shared world every backstory must agree with) and [REMAKING_THE_COLLECTION.md](docs/REMAKING_THE_COLLECTION.md) (the two shelves and the tick list)
+- `spec/maker_card_set.json` - the hand-remade collection, and what **Maker Mode** plays: its own decks, its own Capital City and its own nine Statues. It borrows nothing from the printed book (`borrowsFromPrinted` is gone, and `composeMakerSet` simply finds nothing to read). It holds each remade character's backstory alongside their cards, and every card carries `remakes`, the id of the printed card it replaces, which is what ticks that card off even after a rename. It also carries the card types the printed set never had — Town Buildings, and now the nineteen Tokens — and each remade character's `wantedVerbs`, the effects their story wanted, with a `resolved` line once the engine can say it. The rebuild is documented in three files: [REMAKING_A_CHARACTER.md](docs/REMAKING_A_CHARACTER.md) (the process an agent follows to remake one character), [TOWN_BIBLE.md](docs/TOWN_BIBLE.md) (the shared world every backstory must agree with) and [REMAKING_THE_COLLECTION.md](docs/REMAKING_THE_COLLECTION.md) (the two shelves and the tick list)
 - `src/engine/modes.js` - the two playable collections and the one rule that joins them: `composeMakerSet` reads the borrowed printed cards into the Maker collection, and `isPlayableSet` is what decides whether the Maker door on the home screen opens or shows locked
 - `spec/starter_card_set.json` - all 461 cards: 186 Characters, 106 Events, 9 Statues, 96 Market cards, 14 Buildings, 12 hired animals, 8 Ordinances and 30 on-reveal cards, plus eight printed 40-card decks and seven Market Decks. Every card carries its `rarity` and the `power` rating that earned it, and the file is ordered by that rating, strongest for its cost first. A Market Deck is dealt as all 9 Statues plus a 26-card sample of its own pool — 35 cards — topped up from that pool until at least three on-reveal cards are in it, so every market keeps one size and its own printed character while the display varies from game to game.
 - `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`. `power.js` is the power/cost model that rates every card and assigns its rarity
@@ -304,6 +304,12 @@ printing it has, and greys the ones it has not; `src/ui/versions.js` owns the li
 and the two-step recipe for bringing a new printing in. Printings never touch rules, rarity, cost or
 deck limits, and a card is shown in its Full Card Art where it has one and its regular printing
 otherwise — which is exactly what the table showed before printings existed.
+
+**The card back** is one drawing for the whole game: a dark green field inside a gold rule, a paw
+struck on a gold medal, and a ring of leaves and berries around it, with a leaf sprig in each corner.
+It is drawn as vector (`cardBackSVG` in `src/ui/art.js`) rather than bundled as an image, because a
+back is shown at every size the game uses — a 22px pile chip, a fanned hand, a full-size card in the
+Book — and hairlines and leaf edges have to survive all of them.
 
 **Full Art Collection:** twenty-four selected cards have their own portrait paintings, edge-to-edge
 artwork, fine gold frames and subtle pointer-responsive foil. Choose **Explore the Full Art cards**

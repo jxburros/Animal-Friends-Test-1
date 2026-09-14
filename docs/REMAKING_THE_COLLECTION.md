@@ -21,12 +21,12 @@ Cards render exactly as they do at the table (hover to read one, or press **Read
 of chips for the printings it exists in, and **Story** opens a Maker character's backstory beside the
 full flavor of every version of them — the flavor a card face is too small to show.
 
-Maker cards are playable now: Maker Mode has two decks of its own and a Capital City of its own. What
-it has *not* got is Statues, so `spec/maker_card_set.json` carries a `borrowsFromPrinted` list naming
-the printed cards the collection cannot yet do without, by id. `composeMakerSet` in
-`src/engine/modes.js` reads those into the Maker collection at load time and marks them `borrowed`,
-which is why the Book labels them. Remaking one is a matter of writing the Maker card and striking
-the id off that list.
+Maker cards are playable now, and the shelf stands on its own: Maker Mode has two decks of its own, a
+Capital City of its own and, since the Statues were remade, nine Statues of its own. It borrows
+nothing, and `borrowsFromPrinted` is gone from `spec/maker_card_set.json` — the mechanism is still
+there in `composeMakerSet` (`src/engine/modes.js`), which reads a borrowed id into the collection and
+marks it `borrowed` so the Book can label it, and it is simply reading an empty list. That is what
+finishing a borrow looks like: write the Maker cards, strike the ids, and the list goes with them.
 
 ## Writing a maker card
 
@@ -120,6 +120,14 @@ first batch, neither Food nor Entertainment had a single Building, Event, Market
 anywhere in the collection), and giving the verbs a remade cast leans on something in the Capital
 City that answers them.
 
+**Statues** were the last thing on this shelf that was still somebody else's. All nine are remade
+now — same nine virtues, same costs, same monuments — but each one is rebuilt around a verb the
+engine has since learned: Kindness feeds an animal out of work, Curiosity bins what it does not want,
+Courage tosses for it, Patience and Ingenuity and Joy keep chits, Community puts two animals
+together. A Statue keeps its bargain whatever else changes: a boon, and a burden that lasts as long
+as its Mayor holds it. The remade nine rate 2.44–2.83 against the printed 1.94–2.46 — a shade richer,
+and tighter, which is the trade for nine cards that only ever play against each other.
+
 **Town Buildings** are the other half of that shelf, and they are all additions: a Town Building is
 played out of a Mayor's own deck for its Supply cost plus a crew of upright animals, and the printed
 set has none, because the type did not exist when it was printed. Write them as *small and personal*
@@ -142,13 +150,16 @@ that goes in a deck. All nineteen are additions, for the same reason every Town 
 printed set has none. They rate 0 by construction and are always Common, because a marker costs its
 holder nothing.
 
-Nothing on either shelf spends a token yet. That is deliberate and it is the interesting part: a
-token is the obvious answer to a whole family of cards the collection keeps reaching for — *your
-Rabbits are worth something to each other*, *Food pays for Food*, *the town has built before and it
-shows* — and every one of those cards wants the same counter underneath it. The counter was built
-once, before any of them, so the first three do not each invent their own. The engine side is
-`gainToken`, `spendToken` and the `tokensAtLeast` condition (`docs/ENGINE_API.md`); the rules side is
-`spec/game.json` → `tokens`; the shelf's own account of why is `spec/maker_card_set.json` → `tokens`.
+Three cards spend a token now, and they are the three the counter was built for: *your Rabbits are
+worth something to each other* (Warren Muster), *Food pays for Food* (the Ovens' Account) and *the
+town has built before and it shows* (the Surveyor's Table). Building the counter once, before any of
+them existed, is what stopped each of them inventing its own — which was the whole argument for
+printing nineteen cards nobody could use yet. Each spender is paired with something that hands the
+chit out (the Chit Tin, the two Founders' cards, the Harvest Fair), and a price a town cannot meet is
+not paid at all, so the rest of the card still happens and a spender is safe to print. The engine side
+is `gainToken`, `spendToken` and the `tokensAtLeast` condition (`docs/ENGINE_API.md`); the rules side
+is `spec/game.json` → `tokens`; the shelf's own account of why is
+`spec/maker_card_set.json` → `tokens`.
 
 A **Building carries one ability**, and that is a balance fact rather than a style note: a second
 standing ability is worth roughly +2 to +3.5 on the rating, which puts a Building straight past the

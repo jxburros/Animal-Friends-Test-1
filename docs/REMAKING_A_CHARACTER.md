@@ -252,7 +252,8 @@ so it is the only place the key means anything — on a Character in a town it i
 `addMod`, `readyCharacter`, `readyNextTurn`, `rehire`, `recruitFromHand`, `reorderDeckTop`,
 `eventFromDumpToDeckBottom`, `eventFromDumpToHand`, `peekMarketDeck`, `opponentTopdeckFromHand`,
 `unemployOpponentCharacter`, `raiseOwnBid`, `scryDeck`, `makeBusy`, `peekOpponentHand`, `gainToken`,
-`spendToken`, plus the species signatures `storeSupply`,
+`spendToken`, `coinFlip`, `giveToUnemployed`, `pairCharacters`, `swapBuilding`,
+`eventFromOpponentDump`, plus the species signatures `storeSupply`,
 `takeStoredSupply`, `takeFromCityDump`, `protectCharacter`, `moveShift`, `selfReady`, `cancelReveal`,
 `advanceCharacter`. (`test/card-vocabulary.mjs` is the authority — read it, not this list, if they ever
 disagree. Shared-shock verbs like `everyoneLosesSupply` belong to Disruptions, not Characters.)
@@ -266,7 +267,9 @@ Character the town already has.
 Some of the vocabulary exists *because* a remake asked for it — `makeBusy`, `scryDeck`'s `to: "dump"`,
 `protectCharacter`'s `notSelf`, filtered mods, `buildingDiscount`, `leavesAfter`, and then the second
 round: `buildingsAtMost` (Bella), `peekOpponentHand` (Inkwell), `shift.decay` (Kevin) and the
-`upgradesOwn` mod filter (Lynnette) — all wishes
+`upgradesOwn` mod filter (Lynnette), and then the third: `coinFlip` (Roger and Earl),
+`giveToUnemployed` (Marmalade), `pairCharacters` (Daisy), the `townShiftBonus` passive (Orien),
+`swapBuilding` (Patch), `eventFromOpponentDump` (Pockets) and `gainToken`'s `per` (Pebble) — all wishes
 first (see `docs/ENGINE_API.md`, and the `wantedVerbs` of the characters that wanted them). That is the
 route: wish, then approval, then engine, then the card. A character entry's `wantedVerbs` entry gains a
 `resolved` line when its wish is built, saying what was built and what the card says now; a wish that

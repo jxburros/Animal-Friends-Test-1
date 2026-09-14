@@ -187,7 +187,7 @@ export async function readyPhase(state, pi) {
       const i = order.indexOf(s.orientation);
       s.orientation = order[Math.min(order.length - 1, i + 1)];
       if (!advanced.includes(s)) advanced.push(s);
-      if (s.orientation === UPRIGHT) becameUpright.push(s);
+      if (s.orientation === UPRIGHT) { becameUpright.push(s); p.turn.readied++; }
     }
     if (s.orientation === UPRIGHT) s.hasBeenUpright = true;
   }
