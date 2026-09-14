@@ -12,7 +12,7 @@ import {
 } from '../engine/index.js';
 import { cardArtSVG, cardBackSVG, iconSVG } from './art.js';
 import { ornamentalFrameSVG } from './painted-art.js';
-import { fullArtFor, fullArtFrameSVG } from './full-art.js';
+import { fullArtFor, fullArtFrameSVG, FULL_ART_CARDS } from './full-art.js';
 import * as fx from './fx.js';
 import * as choreo from './choreo.js';
 
@@ -348,7 +348,7 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
     face.appendChild(h('div', { class: 'foil-sheen' }));
     if (!fullArt) face.appendChild(h('div', { class: 'foil-tag', title: 'Foil card', html: iconSVG('foil') }));
   }
-  const footer = h('div', { class: 'card-footer' }, [h('span', {}, fullArt ? (fullArt.number ? `Full Art · ${fullArt.number}/12` : 'Full Art') : typeLabel(def))]);
+  const footer = h('div', { class: 'card-footer' }, [h('span', {}, fullArt ? `Full Art · ${fullArt.number}/${Object.keys(FULL_ART_CARDS).length}` : typeLabel(def))]);
   if (interactive) footer.appendChild(h('button', {
     class: 'inspect-card', type: 'button', 'aria-label': `Read ${def.name}`,
     onclick: (event) => { event.stopPropagation(); inspectCard(def); },

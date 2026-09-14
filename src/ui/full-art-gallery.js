@@ -1,20 +1,22 @@
 import { FULL_ART_CARDS } from './full-art.js';
 import { buildCardFace, setPreviewContext } from './render.js';
 
-export function openFullArtGallery(rules, set) {
+export function openFullArtGallery(rules, set, makerSet) {
   if (document.querySelector('.full-art-gallery')) return;
   setPreviewContext(rules, set);
   const previous = document.activeElement;
+  const makerById = Object.fromEntries(((makerSet && makerSet.cards) || []).map((c) => [c.id, c]));
+  const count = Object.keys(FULL_ART_CARDS).length;
   const dialog = document.createElement('dialog');
   dialog.className = 'full-art-gallery';
   dialog.setAttribute('aria-labelledby', 'full-art-heading');
   dialog.innerHTML = `<header><div class="collection-kicker">Animal Friends · Special Collection</div>
     <h2 id="full-art-heading">A little more wonder.</h2>
-    <p>Twelve familiar cards, painted anew. Sweeping scenes, gilded edges, and a little light that follows you.</p>
+    <p>${count} familiar cards, painted anew. Sweeping scenes, gilded edges, and a little light that follows you.</p>
     <button class="gallery-close" type="button" aria-label="Close full art gallery" autofocus>✕</button></header>
     <div class="full-art-grid"></div>`;
   for (const [id] of Object.entries(FULL_ART_CARDS)) {
-    const def = set.cardsById[id];
+    const def = set.cardsById[id] || makerById[id];
     if (!def) continue;
     const figure = document.createElement('figure');
     figure.appendChild(buildCardFace(def, { large: true }));

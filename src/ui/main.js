@@ -6,6 +6,7 @@ import {
   setGame, stopGame, isGameActive, scheduleRender, renderIfChanged, settle,
 } from './render.js';
 import { openFullArtGallery } from './full-art-gallery.js';
+import { FULL_ART_CARDS } from './full-art.js';
 import { openDeckBuilder, loadSavedDecks, saveDeck, deleteSavedDeck } from './deckbuilder.js';
 import { buildHelp, openHelp, openWelcome, hasBeenWelcomed } from './help.js';
 import { createTutorialSession, stopTutorial } from './tutorial.js';
@@ -59,7 +60,8 @@ function customBlurb(deck) {
 
 // ---------- menu ----------
 function buildMenu() {
-  $('fullArtGalleryBtn').onclick = () => openFullArtGallery(rules, cardSet);
+  $('fullArtGalleryBtn').textContent = `Explore the ${Object.keys(FULL_ART_CARDS).length} Full Art cards`;
+  $('fullArtGalleryBtn').onclick = () => openFullArtGallery(rules, cardSet, makerSet);
   renderDeckChoice();
   renderMarketChoice();
 }
