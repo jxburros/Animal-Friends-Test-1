@@ -1,7 +1,7 @@
 // Card printings: regular, alternate art, foil, alternate art foil, creative foil, full card art.
 //
 // Only two of the six exist in the art assets today — regular, which needs none, and full card art,
-// which has eighteen paintings. The rest are wired and empty on purpose. What is tested here is that
+// which has twenty-four paintings. The rest are wired and empty on purpose. What is tested here is that
 // the empty ones stay empty until a painting actually exists, and that the two that do exist render
 // exactly as they did before printings were a thing.
 import test from 'node:test';

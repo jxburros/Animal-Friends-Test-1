@@ -1,11 +1,11 @@
 # Full Art Collection
 
-Eighteen existing cards get an intentionally distinct collectible presentation: individual 1024 × 1536
+Twenty-four existing cards get an intentionally distinct collectible presentation: individual 1024 × 1536
 paintings extending across the entire face, deep translucent nameplates and rules panels, fine gold
 corner work, and a soft pearlescent sheen. The restrained highlight follows the pointer and also
 responds to keyboard focus. There is no continuous shimmer animation; reduced motion disables transitions.
 
-The first twelve are printed cards; the last six are Maker shelf cards (`spec/maker_card_set.json`)
+The first twelve are printed cards; the last twelve are Maker shelf cards (`spec/maker_card_set.json`)
 that were later given their own commissioned portrait.
 
 Open **Explore the Full Art cards** on the book cover. Each gallery card has a **Read** button for
@@ -32,6 +32,12 @@ Deck Workshop, previews and animation copies. Escape dismisses the reader or gal
 | 16 | Betty — Firework Maker | — | Holding a rocket at a lantern-lit fireworks stall |
 | 17 | Comet — Astronaut | — | Floating in space above the earth, a comet overhead |
 | 18 | Rosabeth — Apothecary | — | Mixing a tincture by moonlight in a herb shop |
+| 19 | Copper — Market Steward | — | Weighing stock on brass scales at a busy market arch |
+| 20 | Hazel — Merchant | — | A lantern-lit night stall of curios, keys and unlabeled bottles |
+| 21 | Moss — Bridgewright | — | The finished arch over the river, rejected drawings under one arm |
+| 22 | Maribel — Horticulturist | — | Seed trays and drawers in a sunlit glasshouse |
+| 23 | Sota — Telescope Fitter | — | Seating a great lens by lamplight, back to the stars |
+| 24 | Juniper — Stargazer | — | A brass orrery on a hill above town, post satchel beside them |
 
 These subjects were selected for recognizable characters, expressive occupations, varied environments,
 and strong lighting opportunities. Their printed rarities, card IDs, costs, abilities, deck limits and

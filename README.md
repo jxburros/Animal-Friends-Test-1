@@ -26,7 +26,7 @@ Capital City banner, welcome screen and deck workshop, with locally bundled artw
 
 **Card printings.** Every card can now exist in six printings — **Regular, Alternate Art, Foil,
 Alternate Art Foil, Creative Foil** and **Full Card Art** — and the Book turns a card over to any of
-them with the chips beneath it. Only two have art today: Regular, which needs none, and the eighteen
+them with the chips beneath it. Only two have art today: Regular, which needs none, and the twenty-four
 Full Card Art paintings. The other four are wired and deliberately empty; a greyed chip is a printing
 that has not been painted yet. Adding one is two steps, documented at the top of
 `src/ui/versions.js`: drop the painting at `assets/art/versions/<cardId>/<slot>.png`, and add one
@@ -305,7 +305,7 @@ and the two-step recipe for bringing a new printing in. Printings never touch ru
 deck limits, and a card is shown in its Full Card Art where it has one and its regular printing
 otherwise — which is exactly what the table showed before printings existed.
 
-**Full Art Collection:** eighteen selected cards have their own portrait paintings, edge-to-edge
+**Full Art Collection:** twenty-four selected cards have their own portrait paintings, edge-to-edge
 artwork, fine gold frames and subtle pointer-responsive foil. Choose **Explore the Full Art cards**
 on a collection's cover, or filter the Book by the **Full Card Art** printing. The same treatment
 appears in play, the Deck Workshop and card readers. Printed rarities and gameplay are unchanged. See the
@@ -319,9 +319,9 @@ burden in a keyboard- and touch-accessible reading view; Escape closes it.
 
 `src/ui/painted-art.js` selects a painted scene by explicit atlas/tile when a card names one (`art: { atlas: "boroughs" | "whiskerwood" | "neighbors" | "monuments" | "townlife" | "capital" | "nightworkers" | "nightskies", tile }`), or by species
 and theme for other cards. These are **128 atlas paintings**: related cards retain different printed names, jobs,
-stats and effects while sharing art. The eighteen Full Art selections override their shared painting
+stats and effects while sharing art. The twenty-four Full Art selections override their shared painting
 with an individual PNG from `assets/art/full-art/`, retaining the atlas and vector layers as fallbacks.
-All the PNG atlases and the eighteen portraits ship with the game; no image
+All the PNG atlases and the twenty-four portraits ship with the game; no image
 service or external font request is needed to play. `src/ui/art.js` preserves the original per-card
 vector illustrations underneath the painted layer as a fallback for missing art or unknown species.
 `src/ui/storybook.css` owns the painted edition's presentation without changing rules or animation timing.
