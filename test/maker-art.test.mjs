@@ -11,6 +11,10 @@ import {
   MAKER_HARVEST_ATLAS_URL,
   MAKER_WORKSHOP_ATLAS_URL,
   MAKER_PLACES_ATLAS_URL,
+  MAKER_TOKENS_ATLAS_URL,
+  MAKER_BAKERY_LIBRARY_ATLAS_URL,
+  MAKER_RECORDS_ROOTS_ATLAS_URL,
+  MAKER_ROLES_ATLAS_URL,
   paintedArtSVG,
 } from '../src/ui/painted-art.js';
 
@@ -25,11 +29,15 @@ const atlasUrls = {
   makerharvest: MAKER_HARVEST_ATLAS_URL,
   makerworkshop: MAKER_WORKSHOP_ATLAS_URL,
   makerplaces: MAKER_PLACES_ATLAS_URL,
+  makertokens: MAKER_TOKENS_ATLAS_URL,
+  makerbakerylibrary: MAKER_BAKERY_LIBRARY_ATLAS_URL,
+  makerrecordsroots: MAKER_RECORDS_ROOTS_ATLAS_URL,
+  makerroles: MAKER_ROLES_ATLAS_URL,
 };
 
-test('eight Maker atlases assign 128 existing cards to every tile exactly once', () => {
+test('twelve Maker atlases assign 192 existing cards to every tile exactly once', () => {
   const entries = Object.entries(MAKER_ART_TILES);
-  assert.equal(entries.length, 128);
+  assert.equal(entries.length, 192);
 
   for (const [atlas, url] of Object.entries(atlasUrls)) {
     const assignments = entries.filter(([, art]) => art.atlas === atlas);
@@ -58,5 +66,16 @@ test('every non-token Maker card without authored art now has a commissioned sce
 
   assert.equal(MAKER_ART_TILES.mk_bean_proprietor_5.atlas, 'makercivic');
   assert.equal(MAKER_ART_TILES.mk_maribel_horticulturist_4.atlas, 'makerharvest');
+});
+
+test('every Maker token has commissioned art and selected shared scenes are replaced', () => {
+  const missingTokens = MAKER.cards.filter((card) => card.type === 'token' && !MAKER_ART_TILES[card.id]);
+  assert.deepEqual(missingTokens, []);
+
+  assert.equal(MAKER_ART_TILES.mk_tok_rabbit.atlas, 'makertokens');
+  assert.equal(MAKER_ART_TILES.mk_tok_building.atlas, 'makerbakerylibrary');
+  assert.equal(MAKER_ART_TILES.mk_marmalade_night_baker_0.atlas, 'makerbakerylibrary');
+  assert.equal(MAKER_ART_TILES.mk_daniel_star_charter_3.atlas, 'makerrecordsroots');
+  assert.equal(MAKER_ART_TILES.mk_brooke_balloonist_4.atlas, 'makerroles');
 });
 
