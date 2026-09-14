@@ -2,21 +2,31 @@
 .card-face.foil { --mx: 30%; --my: 20%; isolation: isolate; }
 .card-face.foil .foil-sheen {
   position: absolute; inset: 0; z-index: 7; pointer-events: none; border-radius: inherit;
-  opacity: .28; mix-blend-mode: screen;
-  background: radial-gradient(ellipse at var(--mx) var(--my), #fff9ddc0, transparent 48%),
-    repeating-linear-gradient(115deg, #58cfd660 0%, #b1a0ed85 13%, #f3a4b775 26%, #f8e394a0 39%, #83dba880 52%, #58cfd660 65%);
-  background-size: 100% 100%, 250% 250%;
-  animation: foil-drift calc(9s * max(var(--fx-scale, 1), .01)) linear infinite;
+  opacity: .18; mix-blend-mode: hard-light;
+  background: radial-gradient(ellipse at var(--mx) var(--my), #ffffffb0, #c0ffff50 12%, transparent 42%),
+    linear-gradient(115deg, transparent 32%, #fff9ed70 42%, #fff 46%, #baffff90 50%, transparent 60%),
+    repeating-linear-gradient(115deg, #00cfff 0%, #6955ff 12%, #ff2bcb 24%, #ff9554 38%, #ffee68 50%, #36f3c7 62%, #00cfff 74%);
+  background-size: 100% 100%, 250% 250%, 180% 180%;
+  animation: foil-drift calc(7s * max(var(--fx-scale, 1), .01)) linear infinite;
   transition: opacity .25s;
 }
-.card-face.foil:hover .foil-sheen, .card-face.foil:focus-within .foil-sheen { opacity: .45; }
+.card-face.foil:hover .foil-sheen, .card-face.foil:focus-within .foil-sheen { opacity: .32; }
 .card-face.foil-artwork > .art, .card-face.foil-details > .art { isolation: isolate; }
-@keyframes foil-drift { from { background-position: 0 0, 0% 50%; } to { background-position: 0 0, 250% 50%; } }
+@keyframes foil-drift {
+  0% { background-position: 0 0, 100% 50%, 0% 50%; }
+  50% { background-position: 0 0, 0% 50%, 100% 50%; }
+  100% { background-position: 0 0, 100% 50%, 0% 50%; }
+}
 .card-face.foil-details .art > .foil-sheen {
+  /* Small metal/glass details need substantially more reflected light than a whole card. */
+  opacity: .8; mix-blend-mode: color-dodge;
+  animation-duration: calc(4s * max(var(--fx-scale, 1), .01));
   mask-image: var(--foil-detail-mask); mask-mode: alpha;
   mask-repeat: no-repeat; mask-size: cover; mask-position: center;
   -webkit-mask-image: var(--foil-detail-mask); -webkit-mask-repeat: no-repeat; -webkit-mask-size: cover; -webkit-mask-position: center;
 }
+.card-face.foil-details:hover .art > .foil-sheen,
+.card-face.foil-details:focus-within .art > .foil-sheen { opacity: .95; }
 .card-face.foil-hexagon > .foil-sheen {
   mask-image: url('../../assets/art/foil/hexagons.svg'); mask-mode: alpha;
   mask-size: 12px 21px; mask-repeat: repeat;

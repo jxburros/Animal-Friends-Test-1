@@ -263,8 +263,9 @@ const faceFinishes = new WeakMap();
  * card is shown in the printing it has always been shown in — its Full Card Art if it has one, the
  * regular printing otherwise — so the table itself is untouched by printings existing.
  * `foil` optionally previews a finish independently of that printing; null/false explicitly disables it.
+ * `foilInteractive` lets the reader track light without adding nested Read buttons or hover peeks.
  */
-export function buildCardFace(def, { large = false, interactive = true, version = null, foil: foilOverride } = {}) {
+export function buildCardFace(def, { large = false, interactive = true, foilInteractive = interactive, version = null, foil: foilOverride } = {}) {
   const ver = versionOf(resolveVersionKey(def, version));
   const fullArt = ver.fullArt ? fullArtFor(def) : null;
   const foil = resolveFoil(def, ver, foilOverride);
@@ -274,7 +275,7 @@ export function buildCardFace(def, { large = false, interactive = true, version 
     'data-card': def.id,
     'data-version': ver.key,
     'data-foil': foil?.mode || 'none',
-    'data-foil-interactive': interactive ? '1' : null,
+    'data-foil-interactive': foilInteractive ? '1' : null,
     'data-peek': interactive && !large ? '1' : null,
   });
   const banner = h('div', { class: 'banner' });
@@ -393,7 +394,7 @@ function inspectCard(def, version = null, foil) {
   hidePeek();
   const previous = document.activeElement;
   const dialog = h('dialog', { class: 'card-reader', 'aria-label': def.name });
-  dialog.appendChild(buildCardFace(def, { large: true, interactive: false, version, foil }));
+  dialog.appendChild(buildCardFace(def, { large: true, interactive: false, foilInteractive: true, version, foil }));
   dialog.appendChild(h('button', { class: 'reader-close', type: 'button', onclick: () => dialog.close() }, 'Return to the table'));
   dialog.addEventListener('close', () => { dialog.remove(); if (previous?.isConnected) previous.focus(); });
   dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
