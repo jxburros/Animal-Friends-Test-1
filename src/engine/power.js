@@ -261,6 +261,17 @@ export function effectPower(eff) {
       return 1.0;
     case 'peekMarketDeck':
       return 0.4 * n(eff.count);
+    case 'peekOpponentHand':
+      // Knowing what is coming, once: worth about a card's worth of not guessing, and worth it
+      // whether the hand is full or nearly empty, which is why it is not counted per card.
+      return 1.2;
+    case 'gainToken':
+      // A token is stored potential: worth less than the Supply it will one day buy, because
+      // something else has to come along and spend it.
+      return 0.6 * n(eff.count);
+    case 'spendToken':
+      // The token is the price; what it buys is the rider, and only when the price can be paid.
+      return 0.75 * effectPower(eff.then) - 0.4 * n(eff.count);
     case 'opponentTopdeckFromHand':
       return 1.4;
     case 'unemployOpponentCharacter':
@@ -367,10 +378,26 @@ function ladderPower(card, rules) {
   return 0.5 + 0.35 * (card.cost - minPledge);
 }
 
-/** A shift is worth its throughput plus a little for the lump sum it arrives in. */
-export function shiftPower(shift) {
+/**
+ * A shift is worth its throughput plus a little for the lump sum it arrives in.
+ *
+ * A shift printed with `decay` pays less each time it is worked — the burnt-out animal — so it is
+ * rated on the average of the shifts it will actually work: `runs` of them, which is the term of a
+ * retained hire or `SHIFTS_EXPECTED` for an animal who lives here. Without `decay` this is exactly
+ * the old arithmetic, so no card already in either set moves.
+ */
+const SHIFTS_EXPECTED = 4;
+export function shiftPower(shift, runs = SHIFTS_EXPECTED) {
   if (!shift) return 0;
-  return (shift.output / shift.delay) * 2.5 + shift.output * 0.3;
+  const decay = shift.decay || 0;
+  let output = shift.output;
+  if (decay) {
+    const n = Math.max(1, Math.round(runs));
+    let total = 0;
+    for (let i = 0; i < n; i++) total += Math.max(shift.minOutput ?? 0, shift.output - decay * i);
+    output = total / n;
+  }
+  return (output / shift.delay) * 2.5 + output * 0.3;
 }
 
 /** Turns a Character spends rotating into work before its first shift, by rank. */
@@ -426,6 +453,11 @@ export function opportunityCost(card, statueCost, rules) {
       return card.cost + ACTION + 0.6 + (card.hold ? 0.5 * ACTION : 0) + (card.disposal === 'outOfPlay' ? 0.4 : 0);
     case 'disruption':
       return 2.0; // never bought; rated purely by how hard it hits the table
+    case 'token':
+      // A token is not in anybody's deck and is never drawn, bought or played: it is a marker the
+      // rules hand out. It costs its holder nothing, so it is rated at the floor and never earns a
+      // rarity above Common.
+      return 1.0;
     default:
       return slot + (card.cost || 0);
   }
@@ -435,7 +467,9 @@ export function opportunityCost(card, statueCost, rules) {
 export function cardPower(card, rules) {
   let power = 0;
   if (card.type === 'character' || card.type === 'marketCharacter') {
-    power += shiftPower(card.shift);
+    // A hire with a term works its term's worth of shifts and no more, which is what a decaying
+    // shift has to be averaged over.
+    power += shiftPower(card.shift, card.leavesAfter || SHIFTS_EXPECTED);
     power += ladderPower(card, rules);
     power += BODY; // an animal is worth having quite apart from what is printed on it
   }

@@ -202,6 +202,7 @@ function typeIconName(def) {
   if (def.type === 'character') return def.study;
   if (def.type === 'event') return def.kind === 'limited' ? 'limited' : 'instant';
   if (def.type === 'statue') return 'statue';
+  if (def.type === 'token') return def.study || def.species || 'market';
   return 'market';
 }
 /** The card type as it is printed along the bottom edge, in words rather than in engine spelling. */
@@ -212,6 +213,7 @@ const TYPE_LABEL = {
   marketCharacter: 'Hire',
   disruption: 'Disruption',
   ordinance: 'Ordinance',
+  token: 'Token',
 };
 function typeLabel(def) {
   return TYPE_LABEL[def.type] || def.type;
@@ -292,7 +294,7 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
     : def.type === 'statue' ? 'Victory · Statue' : def.type === 'disruption' ? 'Shared Disruption'
       : def.type === 'townBuilding' ? 'Town Building' : def.type === 'building' ? 'Capital City Building'
         : def.type === 'marketCharacter' ? (def.title || 'Capital City Hire')
-          : def.hold ? 'Capital City Event · kept' : 'Capital City Market';
+          : def.type === 'token' ? 'Token' : def.hold ? 'Capital City Event · kept' : 'Capital City Market';
   face.appendChild(h('div', { class: 'card-subtitle' }, subtitle || def.type));
   face.appendChild(h('div', { class: 'art', html: cardArtSVG(def) }));
 
@@ -333,6 +335,16 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
   } else if (def.type === 'building') {
     body.appendChild(h('div', { class: 'title' }, 'Capital City Building'));
     traits.appendChild(h('span', { class: 'trait' }, [icon('market'), 'Takes a Building place']));
+    body.appendChild(traits);
+  } else if (def.type === 'token') {
+    // A token is a marker rather than a card: it is never drawn, bought or played, so the face shows
+    // what kind it is and nothing about cost, requirements or places.
+    body.appendChild(h('div', { class: 'title' }, 'Token'));
+    const of = (def.token && def.token.of) || '';
+    if (of === 'species') traits.appendChild(h('span', { class: 'trait' }, [icon(def.species), def.species]));
+    else if (of === 'study') traits.appendChild(h('span', { class: 'trait' }, [icon(def.study), def.study]));
+    else traits.appendChild(h('span', { class: 'trait' }, [icon('market'), 'Buildings']));
+    traits.appendChild(h('span', { class: 'trait' }, 'Never in a deck'));
     body.appendChild(traits);
   } else if (def.type === 'market') {
     body.appendChild(h('div', { class: 'title' }, def.hold ? 'Bought and kept' : 'Capital City card'));

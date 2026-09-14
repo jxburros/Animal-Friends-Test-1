@@ -3,7 +3,7 @@ import { shuffle } from './rng.js';
 import {
   cardDef, topCard, log, nextUid, opponentOf, entryOrientation, rankOf, abilitySources, hasPassive,
   hasMod, consumeMod, isUpright, speciesInTown, refillCity, UPRIGHT, BUSY, findStack, hasTownRoom,
-  hasBuildingRoom, canDemolishFor,
+  hasBuildingRoom, canDemolishFor, buildingsBuilt, tokenKey, tokenCount, addTokens, spendTokens,
 } from './state.js';
 
 // ---------- agent I/O ----------
@@ -53,6 +53,11 @@ function validateAnswer(req, a) {
 }
 
 const inst = (state, c) => ({ uid: c.uid, cardId: c.cardId, name: cardDef(state, c.cardId).name });
+/** A token kind in words, using the name printed on its card when the set declares one. */
+const tokenLabel = (state, key) => {
+  const card = (state.set.cards || []).find((c) => c.type === 'token' && tokenKey(c.token) === key);
+  return card ? card.name : key;
+};
 const stackOpt = (state, s) => ({ uid: s.uid, cardId: s.cards[0].cardId, name: `${topCard(state, s).name}, ${topCard(state, s).title}`, orientation: s.orientation });
 
 // ---------- basic mutations ----------
@@ -139,7 +144,7 @@ export async function discard(state, pi, n, { byOpponent = false } = {}) {
 
 export function makeStack(state, pi, cardInst, orientation) {
   const p = state.players[pi];
-  const s = { uid: nextUid(state), cards: [cardInst], orientation, shift: null, enteredTurn: state.turnNumber, hasBeenUpright: orientation === UPRIGHT, readyNextTurn: false, lockedBid: null, stored: 0, protectedUntil: 0, selfReadyUsed: false };
+  const s = { uid: nextUid(state), cards: [cardInst], orientation, shift: null, enteredTurn: state.turnNumber, hasBeenUpright: orientation === UPRIGHT, readyNextTurn: false, lockedBid: null, stored: 0, protectedUntil: 0, selfReadyUsed: false, shiftsWorked: 0 };
   p.town.push(s);
   return s;
 }
@@ -151,6 +156,9 @@ export async function completeShift(state, pi, stack) {
   const bonus = consumeMod(p, 'shiftBonus');
   out += bonus;
   stack.shift = null;
+  // A burnt-out animal's next shift pays less than this one did (`shift.decay`), so the count of
+  // shifts finished is kept on the stack rather than recomputed from anything.
+  stack.shiftsWorked = (stack.shiftsWorked || 0) + 1;
   p.stats.shiftsCompleted++;
   p.turn.shiftsCompleted++;
   log(state, pi, `${def.name}, ${def.title} finishes the shift.`, { kind: 'shiftDone', player: pi, uid: stack.uid, output: out });
@@ -388,6 +396,17 @@ function conditionHolds(state, pi, src, cond, ctx) {
   if (cond.handAtLeast !== undefined && p.hand.length < cond.handAtLeast) return false;
   if (cond.unemploymentNotMoreThanOpponent && p.unemployment.length > opp.unemployment.length) return false;
   if (cond.minSpeciesInTown && speciesInTown(state, pi).size < cond.minSpeciesInTown) return false;
+  // How much this town has built. The naturalist's condition: her work is worth most to a Mayor who
+  // has raised nothing, and least to one whose eight places are full. Statues are not counted —
+  // they are bought, not built — so this reads the Buildings and nothing else.
+  if (cond.buildingsAtMost !== undefined && buildingsBuilt(state, pi) > cond.buildingsAtMost) return false;
+  if (cond.buildingsAtLeast !== undefined && buildingsBuilt(state, pi) < cond.buildingsAtLeast) return false;
+  // Tokens the town is holding. Nothing on either shelf sets this yet; it is here so the first card
+  // that wants to ask "have you got two Rabbit tokens?" does not have to invent the question.
+  if (cond.tokensAtLeast) {
+    const t = cond.tokensAtLeast;
+    if (tokenCount(p, t) < (t.count ?? 1)) return false;
+  }
   return true;
 }
 
@@ -546,6 +565,42 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       const top = state.market.deck.slice(0, eff.count || 1).map((id) => cardDef(state, id).name);
       p.knownMarketTop = state.market.deck.slice(0, eff.count || 1);
       log(state, pi, `${p.name} looks at the top of the Market Deck${top.length ? `: ${top.join(', ')}` : ' (empty)'}.`, { kind: 'peekMarket', player: pi, cardIds: p.knownMarketTop.slice() });
+      return;
+    }
+    case 'peekOpponentHand': {
+      // The other side of the glass: the one effect in the collection that looks into a rival's hand.
+      // Information only — nothing moves, and the rival is told they were read, because a card that
+      // looked at your hand without saying so would be a card nobody could play around.
+      if (!o.hand.length) {
+        log(state, pi, `${p.name} looks across at ${o.name}'s hand and finds it empty.`, { kind: 'peekHand', player: pi, opponent: oi, cardIds: [] });
+        return;
+      }
+      p.knownOpponentHand = o.hand.map((c) => c.cardId);
+      const names = p.knownOpponentHand.map((id) => cardDef(state, id).name);
+      log(state, pi, `${p.name} looks at ${o.name}'s hand: ${names.join(', ')}.`, { kind: 'peekHand', player: pi, opponent: oi, cardIds: p.knownOpponentHand.slice() });
+      return;
+    }
+    case 'gainToken': {
+      // Tokens are the small change of the town (see `tokenKey` in state.js). No card on either
+      // shelf spends them yet; the verb is here so the first one that does needs no engine work.
+      const key = tokenKey(eff);
+      if (!key) return;
+      const n = eff.count === undefined ? 1 : eff.count;
+      if (n <= 0) return;
+      const now = addTokens(p, key, n, state.rules.tokens?.cap ?? null);
+      log(state, pi, `${p.name} takes ${n} ${tokenLabel(state, key)} token${n === 1 ? '' : 's'} (now ${now}).`, { kind: 'token', player: pi, token: key, delta: n, total: now });
+      return;
+    }
+    case 'spendToken': {
+      const key = tokenKey(eff);
+      if (!key) return;
+      const n = eff.count === undefined ? 1 : eff.count;
+      // A cost you cannot meet is not paid at all: the tokens stay where they are and the rider does
+      // not run. Checking before spending is the whole of it — a part-paid price is not a price.
+      if (tokenCount(p, key) < n) return;
+      const spent = spendTokens(p, key, n);
+      log(state, pi, `${p.name} spends ${spent} ${tokenLabel(state, key)} token${spent === 1 ? '' : 's'}.`, { kind: 'token', player: pi, token: key, delta: -spent, total: tokenCount(p, key) });
+      if (eff.then) await runEffect(state, pi, eff.then, ctx);
       return;
     }
     case 'opponentTopdeckFromHand': {

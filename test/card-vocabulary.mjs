@@ -17,6 +17,10 @@ export const EFFECTS = new Set([
   'selfReady', 'cancelReveal', 'advanceCharacter',
   // the astronomers' verb (Night Shift): look at your own deck top and bin what you do not want
   'scryDeck',
+  // the other side of the glass: look at the rival's hand (information only, and the rival is told)
+  'peekOpponentHand',
+  // tokens: the small change of the town, one kind per species, per study, and one for Buildings
+  'gainToken', 'spendToken',
   // on-reveal catch-up
   'behindPlayerGains', 'behindPlayerReadies',
   // shared shocks, used by Disruption cards
@@ -54,5 +58,17 @@ export const CITY_RULE_KEYS = new Set(['pledgeLadderDelta', 'statueCostDelta', '
 export const CONDITIONS = new Set([
   'self', 'announcerIsSelf', 'onlyUprightOfSpecies', 'otherCharacterInTown', 'eventRequiresStudy',
   'nonStatue', 'statue', 'handAtLeast', 'unemploymentNotMoreThanOpponent', 'minSpeciesInTown',
+  // how much this town has built — Buildings, not the Statues, which are bought rather than raised
+  'buildingsAtMost', 'buildingsAtLeast',
+  // tokens the town is holding: { of, species|study, count }
+  'tokensAtLeast',
 ]);
+
+/**
+ * Keys a mod's `filter` may carry. A filter narrows what a mod applies to: `study`/`studyIn`,
+ * `species`, `type` and `maxCost` are read off the card being priced, and `upgradesOwn` is read off
+ * the recruit itself — the printer's rate, good only for a card that upgrades an animal you already
+ * have. `modFilterMatches` in src/engine/state.js is the authority.
+ */
+export const MOD_FILTER_KEYS = new Set(['study', 'studyIn', 'species', 'type', 'maxCost', 'upgradesOwn']);
 

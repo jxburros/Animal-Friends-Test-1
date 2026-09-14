@@ -2,7 +2,7 @@
 import {
   cardDef, topCard, log, nextUid, opponentOf, entryOrientation, rankOf, hasPassive, hasMod, getMod, consumeMod,
   canAct, findStack, cityRule, refillCity, townFootprint, townCap, hasTownRoom, UPRIGHT, BUSY,
-  getModFor, consumeModFor, hasBuildingRoom, canDemolishFor, buildingCap,
+  getModFor, consumeModFor, hasBuildingRoom, canDemolishFor, buildingCap, shiftOutputFor,
 } from './state.js';
 import {
   ask, gainSupply, draw, discard, makeStack, fireHook, runEffect, matchesFilter, isSelfReadyEffect,
@@ -21,9 +21,10 @@ export function recruitCost(state, pi, cardId, targetUid = null) {
     const under = s ? topCard(state, s) : cardDef(state, p.unemployment.find((c) => c.uid === targetUid).cardId);
     cost = def.cost - under.cost;
   }
-  // A recruit discount may be typed (the café rate applies to Food animals only); an untyped one
-  // applies to everybody, exactly as before.
-  cost = Math.max(0, cost - getModFor(p, 'recruitDiscount', def));
+  // A recruit discount may be typed (the café rate applies to Food animals only, the printer's rate
+  // only to a card that upgrades an animal you already have); an untyped one applies to everybody,
+  // exactly as before. Whether this is an upgrade is not a property of the card, so it is passed in.
+  cost = Math.max(0, cost - getModFor(p, 'recruitDiscount', def, { upgrade: !!targetUid }));
   return cost;
 }
 
@@ -336,7 +337,7 @@ export function legalActions(state, pi) {
       }
       continue;
     }
-    acts.push({ type: 'work', charUid: s.uid, cardId: def.id, delay: def.shift.delay, output: def.shift.output });
+    acts.push({ type: 'work', charUid: s.uid, cardId: def.id, delay: def.shift.delay, output: shiftOutputFor(def, s) });
     if (busyAb && !isSelfReadyEffect(busyAb.effect)) acts.push({ type: 'ability', charUid: s.uid, cardId: def.id });
   }
   // events
@@ -445,7 +446,8 @@ export async function applyAction(state, pi, a) {
       const cost = recruitCost(state, pi, def.id, a.targetUid || null);
       if (cost > p.supply) throw new Error('Cannot afford');
       p.supply -= cost;
-      if (getModFor(p, 'recruitDiscount', def)) consumeModFor(p, 'recruitDiscount', def);
+      const recruitCtx = { upgrade: !!a.targetUid };
+      if (getModFor(p, 'recruitDiscount', def, recruitCtx)) consumeModFor(p, 'recruitDiscount', def, recruitCtx);
       const [c] = p.hand.splice(idx, 1);
       p.stats.recruits++;
       p.turn.recruits++;
@@ -475,8 +477,11 @@ export async function applyAction(state, pi, a) {
       if (!s || !canAct(s)) throw new Error('Character cannot work');
       const def = topCard(state, s);
       s.orientation = BUSY;
-      s.shift = { remaining: def.shift.delay, output: def.shift.output };
-      log(state, pi, `${def.name}, ${def.title} starts a shift (${def.shift.delay} turn${def.shift.delay === 1 ? '' : 's'} → ${def.shift.output} Supply).`, { kind: 'shiftStart', player: pi, uid: s.uid, delay: def.shift.delay, output: def.shift.output });
+      // What this shift pays: the printed output, unless the animal burns out (`shift.decay`), in
+      // which case every shift they work pays less than the one before.
+      const output = shiftOutputFor(def, s);
+      s.shift = { remaining: def.shift.delay, output };
+      log(state, pi, `${def.name}, ${def.title} starts a shift (${def.shift.delay} turn${def.shift.delay === 1 ? '' : 's'} → ${output} Supply)${output < def.shift.output ? ', and is not what they were' : ''}.`, { kind: 'shiftStart', player: pi, uid: s.uid, delay: def.shift.delay, output });
       await fireHook(state, 'onShiftStarted', { player: pi, stackUid: s.uid });
       return false;
     }
