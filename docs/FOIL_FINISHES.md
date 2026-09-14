@@ -73,6 +73,13 @@ use a bundled seamless SVG mask. Foil layers are noninteractive and hidden from 
 The selected finish is retained in the reader and hover peek. Motion stops for reduced-motion
 preferences and the Instant pace, leaving a still foil finish.
 
+All finishes combine saturated spectral color with a sweeping white/cyan reflection. Full-face
+coverage uses a restrained blend to preserve text; masked details use a brighter color-dodge finish
+and a four-second light sweep so small metal and porcelain accents visibly gleam. Read dialogs also
+track pointer light, while passive hover previews and animation clones remain noninteractive.
+
+![Comet, Flint and Earl during the brighter detail-foil sweep](screenshots/detail-foil-shine.png)
+
 `npm test` covers finish normalization, assignment precedence, every card/printing combination,
 mask validation, coverage placement and unchanged card definitions, alongside engine regressions.
 Use the preview for visual checks at table/large sizes, full art, narrow viewports and Read dialogs.
@@ -83,4 +90,6 @@ With the server running, run `node scripts/check-foil.cjs http://localhost:8080`
 This checks actual coverage pixels on ordinary and full-art cards, the Read dialog, motion settings,
 phone/tablet/desktop overflow and the main app loading without browser errors. Full-art panels are
 translucent: artwork foil stays behind them, but a little background shine can show through.
+It also compares two animation phases on each assigned detail mask at table and large sizes, checking
+that reflected light visibly changes rather than merely verifying that a mask exists.
 Native screen-reader testing is not automated here.

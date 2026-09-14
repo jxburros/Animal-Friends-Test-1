@@ -81,6 +81,47 @@ const baseURL = process.argv[2] || 'http://localhost:8080';
   await page.evaluate(()=>window.renderFinish(null,'regular'));
   const matte=PNG.sync.read(await page.locator('#test-host .card-face').screenshot());
   assert.equal(delta(matte,missingMask,{x:20,y:100,width:190,height:130}),0,'failed mask never turns into full-art foil');
+
+  // Test visible, moving light on the actual commissioned masks, not only the demo shapes.
+  function lightDifference(a, b) {
+    let changed = 0, energy = 0, peak = 0;
+    for (let i = 0; i < a.data.length; i += 4) {
+      const channels = [0, 1, 2].map(c => Math.abs(a.data[i+c] - b.data[i+c]));
+      const difference = Math.max(...channels);
+      if (difference > 8) { changed++; energy += channels.reduce((sum, x) => sum + x, 0) / 3; }
+      peak = Math.max(peak, difference);
+    }
+    return { changed, mean: energy / Math.max(changed, 1), peak };
+  }
+  for (const id of ['mk_comet_astronaut_5', 'ns_flint_0', 'mk_earl_tea_house_keeper_4']) {
+    for (const large of [false, true]) {
+      const captures = [];
+      for (const foil of [false, undefined]) {
+        await page.evaluate(async ({ id, large, foil }) => {
+          const { buildCardFace } = await import('/src/ui/render.js');
+          const sets = await Promise.all(['starter_card_set', 'maker_card_set'].map(async name => (await (await fetch(`/spec/${name}.json`)).json()).cards));
+          const card = buildCardFace(sets.flat().find(def => def.id === id), { large, interactive: false, version: 'foil', foil });
+          document.querySelector('#test-host').replaceChildren(card);
+          await Promise.all([...new Set([...card.querySelectorAll('image')].map(image => image.getAttribute('href')))].map(async url => {
+            const image = new Image(); image.src = url; await image.decode();
+          }));
+          const { setPace } = await import('/src/ui/fx.js');
+          setPace('storybook');
+          for (const animation of card.getAnimations({ subtree: true })) { animation.pause(); animation.currentTime = 0; }
+        }, { id, large, foil });
+        captures.push(PNG.sync.read(await page.locator('#test-host .art').screenshot()));
+      }
+      await page.locator('#test-host .foil-sheen').evaluate(el => {
+        for (const animation of el.getAnimations()) animation.currentTime = 2000;
+      });
+      const later = PNG.sync.read(await page.locator('#test-host .art').screenshot());
+      const visible = lightDifference(captures[0], captures[1]);
+      const moving = lightDifference(captures[1], later);
+      assert.ok(visible.changed > 5 && visible.peak > 40, `${id}/${large}: detail foil is visible`);
+      assert.ok(moving.changed > 5 && moving.mean > 15, `${id}/${large}: reflected light visibly sweeps`);
+      console.log('Detail light', id, large ? 'large' : 'table', { visible, moving });
+    }
+  }
   await page.evaluate(()=>document.querySelector('#test-host').remove());
   await page.goto(baseURL, { waitUntil: 'domcontentloaded' });
   await page.locator('#welcomePlayBtn').click();
@@ -96,6 +137,15 @@ const baseURL = process.argv[2] || 'http://localhost:8080';
   await page.locator('#bookHost .foil-details .inspect-card').first().click();
   assert.equal(await page.locator('.card-reader .card-face').getAttribute('data-version'), 'foil');
   assert.equal(await page.locator('.card-reader .card-face').getAttribute('data-foil'), 'details');
+  const readerFace = page.locator('.card-reader .card-face');
+  await readerFace.hover({ position: { x: 40, y: 120 } });
+  assert.ok(await readerFace.evaluate(el => el.style.getPropertyValue('--mx')), 'reader tracks reflected light');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  const stillPointer = await readerFace.evaluate(el => el.style.getPropertyValue('--mx'));
+  await readerFace.hover({ position: { x: 120, y: 140 } });
+  assert.equal(await readerFace.evaluate(el => el.style.getPropertyValue('--mx')), stillPointer);
+  assert.equal(await readerFace.locator('.foil-sheen').evaluate(el => getComputedStyle(el).animationName), 'none');
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.keyboard.press('Escape');
   await page.locator('#bookHost .book-card').first().getByRole('button', { name: 'Regular', exact: true }).click();
   assert.equal(await bookFaces.first().getAttribute('data-version'), 'regular');
