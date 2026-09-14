@@ -21,6 +21,12 @@ export const FULL_ART_CARDS = Object.freeze({
   mk_betty_firework_maker_3: Object.freeze({ number: '16', title: "Betty, Firework Maker", url: new URL('../../assets/art/full-art/mk_betty_firework_maker_3.png', import.meta.url).href }),
   mk_comet_astronaut_5: Object.freeze({ number: '17', title: "Comet, Astronaut", url: new URL('../../assets/art/full-art/mk_comet_astronaut_5.png', import.meta.url).href }),
   mk_rosabeth_apothecary_3: Object.freeze({ number: '18', title: "Rosabeth, Apothecary", url: new URL('../../assets/art/full-art/mk_rosabeth_apothecary_3.png', import.meta.url).href }),
+  mk_copper_market_steward_5: Object.freeze({ number: '19', title: "Copper, Market Steward", url: new URL('../../assets/art/full-art/mk_copper_market_steward_5.png', import.meta.url).href }),
+  mk_hazel_merchant_5: Object.freeze({ number: '20', title: "Hazel, Merchant", url: new URL('../../assets/art/full-art/mk_hazel_merchant_5.png', import.meta.url).href }),
+  mk_moss_bridgewright_5: Object.freeze({ number: '21', title: "Moss, Bridgewright", url: new URL('../../assets/art/full-art/mk_moss_bridgewright_5.png', import.meta.url).href }),
+  mk_maribel_horticulturist_4: Object.freeze({ number: '22', title: "Maribel, Horticulturist", url: new URL('../../assets/art/full-art/mk_maribel_horticulturist_4.png', import.meta.url).href }),
+  mk_sota_telescope_fitter_3: Object.freeze({ number: '23', title: "Sota, Telescope Fitter", url: new URL('../../assets/art/full-art/mk_sota_telescope_fitter_3.png', import.meta.url).href }),
+  mk_juniper_stargazer_5: Object.freeze({ number: '24', title: "Juniper, Stargazer", url: new URL('../../assets/art/full-art/mk_juniper_stargazer_5.png', import.meta.url).href }),
 });
 
 export function fullArtFor(def) {
