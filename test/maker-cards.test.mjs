@@ -8,7 +8,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { SET } from './helpers.mjs';
 import { characterIndex, groupByCharacter, characterOf, isCharacterCard } from '../src/engine/characters.js';
-import { EFFECTS, TRIGGERS, MOD_KEYS, CONDITIONS, PASSIVE_KEYS, CITY_RULE_KEYS } from './card-vocabulary.mjs';
+import { EFFECTS, TRIGGERS, MOD_KEYS, MOD_FILTER_KEYS, CONDITIONS, PASSIVE_KEYS, CITY_RULE_KEYS } from './card-vocabulary.mjs';
 
 const MAKER = JSON.parse(fs.readFileSync(new URL('../spec/maker_card_set.json', import.meta.url), 'utf8'));
 const printedById = Object.fromEntries(SET.cards.map((c) => [c.id, c]));
@@ -34,7 +34,14 @@ function walkEffect(eff, where) {
     assert.ok(Array.isArray(eff.steps) && eff.steps.length, `${where}: seq with no steps`);
     eff.steps.forEach((st, i) => walkEffect(st, `${where}.steps[${i}]`));
   }
-  if (eff.do === 'addMod') assert.ok(MOD_KEYS.has(eff.key), `${where}: unknown mod key "${eff.key}"`);
+  if (eff.do === 'addMod') {
+    assert.ok(MOD_KEYS.has(eff.key), `${where}: unknown mod key "${eff.key}"`);
+    // A filter narrows what a mod applies to; a key the engine does not read is a mod that quietly
+    // applies to everything, which is the opposite of what the card says.
+    for (const key of Object.keys(eff.filter || {})) {
+      assert.ok(MOD_FILTER_KEYS.has(key), `${where}: unknown mod filter key "${key}"`);
+    }
+  }
   // `then` is the rider a recruit arrives with; a typo in it is as broken as a typo anywhere else.
   if (eff.then) walkEffect(eff.then, `${where}.then`);
 }

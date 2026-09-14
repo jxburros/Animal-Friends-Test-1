@@ -118,14 +118,16 @@ announce/raise — raise `bid` if you want). `applyAction(state, pi, action)` va
 ```
 state = { seed, rng, turnNumber, active, phase, players:[P,P], market, log:[{turn,player,text,fx?}], winner, result }
 P = { index, name, deckId, deck:[Card], hand:[Card], town:[Stack], events:[{uid,cardId,remaining}], dump:[Card],
-      unemployment:[Card], victoryRow:[cardId], buildings:[cardId], supply, escrow, mods:[{key,value,expires}],
-      turn:{...counters}, stats }
+      unemployment:[Card], victoryRow:[cardId], buildings:[cardId], supply, escrow, mods:[{key,value,expires,filter?}],
+      tokens:{ 'species:Rabbit'|'study:Food'|'building': count }, turn:{...counters}, stats }
 Card  = { uid, cardId }                       // cardDef(state, cardId) gives the definition
 Stack = { uid, cards:[Card top-first], orientation:0|180|270, shift:null|{remaining,output}, hasBeenUpright,
           readyNextTurn, lockedBid,  // lockedBid = the auction this Character is standing in, if any
           stored,                    // Supply put by on this card (a Squirrel's cache)
           protectedUntil,            // turn number until which an opponent cannot target it
-          selfReadyUsed }            // a Cat's once-per-game self-ready
+          selfReadyUsed,             // a Cat's once-per-game self-ready
+          shiftsWorked,              // shifts finished here; a decaying shift pays less each time
+          termRemaining }            // turns left on a retained hire (leavesAfter)
 market = { deckId, deckName, deck:[cardId], city:[cardId], cityDump:[cardId], outOfPlay:[cardId], revealQueue:[cardId],
            pending:[{id, cardId, announcer, high, bid, bonus, committed:[n,n], chars:[[uid],[uid]],
                      rounds:[{player,bid,bonus,turn}], unchallengeable, turnAnnounced, lastBidTurn}] }
@@ -198,7 +200,9 @@ Passive keys: `winTiesAsChallenger`, `blockOpponentBidRaise`, `firstAnnounceMinB
 `eventCharReductionPerTurn`, `firstBidPlus1`, and the Statue burdens `opponentRehireDiscount`,
 `opponentFirstBidPlus1`, `apprenticeEntersBusy`, `eventCostPlus1`, `resourceSupplyMinus1`, `losingBidsPayFull`.
 
-Opponent-facing ops: `unemployOpponentCharacter`, `opponentTopdeckFromHand`, `makeBusy`.
+Opponent-facing ops: `unemployOpponentCharacter`, `opponentTopdeckFromHand`, `makeBusy`, `peekOpponentHand`.
+
+Token ops: `gainToken`, `spendToken` (see **Tokens** below).
 
 Disruption effect ops (global, both players): `allCharactersToUnemployment`, `endAllShifts`, `everyoneLosesSupply`,
 `everyoneGainsSupply`, `everyoneDraws`, `everyoneDiscardsDownTo`, `blockNextReady`, `everyoneRehiresFree`.
@@ -228,6 +232,48 @@ character's `wantedVerbs`). Nothing in the printed set uses them, so every print
   animal back to the Capital City's City Dump when it runs out. A Character pledged into an open
   auction does not tick: the town cannot send home what it has bid. `power.js` caps such a card's
   ability runs at the term and discounts the whole card by `termFactor`.
+
+## Card data: the second round of wishes (v0.7.2)
+
+The four `wantedVerbs` the first round left unbuilt, and the same rule applies: nothing in the
+printed set uses any of them, so every printed rating is unchanged.
+
+- **`buildingsAtMost` / `buildingsAtLeast`** — conditions reading how many Buildings this Mayor has
+  actually raised (`buildingsBuilt` in `state.js`: Capital City Buildings and Town Buildings, *not*
+  the Statues, which are bought rather than built). Bella's wish: a naturalist at her best in a town
+  that has put nothing up.
+- **`peekOpponentHand`** — look at the rival's hand. Information only: nothing moves, and the rival is
+  told they were read (`fx.kind === 'peekHand'`), because a card that looked without saying so would
+  be a card nobody could play around. The looker keeps it on `player.knownOpponentHand`.
+- **`shift: { decay, minOutput }`** on a card — the animal burns out. Every shift they work pays
+  `decay` less than the one before, down to `minOutput` (0 when it is not printed). The count lives on
+  the stack as `shiftsWorked`, so an animal who never works never burns out and a fresh copy starts at
+  the printed figure. `shiftOutputFor(def, stack)` is the one place that arithmetic happens;
+  `legalActions` reports the decayed figure and `power.js` rates the shift on the average of the
+  shifts the card will actually work (its `leavesAfter` term, or four).
+- **`filter: { upgradesOwn: true }`** on a mod — the printer's rate, good only for a recruit that
+  upgrades a Character the town already has. Whether a recruit is an upgrade is not a property of the
+  card, so `recruitCost` passes it to `getModFor`/`consumeModFor` as context and `modFilterMatches`
+  reads it there.
+
+## Tokens (v0.7.2)
+
+Tokens are markers a Mayor holds beside their Supply: one kind per species, one per field of study,
+and one for Buildings. They are never drawn, bought, bid on or discarded, and they take neither a town
+place nor a Building place. The rules are `spec/game.json` → `tokens`.
+
+- **Declared by cards.** A card of `type: "token"` carrying `token: { of: "species", species }`,
+  `{ of: "study", study }` or `{ of: "building" }` says that kind exists. `tokenKinds(set)` lists them.
+  `DECK_TYPES` excludes tokens, so the Deck Workshop refuses one in a deck.
+- **Held per player.** `player.tokens` maps a key (`species:Rabbit`, `study:Food`, `building`) to a
+  count. `tokenKey`, `tokenCount`, `addTokens`, `spendTokens` in `state.js` are the whole API;
+  `rules.tokens.cap` caps one kind and `rules.tokens.startingTokens` seeds every declared kind at setup.
+- **Card verbs.** `gainToken { of, species|study, count }`, `spendToken { ..., then }` — a price you
+  cannot meet is not paid at all, so a short holding spends nothing and the rider does not run — and
+  the condition `tokensAtLeast: { of, species|study, count }`.
+- **Nothing spends one yet**, deliberately. The counter was built ahead of the cards that will use it
+  so that the first three of them do not each invent their own; `spec/maker_card_set.json` → `tokens`
+  says why at length.
 
 ## Card data: naming a Character (v0.4.0)
 

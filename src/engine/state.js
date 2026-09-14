@@ -27,6 +27,20 @@ export function entryOrientation(rules, cost) {
   return rules.ranks[rankOf(rules, cost)].entryOrientation;
 }
 
+/**
+ * What a Character's next shift actually pays. Ordinarily that is the printed output, but a shift may
+ * carry `decay`: the animal burns out, and every shift they work pays less than the one before, down
+ * to `minOutput` (0 if it is not printed). `stack.shiftsWorked` is the count of shifts this animal has
+ * finished, so the first pays the printed figure, the second `output - decay`, and so on.
+ */
+export function shiftOutputFor(def, stack) {
+  const shift = def.shift || {};
+  const decay = shift.decay || 0;
+  if (!decay) return shift.output;
+  const worked = (stack && stack.shiftsWorked) || 0;
+  return Math.max(shift.minOutput ?? 0, shift.output - decay * worked);
+}
+
 let uidCounter = 0;
 export function nextUid(state) {
   state.uidCounter = (state.uidCounter || 0) + 1;
@@ -129,6 +143,9 @@ function makePlayer(state, index, name, deckRef) {
     // the Victory Row take places out of the same eight (rules.buildings).
     buildings: [],
     reshuffles: 0, // Town Dump shuffled back into the deck; rules.deckOut.maxReshuffles allows one
+    // Tokens the town is holding, keyed by `tokenKey` (`species:Rabbit`, `study:Food`, `building`).
+    // Nothing in either shelf spends them yet; the plumbing is here so the cards that will can.
+    tokens: {},
     held: [], // market cards whose effect is still pending (for display)
     supply: 0,
     escrow: 0,
@@ -189,6 +206,12 @@ export function createGame(rules, set, opts = {}) {
   if (state.rules.market.disruptions?.skipDuringSetup) {
     const setAside = state.market.revealQueue.splice(0);
     state.market.cityDump.push(...setAside);
+  }
+  // Every Mayor starts with `rules.tokens.startingTokens` of every kind the set declares (0 by
+  // default, so this is a no-op until a set says otherwise).
+  const startTokens = rules.tokens?.startingTokens || 0;
+  if (startTokens > 0) {
+    for (const p of state.players) for (const { key } of tokenKinds(indexed)) addTokens(p, key, startTokens, rules.tokens?.cap ?? null);
   }
   state.phase = 'start';
   log(state, null, `A new game of ${indexed.name} begins in the ${state.market.deckName} market. ${names[0]} plays ${state.players[0].deckName}; ${names[1]} plays ${state.players[1].deckName}.`, { kind: 'gameStart', market: state.market.deckId });
@@ -298,7 +321,7 @@ export function getMod(player, key) {
  * the café rate, good for Food animals and nobody else. `getModFor` totals only the mods whose
  * filter matches the card in hand; an unfiltered mod matches everything, as it always did.
  */
-export function modFilterMatches(mod, def) {
+export function modFilterMatches(mod, def, ctx = {}) {
   const f = mod.filter;
   if (!f) return true;
   if (!def) return false;
@@ -307,16 +330,20 @@ export function modFilterMatches(mod, def) {
   if (f.species && def.species !== f.species) return false;
   if (f.type && def.type !== f.type) return false;
   if (f.maxCost !== undefined && (def.cost || 0) > f.maxCost) return false;
+  // The printer's rate: good only for a card that upgrades a Character the town already has. It is
+  // not a property of the card — the same card is an upgrade or a new body depending on what is
+  // standing in the town — so it is read off the recruit being priced, not off the definition.
+  if (f.upgradesOwn && !ctx.upgrade) return false;
   return true;
 }
-export function getModFor(player, key, def) {
-  return player.mods.filter((m) => m.key === key && modFilterMatches(m, def)).reduce((a, m) => a + m.value, 0);
+export function getModFor(player, key, def, ctx = {}) {
+  return player.mods.filter((m) => m.key === key && modFilterMatches(m, def, ctx)).reduce((a, m) => a + m.value, 0);
 }
 /** Spend `amount` from the mods of this key that apply to `def` (filtered ones included). */
-export function consumeModFor(player, key, def, amount = Infinity) {
+export function consumeModFor(player, key, def, ctx = {}, amount = Infinity) {
   let used = 0;
   for (const m of player.mods.slice()) {
-    if (m.key !== key || !modFilterMatches(m, def)) continue;
+    if (m.key !== key || !modFilterMatches(m, def, ctx)) continue;
     const take = Math.min(m.value, amount - used);
     used += take;
     m.value -= take;
@@ -343,6 +370,73 @@ export function consumeMod(player, key, amount = Infinity) {
 }
 export function expireMods(player, when) {
   player.mods = player.mods.filter((m) => m.expires !== when);
+}
+
+// ---------- tokens ----------
+/**
+ * Tokens are the small change of the town: one kind for every species, one for every field of study,
+ * and one for Buildings. They are declared as cards on the maker shelf (`type: "token"`), which is
+ * what says a given token exists at all, and held in `player.tokens` as a count per kind.
+ *
+ * The plumbing is here ahead of the cards that will use it, deliberately. A token is the obvious
+ * answer to a whole family of effects the collection keeps reaching for — "your Rabbits are worth
+ * something to each other", "Food pays for Food", "the town has built before and it shows" — and
+ * every one of those cards wants the same counter underneath it. Building the counter once, now,
+ * is what stops the first three of them each inventing their own.
+ *
+ * A token spec is `{ of: "species", species }`, `{ of: "study", study }` or `{ of: "building" }`.
+ */
+export function tokenKey(spec = {}) {
+  if (!spec || !spec.of) return null;
+  if (spec.of === 'species') return spec.species ? `species:${spec.species}` : null;
+  if (spec.of === 'study') return spec.study ? `study:${spec.study}` : null;
+  if (spec.of === 'building') return 'building';
+  return null;
+}
+
+/** The token kind a card declares (`card.token`), as a key — or null for a card that is not a token. */
+export function tokenKeyOf(def) {
+  return def && def.type === 'token' ? tokenKey(def.token) : null;
+}
+
+/** Every token kind the set declares, as `{ key, def }`, in the order the cards are printed. */
+export function tokenKinds(set) {
+  return (set.cards || [])
+    .filter((c) => c.type === 'token' && tokenKeyOf(c))
+    .map((c) => ({ key: tokenKeyOf(c), def: c }));
+}
+
+/** How many tokens of one kind this Mayor is holding. */
+export function tokenCount(player, spec) {
+  const key = typeof spec === 'string' ? spec : tokenKey(spec);
+  return (key && player.tokens && player.tokens[key]) || 0;
+}
+
+/**
+ * Hand this Mayor `n` tokens of one kind, up to `cap` of that kind if the rules set one
+ * (`rules.tokens.cap`). Returns the new count (0 for an unknown kind).
+ */
+export function addTokens(player, spec, n = 1, cap = null) {
+  const key = typeof spec === 'string' ? spec : tokenKey(spec);
+  if (!key || n <= 0) return tokenCount(player, key || '');
+  if (!player.tokens) player.tokens = {};
+  const total = (player.tokens[key] || 0) + n;
+  player.tokens[key] = typeof cap === 'number' && cap >= 0 ? Math.min(cap, total) : total;
+  return player.tokens[key];
+}
+
+/**
+ * Spend up to `n` tokens of one kind. Returns how many were actually spent, which is the answer a
+ * card needs: a cost you cannot meet is not paid at all, so callers check the return before acting.
+ */
+export function spendTokens(player, spec, n = 1) {
+  const key = typeof spec === 'string' ? spec : tokenKey(spec);
+  const have = tokenCount(player, key || '');
+  const take = Math.max(0, Math.min(n, have));
+  if (!take) return 0;
+  player.tokens[key] = have - take;
+  if (player.tokens[key] === 0) delete player.tokens[key];
+  return take;
 }
 
 // Sources of abilities for a player: town character stacks (top card), limited events, statues.
@@ -419,6 +513,16 @@ export function buildingSlotsUsed(state, pi) {
 export function buildingCap(state) {
   const n = (state.rules.buildings || {}).maxPerTown;
   return typeof n === 'number' && n > 0 ? n : Infinity;
+}
+
+/**
+ * How many Buildings this Mayor has actually put up — Capital City Buildings and Town Buildings, and
+ * not the Statues, which are bought rather than built. This is what a `buildingsAtMost` condition
+ * reads: a card that is at its best in a town that has raised nothing is asking about the building,
+ * not about the Victory Row.
+ */
+export function buildingsBuilt(state, pi) {
+  return (state.players[pi].buildings || []).length;
 }
 
 /** Is there an empty place to stand something permanent in? */

@@ -3,8 +3,11 @@
 // manners they inherit (never a Character mid-shift, never one pledged, never one behind quills).
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { newGame, addStack, addToHand, addToUnemployment, setSupply, UPRIGHT, BUSY } from './helpers.mjs';
-import { runEffect, isProtected } from '../src/engine/effects.js';
+import {
+  newGame, addStack, addToHand, addToUnemployment, setSupply, defineCard, giveBuilding, giveStatue,
+  legalActionsFor, act, SET, UPRIGHT, BUSY,
+} from './helpers.mjs';
+import { runEffect, isProtected, fireHook } from '../src/engine/effects.js';
 import { cityRule } from '../src/engine/state.js';
 import { pledgeMinCost } from '../src/engine/actions.js';
 import { endPhase } from '../src/engine/game.js';
@@ -236,4 +239,135 @@ test('rehire can be filtered by study and by species, not only by cost', async (
   assert.equal(state.players[0].town.length, 1, 'no Squirrel left in Unemployment, so nothing happens');
   await runEffect(state, 0, { do: 'rehire', free: true, filter: { species: 'Rabbit' }, optional: true }, {});
   assert.equal(state.players[0].town.length, 2, 'the Rabbit comes back when the filter asks for one');
+});
+
+// ---------------------------------------------------------------------------------------------
+// The second round of wishes: the four `wantedVerbs` left unbuilt after the first. Each one is a
+// character's story the engine could not say — Bella's bare town, Inkwell's look through the glass,
+// Kevin burning out, Lynnette's rate on a promotion — and each test here is that sentence, checked.
+
+test('buildingsAtMost reads what a town has built, and never the Victory Row', async () => {
+  const state = stage();
+  defineCard(state, {
+    id: 'tst_naturalist', type: 'character', name: 'Tester', title: 'Naturalist', species: 'Mouse',
+    study: 'Agriculture', cost: 0, shift: { delay: 1, output: 1 },
+    abilities: [{ trigger: 'onTurnStart', condition: { buildingsAtMost: 0 }, effect: { do: 'gainSupply', amount: 2 } }],
+  });
+  addStack(state, 0, 'tst_naturalist', UPRIGHT);
+  setSupply(state, 0, 0);
+  await fireHook(state, 'onTurnStart', { player: 0 });
+  assert.equal(state.players[0].supply, 2, 'a town with nothing built collects');
+
+  // Inert props: every printed Statue and Building has an ability of its own, and one that also
+  // fired at turn start would be measuring itself rather than the condition under test.
+  defineCard(state, { id: 'tst_statue', type: 'statue', name: 'Tester Statue', cost: 10 });
+  defineCard(state, { id: 'tst_building', type: 'building', name: 'Tester Building', cost: 6 });
+
+  // A Statue is bought, not built, so it does not close the condition.
+  giveStatue(state, 0, 'tst_statue');
+  await fireHook(state, 'onTurnStart', { player: 0 });
+  assert.equal(state.players[0].supply, 4, 'a Statue in the Victory Row is not a Building raised');
+
+  giveBuilding(state, 0, 'tst_building');
+  await fireHook(state, 'onTurnStart', { player: 0 });
+  assert.equal(state.players[0].supply, 4, 'one Building and the condition is shut');
+});
+
+test('buildingsAtLeast is the same dial pointed the other way', async () => {
+  const state = stage();
+  defineCard(state, {
+    id: 'tst_surveyor', type: 'character', name: 'Tester', title: 'Surveyor', species: 'Badger',
+    study: 'Crafts', cost: 0, shift: { delay: 1, output: 1 },
+    abilities: [{ trigger: 'onTurnStart', condition: { buildingsAtLeast: 2 }, effect: { do: 'gainSupply', amount: 3 } }],
+  });
+  addStack(state, 0, 'tst_surveyor', UPRIGHT);
+  setSupply(state, 0, 0);
+  defineCard(state, { id: 'tst_building', type: 'building', name: 'Tester Building', cost: 6 });
+  const aBuilding = 'tst_building';
+  giveBuilding(state, 0, aBuilding);
+  await fireHook(state, 'onTurnStart', { player: 0 });
+  assert.equal(state.players[0].supply, 0, 'one Building is not two');
+  giveBuilding(state, 0, aBuilding);
+  await fireHook(state, 'onTurnStart', { player: 0 });
+  assert.equal(state.players[0].supply, 3);
+});
+
+test('peekOpponentHand reads the rival’s hand, moves nothing, and says so out loud', async () => {
+  const state = stage();
+  const a = addToHand(state, 1, 'bb_clover_1');
+  const b = addToHand(state, 1, 'bb_clover_2');
+  const before = state.players[1].hand.length;
+  await runEffect(state, 0, { do: 'peekOpponentHand' }, {});
+  assert.deepEqual(state.players[0].knownOpponentHand.slice(-2), [a.cardId, b.cardId]);
+  assert.equal(state.players[1].hand.length, before, 'nothing leaves the hand that was read');
+  const entry = state.log[state.log.length - 1];
+  assert.equal(entry.fx.kind, 'peekHand', 'the rival is told they were read');
+  assert.equal(entry.fx.opponent, 1);
+});
+
+test('peekOpponentHand on an empty hand is a look and nothing else', async () => {
+  const state = stage();
+  state.players[1].hand = [];
+  await runEffect(state, 0, { do: 'peekOpponentHand' }, {});
+  assert.deepEqual(state.log[state.log.length - 1].fx.cardIds, []);
+});
+
+test('a shift printed with decay pays less every time it is worked', async () => {
+  const state = stage();
+  defineCard(state, {
+    id: 'tst_burnout', type: 'character', name: 'Tester', title: 'Hired Hand', species: 'Fox',
+    study: 'Civics', cost: 3, shift: { delay: 1, output: 3, decay: 1, minOutput: 1 },
+  });
+  const s = addStack(state, 0, 'tst_burnout', UPRIGHT);
+  setSupply(state, 0, 0);
+  const outputs = [];
+  for (let i = 0; i < 4; i++) {
+    state.phase = 'actions';
+    const work = legalActionsFor(state, 0).find((a) => a.type === 'work' && a.charUid === s.uid);
+    assert.ok(work, 'the animal can work');
+    outputs.push(work.output);
+    await act(state, 0, work);
+    await endPhase(state, 0);
+    s.orientation = UPRIGHT;
+  }
+  assert.deepEqual(outputs, [3, 2, 1, 1], 'three, then two, then one, and never below minOutput');
+  assert.equal(state.players[0].supply, 7);
+});
+
+test('a shift with no decay is the printed output for ever', async () => {
+  const state = stage();
+  const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+  const def = state.set.cardsById.bb_clover_1;
+  s.shiftsWorked = 5;
+  state.phase = 'actions';
+  const work = legalActionsFor(state, 0).find((a) => a.type === 'work' && a.charUid === s.uid);
+  assert.equal(work.output, def.shift.output);
+});
+
+test('a recruit discount filtered upgradesOwn is good for a promotion and nothing else', async () => {
+  const state = stage();
+  const dearer = SET.cards.find((c) => c.name === 'Clover' && c.cost >= 2);
+  const cheaper = SET.cards.filter((c) => c.name === 'Clover' && c.cost < dearer.cost).sort((a, b) => b.cost - a.cost)[0];
+  const target = addStack(state, 0, cheaper.id, UPRIGHT);
+  addToHand(state, 0, dearer.id);
+  state.players[0].mods.push({ key: 'recruitDiscount', value: 1, expires: 'untilUsed', consumable: true, filter: { upgradesOwn: true } });
+
+  assert.equal(recruitCost(state, 0, dearer.id), dearer.cost, 'a new body pays the printed price');
+  assert.equal(
+    recruitCost(state, 0, dearer.id, target.uid),
+    Math.max(0, dearer.cost - cheaper.cost - 1),
+    'the promotion collects the printer’s rate',
+  );
+});
+
+test('an upgradesOwn discount is spent by the upgrade that used it, and only then', async () => {
+  const state = stage();
+  const dearer = SET.cards.find((c) => c.name === 'Clover' && c.cost >= 2);
+  const cheaper = SET.cards.filter((c) => c.name === 'Clover' && c.cost < dearer.cost).sort((a, b) => b.cost - a.cost)[0];
+  const target = addStack(state, 0, cheaper.id, UPRIGHT);
+  const card = addToHand(state, 0, dearer.id);
+  setSupply(state, 0, 10);
+  state.players[0].mods.push({ key: 'recruitDiscount', value: 1, expires: 'untilUsed', consumable: true, filter: { upgradesOwn: true } });
+  await act(state, 0, { type: 'recruit', cardUid: card.uid, cardId: dearer.id, targetUid: target.uid, upgrade: true });
+  assert.equal(state.players[0].mods.filter((m) => m.key === 'recruitDiscount').length, 0, 'the rate is used up');
 });

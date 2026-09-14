@@ -287,6 +287,8 @@ function buildFilters() {
     chip('Characters', filter.type === 'character', () => { filter.type = 'character'; render(); }),
     chip('Events', filter.type === 'event', () => { filter.type = 'event'; render(); }),
     chip('Town Buildings', filter.type === 'townBuilding', () => { filter.type = 'townBuilding'; render(); }),
+    // Tokens are not deck cards; the chip is here so the maker shelf's token sheet can be read.
+    chip('Tokens', filter.type === 'token', () => { filter.type = 'token'; render(); }),
   ]);
   const sortRow = h('div', { class: 'db-chiprow' }, [
     h('span', { class: 'db-chiplabel' }, 'Sort by:'),

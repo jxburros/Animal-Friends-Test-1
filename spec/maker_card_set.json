@@ -1,5 +1,5 @@
 {
- "$comment": "Maker Cards (AF-MAKER-01). The hand-remade collection: as each character is remade its backstory and cards are added here, so the new versions can be read beside the printed ones in the Deck Workshop. This set starts empty and is NOT playable yet. The process is docs/REMAKING_A_CHARACTER.md, and the shared world it draws on is docs/TOWN_BIBLE.md. 'characters' holds one entry per remade character: name, species, studies, backstory, voice, arc, plus 'retires' (printed versions with no successor, each with a reason) and 'wantedVerbs' (effects the story wanted that the engine cannot yet do). 'cards' use exactly the schema of spec/starter_card_set.json plus one of two labels. A card that replaces a printed card carries 'remakes': the id (or list of ids) of the printed card(s) — an id and never a name, which is what survives a rename. A card that replaces nothing carries 'addition': true and an 'addedBecause' line saying why it is new: an extra rung in a character's arc, or a card of a type the printed set never had, as every Town Building is. One or the other is required, so a forgotten link cannot pass as a new card. 'rarity' and 'power' are computed by npm run stamp, never hand-written.",
+ "$comment": "Maker Cards (AF-MAKER-01). The hand-remade collection: as each character is remade its backstory and cards are added here, so the new versions can be read beside the printed ones in the Deck Workshop. This set starts empty and is NOT playable yet. The process is docs/REMAKING_A_CHARACTER.md, and the shared world it draws on is docs/TOWN_BIBLE.md. 'characters' holds one entry per remade character: name, species, studies, backstory, voice, arc, plus 'retires' (printed versions with no successor, each with a reason) and 'wantedVerbs' (effects the story wanted that the engine cannot yet do). 'cards' use exactly the schema of spec/starter_card_set.json plus one of two labels. A card that replaces a printed card carries 'remakes': the id (or list of ids) of the printed card(s) — an id and never a name, which is what survives a rename. A card that replaces nothing carries 'addition': true and an 'addedBecause' line saying why it is new: an extra rung in a character's arc, or a card of a type the printed set never had, as every Town Building is. One or the other is required, so a forgotten link cannot pass as a new card. A 'token' card is a third thing again: it declares that a kind of token exists — one per species, one per study, one for Buildings — rather than being a card anybody draws, and the 'tokens' block below says what they are for. 'rarity' and 'power' are computed by npm run stamp, never hand-written.",
  "setId": "AF-MAKER-01",
  "name": "Maker Cards",
  "playable": false,
@@ -430,14 +430,15 @@
    "pronouns": "she/her",
    "backstory": "If you cannot find Bella she is in the forest, and if you cannot find her in the forest you are not looking down. She works on the floor of it: knees in the leaf litter, notebook open on one knee, voice recorder in the other paw because some things have to be said before they can be written. She has been at it since she was a kid, when foraging was simply how the family ate through the back half of the year and Bella was the one who came home with a full basket and a list of everything she had walked past on the way.\n\nShe never stopped and she never scaled it up. Ecology is what she calls it now, and the Science hall files her recordings and cites them, but the method has not changed since she was seven: go out, sit down, watch one square of ground long enough that it starts telling you things. She can feed herself off a hedgerow in any month of the year and would rather. The whole point, as far as Bella is concerned, is that the woodland was already working before anybody built anything on it, and will still be working after.\n\nThat is also her limit. She has never bid on anything in her life, she is no use whatsoever in the Capital City, and she has an audible opinion about animals who would rather raise a building than walk out and look at what is already there. Put Bella in a finished town with everything standing and she is a mouse with a notebook. Put her in a young one, or an empty one, and she is the reason it eats.",
    "voice": "Quiet, exact, always slightly mid-sentence. Answers a question with what she saw, the date she saw it, and what the weather was doing.",
-   "arc": "Every rung is about needing less. Forager (0) makes your next Event need one fewer animal, which is worth most when you have barely any. Field Scientist (1) turns her own shift into a card. Field Recorder (2) puts a spent Event back under the deck; Wildlife Warden (3) puts one straight back in your hand — the Mouse signature, and Bella's whole trick: nothing is used up, it comes round again. Ecologist (5) makes the first Event of every turn cheaper in animals and pays you for playing it. The maker asked for a character strongest when the player has little or nothing built; the engine cannot read a town's buildings, so the arc reads the dial it does have — how few animals you need standing before a card does something.",
+   "arc": "Every rung is about needing less, and every rung is worth most to a Mayor who has built nothing. Forager (0) makes your next Event need one fewer animal, and pays a bare town outright. Field Scientist (1) turns her own shift into a card, and into Supply while the town has raised at most one thing. Field Recorder (2) puts a spent Event back under the deck; Wildlife Warden (3) puts one straight back in your hand — the Mouse signature, and Bella's whole trick: nothing is used up, it comes round again. Ecologist (5) makes the first Event of every turn cheaper in animals, pays you for playing it, and keeps drawing you cards right up until the eight places start filling. The maker asked for a character strongest when the player has little or nothing built; the cards now say so outright.",
    "remade": "2026-09-14",
    "retires": [],
    "wantedVerbs": [
     {
      "verb": "buildingsAtMost (a condition on how much the town has built)",
      "why": "The maker asked for Bella's effects to be at their most powerful when the player has little to no buildings. The engine tracks `p.buildings`, but no card condition reads it — `CONDITIONS` has nothing about buildings, statues or town size, so 'while you control no Buildings, gain 2 Supply instead of 1' cannot be written.",
-     "workaround": "Built the same statement out of the one scarcity the vocabulary does read: `eventCharReduction` and the `eventCharReductionPerTurn` passive, which are worth most to a player with few animals standing, and a cost curve weighted to the cheap end so Bella is at her best before a town has raised anything. A `buildingsAtMost` condition would let the cards say it outright."
+     "workaround": "Built the same statement out of the one scarcity the vocabulary does read: `eventCharReduction` and the `eventCharReductionPerTurn` passive, which are worth most to a player with few animals standing, and a cost curve weighted to the cheap end so Bella is at her best before a town has raised anything. A `buildingsAtMost` condition would let the cards say it outright.",
+     "resolved": "Built as the `buildingsAtMost` condition (and `buildingsAtLeast` beside it), which reads the Buildings a town has actually raised — not the Statues, which are bought rather than built. Three of Bella's five rungs now pay extra to a Mayor with nothing up, which is what the maker asked for and what the old `eventCharReduction` reading could only imply."
     }
    ],
    "wantedArt": [
@@ -508,14 +509,15 @@
    "pronouns": "they/them",
    "backstory": "Inkwell reads the sky the way other animals read the paper, and tells the rest of it back as stories. By day — what there is of day, for a cat keeping the hours Inkwell keeps — they are in the library with the star charts out and four books open at once, working on something they will explain at length to anybody who asks and which nobody has ever entirely followed. By night they are on the Observatory steps with a flask, looking up.\n\nThe children get the good version. Every week, in the corner of the Lending Library, Inkwell tells the little ones about the worlds on the other side of ours: the doors in the hedge, the town under the lake, the cousins of the moon and what they are like. The stories have a geography and they never contradict one another, which is more than can be said for most of the borough's history. Inkwell insists, cheerfully, that it is all research.\n\nThere is a long-standing rumour that Inkwell is a mage, and Inkwell has never once denied it, which is exactly the sort of thing Inkwell would do. What is true is that things go slightly still around them. The reading room goes quiet, the clock in the hall seems to take its time, and animals who meant to leave an hour ago find that they have not. Cats do as they please, and what pleases Inkwell is for the evening to go on a little longer.",
    "voice": "Unhurried, delighted, permanently mid-thought. Begins answers with 'well — that depends which sky you mean'.",
-   "arc": "Lore is the storytelling and Science is the looking. Bookmark Keeper (1) hands the whole town an extra step of morning. Storyteller (2) has one animal back on their feet by the next turn because the story ended well. Night Librarian (3) is the stillness itself: nobody's animals advance at the next Ready, yours included — the evening simply does not end. Astronomer (4) reads the Capital City's deck off the shift and, once in a game, gets up when a cat should not be able to, which is the Cat signature and the whole rumour in one line. Keeper of Stories (5) turns the first Lore Event of every turn into a card and an extra step. The two Events are the two halves of them: the late shift with the children, and the chart drawn from the good chair.",
+   "arc": "Lore is the storytelling and Science is the looking. Bookmark Keeper (1) hands the whole town an extra step of morning. Storyteller (2) has one animal back on their feet by the next turn because the story ended well. Night Librarian (3) is the stillness itself: nobody's animals advance at the next Ready, yours included — the evening simply does not end. Astronomer (4) reads the Capital City's deck off the shift, reads the rival's hand in the same breath, and once in a game gets up when a cat should not be able to: the Cat signature and the whole rumour in one card. Keeper of Stories (5) turns the first Lore Event of every turn into a card and an extra step. The two Events are the two halves of them: the late shift with the children, and the chart drawn from the good chair.",
    "remade": "2026-09-14",
    "retires": [],
    "wantedVerbs": [
     {
      "verb": "peekOpponentHand / a 'the other side of the glass' effect",
      "why": "The mage rumour wanted one card that looks somewhere no other card looks — the rival's hand, or the Capital City's Ordinance display — as the thing nobody can prove Inkwell does.",
-     "workaround": "Kept the looking inside the vocabulary: `peekMarketDeck` off the Astronomer's shift, and `blockNextReady` for the stillness. The rumour stays in the flavor, where it belongs."
+     "workaround": "Kept the looking inside the vocabulary: `peekMarketDeck` off the Astronomer's shift, and `blockNextReady` for the stillness. The rumour stays in the flavor, where it belongs.",
+     "resolved": "Built as `peekOpponentHand`: the one effect in the collection that looks into a rival's hand. It moves nothing and it is not secret — the rival is told they were read, because a card that looked without saying so would be a card nobody could play around. The Astronomer reads the Market Deck and the hand off the same shift, which is the rumour said out loud at last."
     }
    ]
   },
@@ -544,14 +546,15 @@
    "pronouns": "he/him",
    "backstory": "Kevin came out from the Capital City at seventeen because somebody told him there was work, and there was. He is the easiest hire in the First Boroughs: he says yes before you have finished the sentence, he is at the yard before the animal who hired him, and for about a fortnight he is worth two of anybody. Then the fortnight ends. Kevin goes flat all at once, sleeps through a morning, apologises far more than anyone wants him to, and is on to the next thing by the end of the week.\n\nThe borough has worked out how to use him and mostly does not mind. You get Kevin for a short stretch, you get a great deal out of it, and you do not build anything long around him. He is nineteen and has had eleven jobs, and every one of them would have him back.\n\nWhat he does with the flat fortnight is read. Novels, four or five on the go at once, in stacks by the bed and the kettle and the chair and one on the windowsill of whatever room he is renting that month. Lynnette keeps him a shelf at the print shop. He will tell you the plots of all five at once, badly, with enormous enthusiasm, and then he is up and off again.",
    "voice": "Eager, loud, slightly out of breath. Says 'yeah — yeah, no, I can do that', and means it, right up until he cannot.",
-   "arc": "One card, hired out of the Capital City like the printed City Fox, and now built the way the maker described him. He arrives with money in his paw, works a one-turn shift for three Supply, throws two onto an auction you are winning — and after two of your turns he is gone back to the city. Quick gains, short stay, and cheaper than the printed hire because the fortnight is all you are renting.",
+   "arc": "One card, hired out of the Capital City like the printed City Fox, and now built the way the maker described him. He arrives with money in his paw and works flat out for three Supply — then two, then one, because that is how Kevin works and always has — throws Supply onto an auction you are winning, and after three of your turns he is gone back to the city. Get the first shift out of him; that is the one you are paying for.",
    "remade": "2026-09-14",
    "retires": [],
    "wantedVerbs": [
     {
      "verb": "burnout (a shift that degrades, or a Character who unemploys himself)",
      "why": "'Burns himself out easily' wanted the output to fall off across his stay — three, then two, then one — or for Kevin to put himself into Unemployment at the end of it.",
-     "workaround": "`leavesAfter` does the honest half of it: the gains stay quick and the stay is short, and he is simply gone on the fourth turn. A falling shift output would need the engine to re-read a stack's shift each time it starts."
+     "workaround": "`leavesAfter` does the honest half of it: the gains stay quick and the stay is short, and he is simply gone on the fourth turn. A falling shift output would need the engine to re-read a stack's shift each time it starts.",
+     "resolved": "Built as `shift.decay`: every shift a Character works pays `decay` less than the one before, down to `minOutput`. The count lives on the stack (`shiftsWorked`), so burning out is a property of the animal rather than of the card, and an animal who never works never burns out. Kevin is 3, then 2, then 1, which is the maker's sentence exactly; his term went to three turns so the whole fall is visible, and `power.js` rates a decaying shift on the average of the shifts it will actually work."
     }
    ]
   },
@@ -566,14 +569,15 @@
    "pronouns": "she/her",
    "backstory": "Lynnette prints the town's books. The press is hers, the shop is hers, and the borough's paper, ballots, almanacs, hymn sheets, notices and every book printed in the First Boroughs these fifteen years have come off it — usually late, always right. She got the press cheap because it was broken and learned to mend it because nobody else would, which is roughly her whole biography: a thing needed doing, and doing it turned out to be a trade.\n\nWhat she actually loves is the spreading. Lynnette cannot leave a good thing unpublished. If an animal in the borough learns something worth knowing she will have it set, printed and pinned up in the Hiring Hall inside the week, free, whether or not they asked — the apprentice notices, the guild's syllabus and the almanac's planting tables are all her doing and not one of them ever made her a penny. She is the reason an animal in the First Boroughs can find out how to be better at their job without knowing anybody first.\n\nThursdays she reads to the little ones in the Lending Library, sitting on the floor with about nine rabbits and whoever else has wandered in, doing all the voices. She is a poor businesswoman and a rich one in the way the borough actually counts it.",
    "voice": "Brisk, ink to the elbows, always mid-job. Finishes your sentence, and then prints it.",
-   "arc": "Every rung makes the next animal easier to take on, which is what the maker asked for: Lynnette's whole effect on a town is that the step up costs less than it should. Night Printer (0) takes a coin off your next recruit the moment she arrives. Bookbinder (1) does it again off every shift she works. Lending Librarian (3) is the Rabbit signature — she reads to them, and one of them walks out of your hand into the town behind her. Master Printer (5) is the point of all of it: your Masters are ready a turn sooner, because by the time they turn up the borough has already read how the job is done.",
+   "arc": "Every rung makes the next animal easier to take on, and the step up cheaper than the new body — which is what the maker asked for. Night Printer (0) takes a coin off your next recruit the moment she arrives, and two off it if it is somebody you already have going up a rung. Bookbinder (1) does the same off every shift she works. Lending Librarian (3) is the Rabbit signature — she reads to them, and one of them walks out of your hand into the town behind her. Master Printer (5) is the point of all of it: your Masters are ready a turn sooner, because by the time they turn up the borough has already read how the job is done.",
    "remade": "2026-09-14",
    "retires": [],
    "wantedVerbs": [
     {
      "verb": "upgradeDiscount (a recruit discount that only applies to a higher version of a Character already in your town)",
      "why": "The maker asked for abilities that help characters upgrade. Upgrading is recruiting a dearer version over a cheaper one, but `recruitDiscount` cannot tell that recruit from any other — the mod's `filter` reads study, species and cost, not 'this card upgrades one of yours'.",
-     "workaround": "Left the discount untyped, so it helps any recruit and helps an upgrade among them, and put the real answer on the Master Printer: `masterDelayMinus1`, which makes the top of every character's arc a turn cheaper in time. A filter key like `upgradesOwn` would let the Night Printer and the Bookbinder say it exactly."
+     "workaround": "Left the discount untyped, so it helps any recruit and helps an upgrade among them, and put the real answer on the Master Printer: `masterDelayMinus1`, which makes the top of every character's arc a turn cheaper in time. A filter key like `upgradesOwn` would let the Night Printer and the Bookbinder say it exactly.",
+     "resolved": "Built as a mod filter key, `upgradesOwn`. Whether a recruit is an upgrade is not a property of the card — the same card is a promotion or a new body depending on who is standing in the town — so `recruitCost` passes it in and `modFilterMatches` reads it there. The Night Printer and the Bookbinder now each hand out two discounts, the plain one and the printer's rate, and only an upgrade collects both."
     }
    ]
   }
@@ -2966,7 +2970,7 @@
     "delay": 1,
     "output": 1
    },
-   "text": "When Bella is recruited, your next Event needs one fewer Character.",
+   "text": "When Bella is recruited, your next Event needs one fewer Character. If you control no Buildings, gain 2 Supply as well.",
    "flavor": "She was seven, the basket was bigger than she was, and she carried it home full in the week the grange had told everybody there was nothing out there.",
    "abilities": [
     {
@@ -2978,6 +2982,16 @@
       "expires": "untilUsed",
       "consumable": true
      }
+    },
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "buildingsAtMost": 0
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
     }
    ],
    "art": {
@@ -2985,10 +2999,10 @@
     "tile": 2
    },
    "remakes": "bb_fern_1",
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
-    "score": 3.18,
-    "power": 5.3,
+    "score": 4.13,
+    "power": 6.9,
     "opportunityCost": 3.6
    }
   },
@@ -3005,7 +3019,7 @@
     "delay": 1,
     "output": 1
    },
-   "text": "Upgrades Bella. When Bella completes a shift, draw 1 card.",
+   "text": "Upgrades Bella. When Bella completes a shift, draw 1 card, and gain 1 Supply as well if you control one Building or none.",
    "flavor": "Three notebooks and the recorder, because by the time she has found the right notebook the bird has gone and she is talking to herself about it anyway.",
    "abilities": [
     {
@@ -3017,6 +3031,17 @@
       "do": "draw",
       "count": 1
      }
+    },
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true,
+      "buildingsAtMost": 1
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
     }
    ],
    "art": {
@@ -3026,8 +3051,8 @@
    "remakes": "ns_fern_1",
    "rarity": "Uncommon",
    "power": {
-    "score": 3.94,
-    "power": 7.26,
+    "score": 4.57,
+    "power": 8.41,
     "opportunityCost": 4.6
    }
   },
@@ -3116,7 +3141,7 @@
     "delay": 2,
     "output": 4
    },
-   "text": "Upgrades Bella. Your first Event each turn needs one fewer Character, and the first Event you play each turn also gives you 1 Supply.",
+   "text": "Upgrades Bella. Your first Event each turn needs one fewer Character, and while you control three Buildings or fewer the first Event you play each turn also gives you 1 Supply.",
    "flavor": "The Science hall cites her now, which she finds funny, because the finding they cite is that the wood was doing all of this perfectly well before any of us turned up with a shovel.",
    "abilities": [
     {
@@ -3129,6 +3154,9 @@
      "effect": {
       "do": "gainSupply",
       "amount": 1
+     },
+     "condition": {
+      "buildingsAtMost": 3
      }
     }
    ],
@@ -3139,8 +3167,8 @@
    "remakes": "bb_fern_2",
    "rarity": "Rare",
    "power": {
-    "score": 5.21,
-    "power": 13.6,
+    "score": 5.1,
+    "power": 13.3,
     "opportunityCost": 11
    }
   },
@@ -3719,8 +3747,8 @@
     "delay": 2,
     "output": 3
    },
-   "text": "Upgrades Inkwell. When Inkwell completes a shift, look at the top two cards of the Market Deck. Busy, once per game: Inkwell readies themselves.",
-   "flavor": "The Observatory steps, a flask, and a cat who is supposed to be asleep standing up as if the hour were a suggestion. Nobody has ever caught them doing it.",
+   "text": "Upgrades Inkwell. When Inkwell completes a shift, look at the top two cards of the Market Deck and at your rival's hand. Busy, once per game: Inkwell readies themselves.",
+   "flavor": "The Observatory steps, a flask, and a cat who is supposed to be asleep standing up as if the hour were a suggestion. They will tell you they were looking at Ursa; the other Mayor has stopped leaving their hand on the table.",
    "abilities": [
     {
      "trigger": "onShiftCompleted",
@@ -3728,8 +3756,16 @@
       "self": true
      },
      "effect": {
-      "do": "peekMarketDeck",
-      "count": 2
+      "do": "seq",
+      "steps": [
+       {
+        "do": "peekMarketDeck",
+        "count": 2
+       },
+       {
+        "do": "peekOpponentHand"
+       }
+      ]
      }
     },
     {
@@ -3745,10 +3781,10 @@
     "tile": 2
    },
    "remakes": "ns_inkwell_4",
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
-    "score": 4.52,
-    "power": 11.35,
+    "score": 5.21,
+    "power": 13.08,
     "opportunityCost": 10
    }
   },
@@ -4079,17 +4115,19 @@
    "cost": 3,
    "shift": {
     "delay": 1,
-    "output": 3
+    "output": 3,
+    "decay": 1,
+    "minOutput": 1
    },
-   "leavesAfter": 2,
-   "text": "Hired from the Capital City; enters Busy, and goes back to the city after two of your turns. When Kevin is recruited, gain 2 Supply. Busy: add 2 Supply to an auction you are winning.",
-   "flavor": "He said yes before you finished the sentence and he was at the yard before you were. Get what you need out of the fortnight; there is no second one.",
+   "leavesAfter": 3,
+   "text": "Hired from the Capital City; enters Busy, and goes back to the city after three of your turns. Each shift Kevin works pays 1 less than the last, down to 1. When Kevin is recruited, gain 1 Supply. Busy: add 2 Supply to an auction you are winning.",
+   "flavor": "He said yes before you finished the sentence and he was at the yard before you were. Three. Then two. Then one, and a fox asleep on the sacks, and nobody in the borough has ever once been cross with him about it.",
    "abilities": [
     {
      "trigger": "onRecruit",
      "effect": {
       "do": "gainSupply",
-      "amount": 2
+      "amount": 1
      }
     },
     {
@@ -4107,8 +4145,8 @@
    "remakes": "mkt_kestrel",
    "rarity": "Uncommon",
    "power": {
-    "score": 4.47,
-    "power": 9.96,
+    "score": 4.45,
+    "power": 9.92,
     "opportunityCost": 7.4
    }
   },
@@ -4125,7 +4163,7 @@
     "delay": 1,
     "output": 1
    },
-   "text": "When Lynnette is recruited, your next recruit costs 1 less Supply.",
+   "text": "When Lynnette is recruited, your next recruit costs 1 less Supply, or 2 less if it upgrades a Character you already have.",
    "flavor": "Tomorrow's apprentice notices, printed tonight, free, whether or not anybody asked her for them.",
    "abilities": [
     {
@@ -4137,6 +4175,19 @@
       "expires": "untilUsed",
       "consumable": true
      }
+    },
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true,
+      "filter": {
+       "upgradesOwn": true
+      }
+     }
     }
    ],
    "art": {
@@ -4144,10 +4195,10 @@
     "tile": 6
    },
    "remakes": "ns_linnet_0",
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
-    "score": 2.82,
-    "power": 4.7,
+    "score": 3.41,
+    "power": 5.7,
     "opportunityCost": 3.6
    }
   },
@@ -4164,7 +4215,7 @@
     "delay": 1,
     "output": 1
    },
-   "text": "Upgrades Lynnette. When Lynnette completes a shift, your next recruit costs 1 less Supply.",
+   "text": "Upgrades Lynnette. When Lynnette completes a shift, your next recruit costs 1 less Supply, or 2 less if it upgrades a Character you already have.",
    "flavor": "She got the press cheap because it was broken and learned to mend it because nobody else would, and a mended spine has been her idea of a good evening ever since.",
    "abilities": [
     {
@@ -4179,6 +4230,22 @@
       "expires": "untilUsed",
       "consumable": true
      }
+    },
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true,
+      "filter": {
+       "upgradesOwn": true
+      }
+     }
     }
    ],
    "art": {
@@ -4188,8 +4255,8 @@
    "remakes": "ww_linnet_1",
    "rarity": "Uncommon",
    "power": {
-    "score": 3.55,
-    "power": 6.54,
+    "score": 4.33,
+    "power": 7.98,
     "opportunityCost": 4.6
    }
   },
@@ -4958,6 +5025,1095 @@
     "power": 6,
     "opportunityCost": 6.82
    }
+  },
+  {
+   "id": "mk_tok_rabbit",
+   "type": "token",
+   "name": "Rabbit Token",
+   "title": "Token",
+   "species": "Rabbit",
+   "token": {
+    "of": "species",
+    "species": "Rabbit"
+   },
+   "cost": 0,
+   "text": "A Rabbit token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Handed out at the warren door and counted back at the end of the evening, which is the only way anybody has ever established how many rabbits were actually there.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_mouse",
+   "type": "token",
+   "name": "Mouse Token",
+   "title": "Token",
+   "species": "Mouse",
+   "token": {
+    "of": "species",
+    "species": "Mouse"
+   },
+   "cost": 0,
+   "text": "A Mouse token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Rosabeth keeps hers in the tin the seed labels came in. Bella has never lost one and can tell you, unprompted, the week she was given each.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_hedgehog",
+   "type": "token",
+   "name": "Hedgehog Token",
+   "title": "Token",
+   "species": "Hedgehog",
+   "token": {
+    "of": "species",
+    "species": "Hedgehog"
+   },
+   "cost": 0,
+   "text": "A Hedgehog token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Bob has four and has never once produced them at the gate, on the grounds that a hedgehog who needs a token to prove he is a hedgehog has bigger problems.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_badger",
+   "type": "token",
+   "name": "Badger Token",
+   "title": "Token",
+   "species": "Badger",
+   "token": {
+    "of": "species",
+    "species": "Badger"
+   },
+   "cost": 0,
+   "text": "A Badger token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Struck thicker than the rest, because the first batch came back from a Badger winter bent, and Barrow said quietly that this was a thing about the tokens rather than a thing about the winter.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_otter",
+   "type": "token",
+   "name": "Otter Token",
+   "title": "Token",
+   "species": "Otter",
+   "token": {
+    "of": "species",
+    "species": "Otter"
+   },
+   "cost": 0,
+   "text": "An Otter token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Drilled through the middle so it can go on the line with the keys, which is Brooke’s doing: everything an otter owns has to survive being dropped in the water.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_squirrel",
+   "type": "token",
+   "name": "Squirrel Token",
+   "title": "Token",
+   "species": "Squirrel",
+   "token": {
+    "of": "species",
+    "species": "Squirrel"
+   },
+   "cost": 0,
+   "text": "A Squirrel token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Peanut has a great many and will not spend one, on the grounds that a rainy day is coming. Peanut is right about this roughly once every four years.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_cat",
+   "type": "token",
+   "name": "Cat Token",
+   "title": "Token",
+   "species": "Cat",
+   "token": {
+    "of": "species",
+    "species": "Cat"
+   },
+   "cost": 0,
+   "text": "A Cat token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Issued to every Cat in the borough. Inkwell’s has not been seen since the night it was issued and Inkwell is entirely unbothered about it.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_owl",
+   "type": "token",
+   "name": "Owl Token",
+   "title": "Token",
+   "species": "Owl",
+   "token": {
+    "of": "species",
+    "species": "Owl"
+   },
+   "cost": 0,
+   "text": "An Owl token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Collected at dusk rather than at the Hiring Hall’s hours, after Hoot pointed out mildly that every Owl in the borough was asleep at eleven in the morning.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_fox",
+   "type": "token",
+   "name": "Fox Token",
+   "title": "Token",
+   "species": "Fox",
+   "token": {
+    "of": "species",
+    "species": "Fox"
+   },
+   "cost": 0,
+   "text": "A Fox token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Finn can tell you what one is worth this week. Kevin has spent his, twice, and turned up cheerfully to ask whether there were any more.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_raccoon",
+   "type": "token",
+   "name": "Raccoon Token",
+   "title": "Token",
+   "species": "Raccoon",
+   "token": {
+    "of": "species",
+    "species": "Raccoon"
+   },
+   "cost": 0,
+   "text": "A Raccoon token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Hazel has a bag of them, and not one of the bag came from the Hiring Hall. Every single one was found, and every single one is genuine.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_agriculture",
+   "type": "token",
+   "name": "Agriculture Token",
+   "title": "Token",
+   "study": "Agriculture",
+   "token": {
+    "of": "study",
+    "study": "Agriculture"
+   },
+   "cost": 0,
+   "text": "An Agriculture token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Cut from the same board as the seed labels, and the first batch went out with Clover’s potato beds stamped on the back by mistake. Nobody has asked for the mistake to be corrected.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_civics",
+   "type": "token",
+   "name": "Civics Token",
+   "title": "Token",
+   "study": "Civics",
+   "token": {
+    "of": "study",
+    "study": "Civics"
+   },
+   "cost": 0,
+   "text": "A Civics token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Biff signs for his and for whoever he has walked up the Hiring Hall steps that week, which is why the Civics ledger never balances and has never once been queried.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_commerce",
+   "type": "token",
+   "name": "Commerce Token",
+   "title": "Token",
+   "study": "Commerce",
+   "token": {
+    "of": "study",
+    "study": "Commerce"
+   },
+   "cost": 0,
+   "text": "A Commerce token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Copper weighed one, wrote the weight down, and weighs a fresh one every quarter to see whether the Capital City has started shaving them. It has not. He will keep checking.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_crafts",
+   "type": "token",
+   "name": "Crafts Token",
+   "title": "Token",
+   "study": "Crafts",
+   "token": {
+    "of": "study",
+    "study": "Crafts"
+   },
+   "cost": 0,
+   "text": "A Crafts token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Barrow’s has his thumbprint pressed into the soft side of it, put there the day the borough struck them, because a thing worth making is worth knowing who made it.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_lore",
+   "type": "token",
+   "name": "Lore Token",
+   "title": "Token",
+   "study": "Lore",
+   "token": {
+    "of": "study",
+    "study": "Lore"
+   },
+   "cost": 0,
+   "text": "A Lore token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Kept in the Lending Library’s long drawer with the ribbons. Lynnette prints the replacements, and the replacements are better than the originals, which Inkwell finds very funny.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_science",
+   "type": "token",
+   "name": "Science Token",
+   "title": "Token",
+   "study": "Science",
+   "token": {
+    "of": "study",
+    "study": "Science"
+   },
+   "cost": 0,
+   "text": "A Science token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Comet read the specification twice before collecting hers, in case she had misunderstood it the first time. She had not. She wanted to be sure.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_food",
+   "type": "token",
+   "name": "Food Token",
+   "title": "Token",
+   "study": "Food",
+   "token": {
+    "of": "study",
+    "study": "Food"
+   },
+   "cost": 0,
+   "text": "A Food token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Bean keeps the cafe’s in the till, under the tray, and Peanut counts them with the takings every night whether or not anybody has asked for a count.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_entertainment",
+   "type": "token",
+   "name": "Entertainment Token",
+   "title": "Token",
+   "study": "Entertainment",
+   "token": {
+    "of": "study",
+    "study": "Entertainment"
+   },
+   "cost": 0,
+   "text": "An Entertainment token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "Struck last of the eight, because Entertainment was the last study the borough admitted it had. Oatmeal was handed the first one on a stage, which is exactly where he would have chosen to be handed it.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_tok_building",
+   "type": "token",
+   "name": "Building Token",
+   "title": "Token",
+   "token": {
+    "of": "building"
+   },
+   "cost": 0,
+   "text": "A Building token. Held beside your Supply and spent by the cards that call for it; never drawn, never bid on, never part of a deck.",
+   "flavor": "A surveyor’s chit, issued when a roof goes on and kept by the Mayor who raised it. Barrow has more of them than anyone in the borough and keeps them in the tin his father kept nails in.",
+   "addition": true,
+   "addedBecause": "Tokens are a new card type and neither shelf has one, so there is nothing to remake. The set declares one kind for every species, one for every field of study, and one for Buildings, so the first card that wants to count something a town already is does not have to invent a counter of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 0,
+    "power": 0,
+    "opportunityCost": 1
+   }
+  },
+  {
+   "id": "mk_barrows_measure",
+   "type": "event",
+   "name": "Barrow's Measure",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Barrow"
+    },
+    {
+     "study": "Crafts"
+    }
+   ],
+   "text": "Requires Barrow and a Crafts Character. Gain 2 Supply, and the next Building you buy costs 1 less Supply.",
+   "flavor": "He walks the lot before the auction, on his own, and comes back with a figure. The Capital City has never yet asked less than the figure and has never once been more than a Supply above it.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "addMod",
+      "key": "buildingDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "Barrow is the borough’s stonecutter and the only animal in the collection who moves a Building’s price; the printed set has no Event that does, because until `buildingDiscount` existed no card could.",
+   "rarity": "Common",
+   "power": {
+    "score": 1.92,
+    "power": 3.2,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_biffs_beat",
+   "type": "event",
+   "name": "Biff's Beat",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Biff"
+    }
+   ],
+   "text": "Requires Biff. One of your opponent's Characters turns one step back toward Busy, then you may rehire a Character from your Unemployment for 1 less Supply.",
+   "flavor": "The trouble stops, because Biff is immovable and it does. Then he walks them home, and a week later he has found them something to do. Both halves of that are the job; he has given up explaining which is the important one.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "makeBusy"
+     },
+     {
+      "do": "rehire",
+      "discount": 1,
+      "optional": true
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "Biff’s whole remake turns on `makeBusy` and nothing in the market answers it. The Event is the beat itself — stop the trouble, then find the animal a place — which no single card of his could hold on its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 1.84,
+    "power": 2.74,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_rosabeths_rounds",
+   "type": "event",
+   "name": "Rosabeth's Rounds",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Rosabeth"
+    },
+    {
+     "study": "Agriculture"
+    }
+   ],
+   "text": "Requires Rosabeth and an Agriculture Character. Rehire an Agriculture Character from your Unemployment for free, then draw 1 card.",
+   "flavor": "She does the beds first and the borough second, and by the time she has got round to the second half of it somebody has been on the beds a fortnight and is fit to be somewhere else.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "rehire",
+      "free": true,
+      "filter": {
+       "study": "Agriculture"
+      },
+      "optional": true
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "The filtered `rehire` was built for Rosabeth’s gate and only one of her cards uses it; the Event is the gate itself, and Agriculture had no character-named Event of its own.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.14,
+    "power": 3.57,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_oatmeals_benefit_night",
+   "type": "event",
+   "name": "Oatmeal's Benefit Night",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Oatmeal"
+    },
+    {
+     "study": "Entertainment"
+    }
+   ],
+   "text": "Requires Oatmeal and an Entertainment Character. Draw 2 cards and gain 2 Supply. Your opponent gains 1 Supply.",
+   "flavor": "Whatever the hall takes goes to whoever needs it, and Oatmeal has never once checked which town they were from before handing it over. Four of his brothers and sisters at the back, as always.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 2
+     },
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "opponentGainSupply",
+      "amount": 1
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "Entertainment has one Event and it names nobody; Oatmeal introduced the study and had none of his own. The Supply that crosses the table is the whole point of him and only an Event can say it.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.64,
+    "power": 4.4,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_coppers_stocktake",
+   "type": "event",
+   "name": "Copper's Stocktake",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Copper"
+    },
+    {
+     "study": "Commerce"
+    }
+   ],
+   "text": "Requires Copper and a Commerce Character. Look at the top three cards of your deck and send any of them to your Town Dump, then gain 2 Supply.",
+   "flavor": "Everything out, everything weighed, everything written down, and the half of it that was never going to be any use carried out to the yard. He does it twice a year and is cheerful for a week afterwards.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "scryDeck",
+      "count": 3,
+      "to": "dump"
+     },
+     {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "The weights office is the borough’s idea of a clean ledger, and `scryDeck: { to: \"dump\" }` was built for an auditor — Barnaby’s — with no card of Copper’s using it.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.29,
+    "power": 3.82,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_warren_muster",
+   "type": "event",
+   "name": "Warren Muster",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "species": "Rabbit",
+     "count": 2
+    }
+   ],
+   "text": "Requires two Rabbits. Recruit a Character costing 2 or less from your hand for free; it enters upright.",
+   "flavor": "Two rabbits is a conversation. Two rabbits and a notice on the Lending Library door is nine of them on the step by Thursday, and one of them already holding a tool.",
+   "effect": {
+    "do": "recruitFromHand",
+    "filter": {
+     "maxCost": 2
+    },
+    "orientation": 0,
+    "optional": true
+   },
+   "addition": true,
+   "addedBecause": "The Rabbit signature is `recruitFromHand` and every card that carries it is a Character; a species whose whole charter is arriving in crowds should have one Event that is the crowd arriving.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.59,
+    "power": 6,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_night_round",
+   "type": "event",
+   "name": "The Night Round",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "species": "Owl",
+     "count": 2
+    }
+   ],
+   "text": "Requires two Owls. Two of your Characters each turn one step toward upright, then look at the top two cards of your deck and put any of them on the bottom.",
+   "flavor": "Bean opens the counter, Hoot does the doors, Barnaby is already at the ledger. By the time the rest of the borough is up, the night has quietly put half of tomorrow in order.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "advanceCharacter",
+      "count": 2
+     },
+     {
+      "do": "scryDeck",
+      "count": 2
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "Owls own the night and the wake-up call, and the remade set gave them three characters and no Event at all — the one hour of the day when the borough’s Owls are all awake together had nothing to show for it.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.34,
+    "power": 3.9,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_bins_at_dawn",
+   "type": "event",
+   "name": "The Bins at Dawn",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "species": "Raccoon"
+    }
+   ],
+   "text": "Requires a Raccoon. Take a card from the City Dump, then draw 1 card.",
+   "flavor": "Hazel is back before the lamps go out, with something the Capital City threw away and a straight face about where it came from. It is always exactly the thing the borough needed and nobody asks.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "takeFromCityDump"
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "Nobody but a Raccoon touches the City Dump, and `takeFromCityDump` appears on no Event on either shelf — the species signature had no card a whole town could play.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.38,
+    "power": 3.54,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_guild_night",
+   "type": "event",
+   "name": "Guild Night",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Crafts",
+     "count": 2
+    }
+   ],
+   "text": "Requires two Crafts Characters. Ready one of your Characters and draw 1 card.",
+   "flavor": "The bench gets cleared, the good chairs come out, and whatever anyone is stuck on goes round the table once. Berry says nothing for an hour and then says the thing that fixes it.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "readyCharacter",
+      "count": 1,
+      "optional": true
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "Crafts is the borough’s biggest study on the maker shelf and had no Event of its own; the guild evening is the one night the whole trade is in a room together.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.04,
+    "power": 3.4,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_hall_lecture",
+   "type": "event",
+   "name": "A Lecture at the Hall",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Science",
+     "count": 2
+    }
+   ],
+   "text": "Requires two Science Characters. Draw 2 cards, and your next Event needs one fewer Character.",
+   "flavor": "Comet asks the question everyone else had decided not to ask, twice, and is not embarrassed either time. Half the hall leaves knowing something; the other half leaves knowing what to look up.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 2
+     },
+     {
+      "do": "addMod",
+      "key": "eventCharReduction",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "Science arrived with the Night Shift and has no Event that asks for it by name. The lecture is the study doing what it is for — which is making the next thing cheaper to attempt.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.76,
+    "power": 4.6,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_ledger_day",
+   "type": "event",
+   "name": "Ledger Day",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Commerce",
+     "count": 2
+    }
+   ],
+   "text": "Requires two Commerce Characters. Gain 4 Supply and draw 1 card.",
+   "flavor": "Quarter day. Half the borough’s accounts pass over Peanut’s counter between orders, and everybody who comes in for a cup leaves knowing something they did not know about what things cost.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 4
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "addition": true,
+   "addedBecause": "Commerce is the study the remade cast is thickest in and the only Event naming it also names Peanut; the quarter’s books are the study’s own day and belong to nobody in particular.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.29,
+    "power": 5.5,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_tb_barrows_yard",
+   "type": "townBuilding",
+   "name": "Barrow's Yard",
+   "title": "Town Building",
+   "cost": 4,
+   "build": {
+    "animals": 2
+   },
+   "text": "At the start of your turn, the next Building you buy this turn costs 1 less Supply.",
+   "flavor": "Stone stacked by size, the good sand under a tarpaulin, and a Badger who will tell you what a wall is worth whether or not you have asked. He bids on every lot that comes up with a roof on it.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "buildingDiscount",
+      "value": 1,
+      "expires": "turnEnd"
+     }
+    }
+   ],
+   "addition": true,
+   "addedBecause": "A Mayor’s own yard is what makes the Capital City’s roofs affordable, and `buildingDiscount` was built for Barrow with exactly one card using it. And by construction: the printed set has no Town Buildings at all.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.76,
+    "power": 7.2,
+    "opportunityCost": 11.02
+   }
+  },
+  {
+   "id": "mk_tb_the_warren",
+   "type": "townBuilding",
+   "name": "The Warren",
+   "title": "Town Building",
+   "cost": 3,
+   "build": {
+    "animals": 2
+   },
+   "text": "At the start of your turn, if you control a Rabbit, draw 1 card.",
+   "flavor": "Nobody built it and nobody can say how far back it goes. Clover’s family came out of one end of it and Lynnette’s press sits over the other, and on any given morning there are more rabbits in it than were in it last night.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "species": "Rabbit"
+      }
+     },
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "addition": true,
+   "addedBecause": "Every Town Building so far answers a study; the borough’s species deserve the same, and Rabbits — whose whole charter is numbers — are where a building full of them says the most.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.86,
+    "power": 7.2,
+    "opportunityCost": 10.02
+   }
+  },
+  {
+   "id": "mk_tb_observatory_steps",
+   "type": "townBuilding",
+   "name": "The Observatory Steps",
+   "title": "Town Building",
+   "cost": 3,
+   "build": {
+    "animals": 2
+   },
+   "text": "At the start of your turn, if you control a Science Character, look at the top two cards of your deck and put any of them on the bottom, then gain 1 Supply.",
+   "flavor": "Inkwell swept them for a season to be allowed up them and Comet read every book at the top before the board would look at her. Whoever is on the steps at four in the morning knows what is coming before the borough does.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Science"
+      }
+     },
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "scryDeck",
+        "count": 2
+       },
+       {
+        "do": "gainSupply",
+        "amount": 1
+       }
+      ]
+     }
+    }
+   ],
+   "addition": true,
+   "addedBecause": "The Observatory is in the town bible and in three backstories and was in nobody’s deck. Science had no permanent card of its own on either shelf.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.63,
+    "power": 9.12,
+    "opportunityCost": 10.02
+   }
+  },
+  {
+   "id": "mk_tb_counting_house",
+   "type": "townBuilding",
+   "name": "The Counting House",
+   "title": "Town Building",
+   "cost": 3,
+   "build": {
+    "animals": 2
+   },
+   "text": "Whenever one of your Characters finishes a shift, if you control a Commerce Character, gain 2 Supply.",
+   "flavor": "A long desk, two lamps and the borough’s quarterly returns in order of age. Copper weighs what comes in and Peanut works out what it was worth, usually between orders and usually before being asked.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Commerce"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "addition": true,
+   "addedBecause": "Commerce is the study that turns other animals’ work into money, which is a thing a building does and not a thing a shift does. Nothing permanent on either shelf paid a Commerce town for the work of the rest of it.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.64,
+    "power": 6.65,
+    "opportunityCost": 10.02
+   }
+  },
+  {
+   "id": "mk_tb_quill_wall",
+   "type": "townBuilding",
+   "name": "The Quill Wall",
+   "title": "Town Building",
+   "cost": 3,
+   "build": {
+    "animals": 2
+   },
+   "text": "At the start of your turn, one of your Characters cannot be targeted by your opponent until your next turn, and your Characters cannot be sent to Unemployment by an effect this turn.",
+   "flavor": "Bob leans on it, Biff walks past it four times a night, and Berry mended the gate in it twice without being asked. It is not much of a wall. Nothing has ever got over it.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "protectCharacter"
+       },
+       {
+        "do": "addMod",
+        "key": "unemploymentShield",
+        "value": 1,
+        "expires": "turnEnd"
+       }
+      ]
+     }
+    }
+   ],
+   "addition": true,
+   "addedBecause": "Protection is the Hedgehog signature and it lives entirely on Characters; a town of them had nothing it could build. The borough has four Hedgehogs and this is the thing all four of them are.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.58,
+    "power": 9,
+    "opportunityCost": 10.02
+   }
+  },
+  {
+   "id": "mk_bld_guild_hall",
+   "type": "building",
+   "name": "The Guild Hall",
+   "title": "Capital City Building",
+   "cost": 7,
+   "text": "At the start of your turn, if you control a Crafts Character, one of your Characters turns one step toward upright and you gain 1 Supply.",
+   "flavor": "The engine course runs here twice a year and Comet took it twice. Barrow will not join and turns up anyway, on the grounds that somebody has to tell them about foundations.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Crafts"
+      }
+     },
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "advanceCharacter",
+        "optional": true
+       },
+       {
+        "do": "gainSupply",
+        "amount": 1
+       }
+      ]
+     }
+    }
+   ],
+   "addition": true,
+   "addedBecause": "The Capital City sells a Building for Food and one for Entertainment and none for the trade that builds them. Crafts is the maker shelf’s largest study and had nothing to buy.",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.79,
+    "power": 11.64,
+    "opportunityCost": 9.22
+   }
+  },
+  {
+   "id": "mk_bld_long_room",
+   "type": "building",
+   "name": "The Long Room",
+   "title": "Capital City Building",
+   "cost": 6,
+   "text": "At the start of your turn, if you control a Lore Character, look at the top two cards of your deck and put any of them on the bottom, then gain 1 Supply.",
+   "flavor": "The Lending Library’s upper floor, where the ribbons live and the reading lamps are never all out. Inkwell has a chair in it that everybody knows is theirs and nobody has ever said so out loud.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Lore"
+      }
+     },
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "scryDeck",
+        "count": 2
+       },
+       {
+        "do": "gainSupply",
+        "amount": 1
+       }
+      ]
+     }
+    }
+   ],
+   "addition": true,
+   "addedBecause": "Lore is where the remade set does its looking and the Capital City sells it nothing; the Lending Library is in half the backstories on the shelf and was on no card at all.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.93,
+    "power": 9.12,
+    "opportunityCost": 8.22
+   }
   }
  ],
  "newStudies": [
@@ -4986,6 +6142,16 @@
     "date": "2026-09-13",
     "what": "7 Town Buildings (the first on either shelf)",
     "why": "Town Buildings are a new card type and the printed set has none, so the maker shelf is where the type gets its first cards. They are the permanent half of a Mayor's own deck — a strip, a cellar, a bench, a gate — against the Capital City's civic monuments, and each one is a place the town bible already established. Every one is an addition: there is no printed Town Building to remake."
+   },
+   {
+    "date": "2026-09-14",
+    "what": "11 Events, 5 Town Buildings, 2 Capital City Buildings",
+    "why": "Support for particular characters, species and studies, which is what the market side was thinnest in. Barrow, Biff, Rosabeth, Oatmeal and Copper had no Event of their own; Rabbits, Owls and Raccoons had none that asked for the species; Crafts, Science and Commerce had none that asked for the study; and Crafts, Lore, Science, Commerce and the borough's four Hedgehogs had nothing permanent to build or buy. Several verbs built for the remakes — makeBusy, the filtered rehire, scryDeck to the Dump, buildingDiscount — were carried by one Character each and by nothing a whole town could play."
+   },
+   {
+    "date": "2026-09-14",
+    "what": "19 Tokens, the first on either shelf",
+    "why": "A new card type again, for the same reason as the Town Buildings: the printed set has none, so the maker shelf is where the type gets its first cards. What they are and why they exist before the cards that spend them is in the `tokens` block."
    }
   ],
   "wantedArt": [
@@ -5016,6 +6182,76 @@
    {
     "id": "mk_tb_gate_hut",
     "what": "A county gate barred for the night, a lamp on the post and a hedgehog asleep in the hut behind it."
+   },
+   {
+    "id": "mk_tb_barrows_yard",
+    "what": "A stonecutter's yard: stone stacked by size, the good sand under a tarpaulin, a Badger with a rule in his paw looking at a lot over the fence."
+   },
+   {
+    "id": "mk_tb_the_warren",
+    "what": "A hillside with a dozen doors in it at dusk and a printing shed built over one end, more rabbits arriving than leaving."
+   },
+   {
+    "id": "mk_tb_observatory_steps",
+    "what": "Long stone steps up to an observatory door at four in the morning, a lamp at the top, a swept broom left against the rail."
+   },
+   {
+    "id": "mk_tb_counting_house",
+    "what": "A long desk under two lamps, the borough's quarterly returns stacked in order of age, scales at one end and a coffee cup at the other."
+   },
+   {
+    "id": "mk_tb_quill_wall",
+    "what": "A low wall at night with a hedgehog leaning on it and a lamp beyond. Nothing dramatic, and nothing getting over it."
+   },
+   {
+    "id": "mk_bld_guild_hall",
+    "what": "A trade hall mid-lesson: an engine in pieces on the floor, the benches full, a Badger at the back with his arms folded."
+   },
+   {
+    "id": "mk_bld_long_room",
+    "what": "The Lending Library's upper floor: ribbons in a long drawer, the reading lamps still lit, one chair that is plainly somebody's."
+   }
+  ]
+ },
+ "tokens": {
+  "note": "The token shelf. A token is a marker a Mayor holds beside their Supply — never drawn, never bid on, never part of a deck — and each kind is declared by one card here: ten species, eight studies, and one for Buildings. The rules are spec/game.json `tokens`; the engine holds the counts in `player.tokens` and gives, spends and reads them with `gainToken`, `spendToken` and the `tokensAtLeast` condition. Nothing on either shelf spends one yet, and that is deliberate. Tokens are the obvious answer to a whole family of cards the collection keeps reaching for — 'your Rabbits are worth something to each other', 'Food pays for Food', 'the town has built before and it shows' — and every one of those cards wants the same counter underneath it. Building the counter once, before any of them exist, is what stops the first three of them each inventing their own.",
+  "kinds": {
+   "species": 10,
+   "study": 8,
+   "building": 1
+  },
+  "wantedArt": [
+   {
+    "ids": [
+     "mk_tok_rabbit",
+     "mk_tok_mouse",
+     "mk_tok_hedgehog",
+     "mk_tok_badger",
+     "mk_tok_otter",
+     "mk_tok_squirrel",
+     "mk_tok_cat",
+     "mk_tok_owl",
+     "mk_tok_fox",
+     "mk_tok_raccoon"
+    ],
+    "what": "One sheet of ten round wooden chits, each stamped with a species in the borough's own hand — not a portrait but a maker's mark: ears, a tail, a set of quills. Worn edges; these have been in pockets."
+   },
+   {
+    "ids": [
+     "mk_tok_agriculture",
+     "mk_tok_civics",
+     "mk_tok_commerce",
+     "mk_tok_crafts",
+     "mk_tok_lore",
+     "mk_tok_science",
+     "mk_tok_food",
+     "mk_tok_entertainment"
+    ],
+    "what": "One sheet of eight square chits carrying the study icons already used on the card faces, struck in the same wood and the same hand as the species sheet."
+   },
+   {
+    "id": "mk_tok_building",
+    "what": "A single surveyor's chit, larger than the rest and stamped with a roofline, lying on the corner of a plan with a tin of them behind it."
    }
   ]
  }

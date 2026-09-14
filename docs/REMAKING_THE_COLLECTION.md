@@ -130,6 +130,21 @@ card that fires when Supply is taken off you is not paid as though that happened
 mattered while every printed Building triggered at turn start; it started mattering the day a town
 could build one of its own.
 
+**Tokens** are the newest type on the shelf and the only one that is not a card anybody plays. A
+token is a marker a Mayor holds beside their Supply — one kind for every species, one for every field
+of study, and one for Buildings — and the `token` card is its face and its rules text, not something
+that goes in a deck. All nineteen are additions, for the same reason every Town Building is: the
+printed set has none. They rate 0 by construction and are always Common, because a marker costs its
+holder nothing.
+
+Nothing on either shelf spends a token yet. That is deliberate and it is the interesting part: a
+token is the obvious answer to a whole family of cards the collection keeps reaching for — *your
+Rabbits are worth something to each other*, *Food pays for Food*, *the town has built before and it
+shows* — and every one of those cards wants the same counter underneath it. The counter was built
+once, before any of them, so the first three do not each invent their own. The engine side is
+`gainToken`, `spendToken` and the `tokensAtLeast` condition (`docs/ENGINE_API.md`); the rules side is
+`spec/game.json` → `tokens`; the shelf's own account of why is `spec/maker_card_set.json` → `tokens`.
+
 A **Building carries one ability**, and that is a balance fact rather than a style note: a second
 standing ability is worth roughly +2 to +3.5 on the rating, which puts a Building straight past the
 printed band (the dearest printed Building rates 5.39). Put the second idea on a Market card or an

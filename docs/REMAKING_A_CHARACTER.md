@@ -251,15 +251,26 @@ so it is the only place the key means anything — on a Character in a town it i
 **Effects**: `seq`, `gainSupply`, `opponentGainSupply`, `giveSupplyToOpponent`, `draw`, `discard`,
 `addMod`, `readyCharacter`, `readyNextTurn`, `rehire`, `recruitFromHand`, `reorderDeckTop`,
 `eventFromDumpToDeckBottom`, `eventFromDumpToHand`, `peekMarketDeck`, `opponentTopdeckFromHand`,
-`unemployOpponentCharacter`, `raiseOwnBid`, `scryDeck`, `makeBusy`, plus the species signatures `storeSupply`,
+`unemployOpponentCharacter`, `raiseOwnBid`, `scryDeck`, `makeBusy`, `peekOpponentHand`, `gainToken`,
+`spendToken`, plus the species signatures `storeSupply`,
 `takeStoredSupply`, `takeFromCityDump`, `protectCharacter`, `moveShift`, `selfReady`, `cancelReveal`,
 `advanceCharacter`. (`test/card-vocabulary.mjs` is the authority — read it, not this list, if they ever
 disagree. Shared-shock verbs like `everyoneLosesSupply` belong to Disruptions, not Characters.)
 
+**Conditions** may also ask how much the town has built (`buildingsAtMost`, `buildingsAtLeast` — the
+Buildings raised, never the Statues) and what tokens it is holding (`tokensAtLeast`). A card's `shift`
+may carry `decay` and `minOutput`: the animal burns out, and every shift they work pays less than the
+one before. A mod's `filter` may carry `upgradesOwn`, which is good only for a recruit that upgrades a
+Character the town already has.
+
 Some of the vocabulary exists *because* a remake asked for it — `makeBusy`, `scryDeck`'s `to: "dump"`,
-`protectCharacter`'s `notSelf`, filtered mods, `buildingDiscount` and `leavesAfter` were all wishes
+`protectCharacter`'s `notSelf`, filtered mods, `buildingDiscount`, `leavesAfter`, and then the second
+round: `buildingsAtMost` (Bella), `peekOpponentHand` (Inkwell), `shift.decay` (Kevin) and the
+`upgradesOwn` mod filter (Lynnette) — all wishes
 first (see `docs/ENGINE_API.md`, and the `wantedVerbs` of the characters that wanted them). That is the
-route: wish, then approval, then engine, then the card.
+route: wish, then approval, then engine, then the card. A character entry's `wantedVerbs` entry gains a
+`resolved` line when its wish is built, saying what was built and what the card says now; a wish that
+was deliberately *not* built says that there too, with the reason.
 
 **When the story wants something the engine cannot do**: do not invent a verb, and do not write an
 unplayable card. Build the nearest thing out of verbs that exist, and log the gap in the character
