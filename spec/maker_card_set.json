@@ -12,7 +12,9 @@
   "Otter",
   "Squirrel",
   "Cat",
-  "Owl"
+  "Owl",
+  "Fox",
+  "Raccoon"
  ],
  "studies": [
   "Agriculture",
@@ -413,6 +415,165 @@
      "why": "`rehire` filters only on cost (`cost`, `maxCost`). Rosabeth's garden takes the animal who has been down longest, not the cheapest one, and the story wanted to say so — oldest in Unemployment, or a Character of a named study.",
      "workaround": "Left the choice open on every rehire: the Mayor picks, which is what the printed set does everywhere and reads as Rosabeth taking whoever came to the gate.",
      "resolved": "Built: `rehire` reads `filter.study`, `filter.species` and `filter.minCost` alongside the cost filters it always had. The Herbalist Physician now brings back an Agriculture animal specifically — the ones the garden is actually for — rather than whoever happens to be cheapest."
+    }
+   ]
+  },
+  {
+   "name": "Bella",
+   "renamedFrom": "Fern",
+   "species": "Mouse",
+   "studies": [
+    "Agriculture",
+    "Science",
+    "Lore"
+   ],
+   "pronouns": "she/her",
+   "backstory": "If you cannot find Bella she is in the forest, and if you cannot find her in the forest you are not looking down. She works on the floor of it: knees in the leaf litter, notebook open on one knee, voice recorder in the other paw because some things have to be said before they can be written. She has been at it since she was a kid, when foraging was simply how the family ate through the back half of the year and Bella was the one who came home with a full basket and a list of everything she had walked past on the way.\n\nShe never stopped and she never scaled it up. Ecology is what she calls it now, and the Science hall files her recordings and cites them, but the method has not changed since she was seven: go out, sit down, watch one square of ground long enough that it starts telling you things. She can feed herself off a hedgerow in any month of the year and would rather. The whole point, as far as Bella is concerned, is that the woodland was already working before anybody built anything on it, and will still be working after.\n\nThat is also her limit. She has never bid on anything in her life, she is no use whatsoever in the Capital City, and she has an audible opinion about animals who would rather raise a building than walk out and look at what is already there. Put Bella in a finished town with everything standing and she is a mouse with a notebook. Put her in a young one, or an empty one, and she is the reason it eats.",
+   "voice": "Quiet, exact, always slightly mid-sentence. Answers a question with what she saw, the date she saw it, and what the weather was doing.",
+   "arc": "Every rung is about needing less. Forager (0) makes your next Event need one fewer animal, which is worth most when you have barely any. Field Scientist (1) turns her own shift into a card. Field Recorder (2) puts a spent Event back under the deck; Wildlife Warden (3) puts one straight back in your hand — the Mouse signature, and Bella's whole trick: nothing is used up, it comes round again. Ecologist (5) makes the first Event of every turn cheaper in animals and pays you for playing it. The maker asked for a character strongest when the player has little or nothing built; the engine cannot read a town's buildings, so the arc reads the dial it does have — how few animals you need standing before a card does something.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "buildingsAtMost (a condition on how much the town has built)",
+     "why": "The maker asked for Bella's effects to be at their most powerful when the player has little to no buildings. The engine tracks `p.buildings`, but no card condition reads it — `CONDITIONS` has nothing about buildings, statues or town size, so 'while you control no Buildings, gain 2 Supply instead of 1' cannot be written.",
+     "workaround": "Built the same statement out of the one scarcity the vocabulary does read: `eventCharReduction` and the `eventCharReductionPerTurn` passive, which are worth most to a player with few animals standing, and a cost curve weighted to the cheap end so Bella is at her best before a town has raised anything. A `buildingsAtMost` condition would let the cards say it outright."
+    }
+   ],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_bella_forager_0",
+      "mk_bella_field_scientist_1",
+      "mk_bella_field_recorder_2",
+      "mk_bella_wildlife_warden_3",
+      "mk_bella_ecologist_5"
+     ],
+     "why": "neighbors tile 2 is the Mouse herbalist at a bench of jars, inherited from the printed Fern, and it now reads as Rosabeth's apothecary rather than Bella's. Nothing in any atlas shows an animal sitting in the leaf litter with a notebook and a recorder, which is the whole character. A forest-floor scene would fix all five at once."
+    }
+   ]
+  },
+  {
+   "name": "Finn",
+   "renamedFrom": "Flint",
+   "species": "Fox",
+   "studies": [
+    "Commerce",
+    "Civics"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Finn sells. Over the years he has sold hedge cuttings, subscriptions to a newspaper that was never printed, six identical clocks to the same household across four years, and — currently, legitimately, and rather well — most of the borough's dry goods. He is not a crook and he is not a saint, and the First Boroughs have known exactly where he sits on that line since he was about nine.\n\nClean jobs he has had plenty of. Weighing at the Grain Exchange, a season on the toll gate, two separate stints on the fair committee. They never last. Something always comes up that Finn cannot resist being clever about, and he moves on before anybody has to make it a formal matter, and everyone stays on speaking terms. What he has instead of a record is a reputation: if you need a thing sold, bought or valued inside the hour you go to Finn, you go in with your eyes open, and it gets done.\n\nThe odd part, which the borough long ago stopped finding odd, is that he is genuinely respected. He is on the committee more often than not, he chairs the fair, and when the Capital City sends somebody out to do business with the First Boroughs it is Finn who meets them, because he is the only animal in town who enjoys it. He keeps the fair's weights honest and he remembers, vividly, what the Finn of five years ago would have done with them.",
+   "voice": "Fast, friendly, already agreeing with you. Says 'look' a lot, and 'I'll be straight with you' — and is, about eighty per cent of the time.",
+   "arc": "All four rungs are the auction, because that is where Finn lives and it is what the maker asked for. Auctioneer's Boy (0) can only shout a number up. Peddler (1) puts a coin on his own announcement and sees what is coming next. Fair Warden (3) is the clean job: two Supply onto an auction he is already winning, and a tie breaks his way, because the animal calling the fair is the animal who knows the rules. Trade Broker (4) takes his percentage off everything the town brings home and reads the deck on the way in. He is a Fox the whole way: he never out-earns anybody, he wins the room.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": []
+  },
+  {
+   "name": "Hazel",
+   "species": "Raccoon",
+   "studies": [
+    "Commerce",
+    "Crafts"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Hazel keeps raccoon hours, which in the First Boroughs means the useful ones. The stall goes up when the lamps go on and comes down somewhere around four, and everything on it is interesting: bottles with no labels, a drawer of keys to doors nobody can place, charts of a sky that is not quite this one, and — reliably, unpredictably — the one thing you needed and could not have named. Where any of it comes from is Hazel's business. They work the bins, the barges and the City Dump, and they get there first.\n\nThey are, by common agreement, a bit much. They read the cards, they read the sky, they will tell you what the month means and then tell you the price, and they are never entirely joking. Half the borough takes the mysticism as part of the patter. The other half has quietly noticed how often Hazel turns out to be right about what is coming up for sale.\n\nNone of which has stopped the town putting them in charge of things. Hazel has run the guild hall twice, has sat on the market committee for years, and is who the night trade sends when it wants to be heard in daylight. They arrive at the meeting in the coat they closed the stall in, say one useful thing, and go to bed at eight in the morning.",
+   "voice": "Amused, sideways, fond of a pause. Gives you the price and then something you did not ask for that turns out to matter.",
+   "arc": "Every rung gets a card out of the deck and into a paw, which is what the maker asked for. Barrow Hand (0) draws off her own slow shift. Night Market Vendor (1) draws and bins on arrival. Market Vendor (2) sets the top of the deck in order, which is the reading before the selling. Guildmaster (3) is the Raccoon signature: the City Dump is stock, and the guild hall is where it finally gets sold in daylight. Merchant (5) turns every card the town brings home into another card in hand, and bins what the deck was going to waste your draw on. Hazel's Night Market is the same instinct as an Event — take the good half off the top.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": []
+  },
+  {
+   "name": "Hoot",
+   "species": "Owl",
+   "studies": [
+    "Civics"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Hoot came in on the night mail with one bag and a list of everybody's names, and had worked through most of the list by the end of the first week. The job is night porter: doors, lamps, deliveries, the ward's keys, and getting animals up who have asked to be got up. The knocking at four in the morning is neither a joke nor an accident — Hoot takes a request to be woken as seriously as anybody in the First Boroughs takes anything, and has never once been late with one.\n\nNobody has worked out yet when Hoot sleeps. They are new enough that the borough still says so, and settled enough that nobody can remember the last week without them.",
+   "voice": "Bright, polite, appallingly awake. Apologises for the hour, and then knocks again.",
+   "arc": "One card, unchanged in everything that matters — the maker asked for Hoot to stay as they are. A Capital City hire who turns somebody else in your town one step toward upright while Hoot is still Busy themselves. The shift is poor on purpose: an Owl earns you almost nothing and is worth hiring entirely for what they do to everyone else's morning.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": []
+  },
+  {
+   "name": "Inkwell",
+   "species": "Cat",
+   "studies": [
+    "Lore",
+    "Science"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Inkwell reads the sky the way other animals read the paper, and tells the rest of it back as stories. By day — what there is of day, for a cat keeping the hours Inkwell keeps — they are in the library with the star charts out and four books open at once, working on something they will explain at length to anybody who asks and which nobody has ever entirely followed. By night they are on the Observatory steps with a flask, looking up.\n\nThe children get the good version. Every week, in the corner of the Lending Library, Inkwell tells the little ones about the worlds on the other side of ours: the doors in the hedge, the town under the lake, the cousins of the moon and what they are like. The stories have a geography and they never contradict one another, which is more than can be said for most of the borough's history. Inkwell insists, cheerfully, that it is all research.\n\nThere is a long-standing rumour that Inkwell is a mage, and Inkwell has never once denied it, which is exactly the sort of thing Inkwell would do. What is true is that things go slightly still around them. The reading room goes quiet, the clock in the hall seems to take its time, and animals who meant to leave an hour ago find that they have not. Cats do as they please, and what pleases Inkwell is for the evening to go on a little longer.",
+   "voice": "Unhurried, delighted, permanently mid-thought. Begins answers with 'well — that depends which sky you mean'.",
+   "arc": "Lore is the storytelling and Science is the looking. Bookmark Keeper (1) hands the whole town an extra step of morning. Storyteller (2) has one animal back on their feet by the next turn because the story ended well. Night Librarian (3) is the stillness itself: nobody's animals advance at the next Ready, yours included — the evening simply does not end. Astronomer (4) reads the Capital City's deck off the shift and, once in a game, gets up when a cat should not be able to, which is the Cat signature and the whole rumour in one line. Keeper of Stories (5) turns the first Lore Event of every turn into a card and an extra step. The two Events are the two halves of them: the late shift with the children, and the chart drawn from the good chair.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "peekOpponentHand / a 'the other side of the glass' effect",
+     "why": "The mage rumour wanted one card that looks somewhere no other card looks — the rival's hand, or the Capital City's Ordinance display — as the thing nobody can prove Inkwell does.",
+     "workaround": "Kept the looking inside the vocabulary: `peekMarketDeck` off the Astronomer's shift, and `blockNextReady` for the stillness. The rumour stays in the flavor, where it belongs."
+    }
+   ]
+  },
+  {
+   "name": "Juniper",
+   "species": "Fox",
+   "studies": [
+    "Civics",
+    "Science"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Juniper carries the post, and has since they were small: the borough's letters, the grange's notices, the Capital City's forms, up and down the same routes in every weather there is. What makes them good at it was never the legs. It is that Juniper can put a thing to an animal in the way that animal needs to hear it, which is a rarer skill than the town knew it was short of, and it has carried them from a satchel to the ward office to the committee table without anybody quite planning it. They are, at time of writing, on four committees and chair two of them.\n\nNone of that is what Juniper is actually about. Juniper reads the sky. They keep an ephemeris, they know which planet is where and what the almanac says about it, and when a decision comes down to a genuinely even choice they will go outside, look up, and come back with an answer. The Science hall finds this maddening and the Observatory finds it charming, and both have had to admit that Juniper's calls come off more often than they have any business doing.\n\nAsk them and they will tell you there is no conflict in it at all. The post goes where it is addressed and the stars say when to set out; one is the route and the other is the hour. Juniper has never missed a delivery, and has never made a decision on a cloudy night without complaining about it first.",
+   "voice": "Warm, quick, disarming. Delivers bad news kindly and then tells you what the sky is doing.",
+   "arc": "Civics is the ladder and the auction is the Fox. Messenger (1) reads the Capital City's deck on every announcement, because knowing what is coming is the job. Courier Captain (2) makes the first bid of your turn count for more. Ward Councillor (3) puts two Supply onto an auction they are already winning. Diplomat (4) stops the rival raising at all, which is the committee room in one sentence. Stargazer (5) leaves the ladder alone entirely and looks at the deck at the start of every turn — and with another Science animal in town, the sky pays. The rise through Civics is the trade; the Science card at the top is what Juniper would have done with the whole life if the post had let them.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": []
+  },
+  {
+   "name": "Kevin",
+   "renamedFrom": "Kestrel",
+   "species": "Fox",
+   "studies": [
+    "Civics"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Kevin came out from the Capital City at seventeen because somebody told him there was work, and there was. He is the easiest hire in the First Boroughs: he says yes before you have finished the sentence, he is at the yard before the animal who hired him, and for about a fortnight he is worth two of anybody. Then the fortnight ends. Kevin goes flat all at once, sleeps through a morning, apologises far more than anyone wants him to, and is on to the next thing by the end of the week.\n\nThe borough has worked out how to use him and mostly does not mind. You get Kevin for a short stretch, you get a great deal out of it, and you do not build anything long around him. He is nineteen and has had eleven jobs, and every one of them would have him back.\n\nWhat he does with the flat fortnight is read. Novels, four or five on the go at once, in stacks by the bed and the kettle and the chair and one on the windowsill of whatever room he is renting that month. Lynnette keeps him a shelf at the print shop. He will tell you the plots of all five at once, badly, with enormous enthusiasm, and then he is up and off again.",
+   "voice": "Eager, loud, slightly out of breath. Says 'yeah — yeah, no, I can do that', and means it, right up until he cannot.",
+   "arc": "One card, hired out of the Capital City like the printed City Fox, and now built the way the maker described him. He arrives with money in his paw, works a one-turn shift for three Supply, throws two onto an auction you are winning — and after two of your turns he is gone back to the city. Quick gains, short stay, and cheaper than the printed hire because the fortnight is all you are renting.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "burnout (a shift that degrades, or a Character who unemploys himself)",
+     "why": "'Burns himself out easily' wanted the output to fall off across his stay — three, then two, then one — or for Kevin to put himself into Unemployment at the end of it.",
+     "workaround": "`leavesAfter` does the honest half of it: the gains stay quick and the stay is short, and he is simply gone on the fourth turn. A falling shift output would need the engine to re-read a stack's shift each time it starts."
+    }
+   ]
+  },
+  {
+   "name": "Lynnette",
+   "renamedFrom": "Linnet",
+   "species": "Rabbit",
+   "studies": [
+    "Crafts",
+    "Lore"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Lynnette prints the town's books. The press is hers, the shop is hers, and the borough's paper, ballots, almanacs, hymn sheets, notices and every book printed in the First Boroughs these fifteen years have come off it — usually late, always right. She got the press cheap because it was broken and learned to mend it because nobody else would, which is roughly her whole biography: a thing needed doing, and doing it turned out to be a trade.\n\nWhat she actually loves is the spreading. Lynnette cannot leave a good thing unpublished. If an animal in the borough learns something worth knowing she will have it set, printed and pinned up in the Hiring Hall inside the week, free, whether or not they asked — the apprentice notices, the guild's syllabus and the almanac's planting tables are all her doing and not one of them ever made her a penny. She is the reason an animal in the First Boroughs can find out how to be better at their job without knowing anybody first.\n\nThursdays she reads to the little ones in the Lending Library, sitting on the floor with about nine rabbits and whoever else has wandered in, doing all the voices. She is a poor businesswoman and a rich one in the way the borough actually counts it.",
+   "voice": "Brisk, ink to the elbows, always mid-job. Finishes your sentence, and then prints it.",
+   "arc": "Every rung makes the next animal easier to take on, which is what the maker asked for: Lynnette's whole effect on a town is that the step up costs less than it should. Night Printer (0) takes a coin off your next recruit the moment she arrives. Bookbinder (1) does it again off every shift she works. Lending Librarian (3) is the Rabbit signature — she reads to them, and one of them walks out of your hand into the town behind her. Master Printer (5) is the point of all of it: your Masters are ready a turn sooner, because by the time they turn up the borough has already read how the job is done.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": [
+    {
+     "verb": "upgradeDiscount (a recruit discount that only applies to a higher version of a Character already in your town)",
+     "why": "The maker asked for abilities that help characters upgrade. Upgrading is recruiting a dearer version over a cheaper one, but `recruitDiscount` cannot tell that recruit from any other — the mod's `filter` reads study, species and cost, not 'this card upgrades one of yours'.",
+     "workaround": "Left the discount untyped, so it helps any recruit and helps an upgrade among them, and put the real answer on the Master Printer: `masterDelayMinus1`, which makes the top of every character's arc a turn cheaper in time. A filter key like `upgradesOwn` would let the Night Printer and the Bookbinder say it exactly."
     }
    ]
   }
@@ -835,14 +996,14 @@
     "atlas": "neighbors",
     "tile": 10
    },
+   "addition": true,
+   "addedBecause": "Oatmeal's arc runs past the four printed Barleys: the band leader who ends up on the borough council is the top of his ladder, and there was no fifth printed version for it to replace.",
    "rarity": "Super Rare",
    "power": {
     "score": 5.59,
     "power": 14.58,
     "opportunityCost": 11
-   },
-   "addition": true,
-   "addedBecause": "Oatmeal's arc runs past the four printed Barleys: the band leader who ends up on the borough council is the top of his ladder, and there was no fifth printed version for it to replace."
+   }
   },
   {
    "id": "mk_barnaby_night_auditor_4",
@@ -1105,13 +1266,13 @@
     "tile": 5
    },
    "remakes": "mkt_bram",
+   "leavesAfter": 3,
    "rarity": "Super Rare",
    "power": {
     "score": 5.81,
     "power": 14.25,
     "opportunityCost": 9.4
-   },
-   "leavesAfter": 3
+   }
   },
   {
    "id": "mk_berry_tinker_0",
@@ -1251,14 +1412,14 @@
     "atlas": "nightskies",
     "tile": 10
    },
+   "addition": true,
+   "addedBecause": "Berry's five printed versions became six. The consulting rung between the committee volunteer and the workshop elder — the retired tinkerer who cannot say no to a job — had no printed original.",
    "rarity": "Uncommon",
    "power": {
     "score": 4.42,
     "power": 10.05,
     "opportunityCost": 7.8
-   },
-   "addition": true,
-   "addedBecause": "Berry's five printed versions became six. The consulting rung between the committee volunteer and the workshop elder — the retired tinkerer who cannot say no to a job — had no printed original."
+   }
   },
   {
    "id": "mk_berry_workshop_elder_4",
@@ -1418,14 +1579,14 @@
     "atlas": "capital",
     "tile": 7
    },
+   "addition": true,
+   "addedBecause": "One printed Gate Hedgehog became two animals and a gate: mkt_bristle went to Biff's cost-2 beat, so his senior rung replaces nothing.",
    "rarity": "Super Rare",
    "power": {
     "score": 6.33,
     "power": 15.9,
     "opportunityCost": 10
-   },
-   "addition": true,
-   "addedBecause": "One printed Gate Hedgehog became two animals and a gate: mkt_bristle went to Biff's cost-2 beat, so his senior rung replaces nothing."
+   }
   },
   {
    "id": "mk_bob_gate_attendant_4",
@@ -1458,14 +1619,14 @@
     "atlas": "capital",
     "tile": 7
    },
+   "addition": true,
+   "addedBecause": "Bob is an added character (see his entry in `characters`): the printed Gate Hedgehog's beat went to Biff, and Bob kept the gate.",
    "rarity": "Rare",
    "power": {
     "score": 4.7,
     "power": 11,
     "opportunityCost": 8.4
-   },
-   "addition": true,
-   "addedBecause": "Bob is an added character (see his entry in `characters`): the printed Gate Hedgehog's beat went to Biff, and Bob kept the gate."
+   }
   },
   {
    "id": "mk_brooke_dock_hand_1",
@@ -1568,14 +1729,14 @@
      }
     }
    ],
+   "addition": true,
+   "addedBecause": "Brooke's ladder to the River Otter licence needed its middle rung; the four printed Brooks skipped cost 3 entirely.",
    "rarity": "Rare",
    "power": {
     "score": 4.95,
     "power": 11.25,
     "opportunityCost": 7.8
-   },
-   "addition": true,
-   "addedBecause": "Brooke's ladder to the River Otter licence needed its middle rung; the four printed Brooks skipped cost 3 entirely."
+   }
   },
   {
    "id": "mk_brooke_balloonist_4",
@@ -1770,14 +1931,14 @@
      }
     }
    ],
+   "addition": true,
+   "addedBecause": "The maker gave Betty six rungs against the printed four. The powder half of her arc starts here, and no printed Burr was doing it.",
    "rarity": "Rare",
    "power": {
     "score": 4.96,
     "power": 10.67,
     "opportunityCost": 6.8
-   },
-   "addition": true,
-   "addedBecause": "The maker gave Betty six rungs against the printed four. The powder half of her arc starts here, and no printed Burr was doing it."
+   }
   },
   {
    "id": "mk_betty_firework_maker_3",
@@ -1885,14 +2046,14 @@
      }
     }
    ],
+   "addition": true,
+   "addedBecause": "Same batch, top of the curve: the printed Burrs stopped at cost 3, and the animal the grange sends for is what Betty grows into.",
    "rarity": "Super Rare",
    "power": {
     "score": 5.82,
     "power": 15.19,
     "opportunityCost": 11
-   },
-   "addition": true,
-   "addedBecause": "Same batch, top of the curve: the printed Burrs stopped at cost 3, and the animal the grange sends for is what Betty grows into."
+   }
   },
   {
    "id": "mk_clover_seedling_helper_0",
@@ -2789,6 +2950,1326 @@
    "power": {
     "score": 5.62,
     "power": 14.65,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_bella_forager_0",
+   "type": "character",
+   "name": "Bella",
+   "title": "Forager",
+   "job": "Forager",
+   "species": "Mouse",
+   "study": "Agriculture",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Bella is recruited, your next Event needs one fewer Character.",
+   "flavor": "She was seven, the basket was bigger than she was, and she carried it home full in the week the grange had told everybody there was nothing out there.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "addMod",
+      "key": "eventCharReduction",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 2
+   },
+   "remakes": "bb_fern_1",
+   "rarity": "Common",
+   "power": {
+    "score": 3.18,
+    "power": 5.3,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_bella_field_scientist_1",
+   "type": "character",
+   "name": "Bella",
+   "title": "Field Scientist",
+   "job": "Field Scientist",
+   "species": "Mouse",
+   "study": "Science",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Upgrades Bella. When Bella completes a shift, draw 1 card.",
+   "flavor": "Three notebooks and the recorder, because by the time she has found the right notebook the bird has gone and she is talking to herself about it anyway.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 2
+   },
+   "remakes": "ns_fern_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.94,
+    "power": 7.26,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_bella_field_recorder_2",
+   "type": "character",
+   "name": "Bella",
+   "title": "Field Recorder",
+   "job": "Field Recorder",
+   "species": "Mouse",
+   "study": "Lore",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Bella. Busy: return an Event from your Town Dump to the bottom of your deck.",
+   "flavor": "Fifteen years of the same square of hedgerow, every visit dated, and she will tell you without looking it up which year the frost came early.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "eventFromDumpToDeckBottom",
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 2
+   },
+   "remakes": "mh_fern_4",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.76,
+    "power": 10.25,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_bella_wildlife_warden_3",
+   "type": "character",
+   "name": "Bella",
+   "title": "Wildlife Warden",
+   "job": "Wildlife Warden",
+   "species": "Mouse",
+   "study": "Agriculture",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Bella. Busy: return an Event from your Town Dump to your hand.",
+   "flavor": "The warden's badge changed nothing about her day. She still sits down in the dirt; she just has the authority to tell somebody else to.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "eventFromDumpToHand",
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 2
+   },
+   "remakes": "bb_fern_3",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.77,
+    "power": 10.85,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_bella_ecologist_5",
+   "type": "character",
+   "name": "Bella",
+   "title": "Ecologist",
+   "job": "Ecologist",
+   "species": "Mouse",
+   "study": "Agriculture",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Bella. Your first Event each turn needs one fewer Character, and the first Event you play each turn also gives you 1 Supply.",
+   "flavor": "The Science hall cites her now, which she finds funny, because the finding they cite is that the wood was doing all of this perfectly well before any of us turned up with a shovel.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "eventCharReductionPerTurn"
+    },
+    {
+     "trigger": "onEventPlayed",
+     "oncePerTurn": true,
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 2
+   },
+   "remakes": "bb_fern_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.21,
+    "power": 13.6,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_finn_auctioneers_boy_0",
+   "type": "character",
+   "name": "Finn",
+   "title": "Auctioneer's Boy",
+   "job": "Auctioneer's Boy",
+   "species": "Fox",
+   "study": "Commerce",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Busy: you may raise one of your open bids by 1.",
+   "flavor": "Nine years old, not allowed to bid, and already the only animal in the room who knew what everything in it was worth.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "raiseOwnBid",
+      "amount": 1,
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 6
+   },
+   "remakes": "ns_flint_0",
+   "rarity": "Common",
+   "power": {
+    "score": 2.94,
+    "power": 4.9,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_finn_peddler_1",
+   "type": "character",
+   "name": "Finn",
+   "title": "Peddler",
+   "job": "Peddler",
+   "species": "Fox",
+   "study": "Commerce",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Finn. When you announce a purchase, add 1 Supply to it and look at the top card of the Market Deck.",
+   "flavor": "The clocks were the high point. Six of them, same household, four years, and they still buy their flour off him.",
+   "abilities": [
+    {
+     "trigger": "onAnnounce",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "raiseOwnBid",
+        "amount": 1
+       },
+       {
+        "do": "peekMarketDeck",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 6
+   },
+   "remakes": "pp_flint_1",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.11,
+    "power": 9.4,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_finn_fair_warden_3",
+   "type": "character",
+   "name": "Finn",
+   "title": "Fair Warden",
+   "job": "Fair Warden",
+   "species": "Fox",
+   "study": "Civics",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Finn. Busy: add 2 Supply to an auction you are winning. When a bid is tied, add 1 Supply to yours.",
+   "flavor": "He keeps the fair honest, which mostly means keeping an eye out for the Finn of five years ago. He knows exactly where that animal would be standing, and exactly what he would do about a tie.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "raiseOwnBid",
+      "amount": 2
+     }
+    },
+    {
+     "trigger": "onTiedBid",
+     "effect": {
+      "do": "raiseOwnBid",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 6
+   },
+   "remakes": "mh_flint_3",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.16,
+    "power": 9.45,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_finn_trade_broker_4",
+   "type": "character",
+   "name": "Finn",
+   "title": "Trade Broker",
+   "job": "Trade Broker",
+   "species": "Fox",
+   "study": "Commerce",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Finn. Whenever you gain a non-Statue Capital City card, gain 1 Supply. When you announce a purchase, look at the top card of the Market Deck.",
+   "flavor": "His percentage is small and he takes it off everything, and he knows what is coming up before the animal selling it does. The committee that reappointed him last spring knows precisely that, and reappointed him anyway.",
+   "abilities": [
+    {
+     "trigger": "onGainMarketCard",
+     "condition": {
+      "nonStatue": true
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    },
+    {
+     "trigger": "onAnnounce",
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 6
+   },
+   "remakes": "pp_flint_2",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.45,
+    "power": 11.19,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_hazel_barrow_hand_0",
+   "type": "character",
+   "name": "Hazel",
+   "title": "Barrow Hand",
+   "job": "Barrow Hand",
+   "species": "Raccoon",
+   "study": "Commerce",
+   "cost": 0,
+   "shift": {
+    "delay": 2,
+    "output": 1
+   },
+   "text": "When Hazel completes a shift, draw 1 card.",
+   "flavor": "One barrow, no stall, and a route round the bins that took all night and turned up something worth having every single time.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 5
+   },
+   "remakes": "mh_hazel_0",
+   "rarity": "Common",
+   "power": {
+    "score": 2.76,
+    "power": 4.61,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_hazel_night_market_vendor_1",
+   "type": "character",
+   "name": "Hazel",
+   "title": "Night Market Vendor",
+   "job": "Night Market Vendor",
+   "species": "Raccoon",
+   "study": "Commerce",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Upgrades Hazel. Recruit: draw 1 card, then discard 1 card.",
+   "flavor": "Everything half price after dark, on the stated grounds that you cannot quite see it and the unstated grounds that Hazel already knows which one you will take.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "draw",
+        "count": 1
+       },
+       {
+        "do": "discard",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 5
+   },
+   "remakes": "ns_hazel_1",
+   "rarity": "Common",
+   "power": {
+    "score": 3.1,
+    "power": 5.7,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_hazel_market_vendor_2",
+   "type": "character",
+   "name": "Hazel",
+   "title": "Market Vendor",
+   "job": "Market Vendor",
+   "species": "Raccoon",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Hazel. Busy: look at the top two cards of your deck and put any of them on the bottom.",
+   "flavor": "The bottles have no labels and the keys fit no door anyone can name, and Hazel will tell you what the month means before they tell you the price.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "scryDeck",
+      "count": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 5
+   },
+   "remakes": "pp_hazel_1",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.67,
+    "power": 10.05,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_hazel_guildmaster_3",
+   "type": "character",
+   "name": "Hazel",
+   "title": "Guildmaster",
+   "job": "Guildmaster",
+   "species": "Raccoon",
+   "study": "Crafts",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Hazel. Busy: take a Market card from the City Dump and gain it.",
+   "flavor": "They ran the guild hall for two terms and never once changed out of the coat they close the stall in. The committee took the minutes; Hazel took whatever the Capital City had thrown out.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "takeFromCityDump"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 5
+   },
+   "remakes": "pp_hazel_3",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.16,
+    "power": 11.73,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_hazel_merchant_5",
+   "type": "character",
+   "name": "Hazel",
+   "title": "Merchant",
+   "job": "Merchant",
+   "species": "Raccoon",
+   "study": "Commerce",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Hazel. Whenever you gain a non-Statue Market card, draw 1 card. Busy: look at the top two cards of your deck and send any of them to your Town Dump.",
+   "flavor": "Half the borough calls the sky-reading patter. The other half has noticed that Hazel is packing up a stall of exactly the right stock three nights before anyone announces the sale.",
+   "abilities": [
+    {
+     "trigger": "onGainMarketCard",
+     "condition": {
+      "nonStatue": true
+     },
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    },
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "scryDeck",
+      "count": 2,
+      "to": "dump"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 5
+   },
+   "remakes": "pp_hazel_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.32,
+    "power": 13.89,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_hazels_night_market",
+   "type": "event",
+   "name": "Hazel's Night Market",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Hazel"
+    }
+   ],
+   "text": "Requires Hazel. Draw 2 cards, then look at the top two cards of your deck and put any of them on the bottom.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 2
+     },
+     {
+      "do": "scryDeck",
+      "count": 2
+     }
+    ]
+   },
+   "flavor": "The lamps go on, the trestles come out, and for six hours the town can buy anything at all. Hazel shakes on it before the other stallholders have finished counting.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 13
+   },
+   "remakes": "mh_hazels_bargain",
+   "rarity": "Common",
+   "power": {
+    "score": 2.62,
+    "power": 3.9,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_hoot_night_porter_2",
+   "type": "marketCharacter",
+   "name": "Hoot",
+   "title": "Night Porter",
+   "job": "Night Porter",
+   "species": "Owl",
+   "study": "Civics",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Hired from the Capital City; enters Busy. Busy: one of your other Characters turns one step toward upright.",
+   "flavor": "The knock comes at four. You did ask. Hoot has the list, your name is on it in a very neat hand, and Hoot has never once been late with one.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "advanceCharacter",
+      "filter": {
+       "notSelf": true
+      }
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 6
+   },
+   "remakes": "ns_mkt_hoot",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.02,
+    "power": 8.45,
+    "opportunityCost": 6.4
+   }
+  },
+  {
+   "id": "mk_inkwell_bookmark_keeper_1",
+   "type": "character",
+   "name": "Inkwell",
+   "title": "Bookmark Keeper",
+   "job": "Bookmark Keeper",
+   "species": "Cat",
+   "study": "Lore",
+   "cost": 1,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "When Inkwell is recruited, your Characters advance an extra step at your next Ready.",
+   "flavor": "Four books open at once and a ribbon in each, and Inkwell can tell you what page every one of them is waiting on.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "addMod",
+      "key": "extraAdvance",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 2
+   },
+   "remakes": "ww_inkwell_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.75,
+    "power": 6.9,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_inkwell_storyteller_2",
+   "type": "character",
+   "name": "Inkwell",
+   "title": "Storyteller",
+   "job": "Storyteller",
+   "species": "Cat",
+   "study": "Lore",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Inkwell. Busy: another Character you control is upright at the start of your next turn.",
+   "flavor": "The town under the lake, the doors in the hedge, the cousins of the moon. Nine listeners on the library floor, and every one of them up at dawn to go and look for one.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "readyNextTurn",
+      "filter": {
+       "notSelf": true
+      },
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 2
+   },
+   "remakes": "mh_inkwell_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.13,
+    "power": 11.05,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_inkwell_night_librarian_3",
+   "type": "character",
+   "name": "Inkwell",
+   "title": "Night Librarian",
+   "job": "Night Librarian",
+   "species": "Cat",
+   "study": "Lore",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Inkwell. When Inkwell becomes upright, nobody's Characters advance at the next Ready.",
+   "flavor": "The reading room goes quiet, the hall clock takes its time, and every animal who meant to leave an hour ago is still in their chair. Inkwell has not looked up.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "blockNextReady"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 2
+   },
+   "remakes": "ww_inkwell_2",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.69,
+    "power": 12.93,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_inkwell_astronomer_4",
+   "type": "character",
+   "name": "Inkwell",
+   "title": "Astronomer",
+   "job": "Astronomer",
+   "species": "Cat",
+   "study": "Science",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Inkwell. When Inkwell completes a shift, look at the top two cards of the Market Deck. Busy, once per game: Inkwell readies themselves.",
+   "flavor": "The Observatory steps, a flask, and a cat who is supposed to be asleep standing up as if the hour were a suggestion. Nobody has ever caught them doing it.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 2
+     }
+    },
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "selfReady",
+      "oncePerGame": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 2
+   },
+   "remakes": "ns_inkwell_4",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.52,
+    "power": 11.35,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_inkwell_keeper_of_stories_5",
+   "type": "character",
+   "name": "Inkwell",
+   "title": "Keeper of Stories",
+   "job": "Keeper of Stories",
+   "species": "Cat",
+   "study": "Lore",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Inkwell. The first Event you play each turn that requires Lore lets you draw 1 card, and your Characters advance an extra step at your next Ready.",
+   "flavor": "Ask whether any of it is true and you will be told, kindly and at length, that it is all research, and that the geography has never once contradicted itself, which is more than the borough's own history manages.",
+   "abilities": [
+    {
+     "trigger": "onEventPlayed",
+     "condition": {
+      "eventRequiresStudy": "Lore"
+     },
+     "oncePerTurn": true,
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "draw",
+        "count": 1
+       },
+       {
+        "do": "addMod",
+        "key": "extraAdvance",
+        "value": 1,
+        "expires": "untilUsed",
+        "consumable": true
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 2
+   },
+   "remakes": "ww_inkwell_3",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.17,
+    "power": 13.5,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_inkwells_late_shift",
+   "type": "event",
+   "name": "Inkwell's Late Shift",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Inkwell"
+    }
+   ],
+   "text": "Requires Inkwell. Draw 3 cards, then discard 1 card.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 3
+     },
+     {
+      "do": "discard",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "The candle burns down, the last of the little ones is carried home asleep, and Inkwell goes back to the chapter they were actually reading.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 2
+   },
+   "remakes": "mh_inkwells_late_shift",
+   "rarity": "Common",
+   "power": {
+    "score": 2.42,
+    "power": 3.6,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_inkwells_star_chart",
+   "type": "event",
+   "name": "Inkwell's Star Chart",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Inkwell"
+    }
+   ],
+   "text": "Requires Inkwell. Look at the top three cards of your deck and put any of them on the bottom, then draw 1 card.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "scryDeck",
+      "count": 3
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "Charted entirely from the good chair, which means half the sky is missing and the half that is there is right to the minute.",
+   "art": {
+    "atlas": "nightskies",
+    "tile": 5
+   },
+   "remakes": "ns_inkwells_star_chart",
+   "rarity": "Common",
+   "power": {
+    "score": 1.92,
+    "power": 2.85,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_juniper_messenger_1",
+   "type": "character",
+   "name": "Juniper",
+   "title": "Messenger",
+   "job": "Messenger",
+   "species": "Fox",
+   "study": "Civics",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "When you announce a purchase, look at the top 2 cards of the Market Deck.",
+   "flavor": "Every route in the borough in every weather there is, and not one delivery missed — though there is a note in the ledger about a cloudy Tuesday and a great deal of complaining.",
+   "abilities": [
+    {
+     "trigger": "onAnnounce",
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 7
+   },
+   "remakes": "pp_juniper_1",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.94,
+    "power": 9.1,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_juniper_courier_captain_2",
+   "type": "character",
+   "name": "Juniper",
+   "title": "Courier Captain",
+   "job": "Courier Captain",
+   "species": "Fox",
+   "study": "Civics",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Juniper. While Juniper is upright, your first bid each turn counts as 1 higher.",
+   "flavor": "They still run the fastest route in town. They simply have eleven other animals running it now, and an ephemeris on the wall of the sorting room.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "effect": null,
+     "key": "firstBidPlus1",
+     "requiresUpright": true
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 7
+   },
+   "remakes": "pp_juniper_3",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.58,
+    "power": 9.85,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_juniper_ward_councillor_3",
+   "type": "character",
+   "name": "Juniper",
+   "title": "Ward Councillor",
+   "job": "Ward Councillor",
+   "species": "Fox",
+   "study": "Civics",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Juniper. Busy: add 2 Supply to an auction you are winning.",
+   "flavor": "Four committees, two of them chaired, and not one animal on any of them could tell you the moment Juniper stopped being the one who brought the papers in.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "raiseOwnBid",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 6
+   },
+   "remakes": "mh_juniper_3",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.89,
+    "power": 8.85,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_juniper_diplomat_4",
+   "type": "character",
+   "name": "Juniper",
+   "title": "Diplomat",
+   "job": "Diplomat",
+   "species": "Fox",
+   "study": "Civics",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Juniper. Your opponent cannot raise a pending bid.",
+   "flavor": "They put it to each animal in the room in the way that animal needed to hear it, and by the time they had been round the table twice there was nothing left for anybody to raise.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "blockOpponentBidRaise"
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 6
+   },
+   "remakes": "pp_juniper_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 5,
+    "power": 12.55,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_juniper_stargazer_5",
+   "type": "character",
+   "name": "Juniper",
+   "title": "Stargazer",
+   "job": "Stargazer",
+   "species": "Fox",
+   "study": "Science",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Juniper. At the start of your turn, look at the top two cards of the Market Deck; if you control another Science Character, gain 1 Supply as well.",
+   "flavor": "The Science hall finds it maddening and the Observatory finds it charming, and both have had to write down how often the call comes off. The post goes where it is addressed; the sky says when to set out.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 2
+     }
+    },
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Science"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 7
+   },
+   "remakes": "ns_juniper_5",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.79,
+    "power": 12.51,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_kevin_hired_hand_3",
+   "type": "marketCharacter",
+   "name": "Kevin",
+   "title": "Hired Hand",
+   "job": "Hired Hand",
+   "species": "Fox",
+   "study": "Civics",
+   "cost": 3,
+   "shift": {
+    "delay": 1,
+    "output": 3
+   },
+   "leavesAfter": 2,
+   "text": "Hired from the Capital City; enters Busy, and goes back to the city after two of your turns. When Kevin is recruited, gain 2 Supply. Busy: add 2 Supply to an auction you are winning.",
+   "flavor": "He said yes before you finished the sentence and he was at the yard before you were. Get what you need out of the fortnight; there is no second one.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    },
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "raiseOwnBid",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 8
+   },
+   "remakes": "mkt_kestrel",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.47,
+    "power": 9.96,
+    "opportunityCost": 7.4
+   }
+  },
+  {
+   "id": "mk_lynnette_night_printer_0",
+   "type": "character",
+   "name": "Lynnette",
+   "title": "Night Printer",
+   "job": "Night Printer",
+   "species": "Rabbit",
+   "study": "Crafts",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Lynnette is recruited, your next recruit costs 1 less Supply.",
+   "flavor": "Tomorrow's apprentice notices, printed tonight, free, whether or not anybody asked her for them.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 6
+   },
+   "remakes": "ns_linnet_0",
+   "rarity": "Common",
+   "power": {
+    "score": 2.82,
+    "power": 4.7,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_lynnette_bookbinder_1",
+   "type": "character",
+   "name": "Lynnette",
+   "title": "Bookbinder",
+   "job": "Bookbinder",
+   "species": "Rabbit",
+   "study": "Crafts",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Upgrades Lynnette. When Lynnette completes a shift, your next recruit costs 1 less Supply.",
+   "flavor": "She got the press cheap because it was broken and learned to mend it because nobody else would, and a mended spine has been her idea of a good evening ever since.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 6
+   },
+   "remakes": "ww_linnet_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.55,
+    "power": 6.54,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_lynnette_lending_librarian_3",
+   "type": "character",
+   "name": "Lynnette",
+   "title": "Lending Librarian",
+   "job": "Lending Librarian",
+   "species": "Rabbit",
+   "study": "Lore",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Lynnette. When Lynnette is recruited, you may recruit a Character costing 1 or less from your hand for free; it enters Busy.",
+   "flavor": "Thursday, on the floor, about nine rabbits and whoever else wandered in, all the voices done properly. One of them always comes back on the Friday asking how you get a job.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "recruitFromHand",
+      "filter": {
+       "maxCost": 1
+      },
+      "orientation": 270,
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 6
+   },
+   "remakes": "mh_linnet_3",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.43,
+    "power": 12.35,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_lynnette_master_printer_5",
+   "type": "character",
+   "name": "Lynnette",
+   "title": "Master Printer",
+   "job": "Master Printer",
+   "species": "Rabbit",
+   "study": "Crafts",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Lynnette. Your Master Characters are ready a turn sooner. Busy: draw 1 card.",
+   "flavor": "The press runs all night and by morning the whole borough is reading the same page, which is why the animal who turns up on Tuesday to do the job already knows how the job is done.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "masterDelayMinus1"
+    },
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 6
+   },
+   "remakes": "mh_linnet_5",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.86,
+    "power": 15.3,
     "opportunityCost": 11
    }
   },
