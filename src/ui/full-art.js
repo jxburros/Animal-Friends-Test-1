@@ -1,4 +1,7 @@
 // Presentation-only collection: printed rarity, costs, deck limits and rules stay unchanged.
+// The first twelve are printed cards (`spec/starter_card_set.json`); the rest are Maker shelf
+// cards (`spec/maker_card_set.json`) that have since been given their own commissioned portrait.
+// Both render through the same shared face — foil, full-art frame, gallery and reader alike.
 export const FULL_ART_CARDS = Object.freeze({
   bb_clover_3: Object.freeze({ number: '01', title: "Clover, Master Botanist", url: new URL('../../assets/art/full-art/bb_clover_3.png', import.meta.url).href }),
   rr_pip_3: Object.freeze({ number: '02', title: "Pip, Chief Archivist", url: new URL('../../assets/art/full-art/rr_pip_3.png', import.meta.url).href }),
@@ -12,6 +15,12 @@ export const FULL_ART_CARDS = Object.freeze({
   mk_glasshouse_walk: Object.freeze({ number: '10', title: "Glasshouse Walk", url: new URL('../../assets/art/full-art/mk_glasshouse_walk.png', import.meta.url).href }),
   st_curiosity: Object.freeze({ number: '11', title: "Statue of Curiosity", url: new URL('../../assets/art/full-art/st_curiosity.png', import.meta.url).href }),
   dx_hard_winter: Object.freeze({ number: '12', title: "Hard Winter", url: new URL('../../assets/art/full-art/dx_hard_winter.png', import.meta.url).href }),
+  mk_peanut_barista_1: Object.freeze({ number: '13', title: "Peanut, Barista", url: new URL('../../assets/art/full-art/mk_peanut_barista_1.png', import.meta.url).href }),
+  mk_brooke_balloonist_4: Object.freeze({ number: '14', title: "Brooke, Balloonist", url: new URL('../../assets/art/full-art/mk_brooke_balloonist_4.png', import.meta.url).href }),
+  mk_oatmeal_jazz_singer_3: Object.freeze({ number: '15', title: "Oatmeal, Jazz Singer", url: new URL('../../assets/art/full-art/mk_oatmeal_jazz_singer_3.png', import.meta.url).href }),
+  mk_betty_firework_maker_3: Object.freeze({ number: '16', title: "Betty, Firework Maker", url: new URL('../../assets/art/full-art/mk_betty_firework_maker_3.png', import.meta.url).href }),
+  mk_comet_astronaut_5: Object.freeze({ number: '17', title: "Comet, Astronaut", url: new URL('../../assets/art/full-art/mk_comet_astronaut_5.png', import.meta.url).href }),
+  mk_rosabeth_apothecary_3: Object.freeze({ number: '18', title: "Rosabeth, Apothecary", url: new URL('../../assets/art/full-art/mk_rosabeth_apothecary_3.png', import.meta.url).href }),
 });
 
 export function fullArtFor(def) {

@@ -1,11 +1,14 @@
 # Full Art Collection
 
-Twelve existing cards get an intentionally distinct collectible presentation: individual 1024 × 1536
+Eighteen existing cards get an intentionally distinct collectible presentation: individual 1024 × 1536
 paintings extending across the entire face, deep translucent nameplates and rules panels, fine gold
 corner work, and a soft pearlescent sheen. The restrained highlight follows the pointer and also
 responds to keyboard focus. There is no continuous shimmer animation; reduced motion disables transitions.
 
-Open **Explore the 12 Full Art cards** on the book cover. Each gallery card has a **Read** button for
+The first twelve are printed cards; the last six are Maker shelf cards (`spec/maker_card_set.json`)
+that were later given their own commissioned portrait.
+
+Open **Explore the Full Art cards** on the book cover. Each gallery card has a **Read** button for
 the complete rules, burden and flavor text. The same shared renderer covers the game table, hand,
 Deck Workshop, previews and animation copies. Escape dismisses the reader or gallery and restores focus.
 
@@ -23,31 +26,36 @@ Deck Workshop, previews and animation copies. Escape dismisses the reader or gal
 | 10 | Glasshouse Walk | Common | Lush glass arches and sunlit mosaic paths |
 | 11 | Statue of Curiosity | Legendary | A stone squirrel discovering a luminous butterfly |
 | 12 | Hard Winter | Uncommon | Snowbound cottages and a frozen mill |
+| 13 | Peanut — Barista | — | Pouring latte art at the café counter |
+| 14 | Brooke — Balloonist | — | A hot air balloon rising over a river at sunrise |
+| 15 | Oatmeal — Jazz Singer | — | Singing to a badger band under stage lights |
+| 16 | Betty — Firework Maker | — | Holding a rocket at a lantern-lit fireworks stall |
+| 17 | Comet — Astronaut | — | Floating in space above the earth, a comet overhead |
+| 18 | Rosabeth — Apothecary | — | Mixing a tincture by moonlight in a herb shop |
 
 These subjects were selected for recognizable characters, expressive occupations, varied environments,
-and strong lighting opportunities across all five card types. Their printed rarities, card IDs, costs,
-abilities, deck limits and rules are unchanged. Other versions of the same named Character keep their
-regular art. This is a fixed presentation selection, not a new rarity or random reward system.
+and strong lighting opportunities. Their printed rarities, card IDs, costs, abilities, deck limits and
+rules are unchanged. Other versions of the same named Character keep their regular art. This is a fixed
+presentation selection, not a new rarity or random reward system.
 
 ## Assets and implementation
 
-- `src/ui/full-art.js` owns the exact twelve-card registry, collection numbers and bundled image URLs.
+- `src/ui/full-art.js` owns the full-art registry, collection numbers and bundled image URLs — printed
+  cards and Maker shelf cards alike, keyed by card id.
 - `src/ui/full-art.css` styles only opted-in faces plus the collection gallery.
-- `src/ui/full-art-gallery.js` builds the gallery from the existing card definitions and shared renderer.
-- `assets/art/full-art/<card-id>.png` contains all twelve original portraits.
+- `src/ui/full-art-gallery.js` builds the gallery from the existing card definitions (printed set plus
+  Maker set) and the shared renderer.
+- `assets/art/full-art/<card-id>.png` contains every portrait in the registry.
 - Original atlas art and per-card vector art remain underneath each new painting as failure fallbacks.
 - [Exact generation prompts](FULL_ART_PROMPTS.md); created with the built-in image generation tool.
 
 ## Validation
 
-- All 166 automated tests pass, including unique assets, exact selection and unchanged definitions.
+- Automated tests cover unique assets, correct card resolution (both shelves) and unchanged definitions.
 - Full-game smoke run completed with a winner.
-- Chromium/Edge browser checks at 1360, 768 and 390 px: all twelve readers (36 combinations), complete
-  rules/burden/flavor, gallery width, Escape, focus restoration and reduced motion passed.
-- No JavaScript page errors or failed asset requests during those browser checks.
-- Deck Workshop shows exactly nine selected player cards alongside the regular catalogue; its reader
-  works and a seeded game starts successfully.
+- Deck Workshop shows the Maker cards with their own full-art treatment alongside the regular catalogue;
+  its reader works and a seeded game starts successfully.
 - Visually inspected every painting, the rendered collection and the phone-sized Statue reader.
 - Native screen-reader testing was not run.
 
-![The twelve full-art cards](screenshots/full-art-collection.png)
+![The full-art cards](screenshots/full-art-collection.png)

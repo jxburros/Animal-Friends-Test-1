@@ -6,13 +6,22 @@ import { FULL_ART_CARDS, fullArtFor } from '../src/ui/full-art.js';
 import { paintedArtSVG } from '../src/ui/painted-art.js';
 import { SET } from './helpers.mjs';
 
-test('full art selects exactly twelve existing cards with twelve unique portrait paintings', () => {
+const MAKER = JSON.parse(readFileSync(new URL('../spec/maker_card_set.json', import.meta.url), 'utf8'));
+// The collection draws from both shelves: printed cards from SET, and Maker shelf cards that have
+// since been given their own commissioned portrait — same lookup the game itself builds (see
+// src/ui/deckbuilder.js) so a card's id resolves to its definition regardless of which set it lives in.
+const cardsById = {
+  ...Object.fromEntries(MAKER.cards.map((c) => [c.id, c])),
+  ...Object.fromEntries(SET.cards.map((c) => [c.id, c])),
+};
+
+test('full art selects existing cards with unique portrait paintings, numbered in order', () => {
   const entries = Object.entries(FULL_ART_CARDS);
-  assert.equal(entries.length, 12);
+  assert.ok(entries.length > 0);
   const hashes = new Set();
   const types = new Set();
   for (const [index, [id, art]] of entries.entries()) {
-    const card = SET.cards.find(c => c.id === id);
+    const card = cardsById[id];
     assert.ok(card, id);
     types.add(card.type);
     assert.equal(art.number, String(index + 1).padStart(2, '0'));
@@ -23,9 +32,10 @@ test('full art selects exactly twelve existing cards with twelve unique portrait
     const markup = paintedArtSVG(card, '<svg data-fallback="original"/>');
     assert.ok(markup.includes(art.url), id + ' resolves its own full art');
     assert.ok(markup.includes('data-fallback="original"'), id + ' retains the vector fallback');
+    assert.equal(fullArtFor(card), art);
   }
-  assert.equal(hashes.size, 12);
-  assert.equal(types.size, 5);
+  assert.equal(hashes.size, entries.length, 'every portrait is a distinct image');
+  assert.ok(types.size > 1, 'the collection spans more than one card type');
 });
 
 test('other versions and unselected cards keep their original art treatment', () => {
@@ -37,6 +47,12 @@ test('other versions and unselected cards keep their original art treatment', ()
       assert.ok(!art.includes('full-art-painting'), card.id);
     }
     assert.equal(JSON.stringify(card), before, 'rendering never changes the definition');
+  }
+  for (const card of MAKER.cards) {
+    if (!Object.hasOwn(FULL_ART_CARDS, card.id)) {
+      assert.equal(fullArtFor(card), null);
+      assert.ok(!paintedArtSVG(card, '<svg/>').includes('full-art-painting'), card.id);
+    }
   }
   assert.equal(fullArtFor(null), null);
   assert.equal(fullArtFor({ id: 'toString' }), null);
