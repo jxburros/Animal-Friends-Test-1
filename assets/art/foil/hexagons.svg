@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="42" viewBox="0 0 24 42">
+  <!-- Seamless point-up honeycomb. Transparent centres keep the tiny cells distinct. -->
+  <path d="M12 0 24 7V21L12 28 0 21V7ZM0 21-12 28V42L0 49 12 42V28ZM24 21 12 28V42L24 49 36 42V28Z"
+    fill="none" stroke="white" stroke-width="1.2"/>
+</svg>

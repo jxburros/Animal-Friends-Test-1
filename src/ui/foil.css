@@ -1,0 +1,51 @@
+/* Shared finish renderer. Art style and card type do not choose coverage. */
+.card-face.foil { --mx: 30%; --my: 20%; isolation: isolate; }
+.card-face.foil .foil-sheen {
+  position: absolute; inset: 0; z-index: 7; pointer-events: none; border-radius: inherit;
+  opacity: .28; mix-blend-mode: screen;
+  background: radial-gradient(ellipse at var(--mx) var(--my), #fff9ddc0, transparent 48%),
+    repeating-linear-gradient(115deg, #58cfd660 0%, #b1a0ed85 13%, #f3a4b775 26%, #f8e394a0 39%, #83dba880 52%, #58cfd660 65%);
+  background-size: 100% 100%, 250% 250%;
+  animation: foil-drift calc(9s * max(var(--fx-scale, 1), .01)) linear infinite;
+  transition: opacity .25s;
+}
+.card-face.foil:hover .foil-sheen, .card-face.foil:focus-within .foil-sheen { opacity: .45; }
+.card-face.foil-artwork > .art, .card-face.foil-details > .art { isolation: isolate; }
+@keyframes foil-drift { from { background-position: 0 0, 0% 50%; } to { background-position: 0 0, 250% 50%; } }
+.card-face.foil-details .art > .foil-sheen {
+  mask-image: var(--foil-detail-mask); mask-mode: alpha;
+  mask-repeat: no-repeat; mask-size: cover; mask-position: center;
+  -webkit-mask-image: var(--foil-detail-mask); -webkit-mask-repeat: no-repeat; -webkit-mask-size: cover; -webkit-mask-position: center;
+}
+.card-face.foil-hexagon > .foil-sheen {
+  mask-image: url('../../assets/art/foil/hexagons.svg'); mask-mode: alpha;
+  mask-size: 12px 21px; mask-repeat: repeat;
+  -webkit-mask-image: url('../../assets/art/foil/hexagons.svg'); -webkit-mask-size: 12px 21px;
+  -webkit-mask-repeat: repeat;
+  opacity: .55;
+}
+.card-face.foil-hexagon:hover > .foil-sheen, .card-face.foil-hexagon:focus-within > .foil-sheen { opacity: .75; }
+/* Reverse foil: a stock layer behind opaque art/panels, plus a finish on those panels. */
+.card-face.foil-reverse > .foil-stock { z-index: 0; }
+.card-face.foil-reverse:not(.full-art) > .art { z-index: 1; }
+.card-face.foil-reverse > .card-subtitle, .card-face.foil-reverse > .card-footer { position: relative; z-index: 3; }
+.card-face.foil .foil-rim {
+  padding: 3px;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+}
+/* Labels/controls remain crisp and pointer targets are never covered by an interactive layer. */
+.card-face.foil .foil-tag {
+  position: absolute; right: 9px; top: 58px; z-index: 8; width: 14px; height: 14px;
+  color: #fff7df; background: #736040; border: 1px solid #e9d09b; border-radius: 50%; padding: 2px;
+  pointer-events: none;
+}
+.card-face.foil .foil-tag svg { width: 100%; height: 100%; display: block; }
+.card-face.large .foil-tag { top: 87px; right: 13px; width: 20px; height: 20px; }
+@media (prefers-reduced-motion: reduce) {
+  .card-face.foil .foil-sheen { animation: none; transition: none; }
+}
+:root[data-pace="instant"] .card-face.foil .foil-sheen { animation: none; transition: none; }
+@media print { .card-face.foil .foil-sheen { animation: none; } }
