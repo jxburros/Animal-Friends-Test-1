@@ -147,6 +147,38 @@ add to the list.
 - **The Tax Assessors come out from the Capital City with clipboards**, unannounced, and the borough
   loses Supply when they do. They are the disaster Copper's cellar was stocked against, and he has
   met them four times. [Copper]
+- **The borough's night market is Hazel's**, and it keeps its own hours: the trestles go up when the
+  lamps go on and come down around four. It is where the town buys the things it cannot name, and it
+  is the reason the night trade has a voice at daylight meetings at all — Hazel has run the guild
+  hall twice and sits on the market committee, and turns up to both in the coat they closed the stall
+  in. [Hazel]
+- **There is a standing list of animals who have asked to be woken.** Hoot the night porter keeps it,
+  along with the ward's keys, and knocks at four in the morning on anybody who is on it. Being woken
+  in the First Boroughs is a service you sign up for, not something that happens to you. [Hoot]
+- **The fair has a warden and the warden is Finn**, who has also had, and lost, a weighing job at the
+  Grain Exchange and a season on the toll gate. The borough knows exactly where he sits between honest
+  and otherwise, has known since he was about nine, and puts him on the committee anyway. He is who
+  meets the Capital City's traders when they come out, because he is the only animal in town who
+  enjoys it. [Finn]
+- **The Lending Library has a children's corner and two regular readers.** Inkwell tells the little
+  ones about the worlds on the other side of ours on one evening a week; Lynnette reads to them on
+  Thursdays, on the floor, doing all the voices. A young animal in this borough has been read to by
+  one or both. [Inkwell, Lynnette]
+- **The borough's press is Lynnette's**, and everything printed in the First Boroughs these fifteen
+  years has come off it: the paper, the ballots, the almanac, the notices. The apprentice notices in
+  the Hiring Hall, the guild's syllabus and the almanac's planting tables are hers, given free. An
+  animal here can find out how to be better at their job without knowing anybody first, and that is
+  why. [Lynnette]
+- **Bella's field recordings are filed and cited by the Science hall**, and have been for years, which
+  is the borough's one piece of formal ecology. She has never bid on anything in the Capital City in
+  her life. [Bella]
+- **Juniper carries the borough's post and sits on four committees**, and decides genuinely even calls
+  by going outside and looking up. The Science hall finds this maddening, the Observatory finds it
+  charming, and both have had to concede the calls come off. [Juniper]
+- **Young animals come out from the Capital City looking for work and some of them do not stay.**
+  Kevin is the standing example: eleven jobs by nineteen, worth two of anybody for a fortnight, gone
+  by the end of the month, and every one of those eleven would have him back. The borough hires him
+  knowing all of it. [Kevin]
 
 ## Relationships
 
@@ -160,6 +192,10 @@ add to the list.
 - **Peanut keeps the books for half the borough**: the grange's feed bills, the ferry's tolls, the
   guild's quarterly returns. A character with accounts has plausibly had them audited, kindly, by
   Peanut. [Peanut]
+- **Lynnette keeps Kevin a shelf** at the print shop. He reads four or five novels at once through
+  the flat fortnight between jobs, and she has never charged him for one. [Kevin, Lynnette]
+- **Inkwell is widely rumoured to be a mage** and has never once denied it. Nobody has anything
+  better than the rumour, and the borough is content with that. [Inkwell]
 
 ## Renames
 
@@ -177,6 +213,10 @@ be read.
 | Betty | Burr | 2026-09-13 |
 | Dylan | Dabble | 2026-09-13 |
 | Rosabeth | Dill | 2026-09-13 |
+| Bella | Fern | 2026-09-14 |
+| Finn | Flint | 2026-09-14 |
+| Kevin | Kestrel | 2026-09-14 |
+| Lynnette | Linnet | 2026-09-14 |
 
 ## Additions
 
