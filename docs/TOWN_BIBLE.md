@@ -244,6 +244,53 @@ add to the list.
 - **The Lending Library has a late desk**, kept by Andrew after the children's corner has emptied and
   the evening readers have gone. What cannot be lent out he copies by hand a page or two a night, so
   there is a second one; the Library has twice filed his copy as the original. [Andrew, Inkwell]
+- **The almanac's price tables are Orien's figures.** He keeps a calculating engine in his back room,
+  built out of Observatory cast-offs and whatever Patch would sell him, and feeds it the shift
+  returns, the auction prices, the ferry's crossings and the weighbridge's plate. Lynnette sets the
+  tables and nobody in the borough has paid for a figure since. Ask him what a Building will go for
+  and he will be within a Supply. [Orien, Lynnette, Patch, Liz]
+- **The Salvage Yard is divided without anybody having said so.** Annabelle takes the paper; Patch
+  takes everything else, and sells it back to the borough mended or improved. What Patch is really
+  known for is the judging — animals bring him a thing and ask whether it is worth keeping, and then
+  they start bringing him leases, and seasons that have not gone well, and he tells them, and he is
+  right. [Patch, Annabelle]
+- **The crossing has been one family's for seven generations**, and the borough calls whoever is on
+  the boat the ferryotter without troubling about the name. That family struck its own fare chits — a
+  worn wooden otter on a round of hard wood, handed over at one bank and counted back at the other —
+  and the rest of the town's chits, the study marks and the building mark, are copies of the ferry's.
+  Half the borough has one in a pocket it never handed back. [Pebble]
+- **Everything Scott prints about a real animal or a real year goes across Ned's shelves first**, and
+  Ned certifies it or Scott cuts it; in fifteen years Lynnette has never printed a correction to a
+  word of his. The other half of his shelf is invention and is not kept separate from it. When Scott
+  says the bridge went in a particular spring, the borough stops arguing about which spring.
+  [Scott, Ned, Lynnette]
+- **Hibiscus walks the borough's round and Juniper carries what leaves it**, and the two of them hand
+  over at the sorting bench at five every morning. Nothing on that round is ever lost and the round
+  takes seven hours, because Hibiscus cannot be got off a doorstep in under ten minutes. The standing
+  complaints about the late second post are filed next to the ones about the county gate.
+  [Hibiscus, Juniper]
+- **The orchard is Quill's, from her parents, and it is never empty.** There is a cider social in the
+  barn from September to February and a bonfire whenever the prunings get above knee height, and half
+  the borough has picked there one autumn. The Hiring Hall sends animals who are quietly out of work
+  and Quill hands them a basket without ever mentioning it: Rosabeth's garden takes the ones who have
+  stopped getting up, and the orchard takes everybody, all the time, so that nobody has to admit to
+  anything. [Quill, Rosabeth]
+- **Quinn is at everything and says nothing**, and the borough's record is the better for both. When
+  a place falls vacant the Hiring Hall comes to him, and he turns back four years, finds the animal
+  who did that exact work in a bad winter and has not been asked since, and hands over a slip with a
+  name on it. More animals have been got back into work by that slip than by any committee sitting.
+  [Quinn]
+- **An even call in the First Boroughs is settled by Roger's ha'penny.** Roger can fix anything and
+  is therefore made chair of everything, and cannot decide, because he can see it from where both
+  animals are standing at once. So somebody else calls it in the air — never Roger, who says that
+  would be taking a side — and whatever it does is what happens, and he writes it down. The coin is
+  worn almost smooth and has settled four boundary questions, a dispute about a bandstand, and who
+  was to have the good pitch at the fair. [Roger]
+- **The tea house keeps the afternoons and the café keeps the mornings.** Earl's room is where an
+  animal who needs to sit down with somebody sits down for two hours; Bean's counter by the Hiring
+  Hall has the accounts and the noise. They have never competed for an hour, and Earl buys his leaf
+  through Bean's supplier. Half the borough's apprentices have been talked into the next thing across
+  Earl's counter, usually over a pot they did not pay for. [Earl, Bean]
 
 ## Relationships
 
@@ -264,6 +311,18 @@ add to the list.
   has offered him a shelf at the print shop for years, which he has never taken. [Beck, Lynnette]
 - **Inkwell is widely rumoured to be a mage** and has never once denied it. Nobody has anything
   better than the rumour, and the borough is content with that. [Inkwell]
+- **Patch and Pockets are brothers**, and Pockets is the older one who taught Patch to dive. Patch
+  built a yard, a counter and a price list out of it; Pockets got range instead, and works the City
+  Dump and the Capital City's gate for things nobody will ask the history of. Pockets turns up at the
+  yard about four times a year, is fed, and leaves with something, and Patch has never once asked
+  what for. [Patch, Pockets]
+- **Lindsay and Rosabeth are the borough's two impossible gardeners.** Rosabeth sings to her plants
+  in full view and has for thirty years; Lindsay is not there at all, waters the whole bench without
+  noticing, and cannot afterwards tell you what she did. Both sets of beds come in over, and the
+  borough has stopped expecting gardening to make sense. [Lindsay, Rosabeth]
+- **The borough's children are certain Quinn is a mage**, on the grounds that the writing comes out
+  faster than the talking goes in. Inkwell, asked once to settle it, said only that Quinn writes
+  faster than he does. [Quinn, Inkwell]
 
 ## Renames
 
@@ -291,6 +350,13 @@ be read.
 | Daniel | Nib | 2026-09-14 |
 | Ned | Nim | 2026-09-14 |
 | Daisy | Nutmeg | 2026-09-14 |
+| Orien | Oakley | 2026-09-14 |
+| Scott | Pip | 2026-09-14 |
+| Lindsay | Pippa | 2026-09-14 |
+| Hibiscus | Poppy | 2026-09-14 |
+| Quinn | Quill | 2026-09-14 |
+| Roger | Rowan | 2026-09-14 |
+| Earl | Russet | 2026-09-14 |
 
 ## Additions
 
@@ -310,14 +376,16 @@ Characters the maker added to the shelf who replace no printed card. They carry 
 | Cookie | The Winter Stores' baker, added by the maker: no printed Cookie, and no version of her carries an effect. | 2026-09-14 |
 | Sota | The Observatory's lens grinder, added by the maker: no printed Sota, and no version of them carries an effect. | 2026-09-14 |
 | Andrew | The Lending Library's late desk, added by the maker: no printed Andrew, and no version of him carries an effect. | 2026-09-14 |
+| Quill | The printed Quill was two animals under one name — a Mouse Town Scrivener and a Hedgehog who kept an orchard. The scrivener took the remake and the new name (Quinn); the orchard hedgehog kept the name Quill and stands as her own character, claiming nothing. Quinn's entry retires the five printed orchard versions and says why. | 2026-09-14 |
 
 Cards may be additions too — an extra rung in a remade character's arc, or a card of a type the
 printed set never had. All seven **Town Buildings** are the second kind: the type did not exist when
-the collection was printed, so there is nothing for them to remake. Sixteen cards are the first kind,
+the collection was printed, so there is nothing for them to remake. Twenty-seven cards are the first kind,
 added to characters already on the shelf: ten that do nothing but upgrade and work a shift (Biff,
-Comet, Brooke, Moss, Maribel, Daniel, Copper, Lynnette, Rosabeth and Morty), and six whose ability
-names a species or a study the character's own backstory already named (Clover, Bella, Ned, Beck,
-Marmalade and Hazel).
+Comet, Brooke, Moss, Maribel, Daniel, Copper, Lynnette, Rosabeth and Morty), and seventeen that
+carry an ability the character's own backstory had already asked for — among them Clover, Bella,
+Ned, Beck, Marmalade and Hazel, and, from the Orien-to-Earl batch, Orien's Tally Clerk, both of
+Pockets' lower rungs and Quinn's first and last.
 
 ---
 

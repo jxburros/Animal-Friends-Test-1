@@ -1076,6 +1076,288 @@
      "why": "Andrew is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Owl scene, which is the right species doing the wrong work."
     }
    ]
+  },
+  {
+   "name": "Orien",
+   "renamedFrom": "Oakley",
+   "species": "Badger",
+   "studies": [
+    "Science",
+    "Commerce",
+    "Civics"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Orien counts things. He has counted things since he was small enough to be lifted onto the Counting House steps to wait for somebody, and he has never found a reason to stop. What the borough took a while to understand is that he is not doing it for anyone. He does it the way other animals whittle. He came home from his first week of paid work with a table of every price the Capital City had taken that season, drawn out in four colours, for nobody.\n\nThere is a machine in the back room of his house. He built it out of what the Observatory threw away and what Patch would sell him, and it has been rebuilt four times since; it clicks all evening and most of the night, and it is the reason he is never at the bonfire. Into it go the shift returns, the auction prices, the ferry's crossings, the weight of every cart Liz has ever put on her plate. Out of it come the tables the almanac prints — Lynnette sets them, Orien supplies them, and nobody in the borough has ever paid for a figure since. Ask him what a Building will go for and he will tell you, and he will be within a Supply, and he will be a little put out if you sound surprised.\n\nHe is not good with animals, which he knows, and which he has decided is a fair trade. He has been made a committee's figures badger eleven times and has never once been asked to speak. He likes it best when a meeting goes quiet and looks at him, and he can put a number on the table and go home.",
+   "voice": "Precise, cheerful, and a little too fast. Answers the question you should have asked. Says 'well — it depends what you mean by cheap' and then tells you, at length, what it depends on.",
+   "arc": "Five jobs, one habit: Orien changes what a thing costs. The Tally Clerk at 0 works out a cheaper way to hire the next animal and hands the note over. The Rate Checker at 2 has read the lot before you challenged it, so challenging is cheaper. The Borough Actuary at 3 prices the Capital City's Buildings a season ahead, and the town buys under the number. The Survey Computer at 4 is the machine at full tilt: every shift the town finishes that turn pays more than it should. The Town Planner at 5 is what all of it was for: he sits down with the whole borough's figures and the next animal through the door comes in well under budget.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [
+    {
+     "card": "mk_orien_survey_computer_4",
+     "why": "The Survey Computer is a new job: a badger at a home-built calculating engine at two in the morning, tape everywhere. townlife/2 is the bridge engineer's site and is the wrong room entirely."
+    }
+   ],
+   "wantedVerbs": [
+    {
+     "verb": "shiftBonusPerCharacter",
+     "why": "The story wants Orien's tables to pay the town a standing rate — every shift, every turn, because the figures are simply better now.",
+     "workaround": "A turn-long `shiftBonus` mod on the cost-4, re-applied each turn he is upright. Same outcome while he is working, and it stops when he does."
+    }
+   ]
+  },
+  {
+   "name": "Patch",
+   "species": "Raccoon",
+   "studies": [
+    "Commerce",
+    "Science",
+    "Civics",
+    "Crafts"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Patch went into the Salvage Yard as a kit because there was money in it if you were small enough to get under things and quick enough to get out again. That was the whole of the plan for about two years. Then he sold a mangle back to the animal who had thrown it away, for more than it had cost new, because he had put a new roller in it — and he understood, standing there with the coin in his paw, that the diving was the least interesting part of the business.\n\nSo he built the rest of it. He takes it out, he sorts it, he mends what is worth mending and improves what is worth improving, and he sells it back to the borough at a price nobody has ever complained about. Annabelle takes the paper — that is hers, and the two of them have never once discussed it — and Patch takes everything else. What he is really known for now is the judging. Animals bring him things and ask whether they are worth keeping, and he turns them over twice and tells them, and he is right. Word got round, and now they bring him other things to ask the same question about: a trade, a lease, a season that has not gone well, somebody they are not sure about. He turns those over twice as well.\n\nHe will tell you he is not qualified, which is true, and that he is only a raccoon with a yard, which is also true, and then he will tell you to keep the lease and sell the cart, and you will, and it will have been the right way round.",
+   "voice": "Unhurried, dry, entirely certain. Asks two questions and then gives you the answer. Says 'that's worth keeping' and 'that isn't, and you know it isn't' in exactly the same tone.",
+   "arc": "The business, built upward out of the bins. The Junkyard Diver at 0 is the kit under the pile, and every shift he works the town puts something up cheaper out of what he dragged home. The Salvage Sorter at 2 has a bench and a price list, so what the town raises next comes in cheaper. The Valuer at 3 is the job the borough actually made for him: he goes through the Dump and comes back with the thing and the reason. The Yard Foreman at 4 runs the whole yard, so every shift he finishes turns something discarded into something standing. The Reclamation Merchant at 5 is the far end of the mangle: he takes out of the Dump and puts up cheap, and the town's next Building is half somebody else's old one.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [
+    {
+     "card": "mk_patch_valuer_3",
+     "why": "The Valuer is the yard's counter, not the town hall: an animal handing a broken thing over a plank and waiting for the verdict. neighbors/4 is the salvage portrait and is close, but the scene is the counter."
+    }
+   ],
+   "wantedVerbs": [
+    {
+     "verb": "swapBuilding",
+     "why": "The maker asked for abilities about swapping Buildings: return a Building your town has raised to the City Dump and raise another in its place, which is exactly Patch's trade — the old mangle out, the mended one in.",
+     "workaround": "The two halves of the swap, built from verbs that exist: `takeFromCityDump` takes the Market card back out of the shared Dump, and a `buildingDiscount` mod makes putting the replacement up cheap. The town ends up with the better Building; it just cannot hand the old one back."
+    }
+   ]
+  },
+  {
+   "name": "Pebble",
+   "species": "Otter",
+   "studies": [
+    "Commerce",
+    "Civics"
+   ],
+   "pronouns": "they/them",
+   "backstory": "The crossing has been Pebble's family's for seven generations. Their father had it, and his father, and his grandmother before that, and her daughter after her, and the borough long ago stopped bothering with the names: whoever is on the boat is the ferryotter, and the ferryotter is whoever is on the boat. Most families with a thing like that behind them produce, sooner or later, somebody who wants out. Pebble's family has been waiting three generations for that animal and it is not going to be Pebble.\n\nThey like it. That is the whole of it, and it takes some animals a while to believe. Four crossings an hour, the same bank, the same rope, the same eleven regulars and their eleven opinions, and Pebble goes home at the end of it perfectly content. Brooke, who is climbing the ladder out of exactly this job toward the River Otter licence, has asked them about it directly, twice. Pebble said that standing where their father stood, doing what their father did, with his grandmother's fare chits still in the tin, is not a thing you climb out of. The chits are the other half of it: their family struck their own, a worn wooden otter on a round of hard wood, handed to every passenger and counted back at the far bank. Half the borough has one in a pocket that they never handed back, and the rest of the town's chits — the study marks, the building marks — are copies of the ferry's.\n\nThey are not ambitious and they are not bored, and both of those facts make the Harbourmaster's office slightly uneasy. Willow has offered Pebble the warden's post three times. Pebble took it on the third offer on the condition that it did not mean giving up the boat.",
+   "voice": "Easy, unhurried, entirely without edge. Talks about their great-grandmother in the present tense by accident. Says 'mind the step' about four hundred times a day and means it every time.",
+   "arc": "One job, four generations deep, and every rung hands out more of the family's chits. The Crossing Hand at 0 earns one a shift. The Bridge Courier at 1 hands one over with the fare and has somebody else up and moving by morning. The Ferry Master at 3 is the boat at full tempo — the shift slides from paw to paw, Otter-fashion, and a chit goes into the tin with it. The Harbour Warden at 5 is Willow's post, taken on the third asking and only on terms: a chit every turn, and once the tin is deep enough the crossing pays the town as well as the family.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [],
+   "wantedVerbs": [
+    {
+     "verb": "tokenPerPassenger",
+     "why": "The story wants a chit for every animal who crosses — a token per Character the town readies or moves, not a flat one per shift.",
+     "workaround": "A fixed `gainToken` count on each version, rising with the rung. The tin fills at the same rate on a busy turn and a quiet one, which is the one thing a ferry never does."
+    }
+   ]
+  },
+  {
+   "name": "Scott",
+   "renamedFrom": "Pip",
+   "species": "Squirrel",
+   "studies": [
+    "Lore",
+    "Commerce",
+    "Science"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Scott writes it all down and then sells it back to the borough in pamphlets. Half of what comes off Lynnette's press with his name on it is invention — dragons under the far hedgerow, a lighterman who bargains with the river, the winter the moon came down for a look — and the other half is the plain truth about what the borough did in 1841, with the dates right. He does not keep the two apart on the shelf, and he will not be drawn on which sells better.\n\nThe rule he does keep is that the true half is true. Everything he writes about a real animal or a real year goes across Ned's shelves first, and Ned certifies it or Scott cuts it, and in fifteen years Lynnette has never had to print a correction to anything of his. It makes him slow. It also means that when Scott says the bridge went in a particular spring, the borough stops arguing about which spring. What it never makes him is dull: he has worked out, over a long career, exactly where in a ward-boundary dispute to put a joke about somebody's uncle, and exactly where in a reading for the little ones to put a fart.\n\nHe collects more than he prints. Every market between here and the Capital City, every lighterman coming off a night run, every old animal on a bench — he takes the story, pays for it with a better one, and puts it by. Most of it goes into the tin and stays there for years. When a season finally calls for it, he opens the tin, and it turns out he has had the answer since about a decade ago.",
+   "voice": "Warm, digressive, always three sentences from a joke. Starts things with 'now, this is the true one' and means it about half the time, on purpose.",
+   "arc": "Collect, print, verify, pay out — a Squirrel's shape, which is to say poor for a long time and then suddenly not. The Story Collector at 0 works the markets and puts everything by. The Pamphleteer at 2 is the press run: he sets the top of the deck the way he sets a page, and knows what is coming next. The Town Chronicler at 3 is the Ned years, slow and unarguable: he orders his own deck and watches the Capital City's at the same time. The Natural Historian at 4 goes out after the things nobody has written down yet and puts more by. The Author of the Boroughs at 5 opens the tin: a lifetime of collecting, cashed in at once, which is exactly what a Squirrel is for.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [
+    {
+     "card": "mk_scott_pamphleteer_2",
+     "why": "The Pamphleteer is the press floor at Lynnette's with a squirrel reading a wet proof, not the road: neighbors/15 is the travelling storyteller and is the previous job."
+    }
+   ],
+   "wantedVerbs": []
+  },
+  {
+   "name": "Lindsay",
+   "renamedFrom": "Pippa",
+   "species": "Cat",
+   "studies": [
+    "Agriculture",
+    "Science"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Lindsay is not paying attention. She has not been paying attention for about twenty years and the glasshouse has never been better. She waters along the bench with the can held out at exactly the right height for exactly the right count, eyes somewhere past the roof glass, thinking about something that has nothing whatever to do with the roof glass, and every pot gets what it wants. Ask her afterwards what she did and she cannot tell you. Ask the pots and they can.\n\nWhat she is thinking about is never quite established. She has been overheard costing out a glasshouse on the moon, working out how far a seed could fall, and settling an argument nobody was having about whether rain has a smell before or after it lands. The borough finds this restful. Rosabeth sings to her plants in full view and has done for thirty years; Lindsay does the opposite and gets the same result, and between the two of them the borough has stopped expecting gardening to make sense. The one place it shows up as a problem is a conversation: she will agree warmly with something you did not say and then ask you a question you already answered.\n\nHer beds come in over. Always, every year, more than the row should give, and she cannot account for it and has stopped trying — she says the counting is somebody else's department and she is right, it is Orien's, and his figures on her glasshouse have a note in the margin that just says 'ask her again in spring'. Marmalade gets her rosemary and will not use anybody else's. Comet, who has been turned down twice by a selection board for wanting the moon too openly, likes her enormously.",
+   "voice": "Dreamy, kind, half a beat late. Trails off mid-sentence and comes back to it four minutes later, correctly. Says 'oh — sorry — yes' more than any other animal in the borough.",
+   "arc": "Five rungs of not paying attention, paying better and better. The Potting Helper at 0 finishes a shift and comes up with more than the row should give. The Glasshouse Hand at 2 keeps the whole growing side earning while there is another Agriculture animal about. The Herb Grower at 3 is the daydream itself: she is halfway through something else and does the work anyway, because it is second nature — the one time a Cat's own rules do not apply to her. The Conservatory Keeper at 4 has the benches producing over for everybody. The Moon Gardener at 5 is where her head has been the whole time, and the borough finally gets paid for it.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [],
+   "wantedVerbs": []
+  },
+  {
+   "name": "Pockets",
+   "species": "Raccoon",
+   "studies": [
+    "Commerce"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Pockets taught Patch to dive. That is the fact he leads with, and it is true, and it has been getting steadily less useful to him for about fifteen years. He was first into the Salvage Yard, first under the pile, first to work out which of the Capital City's carters would take a bent thing off you at the gate and ask nothing; and then his little brother put a new roller in a mangle, and built a business, and got a counter and a price list and a reputation for telling animals the truth about their leases, and Pockets did not.\n\nWhat he got instead was range. There is nothing in the borough's dumps he cannot get back out and very little he cannot find a buyer for, including things the buyer should not have and things that were never anybody's to sell. He works the City Dump the way his brother works the yard, except that Patch sells you back your own mangle, mended, and Pockets sells you somebody else's, and does not say whose. Nothing he does is quite a crime. Several things he does are the shape of one, seen from a distance, in poor light.\n\nThe brothers are on speaking terms. Pockets turns up at the yard about four times a year, is fed, and leaves with something; Patch has never once asked what for, which is the nearest thing to forgiveness either of them goes in for. The borough hires Pockets when it wants a thing back that it has already thrown away, and is careful not to ask how, and pays him in the same careful way.",
+   "voice": "Quick, charming, all shoulders. Answers the question next to the one you asked. Says 'now I never said that' about things he has just said.",
+   "arc": "Three rungs, all of them the same trade at increasing nerve. The Kerbside Dealer at 1 gets an Event back out of your own Town Dump — small, legitimate, his brother's method. The Odd-Lot Dealer at 3 works the shared City Dump as well and comes back with both. The Salvage Raccoon at 4 stays where the printed card had him, hired out of the Capital City by a town that wants something back and has decided not to ask how.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [
+    {
+     "card": "mk_pockets_odd_lot_dealer_3",
+     "why": "The Odd-Lot Dealer is a raccoon at the gate at dusk with a barrow under a sheet, dealing with a carter who is not getting down. neighbors/4 is the salvage portrait his brother already uses."
+    }
+   ],
+   "wantedVerbs": [
+    {
+     "verb": "playEventFromCityDump",
+     "why": "The maker asked for an Event or a Building out of the City Dump. The Building half exists — `takeFromCityDump` — but an Event in the City Dump cannot be reached at all: Events go to a town's own Dump, and nothing on either shelf crosses from one town's Dump to the other's.",
+     "workaround": "The two Dumps he can reach: `eventFromDumpToHand` for the Event, out of your own Town Dump, and `takeFromCityDump` for the Market card. It is the same pair of hands doing the same trick; it just never goes through the rival's bin."
+    }
+   ]
+  },
+  {
+   "name": "Hibiscus",
+   "renamedFrom": "Poppy",
+   "species": "Rabbit",
+   "studies": [
+    "Civics",
+    "Commerce"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Hibiscus walks the borough's round. Juniper takes the post that leaves the borough and Hibiscus takes the post that stays in it, and the two of them hand over at the sorting bench every morning at five, which is the only part of the day Hibiscus does quickly. After that it is doors. Every door, in order, and at a fair number of them somebody comes out, and that is where the schedule goes.\n\nThey are not bad at the job. They are, by any measure the Hiring Hall keeps, extremely good at it: nothing is lost, nothing is misdelivered, and Hibiscus knows which house on which lane has somebody in it who has not been seen for three days, which is a thing no ledger in the borough records. It is simply that a round which ought to take four hours takes seven, because a bunny who genuinely wants to know how your mother is cannot be got off a doorstep in under ten minutes, and they genuinely want to know, at every door, every day. The borough has decided this is the arrangement. Complaints about the late second post are filed at the Hiring Hall next to the ones about the county gate and come to about as much.\n\nWhat the round actually does is get the borough up. Hibiscus arrives, the door opens, somebody who was going to have a slow morning is now standing in it with their apron on and an opinion about the ferry, and by the time the round is done half the lane is out of doors and working. Biff walks his beat to stop trouble. Hibiscus walks theirs and the trouble never starts, which nobody has ever put in a report.",
+   "voice": "Bright, unhurried, endlessly interested. Opens with a question about somebody's family and gets the answer. Says 'no, go on' at the exact moment they should be leaving.",
+   "arc": "Five rungs of the same round, waking more of the town each time. The Post Runner at 1 gets one animal up for the morning. The Night Mail at 2 does it on the way home as well. The Round Walker at 3 turns a finished shift into somebody else's start. The Mail Coach Driver at 4 keeps the hour whether the passengers are aboard or not — the one job where Hibiscus is early — and has somebody up and waiting the moment the town announces anything. The Postmaster at 5 is the whole lane out of doors by nine: Hibiscus comes up, and an animal who was going to have a slow morning is standing in the doorway with their apron on.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [],
+   "wantedVerbs": []
+  },
+  {
+   "name": "Quill",
+   "addition": true,
+   "addedBecause": "The printed collection had two animals under the name Quill: a Mouse Town Scrivener hired out of the Capital City, and a Hedgehog who kept an orchard across five versions. The maker split them. The scrivener took the remake and the new name (see Quinn, who carries `renamedFrom: \"Quill\"` and retires the orchard versions); the orchard hedgehog kept the name Quill and stands here as her own character, claiming nothing.",
+   "species": "Hedgehog",
+   "studies": [
+    "Agriculture",
+    "Food",
+    "Lore"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Quill's parents had the orchard and their parents had it before that, and Quill grew up in it — under it, mostly, in the long grass between the rows, being handed up windfalls. When it came to her she did not have to decide anything, which she is aware is a kind of luck other animals do not get. She could not imagine doing anything else and has never tried very hard to.\n\nWhat she has decided, over and over, is that the orchard should be full. An orchard does not need thirty animals in it; hers has thirty animals in it anyway, most weekends, because she cannot bear the rows to be quiet. There is a cider social in the barn from September to about February and a bonfire whenever the prunings get above knee height, which is more often than pruning strictly requires. She invents reasons. Half the borough has picked for her one autumn, and about a third of them turned up for a Saturday and were still there at the end of the week, on the books, being paid.\n\nThat is the other thing the orchard does, and Quill will not be thanked for it. Rosabeth's garden takes the animals who have stopped getting up and mends them; the orchard takes everybody, all the time, whether or not anything is wrong, which means a hedgehog who is quietly out of work can be in the rows on Saturday morning without ever having admitted to anything. The Hiring Hall knows. It sends them. Quill pretends not to have noticed, hands them a basket, and puts the kettle on for thirty.",
+   "voice": "Loud, delighted, always catering for more animals than are present. Ends most sentences with 'come Saturday'. Never asks whether you are all right; asks whether you can carry a ladder.",
+   "arc": "The orchard, filling up. The Orchard Hand at 0 gets one animal into the rows where nothing can reach them. The Orchard Keeper at 2 is the standing rule of the place: nobody who is here loses their place here. The Cider Maker at 3 is the barn in September — the social pays, and somebody under the rafters is safe for the evening. The Orchard Scribe at 4 keeps the book of which tree fruited when, which is also the book of who picked, and the whole orchard holds while she is busy. The Harvest Steward at 5 is the season entire: the rows full, the books shut, and not one animal in them out of work.",
+   "remade": "2026-09-14",
+   "wantedArt": [
+    {
+     "card": "mk_quill_cider_maker_3",
+     "why": "The Cider Maker is the barn in September with the press going and thirty animals in it — a Food scene the printed orchard tiles (neighbors/9, the keeper among the trees) do not have."
+    }
+   ],
+   "wantedVerbs": []
+  },
+  {
+   "name": "Quinn",
+   "renamedFrom": "Quill",
+   "species": "Mouse",
+   "studies": [
+    "Civics",
+    "Lore"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Quinn is at everything. The ward meeting, the boundary hearing, the reading of a will, the argument at the weighbridge, the bad meeting after the bridge went — Quinn was at the back of all of them with the book open, and Quinn said nothing at any of them. He has been the borough's scrivener for as long as anyone can produce a date for, which is itself a small joke, because if anybody could produce a date it would be him.\n\nHe is not unfriendly. He answers if you ask him something, in about four words, and then goes back to it. The trouble is that a great many animals have said something in a room he was in and watched his pen move, and it is an unsettling thing to be recorded by somebody who will not tell you what he made of it. Two or three of the older animals will not sit with their backs to him. The children, on the other hand, adore him: there is a settled belief among the borough's young that Quinn is a mage, on the grounds that the writing comes out faster than the talking goes in, and that he was seen at the fair, the regatta and the Hiring Hall on the same afternoon. Inkwell, who has a rumour of his own and has never denied it either, was asked once to settle it. Inkwell said only that Quinn writes faster than he does.\n\nWhat the book is actually for is this. When a place falls vacant the Hiring Hall comes to Quinn, and Quinn turns back four years and finds the animal who did that exact work in a bad winter and has not been asked since, and writes the name on a slip, and hands it over, and says nothing. More animals in this borough have been got back into work by that slip than by any committee sitting.",
+   "voice": "Four words at most, and all four load-bearing. Writes while you are still talking. When he does speak it lands in a quiet room and is usually a date.",
+   "arc": "Three rungs, one book, pointed at Unemployment. The Meeting Scribe at 1 is at the back of the room, and a finished shift gets one animal back in cheap. The Town Scrivener at 3 is the post as the Capital City hires it, and the Mouse signature with it: whatever was written down comes back out of the Dump. The Keeper of the Record at 5 is the whole archive open: he turns back four years and the right name comes back for nothing.",
+   "remade": "2026-09-14",
+   "retires": [
+    {
+     "id": "br_quill_1",
+     "why": "The Orchard Keeper is the hedgehog's, not the scrivener's. The two printed Quills were different animals under one name; the orchard hedgehog now stands as her own character (`Quill`, an addition) and this version is superseded by her Orchard Keeper at cost 2."
+    },
+    {
+     "id": "br_quill_2",
+     "why": "The Harvest Steward is the hedgehog's. Superseded by the added Quill's own Harvest Steward at cost 5, which claims nothing because the two Quills are different species and a remake may not change species."
+    },
+    {
+     "id": "br_quill_3",
+     "why": "The Seed Vault Keeper is the hedgehog's, and the seed bank is Maribel's borough-wide in any case; the orchard arc has no room for it."
+    },
+    {
+     "id": "mh_quill_4",
+     "why": "The Orchard Scribe is the hedgehog's. Superseded by the added Quill's Orchard Scribe at cost 4 — the fruiting book, not the ward book."
+    },
+    {
+     "id": "ns_quill_0",
+     "why": "The Night Gardener is the hedgehog's, and the orchard's cheapest rung is now her Orchard Hand at cost 0."
+    }
+   ],
+   "wantedArt": [
+    {
+     "card": "mk_quinn_keeper_of_the_record_5",
+     "why": "The Keeper of the Record is the archive at night, one mouse and four years of shelving open at once. capital/4 is the Capital City's hiring portrait and is the job below it."
+    }
+   ],
+   "wantedVerbs": []
+  },
+  {
+   "name": "Roger",
+   "renamedFrom": "Rowan",
+   "species": "Fox",
+   "studies": [
+    "Crafts",
+    "Commerce",
+    "Civics"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Roger can fix things. Not one kind of thing — the lock, the lease, the rota, the argument between the two carters, the reason the ward's accounts do not add up — and he does it without much fuss and usually on the way to somewhere else. The borough has noticed. The borough's response to noticing an animal like that is always the same, and Roger has been made chair, warden, clerk, judge and ombudsman of one thing or another since he was about twenty-two, every single time by a room turning round and looking at him.\n\nHe is bad at it. Not at the work — at the office. The job of a chair is to decide, and deciding means one of the two animals in front of you walks out having lost, and Roger cannot do it. He sees it from where they are standing. He sees it from where the other one is standing too, immediately and completely, and he sits there with both of them true at once and the room waiting. He has adjourned hearings to think about it for a week. He has found for both sides in writing, twice, which Ned had to file as two documents.\n\nWhat the borough worked out, eventually, is the ha'penny. When a call is genuinely even Roger takes it out, and somebody else calls it in the air, and whatever it does is what happens, and Roger writes it down and everyone goes home. He has never once called it himself. He says that would be taking a side. The ha'penny is worn almost smooth now and it has settled four boundary questions, a dispute about a bandstand, and who was to have the good pitch at the fair, and the borough considers all four of those settled forever.",
+   "voice": "Mild, apologetic, extremely capable. Starts sentences with 'well, the thing is, from where he's sitting —'. Says 'that's fair' to both animals in the same conversation and means it both times.",
+   "arc": "Five rungs and one worn ha'penny. The Locksmith at 1 is the fixing, before anyone made an office of it — and even then a tie pays him. The Records Clerk at 2 is the borough's paperwork and the Fox's eye on the Capital City. The Circuit Judge at 3 is the first real bench, where a tie starts paying properly. The Fair Broker at 4 is the animal in the middle of a bidding war who can push his own side once the room has stalled. The Ombudsman at 5 is the whole of it: he wins the ties he cannot decide, and every one of them pays.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [
+    {
+     "card": "mk_roger_fair_broker_4",
+     "why": "The Fair Broker is two traders and a fox between them with a coin in the air. neighbors/6 is the bench portrait and boroughs/2 is the lock bench; neither has the toss in it."
+    }
+   ],
+   "wantedVerbs": [
+    {
+     "verb": "coinFlip",
+     "why": "The maker asked for chance: an effect that tosses Roger's ha'penny and does one thing on heads and another on tails — the borough's actual method for a call that will not come down on its own.",
+     "workaround": "The one genuine coin toss the engine already has: the tied bid. `onTiedBid` fires exactly when two Mayors have put up the same number and neither is right, which is the situation Roger is for, and everything he does hangs off it. It is chance the players walked into rather than chance he can call on demand."
+    }
+   ]
+  },
+  {
+   "name": "Earl",
+   "renamedFrom": "Russet",
+   "species": "Fox",
+   "studies": [
+    "Food",
+    "Commerce",
+    "Civics"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Earl keeps the tea house, which is not the café and never has been. Bean's counter by the Hiring Hall has the mornings and the accounts and the noise; Earl has the long afternoons, when an animal who needs to sit down with somebody for two hours comes and sits down with somebody for two hours. The two of them have never competed for an hour in their lives and Earl buys his leaf through Bean's supplier, which he will tell you is the only sensible arrangement in the borough.\n\nThere are two Earls and the difference between them is a pot of tea. The first one — the afternoon one, the one with a cup already poured — is the calmest animal in the First Boroughs. He listens for an hour without moving, says one thing at the end of it, and animals go away and act on the one thing. The second Earl is what is there before the first cup: fast, loud, four jobs at once, halfway up a ladder with the urn in one paw, talking through a plan that has three steps too many in it. That Earl gets an enormous amount done. That Earl also once reorganised the entire back room at four in the morning, on his own, and could not find anything in it for a fortnight.\n\nWhat both Earls do is push animals up. He has a thing about it — he cannot watch somebody be good at a job and stay in it. Half the borough's apprentices have been talked into the next thing across his counter, usually over a pot they did not pay for, and when it is genuinely a coin-toss whether an animal is ready he will lean on it, hard, in favour of ready. He has been wrong perhaps four times. He counts them. He will tell you all four if you have an afternoon.",
+   "voice": "Two speeds and nothing in between. With tea: slow, warm, one sentence at a time. Without: three sentences at once, all of them started. Says 'right — next thing' at both speeds.",
+   "arc": "Four rungs of the same push, and the tea decides how hard. The Tea Boy at 0 hands a note over with the tray and the next upgrade costs less. The Tea Trader at 2 does it every shift. The Coffee Roaster at 3 is Earl off the tea entirely, frantic at the roaster at four in the morning — and when the room stalls on an even call, that is when he leans hardest. The Tea House Keeper at 4 is the afternoon at its best: he is back on the floor with a cup already poured, and the next animal you push up a rung comes cheap.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [],
+   "wantedVerbs": [
+    {
+     "verb": "coinFlip",
+     "why": "The maker asked for a favourable coin flip before Earl helps anybody upgrade: the toss is whether the animal is ready, and Earl leans on it.",
+     "workaround": "The one genuine coin toss the engine already has: the tied bid. `onTiedBid` fires exactly when two Mayors have put up the same number and neither is right, which is the situation Roger is for, and everything he does hangs off it. It is chance the players walked into rather than chance he can call on demand."
+    }
+   ]
   }
  ],
  "cards": [
@@ -6780,7 +7062,7 @@
     }
    ],
    "addition": true,
-   "addedBecause": "Protection is the Hedgehog signature and it lives entirely on Characters; a town of them had nothing it could build. The borough has four Hedgehogs and this is the thing all four of them are.",
+   "addedBecause": "Protection is the Hedgehog signature and it lives entirely on Characters; a town of them had nothing it could build. The borough has five Hedgehogs and this is the thing all five of them are.",
    "rarity": "Uncommon",
    "power": {
     "score": 3.58,
@@ -9061,6 +9343,2141 @@
     "score": 3.39,
     "power": 7.3,
     "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_orien_tally_clerk_0",
+   "type": "character",
+   "name": "Orien",
+   "title": "Tally Clerk",
+   "job": "Tally Clerk",
+   "species": "Badger",
+   "study": "Science",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Orien completes a shift, your next recruit costs 1 less Supply.",
+   "flavor": "His first paid week, and he came home with a table of every price the Capital City took that season, in four colours, for nobody. The borough has been quietly using it ever since.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 10
+   },
+   "addition": true,
+   "addedBecause": "The printed Oakley started at cost 2 with a stonemason's rehire. The rung below it is the animal who only counts, and Orien's whole arc is that counting is the job.",
+   "rarity": "Common",
+   "power": {
+    "score": 3.08,
+    "power": 5.14,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_orien_rate_checker_2",
+   "type": "character",
+   "name": "Orien",
+   "title": "Rate Checker",
+   "job": "Rate Checker",
+   "species": "Badger",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Orien. When you announce a purchase, your challenges cost 1 less Supply until the end of your turn.",
+   "flavor": "He has read the lot, the four lots before it and what all five went for last year. You are not bidding against the room; you are bidding against his margin, and he has already worked out where it is.",
+   "abilities": [
+    {
+     "trigger": "onAnnounce",
+     "oncePerTurn": true,
+     "effect": {
+      "do": "addMod",
+      "key": "challengeDiscount",
+      "value": 1,
+      "expires": "turnEnd"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 10
+   },
+   "remakes": "br_oakley_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.53,
+    "power": 9.75,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_orien_borough_actuary_3",
+   "type": "character",
+   "name": "Orien",
+   "title": "Borough Actuary",
+   "job": "Borough Actuary",
+   "species": "Badger",
+   "study": "Civics",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Orien. Busy: your next Building costs 1 less Supply.",
+   "flavor": "Ask him what the next Building will go for and he tells you, and he is within a Supply, and he is a little put out that you sounded surprised.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "addMod",
+      "key": "buildingDiscount",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 10
+   },
+   "remakes": "mh_oakley_3",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.42,
+    "power": 10.05,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_orien_survey_computer_4",
+   "type": "character",
+   "name": "Orien",
+   "title": "Survey Computer",
+   "job": "Survey Computer",
+   "species": "Badger",
+   "study": "Science",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Orien. At the start of your turn, every shift your Characters complete this turn pays 1 more Supply.",
+   "flavor": "The machine in his back room is on its fourth rebuild, half Observatory cast-offs and half whatever Patch would sell him, and it clicks all night. It is also why he is never at the bonfire.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "shiftBonus",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "townlife",
+    "tile": 2
+   },
+   "remakes": "ns_oakley_4",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.04,
+    "power": 12.67,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_orien_town_planner_5",
+   "type": "character",
+   "name": "Orien",
+   "title": "Town Planner",
+   "job": "Town Planner",
+   "species": "Badger",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Orien. When Orien becomes upright, your next recruit costs 2 less Supply.",
+   "flavor": "Eleven committees have made him their figures badger and not one has asked him to speak. He likes it best when the room goes quiet and looks at him, and he can put the number on the table and go home.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 2,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 10
+   },
+   "remakes": "br_oakley_2",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.07,
+    "power": 15.85,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_patch_junkyard_diver_0",
+   "type": "character",
+   "name": "Patch",
+   "title": "Junkyard Diver",
+   "job": "Junkyard Diver",
+   "species": "Raccoon",
+   "study": "Commerce",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Patch completes a shift, your next Building costs 1 less Supply.",
+   "flavor": "Small enough to get under things, quick enough to get out again. There was money in it and no plan beyond it, and for about two years that was the whole business.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "addMod",
+      "key": "buildingDiscount",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 4
+   },
+   "remakes": "pp_patch_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.25,
+    "power": 5.43,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_patch_salvage_sorter_2",
+   "type": "character",
+   "name": "Patch",
+   "title": "Salvage Sorter",
+   "job": "Salvage Sorter",
+   "species": "Raccoon",
+   "study": "Science",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Patch. When Patch is recruited, your next Building costs 1 less Supply.",
+   "flavor": "He put a new roller in a mangle and sold it back to the animal who had thrown it out, for more than it cost new. Standing there with the coin, he worked out that the diving was the least interesting part of it.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "addMod",
+      "key": "buildingDiscount",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "townlife",
+    "tile": 3
+   },
+   "remakes": "ns_patch_2",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.39,
+    "power": 9.45,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_patch_valuer_3",
+   "type": "character",
+   "name": "Patch",
+   "title": "Valuer",
+   "job": "Valuer",
+   "species": "Raccoon",
+   "study": "Civics",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Patch. Busy: take a Market card from the City Dump and gain it.",
+   "flavor": "They bring him a thing and ask whether it is worth keeping. He turns it over twice and tells them. Then they start bringing him leases, and seasons that have not gone well, and he turns those over twice too.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "takeFromCityDump"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 4
+   },
+   "remakes": "pp_patch_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.16,
+    "power": 11.73,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_patch_yard_foreman_4",
+   "type": "character",
+   "name": "Patch",
+   "title": "Yard Foreman",
+   "job": "Yard Foreman",
+   "species": "Raccoon",
+   "study": "Crafts",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Patch. When Patch completes a shift, take a Market card from the City Dump and gain it.",
+   "flavor": "Out, sorted, mended, improved, sold back at a price nobody has ever complained about. Annabelle takes the paper. The two of them have never once discussed it.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "takeFromCityDump"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 4
+   },
+   "remakes": "mh_patch_4",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.97,
+    "power": 12.49,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_patch_reclamation_merchant_5",
+   "type": "character",
+   "name": "Patch",
+   "title": "Reclamation Merchant",
+   "job": "Reclamation Merchant",
+   "species": "Raccoon",
+   "study": "Commerce",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Patch. Busy: take a Market card from the City Dump and gain it, and your next Building costs 1 less Supply.",
+   "flavor": "He will tell you he is only a raccoon with a yard, and then tell you to keep the lease and sell the cart. You will, and it will have been the right way round.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "takeFromCityDump"
+       },
+       {
+        "do": "addMod",
+        "key": "buildingDiscount",
+        "value": 1,
+        "expires": "nextTurnStart"
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 4
+   },
+   "remakes": "pp_patch_3",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.28,
+    "power": 16.38,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_patchs_second_opinion",
+   "type": "event",
+   "name": "Patch's Second Opinion",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Patch"
+    }
+   ],
+   "text": "Requires Patch. Take a Market card from the City Dump and gain it.",
+   "effect": {
+    "do": "takeFromCityDump"
+   },
+   "flavor": "You came about the cart. He has looked at the cart, and at you, and he is going to start with the lease.",
+   "art": {
+    "atlas": "townlife",
+    "tile": 3
+   },
+   "remakes": "ns_patchs_contraption",
+   "rarity": "Common",
+   "power": {
+    "score": 1.37,
+    "power": 2.04,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_pebble_crossing_hand_0",
+   "type": "character",
+   "name": "Pebble",
+   "title": "Crossing Hand",
+   "job": "Crossing Hand",
+   "species": "Otter",
+   "study": "Commerce",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Pebble completes a shift, take an Otter token.",
+   "flavor": "Four crossings an hour, the same rope, the same eleven regulars and their eleven opinions. One worn wooden otter into the tin for each of them, the way their great-grandmother struck them.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "gainToken",
+      "of": "species",
+      "species": "Otter",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 10
+   },
+   "remakes": "ns_pebble_0",
+   "rarity": "Common",
+   "power": {
+    "score": 2.73,
+    "power": 4.56,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_pebble_bridge_courier_1",
+   "type": "character",
+   "name": "Pebble",
+   "title": "Bridge Courier",
+   "job": "Bridge Courier",
+   "species": "Otter",
+   "study": "Civics",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Pebble is recruited, take an Otter token, and another Character you control is upright at the start of your next turn.",
+   "flavor": "Half the borough has one of the ferry's chits in a pocket they never handed back. Pebble has never once asked for one of them.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainToken",
+        "of": "species",
+        "species": "Otter",
+        "count": 1
+       },
+       {
+        "do": "readyNextTurn",
+        "filter": {
+         "notSelf": true
+        },
+        "optional": true
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 10
+   },
+   "remakes": "ww_pebble_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.86,
+    "power": 7.1,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_pebble_ferry_master_3",
+   "type": "character",
+   "name": "Pebble",
+   "title": "Ferry Master",
+   "job": "Ferry Master",
+   "species": "Otter",
+   "study": "Commerce",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Pebble. Busy: move a shift from one of your Characters to another, then take an Otter token.",
+   "flavor": "Brooke has asked them twice why they are not climbing out of this. Standing where your father stood, Pebble said, with his grandmother's chits still in the tin, is not a thing you climb out of.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "moveShift"
+       },
+       {
+        "do": "gainToken",
+        "of": "species",
+        "species": "Otter",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 12
+   },
+   "remakes": "mh_pebble_3",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.47,
+    "power": 12.45,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_pebble_harbour_warden_5",
+   "type": "character",
+   "name": "Pebble",
+   "title": "Harbour Warden",
+   "job": "Harbour Warden",
+   "species": "Otter",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Pebble. At the start of your turn, take an Otter token. When Pebble becomes upright, if you hold at least three Otter tokens, gain 2 Supply.",
+   "flavor": "Willow asked three times. Pebble took it on the third and only on terms: the post, the office, the whole harbour if you like — and the boat, four crossings an hour, every morning, as before.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "gainToken",
+      "of": "species",
+      "species": "Otter",
+      "count": 1
+     }
+    },
+    {
+     "trigger": "onReady",
+     "condition": {
+      "tokensAtLeast": {
+       "of": "species",
+       "species": "Otter",
+       "count": 3
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 12
+   },
+   "remakes": "mh_pebble_5",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.33,
+    "power": 16.53,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_scott_story_collector_0",
+   "type": "character",
+   "name": "Scott",
+   "title": "Story Collector",
+   "job": "Story Collector",
+   "species": "Squirrel",
+   "study": "Lore",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Scott completes a shift, put 2 Supply by on Scott, then look at the top card of the Market Deck.",
+   "flavor": "Every market between here and the Capital City, every lighterman off a night run, every old animal on a bench. He takes the story and pays for it with a better one, and most of it goes in the tin for years.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "storeSupply",
+        "amount": 2,
+        "cap": 4
+       },
+       {
+        "do": "peekMarketDeck",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 14
+   },
+   "remakes": "rr_pip_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.03,
+    "power": 6.72,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_scott_pamphleteer_2",
+   "type": "character",
+   "name": "Scott",
+   "title": "Pamphleteer",
+   "job": "Pamphleteer",
+   "species": "Squirrel",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Scott. When Scott becomes upright, look at the top 3 cards of your deck and put them back in any order.",
+   "flavor": "Dragons under the far hedgerow on one shelf and the true account of 1841 on the next, and he will not be drawn on which of them sells better. He orders a run the way he orders a page.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "reorderDeckTop",
+      "count": 3
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 15
+   },
+   "remakes": "mh_pip_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.91,
+    "power": 10.56,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_scott_town_chronicler_3",
+   "type": "character",
+   "name": "Scott",
+   "title": "Town Chronicler",
+   "job": "Town Chronicler",
+   "species": "Squirrel",
+   "study": "Lore",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Scott. When Scott becomes upright, look at the top 3 cards of your deck and put them back in any order, then look at the top card of the Market Deck.",
+   "flavor": "Everything about a real animal or a real year goes across Ned's shelves first, and Ned certifies it or Scott cuts it. Fifteen years, and Lynnette has never printed a correction to a word of his.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "reorderDeckTop",
+        "count": 3
+       },
+       {
+        "do": "peekMarketDeck",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 14
+   },
+   "remakes": "rr_pip_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.77,
+    "power": 10.84,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_scott_natural_historian_4",
+   "type": "character",
+   "name": "Scott",
+   "title": "Natural Historian",
+   "job": "Natural Historian",
+   "species": "Squirrel",
+   "study": "Science",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Scott. When Scott becomes upright, look at the top 3 cards of your deck and put them back in any order, then put 2 Supply by on Scott.",
+   "flavor": "He goes out after the things nobody has written down yet, on the grounds that a thing nobody has written down is either a discovery or a very good lie, and he has a use for both.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "reorderDeckTop",
+        "count": 3
+       },
+       {
+        "do": "storeSupply",
+        "amount": 2,
+        "cap": 4
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 0
+   },
+   "remakes": "ns_pip_4",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.59,
+    "power": 14.05,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_scott_author_of_the_boroughs_5",
+   "type": "character",
+   "name": "Scott",
+   "title": "Author of the Boroughs",
+   "job": "Author of the Boroughs",
+   "species": "Squirrel",
+   "study": "Lore",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Scott. When Scott becomes upright, take every Supply your Characters have put by, then look at the top two cards of the Market Deck.",
+   "flavor": "A season finally calls for it, and he opens the tin, and it turns out he has had the answer filed since about a decade ago. There is a fart joke on page four. There is always a fart joke on page four.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "takeStoredSupply"
+       },
+       {
+        "do": "peekMarketDeck",
+        "count": 2
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 14
+   },
+   "remakes": "rr_pip_3",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.75,
+    "power": 17.61,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_scotts_reading_hour",
+   "type": "event",
+   "name": "Scott's Reading Hour",
+   "kind": "limited",
+   "cost": 0,
+   "duration": 2,
+   "requires": [
+    {
+     "name": "Scott"
+    }
+   ],
+   "text": "Requires Scott. Limited 2: at the start of your turn, draw 1 card and look at the top card of the Market Deck.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "draw",
+        "count": 1
+       },
+       {
+        "do": "peekMarketDeck",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "flavor": "He reads the boundary dispute out in full, with the dates, and puts the joke about somebody's uncle exactly where the room starts to go. The little ones are waiting for page four and he knows it.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 9
+   },
+   "remakes": "mh_pips_reading_hour",
+   "rarity": "Common",
+   "power": {
+    "score": 2.36,
+    "power": 3.8,
+    "opportunityCost": 3.3
+   }
+  },
+  {
+   "id": "mk_lindsay_potting_helper_0",
+   "type": "character",
+   "name": "Lindsay",
+   "title": "Potting Helper",
+   "job": "Potting Helper",
+   "species": "Cat",
+   "study": "Agriculture",
+   "cost": 0,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "When Lindsay completes a shift, gain 1 Supply.",
+   "flavor": "Can held at exactly the right height for exactly the right count, eyes somewhere past the roof glass. Ask her afterwards what she did and she cannot tell you. Ask the pots and they can.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 0
+   },
+   "remakes": "ww_pippa_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.26,
+    "power": 5.44,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_lindsay_glasshouse_hand_2",
+   "type": "character",
+   "name": "Lindsay",
+   "title": "Glasshouse Hand",
+   "job": "Glasshouse Hand",
+   "species": "Cat",
+   "study": "Agriculture",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Lindsay. At the start of your turn, if you control an Agriculture Character, gain 1 Supply.",
+   "flavor": "She has been overheard costing out a glasshouse on the moon and settling an argument nobody was having about whether rain smells before or after it lands. Meanwhile the bench came in over again.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Agriculture"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 0
+   },
+   "remakes": "ww_pippa_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.8,
+    "power": 10.33,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_lindsay_herb_grower_3",
+   "type": "character",
+   "name": "Lindsay",
+   "title": "Herb Grower",
+   "job": "Herb Grower",
+   "species": "Cat",
+   "study": "Agriculture",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Lindsay. Busy, once per game: Lindsay readies herself.",
+   "flavor": "Marmalade will not use anybody else's rosemary. She cut it for him this morning without noticing that she had got up, gone out, or come back.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "selfReady",
+      "oncePerGame": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 0
+   },
+   "remakes": "mh_pippa_3",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.33,
+    "power": 9.85,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_lindsay_conservatory_keeper_4",
+   "type": "character",
+   "name": "Lindsay",
+   "title": "Conservatory Keeper",
+   "job": "Conservatory Keeper",
+   "species": "Cat",
+   "study": "Agriculture",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Lindsay. At the start of your turn, every shift your Characters complete this turn pays 1 more Supply.",
+   "flavor": "Her beds come in over. Always, every year, more than the row should give. Orien's figures on the glasshouse have a note in the margin that just says 'ask her again in spring'.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "shiftBonus",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 0
+   },
+   "remakes": "ww_pippa_3",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.04,
+    "power": 12.67,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_lindsay_moon_gardener_5",
+   "type": "character",
+   "name": "Lindsay",
+   "title": "Moon Gardener",
+   "job": "Moon Gardener",
+   "species": "Cat",
+   "study": "Science",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Lindsay. At the start of your turn, gain 2 Supply.",
+   "flavor": "Twenty years of not paying attention, and it turns out this is where she was. Comet, who was turned down twice for wanting the moon too openly, likes her enormously.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 10
+   },
+   "remakes": "ns_pippa_5",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.79,
+    "power": 15.1,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_pockets_kerbside_dealer_1",
+   "type": "character",
+   "name": "Pockets",
+   "title": "Kerbside Dealer",
+   "job": "Kerbside Dealer",
+   "species": "Raccoon",
+   "study": "Commerce",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Pockets completes a shift, you may return an Event from your Town Dump to your hand.",
+   "flavor": "He taught Patch to dive. He leads with that. It has been getting steadily less useful to him for about fifteen years.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "eventFromDumpToHand",
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 4
+   },
+   "addition": true,
+   "addedBecause": "The printed Pockets was one card, hired out of the Capital City at cost 4. His brother's arc starts in the bins at nothing, and so did his; this is the rung the printed set never gave him.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.02,
+    "power": 7.4,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_pockets_odd_lot_dealer_3",
+   "type": "character",
+   "name": "Pockets",
+   "title": "Odd-Lot Dealer",
+   "job": "Odd-Lot Dealer",
+   "species": "Raccoon",
+   "study": "Commerce",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Pockets. When Pockets is recruited, take a Market card from the City Dump and gain it, and you may return an Event from your Town Dump to your hand.",
+   "flavor": "Patch sells you back your own mangle, mended. Pockets sells you somebody else's and does not say whose. Nothing he does is quite a crime; several things are the shape of one, seen from a distance, in poor light.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "takeFromCityDump"
+       },
+       {
+        "do": "eventFromDumpToHand",
+        "optional": true
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 4
+   },
+   "addition": true,
+   "addedBecause": "The middle rung of a one-card character: the trade at full range, working both Dumps at once. No printed Pockets stood at cost 3, because there was only ever the one.",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.96,
+    "power": 11.29,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_pockets_salvage_raccoon_4",
+   "type": "marketCharacter",
+   "name": "Pockets",
+   "title": "Salvage Raccoon",
+   "job": "Salvage Raccoon",
+   "species": "Raccoon",
+   "study": "Commerce",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Hired from the Capital City; enters Busy. Busy: take a Market card from the City Dump and gain it.",
+   "flavor": "The borough hires him when it wants back a thing it has already thrown away. It is careful not to ask how, and it pays him in the same careful way.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "takeFromCityDump"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 4
+   },
+   "remakes": "mkt_pockets",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.16,
+    "power": 12.08,
+    "opportunityCost": 8.4
+   }
+  },
+  {
+   "id": "mk_hibiscus_post_runner_1",
+   "type": "character",
+   "name": "Hibiscus",
+   "title": "Post Runner",
+   "job": "Post Runner",
+   "species": "Rabbit",
+   "study": "Civics",
+   "cost": 1,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "When Hibiscus is recruited, another Character you control is upright at the start of your next turn.",
+   "flavor": "Handover at the sorting bench at five, and that is the only part of the day Hibiscus does quickly. After that it is doors.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "readyNextTurn",
+      "filter": {
+       "notSelf": true
+      },
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 0
+   },
+   "remakes": "bb_poppy_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.69,
+    "power": 6.8,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_hibiscus_night_mail_2",
+   "type": "character",
+   "name": "Hibiscus",
+   "title": "Night Mail",
+   "job": "Night Mail",
+   "species": "Rabbit",
+   "study": "Civics",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "Upgrades Hibiscus. When Hibiscus becomes upright, another Character you control is upright at the start of your next turn.",
+   "flavor": "The second post goes out at ten at night because the first one took until eight, and every lit window on the lane gets a wave whether it wants one or not.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "readyNextTurn",
+      "filter": {
+       "notSelf": true
+      },
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 0
+   },
+   "remakes": "ns_poppy_2",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.1,
+    "power": 8.83,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_hibiscus_round_walker_3",
+   "type": "character",
+   "name": "Hibiscus",
+   "title": "Round Walker",
+   "job": "Round Walker",
+   "species": "Rabbit",
+   "study": "Civics",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Hibiscus. When Hibiscus completes a shift, another Character you control is upright at the start of your next turn.",
+   "flavor": "Four hours of round in seven hours, because a bunny who genuinely wants to know how your mother is cannot be got off a doorstep in under ten minutes, and they genuinely want to know, at every door, every day.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "readyNextTurn",
+      "filter": {
+       "notSelf": true
+      },
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 0
+   },
+   "remakes": "bb_poppy_3",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.25,
+    "power": 9.67,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_hibiscus_mail_coach_driver_4",
+   "type": "character",
+   "name": "Hibiscus",
+   "title": "Mail Coach Driver",
+   "job": "Mail Coach Driver",
+   "species": "Rabbit",
+   "study": "Commerce",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Hibiscus. The first time you announce a purchase each turn, another Character you control is upright at the start of your next turn.",
+   "flavor": "The coach leaves on the hour whether the passengers are aboard or not, which is the one hour of the week Hibiscus is on time, and they consider it a kindness rather than a rule.",
+   "abilities": [
+    {
+     "trigger": "onAnnounce",
+     "oncePerTurn": true,
+     "effect": {
+      "do": "readyNextTurn",
+      "filter": {
+       "notSelf": true
+      },
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 0
+   },
+   "remakes": "mh_poppy_4",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.64,
+    "power": 11.65,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_hibiscus_postmaster_5",
+   "type": "character",
+   "name": "Hibiscus",
+   "title": "Postmaster",
+   "job": "Postmaster",
+   "species": "Rabbit",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Hibiscus. When Hibiscus becomes upright, one of your other Characters becomes upright.",
+   "flavor": "Biff walks his beat to stop the trouble. Hibiscus walks theirs and the trouble never starts, and by nine the whole lane is out of doors with its apron on and an opinion about the ferry.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "readyCharacter",
+      "count": 1,
+      "filter": {
+       "notSelf": true
+      },
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 0
+   },
+   "remakes": "bb_poppy_2",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.4,
+    "power": 14.08,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_hibiscuss_post_route",
+   "type": "event",
+   "name": "Hibiscus's Post Route",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Hibiscus"
+    }
+   ],
+   "text": "Requires Hibiscus. Gain 2 Supply, then one of your Characters is upright at the start of your next turn.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "readyNextTurn",
+      "optional": true
+     }
+    ]
+   },
+   "flavor": "Rain, snow or bidding war, the post gets through — late, and with the whole lane standing in its doorways behind it.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 3
+   },
+   "remakes": "mh_poppys_post_route",
+   "rarity": "Common",
+   "power": {
+    "score": 2.29,
+    "power": 3.4,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_quill_orchard_hand_0",
+   "type": "character",
+   "name": "Quill",
+   "title": "Orchard Hand",
+   "job": "Orchard Hand",
+   "species": "Hedgehog",
+   "study": "Agriculture",
+   "cost": 0,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "When Quill is recruited, one of your Characters cannot be targeted by your opponent until your next turn.",
+   "flavor": "She grew up under the rows, in the long grass, being handed up windfalls. Nothing has ever reached anybody in that grass and she does not intend to be the generation it starts with.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "protectCharacter"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 9
+   },
+   "addition": true,
+   "addedBecause": "Quill is an added character (see her entry in `characters`): the printed Quill was two animals under one name, and the orchard hedgehog claims none of them — Quinn's entry retires the five printed orchard versions and says why.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.82,
+    "power": 4.7,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_quill_orchard_keeper_2",
+   "type": "character",
+   "name": "Quill",
+   "title": "Orchard Keeper",
+   "job": "Orchard Keeper",
+   "species": "Hedgehog",
+   "study": "Agriculture",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Quill. While Quill is in town, your Characters cannot be sent to Unemployment by an effect.",
+   "flavor": "A third of the animals who turned up for one Saturday were still there at the end of the week, on the books, being paid. She has never once said so out loud.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "unemploymentShield",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 9
+   },
+   "addition": true,
+   "addedBecause": "Quill is an added character (see her entry in `characters`): the printed Quill was two animals under one name, and the orchard hedgehog claims none of them — Quinn's entry retires the five printed orchard versions and says why.",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.8,
+    "power": 10.33,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_quill_cider_maker_3",
+   "type": "character",
+   "name": "Quill",
+   "title": "Cider Maker",
+   "job": "Cider Maker",
+   "species": "Hedgehog",
+   "study": "Food",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Quill. When Quill becomes upright, gain 1 Supply and one of your other Characters cannot be targeted by your opponent until your next turn.",
+   "flavor": "The social runs in the barn from September to about February, and the bonfires happen whenever the prunings get above knee height, which is considerably more often than pruning requires. She invents reasons.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 1
+       },
+       {
+        "do": "protectCharacter",
+        "filter": {
+         "notSelf": true
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightskies",
+    "tile": 9
+   },
+   "addition": true,
+   "addedBecause": "Quill is an added character (see her entry in `characters`): the printed Quill was two animals under one name, and the orchard hedgehog claims none of them — Quinn's entry retires the five printed orchard versions and says why.",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.01,
+    "power": 11.39,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_quill_orchard_scribe_4",
+   "type": "character",
+   "name": "Quill",
+   "title": "Orchard Scribe",
+   "job": "Orchard Scribe",
+   "species": "Hedgehog",
+   "study": "Lore",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Quill. Busy: your Characters cannot be sent to Unemployment by an effect until your next turn, and you draw 1 card.",
+   "flavor": "The book says which tree fruited when, going back three keepers. It also says who picked, which is not what the book is for, and is the only record in the borough of a good few animals' worst autumns.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "addMod",
+        "key": "unemploymentShield",
+        "value": 1,
+        "expires": "nextTurnStart"
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 9
+   },
+   "addition": true,
+   "addedBecause": "Quill is an added character (see her entry in `characters`): the printed Quill was two animals under one name, and the orchard hedgehog claims none of them — Quinn's entry retires the five printed orchard versions and says why.",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.63,
+    "power": 14.15,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_quill_harvest_steward_5",
+   "type": "character",
+   "name": "Quill",
+   "title": "Harvest Steward",
+   "job": "Harvest Steward",
+   "species": "Hedgehog",
+   "study": "Agriculture",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Quill. When Quill becomes upright, one of your other Characters cannot be targeted by your opponent and your Characters cannot be sent to Unemployment by an effect until your next turn.",
+   "flavor": "The Hiring Hall sends them and pretends it hasn't; Quill takes them and pretends she hasn't noticed. She hands over a basket, asks whether they can carry a ladder, and puts the kettle on for thirty.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "protectCharacter",
+        "filter": {
+         "notSelf": true
+        }
+       },
+       {
+        "do": "addMod",
+        "key": "unemploymentShield",
+        "value": 1,
+        "expires": "nextTurnStart"
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 9
+   },
+   "addition": true,
+   "addedBecause": "Quill is an added character (see her entry in `characters`): the printed Quill was two animals under one name, and the orchard hedgehog claims none of them — Quinn's entry retires the five printed orchard versions and says why.",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.65,
+    "power": 14.75,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_quinn_meeting_scribe_1",
+   "type": "character",
+   "name": "Quinn",
+   "title": "Meeting Scribe",
+   "job": "Meeting Scribe",
+   "species": "Mouse",
+   "study": "Civics",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Quinn completes a shift, you may rehire a Character from your Unemployment for 1 less Supply.",
+   "flavor": "At the back of the ward meeting with the book open, saying nothing. Two or three of the older animals will not sit with their backs to him.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "rehire",
+      "discount": 1,
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 4
+   },
+   "addition": true,
+   "addedBecause": "The printed Quill the Mouse was a single cost-3 hire out of the Capital City. The rung below it is the scrivener before the borough made the post official — a mouse at the back of a room with a book.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.9,
+    "power": 7.17,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_quinn_town_scrivener_3",
+   "type": "marketCharacter",
+   "name": "Quinn",
+   "title": "Town Scrivener",
+   "job": "Town Scrivener",
+   "species": "Mouse",
+   "study": "Lore",
+   "cost": 3,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Hired from the Capital City; enters Busy. When Quinn becomes upright, you may return an Event from your Town Dump to your hand.",
+   "flavor": "The children are settled on it: he is a mage, because the writing comes out faster than the talking goes in, and because he was at the fair, the regatta and the Hiring Hall on one afternoon.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "eventFromDumpToHand",
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 4
+   },
+   "remakes": "mkt_quill",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.44,
+    "power": 12.12,
+    "opportunityCost": 7.4
+   }
+  },
+  {
+   "id": "mk_quinn_keeper_of_the_record_5",
+   "type": "character",
+   "name": "Quinn",
+   "title": "Keeper of the Record",
+   "job": "Keeper of the Record",
+   "species": "Mouse",
+   "study": "Lore",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Quinn. When Quinn becomes upright, you may rehire a Character from your Unemployment for free.",
+   "flavor": "He turns back four years, finds the animal who did that exact work in a bad winter and has not been asked since, writes the name on a slip, hands it over, and says nothing. It has put more animals back to work than any committee sitting.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "rehire",
+      "free": true,
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 4
+   },
+   "addition": true,
+   "addedBecause": "The top of an arc the printed set never had: the printed Quill the Mouse stopped at the cost-3 hire, and the archive entire — four years back, the right name, for nothing — is the payoff the one card could not carry.",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.69,
+    "power": 14.85,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_roger_locksmith_1",
+   "type": "character",
+   "name": "Roger",
+   "title": "Locksmith",
+   "job": "Locksmith",
+   "species": "Fox",
+   "study": "Crafts",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Whenever a bid of yours is tied, gain 1 Supply.",
+   "flavor": "The lock, the lease, the rota, the argument between the two carters — and all of it on the way to somewhere else. He cuts a key for every door in town and keeps a spare for none of them.",
+   "abilities": [
+    {
+     "trigger": "onTiedBid",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 2
+   },
+   "remakes": "ns_rowan_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.31,
+    "power": 6.1,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_roger_records_clerk_2",
+   "type": "character",
+   "name": "Roger",
+   "title": "Records Clerk",
+   "job": "Records Clerk",
+   "species": "Fox",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Roger. When you announce a purchase, look at the top 2 cards of the Market Deck.",
+   "flavor": "Chair, warden, clerk, judge — every one of them handed to him by a room turning round and looking at him, and this was the first. He was twenty-two and had only mentioned that the figures were out.",
+   "abilities": [
+    {
+     "trigger": "onAnnounce",
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 6
+   },
+   "remakes": "pp_rowan_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.95,
+    "power": 8.5,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_roger_circuit_judge_3",
+   "type": "character",
+   "name": "Roger",
+   "title": "Circuit Judge",
+   "job": "Circuit Judge",
+   "species": "Fox",
+   "study": "Civics",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Roger. Whenever a bid of yours is tied, gain 2 Supply.",
+   "flavor": "He has adjourned a hearing for a week to think about it. He has found for both sides in writing, twice, which Ned had to file as two documents.",
+   "abilities": [
+    {
+     "trigger": "onTiedBid",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 6
+   },
+   "remakes": "mh_rowan_3",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.24,
+    "power": 9.65,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_roger_fair_broker_4",
+   "type": "character",
+   "name": "Roger",
+   "title": "Fair Broker",
+   "job": "Fair Broker",
+   "species": "Fox",
+   "study": "Commerce",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Roger. Whenever a bid of yours is tied, you may pay 2 Supply to raise one of your open bids by 2.",
+   "flavor": "Somebody else calls it in the air. He has never called it himself, not once, on the grounds that calling it would be taking a side.",
+   "abilities": [
+    {
+     "trigger": "onTiedBid",
+     "effect": {
+      "do": "raiseOwnBid",
+      "amount": 2,
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 6
+   },
+   "remakes": "pp_rowan_3",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.04,
+    "power": 10.15,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_roger_ombudsman_5",
+   "type": "character",
+   "name": "Roger",
+   "title": "Ombudsman",
+   "job": "Ombudsman",
+   "species": "Fox",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Roger. Your challenge bids win ties. Whenever a bid of yours is tied, gain 1 Supply.",
+   "flavor": "The ha'penny is worn almost smooth. It has settled four boundary questions, a dispute about a bandstand and who was to have the good pitch at the fair, and the borough considers all four settled forever.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "winTiesAsChallenger"
+    },
+    {
+     "trigger": "onTiedBid",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 6
+   },
+   "remakes": "pp_rowan_2",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.46,
+    "power": 14.25,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_earl_tea_boy_0",
+   "type": "character",
+   "name": "Earl",
+   "title": "Tea Boy",
+   "job": "Tea Boy",
+   "species": "Fox",
+   "study": "Food",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Earl is recruited, your next recruit costs 1 less Supply, or 2 less if it upgrades a Character you already have.",
+   "flavor": "He carried trays before he kept anything, and he was already at it then: nobody got a cup off that tray without also getting told what they ought to be doing next.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    },
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "filter": {
+       "upgradesOwn": true
+      },
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "remakes": "mh_russet_0",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.41,
+    "power": 5.7,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_earl_tea_trader_2",
+   "type": "character",
+   "name": "Earl",
+   "title": "Tea Trader",
+   "job": "Tea Trader",
+   "species": "Fox",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Earl. When Earl completes a shift, your next recruit costs 1 less Supply if it upgrades a Character you already have.",
+   "flavor": "There is always a spare cup behind the counter and it is never free, exactly: you pay for it by hearing what he thinks you should be doing by spring.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "filter": {
+       "upgradesOwn": true
+      },
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "remakes": "ww_russet_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.5,
+    "power": 9.69,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_earl_coffee_roaster_3",
+   "type": "character",
+   "name": "Earl",
+   "title": "Coffee Roaster",
+   "job": "Coffee Roaster",
+   "species": "Fox",
+   "study": "Food",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Earl. Whenever a bid of yours is tied, gain 1 Supply and your next recruit costs 2 less Supply if it upgrades a Character you already have.",
+   "flavor": "This is Earl before the first cup: four in the morning, the urn in one paw, three steps too many in the plan. When it is an even call whether an animal is ready, this is the Earl who leans on it.",
+   "abilities": [
+    {
+     "trigger": "onTiedBid",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 1
+       },
+       {
+        "do": "addMod",
+        "key": "recruitDiscount",
+        "value": 2,
+        "filter": {
+         "upgradesOwn": true
+        },
+        "expires": "untilUsed",
+        "consumable": true
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightskies",
+    "tile": 7
+   },
+   "remakes": "ns_russet_3",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.68,
+    "power": 10.65,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_earl_tea_house_keeper_4",
+   "type": "character",
+   "name": "Earl",
+   "title": "Tea House Keeper",
+   "job": "Tea House Keeper",
+   "species": "Fox",
+   "study": "Civics",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Earl. When Earl becomes upright, your next recruit costs 2 less Supply if it upgrades a Character you already have.",
+   "flavor": "Bean has the mornings and the accounts. Earl has the long afternoons, when an animal who needs to sit down with somebody sits down for two hours and goes away having agreed to something.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 2,
+      "filter": {
+       "upgradesOwn": true
+      },
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "remakes": "mh_russet_4",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.55,
+    "power": 13.95,
+    "opportunityCost": 10
    }
   }
  ],
