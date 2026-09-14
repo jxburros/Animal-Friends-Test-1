@@ -88,10 +88,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .card-face.large .flavor { display: none; }
 .card-face.large .card-footer { font-size: 9px; min-height: 24px; padding: 3px 9px 0; }
 .card-face.large .inspect-card { font-size: 11px; padding: 3px 10px; min-height: 24px; }
-.card-face.foil .foil-sheen { opacity: .16; }
-.card-face.foil:hover .foil-sheen { opacity: .3; }
-.card-face.foil .foil-tag { top: 58px; right: 9px; }
-.card-face.large .foil-tag { top: 87px; right: 13px; }
 
 /* Full rules are available without hover, even when the compact table face is crowded. */
 .card-reader { padding: 12px; background: transparent; border: 0; max-width: calc(100vw - 16px); max-height: calc(100dvh - 24px); overflow: auto; }

@@ -4,6 +4,10 @@ A two-player town-building trading card game where each player is the **Mayor** 
 
 This repo replaced the earlier single-file "Critter Town" game (archived at `docs/legacy-critter-town.html`).
 
+The [foil finish system](docs/FOIL_FINISHES.md) supports full-card, artwork-only, masked artwork details,
+reverse and small hexagon foil on any card. Assign finishes individually over time, or compare them
+in the [finish preview](src/ui/foil-preview.html) after starting the local server.
+
 The [painted app surroundings](docs/APP_SURROUNDINGS.md) extend the card illustrations into the menu,
 Capital City banner, welcome screen and deck workshop, with locally bundled artwork and matching parchment frames.
 

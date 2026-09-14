@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Foil finish preview · Animal Friends</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="storybook.css">
+  <link rel="stylesheet" href="full-art.css">
+  <link rel="stylesheet" href="versions.css">
+  <link rel="stylesheet" href="foil.css">
+  <style>
+    body { margin: 0; padding: 24px; }
+    main { max-width: 1100px; margin: auto; }
+    h1 { margin-bottom: 8px; }
+    p { max-width: 760px; line-height: 1.5; }
+    .controls { display: flex; gap: 16px; flex-wrap: wrap; margin: 24px 0; }
+    label { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; min-width: 0; max-width: 100%; }
+    select, input { min-height: 44px; min-width: 0; max-width: 100%; }
+    #cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+    figure { margin: 0; display: grid; justify-items: center; gap: 10px; }
+    figcaption { font-weight: bold; }
+    .reader-close { min-height: 44px; }
+    @media (max-width: 400px) { body { padding: 16px; } }
+  </style>
+</head>
+<body>
+<main>
+  <a href="../../index.html">Back to Animal Friends</a>
+  <h1>Foil finish preview</h1>
+  <p>Compare all five finishes on any card. These are previews; nothing here assigns a finish to the collection.</p>
+  <p>Detail foil uses a demonstration mask with three shapes. For a finished card, trace a mask to its particular artwork. A transparent area stays matte; an opaque area shines.</p>
+  <div class="controls">
+    <label>Card <select id="card"></select></label>
+    <label>Printing <select id="printing"></select></label>
+    <label>Card size <select id="size"><option value="large">Large</option><option value="small">Table</option></select></label>
+    <label>Motion <select id="motion"><option value="storybook">Animated</option><option value="instant">Still</option></select></label>
+    <label>Detail mask path (optional) <input id="mask" placeholder="assets/art/foil-masks/card.svg"></label>
+  </div>
+  <p id="status" role="status">Loading cards…</p>
+  <div id="cards"></div>
+</main>
+<div id="cardPeek" class="card-peek" hidden></div>
+<script type="module" src="foil-preview.js"></script>
+</body>
+</html>

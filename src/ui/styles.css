@@ -301,22 +301,6 @@ input[type=range]{width:100%;accent-color:var(--gold)}
 .card-peek{position:fixed;z-index:180;pointer-events:none;filter:drop-shadow(0 10px 24px rgba(0,0,0,.4));animation:peek-in calc(.18s * max(var(--fx-scale),.01)) ease-out}
 @keyframes peek-in{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
 
-/* foil: metallic frame, rainbow sheen that follows the pointer, slow idle shimmer */
-.card-face.foil{--mx:30%;--my:20%}
-.card-face.foil .frame{box-shadow:inset 0 0 0 2px #fff6d5,inset 0 0 0 3.5px #d9b45a,0 0 0 1px #b58a2e}
-.card-face.foil .banner{background:linear-gradient(100deg,#7a5a1a,#d9b45a 35%,#8a6a22 55%,#e6c777 80%,#7a5a1a)}
-.card-face.foil .foil-sheen{position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:inherit;mix-blend-mode:color-dodge;opacity:.7;
-  background:
-    radial-gradient(circle at var(--mx) var(--my), rgba(255,255,255,.75) 0, rgba(255,255,255,.2) 18%, transparent 42%),
-    linear-gradient(115deg, rgba(255,0,128,.35) 0%, rgba(255,200,0,.35) 20%, rgba(0,255,170,.35) 40%, rgba(0,160,255,.35) 60%, rgba(180,0,255,.35) 80%, rgba(255,0,128,.35) 100%);
-  background-size:100% 100%,300% 300%;animation:foil-drift calc(7s * max(var(--fx-scale),.01)) linear infinite;transition:opacity .3s}
-.card-face.foil:hover .foil-sheen{opacity:1}
-.card-face.foil{box-shadow:0 0 0 1px #d9b45a,0 0 12px rgba(230,180,80,.45),var(--shadow2)}
-@keyframes foil-drift{0%{background-position:0 0,0% 50%}100%{background-position:0 0,300% 50%}}
-.card-face.foil .foil-tag{position:absolute;right:5px;top:22px;width:14px;height:14px;color:#fff;background:linear-gradient(135deg,#f6d27a,#b58a2e);border:1px solid #fff6d5;border-radius:50%;padding:2px;z-index:7;box-shadow:0 1px 3px rgba(0,0,0,.35);animation:foil-twinkle calc(2.6s * max(var(--fx-scale),.01)) ease-in-out infinite}
-.card-face.foil .foil-tag svg{width:100%;height:100%;display:block}
-.card-face.large .foil-tag{width:20px;height:20px;top:32px;right:8px;padding:3px}
-@keyframes foil-twinkle{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.25) rotate(20deg)}}
 
 /* card backs */
 .card-back{width:var(--card-w);height:var(--card-h);border-radius:10px;overflow:hidden;box-shadow:var(--shadow2);background:#154524;flex:none}
