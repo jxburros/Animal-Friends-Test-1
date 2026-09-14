@@ -215,7 +215,7 @@
    "pronouns": "he/him",
    "backstory": "Biff grew up on the edge of the borough, on the kind of smallholding where you are big before you are old. He was never top of the class and has never once claimed otherwise — he says it about himself before anyone else can, cheerfully, as though it settles the matter. What he had was the shoulders, the legs, and a completely unembarrassed wish for the place to be better than it was.\n\nSo he took the constable's job, which nobody else wanted, and turned out to be remarkable at it. Not because he is hard: because he is not. Biff knows every animal on his beat by name and most of them by their parents, and he has worked out over twenty years that a town is not made safer by taking animals out of it. He stops the trouble — he is a Hedgehog and he is immovable and the trouble does stop — and then he walks the troublemaker home, and a week later he has found them something to do.\n\nAnimals who came up before him have run out of ways to explain that this is not how policing is supposed to work. Biff listens politely to all of them. The beat has the lowest trouble in the First Boroughs, and he does not think it is because of anything clever he did.",
    "voice": "Plain, friendly, a bit loud. Calls everyone by name. Apologises for the interruption before stopping you.",
-   "arc": "Two constables, one career. Beat Constable (2) is Biff on the lane: he comes down it and one of the rival's animals goes back to work. Chief Constable (4) is Biff after twenty years: two of them go back to work, and then he finds a job for somebody who has not got one — at the going rate; Biff finds you the job, he does not pay your wages. `makeBusy` never touches an animal mid-shift, never one pledged into an auction and never one behind a Hedgehog's quills, which is the whole of Biff's method: he stops you, he does not take anything from you.",
+   "arc": "Two constables, one career. Beat Constable (2) is Biff on the lane: he comes down it and one of the rival's animals goes back to work. Chief Constable (4) is Biff after twenty years: two of them go back to work, and then he finds a job for somebody who has not got one — at the going rate; Biff finds you the job, he does not pay your wages. `makeBusy` never touches an animal mid-shift, never one pledged into an auction and never one behind a Hedgehog's quills, which is the whole of Biff's method: he stops you, he does not take anything from you. Added since: a Cadet Constable at 0 with nothing on it at all — the year he was learning the names and not yet allowed to use them.",
    "remade": "2026-09-13",
    "retires": [],
    "wantedVerbs": [
@@ -265,7 +265,7 @@
    "pronouns": "she/her",
    "backstory": "Brooke went onto the Dock rope gang at fourteen and has been working her way up the river trade ever since, which is the thing she would tell you if you asked. The ladder is a real one — dock hand, ferry hand, lighterman, wright — and at the top of it is the licence every otter on the water wants: River Otter, the rank that lets an animal take a loaded boat down the whole river alone, on its own word, with nobody sitting behind it. Brooke has been about two years off it for something like eight years.\n\nThe reason is that Brooke cannot hear about a thing without going to find out how it is done. A balloon came over the estuary in her second year and she was at the field before it had finished deflating, and she came back three months later able to fly it. The regatta needed somebody to call the starts, so she learned to call the starts, and then learned the river's whole history because half the calling is knowing whose great-grandmother won which cup. Somebody said, once, that she would never understand a hull until she had built one. She built one. It took four years and it is still on the water and it is the best boat on the river, and it put her licence back by four years.\n\nThe docks keep her post open. They have worked out what everyone else works out eventually: Brooke always comes back, and she always comes back able to do something nobody asked her to learn, and sooner or later the river needs it. She will make River Otter. Probably not this year. Somebody has just mentioned the railway.",
    "voice": "Cheerful, fast, already halfway out the door. Answers a question with a better question. Says 'right — how does that work, then' more than anything else.",
-   "arc": "Five careers, one unfinished one. The Commerce card at 1 is the ladder she is actually on, and the tempo verb the Otter charter is built from — she hands the work along and it keeps moving. Lore at 2 is the ferry, where the shift itself changes paws. Entertainment at 3 is the regatta, the one job where her detours pay at once: she gets the whole river back on its feet. Science at 4 is the balloon, kept exactly as it was because it is the best thing she ever did by accident — from up there she can see what the Capital City is about to put up for sale. Crafts at 5 is the boat: four years, one hull, and the thing that finally makes an argument with her expensive. She still is not a River Otter.",
+   "arc": "Five careers, one unfinished one. The Commerce card at 1 is the ladder she is actually on, and the tempo verb the Otter charter is built from — she hands the work along and it keeps moving. Lore at 2 is the ferry, where the shift itself changes paws. Entertainment at 3 is the regatta, the one job where her detours pay at once: she gets the whole river back on its feet. Science at 4 is the balloon, kept exactly as it was because it is the best thing she ever did by accident — from up there she can see what the Capital City is about to put up for sale. Crafts at 5 is the boat: four years, one hull, and the thing that finally makes an argument with her expensive. She still is not a River Otter. Added since: a Mooring Hand at 0 with no ability — the rope on the bollard, the bottom rung of the ladder to River Otter.",
    "remade": "2026-09-13",
    "retires": [],
    "wantedArt": [
@@ -322,7 +322,7 @@
    "pronouns": "they/them",
    "backstory": "Clover comes from a gardening family in the plainest sense: four generations on the same allotment strip, and an unbroken line of animals who could tell you what was wrong with a plant by looking at it and could not have told you why. Clover could do the looking by the time they were six. What nobody in the family expected was the other half — the notebook, the labelled rows, the two identical beds planted differently on purpose to see what happened. Clover's grandmother called it fussing. Clover kept fussing.\n\nThe fussing turned into botany, which in the First Boroughs means the animal everyone sends for when something green is behaving strangely, and the animal the Science hall sends for when something green has to survive somewhere it has no business surviving. That is how a gardener from the allotments ended up in the glasshouse, and then in the cold rooms, and then — there is a photograph of this in the Lending Library — in a rocket, holding a tray of seed potatoes and looking extremely pleased.\n\nClover has never once gone anywhere alone. It is not nerves; it simply does not occur to them that a thing worth doing is worth doing by yourself. Every strange place Clover has been talked their way into has had somebody else in the doorway behind them, usually somebody young, usually somebody who had not been asked yet and said yes anyway. Half the borough's gardeners started as the friend Clover brought along.",
    "voice": "Curious, unhurried, generous with credit. Says 'come and look at this' before saying what it is. Asks who else is coming.",
-   "arc": "The same five jobs, deepened: the family's allotment (0), the Saturday stall that pays for the seed (2), the community plot (3), the glasshouse that got them off the ground (4), and the master botanist the whole borough owes a cutting to (5). Two things run the whole way up and they are the two the maker asked for — Supply above what the shift pays, and never arriving alone. At 0 the friend comes out of hand for free; at 3 the friend comes with a coin; at 4 the friend can be a better one; at 5 they bring somebody and the garden pays every morning besides. Both of Clover's Events come with them.",
+   "arc": "The same five jobs, deepened: the family's allotment (0), the Saturday stall that pays for the seed (2), the community plot (3), the glasshouse that got them off the ground (4), and the master botanist the whole borough owes a cutting to (5). Two things run the whole way up and they are the two the maker asked for — Supply above what the shift pays, and never arriving alone. At 0 the friend comes out of hand for free; at 3 the friend comes with a coin; at 4 the friend can be a better one; at 5 they bring somebody and the garden pays every morning besides. Both of Clover's Events come with them. Added since: a Plot Sharer at 1 who pays the moment they arrive in a town that already gardens — the gardeners Clover brought along, finally on the card.",
    "remade": "2026-09-13",
    "retires": [],
    "wantedVerbs": [
@@ -344,7 +344,7 @@
    "pronouns": "she/her",
    "backstory": "Comet has wanted to be an astronaut since she was old enough to say the word, and unusually for an animal who wants something that badly, she has never once been talked out of it or distracted from it. She read every book the Lending Library had, then wrote to the Observatory until they let her sweep it, then took the Crafts hall's engine course twice because she did not think she had understood it the first time. She had. She wanted to be sure.\n\nThe problem has always been her paws. Comet is clumsy in a way that is genuinely remarkable to watch — she has put a foot through a wing panel, upended a tray of instruments into a fuel tank, and once ended a test by falling out of the machine before it left the ground. The selection board turned her down twice. She did not argue either time; she went away, learned the part they had marked her down on until she knew it better than the board did, and came back.\n\nWhat she has instead of hands is a head. Comet knows what the Capital City is going to put up for sale before the Capital City has finished deciding, because she has read the manifests, the dock lists and the Observatory's own order book, and she is the animal the whole Science hall asks before anyone bids on anything. She got the seat on the third application. She fell over on the way to the launch. She went anyway, which is the only thing about Comet that has ever needed explaining and the one thing that never does.",
    "voice": "Precise, earnest, faintly out of breath. Corrects herself mid-sentence. Apologises for the noise, not for the mess.",
-   "arc": "Mostly unchanged, because the maker said so: the same three jobs, the same climb, the same Cat signature at the top — Comet goes when she should not be able to. What the remake sharpens is the head. At 1 the mechanic's finished job discounts the next thing you build; at 3 the test pilot comes down knowing what the Capital City is about to offer; at 5 the astronaut sees three cards deep and is paid for looking.",
+   "arc": "Mostly unchanged, because the maker said so: the same three jobs, the same climb, the same Cat signature at the top — Comet goes when she should not be able to. What the remake sharpens is the head. At 1 the mechanic's finished job discounts the next thing you build; at 3 the test pilot comes down knowing what the Capital City is about to offer; at 5 the astronaut sees three cards deep and is paid for looking. Added since: a Bolt Sorter at 0 with no ability — the hangar floor, long before the selection board.",
    "remade": "2026-09-13",
    "retires": [],
    "wantedVerbs": []
@@ -359,7 +359,7 @@
    "pronouns": "he/him",
    "backstory": "Copper keeps the borough's weights and measures, and has never in his life spent a coin he could put away instead. This is not meanness — ask anyone he has quietly carried through a bad quarter — it is a settled conviction that something is coming. He does not say what. He has never said what. He simply believes, with the calm of an animal who has thought it through, that the town is one bad winter from finding out how little it set aside, and that somebody had better be ready.\n\nThe cellar under the weights office is the proof. It has been filling since he was an apprentice: salt, lamp oil, candle stock, a shelf of small coin nobody has counted but Copper. Twice now the borough has had exactly the kind of season he stocked it for — the year the bridge went, and the winter the Grain Exchange shut for six weeks — and both times the animals who knew about the cellar came and asked, and both times Copper said the same thing. Not yet. This is bad. There will be worse. He lent them the salt on the quiet and did not open the shelf.\n\nWhat this makes him, at the market, is the cheapest animal in the borough to do business with. Copper has read every schedule of fees the Capital City prints and knows which of them can be got round; he buys at the bottom of the day, rehires at the bottom of the month, and has a way of announcing a price so mild that the room takes a moment to notice it was a price. He is not chasing a bargain. He is building the cellar, and the bargains are just how far his coin goes.",
    "voice": "Quiet, mild, apologetic about numbers. Says 'not yet' and 'we'll see' and means both. Never raises his voice and never rounds up.",
-   "arc": "Five versions, one unopened cellar. The Penny Counter at 0 keeps the Cat signature the printed set gave him — Copper gets up when he should not, because he has remembered something he did not put away. The middle three are the cellar at ordinary scale: the next animal recruited costs less (1), anything that takes Supply off you is answered out of the shelf (2), and the first price he names each turn is a penny under what it should be (3). The Market Steward at 5 is all of it at once and answers a raid with two. The shelf itself has still never been opened.",
+   "arc": "Five versions, one unopened cellar. The Penny Counter at 0 keeps the Cat signature the printed set gave him — Copper gets up when he should not, because he has remembered something he did not put away. The middle three are the cellar at ordinary scale: the next animal recruited costs less (1), anything that takes Supply off you is answered out of the shelf (2), and the first price he names each turn is a penny under what it should be (3). The Market Steward at 5 is all of it at once and answers a raid with two. The shelf itself has still never been opened. Added since: a Cellar Keeper at 4 with no ability — the cellar as plain stock rather than as a trick, and the arc's only rung that simply pays.",
    "remade": "2026-09-13",
    "retires": [],
    "wantedVerbs": [
@@ -405,7 +405,7 @@
    "pronouns": "she/her",
    "backstory": "Rosabeth talks to her plants. She sings to them too, and on a good morning she dances down the rows doing it, and she has been doing this for thirty years in full view of a borough that gave up being surprised about it some time in the second decade. There is a persistent and not entirely unfair joke that she likes the garden better than the animals in it. Rosabeth has heard the joke and finds it funny and has never bothered to correct it.\n\nShe ought to be correcting it, because the whole point of the garden is the shelf it fills. Rosabeth's tinctures are half herb and half something she will describe as the moon, or the mood of the bed, or what the rosemary told her, and they are the only remedies in the First Boroughs that reliably work. Nobody can account for it. The Science hall has been through her notes twice and come away with a list of ingredients and no method. She is entirely relaxed about this and says the method is the singing.\n\nWhat she is actually for, and what the borough forgets to say out loud, is getting animals back on their feet. An animal who has lost a place and stopped getting up in the morning ends up at Rosabeth's gate sooner or later, usually sent by somebody, and Rosabeth puts a mug of something in their paws and sets them to work on the beds until they are fit to be somewhere else. Half the Hiring Hall's second chances started in that garden. She charges for the tincture and never for the rest of it.",
    "voice": "Warm, dreamy, faintly sing-song. Talks to the plants mid-conversation and does not treat it as an interruption. Absolutely certain about things she cannot explain.",
-   "arc": "Four versions and one job under all of them: getting an animal back into work. It escalates by how much of the cost she absorbs — at 0 a shift in the garden knocks a Supply off the next rehire, at 2 she brings somebody back herself for a Supply less, at 5 she brings them back for nothing and reads something out of it besides. The Apothecary at 3 is the one card that does not rehire, and it keeps the Mouse's signature the printed Dill was built on: every recipe comes back out of the Town Dump eventually, because Rosabeth never throws a recipe away.",
+   "arc": "Four versions and one job under all of them: getting an animal back into work. It escalates by how much of the cost she absorbs — at 0 a shift in the garden knocks a Supply off the next rehire, at 2 she brings somebody back herself for a Supply less, at 5 she brings them back for nothing and reads something out of it besides. The Apothecary at 3 is the one card that does not rehire, and it keeps the Mouse's signature the printed Dill was built on: every recipe comes back out of the Town Dump eventually, because Rosabeth never throws a recipe away. Added since: a Garden Hand at 1 with no ability — the animal who was sent to her gate, working the beds and not yet able to do anything for anybody.",
    "remade": "2026-09-13",
    "notes": "The printed Herbalist Surgeon (mh_dill_5) drew a card when you also controlled Fern, and credited her field notes. Dropped: the link is not in Rosabeth's story, and Fern has not been remade, so a `name: 'Fern'` condition on a maker card would be pointing at a name the maker may yet change.",
    "retires": [],
@@ -430,7 +430,7 @@
    "pronouns": "she/her",
    "backstory": "If you cannot find Bella she is in the forest, and if you cannot find her in the forest you are not looking down. She works on the floor of it: knees in the leaf litter, notebook open on one knee, voice recorder in the other paw because some things have to be said before they can be written. She has been at it since she was a kid, when foraging was simply how the family ate through the back half of the year and Bella was the one who came home with a full basket and a list of everything she had walked past on the way.\n\nShe never stopped and she never scaled it up. Ecology is what she calls it now, and the Science hall files her recordings and cites them, but the method has not changed since she was seven: go out, sit down, watch one square of ground long enough that it starts telling you things. She can feed herself off a hedgerow in any month of the year and would rather. The whole point, as far as Bella is concerned, is that the woodland was already working before anybody built anything on it, and will still be working after.\n\nThat is also her limit. She has never bid on anything in her life, she is no use whatsoever in the Capital City, and she has an audible opinion about animals who would rather raise a building than walk out and look at what is already there. Put Bella in a finished town with everything standing and she is a mouse with a notebook. Put her in a young one, or an empty one, and she is the reason it eats.",
    "voice": "Quiet, exact, always slightly mid-sentence. Answers a question with what she saw, the date she saw it, and what the weather was doing.",
-   "arc": "Every rung is about needing less, and every rung is worth most to a Mayor who has built nothing. Forager (0) makes your next Event need one fewer animal, and pays a bare town outright. Field Scientist (1) turns her own shift into a card, and into Supply while the town has raised at most one thing. Field Recorder (2) puts a spent Event back under the deck; Wildlife Warden (3) puts one straight back in your hand — the Mouse signature, and Bella's whole trick: nothing is used up, it comes round again. Ecologist (5) makes the first Event of every turn cheaper in animals, pays you for playing it, and keeps drawing you cards right up until the eight places start filling. The maker asked for a character strongest when the player has little or nothing built; the cards now say so outright.",
+   "arc": "Every rung is about needing less, and every rung is worth most to a Mayor who has built nothing. Forager (0) makes your next Event need one fewer animal, and pays a bare town outright. Field Scientist (1) turns her own shift into a card, and into Supply while the town has raised at most one thing. Field Recorder (2) puts a spent Event back under the deck; Wildlife Warden (3) puts one straight back in your hand — the Mouse signature, and Bella's whole trick: nothing is used up, it comes round again. Ecologist (5) makes the first Event of every turn cheaper in animals, pays you for playing it, and keeps drawing you cards right up until the eight places start filling. The maker asked for a character strongest when the player has little or nothing built; the cards now say so outright. Added since: a Science Hall Fellow at 4 who buys a Science animal out of Unemployment a Supply cheaper — the citations turned into somebody else's job.",
    "remade": "2026-09-14",
    "retires": [],
    "wantedVerbs": [
@@ -480,7 +480,7 @@
    "pronouns": "they/them",
    "backstory": "Hazel keeps raccoon hours, which in the First Boroughs means the useful ones. The stall goes up when the lamps go on and comes down somewhere around four, and everything on it is interesting: bottles with no labels, a drawer of keys to doors nobody can place, charts of a sky that is not quite this one, and — reliably, unpredictably — the one thing you needed and could not have named. Where any of it comes from is Hazel's business. They work the bins, the barges and the City Dump, and they get there first.\n\nThey are, by common agreement, a bit much. They read the cards, they read the sky, they will tell you what the month means and then tell you the price, and they are never entirely joking. Half the borough takes the mysticism as part of the patter. The other half has quietly noticed how often Hazel turns out to be right about what is coming up for sale.\n\nNone of which has stopped the town putting them in charge of things. Hazel has run the guild hall twice, has sat on the market committee for years, and is who the night trade sends when it wants to be heard in daylight. They arrive at the meeting in the coat they closed the stall in, say one useful thing, and go to bed at eight in the morning.",
    "voice": "Amused, sideways, fond of a pause. Gives you the price and then something you did not ask for that turns out to matter.",
-   "arc": "Every rung gets a card out of the deck and into a paw, which is what the maker asked for. Barrow Hand (0) draws off her own slow shift. Night Market Vendor (1) draws and bins on arrival. Market Vendor (2) sets the top of the deck in order, which is the reading before the selling. Guildmaster (3) is the Raccoon signature: the City Dump is stock, and the guild hall is where it finally gets sold in daylight. Merchant (5) turns every card the town brings home into another card in hand, and bins what the deck was going to waste your draw on. Hazel's Night Market is the same instinct as an Event — take the good half off the top.",
+   "arc": "Every rung gets a card out of the deck and into a paw, which is what the maker asked for. Barrow Hand (0) draws off her own slow shift. Night Market Vendor (1) draws and bins on arrival. Market Vendor (2) sets the top of the deck in order, which is the reading before the selling. Guildmaster (3) is the Raccoon signature: the City Dump is stock, and the guild hall is where it finally gets sold in daylight. Merchant (5) turns every card the town brings home into another card in hand, and bins what the deck was going to waste your draw on. Hazel's Night Market is the same instinct as an Event — take the good half off the top. Added since: a Market Committee Chair at 4 who draws every turn there is another Raccoon in the town — the night trade's voice at a daylight meeting.",
    "remade": "2026-09-14",
    "retires": [],
    "wantedVerbs": []
@@ -569,7 +569,7 @@
    "pronouns": "she/her",
    "backstory": "Lynnette prints the town's books. The press is hers, the shop is hers, and the borough's paper, ballots, almanacs, hymn sheets, notices and every book printed in the First Boroughs these fifteen years have come off it — usually late, always right. She got the press cheap because it was broken and learned to mend it because nobody else would, which is roughly her whole biography: a thing needed doing, and doing it turned out to be a trade.\n\nWhat she actually loves is the spreading. Lynnette cannot leave a good thing unpublished. If an animal in the borough learns something worth knowing she will have it set, printed and pinned up in the Hiring Hall inside the week, free, whether or not they asked — the apprentice notices, the guild's syllabus and the almanac's planting tables are all her doing and not one of them ever made her a penny. She is the reason an animal in the First Boroughs can find out how to be better at their job without knowing anybody first.\n\nThursdays she reads to the little ones in the Lending Library, sitting on the floor with about nine rabbits and whoever else has wandered in, doing all the voices. She is a poor businesswoman and a rich one in the way the borough actually counts it.",
    "voice": "Brisk, ink to the elbows, always mid-job. Finishes your sentence, and then prints it.",
-   "arc": "Every rung makes the next animal easier to take on, and the step up cheaper than the new body — which is what the maker asked for. Night Printer (0) takes a coin off your next recruit the moment she arrives, and two off it if it is somebody you already have going up a rung. Bookbinder (1) does the same off every shift she works. Lending Librarian (3) is the Rabbit signature — she reads to them, and one of them walks out of your hand into the town behind her. Master Printer (5) is the point of all of it: your Masters are ready a turn sooner, because by the time they turn up the borough has already read how the job is done.",
+   "arc": "Every rung makes the next animal easier to take on, and the step up cheaper than the new body — which is what the maker asked for. Night Printer (0) takes a coin off your next recruit the moment she arrives, and two off it if it is somebody you already have going up a rung. Bookbinder (1) does the same off every shift she works. Lending Librarian (3) is the Rabbit signature — she reads to them, and one of them walks out of your hand into the town behind her. Master Printer (5) is the point of all of it: your Masters are ready a turn sooner, because by the time they turn up the borough has already read how the job is done. Added since: a Press Feeder at 2 with no ability — the night's run itself, which discounts nothing and produces everything.",
    "remade": "2026-09-14",
    "retires": [],
    "wantedVerbs": [
@@ -593,7 +593,7 @@
    "pronouns": "she/her",
    "backstory": "Maribel has been a tree hugger since she was small enough to be carried past the hedgerow, and she means it literally: the oak on the far side of the allotment strip is standing today because a six-year-old mouse sat in the roots of it for a day and a half while the grange argued overhead. She has never really stopped doing that, she has only got better at the paperwork.\n\nThe seed bank is the grown-up version of the oak. Maribel keeps it — every variety the borough has ever grown, dried, labelled, doubled and put away against the year somebody needs it, and the labels are hers because she does not trust anybody else's. She is the animal who reads the whole ordinance before the meeting, finds the clause that saves the hedgerow, and files the objection again on the Monday after it is thrown out on the Friday. Clover's allotment strip has four generations behind it and Maribel has the seed stock for all four in a tin.\n\nWhat she is bad at is the Capital City. She does not bid, she does not enjoy being outbid, and a borough busy raising Buildings is a borough turning ground she has walked over since she was a kit into something that cannot be turned back. She would rather the town grew slowly and kept what it has, and she will say so, at length, in writing, on the record.",
    "voice": "Patient, precise, faintly damp. Says 'that hedge is older than the bylaw' and has the date for both.",
-   "arc": "Maribel is the Mouse who makes the town's paperwork cheap, and every rung makes it cheaper. The Seed Keeper (1) takes a Character off the next Event. The Seed Bank Clerk (2) starts pulling Events back out of the Town Dump — nothing filed is ever really thrown away. The Seed Vault Scientist (3) is paid in cards for the Science the borough asks her for. The Horticulturist (4) pays for every Event, and pays extra while the ground is still ground. The Seed Bank Director (5) is the objection standing as a rule: an Event every single turn needs one animal fewer, which is what a lifetime of filing on the Monday actually buys.",
+   "arc": "Maribel is the Mouse who makes the town's paperwork cheap, and every rung makes it cheaper. The Seed Keeper (1) takes a Character off the next Event. The Seed Bank Clerk (2) starts pulling Events back out of the Town Dump — nothing filed is ever really thrown away. The Seed Vault Scientist (3) is paid in cards for the Science the borough asks her for. The Horticulturist (4) pays for every Event, and pays extra while the ground is still ground. The Seed Bank Director (5) is the objection standing as a rule: an Event every single turn needs one animal fewer, which is what a lifetime of filing on the Monday actually buys. Added since: a Seed Sorter at 0 with no ability — trays and tweezers, before there was a vault to make cheap.",
    "remade": "2026-09-14",
    "retires": [],
    "wantedVerbs": []
@@ -609,7 +609,7 @@
    "pronouns": "he/him",
    "backstory": "Beck keeps the ward book, lights nothing on fire, and is home by seven. He clerks — bylaws, ward rolls, the lamplighters' hours — and he clerks well, because the work is quiet and nobody needs him to be interesting at it. Ask the Hiring Hall about Beck and you will get a shrug and 'no trouble, ever', which in that room is high praise.\n\nThe evening is the part he is actually living for. A candle, a chair, whatever he has got hold of that week, and two or three hours of nothing but reading before bed and the same again tomorrow. He takes in what the borough throws out — a split almanac off the City Dump, somebody's water-stained novel, a bundle of old ward minutes nobody has wanted since the bridge went — and he has read all of it, which is why he is the animal who quietly knows the answer and waits to be asked twice before giving it.\n\nHe is not boring. He is simply finished with the day at the end of it. Lynnette has offered him a shelf and he has never taken her up on it; he prefers the ones nobody else wanted.",
    "voice": "Quiet, unhurried, slightly reluctant to be the one talking. Says 'well — it's in the book' and then recites it.",
-   "arc": "Beck reads, and reading pays in cards and in second chances at Events. The Bylaw Reader (1) works a long slow shift and comes back with a card. The Ward Clerk (2) pulls an Event back out of the Town Dump every shift. The Lamplighter's Clerk (3) is the Raccoon signature — on his way home he takes something out of the City Dump that nobody else wanted. The Keeper of the Ward Book (5) is Beck at the end of the arc and exactly as quiet as he was at the start: he has read the whole thing, so his challenge bids win ties, and every shift is another Event back out of the bin.",
+   "arc": "Beck reads, and reading pays in cards and in second chances at Events. The Bylaw Reader (1) works a long slow shift and comes back with a card. The Ward Clerk (2) pulls an Event back out of the Town Dump every shift. The Lamplighter's Clerk (3) is the Raccoon signature — on his way home he takes something out of the City Dump that nobody else wanted. The Keeper of the Ward Book (5) is Beck at the end of the arc and exactly as quiet as he was at the start: he has read the whole thing, so his challenge bids win ties, and every shift is another Event back out of the bin. Added since: a Candlelight Reader at 4 who takes a card out of the City Dump off the turn's first Lore Event — the signature hung on the study the whole character is made of.",
    "remade": "2026-09-14",
    "retires": [],
    "wantedVerbs": [],
@@ -630,7 +630,7 @@
    "pronouns": "he/him",
    "backstory": "Marmalade was a horrible kitten. He shoved, he took things, he was walked home by Biff more times than anyone has the heart to count, and the borough had more or less decided what he was going to be. Then somebody put him in front of a bowl of dough to keep his paws busy, and he was quiet for the first time in his life.\n\nNothing about the anger has come back. It went into the proving and it stayed there. Marmalade bakes at night, because that is when the ovens are banked, and by morning he has been through three recipes nobody asked for — a loaf in the shape of a hedgehog, buns with the wrong fruit in on purpose, something laminated he read about and could not leave alone. Half of it is handed out before it is paid for, always to the kittens first, because Marmalade knows precisely what a kitten with nothing to do turns into.\n\nHe works the market stall in the day and cannot keep a queue moving to save his life, since everybody in it wants to tell him something. He is a Cat, so he does this entirely on his own schedule and is impossible to hurry; but the borough gets up earlier on the mornings Marmalade has been baking, and that is most of them.",
    "voice": "Warm, distractible, covered in flour. Starts sentences with 'right, so listen' and ends them with a bun in your paw.",
-   "arc": "Every rung of Marmalade gets the town up and moving earlier, because that is what the bread does. The Night Baker (0) works the long patient shift and has everyone a step further along by the Ready. The Dough Kneader (1) and the Market Baker (2) do it at the door, the moment he is hired, and the Market Baker takes a coin at the counter for it. The Neighborhood Baker (3) hands the tray round and puts one of your animals back on its feet outright. The Harvest Head Baker (5) is the whole bakery: the first shift each turn pays extra, and once a game Marmalade is simply up before the rest of the town, which is the Cat's own trick and his oldest habit.",
+   "arc": "Every rung of Marmalade gets the town up and moving earlier, because that is what the bread does. The Night Baker (0) works the long patient shift and has everyone a step further along by the Ready. The Dough Kneader (1) and the Market Baker (2) do it at the door, the moment he is hired, and the Market Baker takes a coin at the counter for it. The Neighborhood Baker (3) hands the tray round and puts one of your animals back on its feet outright. The Harvest Head Baker (5) is the whole bakery: the first shift each turn pays extra, and once a game Marmalade is simply up before the rest of the town, which is the Cat's own trick and his oldest habit. Added since: an Oven Keeper at 4 who is paid every morning the town has another Cat in it — the kittens, served first, paying him back.",
    "remade": "2026-09-14",
    "retires": [],
    "wantedVerbs": [
@@ -662,12 +662,13 @@
    "studies": [
     "Food",
     "Crafts",
-    "Science"
+    "Science",
+    "Agriculture"
    ],
    "pronouns": "he/him",
    "backstory": "Morty is the cleverest badger in the borough and the least interested in saying so. He keeps the watermill turning, he built the boiler the Science hall said would not hold, and he is always, without exception, in the middle of something — a sketch on the back of a flour docket, a gear cut too fine for anybody else's lathe, a governor he has taken apart twice this week because it was very nearly right.\n\nThe other half of him is dinner. Morty loves to eat, thinks about eating while he is working, and has never met a recipe he did not want to try once on principle. The mill kitchen is his: he grinds it, then he cooks it, and the animals who bring grain to the mill have learned to turn up hungry. He and Marmalade trade — a recipe against a mended oven door — and Morty takes notes on the recipe the way he takes notes on a bearing.\n\nHe is a Badger, so he builds things that survive the bad year. The boiler test is an annual embarrassment that the whole borough attends and nothing has ever gone wrong at it, which Morty regards as the point and everybody else regards as a shame.",
    "voice": "Cheerful, technical, mouth half full. 'Hold on — hold on — right, try it now. Have you eaten?'",
-   "arc": "Morty braces the town and then feeds it. The Mill Kitchen Cook (1) is the cheap rung and the Badger signature: he has the town ready before the shock lands. The Watermill Mechanic (3) puts an animal back to work cheap, because he can always use a pair of paws. The Steam Engineer (4) braces the whole borough again from a boiler the Science hall said would not hold. The Master Millwright (5) is the mill running true: the first shift you complete each turn pays 1 more, every turn, for the rest of the game.",
+   "arc": "Morty braces the town and then feeds it. The Mill Kitchen Cook (1) is the cheap rung and the Badger signature: he has the town ready before the shock lands. The Watermill Mechanic (3) puts an animal back to work cheap, because he can always use a pair of paws. The Steam Engineer (4) braces the whole borough again from a boiler the Science hall said would not hold. The Master Millwright (5) is the mill running true: the first shift you complete each turn pays 1 more, every turn, for the rest of the game. Added since: a Grain Miller at 2 with no ability, and the arc's one rung in Agriculture — the plain half of the mill that has never gone wrong.",
    "remade": "2026-09-14",
    "retires": [],
    "wantedArt": [
@@ -688,7 +689,7 @@
    "pronouns": "he/him",
    "backstory": "Moss builds it his way. He has been told, by the guild, by the grange and once in writing by the Capital City, that the way is on the sheet; and Moss reads the sheet, puts it down, and does the thing that works. It has cost him two commissions and a formal warning and it has also given the borough a plough hitch that does not foul, a bridge arch a third lighter than the drawing, and a bench jig half the workshop now uses without knowing whose it was.\n\nHe is not a difficult animal about it, which is the confusing part. He is cheerful, he turns up, he takes the apprentice nobody else wants, and then he quietly builds it the other way and lets the result argue. About a third of the time the result loses and Moss rebuilds it properly and says so. The Town Workshop has stopped sending anybody to check.\n\nBerry walked him through his first joint when he was twelve and has been the one animal Moss will listen to about anything ever since. What Berry actually taught him, Moss will tell you, was not the joint — it was that you work it out yourself, which is exactly what the guild now finds so annoying.",
    "voice": "Easy, unbothered, already doing it. 'Yeah, that's the drawing. Watch this.'",
-   "arc": "Moss makes the town cheaper to build and harder to knock over, and he never once does it the way the sheet says. The Ploughwright (1) braces the borough. The Toolsmith (2) works a shift and the next Building comes in under the drawing. The Guild Architect (3) picks an animal back up out of Unemployment cheap. The Rocketwright (4) is Moss and Comet arguing productively. The Bridgewright (5) is the arch that should not stand: he is busy, and one of your Characters is on its feet because of what he worked out.",
+   "arc": "Moss makes the town cheaper to build and harder to knock over, and he never once does it the way the sheet says. The Ploughwright (1) braces the borough. The Toolsmith (2) works a shift and the next Building comes in under the drawing. The Guild Architect (3) picks an animal back up out of Unemployment cheap. The Rocketwright (4) is Moss and Comet arguing productively. The Bridgewright (5) is the arch that should not stand: he is busy, and one of your Characters is on its feet because of what he worked out. Added since: a Timber Hand at 0 with no ability — Moss at eleven, before Berry got hold of him.",
    "remade": "2026-09-14",
    "retires": [],
    "wantedVerbs": []
@@ -704,7 +705,7 @@
    "pronouns": "they/them",
    "backstory": "Daniel draws the maps and does not go. They have charted the canal from the ferry steps to the county line, the roads out past the toll gate, the coast they have never smelled and, on clear nights from a window, the stars; and the furthest they have been from the borough in their life is the far hedgerow, once, with somebody else.\n\nIt is not that they do not want to. It is that they want to enormously, in the abstract, from a desk, with the door shut. A map is the whole adventure with none of the going: the routes, the distances, the marginal note about where the bank shelves and which inn will take a mouse after dark, all of it true and all of it happening to somebody else. Traders come back from the Capital City road and Daniel debriefs them for two hours, corrects the chart, rolls it up, and sleeps in their own bed.\n\nThe borough gets a great deal out of this. Everything Brooke's lightermen run by, everything the Science hall's surveys are laid over, and every apprentice sent out to somewhere they have never been with a sheet in their paw and a mouse's careful handwriting on it — all Daniel's, and every one of those animals has been somewhere Daniel has not.",
    "voice": "Soft, exact, endlessly curious about elsewhere. 'And what was it like, past the second lock? No — tell me properly.'",
-   "arc": "Daniel's cards are the route known before the journey: the Event costs one animal fewer, and the top of the deck arrives in the order they charted. Ink Mixer (0) is the desk and the discount. Canal Cartographer (2) adds the chart itself. Star Charter (3) is the window and the night sky, and takes a Character off the Event while they are working. Master Cartographer (4) is the whole wall of maps — the deck in the order they want and a look at what the Capital City is bringing out next, which is as close as Daniel gets to leaving.",
+   "arc": "Daniel's cards are the route known before the journey: the Event costs one animal fewer, and the top of the deck arrives in the order they charted. Ink Mixer (0) is the desk and the discount. Canal Cartographer (2) adds the chart itself. Star Charter (3) is the window and the night sky, and takes a Character off the Event while they are working. Master Cartographer (4) is the whole wall of maps — the deck in the order they want and a look at what the Capital City is bringing out next, which is as close as Daniel gets to leaving. Added since: a Chart Copier at 1 with no ability — the tracing itself, which has no decisions in it.",
    "remade": "2026-09-14",
    "retires": [],
    "wantedVerbs": []
@@ -720,7 +721,7 @@
    "pronouns": "they/them",
    "backstory": "Ned keeps the record, and the record is right. Every ward roll, every guild return, every date the bridge was out and every name on the hiring list since before Ned was born — filed, cross-referenced and correct, because a record that is nearly correct is a record that will one day be quoted by somebody who is nearly wrong.\n\nThey are by the book in the literal sense: the book exists, Ned wrote most of the current edition of it, and they will hand it to you open at the page rather than paraphrase. This makes them unpopular in a meeting and indispensable the following week. The borough's two standing arguments about the far hedgerow were both settled out of Ned's shelves in an afternoon, which is the kind of thing that stops being annoying the moment it is your argument.\n\nWhat nobody sees is the putting by. A Squirrel archivist does not spend the find — Ned notices a discrepancy, files it, and says nothing for a year, and then the whole thing comes out at once, in order, with the dates. Lynnette prints what Ned certifies and has never had to print a correction.",
    "voice": "Level, careful, allergic to 'roughly'. Says 'that is close, and it is not what happened'.",
-   "arc": "Ned files, and then Ned opens the file. The Page Runner (1) puts Supply by on every shift, the Squirrel's own slow start. The Night Archivist (2) sets the top of the deck in order. The Reference Librarian (4) does both — the order and another coin put by. The Chancellor of Records (5) is the year of quiet filing paid out in one go: every coin the town has put by, taken in at once, on the record.",
+   "arc": "Ned files, and then Ned opens the file. The Page Runner (1) puts Supply by on every shift, the Squirrel's own slow start. The Night Archivist (2) sets the top of the deck in order. The Reference Librarian (4) does both — the order and another coin put by. The Chancellor of Records (5) is the year of quiet filing paid out in one go: every coin the town has put by, taken in at once, on the record. Added since: a Ward Recorder at 3 who draws off the turn's first Civics Event — the shelf opening on the ward's business.",
    "remade": "2026-09-14",
    "retires": [],
    "wantedVerbs": []
@@ -744,6 +745,256 @@
      "verb": "pairCharacters (two Characters in a town who are worth more to each other)",
      "why": "Daisy's whole story is the sweeping-off-her-feet that has not happened yet, and the card wanted to notice the animal she is standing next to.",
      "workaround": "Left as the Squirrel's storage thread — she puts by, and the Festival pays out — with the romance carried in the flavor. `otherCharacterInTown` can name one animal, but Daisy does not know who it is yet, which is the point of her."
+    }
+   ]
+  },
+  {
+   "name": "Peter",
+   "addition": true,
+   "addedBecause": "Peter is a character the maker added to the shelf: there is no printed Peter, so there is nothing to remake and nothing to retire. The maker asked for a set of animals whose versions carry no effect at all — they upgrade, and they work a shift — and this is one of them.",
+   "species": "Rabbit",
+   "studies": [
+    "Agriculture"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Peter lays hedges. He was born at the far end of the borough within sight of the far hedgerow and has spent his working life inside it: cutting the stems most of the way through, bending them over while they are still living, pegging them down and letting them grow back into a wall. It takes a winter to do a field's length and about fifteen years to find out whether you did it properly.\n\nThis is why the borough's hedges are harder to take down than they look. Maribel files the objection at the meeting; Peter is the reason there is still something there to object about. The two of them have never discussed it.",
+   "voice": "Slow, practical, mostly about the hedge. Answers a question about himself with an answer about the hedge.",
+   "arc": "Two rungs and no tricks at all, which is the maker's brief for him: the lad with the billhook at 0, and the hedgelayer whose winter's work will still be standing in fifteen years at 3. The long shift is the whole of the second card — a hedge is not laid in a turn, and Peter is paid for what is there at the end of it.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": [],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_peter_hedge_cutter_0",
+      "mk_peter_hedgelayer_3"
+     ],
+     "why": "Peter is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Rabbit scene, which is the right species doing the wrong work."
+    }
+   ]
+  },
+  {
+   "name": "Osh",
+   "addition": true,
+   "addedBecause": "Osh is a character the maker added to the shelf: there is no printed Osh, so there is nothing to remake and nothing to retire. The maker asked for a set of animals whose versions carry no effect at all — they upgrade, and they work a shift — and this is one of them.",
+   "species": "Mouse",
+   "studies": [
+    "Crafts"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Osh goes round the borough with a treadle wheel on a handcart and puts an edge back on things. Knives, shears, billhooks, the mill's dressing picks, the bakery's scrapers, one ceremonial sword that has never cut anything. He does a circuit that takes eleven days and has done it in the same order since he was small enough to need a box to stand on.\n\nHe is a mouse and the wheel is nearly as big as he is, which the borough finds funnier than he does. Morty's mill kitchen and Marmalade's bakery are both on day four.",
+   "voice": "Quiet, exact, and briefly unbearable about other animals' edges.",
+   "arc": "Two rungs, both of them the wheel. At 0 he is on somebody else's round; at 2 it is his round, his order and his eleven days, which is why the second card works the long shift for more.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": [],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_osh_sharpener_s_boy_0",
+      "mk_osh_edge_grinder_2"
+     ],
+     "why": "Osh is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Mouse scene, which is the right species doing the wrong work."
+    }
+   ]
+  },
+  {
+   "name": "Adam",
+   "addition": true,
+   "addedBecause": "Adam is a character the maker added to the shelf: there is no printed Adam, so there is nothing to remake and nothing to retire. The maker asked for a set of animals whose versions carry no effect at all — they upgrade, and they work a shift — and this is one of them.",
+   "species": "Badger",
+   "studies": [
+    "Civics"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Adam mends roads. The lane down to the ferry steps, the long pull up to the county gate, the square's cobbles after festival week — all of it is his, and all of it is work nobody notices until it stops being done. He was out on the county road the year the bridge went, and stayed out on it for most of that spring getting carts round the long way.\n\nHe is a Badger about it in the ordinary Badger fashion: he starts at one end, he does not hurry, and he is still there at the end of the day when everybody who came to watch has gone home.",
+   "voice": "Level and unhurried. Talks about a road the way other animals talk about a relative.",
+   "arc": "The lad with the barrow at 1 and the animal who decides where the road goes at 4. Both cards do nothing but work, because a road is nothing but work; the difference between them is how much of it is his.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": [],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_adam_road_mender_1",
+      "mk_adam_surveyor_of_ways_4"
+     ],
+     "why": "Adam is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Badger scene, which is the right species doing the wrong work."
+    }
+   ]
+  },
+  {
+   "name": "Cassadee",
+   "addition": true,
+   "addedBecause": "Cassadee is a character the maker added to the shelf: there is no printed Cassadee, so there is nothing to remake and nothing to retire. The maker asked for a set of animals whose versions carry no effect at all — they upgrade, and they work a shift — and this is one of them.",
+   "species": "Hedgehog",
+   "studies": [
+    "Entertainment"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Open mic nights in the First Boroughs happen in whatever room will have them, and Cassadee is the animal who decides which room. She books it, sweeps it, sets the chairs, finds the lamp oil, stands at the back with the list, and puts the chairs away again at midnight. She does not sing, play, recite or juggle, and has turned down every invitation to try.\n\nOatmeal's band is on her list more often than anybody, which she says is because they turn up on time and not because there are five of them and four are brothers and sisters.",
+   "voice": "Brisk, kind, immovable about the running order. Says 'you are on at nine' as though it were a law.",
+   "arc": "Two rungs of the same evening: the animal carrying the chairs in at 0, and the animal whose room it is at 3. Nothing on either card but the work, which is the point — the show is somebody else's, and Cassadee is what it stands on.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": [],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_cassadee_stage_hand_0",
+      "mk_cassadee_hall_manager_3"
+     ],
+     "why": "Cassadee is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Hedgehog scene, which is the right species doing the wrong work."
+    }
+   ]
+  },
+  {
+   "name": "Annabelle",
+   "addition": true,
+   "addedBecause": "Annabelle is a character the maker added to the shelf: there is no printed Annabelle, so there is nothing to remake and nothing to retire. The maker asked for a set of animals whose versions carry no effect at all — they upgrade, and they work a shift — and this is one of them.",
+   "species": "Raccoon",
+   "studies": [
+    "Lore"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Everything the borough throws out goes through the Salvage Yard, and everything with words on it goes through Annabelle. She pulls the paper out before the weather gets at it: ward minutes, split almanacs, bills of lading, half a novel, the Grain Exchange's returns for a year nobody can otherwise account for. What is legible she flattens, dries and files. What is not she keeps anyway, on the grounds that she has been wrong before.\n\nShe and Beck have an arrangement of long standing and no written terms: she keeps the ones with words on, he gets first read of anything with a story in it, and neither of them has ever had to say so out loud.",
+   "voice": "Dry, unbothered, faintly amused at what animals throw away.",
+   "arc": "Paper Sorter (0) is the yard in the rain; Salvage Archivist (3) is the dry shed, the press and the shelves. Neither card does anything clever, because the work is the same work either way and the only thing that changes is how much of it survives.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": [],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_annabelle_paper_sorter_0",
+      "mk_annabelle_salvage_archivist_3"
+     ],
+     "why": "Annabelle is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Raccoon scene, which is the right species doing the wrong work."
+    }
+   ]
+  },
+  {
+   "name": "Liz",
+   "addition": true,
+   "addedBecause": "Liz is a character the maker added to the shelf: there is no printed Liz, so there is nothing to remake and nothing to retire. The maker asked for a set of animals whose versions carry no effect at all — they upgrade, and they work a shift — and this is one of them.",
+   "species": "Fox",
+   "studies": [
+    "Commerce"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Liz keeps the weighbridge at the Grain Exchange. Every loaded cart in or out of the borough's biggest building crosses her plate, and what she writes on the docket is what everybody after her is paid on. Copper's office certifies the bridge every spring and has never once had to adjust it.\n\nIt is the job Finn had and lost, which the borough mentions to neither of them. Liz is a Fox and reads a carter's face while the beam is settling, and has never needed to do anything about what she reads there, because the beam settles where it settles.",
+   "voice": "Short, level, faintly bored. Reads the number out once.",
+   "arc": "Scale Hand (1) is the beam and somebody else's docket; Weighbridge Keeper (4) is the beam, the docket and the signature. A weighbridge does not need an ability: the whole of its power is that the number is the number.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": [],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_liz_scale_hand_1",
+      "mk_liz_weighbridge_keeper_4"
+     ],
+     "why": "Liz is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Fox scene, which is the right species doing the wrong work."
+    }
+   ]
+  },
+  {
+   "name": "Taco",
+   "addition": true,
+   "addedBecause": "Taco is a character the maker added to the shelf: there is no printed Taco, so there is nothing to remake and nothing to retire. The maker asked for a set of animals whose versions carry no effect at all — they upgrade, and they work a shift — and this is one of them.",
+   "species": "Otter",
+   "studies": [
+    "Food"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Taco cooks on a cart at the ferry steps and keeps the hours the river keeps, which is to say no hours at all. Lightermen come off a boat at four in the morning wanting something hot and Taco is there with it; the cart is shut at noon when everybody else's is busiest, and open again when the evening boats come down.\n\nHe is an Otter and cannot stand still, so the cart moves too — steps, Boat Shed, the top of the lane — and the river trade finds it anyway, every time, by a method nobody has ever explained to a landsman.",
+   "voice": "Fast, cheerful, several things at once. Asks how the run went before he asks what you want.",
+   "arc": "Cart Cook (1) is the pan and somebody else's cart; Quayside Cook (3) is his cart, his hours and the whole river trade's supper. Both do nothing but feed animals, which on the steps at four in the morning is the entire job.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": [],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_taco_cart_cook_1",
+      "mk_taco_quayside_cook_3"
+     ],
+     "why": "Taco is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Otter scene, which is the right species doing the wrong work."
+    }
+   ]
+  },
+  {
+   "name": "Cookie",
+   "addition": true,
+   "addedBecause": "Cookie is a character the maker added to the shelf: there is no printed Cookie, so there is nothing to remake and nothing to retire. The maker asked for a set of animals whose versions carry no effect at all — they upgrade, and they work a shift — and this is one of them.",
+   "species": "Squirrel",
+   "studies": [
+    "Food"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Cookie bakes for the Winter Stores. Everything that comes off her board is made to keep: hard biscuit, twice-baked rusk, seed cake that improves for a month and is edible for a year. She uses the Community Oven like everybody else, on the late heat after the bread is out, which is the cool slow end nobody else wants and exactly the end she needs.\n\nShe is a Squirrel and the Winter Stores are the largest cache in the borough, so the arrangement was more or less inevitable. She has never eaten anything she baked in the year she baked it.",
+   "voice": "Practical, warm, slightly stern about dates. Gives you one and tells you not to open it yet.",
+   "arc": "Biscuit Maker (0) is the corner of somebody's board; Winter Stores Cook (3) is the whole late heat and the Stores' shelves behind it. Neither card does anything on the turn it lands, which is a fair description of Cookie's entire trade.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": [],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_cookie_biscuit_maker_0",
+      "mk_cookie_winter_stores_cook_3"
+     ],
+     "why": "Cookie is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Squirrel scene, which is the right species doing the wrong work."
+    }
+   ]
+  },
+  {
+   "name": "Sota",
+   "addition": true,
+   "addedBecause": "Sota is a character the maker added to the shelf: there is no printed Sota, so there is nothing to remake and nothing to retire. The maker asked for a set of animals whose versions carry no effect at all — they upgrade, and they work a shift — and this is one of them.",
+   "species": "Cat",
+   "studies": [
+    "Science"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Sota grinds glass. Every lens in the Observatory's smaller instruments came off their bench, and the two big ones have been re-seated by them twice. It is months of work to take a blank down to a figure that will hold a star still, and the last of it is done by hand, by feel, at about the speed of a plant growing.\n\nThey have been invited to look through the finished article on many occasions and have gone each time out of politeness. What Sota wants to know is whether the edge is right. What the star is doing is the Observatory's business.",
+   "voice": "Soft, unhurried, entirely uninterested in the sky.",
+   "arc": "Lens Grinder (1) is the bench and the blank; Telescope Fitter (3) is the bench, the tube and the cell it sits in. The work is months long and does nothing until it is finished, so neither card does anything either.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": [],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_sota_lens_grinder_1",
+      "mk_sota_telescope_fitter_3"
+     ],
+     "why": "Sota is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Cat scene, which is the right species doing the wrong work."
+    }
+   ]
+  },
+  {
+   "name": "Andrew",
+   "addition": true,
+   "addedBecause": "Andrew is a character the maker added to the shelf: there is no printed Andrew, so there is nothing to remake and nothing to retire. The maker asked for a set of animals whose versions carry no effect at all — they upgrade, and they work a shift — and this is one of them.",
+   "species": "Owl",
+   "studies": [
+    "Lore"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Andrew keeps the late desk at the Lending Library — the hours after the children's corner has emptied and the last of the evening readers have gone. He locks up after Inkwell's evening and does not go home. What cannot be lent out he copies by hand, a page or two a night, so that there is a second one.\n\nHe is an Owl, so the hours suit him and the pay does not. The library has never been able to explain the arrangement to the Counting House and has stopped trying.",
+   "voice": "Mild, unhurried, apologetic about the hour and plainly delighted by it.",
+   "arc": "Night Copyist (0) is one desk and one lamp; Keeper of the Late Desk (2) is the whole dark half of the building. An Owl earns almost nothing, and Andrew earns rather less than that, so both cards are small — which is the character, not an oversight.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedVerbs": [],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_andrew_night_copyist_0",
+      "mk_andrew_keeper_of_the_late_desk_2"
+     ],
+     "why": "Andrew is a new animal and no painted tile shows this job. With no `art` set the cards fall back to the painted Owl scene, which is the right species doing the wrong work."
     }
    ]
   }
@@ -1759,6 +2010,30 @@
    }
   },
   {
+   "id": "mk_biff_cadet_constable_0",
+   "type": "character",
+   "name": "Biff",
+   "title": "Cadet Constable",
+   "job": "Cadet Constable",
+   "species": "Hedgehog",
+   "study": "Civics",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "Two paces behind Biff, saying nothing, learning the only part of the job that can be taught: the names. He was on the beat for a year before he was allowed to speak on it.",
+   "addition": true,
+   "addedBecause": "Biff's arc starts at 2 and the printed set had no apprentice constable either. This is the year before the beat, and it does nothing on purpose — the whole of Biff's method is knowing everybody, and a cadet does not know anybody yet.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.22,
+    "power": 3.7,
+    "opportunityCost": 3.6
+   }
+  },
+  {
    "id": "mk_bob_gate_attendant_4",
    "type": "marketCharacter",
    "name": "Bob",
@@ -1992,6 +2267,30 @@
     "score": 6,
     "power": 15.65,
     "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_brooke_mooring_hand_0",
+   "type": "character",
+   "name": "Brooke",
+   "title": "Mooring Hand",
+   "job": "Mooring Hand",
+   "species": "Otter",
+   "study": "Commerce",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "The bottom of the ladder to River Otter, and she has never pretended otherwise: rope, bollard, fend her off, catch the next one. Eight years off the licence starts here.",
+   "addition": true,
+   "addedBecause": "The printed set and the remade arc both start Brooke at the dock hand. The rung below that is the rope on the bollard, and a mooring hand has no trick to play — she catches the boat or she does not.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.22,
+    "power": 3.7,
+    "opportunityCost": 3.6
    }
   },
   {
@@ -2425,6 +2724,44 @@
    }
   },
   {
+   "id": "mk_clover_plot_sharer_1",
+   "type": "character",
+   "name": "Clover",
+   "title": "Plot Sharer",
+   "job": "Plot Sharer",
+   "species": "Rabbit",
+   "study": "Agriculture",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Clover. When Clover is recruited, if you control another Agriculture Character, gain 2 Supply.",
+   "flavor": "Half the borough's gardeners started as somebody Clover brought along to look at something. The strip has been four generations in one family and Clover is the one who keeps giving bits of it away.",
+   "addition": true,
+   "addedBecause": "Clover's arc had nothing at 1, and nothing anywhere that pays for the gardeners they brought along — which the town bible says is half of them. This rung is that: another Agriculture animal in the town, and the plot pays for two.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Agriculture"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 5.16,
+    "power": 9.5,
+    "opportunityCost": 4.6
+   }
+  },
+  {
    "id": "mk_clovers_potato_experiment",
    "type": "event",
    "name": "Clover’s Potato Experiment",
@@ -2646,6 +2983,30 @@
     "score": 5.9,
     "power": 15.39,
     "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_comet_bolt_sorter_0",
+   "type": "character",
+   "name": "Comet",
+   "title": "Bolt Sorter",
+   "job": "Bolt Sorter",
+   "species": "Cat",
+   "study": "Crafts",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "Before the third application, before the second, before the first: a kitten on the hangar floor putting bolts in the right tin. She knew what every one of them was for by the end of the summer.",
+   "addition": true,
+   "addedBecause": "Comet's arc starts at 1 with the mechanic. The rung below it is the hangar floor, years before the selection board turned her down twice, and it does nothing because at that point she was not allowed to touch anything.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.22,
+    "power": 3.7,
+    "opportunityCost": 3.6
    }
   },
   {
@@ -2915,6 +3276,30 @@
    }
   },
   {
+   "id": "mk_copper_cellar_keeper_4",
+   "type": "character",
+   "name": "Copper",
+   "title": "Cellar Keeper",
+   "job": "Cellar Keeper",
+   "species": "Cat",
+   "study": "Commerce",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Copper. A steady shift: 2 turns, 5 Supply.",
+   "flavor": "Salt, lamp oil, candle stock and a shelf of small coin, counted over twice a year and never once opened. This is the card where the cellar simply pays: no trick, no timing, just a Cat who put it by.",
+   "addition": true,
+   "addedBecause": "Copper's arc had nothing at 4, and the cellar itself had no card of its own — every other rung spends it or plays off it. This one is the stock, standing there, and a standing stock does nothing clever.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.42,
+    "power": 11.1,
+    "opportunityCost": 10
+   }
+  },
+  {
    "id": "mk_dylan_river_otter_4",
    "type": "marketCharacter",
    "name": "Dylan",
@@ -3121,6 +3506,30 @@
     "score": 5.62,
     "power": 14.65,
     "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_rosabeth_garden_hand_1",
+   "type": "character",
+   "name": "Rosabeth",
+   "title": "Garden Hand",
+   "job": "Garden Hand",
+   "species": "Mouse",
+   "study": "Agriculture",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Rosabeth. A short shift: 1 turn, 2 Supply.",
+   "flavor": "Not a job so much as a place to be put. The beds want doing, Rosabeth is singing at the far end of them, and by the third week you are somebody who gets up in the morning.",
+   "addition": true,
+   "addedBecause": "Rosabeth's arc had nothing at 1, and every rung of hers is about rehiring somebody. This is the other side of that gate — the animal who was sent to her, working the beds — and it does nothing yet, which is the point of it.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.29,
+    "power": 7.9,
+    "opportunityCost": 4.6
    }
   },
   {
@@ -3336,6 +3745,43 @@
     "score": 5.1,
     "power": 13.3,
     "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_bella_science_hall_fellow_4",
+   "type": "character",
+   "name": "Bella",
+   "title": "Science Hall Fellow",
+   "job": "Science Hall Fellow",
+   "species": "Mouse",
+   "study": "Science",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Bella. When Bella becomes upright, you may rehire a Science Character from your Unemployment for 1 Supply less.",
+   "flavor": "Her recordings have been filed and cited by the Science hall for years, so when the hall lets somebody go, Bella is the one who says the name out loud in the right room. She has still never bid on anything in her life.",
+   "addition": true,
+   "addedBecause": "Bella's arc had nothing at 4, and nothing that used the one piece of standing she has: the Science hall cites her. A citation is worth a job to somebody, so this rung buys a Science animal out of Unemployment cheap.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "rehire",
+      "discount": 1,
+      "filter": {
+       "study": "Science"
+      },
+      "optional": true
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 4.91,
+    "power": 12.32,
+    "opportunityCost": 10
    }
   },
   {
@@ -3709,6 +4155,44 @@
     "score": 5.32,
     "power": 13.89,
     "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_hazel_market_committee_chair_4",
+   "type": "character",
+   "name": "Hazel",
+   "title": "Market Committee Chair",
+   "job": "Market Committee Chair",
+   "species": "Raccoon",
+   "study": "Commerce",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Hazel. At the start of your turn, if you control another Raccoon, draw 1 card.",
+   "flavor": "They have run the guild hall twice and sit on the market committee, and turn up to both in the coat they closed the stall in. The night trade has a voice at daylight meetings because Hazel brings one of its own along and sits it down.",
+   "addition": true,
+   "addedBecause": "Hazel's arc had nothing at 4, and nothing that used the thing the bible gives them: the night trade got a voice at daylight meetings, and it got it by Hazel bringing it. This rung is the other Raccoon in the room.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "species": "Raccoon"
+      }
+     },
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 5.04,
+    "power": 12.67,
+    "opportunityCost": 10
    }
   },
   {
@@ -4504,6 +4988,30 @@
     "score": 5.86,
     "power": 15.3,
     "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_lynnette_press_feeder_2",
+   "type": "character",
+   "name": "Lynnette",
+   "title": "Press Feeder",
+   "job": "Press Feeder",
+   "species": "Rabbit",
+   "study": "Crafts",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Lynnette. A steady shift: 2 turns, 3 Supply.",
+   "flavor": "Sheet on, pull, sheet off, four hundred times, and the ballots are done by morning. Lynnette has fed her own press for fifteen years because nobody else does it without a crease.",
+   "addition": true,
+   "addedBecause": "Lynnette's arc had no rung at 2, and every other rung of hers discounts something. The press run itself discounts nothing: it is a night of identical work that produces the borough's paper.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.39,
+    "power": 7.3,
+    "opportunityCost": 6.8
    }
   },
   {
@@ -6481,6 +6989,30 @@
    }
   },
   {
+   "id": "mk_maribel_seed_sorter_0",
+   "type": "character",
+   "name": "Maribel",
+   "title": "Seed Sorter",
+   "job": "Seed Sorter",
+   "species": "Mouse",
+   "study": "Agriculture",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "Trays, tweezers, and one variety at a time until the light goes. Maribel was doing this before the borough thought of it as a seed bank, and she is the reason it became one.",
+   "addition": true,
+   "addedBecause": "Maribel's arc starts at the Seed Keeper (1). The rung below it is the tray and the tweezers before there was a vault to put anything in, and it makes nothing cheaper because there was no paperwork yet.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.22,
+    "power": 3.7,
+    "opportunityCost": 3.6
+   }
+  },
+  {
    "type": "character",
    "id": "mk_beck_bylaw_reader_1",
    "name": "Beck",
@@ -6626,6 +7158,42 @@
     "score": 5.96,
     "power": 15.55,
     "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_beck_candlelight_reader_4",
+   "type": "character",
+   "name": "Beck",
+   "title": "Candlelight Reader",
+   "job": "Candlelight Reader",
+   "species": "Raccoon",
+   "study": "Lore",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Beck. The first Event you play each turn that requires Lore lets you take a card from the City Dump.",
+   "flavor": "Split almanacs, water-stained novels, ward minutes nobody has wanted since the bridge went — Beck has read all of it by candle, and knows which heap the thing you need went out on. Annabelle keeps the ones with words; Beck gets first read.",
+   "addition": true,
+   "addedBecause": "Beck's arc had nothing at 4, and his Raccoon signature sat on one rung only. This one hangs it on the study the whole character is made of: a Lore Event is exactly the moment Beck remembers what the town threw away.",
+   "abilities": [
+    {
+     "trigger": "onEventPlayed",
+     "condition": {
+      "eventRequiresStudy": "Lore"
+     },
+     "oncePerTurn": true,
+     "effect": {
+      "do": "takeFromCityDump"
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 4.78,
+    "power": 12,
+    "opportunityCost": 10
    }
   },
   {
@@ -6879,6 +7447,44 @@
    }
   },
   {
+   "id": "mk_marmalade_oven_keeper_4",
+   "type": "character",
+   "name": "Marmalade",
+   "title": "Oven Keeper",
+   "job": "Oven Keeper",
+   "species": "Cat",
+   "study": "Food",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Marmalade. At the start of your turn, if you control another Cat, gain 2 Supply.",
+   "flavor": "The ovens are banked overnight and shared out by morning, and Marmalade is who banks them. The kittens are served first and usually before it is paid for — which is why, in a town with cats in it, Marmalade's morning is never short.",
+   "addition": true,
+   "addedBecause": "Marmalade's arc had nothing at 4, and nothing that named the animals he actually bakes for. The bible has him handing it to the kittens first; this rung is the borough paying him back for it.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "species": "Cat"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.46,
+    "power": 13.71,
+    "opportunityCost": 10
+   }
+  },
+  {
    "id": "mk_mittens_rooftop_cat_4",
    "type": "marketCharacter",
    "name": "Mittens",
@@ -7059,6 +7665,30 @@
     "score": 4.71,
     "power": 12.3,
     "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_morty_grain_miller_2",
+   "type": "character",
+   "name": "Morty",
+   "title": "Grain Miller",
+   "job": "Grain Miller",
+   "species": "Badger",
+   "study": "Agriculture",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Morty. A steady shift: 2 turns, 3 Supply.",
+   "flavor": "Before the kitchen, before the boiler, the plain half of the mill: sacks in, stones dressed, flour out, all day. Morty will tell you it is the only part of the job that has never once gone wrong.",
+   "addition": true,
+   "addedBecause": "Morty's arc had nothing at 2 and nothing in Agriculture, though the printed set had him milling grain. The milling itself is the rung with no trick in it, and he keeps it.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.39,
+    "power": 7.3,
+    "opportunityCost": 6.8
    }
   },
   {
@@ -7282,6 +7912,30 @@
    }
   },
   {
+   "id": "mk_moss_timber_hand_0",
+   "type": "character",
+   "name": "Moss",
+   "title": "Timber Hand",
+   "job": "Timber Hand",
+   "species": "Badger",
+   "study": "Crafts",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "Berry taught him at twelve; this is Moss at eleven, stacking other animals' timber and already stacking it his own way. Nobody had yet had to write him a warning about it.",
+   "addition": true,
+   "addedBecause": "Moss's arc starts at 1. This is the year before Berry got hold of him, and it carries no ability because everything Moss does to a town comes from doing it his own way, which he had not yet been caught at.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.22,
+    "power": 3.7,
+    "opportunityCost": 3.6
+   }
+  },
+  {
    "id": "mk_moss_rehiring_day",
    "type": "event",
    "name": "Moss's Rehiring Day",
@@ -7481,6 +8135,30 @@
    }
   },
   {
+   "id": "mk_daniel_chart_copier_1",
+   "type": "character",
+   "name": "Daniel",
+   "title": "Chart Copier",
+   "job": "Chart Copier",
+   "species": "Mouse",
+   "study": "Lore",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Daniel. A short shift: 1 turn, 2 Supply.",
+   "flavor": "Somebody else's survey, traced true, four times over so that four animals can carry one. Daniel has copied more of the borough than he has walked, which is most of it.",
+   "addition": true,
+   "addedBecause": "Daniel's arc jumps from the ink at 0 to the canal chart at 2. The rung between is the copying itself — hours of it, no decisions in it — so the card is the shift and nothing else.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.29,
+    "power": 7.9,
+    "opportunityCost": 4.6
+   }
+  },
+  {
    "type": "character",
    "id": "mk_ned_page_runner_1",
    "name": "Ned",
@@ -7639,6 +8317,43 @@
    }
   },
   {
+   "id": "mk_ned_ward_recorder_3",
+   "type": "character",
+   "name": "Ned",
+   "title": "Ward Recorder",
+   "job": "Ward Recorder",
+   "species": "Squirrel",
+   "study": "Civics",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Ned. The first Event you play each turn that requires Civics lets you draw 1 card.",
+   "flavor": "Both of the borough's standing arguments about the far hedgerow were settled out of Ned's shelves in an afternoon. Whatever the ward is about to do, Ned has the last time it did it, in a box, labelled.",
+   "addition": true,
+   "addedBecause": "Ned's arc had nothing at 3, and nothing that touched Civics business directly — the records are civic records, and the bible has them settling the ward's arguments. This rung is the shelf opening the moment a Civics Event lands.",
+   "abilities": [
+    {
+     "trigger": "onEventPlayed",
+     "condition": {
+      "eventRequiresStudy": "Civics"
+     },
+     "oncePerTurn": true,
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.16,
+    "power": 9.45,
+    "opportunityCost": 7.8
+   }
+  },
+  {
    "type": "character",
    "id": "mk_daisy_petal_sweeper_0",
    "name": "Daisy",
@@ -7787,6 +8502,486 @@
     "score": 5.39,
     "power": 13.55,
     "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_peter_hedge_cutter_0",
+   "type": "character",
+   "name": "Peter",
+   "title": "Hedge Cutter",
+   "job": "Hedge Cutter",
+   "species": "Rabbit",
+   "study": "Agriculture",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "Peter is given the billhook and the near end of the field, and told to keep up. He does keep up. Nobody has yet mentioned that he is doing it correctly.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.22,
+    "power": 3.7,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_peter_hedgelayer_3",
+   "type": "character",
+   "name": "Peter",
+   "title": "Hedgelayer",
+   "job": "Hedgelayer",
+   "species": "Rabbit",
+   "study": "Agriculture",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Peter. A steady shift: 2 turns, 4 Supply.",
+   "flavor": "Cut it most of the way through, bend it over while it is still alive, peg it down and wait fifteen years to find out whether you were any good. Peter has been good for eleven of them so far.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.05,
+    "power": 9.2,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_osh_sharpener_s_boy_0",
+   "type": "character",
+   "name": "Osh",
+   "title": "Sharpener's Boy",
+   "job": "Sharpener's Boy",
+   "species": "Mouse",
+   "study": "Crafts",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "He is not yet allowed the wheel. He is allowed to carry the wheel, which at his size is the harder half of the job.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.22,
+    "power": 3.7,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_osh_edge_grinder_2",
+   "type": "character",
+   "name": "Osh",
+   "title": "Edge Grinder",
+   "job": "Edge Grinder",
+   "species": "Mouse",
+   "study": "Crafts",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Osh. A steady shift: 2 turns, 3 Supply.",
+   "flavor": "Eleven days, the same order every time, and at the end of it every edge in the borough is the same edge again. Osh could tell you whose shears these are with his eyes shut, and has.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.39,
+    "power": 7.3,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_adam_road_mender_1",
+   "type": "character",
+   "name": "Adam",
+   "title": "Road Mender",
+   "job": "Road Mender",
+   "species": "Badger",
+   "study": "Civics",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "A short shift: 1 turn, 2 Supply.",
+   "flavor": "Barrow, rake, hot stuff out of the pot, and the square's cobbles back down before the stalls come at six. Adam has never been thanked for this and has never expected to be.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.29,
+    "power": 7.9,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_adam_surveyor_of_ways_4",
+   "type": "character",
+   "name": "Adam",
+   "title": "Surveyor of Ways",
+   "job": "Surveyor of Ways",
+   "species": "Badger",
+   "study": "Civics",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Adam. A steady shift: 2 turns, 5 Supply.",
+   "flavor": "The long pull to the county gate was his idea, and it is a quarter-hour shorter than the one it replaced. He got carts round the whole of that spring the bridge was down, and he will tell you it was nothing much, at length.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.42,
+    "power": 11.1,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_cassadee_stage_hand_0",
+   "type": "character",
+   "name": "Cassadee",
+   "title": "Stage Hand",
+   "job": "Stage Hand",
+   "species": "Hedgehog",
+   "study": "Entertainment",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "Chairs in, chairs out, lamp trimmed, and one hedgehog at the back holding a list nobody else has read. She was fourteen and it was already her list.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.22,
+    "power": 3.7,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_cassadee_hall_manager_3",
+   "type": "character",
+   "name": "Cassadee",
+   "title": "Hall Manager",
+   "job": "Hall Manager",
+   "species": "Hedgehog",
+   "study": "Entertainment",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Cassadee. A steady shift: 2 turns, 4 Supply.",
+   "flavor": "The room, the lamp oil, the running order and the chairs away by midnight. Cassadee has never once been on the stage and the evening has never once started without her.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.05,
+    "power": 9.2,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_annabelle_paper_sorter_0",
+   "type": "character",
+   "name": "Annabelle",
+   "title": "Paper Sorter",
+   "job": "Paper Sorter",
+   "species": "Raccoon",
+   "study": "Lore",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "Wet paper, cold paws, and a stack by the gate that will be a shelf by the autumn. Annabelle has read most of the borough's rubbish and remembers an unfair amount of it.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.22,
+    "power": 3.7,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_annabelle_salvage_archivist_3",
+   "type": "character",
+   "name": "Annabelle",
+   "title": "Salvage Archivist",
+   "job": "Salvage Archivist",
+   "species": "Raccoon",
+   "study": "Lore",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Annabelle. A steady shift: 2 turns, 4 Supply.",
+   "flavor": "Flattened, dried, labelled and shelved: a year of Grain Exchange returns that exist nowhere else because the Grain Exchange threw its own copy out. She has been wrong before, so she keeps the illegible ones too.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.05,
+    "power": 9.2,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_liz_scale_hand_1",
+   "type": "character",
+   "name": "Liz",
+   "title": "Scale Hand",
+   "job": "Scale Hand",
+   "species": "Fox",
+   "study": "Commerce",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "A short shift: 1 turn, 2 Supply.",
+   "flavor": "She chocks the wheels, waits for the beam, and calls the figure up to the office. It has been the right figure every time, which at the Grain Exchange is not nothing.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.29,
+    "power": 7.9,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_liz_weighbridge_keeper_4",
+   "type": "character",
+   "name": "Liz",
+   "title": "Weighbridge Keeper",
+   "job": "Weighbridge Keeper",
+   "species": "Fox",
+   "study": "Commerce",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Liz. A steady shift: 2 turns, 5 Supply.",
+   "flavor": "Every loaded cart in the borough crosses Liz's plate and is paid on what she writes. Copper certifies the bridge each spring and has never had to move it a hair. She reads the carter's face anyway, out of habit.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.42,
+    "power": 11.1,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_taco_cart_cook_1",
+   "type": "character",
+   "name": "Taco",
+   "title": "Cart Cook",
+   "job": "Cart Cook",
+   "species": "Otter",
+   "study": "Food",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "A short shift: 1 turn, 2 Supply.",
+   "flavor": "One pan, one lamp, and whatever came off the last boat. Taco learned to cook standing up on a moving cart and has never seen the appeal of doing it any other way.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.29,
+    "power": 7.9,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_taco_quayside_cook_3",
+   "type": "character",
+   "name": "Taco",
+   "title": "Quayside Cook",
+   "job": "Quayside Cook",
+   "species": "Otter",
+   "study": "Food",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Taco. A steady shift: 2 turns, 4 Supply.",
+   "flavor": "Shut at noon, open at four in the morning, and never twice in the same place. The lightermen find him every time and not one of them can tell you how.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.05,
+    "power": 9.2,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_cookie_biscuit_maker_0",
+   "type": "character",
+   "name": "Cookie",
+   "title": "Biscuit Maker",
+   "job": "Biscuit Maker",
+   "species": "Squirrel",
+   "study": "Food",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "Hard biscuit, twice through the oven, on the last of the heat. It is not very nice and it will still be there in March, which is the whole idea.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.22,
+    "power": 3.7,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_cookie_winter_stores_cook_3",
+   "type": "character",
+   "name": "Cookie",
+   "title": "Winter Stores Cook",
+   "job": "Winter Stores Cook",
+   "species": "Squirrel",
+   "study": "Food",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Cookie. A steady shift: 2 turns, 4 Supply.",
+   "flavor": "The late heat after the bread is out, and shelves that do not get opened until the weather turns. Cookie has never eaten anything in the year she baked it and does not intend to start.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.05,
+    "power": 9.2,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_sota_lens_grinder_1",
+   "type": "character",
+   "name": "Sota",
+   "title": "Lens Grinder",
+   "job": "Lens Grinder",
+   "species": "Cat",
+   "study": "Science",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "A short shift: 1 turn, 2 Supply.",
+   "flavor": "Months on one blank, and the last of it done by feel at about the speed of a plant growing. Sota can tell you the figure is out before the test says so.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.29,
+    "power": 7.9,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_sota_telescope_fitter_3",
+   "type": "character",
+   "name": "Sota",
+   "title": "Telescope Fitter",
+   "job": "Telescope Fitter",
+   "species": "Cat",
+   "study": "Science",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Sota. A steady shift: 2 turns, 4 Supply.",
+   "flavor": "Every small instrument in the Observatory came off Sota's bench, and the two big ones have been re-seated by them twice. They have looked through exactly as many of them as politeness required.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.05,
+    "power": 9.2,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_andrew_night_copyist_0",
+   "type": "character",
+   "name": "Andrew",
+   "title": "Night Copyist",
+   "job": "Night Copyist",
+   "species": "Owl",
+   "study": "Lore",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "A page or two a night, in a hand so even the Library has twice filed his copy as the original. Andrew has never pointed this out.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.22,
+    "power": 3.7,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_andrew_keeper_of_the_late_desk_2",
+   "type": "character",
+   "name": "Andrew",
+   "title": "Keeper of the Late Desk",
+   "job": "Keeper of the Late Desk",
+   "species": "Owl",
+   "study": "Lore",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Andrew. A steady shift: 2 turns, 3 Supply.",
+   "flavor": "He locks the door behind Inkwell's evening and then does not leave. The Counting House has asked twice what exactly it is paying for, and the Library has given up trying to explain.",
+   "addition": true,
+   "addedBecause": "An added character (see their entry in `characters`): they replace no printed card, and they carry no ability because the maker asked for animals whose whole card is the shift they work.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.39,
+    "power": 7.3,
+    "opportunityCost": 6.8
    }
   }
  ],
