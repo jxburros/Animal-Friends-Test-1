@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
-import { FOIL_MODES, FOIL_ASSIGNMENTS, normalizeFoil, resolveFoil, applyFoil } from '../src/ui/foil.js';
+import { FOIL_MODES, normalizeFoil, resolveFoil, applyFoil } from '../src/ui/foil.js';
 import { VERSIONS, version } from '../src/ui/versions.js';
 import { SET } from './helpers.mjs';
 
@@ -9,7 +9,6 @@ const detail = { mode: 'details', mask: 'assets/art/foil/sample-details.svg' };
 const maker = JSON.parse(readFileSync(new URL('../spec/maker_card_set.json', import.meta.url)));
 
 test('all finishes work for every card and printing without changing definitions', () => {
-  assert.deepEqual(FOIL_ASSIGNMENTS, {}, 'individual assignments remain an editorial decision');
   for (const card of [...SET.cards, ...maker.cards]) {
     const before = JSON.stringify(card);
     for (const printing of VERSIONS) {

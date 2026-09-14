@@ -220,7 +220,7 @@ function rebuildNote(entry) {
 
 // ---------- one card on the shelf ----------
 function buildEntry({ card, shelf }) {
-  const chosen = chosenVersion.get(card.id) || defaultVersionKey(card);
+  const chosen = chosenVersion.get(card.id) || (filter.version === 'any' ? defaultVersionKey(card) : filter.version);
   const have = new Set(versionsOf(card).map((v) => v.key));
   const fig = h('figure', { class: 'book-card' });
   fig.appendChild(buildCardFace(card, { large: true, interactive: true, version: chosen }));
@@ -293,11 +293,13 @@ function buildFilters() {
   const everything = allEntries().map((e) => e.card);
   bar.appendChild(h('div', { class: 'db-chiprow' }, [
     h('span', { class: 'db-chiplabel' }, 'Printing:'),
-    chip('Any', filter.version === 'any', () => { filter.version = 'any'; shown = PAGE; render(); }),
+    chip('Any', filter.version === 'any', () => { filter.version = 'any'; chosenVersion.clear(); shown = PAGE; render(); }),
     ...VERSIONS.map((v) => {
       const n = everything.filter((c) => hasVersion(c, v.key)).length;
       const b = chip(`${v.name} · ${n}`, filter.version === v.key, () => {
-        filter.version = filter.version === v.key ? 'any' : v.key; shown = PAGE; render();
+        filter.version = filter.version === v.key ? 'any' : v.key;
+        // A printing shelf opens on that printing; card chips can still compare other versions.
+        chosenVersion.clear(); shown = PAGE; render();
       }, null, { title: n ? v.blurb : `${v.blurb} — none painted yet`, disabled: !n });
       return b;
     }),

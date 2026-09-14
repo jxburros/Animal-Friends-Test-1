@@ -1,15 +1,13 @@
 // Card printings: regular, alternate art, foil, alternate art foil, creative foil, full card art.
 //
-// Only two of the six exist in the art assets today — regular, which needs none, and full card art,
-// which has twenty-four paintings. The rest are wired and empty on purpose. What is tested here is that
-// the empty ones stay empty until a painting actually exists, and that the two that do exist render
-// exactly as they did before printings were a thing.
+// Regular, ordinary Foil and Full Card Art exist. Alternate and Creative printings stay unavailable
+// until explicitly commissioned. Finish choices do not create different printing categories.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
   VERSIONS, VERSION_KEYS, version, versionsOf, hasVersion, versionArtUrl,
-  defaultVersionKey, resolveVersionKey, PRINTINGS, versionAssetUrl,
+  defaultVersionKey, resolveVersionKey, versionAssetUrl,
 } from '../src/ui/versions.js';
 import { FULL_ART_CARDS, fullArtFor } from '../src/ui/full-art.js';
 import { paintedArtSVG } from '../src/ui/painted-art.js';
@@ -48,9 +46,8 @@ test('every card exists in the regular printing, and in Full Card Art only if it
 });
 
 test('the printings with no art yet are offered nowhere', () => {
-  assert.deepEqual(PRINTINGS, {}, 'no alternate art or foils painted yet');
   for (const card of allCards) {
-    for (const key of ['alternateArt', 'foil', 'alternateArtFoil', 'creativeFoil']) {
+    for (const key of ['alternateArt', 'alternateArtFoil', 'creativeFoil']) {
       assert.equal(hasVersion(card, key), false, `${card.id} ${key}`);
       assert.equal(versionArtUrl(card, key), null, `${card.id} ${key}`);
     }

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <!-- Ordinary Maker Roles atlas tile 11: helmet brass, chest gauge and comet. -->
+  <g fill="none" stroke="white" stroke-linecap="round">
+    <path d="M112 130C125 94 157 66 192 61C237 51 269 69 288 102C315 151 291 197 250 223C207 250 156 241 128 217" stroke-width="9"/>
+    <circle cx="329" cy="310" r="21" stroke-width="7"/>
+  </g>
+  <path fill="white" opacity=".85" d="M354 25C419 39 500 57 544 87C560 97 570 114 558 126C539 144 516 123 494 106C451 74 401 46 354 25Z"/>
+</svg>
