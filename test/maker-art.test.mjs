@@ -7,6 +7,10 @@ import {
   MAKER_FIELD_ATLAS_URL,
   MAKER_WOODLAND_ATLAS_URL,
   MAKER_NIGHT_ATLAS_URL,
+  MAKER_CIVIC_ATLAS_URL,
+  MAKER_HARVEST_ATLAS_URL,
+  MAKER_WORKSHOP_ATLAS_URL,
+  MAKER_PLACES_ATLAS_URL,
   paintedArtSVG,
 } from '../src/ui/painted-art.js';
 
@@ -17,11 +21,15 @@ const atlasUrls = {
   makerfield: MAKER_FIELD_ATLAS_URL,
   makerwoodland: MAKER_WOODLAND_ATLAS_URL,
   makernight: MAKER_NIGHT_ATLAS_URL,
+  makercivic: MAKER_CIVIC_ATLAS_URL,
+  makerharvest: MAKER_HARVEST_ATLAS_URL,
+  makerworkshop: MAKER_WORKSHOP_ATLAS_URL,
+  makerplaces: MAKER_PLACES_ATLAS_URL,
 };
 
-test('four Maker atlases assign 64 existing cards to every tile exactly once', () => {
+test('eight Maker atlases assign 128 existing cards to every tile exactly once', () => {
   const entries = Object.entries(MAKER_ART_TILES);
-  assert.equal(entries.length, 64);
+  assert.equal(entries.length, 128);
 
   for (const [atlas, url] of Object.entries(atlasUrls)) {
     const assignments = entries.filter(([, art]) => art.atlas === atlas);
@@ -42,5 +50,13 @@ test('four Maker atlases assign 64 existing cards to every tile exactly once', (
     assert.ok(markup.includes('data-fallback="original"'), id);
     assert.equal(JSON.stringify(card), before, id + ' remains presentation-only');
   }
+});
+
+test('every non-token Maker card without authored art now has a commissioned scene', () => {
+  const missing = MAKER.cards.filter((card) => card.type !== 'token' && !card.art && !MAKER_ART_TILES[card.id]);
+  assert.deepEqual(missing, []);
+
+  assert.equal(MAKER_ART_TILES.mk_bean_proprietor_5.atlas, 'makercivic');
+  assert.equal(MAKER_ART_TILES.mk_maribel_horticulturist_4.atlas, 'makerharvest');
 });
 
