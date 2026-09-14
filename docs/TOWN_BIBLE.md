@@ -292,6 +292,67 @@ add to the list.
   through Bean's supplier. Half the borough's apprentices have been talked into the next thing across
   Earl's counter, usually over a pot they did not pay for. [Earl, Bean]
 
+- **Sage keeps the borough's sky watch and has never applied to go up.** The Observatory's selection
+  board has left the application form on their desk three times and it has gone back in the drawer
+  three times. Sage knows the space division better than it knows itself — the manifests, the order
+  book, the launch windows — and is the animal Comet writes to from the pad. The Lending Library's
+  low shelf is the scientific romances, and Sage has read all of them twice. [Sage, Comet, Sota]
+- **Eric's parents are lawyers from the Capital City** and did not argue when he said at six that he
+  was going to farm: they bought the schooling, drove the county-fair circuit every summer, and then
+  learned it alongside him. All three of them still show, and all three are a nuisance to beat. An
+  animal in this borough who has been beaten at a county fair has plausibly been beaten by one of
+  them. [Eric]
+- **The borough's wage rates are compared against Eric's.** He can say to the Supply what an animal
+  costs to keep for a season and will say it out loud in front of them, and the figure he says is
+  the figure he pays. The grange has quietly stopped arguing with him about it. [Eric]
+- **Benjamin makes the borough's lanterns and keeps its fire record**, and holds that these are the
+  same job. Everything in the First Boroughs that has ever burned is written down in his hand, and
+  because a fire record is a record of what a place chose to rebuild, he is the animal the borough
+  asks about its own history. The night round's lamps are filled at his bench and nowhere else —
+  his rule, not the ward's — and he is the one who walks the sheds in the dry weeks. He made Morty
+  move the mill's spare oil. [Benjamin, Morty]
+- **The night round's lanterns come off Benjamin's bench and Mandee carries them**, and between the
+  two of them the night shift has never stumbled. [Benjamin, Mandee]
+- **The night school is Jessica's and there is no homework.** She teaches in songs, games and
+  activities, has never once set any, and told a meeting some years ago that she would think about
+  it. The kittens can name every constellation and cannot spell any of them. The other half of that
+  room is not kittens: animals already in a job who would like a better one, and half the Hiring
+  Hall's promotions these ten years started there, at ten at night. [Jessica]
+- **The borough's outfits are Faustus's**, and he cuts by ear: you describe it, badly, waving, and
+  he has the bolt down before you finish. Festival week, the regatta and the Auction House's big
+  lots are all his, and he will not make a thing for a room he is not going to be in. A Mayor who
+  turns up to the Capital City in something Faustus made has cost everybody else a rung before a
+  number has been said, and the Auction House has stopped pretending otherwise. [Faustus, Daisy]
+- **Jake ran the warrens' long errands twice and left twice.** He came out from the Capital City
+  with a reputation the Hiring Hall has never been given the details of and has never asked for,
+  works about three animals' worth for a fortnight, takes the money in his paw rather than on the
+  book, and is on the road before anybody has decided anything about him. There is no address for
+  him anywhere in the borough. [Jake, Kevin]
+- **Thistle sets the pace at the head of a row and the row keeps it.** He has never once looked
+  back; an animal who falls in behind him comes off the field having done half again what they meant
+  to and does not feel it until morning. The grange sends him out with the ones who are sure they
+  are no good at it. [Thistle]
+- **Half of what is bolted, glazed or hung in this town came off Tuppence's cart** — bought out of
+  the Capital City before anybody here could say what it was for, and sold on at a price the
+  Counting House has stopped querying. What the day market cannot name goes to Hazel's night market,
+  where not being able to name a thing is the whole appeal. [Tuppence, Hazel, Patch, Moss]
+- **The building consents are Velvet's counter.** Nothing goes up in the First Boroughs and nothing
+  comes down without a form he has read aloud to somebody, slowly, all of it. Velvet keeps the
+  consents and Ned keeps the ward records; in fifteen years the two shelves have never disagreed.
+  Moss's formal warning from the Capital City came across this counter. [Velvet, Ned, Moss]
+- **Nobody knows where Mandee lives, and the borough has tested it.** She works nights only, is not
+  on Hoot's waking list, has a blank address line at the Hiring Hall, and twice an animal who set out
+  to walk home with her at the end of a run found they were walking home alone. She is the second of
+  the two animals this town does not ask about; Barnaby is the first, and the borough has decided
+  not to compare notes. Scott keeps a whole shelf of her tales and files it with the invention, and
+  has said once, not as a joke, that he is not sure that is the right shelf.
+  [Mandee, Barnaby, Hoot, Scott]
+- **Willow signs for everything that floats between the ferry steps and the county line**, and for
+  the boat yard, the towpath cottages and the arcade lease besides. She started at nineteen with one
+  bad ferry and terms its previous owner described for years as generous of him. The Harbourmaster's
+  office is hers, which is why the River Otter licence is granted out of it and why the river
+  trade's whole ladder runs up to her desk. [Willow, Brooke, Dylan]
+
 ## Relationships
 
 - **Bean owns the café; Peanut runs its counter.** Bean inherited it, Peanut keeps the books, and on
@@ -323,6 +384,22 @@ add to the list.
 - **The borough's children are certain Quinn is a mage**, on the grounds that the writing comes out
   faster than the talking goes in. Inkwell, asked once to settle it, said only that Quinn writes
   faster than he does. [Quinn, Inkwell]
+
+- **Thistle is at the open mic on the nights one particular singer is on the list.** He is at the
+  back by the door, does not take his coat off, listens to the one set with his eyes shut and is gone
+  before the applause. Cassadee keeps the list, knows exactly which nights he comes, has twice moved
+  that singer up the running order so he would not have to stay so late, and has never mentioned any
+  of it to him. The borough gossips about this and only this, and does it very quietly.
+  [Thistle, Cassadee]
+- **Sage and Sota work the same bench for whole nights without either saying anything the other
+  wants to hear.** Sota grinds the lenses and has no interest in what they are pointed at; Sage is
+  the opposite animal. Neither has ever suggested a different arrangement. [Sage, Sota]
+- **Pebble's family will not meet Willow without a third animal present.** It is a standing rule,
+  seven generations into holding the crossing, and they will not say which year they made it.
+  [Willow, Pebble]
+- **Velvet genuinely enjoys the queue.** He said in a public meeting that the small talk while a
+  long form is filled in is the best part of his week. The borough was startled, thought about it,
+  and decided to believe him. [Velvet]
 
 ## Renames
 
@@ -357,6 +434,11 @@ be read.
 | Quinn | Quill | 2026-09-14 |
 | Roger | Rowan | 2026-09-14 |
 | Earl | Russet | 2026-09-14 |
+| Eric | Sorrel | 2026-09-14 |
+| Benjamin | Tansy | 2026-09-14 |
+| Jessica | Tawny | 2026-09-14 |
+| Jake | Thimble | 2026-09-14 |
+| Mandee | Vesper | 2026-09-14 |
 
 ## Additions
 
@@ -377,15 +459,19 @@ Characters the maker added to the shelf who replace no printed card. They carry 
 | Sota | The Observatory's lens grinder, added by the maker: no printed Sota, and no version of them carries an effect. | 2026-09-14 |
 | Andrew | The Lending Library's late desk, added by the maker: no printed Andrew, and no version of him carries an effect. | 2026-09-14 |
 | Quill | The printed Quill was two animals under one name — a Mouse Town Scrivener and a Hedgehog who kept an orchard. The scrivener took the remake and the new name (Quinn); the orchard hedgehog kept the name Quill and stands as her own character, claiming nothing. Quinn's entry retires the five printed orchard versions and says why. | 2026-09-14 |
+| Faustus | The printed Thimble was two animals under one name — a Rabbit Warren Runner hired out of the Capital City and a Cat who worked thread. The Rabbit took the remake and the new name (Jake); the Cat is Faustus and stands as his own character, claiming nothing, because a remake may not change species. Jake's entry retires the five printed Cat versions and says where each went. | 2026-09-14 |
 
-Cards may be additions too — an extra rung in a remade character's arc, or a card of a type the
-printed set never had. All seven **Town Buildings** are the second kind: the type did not exist when
-the collection was printed, so there is nothing for them to remake. Twenty-seven cards are the first kind,
-added to characters already on the shelf: ten that do nothing but upgrade and work a shift (Biff,
-Comet, Brooke, Moss, Maribel, Daniel, Copper, Lynnette, Rosabeth and Morty), and seventeen that
-carry an ability the character's own backstory had already asked for — among them Clover, Bella,
-Ned, Beck, Marmalade and Hazel, and, from the Orien-to-Earl batch, Orien's Tally Clerk, both of
-Pockets' lower rungs and Quinn's first and last.
+Cards may be additions too — an extra rung in a remade character's arc, an added character's own
+cards, or a card of a type the printed set never had. All twelve **Town Buildings** and all nineteen
+**Tokens** are the last kind: neither type existed when the collection was printed, so there is
+nothing for them to remake. Thirty-one belong to the characters this file lists as additions above,
+Faustus's five among them. The remaining fifty-two are extra rungs on characters already on the
+shelf, where the maker's count beat the printed one: some that do nothing but upgrade and work a
+shift (Biff, Comet, Brooke, Moss, Maribel, Daniel, Copper, Lynnette, Rosabeth and Morty), and the
+rest carrying an ability the character's own backstory had already asked for — among them Clover,
+Bella, Ned, Beck, Marmalade and Hazel; Orien's Tally Clerk, both of Pockets' lower rungs and Quinn's
+first and last; and, from the Sage-to-Willow batch, Eric's Best Farmer There Ever Was and Jessica's
+Song and Game Leader.
 
 ---
 
