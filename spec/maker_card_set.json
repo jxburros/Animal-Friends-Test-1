@@ -1393,6 +1393,292 @@
      "resolved": "Built as `coinFlip`, the same verb Roger asked for. Earl leans on his where the story put it: the Coffee Roaster tosses when he finishes a shift, and heads is the favourable call — the upgrade rate — while tails is the Supply he would have made anyway. An even call about whether an animal is ready, settled the way the borough settles one."
     }
    ]
+  },
+  {
+   "name": "Sage",
+   "species": "Owl",
+   "studies": [
+    "Science"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Sage learned to read on the Lending Library's low shelf, which is where the scientific romances live — the penny serials about the other side of the sky, rockets the shape of a thumb, animals on a red world who are polite and terrifying. They read the lot before they were ten and then read them again, and they have never entirely stopped. Everything Sage knows about the sky started as somebody's invention, and the fact that some of it turned out to be true is, they will tell you, the best thing that has ever happened to anybody.\n\nSo they took the dome. Sage keeps the borough's watch list — what is due, what is late, what has not been seen since a year nobody here was alive for — and they keep it to the minute. The Crown wanted to know when the comet would come and Sage told them to the minute and then went back to bed. Sota grinds the lenses and has no interest whatever in what they are pointed at; Sage is the opposite animal, and the two of them work the same bench for whole nights without either saying anything the other wants to hear.\n\nAnd they will not go. The selection board has left the application form on Sage's desk three times, flat, unmentioned, the way you leave a thing for somebody who has said no politely. Sage knows the space division better than the space division does — they have read the manifests, they sit in on the launch meetings, they are the animal Comet writes to from the pad — and they have never once put a name on the form. It is very high up, they say, and there is no one to tell if something goes wrong, and anyway somebody has to be down here looking, or what is the point of anyone going.",
+   "voice": "Precise about numbers, hopeless about wonder — a forecast to the minute and then a sentence about what it would be like to stand there. Says \"somebody has to be looking\" the way other animals say sorry.",
+   "arc": "Three rungs and one dome. The Night Assistant at 0 reads ahead in the town's own deck. The Astronomer at 3 reads the Capital City too, because the sky and the market both come round on a schedule. The Royal Astronomer at 5 does all of it every morning and draws what comes of it: the watch list that the Crown pays for.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [],
+   "wantedVerbs": [
+    {
+     "verb": "peekMarketDeck with a rearrangement",
+     "why": "Sage's whole gift is knowing the order things arrive in; the story wanted them to put the Capital City's deck back in a chosen order the way `reorderDeckTop` does for a town's own deck. `peekMarketDeck` only looks.",
+     "workaround": "They look at the Market Deck and reorder their own — the borough's side of the sky, which is the half Sage is allowed to touch."
+    }
+   ]
+  },
+  {
+   "name": "Eric",
+   "renamedFrom": "Sorrel",
+   "species": "Rabbit",
+   "studies": [
+    "Agriculture",
+    "Civics"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Eric was six when he told his parents he was going to be a farmer. His parents are lawyers — Capital City lawyers, the kind the Counting House budgets for a year ahead — and the borough fully expected a row. There was no row. They took him at his word, the way they would take a client at their word, and then they did what that family does with a thing once it has been decided: they bought the best of it. The best agricultural schools. The county-fair circuit every summer from when he was nine. A shelf of seed catalogues that arrived in the post like briefs.\n\nAnd then, because neither of them could bear to be the least informed animal in a room, they learned it alongside him. His mother can judge a fleece and has the rosettes to prove it. His father reads the almanac cover to cover the week it comes off Lynnette's press and argues with the planting tables in the margin. All three of them show at the county fair and all three of them are a nuisance to beat.\n\nWhat Eric actually turned out to be good at is not growing things, though he grows things very well. It is knowing what an animal costs to keep for a season, to the Supply, and being willing to say so out loud in front of them. He hires cheaply and he hires well, and nobody has ever accused him of hiring meanly, because the figure he says out loud is the figure he pays and it is usually better than the one they were going to ask for. The borough's wage rates are compared against Eric's, and the grange has quietly stopped arguing with him about it.",
+   "voice": "Plain, unhurried, and full of numbers he is not showing off about. Says what a thing costs before he says whether he wants it. Calls his parents \"the lawyers\" with enormous affection.",
+   "arc": "Five rungs up a farm the lawyers paid for. The Smallholder at 1 knows one animal's keep and shaves it off the next hire. The Fair Steward at 2 learned the trick on the circuit, where you price everything. The Row Farmer at 3 is the Rabbit's own verb — he brings somebody along, and the next hire is cheaper for it. The Row Boss at 4 runs a rate every morning; the Best Farmer There Ever Was at 5 runs it at double, which is what the schooling was for.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [
+    {
+     "card": "mk_eric_best_farmer_5",
+     "why": "The top of the arc is Eric and both lawyers in the ring at the county fair with the rosette. It carries boroughs/8, the Row Farmer's field, as a stand-in: no printed Sorrel had art for a cost-5, because no printed Sorrel went that high."
+    }
+   ],
+   "wantedVerbs": [
+    {
+     "verb": "a standing recruitDiscount that is not spent by the first recruit",
+     "why": "The story wanted a rate — every animal you hire while Eric is standing there costs 1 less — because that is what \"he knows what an animal costs to keep\" means. `recruitDiscount` is consumed whole by the first recruit it applies to (`consumeModFor`), so it can only ever say \"your next recruit\".",
+     "workaround": "A discount re-issued every turn: the Row Boss at 4 and the Best Farmer at 5 each hand one out at the start of your turn, so a Mayor who hires once a turn gets the rate and one who hires twice does not."
+    }
+   ]
+  },
+  {
+   "name": "Benjamin",
+   "renamedFrom": "Tansy",
+   "species": "Otter",
+   "studies": [
+    "Lore",
+    "Crafts",
+    "Civics"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Benjamin makes the borough's lanterns, and he keeps the borough's fire record, and he has never been able to explain to anybody's satisfaction that these are the same job. Light shows us who we truly are, he says, which sounds like a lantern maker being poetic until you watch him do it: he will hold a lamp up to a beam and tell you the year the shed above it burned, who rebuilt it, what they rebuilt it out of, and why the joint is wrong.\n\nThe fire is the first half. He has been at it since he was small enough to be carried away from it — a wick, a dish of oil, the blue at the bottom of the flame, the exact moment a lamp catches. The borough has decided this is fine. It is fine because Benjamin is the most careful animal in the First Boroughs about it: he is the one who goes round the sheds in the dry weeks, he is the one who made Morty move the mill's spare oil, and the standing arrangement that the night round's lamps are filled at his bench and nowhere else is his own rule, not the ward's.\n\nThe second half is the record. Everything in this town that has ever burned is written down in Benjamin's hand, and because a fire record is really a record of what a place chose to rebuild, he ended up the animal the borough asks about its own history. He works the Town Dump the way other animals work a shelf — a thing thrown out is a thing somebody decided about, and he will go and get it back, and he is nearly always right that it was wanted. Mandee carries his lanterns on the night round, and between the two of them the night shift has never stumbled.",
+   "voice": "Warm, a little grand, and absolutely serious about light. Starts sentences with \"The year that went —\". Will not let you leave a lamp where he can see it is wrong.",
+   "arc": "Five rungs and one flame. The Wick Trimmer at 0 is the Otter keeping others moving. The Lantern Maker at 2 starts going back into the Dump, a card at a time, to the bottom of the deck. The Town Historian at 3 does both halves of his job in one shift — a shift moved, a thing recovered. The Master Lantern Maker at 4 gets it back into his hand instead, and the Keeper of the Light at 5 does it every morning, because by then the record is the town's and not his.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [
+    {
+     "card": "mk_benjamin_town_historian_3",
+     "why": "The Historian wants the fire book open on a trestle with a lamp held over a burnt beam. It carries neighbors/13, Benjamin's lamplighter portrait, as a stand-in — the right animal, the wrong hour."
+    }
+   ],
+   "wantedVerbs": [
+    {
+     "verb": "cardFromDumpToHand",
+     "why": "The maker asked for a character who can return cards from the Town Dump. The engine only reaches Events there — `eventFromDumpToHand` and `eventFromDumpToDeckBottom` — and the one verb that reaches any card in a bin, `takeFromCityDump`, is the Raccoon's and works the shared City Dump instead. A Market card or a Character in your own Town Dump cannot be got back at all.",
+     "workaround": "Events only, on four of the five rungs — which is the half of the Dump the engine can see. It is also, awkwardly, the Mouse's signature on an Otter, so Benjamin keeps `moveShift` and `readyNextTurn` on the rungs either side of it and reads as an Otter who happens to go through bins."
+    }
+   ]
+  },
+  {
+   "name": "Jessica",
+   "renamedFrom": "Tawny",
+   "species": "Owl",
+   "studies": [
+    "Entertainment",
+    "Civics",
+    "Lore"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Jessica teaches the little ones, and she has never in her life set homework. The borough's parents raised this with her once, some years ago, in a meeting; Jessica agreed that homework was a very good idea and said she would think about it, and then went back and taught them the constellations as a round with actions. The kittens can name every one of them. Not one of them can spell any of them. The parents have stopped bringing it up.\n\nThe method is songs, games and activities, in that order, and it is not a softness — it is the only thing she has ever found that works on an animal who is convinced they are no good at this. She gets them singing the thing before they know it is the thing. By the time a kitten notices they are doing arithmetic they have been doing it for a fortnight and are annoyed about having been tricked, which Jessica regards as the moment the job is done.\n\nShe runs the night school as well, which is where the other half of her work happens, because the animals who turn up at the night school are not kittens. They are animals already doing a job who have worked out they would like to be doing a better one, and Jessica is the one who finds the next rung and talks them onto it before they have finished explaining why they could not possibly. Half the Hiring Hall's promotions in the last ten years started in that room. She is small, extremely loud, and has never once been to bed before four.",
+   "voice": "Delighted, fast, and slightly out of breath. Everything is an activity. Ends explanations with \"— right, everybody up\".",
+   "arc": "Four rungs and no homework. The Song and Game Leader at 0 is the Owl signature done literally: everybody up, on their feet, now. The Infant Teacher at 1 and the Night School Teacher at 2 start paying for the next rung — a promotion in your own town costs less. The Headmistress at 4 hands that rate out every morning, at double, which is what ten years of the night school actually amounts to.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [
+    {
+     "card": "mk_jessica_song_leader_0",
+     "why": "The songs-and-games rung is a room of kittens on their feet doing the constellations as a round with actions. It carries nightworkers/3, the Headmistress at her desk, as a stand-in, which is the one thing Jessica is never doing."
+    }
+   ],
+   "wantedVerbs": []
+  },
+  {
+   "name": "Jake",
+   "renamedFrom": "Thimble",
+   "species": "Rabbit",
+   "studies": [
+    "Agriculture"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Jake came out from the Capital City with a reputation the Hiring Hall has never been given the details of, and has never asked for, because the one time somebody did ask he told them and they wished they had not. He is a warren runner: the long errands, the far rows, the sacks at the wrong end of the borough at the wrong end of the night. It is the job nobody wants and he is frankly wasted in it, and both of those things are the point.\n\nHe is down on his luck in the specific, cheerful way of an animal who has been down on his luck before and knows exactly how long it lasts. He does not borrow. He does not explain. He turns up at the grange, says what he will do it for, does about three animals' worth of it, takes the money in his paw rather than on the book, and then one morning the borough looks round and Jake is not there. He has done it twice. Nobody has an address for him. The road is the point — he talks about it the way Benjamin talks about light, which is to say constantly and without embarrassment.\n\nThe borough's older animals compare him to Kevin, and the comparison is wrong in the way that matters. Kevin stays a fortnight and every one of his eleven employers would have him back. Jake leaves before anybody has decided anything about him at all, which is a trick, and which is the same trick every time.",
+   "voice": "Quick, funny, slightly too familiar on the first morning. Never answers a question about where he was. Says \"before I go\" a lot, from the first day.",
+   "arc": "One rung, and it is a short one on purpose. Jake is hired out of the Capital City, works like three animals for two turns, and is on the road — the whole of him is the trade between what he earns you and how little of him you get to keep.",
+   "remade": "2026-09-14",
+   "retires": [
+    {
+     "id": "ww_thimble_1",
+     "why": "The printed Thimble was two animals under one name. This one is the Cat, the Thread Sorter, and the Cat is Faustus now — an addition on his own entry, because a remake may not change species. Superseded by Faustus's Bolt Boy at cost 0."
+    },
+    {
+     "id": "ns_thimble_1",
+     "why": "The Cat's Spacesuit Seamstress, not the Rabbit's. Superseded by Faustus's Pressure-Suit Tailor at cost 1, which claims nothing for the same reason."
+    },
+    {
+     "id": "ww_thimble_2",
+     "why": "The Cat's Quilt Maker. Superseded by Faustus's Costumier at cost 2; the quilting reads as thrift and Faustus does not, so it changed jobs on the way across."
+    },
+    {
+     "id": "mh_thimble_3",
+     "why": "The Cat's Sailmaker. Superseded by Faustus's Sailmaker at cost 3 — the one printed job that survived the crossing intact, because a harbour town's canvas is still cloth and Faustus is still the animal who cuts it."
+    },
+    {
+     "id": "ww_thimble_3",
+     "why": "The Cat's Master of Mending. Faustus does not mend; he replaces. Superseded by his Threadmaster at cost 5, a hire out of the Capital City who works the door of the auction room instead."
+    }
+   ],
+   "wantedArt": [],
+   "wantedVerbs": [
+    {
+     "verb": "a hire who can be re-hired after leaving",
+     "why": "Jake has done it twice and the story wants the borough to be able to take him on again the next time he drifts through. A `leavesAfter` hire goes back to the Capital City and the card is simply out of the game for that Mayor.",
+     "workaround": "Two turns, a big shift, and the Supply in his paw. The second visit is a story the flavor tells rather than a thing the engine does."
+    }
+   ]
+  },
+  {
+   "name": "Faustus",
+   "addition": true,
+   "addedBecause": "The printed Thimble was two animals under one name — a Rabbit Warren Runner hired out of the Capital City, and a Cat who worked thread. The Rabbit took the remake and the new name (Jake); the Cat is Faustus and stands as his own character, claiming nothing, because a remake may not change species. Jake's entry retires the five printed Cat versions and says where each of them went.",
+   "species": "Cat",
+   "studies": [
+    "Crafts",
+    "Science",
+    "Commerce"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Faustus is the loudest animal in any room he is measuring, and he is usually measuring. He is a threadmaster of all types — cloth, canvas, cord, the awful modern stuff the Science hall sends over in sealed tins — and the trick everybody knows him for is that you do not bring him a drawing. You tell him what you want it to look like. You describe it, badly, waving, and he watches your paws rather than your face, and by the time you have finished the sentence he has the bolt down off the shelf and is cutting.\n\nWhat that has made him, in a town that settles everything by auction, is a fixture of the auction room. Festival week, the regatta, the big lots at the Auction House: Faustus dresses the bidders, and he dresses them on the understanding that he will be in the room to see it. He has opinions about what a well-cut coat does to a bidding war and they are not modest opinions and they are, annoyingly, correct. A Mayor who turns up to the Capital City in something Faustus made has already cost everybody else a rung before anybody has said a number, and the Auction House has quietly stopped pretending otherwise.\n\nHe is a Cat, which means all of this happens exactly when it suits him and not a moment before, and he has walked out of a fitting because the light was wrong. Daisy does the flowers for festival week and Faustus does the coats, and the two of them have an arrangement about the square that neither will describe as a friendship.",
+   "voice": "Loud, delighted, endlessly specific about fabric. Interrupts. Calls everybody \"darling\" and means it about half the time.",
+   "arc": "Five rungs, all of them pointed at the auction room. The Bolt Boy at 0 is paid to be in the room when you announce. The Pressure-Suit Tailor at 1 makes a challenge cheaper; the Costumier at 2 makes it win ties. The Sailmaker at 3 is the Cat signature — he gets up when it suits him. The Threadmaster at 5 is the whole thing said out loud: while he is on display in the Capital City, every pledge in every auction costs a rung more, for everybody, and the Mayor who finally hires him gets the first bid of the turn as well.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [
+    {
+     "card": "mk_faustus_threadmaster_5",
+     "why": "The Threadmaster is a hire out of the Capital City, at the Auction House door in something he made this morning. It carries whiskerwood/3, the quilting bench, as a stand-in — the job he was promoted out of."
+    }
+   ],
+   "wantedVerbs": [
+    {
+     "verb": "a pledge rule that only binds the rival",
+     "why": "The maker asked for a card that makes players spend two animals a bid while it is out. `pledgeLadderDelta` does exactly that, and it does it to both Mayors — including the one who hired him — because a `displayed` city rule is a rule of the room, not of a town.",
+     "workaround": "Split across the same card: the ladder is heavier while Faustus sits in the Capital City, and once a Mayor buys him out of the room they get the first bid of each turn a rung higher instead. Buying him is buying the door, which is the shape Bob's gate already established."
+    }
+   ]
+  },
+  {
+   "name": "Thistle",
+   "species": "Badger",
+   "studies": [
+    "Agriculture",
+    "Lore",
+    "Civics"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Thistle works, and that is nearly the whole of what the borough can tell you about him. Up before the lanterns, home after the moon, thirty-odd years of it, and in all that time nobody has had a word out of him that was not about the job or worth hearing. He is not shy and he is not sullen. He simply does not see why a thing that can be done should be discussed first.\n\nWhat he is actually for, the grange worked out early and has never said to his face: put Thistle at the head of a row and the row keeps his pace. Not because he drives it — he has never once looked back — but because the pace is exactly right, and an animal who falls in behind him comes off that field at dusk having done half again what they meant to and not feeling it until the morning. The grange sends him out with the ones who think they are no good. It works about nine times in ten, and the tenth is usually a fox.\n\nAnd there is the other thing. Two evenings a month, in whatever room is having the open mic, there is a badger at the back by the door who does not take his coat off, does not drink anything, listens to one singer's set with his eyes shut, and is gone before the applause. Cassadee keeps the list and knows exactly which nights he comes, and has never mentioned it to him, and has twice moved that singer up the running order so he would not have to stay so late. The borough has decided, collectively and without discussion, that this is nobody's business. It is the only thing about Thistle anybody gossips about, and they do it very quietly.",
+   "voice": "Short. Answers the question asked. Long silences that are not uncomfortable unless you make them so. The most he has ever said at once was about drainage.",
+   "arc": "Five rungs at one pace. The Almanac Keeper at 1 is the Badger signature: the town braces and the weather goes over it. The Field Hand at 2 pays his own next shift better; the Grange Warden at 3 starts paying for everybody's. The Field Surveyor at 4 and the Grange Elder at 5 are the thing the grange actually worked out — while Thistle is standing there, every shift the town finishes is worth more, and at the top it is worth two more, which is thirty years of pace made into a rate.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [],
+   "wantedVerbs": []
+  },
+  {
+   "name": "Tuppence",
+   "species": "Squirrel",
+   "studies": [
+    "Commerce"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Tuppence comes out from the Capital City about once a month with a cart, and what is on the cart is the best hour in the borough. Nobody, including Tuppence, can always say what the things are. There is a brass object with a hinge. There is a crate of the ribbed glass that the Observatory later turned out to want very badly. There is a coil of something that Moss looked at for a long minute, bought the whole of, and used on a bridge arch, and which the Capital City's guild has since written to ask about.\n\nThe trade is not junk and it is not antiques. Tuppence buys ahead of the borough's understanding — the fittings, the stuff, the odd modern material that nobody here has a use for yet — and then waits, which is the most Squirrel thing about them and the reason they are never quite as poor as the cart looks. Half of what is screwed, hung, glazed or bolted into the First Boroughs' Buildings came off that cart at a price the Counting House still does not believe, and the standing joke at the Counting House is that Tuppence's invoices are cheaper than the queries about them.\n\nThey and Hazel have the obvious arrangement: what the day market cannot name goes to the night market, where not being able to name a thing is the whole appeal. Patch is the other end of it — animals bring Patch a thing and ask whether it is worth keeping, and about four times a year the thing turns out to have come off Tuppence's cart, and Patch says yes, and does not explain why.",
+   "voice": "Cheerful, vague about provenance, precise about price. \"I don't know what it is either. It's four Supply, and you'll want two.\"",
+   "arc": "One rung, hired out of the Capital City, because the cart only ever comes out once a month. It does two things at once, which is the whole trade: a Building goes up cheaper while Tuppence is in town, and what they make on the shift goes under the cart rather than into the till.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [],
+   "wantedVerbs": []
+  },
+  {
+   "name": "Velvet",
+   "species": "Cat",
+   "studies": [
+    "Civics",
+    "Lore",
+    "Science"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Velvet is a government cat. His mother was a government cat and her mother kept the Capital City's tithe rolls, and Velvet has never once in his life wanted to be anything else, which the borough finds faintly alarming and Velvet finds restful. He came out to the First Boroughs as a petition runner at seventeen and has been behind one counter or another ever since.\n\nWhat he holds now is the consents. Nothing goes up in this town and nothing comes down without a form Velvet has read aloud to somebody, slowly, all of it, while they fidget. Ned keeps the ward records and Velvet keeps the consents; they are different shelves and in fifteen years the two have never disagreed, which both of them regard as ordinary and everybody else regards as slightly eerie. Moss's formal warning from the Capital City came across Velvet's counter, and Velvet read that aloud too, at the same pace, to a badger who wanted to be anywhere else in the world.\n\nThe thing to understand about him is that he is not enduring any of this. He loves it. He loves the mundane — a well-ruled column, a fee scale that comes out even, a Tuesday. He loves patterns, and he sees them, which is why he is the animal who noticed the far hedgerow appearing in three unrelated files in one spring and said so before anybody else had. And he loves the queue: the small talk while a long form is filled in is, he has said in a public meeting, the best part of his week. The borough was startled, thought about it, and decided to believe him.",
+   "voice": "Unhurried, kind, faintly pleased. Reads things aloud in full. Asks after your aunt while the ink dries, and remembers the answer next quarter.",
+   "arc": "Five rungs and one counter, going from the form to the fabric of the town. The Counter Clerk at 1 gets one Building through cheaper. The Notary at 2 is the Cat signature: he gets up when the small print says he may. The Neighborhood Registrar at 3 runs the discount every morning. Then the other half of the office opens: the Surveyor of Works at 4 takes a Building down and puts a discarded one up in its place, and the Clerk of the Works at 5 does both — the rate and the demolition order — which is the whole consents shelf in one animal.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [
+    {
+     "card": "mk_velvet_surveyor_of_works_4",
+     "why": "The Surveyor of Works is outdoors for once: a cat in a good coat with a clipboard, in front of something about to come down. It carries whiskerwood/4, the counter portrait, as a stand-in."
+    }
+   ],
+   "wantedVerbs": [
+    {
+     "verb": "buildingsAtLeast as a scaling condition on a discount",
+     "why": "The story wanted the rate to read as an office that gets better at its own job — the more this town has raised, the cheaper the next consent. `buildingsAtLeast` exists as a yes/no condition, but nothing scales a mod's value by a count.",
+     "workaround": "Two flat rates on two rungs: 1 less at the Registrar, 2 less at the Clerk of the Works. The office gets better because Velvet is promoted, not because the town got bigger."
+    }
+   ]
+  },
+  {
+   "name": "Mandee",
+   "renamedFrom": "Vesper",
+   "species": "Fox",
+   "studies": [
+    "Lore",
+    "Science",
+    "Commerce"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Mandee works nights. Only nights — the courier run, the weather watch on the dome, the trestles coming down at Hazel's market at four, the loads that go on the water when the water is empty. She is at the sorting bench before Hibiscus and gone before Juniper, she is on Taco's cart list, and she has never once been seen in the First Boroughs in daylight by an animal who could later produce a witness.\n\nNobody knows where she lives. This is not a figure of speech and the borough has tested it: Hoot keeps the list of animals who have asked to be woken and Mandee is not on it, the Hiring Hall has a line for an address and hers is blank, and twice now somebody has set out to walk with her at the end of a run and found, perfectly pleasantly, that they were walking home alone. The borough has two animals it does not ask about — Barnaby is the other — and has decided not to compare notes, which is itself a decision it made without discussing.\n\nWhat she trades in, besides freight, is tales. They are very good tales. They are about the far bank and the long road and a thing at the county line in a bad winter, they are told at exactly the pace of a walk, and not one of them has ever been checked. Scott, who has Ned certify everything he prints about a real animal or a real year, keeps a whole shelf of Mandee's and files it with the invention, and has said, once, in a way that was not a joke, that he is not sure that is the right shelf.\n\nAnd she is never slow. Whatever she is hired to be — the courier, the watcher, the trader with the good coat — Mandee arrives on her feet and ready to go, at an hour when everybody else is turning over.",
+   "voice": "Low, amused, unhurried. Answers a question with a story that is almost an answer. Says \"I'll be off, then\" while already off.",
+   "arc": "Four rungs and no daylight. The Night Courier at 1 is a Fox reading the Capital City one card ahead. From the Weather Watcher at 2 upward, every rung carries the same line — recruit, and somebody turns one step toward upright, and the animal she picks is usually herself, which is the promise the maker made about her. The Moonlight Trader at 3 adds the Fox's first bid; the Keeper of Tales at 4 makes the whole town's Masters arrive a turn nearer, which is Mandee's own habit finally spreading to everybody else.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [],
+   "wantedVerbs": [
+    {
+     "verb": "entersUpright (a card that sets its own entry orientation)",
+     "why": "The maker asked for all of Mandee's variations to arrive ready, regardless of class. Entry orientation is read off the cost alone (`entryOrientation` in actions.js) before the animal is even on the table, so a card cannot change its own — the only two things that touch it, `masterDelayMinus1` and the Statue of Patience's burden, are player passives already in force when the recruit happens.",
+     "workaround": "Three of them: an Apprentice rung, which arrives upright by the rules anyway; `onRecruit → advanceCharacter` on every rung above it, which the player spends on Mandee herself to stand her up the moment she lands; and `masterDelayMinus1` on the Keeper of Tales, so the next Master this town hires — Mandee included — comes in a turn nearer. An upgrade recruit keeps the stack's orientation, so once one Mandee is upright the rest of her arc genuinely does arrive ready. `advanceCharacter` is the Owl's signature and this is the one place a Fox borrows it; she keeps `peekMarketDeck` and `firstBidPlus1` so the auction animal is still the animal."
+    }
+   ]
+  },
+  {
+   "name": "Willow",
+   "species": "Otter",
+   "studies": [
+    "Commerce",
+    "Science",
+    "Civics"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Willow started with one ferry. She was nineteen, it was not a good ferry, and she talked the previous owner into terms that he described for years afterwards as generous of him. She now signs for everything that floats between the ferry steps and the county line, and for a good deal that does not: the boat yard, the two rows of cottages on the towpath, the lease on the arcade, the whole of the harbour office. She sells big. She has never in her life sold anybody a small thing, and the borough is not certain she knows how.\n\nWhat she is, technically, is the Harbourmaster, which means the River Otter licence is granted out of her office, and the river trade's whole ladder — dock hand, ferry hand, lighterman, wright — runs up to a desk she sits behind. Brooke has been about two years off it for eight years and knows exactly whose desk that is. Willow is not unfair about it. She is simply the largest fact in that room, and she takes up all of it, and she talks.\n\nThe talking is the thing. She is the best talker in the First Boroughs and the borough is proud of her for it in the way you are proud of weather. She does not lie and she does not bully; she arrives at the table having already worked out the two worst outcomes available to you, sets them both down in front of you with enormous warmth, and waits. Animals come away from Willow's table having agreed to the less bad one and feeling, on the walk home, that they chose it. Half the harbour was bought that way. Pebble's family, who have had the crossing for seven generations, have a standing rule about never meeting her without a third animal present, and will not say which year they made it.",
+   "voice": "Big, warm, expensive. Uses your name twice a sentence. Lays out your options in ascending order of how much she would like you to take the last one.",
+   "arc": "Five rungs, from one ferry to the whole harbour. The Ferry Trader at 1 and the Tide Reckoner at 3 are Otter tempo — a paw free, a shift moved. From the Toll Keeper at 2 the table starts working on the animal across it: a card of theirs goes back on top of their deck, because whatever they were holding is not the thing they are going to be talking about now. The Harbourmaster at 4 puts both bad outcomes on the table and one of them happens, and the Harbour Admiral at 5 does that every morning and takes a cut of everything the Capital City sells.",
+   "remade": "2026-09-14",
+   "retires": [],
+   "wantedArt": [
+    {
+     "card": "mk_willow_harbour_admiral_5",
+     "why": "The Admiral is the office rather than the quay — the leases, the licences, an otter behind a desk too large for the room. It carries neighbors/12, Willow on the quay, as a stand-in."
+    }
+   ],
+   "wantedVerbs": [
+    {
+     "verb": "opponentChoice (a rival picks which hardship they take)",
+     "why": "The maker asked for a card that makes the other Mayor choose between losing Supply or another hardship. Two things are missing: nothing on a Character can take Supply off a rival at all — `everyoneLosesSupply` is a Disruption's shared shock and `giveSupplyToOpponent` runs the other way — and no effect offers a rival a choice of branches. Every reaching verb in the vocabulary (`makeBusy`, `opponentTopdeckFromHand`, `unemployOpponentCharacter`) simply happens to them.",
+     "workaround": "The choice became a toss. The Harbourmaster and the Harbour Admiral put both bad outcomes on the table with `coinFlip` — an animal goes back to work, or a card goes back on top of the deck — so the pair is real even though the rival does not get to pick which. Roger's ha'penny is the borough's own method for a call that will not come down on its own, which makes the seam a thing the town already does rather than a thing the engine could not do."
+    }
+   ]
   }
  ],
  "cards": [
@@ -12993,6 +13279,1901 @@
     "score": 3.03,
     "power": 4,
     "opportunityCost": 2
+   }
+  },
+  {
+   "id": "mk_sage_night_assistant_0",
+   "type": "character",
+   "name": "Sage",
+   "title": "Night Assistant",
+   "job": "Night Assistant",
+   "species": "Owl",
+   "study": "Science",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Recruit: look at the top two cards of your deck and put any of them on the bottom.",
+   "flavor": "Sage is on the ladder at two in the morning with a serial folded into the watch book, reading ahead in both. Sota grinds the lens and does not ask; Sage tells them anyway.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "scryDeck",
+      "count": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 0
+   },
+   "remakes": "ns_sage_0",
+   "rarity": "Common",
+   "power": {
+    "score": 2.76,
+    "power": 4.6,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_sage_astronomer_3",
+   "type": "character",
+   "name": "Sage",
+   "title": "Astronomer",
+   "job": "Astronomer",
+   "species": "Owl",
+   "study": "Science",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Sage. When Sage becomes upright, look at the top two cards of the Market Deck, then look at the top two cards of your deck and put any of them on the bottom.",
+   "flavor": "The sky comes round on a schedule and so does the Capital City, and Sage has never understood why anybody keeps only one of the two lists.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "peekMarketDeck",
+        "count": 2
+       },
+       {
+        "do": "scryDeck",
+        "count": 2
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 1
+   },
+   "remakes": "ns_sage_3",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.01,
+    "power": 11.39,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_sage_royal_astronomer_5",
+   "type": "character",
+   "name": "Sage",
+   "title": "Royal Astronomer",
+   "job": "Royal Astronomer",
+   "species": "Owl",
+   "study": "Science",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Sage. At the start of your turn, look at the top two cards of your deck and put any of them on the bottom, then draw 1 card.",
+   "flavor": "The form has been on their desk three times and gone back in the drawer three times. Sage knows the pad, the manifests and the launch window to the minute, and has never put a name on the line. Somebody has to be down here looking, they say, or what is the point of anyone going.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "scryDeck",
+        "count": 2
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 1
+   },
+   "remakes": "ns_sage_5",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.59,
+    "power": 14.59,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_sages_star_party",
+   "type": "event",
+   "name": "Sage’s Star Party",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Sage"
+    },
+    {
+     "study": "Science",
+     "count": 1
+    }
+   ],
+   "text": "Requires Sage and a Science Character. Draw 2 cards, then look at the top two cards of the Market Deck.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 2
+     },
+     {
+      "do": "peekMarketDeck",
+      "count": 2
+     }
+    ]
+   },
+   "flavor": "Bring a blanket. Bring a flask. Do not, under any circumstances, bring a lantern. Sage will read you the bit from the serial where the red world answers, and mean every word of it.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 13
+   },
+   "remakes": "ns_sages_star_party",
+   "rarity": "Common",
+   "power": {
+    "score": 2.28,
+    "power": 3.8,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_eric_smallholder_1",
+   "type": "character",
+   "name": "Eric",
+   "title": "Smallholder",
+   "job": "Smallholder",
+   "species": "Rabbit",
+   "study": "Agriculture",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "When Eric is recruited, your next recruit costs 1 less Supply.",
+   "flavor": "Four rows, a shed and a ledger the lawyers would recognise. He can tell you what the animal in the next field costs to keep, and has, to the animal in the next field.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "remakes": "bb_sorrel_1",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 0
+   },
+   "rarity": "Rare",
+   "power": {
+    "score": 4.83,
+    "power": 8.9,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_eric_fair_steward_2",
+   "type": "character",
+   "name": "Eric",
+   "title": "Fair Steward",
+   "job": "Fair Steward",
+   "species": "Rabbit",
+   "study": "Civics",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Eric. When Eric completes a shift, your next recruit costs 1 less Supply.",
+   "flavor": "Nine summers on the circuit teach you that everything in the ring has a price on it, including the animals holding the halters. His mother judges the fleeces. His father argues with the almanac.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 0
+   },
+   "remakes": "mh_sorrel_2",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.5,
+    "power": 9.69,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_eric_row_farmer_3",
+   "type": "character",
+   "name": "Eric",
+   "title": "Row Farmer",
+   "job": "Row Farmer",
+   "species": "Rabbit",
+   "study": "Agriculture",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "Upgrades Eric. Recruit: you may recruit a Character costing 1 or less from your hand for free; it enters Busy, and if one does, your next recruit costs 1 less Supply.",
+   "flavor": "He says the figure out loud, in front of them, and it is always better than the one they had got up the nerve to ask for. Nobody has yet worked out how to be insulted by it.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "recruitFromHand",
+      "filter": {
+       "maxCost": 1
+      },
+      "orientation": 270,
+      "optional": true,
+      "then": {
+       "do": "addMod",
+       "key": "recruitDiscount",
+       "value": 1,
+       "expires": "untilUsed",
+       "consumable": true
+      }
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 8
+   },
+   "remakes": "ns_sorrel_3",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.75,
+    "power": 10.8,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_eric_row_boss_4",
+   "type": "character",
+   "name": "Eric",
+   "title": "Row Boss",
+   "job": "Row Boss",
+   "species": "Rabbit",
+   "study": "Agriculture",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Eric. At the start of your turn, your next recruit costs 1 less Supply.",
+   "flavor": "The whole planting schedule from memory and a stub of chalk, and beside it, in the same hand, what every animal on it is worth for the season.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "remakes": "bb_sorrel_2",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 8
+   },
+   "rarity": "Rare",
+   "power": {
+    "score": 4.84,
+    "power": 12.15,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_eric_best_farmer_5",
+   "type": "character",
+   "name": "Eric",
+   "title": "Best Farmer There Ever Was",
+   "job": "Best Farmer There Ever Was",
+   "species": "Rabbit",
+   "study": "Agriculture",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Eric. At the start of your turn, your next recruit costs 2 less Supply.",
+   "flavor": "This is the thing the schools and the summers and the seed catalogues were for, and the lawyers are in the ring beside him holding the other end of the rosette, being a nuisance to beat.",
+   "addition": true,
+   "addedBecause": "The printed Sorrel stopped at the Row Boss at 4. The rung above it is the animal his parents actually bought — the best farmer there ever was — and the rate he can run once he is it.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 8
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.39,
+    "power": 11.45,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_benjamin_wick_trimmer_0",
+   "type": "character",
+   "name": "Benjamin",
+   "title": "Wick Trimmer",
+   "job": "Wick Trimmer",
+   "species": "Otter",
+   "study": "Lore",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Recruit: choose another Character you control; it becomes upright at the start of your next turn.",
+   "flavor": "He trims every wick on the night round himself and will not be talked out of it. A lamp that gutters on the river path, he says, is a lamp that has told somebody something untrue about where the edge is.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "readyNextTurn",
+      "filter": {
+       "notSelf": true
+      },
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 13
+   },
+   "remakes": "ns_tansy_0",
+   "rarity": "Common",
+   "power": {
+    "score": 3.06,
+    "power": 5.1,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_benjamin_lantern_maker_2",
+   "type": "character",
+   "name": "Benjamin",
+   "title": "Lantern Maker",
+   "job": "Lantern Maker",
+   "species": "Otter",
+   "study": "Crafts",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Benjamin. Busy: return an Event from your Town Dump to the bottom of your deck.",
+   "flavor": "The blue at the bottom of the flame is the part he is actually looking at, and has been since he was small enough to be carried away from it.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "eventFromDumpToDeckBottom"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 13
+   },
+   "remakes": "rr_tansy_1",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.76,
+    "power": 10.25,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_benjamin_town_historian_3",
+   "type": "character",
+   "name": "Benjamin",
+   "title": "Town Historian",
+   "job": "Town Historian",
+   "species": "Otter",
+   "study": "Civics",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Benjamin. Busy: move a shift from one of your Characters to another, then return an Event from your Town Dump to the bottom of your deck.",
+   "flavor": "Hold the lamp to the beam and he will give you the year, the animal who rebuilt it, the timber it came out of, and a short unkind remark about the joint.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "moveShift"
+       },
+       {
+        "do": "eventFromDumpToDeckBottom"
+       }
+      ]
+     }
+    }
+   ],
+   "remakes": "rr_tansy_3",
+   "art": {
+    "atlas": "neighbors",
+    "tile": 13
+   },
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.83,
+    "power": 13.25,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_benjamin_master_lantern_maker_4",
+   "type": "character",
+   "name": "Benjamin",
+   "title": "Master Lantern Maker",
+   "job": "Master Lantern Maker",
+   "species": "Otter",
+   "study": "Crafts",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Benjamin. Busy: move a shift from one of your Characters to another, then you may return an Event from your Town Dump to your hand.",
+   "flavor": "Benjamin makes the lanterns and Mandee carries them, and between the two of them the night shift has never stumbled. He fills them at his own bench and nowhere else; that rule is his, not the ward's.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "moveShift"
+       },
+       {
+        "do": "eventFromDumpToHand",
+        "optional": true
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 13
+   },
+   "remakes": "mh_tansy_4",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.89,
+    "power": 14.8,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_benjamin_keeper_of_the_light_5",
+   "type": "character",
+   "name": "Benjamin",
+   "title": "Keeper of the Light",
+   "job": "Keeper of the Light",
+   "species": "Otter",
+   "study": "Lore",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Benjamin. At the start of your turn, you may return an Event from your Town Dump to your hand.",
+   "flavor": "A fire record is really a record of what a place decided to rebuild, which is why the borough ended up asking a lantern maker about its own history. Light shows us who we truly are. He has been saying it for thirty years and it has been true every time.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "eventFromDumpToHand",
+      "optional": true
+     }
+    }
+   ],
+   "remakes": "rr_tansy_2",
+   "art": {
+    "atlas": "neighbors",
+    "tile": 13
+   },
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.98,
+    "power": 15.61,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_jessica_song_leader_0",
+   "type": "character",
+   "name": "Jessica",
+   "title": "Song and Game Leader",
+   "job": "Song and Game Leader",
+   "species": "Owl",
+   "study": "Entertainment",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Recruit: one of your other Characters turns one step toward upright.",
+   "flavor": "The constellations as a round, with actions. They can all name them. Not one of them can spell any of them. Right, everybody up.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "advanceCharacter",
+      "filter": {
+       "notSelf": true
+      },
+      "optional": true
+     }
+    }
+   ],
+   "addition": true,
+   "addedBecause": "The printed Tawny started at the cost-1 Night Watch, a job Jessica does not do. The rung below the classroom is the songs and the games, which is where her whole method actually starts.",
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 3
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 3.07,
+    "power": 5.13,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_jessica_infant_teacher_1",
+   "type": "character",
+   "name": "Jessica",
+   "title": "Infant Teacher",
+   "job": "Infant Teacher",
+   "species": "Owl",
+   "study": "Civics",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Jessica is recruited, your next recruit that upgrades a Character you control costs 1 less Supply.",
+   "flavor": "She gets them singing the thing before they know it is the thing. By the time a kitten notices they are doing arithmetic they have been doing it for a fortnight and are furious about it.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 1,
+      "filter": {
+       "upgradesOwn": true
+      },
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 4
+   },
+   "remakes": "ns_tawny_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.31,
+    "power": 6.1,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_jessica_night_school_teacher_2",
+   "type": "character",
+   "name": "Jessica",
+   "title": "Night School Teacher",
+   "job": "Night School Teacher",
+   "species": "Owl",
+   "study": "Lore",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Jessica. Recruit: one of your other Characters turns one step toward upright, and your next recruit that upgrades a Character you control costs 1 less Supply.",
+   "flavor": "Lessons begin at ten. Nobody is sure ten what. The animals in that room are not kittens — they are already doing a job and have worked out they would like a better one.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "advanceCharacter",
+        "filter": {
+         "notSelf": true
+        },
+        "optional": true
+       },
+       {
+        "do": "addMod",
+        "key": "recruitDiscount",
+        "value": 1,
+        "filter": {
+         "upgradesOwn": true
+        },
+        "expires": "untilUsed",
+        "consumable": true
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 3
+   },
+   "remakes": "ns_tawny_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.96,
+    "power": 10.68,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_jessica_headmistress_4",
+   "type": "character",
+   "name": "Jessica",
+   "title": "Headmistress",
+   "job": "Headmistress",
+   "species": "Owl",
+   "study": "Lore",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Jessica. At the start of your turn, your next recruit that upgrades a Character you control costs 2 less Supply.",
+   "flavor": "She finds the next rung and talks them onto it before they have finished explaining why they could not possibly. Half the Hiring Hall's promotions these ten years started in her room, at ten at night, with a song.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 2,
+      "filter": {
+       "upgradesOwn": true
+      },
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 3
+   },
+   "remakes": "ns_tawny_4",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.26,
+    "power": 13.2,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_jessicas_night_class",
+   "type": "event",
+   "name": "Jessica’s Night Class",
+   "kind": "limited",
+   "cost": 0,
+   "duration": 2,
+   "requires": [
+    {
+     "name": "Jessica"
+    }
+   ],
+   "text": "Requires Jessica. Limited 2: at the start of your turn, one of your Characters turns one step toward upright.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "advanceCharacter",
+      "optional": true
+     }
+    }
+   ],
+   "flavor": "Tonight: fractions, the constellations, and why you should have gone to bed. There is no homework. There has never been any homework.",
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 3
+   },
+   "remakes": "ns_tawnys_night_class",
+   "rarity": "Common",
+   "power": {
+    "score": 1.77,
+    "power": 2.85,
+    "opportunityCost": 3.3
+   }
+  },
+  {
+   "id": "mk_jake_warren_runner_3",
+   "type": "marketCharacter",
+   "name": "Jake",
+   "title": "Warren Runner",
+   "job": "Warren Runner",
+   "species": "Rabbit",
+   "study": "Agriculture",
+   "cost": 3,
+   "shift": {
+    "delay": 1,
+    "output": 4
+   },
+   "leavesAfter": 2,
+   "text": "Hired from the Capital City; enters Busy, and takes to the road after two of your turns. When Jake completes a shift, gain 2 Supply.",
+   "flavor": "He says what he will do it for, does about three animals' worth of it, and takes the money in his paw rather than on the book. Then one morning the borough looks round and there is no Jake, and no address, and a very tidy row.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 3
+   },
+   "remakes": "mkt_thimble",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.69,
+    "power": 10.44,
+    "opportunityCost": 7.4
+   }
+  },
+  {
+   "id": "mk_faustus_bolt_boy_0",
+   "type": "character",
+   "name": "Faustus",
+   "title": "Bolt Boy",
+   "job": "Bolt Boy",
+   "species": "Cat",
+   "study": "Crafts",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When you announce a purchase with Faustus, gain 1 Supply.",
+   "flavor": "Nine years old, carrying bolts twice his length, and already telling grown animals what the green does to them in that light. He was right about the green.",
+   "abilities": [
+    {
+     "trigger": "onAnnounce",
+     "condition": {
+      "announcerIsSelf": true
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 3
+   },
+   "addition": true,
+   "addedBecause": "Faustus is an added character (see his entry): the printed Thimble the Cat is retired on Jake's entry, so every rung of this arc replaces nothing. This one is the Thread Sorter's rung, done as the animal who is already in the room when the bidding opens.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.94,
+    "power": 4.9,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_faustus_pressure_suit_tailor_1",
+   "type": "character",
+   "name": "Faustus",
+   "title": "Pressure-Suit Tailor",
+   "job": "Pressure-Suit Tailor",
+   "species": "Cat",
+   "study": "Science",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Upgrades Faustus. When Faustus is recruited, your challenges cost 1 less Supply until your next turn.",
+   "flavor": "Fourteen pockets and a tail hole, out of the awful sealed-tin cloth the Science hall sends over. The tail hole was the hard part and he will tell you so, at length, unasked.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "addMod",
+      "key": "challengeDiscount",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 15
+   },
+   "addition": true,
+   "addedBecause": "The Spacesuit Seamstress's rung, kept because the Science hall's sealed tins are the one cloth Faustus cannot bluff and therefore the one he is proudest of. It replaces nothing: the printed version is retired on Jake's entry.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.31,
+    "power": 6.1,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_faustus_costumier_2",
+   "type": "character",
+   "name": "Faustus",
+   "title": "Costumier",
+   "job": "Costumier",
+   "species": "Cat",
+   "study": "Crafts",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Faustus. While Faustus is upright, your challenge bids win ties.",
+   "flavor": "You do not bring him a drawing. You describe it, badly, waving, and he watches your paws rather than your face and has the bolt down before you finish.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "winTiesAsChallenger",
+     "requiresUpright": true
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 3
+   },
+   "addition": true,
+   "addedBecause": "The Quilt Maker's rung, re-cut. Quilting reads as thrift and Faustus does not; a costumier who is in the room when the tie is called is the same cost doing the same work for a different animal. The printed version is retired on Jake's entry.",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.67,
+    "power": 10.05,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_faustus_sailmaker_3",
+   "type": "character",
+   "name": "Faustus",
+   "title": "Sailmaker",
+   "job": "Sailmaker",
+   "species": "Cat",
+   "study": "Commerce",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "Upgrades Faustus. Busy, once per game: Faustus readies himself.",
+   "flavor": "A sail is a coat for a boat, darling, and it is cut the same way and priced rather better. He has walked out of a fitting because the light was wrong, and come back at four in the afternoon when it was not.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "selfReady",
+      "oncePerGame": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 3
+   },
+   "addition": true,
+   "addedBecause": "The one printed job that survived the crossing intact — a harbour town's canvas is still cloth — done as the Cat signature it always wanted to be. The printed Sailmaker is retired on Jake's entry.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.65,
+    "power": 8.3,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_faustus_threadmaster_5",
+   "type": "marketCharacter",
+   "name": "Faustus",
+   "title": "Threadmaster",
+   "job": "Threadmaster",
+   "species": "Cat",
+   "study": "Crafts",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Hired from the Capital City; enters Busy. While Faustus is displayed in the Capital City, every pledge in an auction must be one step more expensive than usual. While Faustus is upright in your town, your first bid each turn counts as 1 higher.",
+   "flavor": "He is standing at the Auction House door in something he made this morning, and the whole room has quietly gone up a rung. Buy him and the door is still narrow; it is simply narrow on the other side of you.",
+   "abilities": [
+    {
+     "trigger": "displayed",
+     "key": "pledgeLadderDelta",
+     "value": 1
+    },
+    {
+     "trigger": "passive",
+     "key": "firstBidPlus1",
+     "requiresUpright": true
+    }
+   ],
+   "addition": true,
+   "addedBecause": "The top of the arc and the card the maker asked for by name: while it is out, a bid costs two animals instead of one. It is a hire out of the Capital City because that is the only place a rule of the room can be read from, and it replaces nothing — the printed Master of Mending is retired on Jake's entry.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 3
+   },
+   "rarity": "Rare",
+   "power": {
+    "score": 4.69,
+    "power": 11.5,
+    "opportunityCost": 9.4
+   }
+  },
+  {
+   "id": "mk_thistle_almanac_keeper_1",
+   "type": "character",
+   "name": "Thistle",
+   "title": "Almanac Keeper",
+   "job": "Almanac Keeper",
+   "species": "Badger",
+   "study": "Lore",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Busy: your town braces: the next shared shock passes it over.",
+   "flavor": "It says frost on Tuesday. It has said frost on Tuesday for eleven years, and one day it will be right, and Thistle will not say anything about it then either.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "cancelReveal"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 11
+   },
+   "remakes": "ns_thistle_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.86,
+    "power": 7.1,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_thistle_field_hand_2",
+   "type": "character",
+   "name": "Thistle",
+   "title": "Field Hand",
+   "job": "Field Hand",
+   "species": "Badger",
+   "study": "Agriculture",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "Upgrades Thistle. At the start of your turn, your next shift pays 1 more Supply.",
+   "flavor": "Up before the lanterns, home after the moon. He has never once looked back down the row, and the row keeps up anyway.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "shiftBonus",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 11
+   },
+   "remakes": "br_thistle_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.12,
+    "power": 8.87,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_thistle_grange_warden_3",
+   "type": "character",
+   "name": "Thistle",
+   "title": "Grange Warden",
+   "job": "Grange Warden",
+   "species": "Badger",
+   "study": "Agriculture",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Thistle. Whenever one of your Characters completes a shift, gain 1 Supply.",
+   "flavor": "The grange sends him out with the ones who are sure they are no good at it. It works about nine times in ten, and the tenth is usually a fox.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 11
+   },
+   "remakes": "br_thistle_2",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.16,
+    "power": 9.45,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_thistle_field_surveyor_4",
+   "type": "character",
+   "name": "Thistle",
+   "title": "Field Surveyor",
+   "job": "Field Surveyor",
+   "species": "Badger",
+   "study": "Civics",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Thistle. While Thistle is upright, every shift your town finishes pays 1 more Supply.",
+   "flavor": "He measures the fields with the same long strides that once worked them, and the borough has stopped checking the figures.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "townShiftBonus",
+     "value": 1,
+     "requiresUpright": true
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 10
+   },
+   "remakes": "mh_thistle_4",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.3,
+    "power": 10.8,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_thistle_grange_elder_5",
+   "type": "character",
+   "name": "Thistle",
+   "title": "Grange Elder",
+   "job": "Grange Elder",
+   "species": "Badger",
+   "study": "Agriculture",
+   "cost": 5,
+   "shift": {
+    "delay": 3,
+    "output": 6
+   },
+   "text": "Upgrades Thistle. While Thistle is upright, every shift your town finishes pays 2 more Supply.",
+   "flavor": "Thirty years of exactly the right pace, and a whole grange that works at it without having been told to. Two evenings a month he is at the back of a room with his eyes shut, and gone before the applause, and nobody says a word.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "townShiftBonus",
+     "value": 2,
+     "requiresUpright": true
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 11
+   },
+   "remakes": "br_thistle_3",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.17,
+    "power": 16.1,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_thistles_grange_supper",
+   "type": "event",
+   "name": "Thistle's Grange Supper",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Thistle"
+    },
+    {
+     "study": "Agriculture"
+    }
+   ],
+   "text": "Requires Thistle and an Agriculture Character. Gain 4 Supply, then you may rehire a Character from your Unemployment for 2 less Supply.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 4
+     },
+     {
+      "do": "rehire",
+      "discount": 2,
+      "optional": true
+     }
+    ]
+   },
+   "flavor": "There is always a chair at the long table for somebody who has been away. Thistle sets it, sits at the far end, and says nothing for two hours, and everybody knows whose supper it is.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 13
+   },
+   "remakes": "mh_thistles_grange_supper",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.53,
+    "power": 5.89,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_tuppence_curio_dealer_3",
+   "type": "marketCharacter",
+   "name": "Tuppence",
+   "title": "Curio Dealer",
+   "job": "Curio Dealer",
+   "species": "Squirrel",
+   "study": "Commerce",
+   "cost": 3,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Hired from the Capital City; enters Busy. At the start of your turn, Buildings cost you 1 less. When Tuppence completes a shift, put 2 Supply by on Tuppence.",
+   "flavor": "A brass object with a hinge, a crate of ribbed glass the Observatory turned out to want very badly, and a coil of something Moss bought the whole of. Half of what is bolted into this town came off that cart before anybody could say what it was for.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "buildingDiscount",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    },
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "storeSupply",
+      "amount": 2,
+      "cap": 4
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 6
+   },
+   "remakes": "mkt_tuppence",
+   "rarity": "Rare",
+   "power": {
+    "score": 5.1,
+    "power": 11.37,
+    "opportunityCost": 7.4
+   }
+  },
+  {
+   "id": "mk_velvet_counter_clerk_1",
+   "type": "character",
+   "name": "Velvet",
+   "title": "Counter Clerk",
+   "job": "Counter Clerk",
+   "species": "Cat",
+   "study": "Civics",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "When Velvet is recruited, Buildings cost you 1 less until your next turn.",
+   "flavor": "Seventeen years old, out from the Capital City with one good coat, and genuinely thrilled to be handed a counter and a queue.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "addMod",
+      "key": "buildingDiscount",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 4
+   },
+   "remakes": "ww_velvet_1",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.94,
+    "power": 9.1,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_velvet_notary_2",
+   "type": "character",
+   "name": "Velvet",
+   "title": "Notary",
+   "job": "Notary",
+   "species": "Cat",
+   "study": "Lore",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Upgrades Velvet. Busy, once per game: Velvet readies himself.",
+   "flavor": "He reads the small print aloud, slowly, all of it, and watches who fidgets. Moss's warning from the Capital City came across this counter and was read at exactly the same pace as everything else.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "selfReady",
+      "oncePerGame": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 4
+   },
+   "remakes": "mh_velvet_2",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.55,
+    "power": 7.65,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_velvet_neighborhood_registrar_3",
+   "type": "character",
+   "name": "Velvet",
+   "title": "Neighborhood Registrar",
+   "job": "Neighborhood Registrar",
+   "species": "Cat",
+   "study": "Civics",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Velvet. At the start of your turn, Buildings cost you 1 less.",
+   "flavor": "He is the animal who noticed the far hedgerow turning up in three unrelated files in one spring, and said so, before anybody else had finished reading one of them.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "buildingDiscount",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 4
+   },
+   "remakes": "ww_velvet_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.74,
+    "power": 10.77,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_velvet_surveyor_of_works_4",
+   "type": "character",
+   "name": "Velvet",
+   "title": "Surveyor of Works",
+   "job": "Surveyor of Works",
+   "species": "Cat",
+   "study": "Science",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Velvet. Busy: take down one of your Buildings and raise a Building from the City Dump in its place.",
+   "flavor": "Nothing goes up in this town and nothing comes down without a form he has read aloud to somebody. Today it is coming down, and he has brought the form outdoors to say so.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "swapBuilding"
+     }
+    }
+   ],
+   "remakes": "ns_velvet_4",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 4
+   },
+   "rarity": "Rare",
+   "power": {
+    "score": 5.35,
+    "power": 13.44,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_velvet_clerk_of_the_works_5",
+   "type": "character",
+   "name": "Velvet",
+   "title": "Clerk of the Works",
+   "job": "Clerk of the Works",
+   "species": "Cat",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Velvet. At the start of your turn, Buildings cost you 2 less.",
+   "flavor": "The consents shelf entire, in one cat, who would not swap it for the Capital City and has been asked twice. The small talk in the queue, he told a public meeting, is the best part of his week. The borough thought about that for a while and decided to believe him.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "buildingDiscount",
+      "value": 2,
+      "expires": "nextTurnStart"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 4
+   },
+   "remakes": "ww_velvet_3",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.19,
+    "power": 16.14,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_velvets_petition",
+   "type": "event",
+   "name": "Velvet's Petition",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Velvet"
+    }
+   ],
+   "text": "Requires Velvet. Draw 1 card. Your next recruit costs 2 less Supply.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "draw",
+      "count": 1
+     },
+     {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 2,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    ]
+   },
+   "flavor": "Four hundred signatures, one of them a paw print, and the new hire starts on Monday. Velvet counted all four hundred, twice, and enjoyed it both times.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 4
+   },
+   "remakes": "mh_velvets_petition",
+   "rarity": "Common",
+   "power": {
+    "score": 2.35,
+    "power": 3.5,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_mandee_night_courier_1",
+   "type": "character",
+   "name": "Mandee",
+   "title": "Night Courier",
+   "job": "Night Courier",
+   "species": "Fox",
+   "study": "Lore",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When you announce a purchase, look at the top card of the Market Deck.",
+   "flavor": "At the sorting bench before Hibiscus and gone before Juniper, with Benjamin's lantern on the strap and nothing in the address line at the Hiring Hall.",
+   "abilities": [
+    {
+     "trigger": "onAnnounce",
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 7
+   },
+   "remakes": "ll_vesper_1",
+   "rarity": "Common",
+   "power": {
+    "score": 3.1,
+    "power": 5.7,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_mandee_weather_watcher_2",
+   "type": "character",
+   "name": "Mandee",
+   "title": "Weather Watcher",
+   "job": "Weather Watcher",
+   "species": "Fox",
+   "study": "Science",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Mandee. Recruit: one of your Characters turns one step toward upright.",
+   "flavor": "Red sky at night, Foxes' delight. Red sky in the morning, somebody is bidding. She takes the dome watch at the hour everyone else is turning over, and she takes it standing.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "advanceCharacter",
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightskies",
+    "tile": 8
+   },
+   "remakes": "ns_vesper_2",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.49,
+    "power": 9.68,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_mandee_moonlight_trader_3",
+   "type": "character",
+   "name": "Mandee",
+   "title": "Moonlight Trader",
+   "job": "Moonlight Trader",
+   "species": "Fox",
+   "study": "Commerce",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Mandee. While Mandee is upright, your first bid each turn counts as 1 higher. Recruit: one of your Characters turns one step toward upright.",
+   "flavor": "She deals after dark, when the prices are honest and the buyers are not, and she is never the animal in the room who has just woken up.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "firstBidPlus1",
+     "requiresUpright": true
+    },
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "advanceCharacter",
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "boroughs",
+    "tile": 2
+   },
+   "remakes": "mh_vesper_3",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.69,
+    "power": 10.68,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_mandee_keeper_of_tales_4",
+   "type": "character",
+   "name": "Mandee",
+   "title": "Keeper of Tales",
+   "job": "Keeper of Tales",
+   "species": "Fox",
+   "study": "Lore",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Mandee. Your Master Characters enter Busy rather than two turns from upright. Recruit: one of your Characters turns one step toward upright.",
+   "flavor": "The far bank, the long road, the thing at the county line in a bad winter — told at exactly the pace of a walk, and not one of them ever checked. Scott files the whole shelf with the invention and has said once, not as a joke, that he is not sure that is the right shelf.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "masterDelayMinus1"
+    },
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "advanceCharacter",
+      "optional": true
+     }
+    }
+   ],
+   "remakes": "ll_vesper_2",
+   "art": {
+    "atlas": "nightskies",
+    "tile": 8
+   },
+   "rarity": "Rare",
+   "power": {
+    "score": 5.32,
+    "power": 13.38,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_mandees_forecast",
+   "type": "event",
+   "name": "Mandee's Forecast",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Mandee"
+    }
+   ],
+   "text": "Requires Mandee. Look at the top three cards of the Market Deck, then gain 2 Supply.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "peekMarketDeck",
+      "count": 3
+     },
+     {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    ]
+   },
+   "flavor": "Fine, then wet, then a Statue in the afternoon. She said it on the step at four in the morning and was gone before anybody thought to ask how she knew the third part.",
+   "art": {
+    "atlas": "nightskies",
+    "tile": 8
+   },
+   "remakes": "ns_vespers_forecast",
+   "rarity": "Common",
+   "power": {
+    "score": 2.15,
+    "power": 3.2,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_willow_ferry_trader_1",
+   "type": "character",
+   "name": "Willow",
+   "title": "Ferry Trader",
+   "job": "Ferry Trader",
+   "species": "Otter",
+   "study": "Commerce",
+   "cost": 1,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "When Willow is recruited, another Character you control is upright at the start of your next turn.",
+   "flavor": "Nineteen, one bad ferry, and terms the previous owner described for years afterwards as generous of him.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "readyNextTurn",
+      "filter": {
+       "notSelf": true
+      },
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 12
+   },
+   "remakes": "rr_willow_1",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.69,
+    "power": 6.8,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_willow_toll_keeper_2",
+   "type": "character",
+   "name": "Willow",
+   "title": "Toll Keeper",
+   "job": "Toll Keeper",
+   "species": "Otter",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Willow. When Willow completes a shift, your opponent puts a card from their hand on top of their deck.",
+   "flavor": "She uses your name twice a sentence and by the second one you have quietly put away whatever you came in holding.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "opponentTopdeckFromHand"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 12
+   },
+   "remakes": "rr_willow_3",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.77,
+    "power": 10.27,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_willow_tide_reckoner_3",
+   "type": "character",
+   "name": "Willow",
+   "title": "Tide Reckoner",
+   "job": "Tide Reckoner",
+   "species": "Otter",
+   "study": "Science",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Willow. Busy: move a shift from one of your Characters to another.",
+   "flavor": "The tide tables are right to the minute. The harbour runs to Willow's minute, not the tide's, and the tide has never complained where she could hear it.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "moveShift"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 12
+   },
+   "remakes": "ns_willow_3",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.95,
+    "power": 11.25,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_willow_harbourmaster_4",
+   "type": "character",
+   "name": "Willow",
+   "title": "Harbourmaster",
+   "job": "Harbourmaster",
+   "species": "Otter",
+   "study": "Commerce",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Willow. When Willow becomes upright, toss a coin: on heads, one of your opponent's Characters is put back to work; on tails, your opponent puts a card from their hand on top of their deck.",
+   "flavor": "She sets both of the worst outcomes available to you on the table, with enormous warmth, and waits. You will take the less bad one, and on the walk home you will feel that you chose it.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "coinFlip",
+      "heads": {
+       "do": "makeBusy"
+      },
+      "tails": {
+       "do": "opponentTopdeckFromHand"
+      }
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 12
+   },
+   "remakes": "rr_willow_2",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.98,
+    "power": 12.52,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_willow_harbour_admiral_5",
+   "type": "character",
+   "name": "Willow",
+   "title": "Harbour Admiral",
+   "job": "Harbour Admiral",
+   "species": "Otter",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 3,
+    "output": 6
+   },
+   "text": "Upgrades Willow. Whenever you gain a non-Statue Capital City card, gain 2 Supply. At the start of your turn, toss a coin: on heads, one of your opponent's Characters is put back to work; on tails, your opponent puts a card from their hand on top of their deck.",
+   "flavor": "The boat yard, the towpath cottages, the arcade lease, the harbour office and every licence granted out of it. Pebble's family have a standing rule about never meeting her without a third animal present, and will not say which year they made it.",
+   "abilities": [
+    {
+     "trigger": "onGainMarketCard",
+     "condition": {
+      "nonStatue": true
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    },
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "coinFlip",
+      "heads": {
+       "do": "makeBusy"
+      },
+      "tails": {
+       "do": "opponentTopdeckFromHand"
+      }
+     }
+    }
+   ],
+   "remakes": "mh_willow_5",
+   "art": {
+    "atlas": "neighbors",
+    "tile": 12
+   },
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.17,
+    "power": 16.09,
+    "opportunityCost": 11
    }
   }
  ],
