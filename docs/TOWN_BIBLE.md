@@ -175,6 +175,36 @@ add to the list.
 - **Juniper carries the borough's post and sits on four committees**, and decides genuinely even calls
   by going outside and looking up. The Science hall finds this maddening, the Observatory finds it
   charming, and both have had to concede the calls come off. [Juniper]
+- **The borough keeps a seed bank**, and Maribel keeps the borough: every variety the First Boroughs
+  have ever grown, dried, doubled and labelled, held against a bad year. She is also the animal who
+  reads the whole ordinance before the meeting and files the objection again after it is thrown out,
+  which is why a hedgerow in this borough is harder to take down than it looks. [Maribel]
+- **Marmalade bakes at night and hands it out in the morning**, to the kittens first and usually
+  before it is paid for. He was a bully as a kitten himself — walked home by Biff more than once —
+  and the borough treats the bakery as the reason that stopped. [Marmalade]
+- **Nobody knows where Mittens came from.** It is the rooftop cat: above the Hiring Hall, the night
+  market and the Observatory dome, watching, for some time before anybody notices. It says one useful
+  sentence into a stuck meeting or a stuck job and is gone. The Hiring Hall's file says 'Mittens' and
+  nothing else. [Mittens]
+- **The mill kitchen is Morty's**, at the far end of the watermill: he grinds it and then he cooks it,
+  and animals bringing grain to the mill turn up hungry on purpose. He and Marmalade trade recipes
+  against repairs. The annual boiler test is a borough fixture at which nothing has ever gone wrong.
+  [Morty, Marmalade]
+- **Moss builds it his own way and the results argue for him** — a plough hitch that does not foul, a
+  bridge arch a third lighter than the drawing, a bench jig half the Town Workshop now uses. It has
+  cost him two commissions and a formal warning from the Capital City, and the guild has stopped
+  sending anybody to check. Berry taught him at twelve, and is still the one animal he listens to.
+  [Moss, Berry]
+- **The borough's maps are Daniel's**, from the ferry steps to the county line and the stars above
+  both, and Daniel has never been past the far hedgerow. Traders and lightermen coming back off the
+  road are debriefed for hours and the chart is corrected the same night. Anybody sent somewhere they
+  have never been goes with one of those sheets. [Daniel, Brooke]
+- **Ned keeps the ward records and the records are right.** Both of the borough's standing arguments
+  about the far hedgerow were settled out of Ned's shelves in an afternoon, and Lynnette has never had
+  to print a correction to anything Ned certified. [Ned, Lynnette]
+- **Festival week's flowers are Daisy's** — every garland on the square, every buttonhole in the hall,
+  four days and a year's takings — and she has sold flowers to most of the couples in the First
+  Boroughs at one end of things or the other. [Daisy]
 - **Young animals come out from the Capital City looking for work and some of them do not stay.**
   Kevin is the standing example: eleven jobs by nineteen, worth two of anybody for a fortnight, gone
   by the end of the month, and every one of those eleven would have him back. The borough hires him
@@ -194,6 +224,9 @@ add to the list.
   Peanut. [Peanut]
 - **Lynnette keeps Kevin a shelf** at the print shop. He reads four or five novels at once through
   the flat fortnight between jobs, and she has never charged him for one. [Kevin, Lynnette]
+- **Beck takes what the borough throws out.** He reads by candlelight every evening — split
+  almanacs, water-stained novels, ward minutes nobody has wanted since the bridge went — and Lynnette
+  has offered him a shelf at the print shop for years, which he has never taken. [Beck, Lynnette]
 - **Inkwell is widely rumoured to be a mage** and has never once denied it. Nobody has anything
   better than the rumour, and the borough is content with that. [Inkwell]
 
@@ -217,6 +250,12 @@ be read.
 | Finn | Flint | 2026-09-14 |
 | Kevin | Kestrel | 2026-09-14 |
 | Lynnette | Linnet | 2026-09-14 |
+| Maribel | Mabel | 2026-09-14 |
+| Beck | Marlow | 2026-09-14 |
+| Morty | Mortar | 2026-09-14 |
+| Daniel | Nib | 2026-09-14 |
+| Ned | Nim | 2026-09-14 |
+| Daisy | Nutmeg | 2026-09-14 |
 
 ## Additions
 
