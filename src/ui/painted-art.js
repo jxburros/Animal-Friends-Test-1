@@ -12,14 +12,108 @@ export const TOWNLIFE_ATLAS_URL = new URL('../../assets/art/townlife-atlas.png',
 export const CAPITAL_ATLAS_URL = new URL('../../assets/art/capital-atlas.png', import.meta.url).href;
 export const NIGHTWORKERS_ATLAS_URL = new URL('../../assets/art/nightworkers-atlas.png', import.meta.url).href;
 export const NIGHTSKIES_ATLAS_URL = new URL('../../assets/art/nightskies-atlas.png', import.meta.url).href;
+export const MAKER_BOROUGH_ATLAS_URL = new URL('../../assets/art/maker-borough-atlas.png', import.meta.url).href;
+export const MAKER_FIELD_ATLAS_URL = new URL('../../assets/art/maker-field-atlas.png', import.meta.url).href;
+export const MAKER_WOODLAND_ATLAS_URL = new URL('../../assets/art/maker-woodland-atlas.png', import.meta.url).href;
+export const MAKER_NIGHT_ATLAS_URL = new URL('../../assets/art/maker-night-atlas.png', import.meta.url).href;
 const SPECIES_TILE = { Rabbit: 0, Mouse: 1, Fox: 2, Raccoon: 3, Hedgehog: 4, Badger: 5, Otter: 6, Squirrel: 7 };
-const ATLASES = { boroughs: () => PAINTED_ATLAS_URL, whiskerwood: () => WHISKERWOOD_ATLAS_URL, neighbors: () => NEIGHBORS_ATLAS_URL, monuments: () => MONUMENTS_ATLAS_URL, townlife: () => TOWNLIFE_ATLAS_URL, capital: () => CAPITAL_ATLAS_URL, nightworkers: () => NIGHTWORKERS_ATLAS_URL, nightskies: () => NIGHTSKIES_ATLAS_URL };
+const ATLASES = {
+  boroughs: () => PAINTED_ATLAS_URL,
+  whiskerwood: () => WHISKERWOOD_ATLAS_URL,
+  neighbors: () => NEIGHBORS_ATLAS_URL,
+  monuments: () => MONUMENTS_ATLAS_URL,
+  townlife: () => TOWNLIFE_ATLAS_URL,
+  capital: () => CAPITAL_ATLAS_URL,
+  nightworkers: () => NIGHTWORKERS_ATLAS_URL,
+  nightskies: () => NIGHTSKIES_ATLAS_URL,
+  makerborough: () => MAKER_BOROUGH_ATLAS_URL,
+  makerfield: () => MAKER_FIELD_ATLAS_URL,
+  makerwoodland: () => MAKER_WOODLAND_ATLAS_URL,
+  makernight: () => MAKER_NIGHT_ATLAS_URL,
+};
+
+// Presentation-only corrections for Maker shelf cards. Keeping these assignments here lets the
+// Maker set remain an authoring document while the shared card renderer gives each selected card
+// its commissioned scene. Tiles are zero-based and row-major.
+export const MAKER_ART_TILES = Object.freeze({
+  mk_peanut_ledger_0: { atlas: 'makerborough', tile: 0 },
+  mk_peanut_accountant_2: { atlas: 'makerborough', tile: 1 },
+  mk_peanut_cafe_manager_4: { atlas: 'makerborough', tile: 2 },
+  mk_peanut_comptroller_5: { atlas: 'makerborough', tile: 3 },
+  mk_peanuts_standing_round: { atlas: 'makerborough', tile: 4 },
+  mk_oatmeal_ward_clerk_1: { atlas: 'makerborough', tile: 5 },
+  mk_oatmeal_safety_inspector_2: { atlas: 'makerborough', tile: 6 },
+  mk_oatmeal_town_warden_4: { atlas: 'makerborough', tile: 7 },
+  mk_oatmeal_alderman_5: { atlas: 'makerborough', tile: 8 },
+  mk_berry_tinker_0: { atlas: 'makerborough', tile: 9 },
+  mk_berry_committee_2: { atlas: 'makerborough', tile: 10 },
+  mk_berry_engineer_3: { atlas: 'makerborough', tile: 11 },
+  mk_berry_workshop_elder_4: { atlas: 'makerborough', tile: 12 },
+  mk_berry_guild_warden_5: { atlas: 'makerborough', tile: 13 },
+  mk_fair_hearing: { atlas: 'makerborough', tile: 14 },
+  mk_dx_tax_assessors: { atlas: 'makerborough', tile: 15 },
+
+  mk_brooke_dock_hand_1: { atlas: 'makerfield', tile: 0 },
+  mk_brooke_ferry_hand_2: { atlas: 'makerfield', tile: 1 },
+  mk_brooke_regatta_caller_3: { atlas: 'makerfield', tile: 2 },
+  mk_brooke_riverwright_5: { atlas: 'makerfield', tile: 3 },
+  mk_betty_barn_sweeper_0: { atlas: 'makerfield', tile: 4 },
+  mk_betty_whittler_1: { atlas: 'makerfield', tile: 5 },
+  mk_betty_stump_blaster_2: { atlas: 'makerfield', tile: 6 },
+  mk_betty_powder_chemist_4: { atlas: 'makerfield', tile: 7 },
+  mk_betty_land_clearer_5: { atlas: 'makerfield', tile: 8 },
+  mk_clover_seedling_helper_0: { atlas: 'makerfield', tile: 9 },
+  mk_clover_market_gardener_2: { atlas: 'makerfield', tile: 10 },
+  mk_clover_community_gardener_3: { atlas: 'makerfield', tile: 11 },
+  mk_clover_master_botanist_5: { atlas: 'makerfield', tile: 12 },
+  mk_slack_water: { atlas: 'makerfield', tile: 13 },
+  mk_dx_open_hiring: { atlas: 'makerfield', tile: 14 },
+  mk_tb_allotment_strip: { atlas: 'makerfield', tile: 15 },
+
+  mk_copper_penny_counter_0: { atlas: 'makerwoodland', tile: 0 },
+  mk_copper_scale_polisher_1: { atlas: 'makerwoodland', tile: 1 },
+  mk_copper_weights_inspector_2: { atlas: 'makerwoodland', tile: 2 },
+  mk_copper_arcade_merchant_3: { atlas: 'makerwoodland', tile: 3 },
+  mk_copper_market_steward_5: { atlas: 'makerwoodland', tile: 4 },
+  mk_rosabeth_herb_gatherer_0: { atlas: 'makerwoodland', tile: 5 },
+  mk_rosabeth_tincture_maker_2: { atlas: 'makerwoodland', tile: 6 },
+  mk_rosabeth_herbalist_physician_5: { atlas: 'makerwoodland', tile: 7 },
+  mk_bella_forager_0: { atlas: 'makerwoodland', tile: 8 },
+  mk_bella_field_scientist_1: { atlas: 'makerwoodland', tile: 9 },
+  mk_bella_field_recorder_2: { atlas: 'makerwoodland', tile: 10 },
+  mk_bella_wildlife_warden_3: { atlas: 'makerwoodland', tile: 11 },
+  mk_bella_ecologist_5: { atlas: 'makerwoodland', tile: 12 },
+  mk_tb_coppers_cellar: { atlas: 'makerwoodland', tile: 13 },
+  mk_tb_rosabeths_gate: { atlas: 'makerwoodland', tile: 14 },
+  mk_tb_berrys_bench: { atlas: 'makerwoodland', tile: 15 },
+
+  mk_finn_auctioneers_boy_0: { atlas: 'makernight', tile: 0 },
+  mk_finn_peddler_1: { atlas: 'makernight', tile: 1 },
+  mk_finn_fair_warden_3: { atlas: 'makernight', tile: 2 },
+  mk_finn_trade_broker_4: { atlas: 'makernight', tile: 3 },
+  mk_hazel_barrow_hand_0: { atlas: 'makernight', tile: 4 },
+  mk_hazel_night_market_vendor_1: { atlas: 'makernight', tile: 5 },
+  mk_hazel_market_vendor_2: { atlas: 'makernight', tile: 6 },
+  mk_hazel_guildmaster_3: { atlas: 'makernight', tile: 7 },
+  mk_hazel_merchant_5: { atlas: 'makernight', tile: 8 },
+  mk_inkwell_astronomer_4: { atlas: 'makernight', tile: 9 },
+  mk_juniper_ward_councillor_3: { atlas: 'makernight', tile: 10 },
+  mk_juniper_diplomat_4: { atlas: 'makernight', tile: 11 },
+  mk_juniper_stargazer_5: { atlas: 'makernight', tile: 12 },
+  mk_tb_open_mic_room: { atlas: 'makernight', tile: 13 },
+  mk_tb_boat_shed: { atlas: 'makernight', tile: 14 },
+  mk_tb_gate_hut: { atlas: 'makernight', tile: 15 },
+});
+
+function explicitArt(def) {
+  const art = def && (MAKER_ART_TILES[def.id] || def.art);
+  if (!art || !Object.hasOwn(ATLASES, art.atlas) || !Number.isInteger(art.tile) || art.tile < 0 || art.tile >= 16) return null;
+  return art;
+}
 
 /** The explicit atlas tile a card asks for, or null when it leaves the choice to the theme rules. */
 export function explicitTile(def) {
-  const art = def && def.art;
-  if (!art || !Object.hasOwn(ATLASES, art.atlas) || !Number.isInteger(art.tile) || art.tile < 0 || art.tile >= 16) return null;
-  return art.tile;
+  return explicitArt(def)?.tile ?? null;
 }
 
 export function paintedTile(def) {
@@ -51,11 +145,12 @@ export function paintedArtSVG(def, fallback) {
 }
 
 function atlasArtSVG(def, fallback) {
+  const art = explicitArt(def);
   const tile = paintedTile(def);
   if (tile === null) return fallback;
   const x = -(tile % 4) * 100;
   const y = -Math.floor(tile / 4) * 100;
-  const atlas = explicitTile(def) !== null ? ATLASES[def.art.atlas]() : PAINTED_ATLAS_URL;
+  const atlas = art ? ATLASES[art.atlas]() : PAINTED_ATLAS_URL;
   // A failed image request reveals the original per-card vector illustration underneath.
   return `<svg class="painted-art" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><svg width="100" height="100">${fallback}</svg><image href="${atlas}" x="${x}" y="${y}" width="400" height="400" preserveAspectRatio="none"/></svg>`;
 }
