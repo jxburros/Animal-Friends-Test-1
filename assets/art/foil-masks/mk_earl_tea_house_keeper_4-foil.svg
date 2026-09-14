@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <!-- Ordinary tea-house illustration: porcelain teapot and gilded cup rims. -->
+  <path fill="white" opacity=".85" d="M257 286Q279 275 301 287Q326 300 329 325Q331 335 326 347L348 333Q369 325 378 337L377 343Q365 336 354 348L329 366Q310 384 281 376Q248 373 233 354Q219 336 230 313Q238 296 257 286Z"/>
+  <g fill="none" stroke="white" stroke-width="3" stroke-linecap="round">
+    <path d="M259 278Q290 271 320 301"/>
+    <path d="M217 403Q246 394 281 402M351 391Q382 382 411 388M440 376Q460 370 481 377"/>
+    <path d="M215 435Q247 444 281 433M351 431Q381 441 411 428M439 420Q461 431 483 418"/>
+  </g>
+</svg>

@@ -1,0 +1,111 @@
+{
+  "seed": 3461026837,
+  "poolSize": 827,
+  "selection": [
+    {
+      "id": "mk_beck_bylaw_reader_1",
+      "name": "Beck",
+      "title": "Bylaw Reader",
+      "type": "character",
+      "mode": "full"
+    },
+    {
+      "id": "bb_clover_1",
+      "name": "Clover",
+      "title": "Seedling Helper",
+      "type": "character",
+      "mode": "full"
+    },
+    {
+      "id": "mk_earl_tea_trader_2",
+      "name": "Earl",
+      "title": "Tea Trader",
+      "type": "character",
+      "mode": "full"
+    },
+    {
+      "id": "mk_benjamin_lantern_maker_2",
+      "name": "Benjamin",
+      "title": "Lantern Maker",
+      "type": "character",
+      "mode": "artwork"
+    },
+    {
+      "id": "mk_velvet_counter_clerk_1",
+      "name": "Velvet",
+      "title": "Counter Clerk",
+      "type": "character",
+      "mode": "artwork"
+    },
+    {
+      "id": "br_toolbox_trade",
+      "name": "Toolbox Trade",
+      "title": "",
+      "type": "event",
+      "mode": "artwork"
+    },
+    {
+      "id": "mk_comet_astronaut_5",
+      "name": "Comet",
+      "title": "Astronaut",
+      "type": "character",
+      "mode": "details"
+    },
+    {
+      "id": "ns_flint_0",
+      "name": "Flint",
+      "title": "Auctioneer’s Boy",
+      "type": "character",
+      "mode": "details"
+    },
+    {
+      "id": "mk_earl_tea_house_keeper_4",
+      "name": "Earl",
+      "title": "Tea House Keeper",
+      "type": "character",
+      "mode": "details"
+    },
+    {
+      "id": "ns_hoot_and_holler",
+      "name": "Hoot and Holler",
+      "title": "",
+      "type": "event",
+      "mode": "reverse"
+    },
+    {
+      "id": "mk_willow_ferry_trader_1",
+      "name": "Willow",
+      "title": "Ferry Trader",
+      "type": "character",
+      "mode": "reverse"
+    },
+    {
+      "id": "mk_faustus_costumier_2",
+      "name": "Faustus",
+      "title": "Costumier",
+      "type": "character",
+      "mode": "reverse"
+    },
+    {
+      "id": "mkt_dabble",
+      "name": "Dabble",
+      "title": "River Pilot",
+      "type": "marketCharacter",
+      "mode": "hexagon"
+    },
+    {
+      "id": "mk_willow_tide_reckoner_3",
+      "name": "Willow",
+      "title": "Tide Reckoner",
+      "type": "character",
+      "mode": "hexagon"
+    },
+    {
+      "id": "mk_rosabeth_herb_gatherer_0",
+      "name": "Rosabeth",
+      "title": "Herb Gatherer",
+      "type": "character",
+      "mode": "hexagon"
+    }
+  ]
+}

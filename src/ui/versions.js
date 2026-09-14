@@ -9,11 +9,10 @@
 //   creativeFoil        a foil with its own etched treatment (and, optionally, its own scene)
 //   fullCardArt         the painting fills the whole card, frame and all
 //
-// Almost no card has all six, and today only two exist in the art assets: `regular`, which needs no
-// asset at all because it is drawn from the atlases and the vector scenes, and `fullCardArt`, whose
-// eighteen paintings live in assets/art/full-art/ and are listed in ./full-art.js.
+// Regular, Foil and Full Card Art printings are available. Foil finishes are assigned independently
+// in foil.js; all five finishes belong to the ordinary `foil` printing.
 //
-// Everything else is wired and waiting. To bring a printing into the game:
+// To bring another printing into the game:
 //
 //   1. drop the painting at  assets/art/versions/<cardId>/<slot>.png   (slot: alternateArt | creativeFoil)
 //   2. add one line to PRINTINGS below:  bb_clover_3: { alternateArt: true, foil: true },
@@ -40,7 +39,7 @@ export const VERSIONS = Object.freeze([
   }),
   Object.freeze({
     key: 'foil', name: 'Foil', short: 'Foil', art: null, shape: null, foil: 'plain', fullArt: false,
-    blurb: 'The ordinary art on foil stock: a gilded frame and a light that follows you.',
+    blurb: 'The ordinary art with a foil finish: full-card, artwork, details, reverse or hexagons.',
   }),
   Object.freeze({
     key: 'alternateArtFoil', name: 'Alternate Art Foil', short: 'Alt Foil', art: 'alternateArt', shape: 'scene', foil: 'plain', fullArt: false,
@@ -61,12 +60,27 @@ const BY_KEY = Object.freeze(Object.fromEntries(VERSIONS.map((v) => [v.key, v]))
 
 /**
  * Which printings each card exists in, beyond the regular one and the Full Card Art collection.
- * Empty today: no alternate art and no foils have been painted yet. See the note at the top of the
- * file for how to add one.
+ * The first random draw has 15 ordinary Foil printings. See docs/FIRST_FOILS.md.
  *
  *   mk_peanut_barista_1: { alternateArt: true, foil: true, alternateArtFoil: true },
  */
-export const PRINTINGS = Object.freeze({});
+export const PRINTINGS = Object.freeze({
+  mk_beck_bylaw_reader_1: Object.freeze({ foil: true }),
+  bb_clover_1: Object.freeze({ foil: true }),
+  mk_earl_tea_trader_2: Object.freeze({ foil: true }),
+  mk_benjamin_lantern_maker_2: Object.freeze({ foil: true }),
+  mk_velvet_counter_clerk_1: Object.freeze({ foil: true }),
+  br_toolbox_trade: Object.freeze({ foil: true }),
+  mk_comet_astronaut_5: Object.freeze({ foil: true }),
+  ns_flint_0: Object.freeze({ foil: true }),
+  mk_earl_tea_house_keeper_4: Object.freeze({ foil: true }),
+  ns_hoot_and_holler: Object.freeze({ foil: true }),
+  mk_willow_ferry_trader_1: Object.freeze({ foil: true }),
+  mk_faustus_costumier_2: Object.freeze({ foil: true }),
+  mkt_dabble: Object.freeze({ foil: true }),
+  mk_willow_tide_reckoner_3: Object.freeze({ foil: true }),
+  mk_rosabeth_herb_gatherer_0: Object.freeze({ foil: true }),
+});
 
 /** The conventional home of a printing's painting: assets/art/versions/<cardId>/<slot>.png */
 export function versionAssetUrl(cardId, slot) {

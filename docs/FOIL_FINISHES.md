@@ -2,7 +2,8 @@
 
 Foil is a presentation setting, independent of rarity, card type, rules and artwork printing.
 Any card (including Maker cards, Tokens, Events and Capital City cards) can use any finish.
-No new card assignments ship with this system. Existing foil flags and printing defaults are
+The [first foil release](FIRST_FOILS.md) assigns 15 ordinary Foil printings, three per finish.
+Existing foil flags and printing defaults are
 preserved, including the existing full-art foil default; an explicit `false` makes any of them matte.
 
 Run `npm run serve`, then open [the finish preview](../src/ui/foil-preview.html). Pick any card and
