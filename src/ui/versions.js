@@ -20,7 +20,7 @@
 //
 // `true` means "this printing exists, at the conventional path"; a string is an explicit URL for art
 // that lives somewhere else. A printing with no art of its own (plain `foil`) only ever needs `true`.
-import { fullArtFor, FULL_ART_CARDS } from './full-art.js';
+import { fullArtFor } from './full-art.js';
 
 /**
  * The six printings, in collection order.
@@ -121,6 +121,8 @@ export function resolveVersionKey(def, key) {
 
 /** How many cards exist in a given printing — what the Book counts on its shelf tabs. */
 export function countInVersion(cards, key) {
-  if (key === 'fullCardArt') return cards.filter((c) => Object.hasOwn(FULL_ART_CARDS, c.id)).length;
+  // Counted by the painting rather than by the registry key: a Maker card that inherited the
+  // painting of the printed card it remade is a card in this printing, on its own shelf.
+  if (key === 'fullCardArt') return cards.filter((c) => !!fullArtFor(c)).length;
   return cards.filter((c) => hasVersion(c, key)).length;
 }

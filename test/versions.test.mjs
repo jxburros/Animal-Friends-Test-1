@@ -11,7 +11,7 @@ import {
   VERSIONS, VERSION_KEYS, version, versionsOf, hasVersion, versionArtUrl,
   defaultVersionKey, resolveVersionKey, PRINTINGS, versionAssetUrl,
 } from '../src/ui/versions.js';
-import { FULL_ART_CARDS } from '../src/ui/full-art.js';
+import { FULL_ART_CARDS, fullArtFor } from '../src/ui/full-art.js';
 import { paintedArtSVG } from '../src/ui/painted-art.js';
 import { SET } from './helpers.mjs';
 
@@ -36,7 +36,9 @@ test('the six printings are named, distinct and in collection order', () => {
 test('every card exists in the regular printing, and in Full Card Art only if it was painted', () => {
   for (const card of allCards) {
     assert.ok(hasVersion(card, 'regular'), card.id);
-    assert.equal(hasVersion(card, 'fullCardArt'), Object.hasOwn(FULL_ART_CARDS, card.id), card.id);
+    // A Maker card that inherited the painting of the printed card it remade has this printing too,
+    // which is why the question is "is there a painting for it" and not "is it a registry key".
+    assert.equal(hasVersion(card, 'fullCardArt'), !!fullArtFor(card), card.id);
     assert.equal(versionsOf(card)[0].key, 'regular');
   }
   assert.equal(hasVersion(null, 'regular'), false);
@@ -58,7 +60,7 @@ test('the printings with no art yet are offered nowhere', () => {
 
 test('a card is shown in its Full Card Art when it has one, and its regular printing otherwise', () => {
   const painted = Object.keys(FULL_ART_CARDS)[0];
-  const plain = SET.cards.find((c) => !Object.hasOwn(FULL_ART_CARDS, c.id));
+  const plain = SET.cards.find((c) => !fullArtFor(c));
   assert.equal(defaultVersionKey({ id: painted }), 'fullCardArt');
   assert.equal(defaultVersionKey(plain), 'regular');
   // A printing the card has not got falls back rather than rendering nothing.

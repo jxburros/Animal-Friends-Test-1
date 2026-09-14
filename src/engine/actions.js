@@ -3,6 +3,7 @@ import {
   cardDef, topCard, log, nextUid, opponentOf, entryOrientation, rankOf, hasPassive, hasMod, getMod, consumeMod,
   canAct, findStack, cityRule, refillCity, townFootprint, townCap, hasTownRoom, UPRIGHT, BUSY,
   getModFor, consumeModFor, hasBuildingRoom, canDemolishFor, buildingCap, shiftOutputFor,
+  passiveTotal,
 } from './state.js';
 import {
   ask, gainSupply, draw, discard, makeStack, fireHook, runEffect, matchesFilter, isSelfReadyEffect,
@@ -25,6 +26,11 @@ export function recruitCost(state, pi, cardId, targetUid = null) {
   // only to a card that upgrades an animal you already have); an untyped one applies to everybody,
   // exactly as before. Whether this is an upgrade is not a property of the card, so it is passed in.
   cost = Math.max(0, cost - getModFor(p, 'recruitDiscount', def, { upgrade: !!targetUid }));
+  // A standing rate is not a discount you are holding, it is what hiring costs in this town while a
+  // particular animal is standing in it. `recruitDiscount` is spent by the first recruit it applies
+  // to; this is never spent, because nobody spends a rate — they just stop being true when he sits
+  // down. Both are read here so a town can have the rate and a discount on top of it.
+  cost = Math.max(0, cost - passiveTotal(state, pi, 'townRecruitDiscount'));
   return cost;
 }
 
@@ -202,7 +208,11 @@ export function pledgeMinCost(state, pending, pi) {
   if (a.pledgeLadder !== 'cost') return 0;
   const already = pending ? pending.chars[pi].length : 0;
   const harmony = hasPassive(state, pi, 'pledgeLadderPlus1') ? 1 : 0; // Statue of Harmony's burden
-  return Math.max(0, already + (a.minPledgeCost ?? 1) + cityRule(state, 'pledgeLadderDelta') + harmony);
+  // A pledge rule that binds one Mayor and not the other. `pledgeLadderDelta` is a rule of the room
+  // and falls on everybody in it, including whoever put the card in the display; this falls only on
+  // the animal across the table, which is what the tailor's side of the Auction House actually is.
+  const tailored = hasPassive(state, opponentOf(pi), 'opponentPledgeLadderPlus1') ? 1 : 0;
+  return Math.max(0, already + (a.minPledgeCost ?? 1) + cityRule(state, 'pledgeLadderDelta') + harmony + tailored);
 }
 
 /** Can this Character be pledged as the player's next bid in this auction? */
@@ -465,6 +475,11 @@ export async function applyAction(state, pi, a) {
       } else {
         let orientation = entryOrientation(state.rules, def.cost);
         if (orientation === state.rules.orientation.masterEntry && hasPassive(state, pi, 'masterDelayMinus1')) orientation = BUSY;
+        // A card may print how it arrives. Entry orientation is otherwise read off the cost alone,
+        // before the animal is on the table, so this is the only way a Master can turn up ready —
+        // and the Statue of Patience's burden below still bites, because that is a rule of the town
+        // and this is only a fact about one animal.
+        if (def.entersUpright) orientation = UPRIGHT;
         if (orientation === UPRIGHT && hasPassive(state, pi, 'apprenticeEntersBusy')) orientation = BUSY; // Statue of Patience's burden
         s = makeStack(state, pi, c, orientation);
         log(state, pi, `${p.name} recruits ${def.name}, ${def.title} (${def.species}, ${def.study}) for ${cost} Supply; enters at ${orientation}°.`, { kind: 'recruit', player: pi, uid: s.uid, cardUid: c.uid, cardId: def.id, cost, upgrade: false, orientation });

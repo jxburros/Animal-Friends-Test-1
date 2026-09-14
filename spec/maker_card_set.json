@@ -1411,7 +1411,8 @@
     {
      "verb": "peekMarketDeck with a rearrangement",
      "why": "Sage's whole gift is knowing the order things arrive in; the story wanted them to put the Capital City's deck back in a chosen order the way `reorderDeckTop` does for a town's own deck. `peekMarketDeck` only looks.",
-     "workaround": "They look at the Market Deck and reorder their own — the borough's side of the sky, which is the half Sage is allowed to touch."
+     "workaround": "They look at the Market Deck and reorder their own — the borough's side of the sky, which is the half Sage is allowed to touch.",
+     "resolved": "Built: `peekMarketDeck` takes `reorder`, and the look at the Capital City's deck ends with the watcher putting it back the way they want it. Sage's top rung carries it — the Royal Astronomer sets the order the Capital City deals in at the start of every turn — and so does the Star Party, where the whole borough is out on the hill looking at the same sky. The Astronomer at 3 still only looks, which is what makes the promotion mean something."
     }
    ]
   },
@@ -1439,7 +1440,8 @@
     {
      "verb": "a standing recruitDiscount that is not spent by the first recruit",
      "why": "The story wanted a rate — every animal you hire while Eric is standing there costs 1 less — because that is what \"he knows what an animal costs to keep\" means. `recruitDiscount` is consumed whole by the first recruit it applies to (`consumeModFor`), so it can only ever say \"your next recruit\".",
-     "workaround": "A discount re-issued every turn: the Row Boss at 4 and the Best Farmer at 5 each hand one out at the start of your turn, so a Mayor who hires once a turn gets the rate and one who hires twice does not."
+     "workaround": "A discount re-issued every turn: the Row Boss at 4 and the Best Farmer at 5 each hand one out at the start of your turn, so a Mayor who hires once a turn gets the rate and one who hires twice does not.",
+     "resolved": "Built: `townRecruitDiscount`, a passive carrying a value, read by `recruitCost` through `passiveTotal` and never spent by anybody. Eric's two top rungs are rates rather than re-issued discounts now — 1 less on every hire at the Row Boss, 2 at the Best Farmer There Ever Was — and they stop the moment he sits down, because a rate is a thing an animal is standing there saying. The cheap rungs keep their one-off discounts, so the arc reads discount, discount, rate."
     }
    ]
   },
@@ -1468,7 +1470,8 @@
     {
      "verb": "cardFromDumpToHand",
      "why": "The maker asked for a character who can return cards from the Town Dump. The engine only reaches Events there — `eventFromDumpToHand` and `eventFromDumpToDeckBottom` — and the one verb that reaches any card in a bin, `takeFromCityDump`, is the Raccoon's and works the shared City Dump instead. A Market card or a Character in your own Town Dump cannot be got back at all.",
-     "workaround": "Events only, on four of the five rungs — which is the half of the Dump the engine can see. It is also, awkwardly, the Mouse's signature on an Otter, so Benjamin keeps `moveShift` and `readyNextTurn` on the rungs either side of it and reads as an Otter who happens to go through bins."
+     "workaround": "Events only, on four of the five rungs — which is the half of the Dump the engine can see. It is also, awkwardly, the Mouse's signature on an Otter, so Benjamin keeps `moveShift` and `readyNextTurn` on the rungs either side of it and reads as an Otter who happens to go through bins.",
+     "resolved": "Built: `cardFromDumpToHand`, which reaches any card of yours in the Town Dump rather than only the Events, with a `filter` for cards that should reach less far. The Master Lantern Maker takes back anything costing 3 or less; the Keeper of the Light takes back anything at all. The narrow verb stays the narrow verb and the two cheap rungs still use it, which is the arc: the bench, then the bin, then the whole record."
     }
    ]
   },
@@ -1534,7 +1537,8 @@
     {
      "verb": "a hire who can be re-hired after leaving",
      "why": "Jake has done it twice and the story wants the borough to be able to take him on again the next time he drifts through. A `leavesAfter` hire goes back to the Capital City and the card is simply out of the game for that Mayor.",
-     "workaround": "Two turns, a big shift, and the Supply in his paw. The second visit is a story the flavor tells rather than a thing the engine does."
+     "workaround": "Two turns, a big shift, and the Supply in his paw. The second visit is a story the flavor tells rather than a thing the engine does.",
+     "resolved": "Built: `returnsToMarket` on a card with `leavesAfter`. When the retainer is up Jake goes to the bottom of the Market Deck instead of the City Dump, so the next time the deck comes round to him either Mayor may take him on again. The card now says what the story always said — he leaves, and he turns up again — and `power.js` pays it as the chance it is rather than as a second term."
     }
    ]
   },
@@ -1564,7 +1568,8 @@
     {
      "verb": "a pledge rule that only binds the rival",
      "why": "The maker asked for a card that makes players spend two animals a bid while it is out. `pledgeLadderDelta` does exactly that, and it does it to both Mayors — including the one who hired him — because a `displayed` city rule is a rule of the room, not of a town.",
-     "workaround": "Split across the same card: the ladder is heavier while Faustus sits in the Capital City, and once a Mayor buys him out of the room they get the first bid of each turn a rung higher instead. Buying him is buying the door, which is the shape Bob's gate already established."
+     "workaround": "Split across the same card: the ladder is heavier while Faustus sits in the Capital City, and once a Mayor buys him out of the room they get the first bid of each turn a rung higher instead. Buying him is buying the door, which is the shape Bob's gate already established.",
+     "resolved": "Built: `opponentPledgeLadderPlus1`, a passive that raises the OTHER Mayor's pledge ladder and not its owner's, alongside the Statue burdens that already reach across the table. The Threadmaster keeps the displayed rule, which is a rule of the room and falls on everybody in it; buying him out of the display turns it into a rule that falls on your rival alone. Buying him is still buying the door — it is simply narrow on the other side of you now."
     }
    ]
   },
@@ -1624,7 +1629,8 @@
     {
      "verb": "buildingsAtLeast as a scaling condition on a discount",
      "why": "The story wanted the rate to read as an office that gets better at its own job — the more this town has raised, the cheaper the next consent. `buildingsAtLeast` exists as a yes/no condition, but nothing scales a mod's value by a count.",
-     "workaround": "Two flat rates on two rungs: 1 less at the Registrar, 2 less at the Clerk of the Works. The office gets better because Velvet is promoted, not because the town got bigger."
+     "workaround": "Two flat rates on two rungs: 1 less at the Registrar, 2 less at the Clerk of the Works. The office gets better because Velvet is promoted, not because the town got bigger.",
+     "resolved": "Built: a mod's value may be counted rather than printed. `addMod` takes `valuePer: \"buildingsBuilt\"` and a `max`, so a rate can scale with what the town has actually raised. The Clerk of the Works is 1 off every Building and 1 more for each one already standing, up to 3 more: the office gets better at its own job, which is what the story asked for. The Registrar below him stays a flat rate, because he is a promotion away from the counting."
     }
    ]
   },
@@ -1648,7 +1654,8 @@
     {
      "verb": "entersUpright (a card that sets its own entry orientation)",
      "why": "The maker asked for all of Mandee's variations to arrive ready, regardless of class. Entry orientation is read off the cost alone (`entryOrientation` in actions.js) before the animal is even on the table, so a card cannot change its own — the only two things that touch it, `masterDelayMinus1` and the Statue of Patience's burden, are player passives already in force when the recruit happens.",
-     "workaround": "Three of them: an Apprentice rung, which arrives upright by the rules anyway; `onRecruit → advanceCharacter` on every rung above it, which the player spends on Mandee herself to stand her up the moment she lands; and `masterDelayMinus1` on the Keeper of Tales, so the next Master this town hires — Mandee included — comes in a turn nearer. An upgrade recruit keeps the stack's orientation, so once one Mandee is upright the rest of her arc genuinely does arrive ready. `advanceCharacter` is the Owl's signature and this is the one place a Fox borrows it; she keeps `peekMarketDeck` and `firstBidPlus1` so the auction animal is still the animal."
+     "workaround": "Three of them: an Apprentice rung, which arrives upright by the rules anyway; `onRecruit → advanceCharacter` on every rung above it, which the player spends on Mandee herself to stand her up the moment she lands; and `masterDelayMinus1` on the Keeper of Tales, so the next Master this town hires — Mandee included — comes in a turn nearer. An upgrade recruit keeps the stack's orientation, so once one Mandee is upright the rest of her arc genuinely does arrive ready. `advanceCharacter` is the Owl's signature and this is the one place a Fox borrows it; she keeps `peekMarketDeck` and `firstBidPlus1` so the auction animal is still the animal.",
+     "resolved": "Built: `entersUpright` on a card. Entry orientation is otherwise read off the cost alone, before the animal is on the table; this is the one thing that can say otherwise, and it is read by the recruit action and by `recruitFromHand` alike, so she arrives ready however she got here. All four Mandees carry it. The Statue of Patience's burden still sits her down, because that is a rule of the town and this is only a fact about one animal — and the `onRecruit → advanceCharacter` workaround has come off the rungs that only had it to stand her up."
     }
    ]
   },
@@ -1676,7 +1683,8 @@
     {
      "verb": "opponentChoice (a rival picks which hardship they take)",
      "why": "The maker asked for a card that makes the other Mayor choose between losing Supply or another hardship. Two things are missing: nothing on a Character can take Supply off a rival at all — `everyoneLosesSupply` is a Disruption's shared shock and `giveSupplyToOpponent` runs the other way — and no effect offers a rival a choice of branches. Every reaching verb in the vocabulary (`makeBusy`, `opponentTopdeckFromHand`, `unemployOpponentCharacter`) simply happens to them.",
-     "workaround": "The choice became a toss. The Harbourmaster and the Harbour Admiral put both bad outcomes on the table with `coinFlip` — an animal goes back to work, or a card goes back on top of the deck — so the pair is real even though the rival does not get to pick which. Roger's ha'penny is the borough's own method for a call that will not come down on its own, which makes the seam a thing the town already does rather than a thing the engine could not do."
+     "workaround": "The choice became a toss. The Harbourmaster and the Harbour Admiral put both bad outcomes on the table with `coinFlip` — an animal goes back to work, or a card goes back on top of the deck — so the pair is real even though the rival does not get to pick which. Roger's ha'penny is the borough's own method for a call that will not come down on its own, which makes the seam a thing the town already does rather than a thing the engine could not do.",
+     "resolved": "Built, both halves: `opponentLosesSupply` takes Supply off a rival and tells them it happened (`onSupplyLost` fires for them), and `opponentChoice` puts two branches on the table and lets the rival pick which one they take. The Harbourmaster offers 2 Supply or a card back on top; the Harbour Admiral offers 3 Supply or an animal put back to work. `power.js` pays the card the least of its branches, because the rival picks — which is also the design rule: print two you would be happy with. Roger's ha'penny stays the borough's method for a call nobody will make; this is the harbour office's, which is to make somebody else make it."
     }
    ]
   }
@@ -13375,7 +13383,7 @@
     "delay": 2,
     "output": 3
    },
-   "text": "Upgrades Sage. At the start of your turn, look at the top two cards of your deck and put any of them on the bottom, then draw 1 card.",
+   "text": "Upgrades Sage. At the start of your turn, look at the top three cards of the Market Deck and put them back in any order, then look at the top two cards of your deck and put any of them on the bottom.",
    "flavor": "The form has been on their desk three times and gone back in the drawer three times. Sage knows the pad, the manifests and the launch window to the minute, and has never put a name on the line. Somebody has to be down here looking, they say, or what is the point of anyone going.",
    "abilities": [
     {
@@ -13384,12 +13392,13 @@
       "do": "seq",
       "steps": [
        {
-        "do": "scryDeck",
-        "count": 2
+        "do": "peekMarketDeck",
+        "count": 3,
+        "reorder": true
        },
        {
-        "do": "draw",
-        "count": 1
+        "do": "scryDeck",
+        "count": 2
        }
       ]
      }
@@ -13402,8 +13411,8 @@
    "remakes": "ns_sage_5",
    "rarity": "Super Rare",
    "power": {
-    "score": 5.59,
-    "power": 14.59,
+    "score": 6.49,
+    "power": 16.93,
     "opportunityCost": 11
    }
   },
@@ -13422,7 +13431,7 @@
      "count": 1
     }
    ],
-   "text": "Requires Sage and a Science Character. Draw 2 cards, then look at the top two cards of the Market Deck.",
+   "text": "Requires Sage and a Science Character. Draw 2 cards, then look at the top two cards of the Market Deck and put them back in any order.",
    "effect": {
     "do": "seq",
     "steps": [
@@ -13432,7 +13441,8 @@
      },
      {
       "do": "peekMarketDeck",
-      "count": 2
+      "count": 2,
+      "reorder": true
      }
     ]
    },
@@ -13444,8 +13454,8 @@
    "remakes": "ns_sages_star_party",
    "rarity": "Common",
    "power": {
-    "score": 2.28,
-    "power": 3.8,
+    "score": 2.76,
+    "power": 4.6,
     "opportunityCost": 3.6
    }
   },
@@ -13590,18 +13600,14 @@
     "delay": 2,
     "output": 4
    },
-   "text": "Upgrades Eric. At the start of your turn, your next recruit costs 1 less Supply.",
+   "text": "Upgrades Eric. While Eric is upright, every Character you recruit costs 1 less Supply.",
    "flavor": "The whole planting schedule from memory and a stub of chalk, and beside it, in the same hand, what every animal on it is worth for the season.",
    "abilities": [
     {
-     "trigger": "onTurnStart",
-     "effect": {
-      "do": "addMod",
-      "key": "recruitDiscount",
-      "value": 1,
-      "expires": "untilUsed",
-      "consumable": true
-     }
+     "trigger": "passive",
+     "key": "townRecruitDiscount",
+     "value": 1,
+     "requiresUpright": true
     }
    ],
    "remakes": "bb_sorrel_2",
@@ -13611,8 +13617,8 @@
    },
    "rarity": "Rare",
    "power": {
-    "score": 4.84,
-    "power": 12.15,
+    "score": 4.76,
+    "power": 11.95,
     "opportunityCost": 10
    }
   },
@@ -13629,7 +13635,7 @@
     "delay": 2,
     "output": 5
    },
-   "text": "Upgrades Eric. At the start of your turn, your next recruit costs 2 less Supply.",
+   "text": "Upgrades Eric. While Eric is upright, every Character you recruit costs 2 less Supply.",
    "flavor": "This is the thing the schools and the summers and the seed catalogues were for, and the lawyers are in the ring beside him holding the other end of the rosette, being a nuisance to beat.",
    "addition": true,
    "addedBecause": "The printed Sorrel stopped at the Row Boss at 4. The rung above it is the animal his parents actually bought — the best farmer there ever was — and the rate he can run once he is it.",
@@ -13637,10 +13643,18 @@
     "atlas": "boroughs",
     "tile": 8
    },
-   "rarity": "Uncommon",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "townRecruitDiscount",
+     "value": 2,
+     "requiresUpright": true
+    }
+   ],
+   "rarity": "Super Rare",
    "power": {
-    "score": 4.39,
-    "power": 11.45,
+    "score": 6.23,
+    "power": 16.25,
     "opportunityCost": 11
    }
   },
@@ -13774,7 +13788,7 @@
     "delay": 2,
     "output": 3
    },
-   "text": "Upgrades Benjamin. Busy: move a shift from one of your Characters to another, then you may return an Event from your Town Dump to your hand.",
+   "text": "Upgrades Benjamin. Busy: move a shift from one of your Characters to another, then you may take a card costing 3 or less back out of your Town Dump into your hand.",
    "flavor": "Benjamin makes the lanterns and Mandee carries them, and between the two of them the night shift has never stumbled. He fills them at his own bench and nowhere else; that rule is his, not the ward's.",
    "abilities": [
     {
@@ -13786,7 +13800,10 @@
         "do": "moveShift"
        },
        {
-        "do": "eventFromDumpToHand",
+        "do": "cardFromDumpToHand",
+        "filter": {
+         "maxCost": 3
+        },
         "optional": true
        }
       ]
@@ -13800,8 +13817,8 @@
    "remakes": "mh_tansy_4",
    "rarity": "Super Rare",
    "power": {
-    "score": 5.89,
-    "power": 14.8,
+    "score": 6.03,
+    "power": 15.14,
     "opportunityCost": 10
    }
   },
@@ -13818,13 +13835,13 @@
     "delay": 2,
     "output": 5
    },
-   "text": "Upgrades Benjamin. At the start of your turn, you may return an Event from your Town Dump to your hand.",
+   "text": "Upgrades Benjamin. At the start of your turn, you may take any card back out of your Town Dump into your hand.",
    "flavor": "A fire record is really a record of what a place decided to rebuild, which is why the borough ended up asking a lantern maker about its own history. Light shows us who we truly are. He has been saying it for thirty years and it has been true every time.",
    "abilities": [
     {
      "trigger": "onTurnStart",
      "effect": {
-      "do": "eventFromDumpToHand",
+      "do": "cardFromDumpToHand",
       "optional": true
      }
     }
@@ -13836,8 +13853,8 @@
    },
    "rarity": "Super Rare",
    "power": {
-    "score": 5.98,
-    "power": 15.61,
+    "score": 6.46,
+    "power": 16.86,
     "opportunityCost": 11
    }
   },
@@ -14068,7 +14085,7 @@
     "output": 4
    },
    "leavesAfter": 2,
-   "text": "Hired from the Capital City; enters Busy, and takes to the road after two of your turns. When Jake completes a shift, gain 2 Supply.",
+   "text": "Hired from the Capital City; enters Busy. After two of your turns Jake takes to the road and goes to the bottom of the Market Deck, where he may be hired again. When Jake completes a shift, gain 2 Supply.",
    "flavor": "He says what he will do it for, does about three animals' worth of it, and takes the money in his paw rather than on the book. Then one morning the borough looks round and there is no Jake, and no address, and a very tidy row.",
    "abilities": [
     {
@@ -14087,10 +14104,11 @@
     "tile": 3
    },
    "remakes": "mkt_thimble",
+   "returnsToMarket": true,
    "rarity": "Rare",
    "power": {
-    "score": 4.69,
-    "power": 10.44,
+    "score": 4.87,
+    "power": 10.84,
     "opportunityCost": 7.4
    }
   },
@@ -14258,7 +14276,7 @@
     "delay": 2,
     "output": 4
    },
-   "text": "Hired from the Capital City; enters Busy. While Faustus is displayed in the Capital City, every pledge in an auction must be one step more expensive than usual. While Faustus is upright in your town, your first bid each turn counts as 1 higher.",
+   "text": "Hired from the Capital City; enters Busy. While Faustus is displayed in the Capital City, every pledge in an auction must be one step more expensive than usual. While Faustus is upright in your town, that rule falls on your opponent alone.",
    "flavor": "He is standing at the Auction House door in something he made this morning, and the whole room has quietly gone up a rung. Buy him and the door is still narrow; it is simply narrow on the other side of you.",
    "abilities": [
     {
@@ -14268,7 +14286,7 @@
     },
     {
      "trigger": "passive",
-     "key": "firstBidPlus1",
+     "key": "opponentPledgeLadderPlus1",
      "requiresUpright": true
     }
    ],
@@ -14280,8 +14298,8 @@
    },
    "rarity": "Rare",
    "power": {
-    "score": 4.69,
-    "power": 11.5,
+    "score": 5.1,
+    "power": 12.5,
     "opportunityCost": 9.4
    }
   },
@@ -14715,16 +14733,29 @@
     "delay": 2,
     "output": 4
    },
-   "text": "Upgrades Velvet. At the start of your turn, Buildings cost you 2 less.",
+   "text": "Upgrades Velvet. At the start of your turn, Buildings cost you 1 less, and 1 less again for every Building you have raised, up to 3 more.",
    "flavor": "The consents shelf entire, in one cat, who would not swap it for the Capital City and has been asked twice. The small talk in the queue, he told a public meeting, is the best part of his week. The borough thought about that for a while and decided to believe him.",
    "abilities": [
     {
      "trigger": "onTurnStart",
      "effect": {
-      "do": "addMod",
-      "key": "buildingDiscount",
-      "value": 2,
-      "expires": "nextTurnStart"
+      "do": "seq",
+      "steps": [
+       {
+        "do": "addMod",
+        "key": "buildingDiscount",
+        "value": 1,
+        "expires": "nextTurnStart"
+       },
+       {
+        "do": "addMod",
+        "key": "buildingDiscount",
+        "value": 1,
+        "valuePer": "buildingsBuilt",
+        "max": 3,
+        "expires": "nextTurnStart"
+       }
+      ]
      }
     }
    ],
@@ -14735,8 +14766,8 @@
    "remakes": "ww_velvet_3",
    "rarity": "Super Rare",
    "power": {
-    "score": 6.19,
-    "power": 16.14,
+    "score": 6.78,
+    "power": 17.7,
     "opportunityCost": 11
    }
   },
@@ -14794,7 +14825,7 @@
     "delay": 1,
     "output": 1
    },
-   "text": "When you announce a purchase, look at the top card of the Market Deck.",
+   "text": "Mandee always arrives upright. When you announce a purchase, look at the top card of the Market Deck.",
    "flavor": "At the sorting bench before Hibiscus and gone before Juniper, with Benjamin's lantern on the strap and nothing in the address line at the Hiring Hall.",
    "abilities": [
     {
@@ -14810,6 +14841,7 @@
     "tile": 7
    },
    "remakes": "ll_vesper_1",
+   "entersUpright": true,
    "rarity": "Common",
    "power": {
     "score": 3.1,
@@ -14830,13 +14862,16 @@
     "delay": 1,
     "output": 2
    },
-   "text": "Upgrades Mandee. Recruit: one of your Characters turns one step toward upright.",
+   "text": "Upgrades Mandee. Mandee always arrives upright. Recruit: one of your other Characters turns one step toward upright.",
    "flavor": "Red sky at night, Foxes' delight. Red sky in the morning, somebody is bidding. She takes the dome watch at the hour everyone else is turning over, and she takes it standing.",
    "abilities": [
     {
      "trigger": "onRecruit",
      "effect": {
       "do": "advanceCharacter",
+      "filter": {
+       "notSelf": true
+      },
       "optional": true
      }
     }
@@ -14846,11 +14881,12 @@
     "tile": 8
    },
    "remakes": "ns_vesper_2",
-   "rarity": "Uncommon",
+   "entersUpright": true,
+   "rarity": "Rare",
    "power": {
-    "score": 4.49,
+    "score": 4.86,
     "power": 9.68,
-    "opportunityCost": 6.8
+    "opportunityCost": 5.6
    }
   },
   {
@@ -14866,20 +14902,13 @@
     "delay": 2,
     "output": 3
    },
-   "text": "Upgrades Mandee. While Mandee is upright, your first bid each turn counts as 1 higher. Recruit: one of your Characters turns one step toward upright.",
+   "text": "Upgrades Mandee. Mandee always arrives upright. While Mandee is upright, your first bid each turn counts as 1 higher.",
    "flavor": "She deals after dark, when the prices are honest and the buyers are not, and she is never the animal in the room who has just woken up.",
    "abilities": [
     {
      "trigger": "passive",
      "key": "firstBidPlus1",
      "requiresUpright": true
-    },
-    {
-     "trigger": "onRecruit",
-     "effect": {
-      "do": "advanceCharacter",
-      "optional": true
-     }
     }
    ],
    "art": {
@@ -14887,11 +14916,12 @@
     "tile": 2
    },
    "remakes": "mh_vesper_3",
-   "rarity": "Rare",
+   "entersUpright": true,
+   "rarity": "Uncommon",
    "power": {
-    "score": 4.69,
-    "power": 10.68,
-    "opportunityCost": 7.8
+    "score": 4.35,
+    "power": 9.25,
+    "opportunityCost": 6.6
    }
   },
   {
@@ -14907,19 +14937,12 @@
     "delay": 2,
     "output": 4
    },
-   "text": "Upgrades Mandee. Your Master Characters enter Busy rather than two turns from upright. Recruit: one of your Characters turns one step toward upright.",
+   "text": "Upgrades Mandee. Mandee always arrives upright. Your Master Characters enter Busy rather than two turns from upright.",
    "flavor": "The far bank, the long road, the thing at the county line in a bad winter — told at exactly the pace of a walk, and not one of them ever checked. Scott files the whole shelf with the invention and has said once, not as a joke, that he is not sure that is the right shelf.",
    "abilities": [
     {
      "trigger": "passive",
      "key": "masterDelayMinus1"
-    },
-    {
-     "trigger": "onRecruit",
-     "effect": {
-      "do": "advanceCharacter",
-      "optional": true
-     }
     }
    ],
    "remakes": "ll_vesper_2",
@@ -14927,11 +14950,12 @@
     "atlas": "nightskies",
     "tile": 8
    },
+   "entersUpright": true,
    "rarity": "Rare",
    "power": {
-    "score": 5.32,
-    "power": 13.38,
-    "opportunityCost": 10
+    "score": 5.31,
+    "power": 11.95,
+    "opportunityCost": 7.6
    }
   },
   {
@@ -15097,19 +15121,28 @@
     "delay": 2,
     "output": 4
    },
-   "text": "Upgrades Willow. When Willow becomes upright, toss a coin: on heads, one of your opponent's Characters is put back to work; on tails, your opponent puts a card from their hand on top of their deck.",
+   "text": "Upgrades Willow. When Willow becomes upright, your opponent chooses: lose 2 Supply, or put a card from their hand on top of their deck.",
    "flavor": "She sets both of the worst outcomes available to you on the table, with enormous warmth, and waits. You will take the less bad one, and on the walk home you will feel that you chose it.",
    "abilities": [
     {
      "trigger": "onReady",
      "effect": {
-      "do": "coinFlip",
-      "heads": {
-       "do": "makeBusy"
-      },
-      "tails": {
-       "do": "opponentTopdeckFromHand"
-      }
+      "do": "opponentChoice",
+      "options": [
+       {
+        "label": "Lose 2 Supply",
+        "effect": {
+         "do": "opponentLosesSupply",
+         "amount": 2
+        }
+       },
+       {
+        "label": "Put a card back on top of your deck",
+        "effect": {
+         "do": "opponentTopdeckFromHand"
+        }
+       }
+      ]
      }
     }
    ],
@@ -15120,8 +15153,8 @@
    "remakes": "rr_willow_2",
    "rarity": "Rare",
    "power": {
-    "score": 4.98,
-    "power": 12.52,
+    "score": 5.03,
+    "power": 12.63,
     "opportunityCost": 10
    }
   },
@@ -15138,7 +15171,7 @@
     "delay": 3,
     "output": 6
    },
-   "text": "Upgrades Willow. Whenever you gain a non-Statue Capital City card, gain 2 Supply. At the start of your turn, toss a coin: on heads, one of your opponent's Characters is put back to work; on tails, your opponent puts a card from their hand on top of their deck.",
+   "text": "Upgrades Willow. Whenever you gain a non-Statue Capital City card, gain 2 Supply. At the start of your turn, your opponent chooses: lose 3 Supply, or one of their Characters is put back to work.",
    "flavor": "The boat yard, the towpath cottages, the arcade lease, the harbour office and every licence granted out of it. Pebble's family have a standing rule about never meeting her without a third animal present, and will not say which year they made it.",
    "abilities": [
     {
@@ -15154,13 +15187,22 @@
     {
      "trigger": "onTurnStart",
      "effect": {
-      "do": "coinFlip",
-      "heads": {
-       "do": "makeBusy"
-      },
-      "tails": {
-       "do": "opponentTopdeckFromHand"
-      }
+      "do": "opponentChoice",
+      "options": [
+       {
+        "label": "Lose 3 Supply",
+        "effect": {
+         "do": "opponentLosesSupply",
+         "amount": 3
+        }
+       },
+       {
+        "label": "Put one of your Characters back to work",
+        "effect": {
+         "do": "makeBusy"
+        }
+       }
+      ]
      }
     }
    ],
@@ -15171,9 +15213,928 @@
    },
    "rarity": "Super Rare",
    "power": {
-    "score": 6.17,
-    "power": 16.09,
+    "score": 6.12,
+    "power": 15.96,
     "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_the_late_desk",
+   "type": "event",
+   "name": "The Late Desk",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Andrew"
+    },
+    {
+     "study": "Lore",
+     "count": 1
+    }
+   ],
+   "text": "Requires Andrew and a Lore Character. Take any card back out of your Town Dump into your hand, then draw 1 card.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "cardFromDumpToHand"
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "The children's corner has emptied and the evening readers have gone, and Andrew is still there with a page and a half to do. What cannot be lent out he copies by hand, a page or two a night, so that there is a second one — and twice now the Library has filed his copy as the original and nobody has corrected it.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 1
+   },
+   "addition": true,
+   "addedBecause": "Andrew keeps the Lending Library's late desk and had no Event of his own; this is also the first card on either shelf to reach into a Town Dump for something other than an Event, which is the verb his whole job is.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.14,
+    "power": 3.58,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_the_harbour_office",
+   "type": "event",
+   "name": "The Harbour Office",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Willow"
+    },
+    {
+     "study": "Civics",
+     "count": 1
+    }
+   ],
+   "text": "Requires Willow and a Civics Character. Gain 2 Supply, and your opponent chooses: lose 2 Supply, or put a card from their hand on top of their deck.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "opponentChoice",
+      "options": [
+       {
+        "label": "Lose 2 Supply",
+        "effect": {
+         "do": "opponentLosesSupply",
+         "amount": 2
+        }
+       },
+       {
+        "label": "Put a card back on top of your deck",
+        "effect": {
+         "do": "opponentTopdeckFromHand"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "flavor": "Willow started at nineteen with one bad ferry on terms its previous owner described for years as generous of him. She has been writing the terms herself ever since, and they are always two things, and one of them is always the one you did not want to be asked.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 6
+   },
+   "addition": true,
+   "addedBecause": "The harbour office grants the River Otter licence and signs for everything that floats between the ferry steps and the county line, and had no Event; it is also where the verb Willow's own cards asked for belongs on the town side.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.04,
+    "power": 3.4,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_the_cider_social",
+   "type": "event",
+   "name": "The Cider Social",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Quill"
+    },
+    {
+     "study": "Agriculture",
+     "count": 1
+    }
+   ],
+   "text": "Requires Quill and an Agriculture Character. Gain 2 Supply, then feed a Character costing 2 or less in your Unemployment; it comes back to work Busy.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 2
+     },
+     {
+      "do": "giveToUnemployed",
+      "filter": {
+       "maxCost": 2
+      },
+      "optional": true
+     }
+    ]
+   },
+   "flavor": "September to February, in the barn, and the Hiring Hall sends whoever is quietly out of work. Quill hands them a basket without ever mentioning it. Rosabeth's garden takes the ones who have stopped getting up; the orchard takes everybody, all the time, so that nobody has to admit to anything.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 7
+   },
+   "addition": true,
+   "addedBecause": "The orchard's cider social is in the town bible and the orchard is never empty; the shelf had a Statue that feeds an animal out of work and nothing a town could play that does it.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.07,
+    "power": 3.45,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_reading_lanterns",
+   "type": "event",
+   "name": "Reading Lanterns",
+   "kind": "limited",
+   "cost": 0,
+   "duration": 2,
+   "requires": [
+    {
+     "study": "Lore",
+     "count": 1
+    }
+   ],
+   "text": "Requires a Lore Character. Limited 2: at the start of your turn, draw 1 card.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "flavor": "Inkwell has the little ones one evening a week and tells them about the worlds on the other side of ours; Lynnette reads on Thursdays, on the floor, doing all the voices. The lanterns are Benjamin's, filled at his bench and nowhere else, and they are hung low enough for a mouse to read by.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 12
+   },
+   "remakes": "ww_reading_lanterns",
+   "rarity": "Common",
+   "power": {
+    "score": 1.86,
+    "power": 3,
+    "opportunityCost": 3.3
+   }
+  },
+  {
+   "id": "mk_tool_lending_day",
+   "type": "event",
+   "name": "Tool Lending Day",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Berry"
+    },
+    {
+     "study": "Crafts",
+     "count": 1
+    }
+   ],
+   "text": "Requires Berry and a Crafts Character. Take a card costing 3 or less back out of your Town Dump into your hand, then gain 1 Supply.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "cardFromDumpToHand",
+      "filter": {
+       "maxCost": 3
+      }
+     },
+     {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    ]
+   },
+   "flavor": "Half the borough's broken things are queued along the bench and the other half are out on loan. Berry does not mend them for you. Berry puts the thing in your paws, sits on the second stool, and asks what you think is wrong with it, and is still asking an hour later when you have fixed it.",
+   "art": {
+    "atlas": "townlife",
+    "tile": 4
+   },
+   "remakes": "br_tool_lending",
+   "rarity": "Common",
+   "power": {
+    "score": 1.66,
+    "power": 2.77,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_the_root_cellar",
+   "type": "event",
+   "name": "The Root Cellar",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Agriculture",
+     "count": 1
+    }
+   ],
+   "text": "Requires an Agriculture Character. Rehire a Character from your Unemployment for 2 less Supply, then gain 1 Supply.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "rehire",
+      "discount": 2
+     },
+     {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    ]
+   },
+   "flavor": "Everything off Cookie's board is made to be opened in a different season from the one it was made in — hard biscuit, rusk, seed cake, baked on the late heat of the Community Oven after the bread is out. She dates the shelf in pencil and has never once been wrong about how long it would have to last.",
+   "art": {
+    "atlas": "nightskies",
+    "tile": 14
+   },
+   "remakes": "br_root_cellar",
+   "rarity": "Common",
+   "power": {
+    "score": 1.94,
+    "power": 2.89,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_glut_of_squash",
+   "type": "event",
+   "name": "A Glut of Squash",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Agriculture",
+     "count": 2
+    }
+   ],
+   "text": "Requires two Agriculture Characters. Gain 4 Supply, then discard 1 card.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 4
+     },
+     {
+      "do": "discard",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "Thistle set the pace down the row and never once looked back, and now there is more squash than the borough can eat and a grange meeting about it on Thursday. Quill has taken forty for the barn. Morty has taken sixty and will not say what for.",
+   "art": {
+    "atlas": "nightskies",
+    "tile": 15
+   },
+   "remakes": "bb_glut_of_squash",
+   "rarity": "Common",
+   "power": {
+    "score": 1.86,
+    "power": 3.1,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_mkt_seed_bank_open_day",
+   "type": "market",
+   "disposal": "cityDump",
+   "name": "The Seed Bank's Open Day",
+   "cost": 3,
+   "text": "Take an Agriculture token and draw 1 card. Then spend 2 Agriculture tokens: recruit a Character costing 2 or less from your hand for free; it enters upright.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainToken",
+      "of": "study",
+      "study": "Agriculture",
+      "count": 1
+     },
+     {
+      "do": "draw",
+      "count": 1
+     },
+     {
+      "do": "spendToken",
+      "of": "study",
+      "study": "Agriculture",
+      "count": 2,
+      "then": {
+       "do": "recruitFromHand",
+       "filter": {
+        "maxCost": 2
+       },
+       "orientation": 0,
+       "optional": true
+      }
+     }
+    ]
+   },
+   "flavor": "Every variety the First Boroughs have ever grown, dried, doubled and labelled, and one afternoon a year when Maribel puts the drawers out on the trestles. You do not pay for a packet. You come back next autumn with two of them, which she writes down, and that is the whole of the arrangement.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 9
+   },
+   "addition": true,
+   "addedBecause": "The fourth card on either shelf to spend a token, and the first for Agriculture: the seed bank is exactly the kind of holding a chit counter was built for, and the shelf already hands Agriculture chits out.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.21,
+    "power": 5.8,
+    "opportunityCost": 4.4
+   }
+  },
+  {
+   "id": "mk_mkt_town_clock",
+   "type": "market",
+   "disposal": "cityDump",
+   "name": "The Town Clock",
+   "cost": 4,
+   "text": "Look at the top three cards of the Market Deck and put them back in any order, then your Characters advance an extra step at your next Ready.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "peekMarketDeck",
+      "count": 3,
+      "reorder": true
+     },
+     {
+      "do": "addMod",
+      "key": "extraAdvance",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    ]
+   },
+   "flavor": "Brass gears, exposed on purpose, and a face the whole square sets its morning by. When it stops the borough calls Berry, and Berry answers to the Town Workshop about it afterwards, and the one thing everybody agrees on is that the hour it strikes is the hour it is.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 12
+   },
+   "remakes": "mk_town_clock",
+   "rarity": "Common",
+   "power": {
+    "score": 1.99,
+    "power": 3.9,
+    "opportunityCost": 5.4
+   }
+  },
+  {
+   "id": "mk_mkt_market_committee",
+   "type": "market",
+   "disposal": "cityDump",
+   "name": "The Market Committee",
+   "cost": 3,
+   "text": "Your opponent chooses: you gain 3 Supply, or you look at the top three cards of the Market Deck, put them back in any order, and draw 1 card.",
+   "onGain": {
+    "do": "opponentChoice",
+    "options": [
+     {
+      "label": "Let them have 3 Supply",
+      "effect": {
+       "do": "gainSupply",
+       "amount": 3
+      }
+     },
+     {
+      "label": "Let them set the Capital City deck",
+      "effect": {
+       "do": "seq",
+       "steps": [
+        {
+         "do": "peekMarketDeck",
+         "count": 3,
+         "reorder": true
+        },
+        {
+         "do": "draw",
+         "count": 1
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "flavor": "Hazel has run the guild hall twice and sits on the committee in the coat they closed the stall in, and the committee has learned to offer two things it can live with rather than one it cannot. The weathervane over the square is a cat. Nobody will say who paid for that.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 14
+   },
+   "addition": true,
+   "addedBecause": "The first card on either shelf where the rival chooses between two things the buyer is happy with, which is the design rule for a card that hands the decision across: print two you would take.",
+   "rarity": "Common",
+   "power": {
+    "score": 1.66,
+    "power": 3,
+    "opportunityCost": 4.4
+   }
+  },
+  {
+   "id": "mk_mkt_the_fitting",
+   "type": "market",
+   "disposal": "cityDump",
+   "name": "The Fitting",
+   "cost": 2,
+   "text": "Gain 1 Supply, and your challenges cost 2 less Supply until your next turn.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 1
+     },
+     {
+      "do": "addMod",
+      "key": "challengeDiscount",
+      "value": 2,
+      "expires": "nextTurnStart"
+     }
+    ]
+   },
+   "flavor": "You describe it badly, waving, and Faustus has the bolt down before you have finished. He will not make a thing for a room he is not going to be in, which is why the Auction House has stopped pretending that a Mayor who walks in wearing one of his has not already cost everybody a rung.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 11
+   },
+   "remakes": "mk_hat_makers_shop",
+   "rarity": "Common",
+   "power": {
+    "score": 1.84,
+    "power": 3,
+    "opportunityCost": 3.4
+   }
+  },
+  {
+   "id": "mk_mkt_toll_gate",
+   "type": "market",
+   "disposal": "cityDump",
+   "name": "The Toll Gate",
+   "cost": 3,
+   "text": "Gain 1 Supply, then your opponent chooses: lose 3 Supply, or one of their Characters is put back to work.",
+   "onGain": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainSupply",
+      "amount": 1
+     },
+     {
+      "do": "opponentChoice",
+      "options": [
+       {
+        "label": "Pay 3 Supply",
+        "effect": {
+         "do": "opponentLosesSupply",
+         "amount": 3
+        }
+       },
+       {
+        "label": "Put one of your Characters back to work",
+        "effect": {
+         "do": "makeBusy"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "flavor": "The gate is the borough's, the tolls are the harbour office's, and the season Finn had the keeping of it is mentioned to nobody. Pay it or work it off: the board by the bar has said so since before anybody currently arguing about it was born.",
+   "art": {
+    "atlas": "townlife",
+    "tile": 11
+   },
+   "remakes": "mk_toll_gate",
+   "rarity": "Common",
+   "power": {
+    "score": 1.27,
+    "power": 2.3,
+    "opportunityCost": 4.4
+   }
+  },
+  {
+   "id": "mk_mkt_owl_post",
+   "type": "market",
+   "disposal": "cityDump",
+   "name": "The Owl Post",
+   "cost": 2,
+   "text": "Take any card back out of your Town Dump into your hand.",
+   "onGain": {
+    "do": "cardFromDumpToHand"
+   },
+   "flavor": "Hibiscus walks the round and Juniper carries what leaves the borough, and the two of them hand over at the sorting bench at five every morning. Nothing on that round has ever been lost. What has been thrown away is a different question, and the answer is that Hibiscus has it, and knew you would want it back.",
+   "art": {
+    "atlas": "nightskies",
+    "tile": 6
+   },
+   "remakes": "ns_mk_owl_post",
+   "rarity": "Common",
+   "power": {
+    "score": 1.27,
+    "power": 2.08,
+    "opportunityCost": 3.4
+   }
+  },
+  {
+   "id": "mk_bld_physic_garden",
+   "type": "building",
+   "name": "The Physic Garden",
+   "title": "Capital City Building",
+   "cost": 7,
+   "text": "At the start of your turn, you may feed a Character costing 2 or less in your Unemployment; it comes back to work Busy.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "giveToUnemployed",
+      "filter": {
+       "maxCost": 2
+      },
+      "optional": true
+     }
+    }
+   ],
+   "flavor": "The Capital City built it to grow specimens and the borough uses it to grow animals. Rosabeth will not be drawn on the tinctures — the Science hall has twice failed to account for them — but she is perfectly clear about the rest of it: you are not here to be mended, you are here because the beds want doing.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 14
+   },
+   "addition": true,
+   "addedBecause": "The Capital City had nothing a Mayor could buy that feeds an animal out of work; the Statue of Kindness does it and a Statue is a victory, not a plan. This is the Building the rest of the shelf's second chances can be bought with.",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.59,
+    "power": 8.72,
+    "opportunityCost": 9.22
+   }
+  },
+  {
+   "id": "mk_bld_weighbridge",
+   "type": "building",
+   "name": "The Weighbridge",
+   "title": "Capital City Building",
+   "cost": 7,
+   "text": "At the start of your turn, gain 2 Supply.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "flavor": "Every loaded cart in or out of the borough crosses Liz's plate and is paid on what she writes. Copper's office certifies the bridge each spring and has never once had to adjust it, which Copper mentions every spring, and Liz has never once looked up.",
+   "art": {
+    "atlas": "capital",
+    "tile": 10
+   },
+   "remakes": "bld_grain_exchange",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.94,
+    "power": 12,
+    "opportunityCost": 9.22
+   }
+  },
+  {
+   "id": "mk_bld_counting_house",
+   "type": "building",
+   "name": "The Counting House",
+   "title": "Capital City Building",
+   "cost": 8,
+   "text": "Whenever one of your Characters finishes a shift, gain 2 Supply.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "flavor": "It budgets for Brett a year ahead and has stopped querying Tuppence's prices, and both of those are Orien's doing: he feeds the shift returns and the auction prices into an engine built out of Observatory cast-offs, and the figure comes back within a Supply.",
+   "art": {
+    "atlas": "capital",
+    "tile": 13
+   },
+   "remakes": "bld_counting_house",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.28,
+    "power": 8.31,
+    "opportunityCost": 10.22
+   }
+  },
+  {
+   "id": "mk_bld_town_workshop",
+   "type": "building",
+   "name": "The Town Workshop",
+   "title": "Capital City Building",
+   "cost": 5,
+   "text": "At the start of your turn, gain 1 Supply. Each of your Events needs one fewer Character.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "eventCharReductionPerTurn"
+    },
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "flavor": "It keeps the jigs, the loan book and the standing argument about whether Moss's bench jig counts as the Workshop's now that half the borough uses it. Berry answers to this room when the clock stops and has never once been asked to explain anything else.",
+   "art": {
+    "atlas": "capital",
+    "tile": 15
+   },
+   "remakes": "bld_town_workshop",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.72,
+    "power": 8.2,
+    "opportunityCost": 7.22
+   }
+  },
+  {
+   "id": "mk_dx_six_weeks_shut",
+   "type": "disruption",
+   "name": "Six Weeks Shut",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: both Mayors lose 2 Supply, then each Mayor may rehire one Character from their Unemployment for free; it enters upright. Goes to the City Dump.",
+   "onReveal": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "everyoneLosesSupply",
+      "amount": 2
+     },
+     {
+      "do": "everyoneRehiresFree",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "The winter the Grain Exchange shut is one of the borough's two reference points for a bad season. Copper did not open the cellar. He lent the salt out on the quiet instead, said there would be worse, and every animal who was put back to work that February was put back by a neighbour.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 11
+   },
+   "remakes": "rev_lean_month",
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.33,
+    "power": 4.4,
+    "opportunityCost": 2
+   }
+  },
+  {
+   "id": "mk_dx_bridge_goes",
+   "type": "disruption",
+   "name": "The Bridge Goes",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: both Mayors lose 2 Supply, and at each Mayor's next Ready their Characters do not advance. Goes to the City Dump.",
+   "onReveal": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "everyoneLosesSupply",
+      "amount": 2
+     },
+     {
+      "do": "blockNextReady"
+     }
+    ]
+   },
+   "flavor": "The other reference point, and the spring Adam kept the carts moving the long way round rather than let the borough stop. It cost a day on every load and he has never claimed it as anything. The year the bridge went is how animals here date things.",
+   "art": {
+    "atlas": "townlife",
+    "tile": 13
+   },
+   "remakes": "dx_bridge_out",
+   "rarity": "Common",
+   "power": {
+    "score": 3.18,
+    "power": 4.2,
+    "opportunityCost": 2
+   }
+  },
+  {
+   "id": "mk_dx_solar_eclipse",
+   "type": "disruption",
+   "name": "The Eclipse",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: both Mayors draw 1 card, and at each Mayor's next Ready their Characters do not advance. Goes to the City Dump.",
+   "onReveal": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "everyoneDraws",
+      "count": 1
+     },
+     {
+      "do": "blockNextReady"
+     }
+    ]
+   },
+   "flavor": "Sage had the time of it to the minute eleven months out and told anybody who would stand still. Nothing in the borough was done between the quarter hour either side of it, and Jessica's whole night class was out on the hill with smoked glass, which is the sort of homework she does set.",
+   "art": {
+    "atlas": "nightskies",
+    "tile": 0
+   },
+   "remakes": "ns_rev_solar_eclipse",
+   "rarity": "Common",
+   "power": {
+    "score": 2.84,
+    "power": 3.75,
+    "opportunityCost": 2
+   }
+  },
+  {
+   "id": "mk_dx_meteor_shower",
+   "type": "disruption",
+   "name": "The Meteor Shower",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: both Mayors draw 1 card and gain 1 Supply. Goes to the City Dump.",
+   "onReveal": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "everyoneDraws",
+      "count": 1
+     },
+     {
+      "do": "everyoneGainsSupply",
+      "amount": 1
+     }
+    ]
+   },
+   "flavor": "Taco's cart moves up to the top of the hill for it, which is the only night of the year anybody can say in advance where the cart will be. Sage counts them aloud. Juniper, who settles even calls by going outside and looking up, has never missed one.",
+   "art": {
+    "atlas": "nightskies",
+    "tile": 1
+   },
+   "remakes": "ns_rev_meteor_shower",
+   "rarity": "Common",
+   "power": {
+    "score": 1.71,
+    "power": 2.25,
+    "opportunityCost": 2
+   }
+  },
+  {
+   "id": "mk_dx_full_moon",
+   "type": "disruption",
+   "name": "The Full Moon",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: the Mayor with fewer Statues readies a Character and gains 2 Supply. Goes to the City Dump.",
+   "onReveal": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "behindPlayerReadies",
+      "count": 1
+     },
+     {
+      "do": "behindPlayerGains",
+      "supply": 2
+     }
+    ]
+   },
+   "flavor": "The night round needs no lanterns and Benjamin fills them anyway, on the grounds that a rule kept only on the nights it is needed is not a rule. Hoot knocks the waking list an hour early. Everything in the borough that has been waiting for light gets done between midnight and four.",
+   "art": {
+    "atlas": "nightskies",
+    "tile": 2
+   },
+   "remakes": "ns_rev_full_moon",
+   "rarity": "Common",
+   "power": {
+    "score": 1.67,
+    "power": 2.2,
+    "opportunityCost": 2
+   }
+  },
+  {
+   "id": "mk_dx_landslide",
+   "type": "disruption",
+   "name": "The Cutting Comes Down",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: every shift in progress in both towns ends at once and produces nothing, and at each Mayor's next Ready their Characters do not advance. Goes to the City Dump.",
+   "onReveal": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "endAllShifts"
+     },
+     {
+      "do": "blockNextReady"
+     }
+    ]
+   },
+   "flavor": "The long pull to the county gate is a quarter-hour shorter than the road it replaced, which was Adam's idea, and the cutting that made it shorter is the cutting that came down. He was up there with a lamp before the noise had finished and did not ask anybody to come with him.",
+   "art": {
+    "atlas": "nightskies",
+    "tile": 11
+   },
+   "remakes": "dx_landslide",
+   "rarity": "Rare",
+   "power": {
+    "score": 4.85,
+    "power": 6.4,
+    "opportunityCost": 2
+   }
+  },
+  {
+   "id": "mk_dx_midges",
+   "type": "disruption",
+   "name": "A Plague of Midges",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: each Mayor draws 1 card, then discards down to 4 cards in hand. Goes to the City Dump.",
+   "onReveal": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "everyoneDraws",
+      "count": 1
+     },
+     {
+      "do": "everyoneDiscardsDownTo",
+      "count": 4
+     }
+    ]
+   },
+   "flavor": "Three days off the water and nothing whatever to be done about it. Bella filed a note on the hatch, cited twice since; Rosabeth sold out of the green tincture by the second morning and gave the rest away; and every meeting in the borough that week was held with the door shut and got through in half the time.",
+   "art": {
+    "atlas": "nightskies",
+    "tile": 12
+   },
+   "remakes": "dx_swarm_of_gnats",
+   "rarity": "Common",
+   "power": {
+    "score": 2.08,
+    "power": 2.75,
+    "opportunityCost": 2
+   }
+  },
+  {
+   "id": "mk_dx_lean_season",
+   "type": "disruption",
+   "name": "A Lean Season",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: each Mayor sends one Character of their choice to Unemployment. Goes to the City Dump.",
+   "onReveal": {
+    "do": "everyoneUnemploys",
+    "count": 1
+   },
+   "flavor": "Not a disaster. A season in which there is simply nothing on, and the Hiring Hall's board is bare by Tuesday. Quinn turns back four years, finds the animals who did that exact work in the last one and has not been asked since, and starts handing out slips with names on them.",
+   "art": {
+    "atlas": "nightskies",
+    "tile": 13
+   },
+   "remakes": "dx_slow_season",
+   "rarity": "Common",
+   "power": {
+    "score": 2.27,
+    "power": 3,
+    "opportunityCost": 2
    }
   }
  ],
@@ -15218,6 +16179,11 @@
     "date": "2026-09-14",
     "what": "9 Statues, 20 remade Market cards, 10 new ones, 1 Disruption",
     "why": "The Statues were the last thing the Maker shelf borrowed, and a collection that cannot be won with its own cards is not a collection. They are remade around the third round of verbs rather than re-typed: Kindness feeds an animal out of work, Curiosity bins what it does not want, Courage tosses for it, Patience and Ingenuity and Joy keep chits, Community puts two animals together. The Market cards are the same again at the other end of the Capital City — the printed ninety-six are largely gain-Supply-and-draw, and the Maker shelf had three of its own — and ten of them are new, including the first three cards on either shelf that spend a token. The Disruption is the third the shelf has, which is what the Capital City’s `minDisruptions` floor of 3 actually needs; two could not fill it. Art: the Statues keep the monuments the printed cards used — they are the same nine monuments in the same square — and the Market cards take printed tiles by theme, the way the printed set has always shared them, so no new wish is logged for them."
+   },
+   {
+    "date": "2026-09-14",
+    "what": "7 Events, 6 Market cards, 4 Buildings, 8 Disruptions",
+    "why": "Written for the cast that is already on the shelf rather than remade off the printed list a card at a time, and painted out of the twenty-five atlas scenes the Maker line had not used yet — the whole of what was left. The animals who had places in the town bible and no card in the Capital City now have one: Andrew's late desk, Willow's harbour office, Quill's cider social, Maribel's seed bank, Liz's weighbridge, Orien's engine in the Counting House, Berry's bench and the Town Workshop he answers to, Hazel's seat on the market committee, Faustus's fitting room, Rosabeth's beds as a Building the Capital City sells. The eight Disruptions are the other half of it: the shelf had three against the printed set's thirty, and the borough's weather — the winter the Exchange shut, the year the bridge went, the eclipse, the midges off the water — is the part of this world the town bible has most of and the Maker collection had least. Sixteen of the twenty-five claim a printed card; the rest say why they are new. Several carry the fourth round of verbs onto the town side, so that a verb a Character asked for is not carried by that Character alone: the Town Dump reach is on the Owl Post and the late desk, the choice handed across the table is on the toll gate, the harbour office and the market committee, and the Capital City deck's order is on the Town Clock."
    }
   ],
   "wantedArt": [
@@ -15405,7 +16371,25 @@
     "mk_mkt_bin_round",
     "mk_mkt_mended_mangle",
     "mk_mkt_late_ferry",
-    "mk_dx_hard_winter"
+    "mk_dx_hard_winter",
+    "mk_mkt_seed_bank_open_day",
+    "mk_mkt_town_clock",
+    "mk_mkt_market_committee",
+    "mk_mkt_the_fitting",
+    "mk_mkt_toll_gate",
+    "mk_mkt_owl_post",
+    "mk_bld_physic_garden",
+    "mk_bld_weighbridge",
+    "mk_bld_counting_house",
+    "mk_bld_town_workshop",
+    "mk_dx_six_weeks_shut",
+    "mk_dx_bridge_goes",
+    "mk_dx_solar_eclipse",
+    "mk_dx_meteor_shower",
+    "mk_dx_full_moon",
+    "mk_dx_landslide",
+    "mk_dx_midges",
+    "mk_dx_lean_season"
    ],
    "poolSize": 26,
    "minDisruptions": 3

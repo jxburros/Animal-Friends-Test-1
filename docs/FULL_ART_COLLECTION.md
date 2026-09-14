@@ -39,6 +39,38 @@ Deck Workshop, previews and animation copies. Escape dismisses the reader or gal
 | 23 | Sota — Telescope Fitter | — | Seating a great lens by lamplight, back to the stars |
 | 24 | Juniper — Stargazer | — | A brass orrery on a hill above town, post satchel beside them |
 
+## Paintings the Maker shelf inherited
+
+A painting was commissioned for a card, not for a card id. When the Maker shelf remade a painted
+printed card and the scene still fitted — the same animal, doing the same work — the remake shows the
+same painting rather than falling back to a shared atlas tile. It stays one painting with one
+collection number, shown on whichever shelf the reader is standing in front of; the gallery still
+lists twenty-four.
+
+| No. | Printed card | Maker remake |
+| --- | --- | --- |
+| 01 | Clover — Master Botanist | Clover, Master Botanist (`mk_clover_master_botanist_5`) |
+| 02 | Pip — Chief Archivist | Scott, Author of the Boroughs (`mk_scott_author_of_the_boroughs_5`) |
+| 03 | Bramble — Guild Warden | Berry, Guild Warden (`mk_berry_guild_warden_5`) |
+| 04 | Russet — Tea House Keeper | Earl, Tea House Keeper (`mk_earl_tea_house_keeper_4`) |
+| 05 | Willow — Harbour Admiral | Willow, Harbour Admiral (`mk_willow_harbour_admiral_5`) |
+| 06 | Mortar — Master Millwright | Morty, Master Millwright (`mk_morty_master_millwright_5`) |
+| 07 | Marmalade — Harvest Head Baker | Marmalade, Harvest Head Baker (`mk_marmalade_harvest_head_baker_5`) |
+| 08 | Inkwell — Keeper of Stories | Inkwell, Keeper of Stories (`mk_inkwell_keeper_of_stories_5`) |
+| 09 | Reading Lanterns | Reading Lanterns (`mk_reading_lanterns`) |
+| 11 | Statue of Curiosity | Statue of Curiosity (`mk_st_curiosity`) |
+| 12 | Hard Winter | A Hard Winter (`mk_dx_hard_winter`) |
+
+Four of the eleven are renames — Pip became Scott, Bramble became Berry, Russet became Earl, Mortar
+became Morty — which is what `renamedFrom` is for and which the painting does not mind: it is the
+same red squirrel in the same hollow-tree library. The link is `remadeAs` on the registry entry, and
+a test holds it honest: the remake must be the card that actually claims the printed one in its
+`remakes`, and must be the same species. Where a remake changed the job title or the study — Scott
+is the Author rather than the Chief Archivist, and Marmalade's study moved to Food when Food was
+declared — the entry carries a `remadeNote` saying why the scene still fits, so that nothing
+inherits a painting of somebody else's work by accident. The painting of Glasshouse Walk (10) is a
+Maker card already, and the twelve Maker portraits (13–24) were commissioned for Maker cards.
+
 These subjects were selected for recognizable characters, expressive occupations, varied environments,
 and strong lighting opportunities. Their printed rarities, card IDs, costs, abilities, deck limits and
 rules are unchanged. Other versions of the same named Character keep their regular art. This is a fixed
@@ -47,7 +79,9 @@ presentation selection, not a new rarity or random reward system.
 ## Assets and implementation
 
 - `src/ui/full-art.js` owns the full-art registry, collection numbers and bundled image URLs — printed
-  cards and Maker shelf cards alike, keyed by card id.
+  cards and Maker shelf cards alike, keyed by card id. `remadeAs` on an entry names the Maker card
+  that inherited the painting, `remadeNote` accounts for a changed job or study, `fullArtFor(def)`
+  resolves either id to the one entry, and `fullArtIds(id)` lists both.
 - `src/ui/full-art.css` styles only opted-in faces plus the collection gallery.
 - `src/ui/full-art-gallery.js` builds the gallery from the existing card definitions (printed set plus
   Maker set) and the shared renderer.

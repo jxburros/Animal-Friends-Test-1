@@ -90,6 +90,11 @@ function townSlotCost(rules) {
  */
 const BUILDING_SLOT = 1.5; // what a place was worth when a town had only three
 const EXPECTED_STATUES = 2.5;
+/**
+ * Buildings a town actually has standing when it plays a card that counts them. Not the cap and not
+ * zero: a Mayor reads a scaling rate off the row in front of them, and that row is usually short.
+ */
+const EXPECTED_BUILDINGS = 1.5;
 function buildingSlotCost(rules) {
   const cap = rules?.buildings?.maxPerTown;
   if (!(typeof cap === 'number' && cap > 0)) return 0.3;
@@ -141,6 +146,14 @@ const PASSIVE_VALUE = {
   // standing. A town finishes something like two shifts a turn, so it is worth rather more per point
   // than a one-shot shiftBonus mod — and it is priced per point, because the passive carries a value.
   townShiftBonus: 2.8,
+  // The wage-setter's standing rate: every animal this town hires costs a Supply less for as long
+  // as he is standing. A Mayor recruits something like once a turn, so it is worth about what a
+  // townShiftBonus point is — a little less, because a discount is only worth having on the turns
+  // there is something worth hiring.
+  townRecruitDiscount: 2.4,
+  // A pledge rule that falls on the rival alone: a rung off every auction they enter, and none off
+  // yours. Dearer than the Statue of Courage's burden, which is one bid rather than every ladder.
+  opponentPledgeLadderPlus1: 2.6,
   // Statue burdens: always a cost to their controller, so they are subtracted, not added.
   opponentRehireDiscount: 1.2,
   opponentFirstBidPlus1: 1.4,
@@ -241,6 +254,13 @@ export function effectPower(eff) {
     case 'addMod': {
       const unit = MOD_VALUE[eff.key] ?? 1;
       if (FLAG_MODS.has(eff.key)) return unit;
+      // A rate that counts something in the town is rated on what the town usually has: a Mayor
+      // deciding whether to play this has a Building or two up, not none and not a full row. `max`
+      // is a real ceiling and is honoured, which is why a scaling mod has to print one.
+      if (eff.valuePer) {
+        const scaled = (eff.value === undefined ? 1 : eff.value) * EXPECTED_BUILDINGS;
+        return unit * (eff.max === undefined ? scaled : Math.min(scaled, eff.max));
+      }
       // A shield is worth what it can plausibly stop, not what it is printed to stop.
       const amount = eff.key === 'lossShield' ? Math.min(n(eff.value), 3) : n(eff.value);
       return unit * amount;
@@ -261,10 +281,29 @@ export function effectPower(eff) {
       return 0.35 * n(eff.count);
     case 'eventFromDumpToHand':
       return AVAILABLE.townDump * 2.0;
+    case 'cardFromDumpToHand':
+      // The whole bin rather than the Events in it: the same reach, better odds of something worth
+      // having in there, and better again when the card may take a Character back. A filter narrows
+      // what is reachable, so it is worth less than the open hand.
+      return AVAILABLE.townDump * 2.6 * n(eff.count) * (eff.filter ? 0.85 : 1);
+    case 'opponentLosesSupply':
+      // Taking Supply off a rival rather than gaining it: worth less than the same Supply in your
+      // own paw, because Supply is the resource this game ends up in surplus of — but it lands on
+      // the turn they were saving for something, which is when it is worth anything at all.
+      return 0.8 * n(eff.amount);
+    case 'opponentChoice':
+      // The rival picks, so you are paid the branch they like best — the least of them, not the
+      // average. Printing two bad options is how you make the least of them still bad.
+      return (eff.options || []).length
+        ? Math.min(...eff.options.map((b) => effectPower(b && b.effect)))
+        : 0;
     case 'eventFromDumpToDeckBottom':
       return 1.0;
     case 'peekMarketDeck':
-      return 0.4 * n(eff.count);
+      // Looking is worth knowing what is coming. Putting the Capital City's deck back in a chosen
+      // order is worth rather more than that: it is what both Mayors will be bidding on next, set
+      // by one of them. Dearer per card than reordering your own deck, for exactly that reason.
+      return 0.4 * n(eff.count) * (eff.reorder ? 2 : 1);
     case 'peekOpponentHand':
       // Knowing what is coming, once: worth about a card's worth of not guessing, and worth it
       // whether the hand is full or nearly empty, which is why it is not counted per card.
@@ -428,8 +467,13 @@ export function shiftPower(shift, runs = SHIFTS_EXPECTED) {
   return (output / shift.delay) * 2.5 + output * 0.3;
 }
 
-/** Turns a Character spends rotating into work before its first shift, by rank. */
-function entryTurns(cost) {
+/**
+ * Turns a Character spends rotating into work before its first shift, by rank — unless the card
+ * prints `entersUpright`, in which case none, whatever it cost. That is the whole of what the field
+ * buys, and buying two turns off a Master is the dearest thing in this function.
+ */
+function entryTurns(cost, card) {
+  if (card && card.entersUpright) return 0;
   if (cost <= 1) return 0; // Apprentices enter upright
   if (cost <= 3) return 1; // Journeymen enter Busy
   return 2; // Masters enter at 180 and take two Readys to stand up
@@ -451,7 +495,7 @@ export function opportunityCost(card, statueCost, rules) {
   const townSlot = townSlotCost(rules); // and an animal also costs one of the town's finite places
   switch (card.type) {
     case 'character':
-      return slot + ACTION + card.cost + 1.2 * entryTurns(card.cost) + townSlot;
+      return slot + ACTION + card.cost + 1.2 * entryTurns(card.cost, card) + townSlot;
     case 'event':
       // Events cost no Supply; their requirements are the whole price, and a Limited Event has to
       // survive on the table to pay out at all.
@@ -516,6 +560,10 @@ export function cardPower(card, rules) {
     power += abilityPower(ab, permanent ? permanentRuns(ab.trigger) : runs);
   }
   if (card.leavesAfter) power *= termFactor(card.leavesAfter);
+  // A hire who goes back on the road rather than into the City Dump may be taken on again when the
+  // Market Deck comes round to them. It is a chance rather than a promise — the rival may be the
+  // one who takes it — so it is worth a little, not a second term.
+  if (card.returnsToMarket) power += 0.4;
   // A held Event waits in hand for the turn that suits it, and asks for no Characters when it comes
   // down. Playing the same effect exactly when you want it is worth more than playing it on reveal.
   if (card.hold) power *= 1.12;

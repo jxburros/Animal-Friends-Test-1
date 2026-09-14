@@ -469,10 +469,25 @@ export async function runEffect(state, pi, eff, ctx = {}) {
     case 'discard':
       await discard(state, pi, eff.count);
       return;
-    case 'addMod':
-      p.mods.push({ key: eff.key, value: eff.value, expires: eff.expires || 'untilUsed', consumable: !!eff.consumable, filter: eff.filter || null, source: ctx.sourceCardId || null });
-      log(state, pi, `${p.name} gains an ongoing effect: ${eff.key} (${eff.value}).`, { kind: 'mod', player: pi, key: eff.key, value: eff.value });
+    case 'addMod': {
+      // A mod's value is usually printed. `valuePer` counts something in the town instead: the
+      // registrar's rate is a rate, and an office that has stamped four Buildings is better at the
+      // fifth than an office that has stamped none. `max` is what keeps a scaling rate rateable —
+      // a value with no ceiling is a card nobody can price, this model included.
+      let value = eff.value;
+      if (eff.valuePer) {
+        const per = eff.valuePer === 'buildingsBuilt' ? buildingsBuilt(state, pi) : 0;
+        value = (eff.value === undefined ? 1 : eff.value) * per;
+        if (eff.max !== undefined) value = Math.min(value, eff.max);
+        if (value <= 0) {
+          log(state, pi, `${p.name}'s ${eff.key} comes to nothing this turn.`, { kind: 'mod', player: pi, key: eff.key, value: 0 });
+          return;
+        }
+      }
+      p.mods.push({ key: eff.key, value, expires: eff.expires || 'untilUsed', consumable: !!eff.consumable, filter: eff.filter || null, source: ctx.sourceCardId || null });
+      log(state, pi, `${p.name} gains an ongoing effect: ${eff.key} (${value}).`, { kind: 'mod', player: pi, key: eff.key, value });
       return;
+    }
     case 'readyCharacter': {
       const opts = p.town.filter((s) => s.orientation !== UPRIGHT && !s.lockedBid && matchesFilter(state, s, eff.filter));
       if (!opts.length) return;
@@ -531,7 +546,9 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       for (const uid of chosen) {
         const c = p.hand.splice(p.hand.findIndex((x) => x.uid === uid), 1)[0];
         const d = cardDef(state, c.cardId);
-        const orientation = eff.orientation ?? entryOrientation(state.rules, d.cost);
+        // A card may say how it arrives (`entersUpright`), and an animal who arrives ready arrives
+        // ready however she got here — out of hand for free is still arriving.
+        const orientation = eff.orientation ?? (d.entersUpright ? UPRIGHT : entryOrientation(state.rules, d.cost));
         const s = makeStack(state, pi, c, orientation);
         p.stats.recruits++;
         log(state, pi, `${p.name} recruits ${d.name}, ${d.title} for free (${orientation === UPRIGHT ? 'upright' : 'Busy'}).`, { kind: 'recruit', player: pi, uid: s.uid, cardUid: c.uid, cardId: c.cardId, cost: 0, upgrade: false });
@@ -570,10 +587,79 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       }
       return;
     }
+    case 'cardFromDumpToHand': {
+      // The whole bin, not just the Events in it. `eventFromDumpToHand` is the narrow verb and stays
+      // the narrow verb; this is the animal who goes through the Town Dump properly and comes back
+      // up with whatever is in there — a Character, a Town Building, an Event, anything of yours
+      // that has been used. A filter narrows it to what a particular card is allowed to reach.
+      const f = eff.filter || {};
+      const opts = p.dump.filter((c) => {
+        const d = cardDef(state, c.cardId);
+        if (f.type && d.type !== f.type) return false;
+        if (f.typeIn && !f.typeIn.includes(d.type)) return false;
+        if (f.maxCost !== undefined && (d.cost || 0) > f.maxCost) return false;
+        if (f.study && d.study !== f.study) return false;
+        if (f.species && d.species !== f.species) return false;
+        if (f.name && d.name !== f.name) return false;
+        return true;
+      });
+      if (!opts.length) return;
+      const max = Math.min(eff.count || 1, opts.length);
+      const chosen = await ask(state, pi, { kind: 'pick', reason: 'cardFromDumpToHand', from: 'dump', options: opts.map((c) => inst(state, c)), min: eff.optional ? 0 : Math.min(1, max), max });
+      for (const uid of chosen) {
+        const at = p.dump.findIndex((x) => x.uid === uid);
+        if (at < 0) continue;
+        const c = p.dump.splice(at, 1)[0];
+        p.hand.push(c);
+        log(state, pi, `${p.name} takes ${cardDef(state, c.cardId).name} back out of the Town Dump.`, { kind: 'dumpToHand', player: pi, uid: c.uid, cardId: c.cardId });
+      }
+      return;
+    }
+    case 'opponentLosesSupply': {
+      // A rival's Supply, taken rather than given — the one reaching verb the collection did not
+      // have. It takes what is there and no more, and the rival is told, because `onSupplyLost` is
+      // a trigger animals build their turn around and a loss nobody is told about is not one.
+      const take = Math.min(eff.amount, o.supply);
+      if (take <= 0) return;
+      o.supply -= take;
+      log(state, pi, `${o.name} loses ${take} Supply to ${ctx.sourceCardId ? cardDef(state, ctx.sourceCardId).name : p.name}.`, { kind: 'supply', player: oi, delta: -take, total: o.supply });
+      if (!state.notifyingSupplyLoss) {
+        state.notifyingSupplyLoss = true;
+        try { await fireHook(state, 'onSupplyLost', { player: oi, listeners: [oi], amount: take }); }
+        finally { state.notifyingSupplyLoss = false; }
+      }
+      return;
+    }
+    case 'opponentChoice': {
+      // Two hardships on the table and the rival picks which one they take. Every other reaching
+      // verb decides for them; this one hands the decision across, which is a different kind of
+      // pressure — the branch they leave is the one they could least afford. The branches are
+      // written from the playing Mayor's side, exactly as they read on the card.
+      const branches = (eff.options || []).filter((b) => b && b.effect);
+      if (!branches.length) return;
+      const opts = branches.map((b, i) => ({ uid: `br${i}`, name: b.label || `Option ${i + 1}` }));
+      const [picked] = await ask(state, oi, { kind: 'pick', reason: 'opponentChoice', from: 'choice', options: opts, min: 1, max: 1 });
+      const branch = branches[opts.findIndex((o2) => o2.uid === picked)] || branches[0];
+      log(state, oi, `${o.name} chooses: ${branch.label || 'the first option'}.`, { kind: 'opponentChoice', player: oi, chooser: oi, source: pi, label: branch.label || null, cardId: ctx.sourceCardId || null });
+      await runEffect(state, pi, branch.effect, ctx);
+      return;
+    }
     case 'peekMarketDeck': {
-      const top = state.market.deck.slice(0, eff.count || 1).map((id) => cardDef(state, id).name);
-      p.knownMarketTop = state.market.deck.slice(0, eff.count || 1);
-      log(state, pi, `${p.name} looks at the top of the Market Deck${top.length ? `: ${top.join(', ')}` : ' (empty)'}.`, { kind: 'peekMarket', player: pi, cardIds: p.knownMarketTop.slice() });
+      const n = Math.min(eff.count || 1, state.market.deck.length);
+      let ids = state.market.deck.slice(0, n);
+      // `reorder` is the sky watch's half of it: knowing the order things arrive in is one thing,
+      // and saying what that order is going to be is another. It is `reorderDeckTop` pointed at the
+      // Capital City's deck rather than your own, so both Mayors meet what you left on top.
+      if (eff.reorder && n > 1) {
+        const opts = ids.map((id, i) => ({ uid: `mkt${i}`, cardId: id, name: cardDef(state, id).name }));
+        const byUid = Object.fromEntries(opts.map((o) => [o.uid, o.cardId]));
+        const order = await ask(state, pi, { kind: 'order', reason: 'reorderMarket', options: opts });
+        ids = order.map((uid) => byUid[uid]);
+        state.market.deck.splice(0, n, ...ids);
+      }
+      p.knownMarketTop = ids.slice();
+      const names = ids.map((id) => cardDef(state, id).name);
+      log(state, pi, `${p.name} looks at the top of the Market Deck${names.length ? `: ${names.join(', ')}` : ' (empty)'}${eff.reorder && n > 1 ? ', and puts them back in that order' : ''}.`, { kind: 'peekMarket', player: pi, cardIds: ids.slice(), reordered: !!(eff.reorder && n > 1) });
       return;
     }
     case 'peekOpponentHand': {

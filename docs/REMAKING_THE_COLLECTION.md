@@ -128,6 +128,23 @@ together. A Statue keeps its bargain whatever else changes: a boon, and a burden
 as its Mayor holds it. The remade nine rate 2.44–2.83 against the printed 1.94–2.46 — a shade richer,
 and tighter, which is the trade for nine cards that only ever play against each other.
 
+**Written for the shelf, not off the list.** The later batches turn the market side around: instead of
+taking the printed Market cards a run at a time, they start from the cast already on the shelf and the
+scenes the art already has, and ask what is missing. The twenty-five-card batch of 2026-09-14 is the
+clearest case — Andrew's late desk, Willow's harbour office, Quill's cider social, Maribel's seed
+bank, Liz's weighbridge, Orien's engine in the Counting House, Hazel's seat on the market committee,
+Faustus's fitting room, and the borough's own weather: the winter the Grain Exchange shut, the year
+the bridge went, the eclipse, the midges off the water. Sixteen of the twenty-five still claim a
+printed card, because a card written for this shelf usually turns out to be the successor of one on
+the other; the rest carry `addition` and say why. Two rules came out of writing it. A new **Market
+card, Building or Disruption has to be added to `marketDecks[0].pool`** or it is a card nobody can
+be dealt (Events go in a Mayor's own deck and belong to the Deck Workshop instead). And **a shared
+shock is dealt far more often on a 26-card market than on the printed one** — the first draft of
+*A Lean Season* sent every Character in both towns to Unemployment, as the printed Recession does,
+and it doubled the average maker game from 50 turns to 93 and stalled two games in twenty-four.
+Play the shelf before committing a Disruption; a card that never lets the towns fill up is a card
+that never lets anybody win.
+
 **Town Buildings** are the other half of that shelf, and they are all additions: a Town Building is
 played out of a Mayor's own deck for its Supply cost plus a crew of upright animals, and the printed
 set has none, because the type did not exist when it was printed. Write them as *small and personal*
@@ -196,6 +213,7 @@ Regenerate them after every batch of remade cards: the "Remade" columns are fill
 | `spec/maker_card_set.json` | the remade collection: backstories and cards (starts empty) |
 | `src/engine/characters.js` | Characters and their versions — used by the sort and the spreadsheet |
 | `src/ui/remade.js` | the tick list: storage, the maker-card link, export/import |
+| `src/ui/full-art.js` | the Full Art registry, and `remadeAs`: the painting a Maker remake inherits |
 | `src/ui/deckbuilder.js` | the shelves, the sort row and the tick buttons |
 | `scripts/characters.mjs` | writes the two CSVs |
 | `scripts/characters_xlsx.py` | binds the CSVs into the workbook |

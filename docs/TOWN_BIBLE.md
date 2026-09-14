@@ -47,6 +47,11 @@ add to the list.
   Community, Harmony. They are the town's stated virtues; a backstory that touches one should mean it.
 - **The City Dump** and **Unemployment** are where cards and animals go when work runs out. Both are
   ordinary parts of town life, not disgrace.
+- **Bought out of the Capital City by the borough** — the Weighbridge at the Grain Exchange, the
+  Counting House, the Town Workshop, the Guild Hall, the Long Room, the All-Night Café, the Hiring
+  Hall, the Festival Green, the Winter Stores and the Physic Garden. A Building is the Capital City's
+  and is won at auction; the borough's use of it is its own business, which is how the Physic Garden
+  came to be full of animals rather than specimens. [town cards]
 - **Places a town builds for itself** — the Allotment Strip, Copper's Cellar, Berry's Bench, Rosabeth's
   Gate, the Open Mic Room, the Boat Shed and the Gate Hut. These are Town Buildings: small, local, and
   raised by a Mayor's own animals rather than won in the Capital City. Each one already belonged to
@@ -352,6 +357,47 @@ add to the list.
   bad ferry and terms its previous owner described for years as generous of him. The Harbourmaster's
   office is hers, which is why the River Otter licence is granted out of it and why the river
   trade's whole ladder runs up to her desk. [Willow, Brooke, Dylan]
+
+- **The Physic Garden is the Capital City's and Rosabeth runs it.** It was built to grow specimens and
+  the borough grows animals in it: whoever is out of work that month is on the beds by the end of the
+  week, and is not told they are being mended. The Science hall has twice failed to account for the
+  tinctures and has stopped writing it up. [town cards, Rosabeth]
+- **The Town Clock's hour is the hour it is.** Brass gears, exposed on purpose, and the whole square
+  sets its morning by the face. When it stops the borough calls Berry, and Berry answers to the Town
+  Workshop about it afterwards; nobody has ever proposed a second clock. [town cards, Berry]
+- **The market committee offers two things.** It sits over the guildhall, it has a cat for a
+  weathervane that nobody will admit to paying for, and it learned long ago to put two proposals it
+  can live with in front of a room rather than one it cannot. Hazel sits on it. [town cards, Hazel]
+- **The seed bank has an open day, once a year.** Maribel puts the drawers out on the trestles and
+  nobody pays for a packet; you come back next autumn with two of them, and she writes that down.
+  [town cards, Maribel]
+- **Tool lending day is a fixture and Berry's bench is where it happens.** Half the borough's broken
+  things are queued along it and the other half are out on loan; the rule of the bench is that the
+  animal who brought the thing is the animal who mends it, with Berry on the second stool asking what
+  they think is wrong with it. [town cards, Berry]
+- **The lanterns of the Lending Library's reading evenings are Benjamin's**, filled at his bench like
+  every other lamp in the borough, and hung low enough for a mouse to read by. Inkwell has one evening
+  a week and Lynnette has Thursdays. [town cards, Benjamin, Inkwell, Lynnette]
+- **The borough's weather is a matter of record.** Sage has the eclipses to the minute eleven months
+  out and the whole night class goes up the hill with smoked glass; Taco's cart moves to the top of
+  that hill for the meteor shower, which is the one night of the year anybody can say in advance
+  where the cart will be; and the midges come off the water for three days most summers and stop
+  everything, which Bella has filed a note on and Rosabeth sells a green tincture for.
+  [town cards, Sage, Jessica, Taco, Bella, Rosabeth]
+- **The cutting on the long pull to the county gate has come down once.** The pull is a quarter-hour
+  shorter than the road it replaced, which was Adam's idea, and the cutting that made it shorter is
+  the one that fell. He was up there with a lamp before the noise had finished and did not ask
+  anybody to come with him. [town cards, Adam]
+- **A lean season is not a disaster.** It is a season with nothing on, the Hiring Hall's board bare by
+  Tuesday, and Quinn turning back four years for the animals who did that exact work in the last one.
+  The borough distinguishes it carefully from the winter the Exchange shut and the year the bridge
+  went, which were. [town cards, Quinn]
+- **Jake can be taken on again.** He has run the warrens' long errands twice and left twice, and the
+  Hiring Hall's position is that there will be a third time and that they will hire him for it.
+  There is still no address. [Jake]
+- **Mandee is never late and never arrives.** She is simply already there, whatever the hour and
+  whatever the job, which is the other reason the borough has stopped asking where she lives.
+  [Mandee]
 
 ## Relationships
 
