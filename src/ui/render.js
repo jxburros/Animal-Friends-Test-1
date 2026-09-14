@@ -13,6 +13,7 @@ import {
 import { cardArtSVG, cardBackSVG, iconSVG } from './art.js';
 import { ornamentalFrameSVG } from './painted-art.js';
 import { fullArtFor, fullArtFrameSVG, FULL_ART_CARDS } from './full-art.js';
+import { resolveVersionKey, version as versionOf } from './versions.js';
 import * as fx from './fx.js';
 import * as choreo from './choreo.js';
 
@@ -255,12 +256,20 @@ function statueBands(victory, tiers) {
   });
 }
 
-export function buildCardFace(def, { large = false, interactive = true } = {}) {
-  const fullArt = fullArtFor(def);
+/**
+ * Build a card face in one of its printings. `version` names it (see ./versions.js); left out, the
+ * card is shown in the printing it has always been shown in — its Full Card Art if it has one, the
+ * regular printing otherwise — so the table itself is untouched by printings existing.
+ */
+export function buildCardFace(def, { large = false, interactive = true, version = null } = {}) {
+  const ver = versionOf(resolveVersionKey(def, version));
+  const fullArt = ver.fullArt ? fullArtFor(def) : null;
+  const foil = ver.foil || def.foil;
   const rank = def.type === 'character' && activeRules() ? rankOf(activeRules(), def.cost) : null;
   const face = h('div', {
-    class: `card-face t-${def.type}${large ? ' large' : ''}${def.foil || fullArt ? ' foil' : ''}${fullArt ? ' full-art' : ''}${rank ? ` rank-${rank}` : ''} rar-${raritySlug(def)}`,
+    class: `card-face t-${def.type}${large ? ' large' : ''}${foil ? ' foil' : ''}${ver.foil === 'creative' ? ' creative-foil' : ''}${ver.art === 'alternateArt' ? ' alt-art' : ''}${fullArt ? ' full-art' : ''}${rank ? ` rank-${rank}` : ''} rar-${raritySlug(def)} ver-${ver.key}`,
     'data-card': def.id,
+    'data-version': ver.key,
     'data-peek': interactive && !large ? '1' : null,
   });
   const banner = h('div', { class: 'banner' });
@@ -296,7 +305,7 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
         : def.type === 'marketCharacter' ? (def.title || 'Capital City Hire')
           : def.type === 'token' ? 'Token' : def.hold ? 'Capital City Event · kept' : 'Capital City Market';
   face.appendChild(h('div', { class: 'card-subtitle' }, subtitle || def.type));
-  face.appendChild(h('div', { class: 'art', html: cardArtSVG(def) }));
+  face.appendChild(h('div', { class: 'art', html: cardArtSVG(def, ver.key) }));
 
   const body = h('div', { class: 'body' });
   const traits = h('div', { class: 'traits' });
@@ -356,14 +365,18 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
   if (def.burden) body.appendChild(h('div', { class: 'burden' }, def.burden));
   if (def.flavor) body.appendChild(h('div', { class: 'flavor' }, def.flavor));
   face.appendChild(body);
-  if (def.foil || fullArt) {
+  if (foil) {
     face.appendChild(h('div', { class: 'foil-sheen' }));
-    if (!fullArt) face.appendChild(h('div', { class: 'foil-tag', title: 'Foil card', html: iconSVG('foil') }));
+    if (!fullArt) face.appendChild(h('div', { class: 'foil-tag', title: `${ver.name} card`, html: iconSVG('foil') }));
   }
-  const footer = h('div', { class: 'card-footer' }, [h('span', {}, fullArt ? `Full Art · ${fullArt.number}/${Object.keys(FULL_ART_CARDS).length}` : typeLabel(def))]);
+  // The footer names the printing whenever it is not the ordinary one: that, and the frame, are how
+  // an Alternate Art or a Creative Foil is told apart from the regular card at a glance.
+  const footerText = fullArt ? `Full Art · ${fullArt.number}/${Object.keys(FULL_ART_CARDS).length}`
+    : ver.key === 'regular' ? typeLabel(def) : `${typeLabel(def)} · ${ver.name}`;
+  const footer = h('div', { class: 'card-footer' }, [h('span', {}, footerText)]);
   if (interactive) footer.appendChild(h('button', {
     class: 'inspect-card', type: 'button', 'aria-label': `Read ${def.name}`,
-    onclick: (event) => { event.stopPropagation(); inspectCard(def); },
+    onclick: (event) => { event.stopPropagation(); inspectCard(def, ver.key); },
     onpointerdown: (event) => event.stopPropagation(),
   }, 'Read'));
   face.appendChild(footer);
@@ -372,11 +385,11 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
 }
 
 // Separate from decision dialogs so inspecting art cannot answer or cancel an engine choice.
-function inspectCard(def) {
+function inspectCard(def, version = null) {
   hidePeek();
   const previous = document.activeElement;
   const dialog = h('dialog', { class: 'card-reader', 'aria-label': def.name });
-  dialog.appendChild(buildCardFace(def, { large: true, interactive: false }));
+  dialog.appendChild(buildCardFace(def, { large: true, interactive: false, version }));
   dialog.appendChild(h('button', { class: 'reader-close', type: 'button', onclick: () => dialog.close() }, 'Return to the table'));
   dialog.addEventListener('close', () => { dialog.remove(); if (previous?.isConnected) previous.focus(); });
   dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });

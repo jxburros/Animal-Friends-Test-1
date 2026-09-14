@@ -322,13 +322,17 @@ npm run characters                # regenerate docs/characters.csv + docs/charac
 
 `npm run stamp` with no flag stamps the **printed** set and must not be run in a remake batch.
 
-Then check by eye, in the Deck Workshop (`npm run serve`, **Build your own deck** → **Maker cards**):
+Then check by eye, in **the Book** (`npm run serve` → **Book**), which is where both collections are
+read side by side:
 
 - every new card renders, **Read** shows the full flavor, and **Story** shows the backstory beside
   every version's flavor — that panel is where the writing is actually judged;
-- on the printed shelf, sorted by **Character**, every old version of this character shows
-  `✓ Remade (maker card)` or is listed in `retires`;
-- the counts in the shelf bar moved by the number you expected.
+- on the **Classic** shelf, every old version of this character shows `✓ Remade (maker card)` or is
+  listed in `retires`;
+- the shelf counts and the "Remade N of M" line moved by the number you expected.
+
+If the batch adds cards a deck can hold, also open **Maker → Build your own deck** and check they are
+on the shelf there: Maker Mode plays this collection, so a new card is playable the moment it lands.
 
 Commit with the character in the subject — `Remake Acorn: 3 Commerce, 2 Crafts` — and say in the body
 what was retired and why, and anything logged in `wantedVerbs`.

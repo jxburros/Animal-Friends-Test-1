@@ -7,7 +7,32 @@ This repo replaced the earlier single-file "Critter Town" game (archived at `doc
 The [painted app surroundings](docs/APP_SURROUNDINGS.md) extend the card illustrations into the menu,
 Capital City banner, welcome screen and deck workshop, with locally bundled artwork and matching parchment frames.
 
-**New in v0.7.0 — Night Shift:** the town after dark. **86 cards**, the **Owl** as the tenth species,
+**New in v0.8.0 — Three doors:** the book now opens on three ways in.
+
+- **Classic** is the printed collection, played exactly as published: eight decks, seven Capital
+  Cities, 461 cards, and no Maker card anywhere in it. The Deck Workshop builds out of the printed
+  book alone.
+- **Maker** is the same game played entirely with the remade cards: the Maker cast, **two decks of
+  their own** (Ledger & Larder, Bench & Bandstand), a Capital City of their own (**The First
+  Workings**), and a Deck Workshop that builds out of the Maker collection. The two collections are
+  never mixed in a deck. The nine Statues are still borrowed from the printed book — the Maker shelf
+  has none of its own yet — and `borrowsFromPrinted` in `spec/maker_card_set.json` says so out loud,
+  by id, so each one drops off that list the moment it is remade.
+- **Book** is the gallery: every card in the game, Classic and Maker alike, at reading size, with
+  filters for shelf, type, species, study and printing, and a search over names and rules text. It
+  is also where the rebuild is tracked now — a printed card's `✓ Remade` tick, the **Story** panel
+  with each character's backstory, and the remade-list export all moved here from the Workshop,
+  because this is the one screen that shows both collections side by side.
+
+**Card printings.** Every card can now exist in six printings — **Regular, Alternate Art, Foil,
+Alternate Art Foil, Creative Foil** and **Full Card Art** — and the Book turns a card over to any of
+them with the chips beneath it. Only two have art today: Regular, which needs none, and the eighteen
+Full Card Art paintings. The other four are wired and deliberately empty; a greyed chip is a printing
+that has not been painted yet. Adding one is two steps, documented at the top of
+`src/ui/versions.js`: drop the painting at `assets/art/versions/<cardId>/<slot>.png`, and add one
+line to `PRINTINGS`. Nothing about rules, rarity, cost or deck limits changes with a printing.
+
+**Earlier, in v0.7.0 — Night Shift:** the town after dark. **86 cards**, the **Owl** as the tenth species,
 **Science** as the sixth study, a barista, and a Cat in space. See [NIGHT_SHIFT.md](docs/NIGHT_SHIFT.md).
 
 - **Owls own the night.** Their signature is the **wake-up call**: a Character turns one step toward
@@ -140,7 +165,7 @@ A hired Character is **retained labour, not a citizen**: they may be hired for a
 
 **Species and study** — species is what a card *is*, study is what it *does*. Species is a design space, not a keyword: each of the ten owns a centre of gravity, a hole and a signature effect (Rabbits arrive in crowds; Badgers shrug off shocks; Raccoons work the City Dump; Squirrels put Supply by; Cats act when they should not be able to; Owls wake the town before dawn). The charters live in `spec/species.json` and `npm run identity` fails the build if two species stop playing differently. Studies — Agriculture, Civics, Commerce, Crafts, Lore, Science — are the horizontal axis that cuts across species.
 
-**Decks** — eight printed 40-card decks (Burrow & Bloom, Paws & Papers, Bramble & Bastion, Ripple & Rune, Whisker & Willow, Root & Rampart, Moon & Mocha, Steam & Starlight), or build your own in the **Deck Workshop**: 40 to 50 cards of Characters, Events and Town Buildings, with copies capped by rarity. There is no Character floor and no Event ceiling — the deck is yours to get wrong, and the Workshop warns rather than refuses when a full-size deck holds six animals or fewer. Each Mayor may **mulligan once, free**. Custom decks are saved in the browser.
+**Decks** — in Classic, eight printed 40-card decks (Burrow & Bloom, Paws & Papers, Bramble & Bastion, Ripple & Rune, Whisker & Willow, Root & Rampart, Moon & Mocha, Steam & Starlight); in Maker Mode, two (Ledger & Larder, Bench & Bandstand). Either way you can build your own in the **Deck Workshop**, out of whichever collection you are playing: 40 to 50 cards of Characters, Events and Town Buildings, with copies capped by rarity. There is no Character floor and no Event ceiling — the deck is yours to get wrong, and the Workshop warns rather than refuses when a full-size deck holds six animals or fewer. Each Mayor may **mulligan once, free**. Custom decks are saved in the browser, kept apart per collection — a Classic deck and a Maker deck are built from different cards and can never meet.
 
 ## Play it online
 
@@ -200,11 +225,12 @@ If you test by downloading the ZIP from GitHub and unzipping it:
 - `docs/ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md` - design reference and source of truth
 - `spec/game.json` - rules constants and prototype decisions
 - `spec/species.json` - the ten species charters (centre of gravity, hole, signature); the contract `npm run identity` checks
-- `spec/maker_card_set.json` - the hand-remade collection, shown on its own shelf in the Deck Workshop and **not playable yet**. Starts empty; it holds each remade character's backstory alongside their cards, and every card carries `remakes`, the id of the printed card it replaces, which is what ticks that card off even after a rename. It also carries the card types the printed set never had — Town Buildings, and now the nineteen Tokens — and each remade character's `wantedVerbs`, the effects their story wanted, with a `resolved` line once the engine can say it. The rebuild is documented in three files: [REMAKING_A_CHARACTER.md](docs/REMAKING_A_CHARACTER.md) (the process an agent follows to remake one character), [TOWN_BIBLE.md](docs/TOWN_BIBLE.md) (the shared world every backstory must agree with) and [REMAKING_THE_COLLECTION.md](docs/REMAKING_THE_COLLECTION.md) (the two shelves and the tick list)
+- `spec/maker_card_set.json` - the hand-remade collection, and what **Maker Mode** plays: its own decks, its own Capital City, and `borrowsFromPrinted` naming the printed cards it cannot yet do without (today, the nine Statues). It holds each remade character's backstory alongside their cards, and every card carries `remakes`, the id of the printed card it replaces, which is what ticks that card off even after a rename. It also carries the card types the printed set never had — Town Buildings, and now the nineteen Tokens — and each remade character's `wantedVerbs`, the effects their story wanted, with a `resolved` line once the engine can say it. The rebuild is documented in three files: [REMAKING_A_CHARACTER.md](docs/REMAKING_A_CHARACTER.md) (the process an agent follows to remake one character), [TOWN_BIBLE.md](docs/TOWN_BIBLE.md) (the shared world every backstory must agree with) and [REMAKING_THE_COLLECTION.md](docs/REMAKING_THE_COLLECTION.md) (the two shelves and the tick list)
+- `src/engine/modes.js` - the two playable collections and the one rule that joins them: `composeMakerSet` reads the borrowed printed cards into the Maker collection, and `isPlayableSet` is what decides whether the Maker door on the home screen opens or shows locked
 - `spec/starter_card_set.json` - all 461 cards: 186 Characters, 106 Events, 9 Statues, 96 Market cards, 14 Buildings, 12 hired animals, 8 Ordinances and 30 on-reveal cards, plus eight printed 40-card decks and seven Market Decks. Every card carries its `rarity` and the `power` rating that earned it, and the file is ordered by that rating, strongest for its cost first. A Market Deck is dealt as all 9 Statues plus a 26-card sample of its own pool — 35 cards — topped up from that pool until at least three on-reveal cards are in it, so every market keeps one size and its own printed character while the display varies from game to game.
 - `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`. `power.js` is the power/cost model that rates every card and assigns its rarity
 - `src/ai/` - agents: `random.js` (baseline), `heuristic.js` (opponent)
-- `src/ui/` - browser interface: `main.js`, `humanAgent.js`, `render.js`, `deckbuilder.js` (the Deck Workshop: both card shelves, the Character sort and the remade ticks), `remade.js` (which printed cards have been remade), `help.js` (the welcome, quick start, rules and FAQ), `tutorial.js` (the coach chips), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations)
+- `src/ui/` - browser interface: `main.js` (the three doors, and the cover of whichever collection is being played), `humanAgent.js`, `render.js`, `book.js` (the Book: every card in both collections, its printings, the Story panel and the remade ticks), `versions.js` (the six printings and which cards have been painted in them), `deckbuilder.js` (the Deck Workshop, building out of one collection), `remade.js` (which printed cards have been remade), `help.js` (the welcome, quick start, rules and FAQ), `tutorial.js` (the coach chips), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations)
 - `src/tutorial/scenario.js` - the tutorial mini-match: the arranged decks and market, the step script (what to do and why, and which moves are allowed), and the rival's plan; DOM-free so the tests can play it
 - `index.html` - playable game
 - `scripts/` - test utilities: `smoke.mjs` (one game log), `invariants.mjs` (card conservation), `playtest.mjs` (AI vs AI), `power.mjs` (the card set sorted by power/cost), `stamp.mjs` (restamp every card's rarity and rating after editing the set), `identity.mjs` (species/study identity and power-creep gate), `build-decks.mjs` (rebuild the printed decks from the ratings, or just the ones named with `--only`), `characters.mjs` (the character spreadsheet: every Character and every version they have), `characters_xlsx.py` (binds those CSVs into one workbook)
@@ -272,10 +298,17 @@ The `assumptions` array in `spec/game.json` documents current prototype choices:
 
 ## Card art
 
-**Full Art Collection:** twelve selected cards now have their own portrait paintings, edge-to-edge
-artwork, fine gold frames and subtle pointer-responsive foil. Choose **Explore the 12 Full Art cards**
-on the book cover to browse the collection. The same treatment appears in play, the Deck Workshop
-and card readers. Printed rarities and gameplay are unchanged. See the
+**Printings:** a card is one set of rules and any number of printings of it — Regular, Alternate Art,
+Foil, Alternate Art Foil, Creative Foil and Full Card Art. The **Book** shows every card in every
+printing it has, and greys the ones it has not; `src/ui/versions.js` owns the list, the art lookup
+and the two-step recipe for bringing a new printing in. Printings never touch rules, rarity, cost or
+deck limits, and a card is shown in its Full Card Art where it has one and its regular printing
+otherwise — which is exactly what the table showed before printings existed.
+
+**Full Art Collection:** eighteen selected cards have their own portrait paintings, edge-to-edge
+artwork, fine gold frames and subtle pointer-responsive foil. Choose **Explore the Full Art cards**
+on a collection's cover, or filter the Book by the **Full Card Art** printing. The same treatment
+appears in play, the Deck Workshop and card readers. Printed rarities and gameplay are unchanged. See the
 [collection and validation notes](docs/FULL_ART_COLLECTION.md) and [all twelve rendered cards](docs/screenshots/full-art-collection.png).
 
 The painted storybook edition uses eight bundled atlases with 128 paintings, parchment nameplates,
@@ -286,9 +319,9 @@ burden in a keyboard- and touch-accessible reading view; Escape closes it.
 
 `src/ui/painted-art.js` selects a painted scene by explicit atlas/tile when a card names one (`art: { atlas: "boroughs" | "whiskerwood" | "neighbors" | "monuments" | "townlife" | "capital" | "nightworkers" | "nightskies", tile }`), or by species
 and theme for other cards. These are **128 atlas paintings**: related cards retain different printed names, jobs,
-stats and effects while sharing art. The twelve Full Art selections override their shared painting
+stats and effects while sharing art. The eighteen Full Art selections override their shared painting
 with an individual PNG from `assets/art/full-art/`, retaining the atlas and vector layers as fallbacks.
-All eight PNG atlases and the twelve portraits ship with the game; no image
+All the PNG atlases and the eighteen portraits ship with the game; no image
 service or external font request is needed to play. `src/ui/art.js` preserves the original per-card
 vector illustrations underneath the painted layer as a fallback for missing art or unknown species.
 `src/ui/storybook.css` owns the painted edition's presentation without changing rules or animation timing.

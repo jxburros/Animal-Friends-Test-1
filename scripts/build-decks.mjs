@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 // Build the printed starter decks from the current card set.
 //
-//   node scripts/build-decks.mjs [--check] [--only <deck-id>,<deck-id>]
+//   node scripts/build-decks.mjs [--maker] [--check] [--only <deck-id>,<deck-id>]
+//
+// `--maker` builds the Maker shelf's own decks into spec/maker_card_set.json instead. The Maker
+// cards are a whole second collection with their own species and studies, so Maker Mode needs decks
+// built out of them rather than out of the printed book.
 //
 // `--only` rebuilds just the named decks and leaves every other printed list exactly as it is, which
 // is how an expansion adds its own decks without retuning the ones already playtested.
@@ -17,7 +21,8 @@
 import fs from 'node:fs';
 import { deckProblems, deckRules, maxCopiesOf } from '../src/engine/deckbuilding.js';
 
-const setUrl = new URL('../spec/starter_card_set.json', import.meta.url);
+const MAKER = process.argv.includes('--maker');
+const setUrl = new URL(MAKER ? '../spec/maker_card_set.json' : '../spec/starter_card_set.json', import.meta.url);
 const set = JSON.parse(fs.readFileSync(setUrl, 'utf8'));
 const rules = JSON.parse(fs.readFileSync(new URL('../spec/game.json', import.meta.url), 'utf8'));
 const dr = deckRules(rules);
@@ -34,7 +39,7 @@ const ECONOMY_FLOOR = 22;
 /** Super Rare copies a printed deck may hold: a deck has a marquee card, not a marquee. */
 const TOP_RARITY_CAP = 3;
 
-const IDENTITIES = [
+const PRINTED_IDENTITIES = [
   { id: 'burrow-bloom', name: 'Burrow & Bloom', species: ['Rabbit', 'Mouse'], studies: ['Agriculture', 'Lore'],
     blurb: 'Rabbits and Mice of Agriculture and Lore: a warren that arrives in crowds and a records office that plays the Events nobody else can afford.' },
   { id: 'paws-papers', name: 'Paws & Papers', species: ['Raccoon', 'Fox'], studies: ['Commerce', 'Civics'],
@@ -53,6 +58,17 @@ const IDENTITIES = [
   { id: 'steam-starlight', name: 'Steam & Starlight', species: ['Badger', 'Owl'], studies: ['Crafts', 'Science'],
     blurb: 'Badgers and Owls of Crafts and Science: the boiler holds, the telescope is pointed the right way, and the whole works is up and running before dawn.' },
 ];
+
+// The Maker shelf's own decks. Two to begin with — the third way to play Maker Mode is to build
+// your own in the Workshop, which is why there is no attempt here to cover the whole cast.
+const MAKER_IDENTITIES = [
+  { id: 'mk-ledger-larder', name: 'Ledger & Larder', species: ['Squirrel', 'Mouse'], studies: ['Commerce', 'Food'],
+    blurb: 'Squirrels and Mice of Commerce and Food: the books balance, the counter never closes, and everything the town eats has been costed twice.' },
+  { id: 'mk-bench-bandstand', name: 'Bench & Bandstand', species: ['Badger', 'Cat'], studies: ['Crafts', 'Entertainment'],
+    blurb: 'Badgers and Cats of Crafts and Entertainment: the bench turns out the work, the hall turns out the town, and neither of them stops for weather.' },
+];
+
+const IDENTITIES = MAKER ? MAKER_IDENTITIES : PRINTED_IDENTITIES;
 
 const score = (c) => (c.power && c.power.score) || 0;
 const cards = set.cards;
@@ -233,7 +249,7 @@ if (process.argv.includes('--check')) {
     set.decks = built;
   }
   fs.writeFileSync(setUrl, `${JSON.stringify(set, null, 1)}\n`);
-  console.log(`\nWrote ${built.length} deck${built.length === 1 ? '' : 's'} to spec/starter_card_set.json.`);
+  console.log(`\nWrote ${built.length} deck${built.length === 1 ? '' : 's'} to ${MAKER ? 'spec/maker_card_set.json' : 'spec/starter_card_set.json'}.`);
 } else {
   console.error('\nNot written: some decks are illegal.');
   process.exit(1);

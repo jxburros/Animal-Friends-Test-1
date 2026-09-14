@@ -2,8 +2,8 @@
  "$comment": "Maker Cards (AF-MAKER-01). The hand-remade collection: as each character is remade its backstory and cards are added here, so the new versions can be read beside the printed ones in the Deck Workshop. This set starts empty and is NOT playable yet. The process is docs/REMAKING_A_CHARACTER.md, and the shared world it draws on is docs/TOWN_BIBLE.md. 'characters' holds one entry per remade character: name, species, studies, backstory, voice, arc, plus 'retires' (printed versions with no successor, each with a reason) and 'wantedVerbs' (effects the story wanted that the engine cannot yet do). 'cards' use exactly the schema of spec/starter_card_set.json plus one of two labels. A card that replaces a printed card carries 'remakes': the id (or list of ids) of the printed card(s) — an id and never a name, which is what survives a rename. A card that replaces nothing carries 'addition': true and an 'addedBecause' line saying why it is new: an extra rung in a character's arc, or a card of a type the printed set never had, as every Town Building is. One or the other is required, so a forgotten link cannot pass as a new card. A 'token' card is a third thing again: it declares that a kind of token exists — one per species, one per study, one for Buildings — rather than being a card anybody draws, and the 'tokens' block below says what they are for. 'rarity' and 'power' are computed by npm run stamp, never hand-written.",
  "setId": "AF-MAKER-01",
  "name": "Maker Cards",
- "playable": false,
- "note": "Work in progress: cards here cannot be put in a deck yet.",
+ "playable": true,
+ "note": "Maker Mode plays this shelf: the two decks above, a deck of your own out of the Deck Workshop, and the one Capital City below. The nine Statues are still the printed ones — the shelf has none of its own yet — and they are borrowed by id through `borrowsFromPrinted`.",
  "species": [
   "Rabbit",
   "Mouse",
@@ -26,7 +26,86 @@
   "Food",
   "Entertainment"
  ],
- "decks": [],
+ "decks": [
+  {
+   "id": "mk-ledger-larder",
+   "name": "Ledger & Larder",
+   "species": [
+    "Squirrel",
+    "Mouse"
+   ],
+   "studies": [
+    "Commerce",
+    "Food"
+   ],
+   "blurb": "Squirrels and Mice of Commerce and Food: the books balance, the counter never closes, and everything the town eats has been costed twice.",
+   "list": {
+    "mk_peanut_ledger_0": 2,
+    "mk_peanut_barista_1": 3,
+    "mk_ned_page_runner_1": 1,
+    "mk_peanut_accountant_2": 1,
+    "mk_daisy_bouquet_weaver_2": 2,
+    "mk_maribel_seed_bank_clerk_2": 2,
+    "mk_cookie_winter_stores_cook_3": 3,
+    "mk_rosabeth_apothecary_3": 2,
+    "mk_daisy_festival_florist_4": 2,
+    "mk_peanut_cafe_manager_4": 2,
+    "mk_peanut_comptroller_5": 2,
+    "mk_peanuts_standing_round": 3,
+    "mk_fresh_batch": 2,
+    "mk_ledger_day": 2,
+    "mk_rosabeth_herbalist_physician_5": 1,
+    "mk_maribel_horticulturist_4": 1,
+    "mk_bella_ecologist_5": 1,
+    "mk_bella_field_scientist_1": 1,
+    "mk_maribel_seed_vault_scientist_3": 1,
+    "mk_ned_ward_recorder_3": 1,
+    "mk_bella_forager_0": 1,
+    "mk_marmalade_harvest_head_baker_5": 1,
+    "mk_hazel_merchant_5": 1,
+    "mk_clover_market_gardener_2": 1,
+    "mk_hazel_market_committee_chair_4": 1
+   }
+  },
+  {
+   "id": "mk-bench-bandstand",
+   "name": "Bench & Bandstand",
+   "species": [
+    "Badger",
+    "Cat"
+   ],
+   "studies": [
+    "Crafts",
+    "Entertainment"
+   ],
+   "blurb": "Badgers and Cats of Crafts and Entertainment: the bench turns out the work, the hall turns out the town, and neither of them stops for weather.",
+   "list": {
+    "mk_comet_bolt_sorter_0": 2,
+    "mk_comet_rocket_mechanic_1": 3,
+    "mk_marmalade_dough_kneader_1": 1,
+    "mk_moss_toolsmith_2": 3,
+    "mk_inkwell_storyteller_2": 2,
+    "mk_morty_watermill_mechanic_3": 2,
+    "mk_moss_guild_architect_3": 2,
+    "mk_oatmeal_jazz_singer_3": 1,
+    "mk_moss_rocketwright_4": 3,
+    "mk_moss_bridgewright_5": 1,
+    "mk_morty_master_millwright_5": 2,
+    "mk_moss_rehiring_day": 1,
+    "mk_guild_night": 3,
+    "mk_comets_countdown": 3,
+    "mk_mortys_boiler_test": 3,
+    "mk_marmalade_harvest_head_baker_5": 1,
+    "mk_comet_astronaut_5": 1,
+    "mk_inkwell_keeper_of_stories_5": 1,
+    "mk_marmalade_market_baker_2": 1,
+    "mk_copper_weights_inspector_2": 1,
+    "mk_hazel_merchant_5": 1,
+    "mk_betty_powder_chemist_4": 1,
+    "mk_brooke_balloonist_4": 1
+   }
+  }
+ ],
  "characters": [
   {
    "name": "Peanut",
@@ -9123,5 +9202,67 @@
     "what": "A single surveyor's chit, larger than the rest and stamped with a roofline, lying on the corner of a plan with a tin of them behind it."
    }
   ]
- }
+ },
+ "borrowsFromPrinted": {
+  "note": "Cards the Maker set has none of yet and cannot be played without. They are read out of spec/starter_card_set.json by id and added to the Maker collection at load time; nothing is copied, so remaking one is a matter of writing the Maker card and dropping the id from here.",
+  "cards": [
+   "st_kindness",
+   "st_curiosity",
+   "st_courage",
+   "st_patience",
+   "st_generosity",
+   "st_ingenuity",
+   "st_community",
+   "st_harmony",
+   "st_joy"
+  ]
+ },
+ "marketDecks": [
+  {
+   "id": "mk-first-workings",
+   "name": "The First Workings",
+   "blurb": "The Maker shelf’s own Capital City: a hiring hall, an all-night café, a bandstand and the assessors at the door. Small, and every lot in it is somebody’s.",
+   "always": [
+    "st_kindness",
+    "st_curiosity",
+    "st_courage",
+    "st_patience",
+    "st_generosity",
+    "st_ingenuity",
+    "st_community",
+    "st_harmony",
+    "st_joy"
+   ],
+   "pool": [
+    "mk_barnaby_night_auditor_4",
+    "mk_barrow_stonecutter_5",
+    "mk_brett_counsel_5",
+    "mk_bob_gate_attendant_4",
+    "mk_dylan_river_otter_4",
+    "mk_hoot_night_porter_2",
+    "mk_kevin_hired_hand_3",
+    "mk_mittens_rooftop_cat_4",
+    "mk_bld_all_night_cafe",
+    "mk_bld_festival_green",
+    "mk_bld_hiring_hall",
+    "mk_bld_winter_stores",
+    "mk_bld_guild_hall",
+    "mk_bld_long_room",
+    "mk_mkt_community_oven",
+    "mk_mkt_bandstand",
+    "mk_mkt_emergency_reserve",
+    "mk_dx_tax_assessors",
+    "mk_dx_open_hiring",
+    "mk_mkt_community_oven",
+    "mk_mkt_bandstand",
+    "mk_mkt_emergency_reserve",
+    "mk_dx_tax_assessors",
+    "mk_dx_open_hiring",
+    "mk_bld_hiring_hall",
+    "mk_bld_winter_stores"
+   ],
+   "poolSize": 26,
+   "minDisruptions": 3
+  }
+ ]
 }

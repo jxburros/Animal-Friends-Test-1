@@ -1386,10 +1386,10 @@ function fallbackScene(def) {
   return fallbackEvent();
 }
 
-export function cardArtSVG(def) {
+export function cardArtSVG(def, versionKey) {
   if (!def) return fallbackEvent();
   const fn = def.id && CARD_SCENES[def.id];
-  return paintedArtSVG(def, fn ? fn() : fallbackScene(def));
+  return paintedArtSVG(def, fn ? fn() : fallbackScene(def), versionKey);
 }
 
 /* ---------- card back ---------- */

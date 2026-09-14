@@ -3,6 +3,7 @@
 // name its painting with `art: { atlas: <bundled atlas name>, tile: 0..15 }`;
 // otherwise the original species/theme selection applies. Only bundled atlases resolve.
 import { fullArtFor } from './full-art.js';
+import { resolveVersionKey, version as versionOf, versionArtUrl } from './versions.js';
 
 export const PAINTED_ATLAS_URL = new URL('../../assets/art/boroughs-atlas.png', import.meta.url).href;
 export const WHISKERWOOD_ATLAS_URL = new URL('../../assets/art/whiskerwood-atlas.png', import.meta.url).href;
@@ -211,13 +212,21 @@ export function paintedTile(def) {
   return null;
 }
 
-export function paintedArtSVG(def, fallback) {
+/**
+ * The art for one printing of a card. `versionKey` names the printing (see ./versions.js); left out,
+ * it is the one the card is ordinarily shown in — its Full Card Art if it has one, its atlas tile
+ * otherwise, which is exactly what the table showed before printings existed.
+ *
+ * A printing with a painting of its own is drawn over the ordinary art rather than instead of it, so
+ * a failed image request falls back through the atlas tile to the vector scene underneath.
+ */
+export function paintedArtSVG(def, fallback, versionKey) {
   const standard = atlasArtSVG(def, fallback);
-  const fullArt = fullArtFor(def);
-  if (fullArt) {
-    return `<svg class="painted-art full-art-painting" viewBox="0 0 100 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><svg width="100" height="160">${standard}</svg><image href="${fullArt.url}" width="100" height="160" preserveAspectRatio="xMidYMid slice"/></svg>`;
-  }
-  return standard;
+  const key = resolveVersionKey(def, versionKey);
+  const url = versionArtUrl(def, key);
+  if (!url) return standard;
+  const shape = versionOf(key).shape === 'full' ? { w: 100, h: 160, cls: ' full-art-painting' } : { w: 100, h: 100, cls: ' alt-art-painting' };
+  return `<svg class="painted-art${shape.cls}" viewBox="0 0 ${shape.w} ${shape.h}" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><svg width="${shape.w}" height="${shape.h}">${standard}</svg><image href="${url}" width="${shape.w}" height="${shape.h}" preserveAspectRatio="xMidYMid slice"/></svg>`;
 }
 
 function atlasArtSVG(def, fallback) {
