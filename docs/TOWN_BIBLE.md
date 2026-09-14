@@ -209,6 +209,41 @@ add to the list.
   Kevin is the standing example: eleven jobs by nineteen, worth two of anybody for a fortnight, gone
   by the end of the month, and every one of those eleven would have him back. The borough hires him
   knowing all of it. [Kevin]
+- **The borough's hedges are laid, not planted, and Peter lays them.** He cuts the stems most of the
+  way through, bends them over living and pegs them down, and it is fifteen years before anybody
+  knows whether he did it properly. It is the other half of why a hedgerow here is hard to take down:
+  Maribel files the objection, Peter grew the wall. [Peter, Maribel]
+- **Osh's sharpening round takes eleven days** and has gone in the same order since he was a kitten.
+  Morty's mill kitchen and Marmalade's bakery are both on day four. Every edge in the borough is on
+  that round, including one ceremonial sword that has never cut anything. [Osh, Morty, Marmalade]
+- **The borough's roads are Adam's** — the ferry steps lane, the long pull to the county gate, the
+  square after festival week. The pull to the gate is a quarter-hour shorter than the road it
+  replaced, which was his idea, and the spring the bridge went he kept the carts moving the long way
+  round. [Adam]
+- **Open mic nights have a booker, and it is Cassadee.** She decides which room will have them, sets
+  it, runs the list and puts the chairs away at midnight, and has never performed anything. Oatmeal's
+  band is on her list more often than anybody's. [Cassadee, Oatmeal]
+- **Paper comes out of the Salvage Yard before the weather gets at it**, because Annabelle pulls it:
+  ward minutes, split almanacs, and a year of Grain Exchange returns that exist nowhere else because
+  the Exchange threw its own copy out. She keeps what has words on it; Beck gets first read of
+  anything with a story in it, by an arrangement neither of them has ever said out loud. [Annabelle,
+  Beck]
+- **The Grain Exchange's weighbridge is Liz's.** Every loaded cart in or out of the borough crosses
+  her plate and is paid on what she writes; Copper's office certifies the bridge each spring and has
+  never had to adjust it. It is the weighing job Finn had and lost, which the borough mentions to
+  neither of them. [Liz, Copper, Finn]
+- **There is a cart at the ferry steps that keeps the river's hours** and not the town's: Taco's,
+  shut at noon and open at four in the morning, and never twice in the same place. Any lighterman
+  coming off a night run has eaten there. [Taco, Brooke]
+- **The Winter Stores are baked for.** Cookie works the late heat of the Community Oven after the
+  bread is out, and everything off her board — hard biscuit, rusk, seed cake — is made to be opened in
+  a different season from the one it was made in. [Cookie]
+- **The Observatory's lenses are Sota's work.** Every small instrument came off their bench and the
+  two big ones have been re-seated twice, months a blank, the last of it by hand. Sota has no
+  interest whatever in what the instruments are pointed at. [Sota]
+- **The Lending Library has a late desk**, kept by Andrew after the children's corner has emptied and
+  the evening readers have gone. What cannot be lent out he copies by hand a page or two a night, so
+  there is a second one; the Library has twice filed his copy as the original. [Andrew, Inkwell]
 
 ## Relationships
 
@@ -265,10 +300,24 @@ Characters the maker added to the shelf who replace no printed card. They carry 
 | Name | Where they came from | Added |
 | --- | --- | --- |
 | Bob | Bristle's printed Gate Hedgehog became two animals: Biff took the beat and the remake, Bob kept the gate. | 2026-09-13 |
+| Peter | A hedgelayer the maker added: no printed Peter, and no version of him carries an effect. | 2026-09-14 |
+| Osh | A travelling sharpener the maker added: no printed Osh, and no version of him carries an effect. | 2026-09-14 |
+| Adam | The borough's road mender, added by the maker: no printed Adam, and no version of him carries an effect. | 2026-09-14 |
+| Cassadee | The animal who books the open mic, added by the maker: no printed Cassadee, and no version of her carries an effect. | 2026-09-14 |
+| Annabelle | The Salvage Yard's paper archivist, added by the maker: no printed Annabelle, and no version of her carries an effect. | 2026-09-14 |
+| Liz | The Grain Exchange's weighbridge keeper, added by the maker: no printed Liz, and no version of her carries an effect. | 2026-09-14 |
+| Taco | The cart cook at the ferry steps, added by the maker: no printed Taco, and no version of him carries an effect. | 2026-09-14 |
+| Cookie | The Winter Stores' baker, added by the maker: no printed Cookie, and no version of her carries an effect. | 2026-09-14 |
+| Sota | The Observatory's lens grinder, added by the maker: no printed Sota, and no version of them carries an effect. | 2026-09-14 |
+| Andrew | The Lending Library's late desk, added by the maker: no printed Andrew, and no version of him carries an effect. | 2026-09-14 |
 
 Cards may be additions too — an extra rung in a remade character's arc, or a card of a type the
 printed set never had. All seven **Town Buildings** are the second kind: the type did not exist when
-the collection was printed, so there is nothing for them to remake.
+the collection was printed, so there is nothing for them to remake. Sixteen cards are the first kind,
+added to characters already on the shelf: ten that do nothing but upgrade and work a shift (Biff,
+Comet, Brooke, Moss, Maribel, Daniel, Copper, Lynnette, Rosabeth and Morty), and six whose ability
+names a species or a study the character's own backstory already named (Clover, Bella, Ned, Beck,
+Marmalade and Hazel).
 
 ---
 
