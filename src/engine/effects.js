@@ -1,9 +1,10 @@
 // Effect interpreter, hooks, and shared mutations (draw, discard, unemploy, shifts, market gains).
-import { shuffle } from './rng.js';
+import { shuffle, rand } from './rng.js';
 import {
   cardDef, topCard, log, nextUid, opponentOf, entryOrientation, rankOf, abilitySources, hasPassive,
   hasMod, consumeMod, isUpright, speciesInTown, refillCity, UPRIGHT, BUSY, findStack, hasTownRoom,
   hasBuildingRoom, canDemolishFor, buildingsBuilt, tokenKey, tokenCount, addTokens, spendTokens,
+  passiveTotal, pairBonusFor,
 } from './state.js';
 
 // ---------- agent I/O ----------
@@ -144,7 +145,7 @@ export async function discard(state, pi, n, { byOpponent = false } = {}) {
 
 export function makeStack(state, pi, cardInst, orientation) {
   const p = state.players[pi];
-  const s = { uid: nextUid(state), cards: [cardInst], orientation, shift: null, enteredTurn: state.turnNumber, hasBeenUpright: orientation === UPRIGHT, readyNextTurn: false, lockedBid: null, stored: 0, protectedUntil: 0, selfReadyUsed: false, shiftsWorked: 0 };
+  const s = { uid: nextUid(state), cards: [cardInst], orientation, shift: null, enteredTurn: state.turnNumber, hasBeenUpright: orientation === UPRIGHT, readyNextTurn: false, lockedBid: null, stored: 0, protectedUntil: 0, selfReadyUsed: false, shiftsWorked: 0, pairedWith: null, pairBonus: 0 };
   p.town.push(s);
   return s;
 }
@@ -155,6 +156,12 @@ export async function completeShift(state, pi, stack) {
   let out = stack.shift.output;
   const bonus = consumeMod(p, 'shiftBonus');
   out += bonus;
+  // Two standing rates on top of the one-shot mod. `townShiftBonus` is the actuary's: the figures
+  // are simply better now, so every shift this town finishes pays more for as long as he is here.
+  // The pair bonus is the florist's: it pays only the two animals who were put together.
+  const standing = passiveTotal(state, pi, 'townShiftBonus');
+  const paired = pairBonusFor(state, pi, stack);
+  out += standing + paired;
   stack.shift = null;
   // A burnt-out animal's next shift pays less than this one did (`shift.decay`), so the count of
   // shifts finished is kept on the stack rather than recomputed from anything.
@@ -162,7 +169,8 @@ export async function completeShift(state, pi, stack) {
   p.stats.shiftsCompleted++;
   p.turn.shiftsCompleted++;
   log(state, pi, `${def.name}, ${def.title} finishes the shift.`, { kind: 'shiftDone', player: pi, uid: stack.uid, output: out });
-  gainSupply(state, pi, out, `${def.name}'s shift${bonus ? `, +${bonus} bonus` : ''}`);
+  const extra = bonus + standing + paired;
+  gainSupply(state, pi, out, `${def.name}'s shift${extra ? `, +${extra} bonus` : ''}`);
   await fireHook(state, 'onShiftCompleted', { player: pi, stackUid: stack.uid });
 }
 
@@ -170,6 +178,7 @@ export async function readyStack(state, pi, stack, why = '') {
   if (stack.lockedBid) return; // pledged to an open auction; nothing frees it but the auction ending
   if (stack.shift && state.rules.shifts.readyEffectCompletesShift) await completeShift(state, pi, stack);
   stack.shift = null;
+  if (stack.orientation !== UPRIGHT) state.players[pi].turn.readied++;
   stack.orientation = UPRIGHT;
   stack.hasBeenUpright = true;
   stack.readyNextTurn = false;
@@ -585,7 +594,14 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       // shelf spends them yet; the verb is here so the first one that does needs no engine work.
       const key = tokenKey(eff);
       if (!key) return;
-      const n = eff.count === undefined ? 1 : eff.count;
+      // `per` is the ferryman's count: a chit for every animal who actually crossed, rather than a
+      // flat handful whether the boat was full or empty. `charactersReadied` counts the Characters
+      // who have stood up in this town this turn; `uprightCharacters` counts who is standing now.
+      const per = eff.per === 'charactersReadied' ? p.turn.readied
+        : eff.per === 'uprightCharacters' ? p.town.filter((st) => st.orientation === UPRIGHT).length
+          : null;
+      const n = per !== null ? per * (eff.count === undefined ? 1 : eff.count)
+        : (eff.count === undefined ? 1 : eff.count);
       if (n <= 0) return;
       const now = addTokens(p, key, n, state.rules.tokens?.cap ?? null);
       log(state, pi, `${p.name} takes ${n} ${tokenLabel(state, key)} token${n === 1 ? '' : 's'} (now ${now}).`, { kind: 'token', player: pi, token: key, delta: n, total: now });
@@ -889,6 +905,112 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       }
       const what = picked.length ? ` and ${toDump ? `sends ${picked.length} to the Town Dump` : `puts ${picked.length} on the bottom`}` : '';
       log(state, pi, `${p.name} looks at the top ${n} card${n === 1 ? '' : 's'} of the deck${what}.`, { kind: 'peekDeck', player: pi, count: n, bottomed: toDump ? 0 : picked.length, dumped: toDump ? picked.length : 0 });
+      return;
+    }
+    case 'coinFlip': {
+      // Chance the borough can actually call: the ha'penny goes up, and one of two things happens.
+      // It reads the same seeded rng every shuffle uses, so a game is still replayable from its seed
+      // and a test can still say what the coin did. Either side may be left off — a flip with only
+      // `heads` is a card that does something half the time and nothing the other half, which is a
+      // real card and not a broken one.
+      const heads = rand(state) < 0.5;
+      log(state, pi, `${p.name} tosses a coin: ${heads ? 'heads' : 'tails'}.`, { kind: 'coinFlip', player: pi, heads, cardId: ctx.sourceCardId || null });
+      const branch = heads ? eff.heads : eff.tails;
+      if (branch) await runEffect(state, pi, branch, ctx);
+      return;
+    }
+    case 'giveToUnemployed': {
+      // The baker's verb, and pointedly not a rehire: nobody is paid and nobody is hired back onto
+      // terms. An animal with nothing is fed, and turns up — Busy, because being fed is not the same
+      // as being ready. No Supply changes hands, so a rehire discount neither helps nor applies.
+      const f = eff.filter || {};
+      const opts = p.unemployment.filter((c) => {
+        const d = cardDef(state, c.cardId);
+        if (f.maxCost !== undefined && d.cost > f.maxCost) return false;
+        if (f.cost !== undefined && d.cost !== f.cost) return false;
+        if (f.study && d.study !== f.study) return false;
+        if (f.species && d.species !== f.species) return false;
+        return true;
+      });
+      if (!opts.length || !hasTownRoom(state, pi)) return;
+      const chosen = await ask(state, pi, { kind: 'pick', reason: 'giveToUnemployed', from: 'unemployment', options: opts.map((c) => inst(state, c)), min: eff.optional ? 0 : 1, max: 1 });
+      for (const uid of chosen) {
+        const at = p.unemployment.findIndex((x) => x.uid === uid);
+        if (at < 0) continue;
+        const c = p.unemployment.splice(at, 1)[0];
+        const d = cardDef(state, c.cardId);
+        const st = makeStack(state, pi, c, BUSY);
+        log(state, pi, `${d.name}, ${d.title} is fed and comes back to work in ${p.name}'s town (Busy).`, { kind: 'rehire', player: pi, uid: st.uid, cardUid: c.uid, cardId: c.cardId, cost: 0, fed: true });
+      }
+      return;
+    }
+    case 'pairCharacters': {
+      // Two animals who are worth more to each other. The source Character is one half of it and
+      // picks the other; an Event, which has no stack of its own, puts two of the town together.
+      // The bond is held on both stacks and read back through the partner, so it lapses the moment
+      // either of them stops standing in this town — which is what a pairing is.
+      const bonus = eff.bonus === undefined ? 1 : eff.bonus;
+      const self = ctx.sourceStackUid ? findStack(state, pi, ctx.sourceStackUid) : null;
+      const eligible = (st) => st !== self && !st.pairedWith && matchesFilter(state, st, eff.filter);
+      const opts = p.town.filter(eligible);
+      if (!opts.length) return;
+      let a = self;
+      let b = null;
+      if (a && a.pairedWith) return; // already somebody's, and a pairing is not swapped about
+      if (!a) {
+        if (opts.length < 2) return;
+        const first = await ask(state, pi, { kind: 'pick', reason: 'pair', from: 'town', options: opts.map((st) => stackOpt(state, st)), min: 1, max: 1 });
+        a = findStack(state, pi, first[0]);
+        if (!a) return;
+      }
+      const rest = p.town.filter((st) => st !== a && eligible(st));
+      if (!rest.length) return;
+      const second = await ask(state, pi, { kind: 'pick', reason: 'pair', from: 'town', options: rest.map((st) => stackOpt(state, st)), min: 1, max: 1 });
+      b = findStack(state, pi, second[0]);
+      if (!b || b === a) return;
+      a.pairedWith = b.uid;
+      b.pairedWith = a.uid;
+      a.pairBonus = bonus;
+      b.pairBonus = bonus;
+      log(state, pi, `${topCard(state, a).name} and ${topCard(state, b).name} work together: each of their shifts pays ${bonus} more.`, { kind: 'pair', player: pi, uids: [a.uid, b.uid], bonus });
+      return;
+    }
+    case 'swapBuilding': {
+      // The yard's trade: the old mangle out, the mended one in. One of this town's Buildings comes
+      // down — a bought one to the City Dump, a built one home to its own Town Dump — and a Building
+      // somebody else threw away goes up in the place it left. Nothing happens unless both halves
+      // can: a town with nothing up has nothing to trade, and an empty Dump has nothing to trade for.
+      if (!(p.buildings || []).length) return;
+      const spares = state.market.cityDump.filter((id) => cardDef(state, id).type === 'building');
+      if (!spares.length) return;
+      if (eff.optional) {
+        const go = await ask(state, pi, { kind: 'confirm', reason: 'swapBuilding', default: true });
+        if (!go) return;
+      }
+      const chosen = await ask(state, pi, {
+        kind: 'pick', reason: 'takeFromCityDump', from: 'cityDump',
+        options: spares.map((id, i) => ({ uid: i, cardId: id, name: cardDef(state, id).name })), min: 1, max: 1,
+      });
+      const cardId = spares[Math.max(0, Math.min(spares.length - 1, chosen[0] ?? 0))];
+      if (!await demolishOne(state, pi, { reason: 'swapBuilding' })) return;
+      state.market.cityDump.splice(state.market.cityDump.indexOf(cardId), 1);
+      log(state, pi, `${p.name} puts ${cardDef(state, cardId).name} up in its place.`, { kind: 'scavenge', player: pi, cardId });
+      await addBuilding(state, pi, cardId, { source: 'market' });
+      return;
+    }
+    case 'eventFromOpponentDump': {
+      // The one pair of hands that crosses the alley. Events go to their own town's Dump and stay
+      // there; a Raccoon at the gate at dusk is how one comes back out of somebody else's.
+      const opts = o.dump.filter((c) => cardDef(state, c.cardId).type === 'event');
+      if (!opts.length) return;
+      const chosen = await ask(state, pi, { kind: 'pick', reason: 'eventFromOpponentDump', from: 'opponentDump', options: opts.map((c) => inst(state, c)), min: eff.optional ? 0 : 1, max: 1 });
+      for (const uid of chosen) {
+        const at = o.dump.findIndex((x) => x.uid === uid);
+        if (at < 0) continue;
+        const c = o.dump.splice(at, 1)[0];
+        p.hand.push(c);
+        log(state, pi, `${p.name} takes ${cardDef(state, c.cardId).name} out of ${o.name}'s Town Dump.`, { kind: 'dumpToHand', player: pi, uid: c.uid, cardId: c.cardId, fromOpponent: true });
+      }
       return;
     }
     case 'selfReady': {

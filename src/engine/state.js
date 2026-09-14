@@ -156,7 +156,10 @@ function makePlayer(state, index, name, deckRef) {
 }
 
 export function freshTurnCounters() {
-  return { eventsPlayed: 0, announcements: 0, bids: 0, recruits: 0, shiftsCompleted: 0, buildingsRaised: 0, usedOnce: [], ingenuityUsed: false };
+  // `readied` is the ferryman's counter: how many Characters have stood up in this town this turn,
+  // in the Ready phase or by any effect that put one back on its feet. A card that pays per animal
+  // moved reads it at the end of the turn, when the count is what actually happened.
+  return { eventsPlayed: 0, announcements: 0, bids: 0, recruits: 0, shiftsCompleted: 0, buildingsRaised: 0, readied: 0, usedOnce: [], ingenuityUsed: false };
 }
 
 /**
@@ -554,6 +557,35 @@ export function cityRule(state, key) {
     }
   }
   return total;
+}
+
+/**
+ * The total value of a standing rule this Mayor's cards carry. `hasPassive` answers whether a rule
+ * is in force; this answers by how much, which is what a passive with a printed `value` needs — the
+ * actuary's standing rate is +1 on every shift, and two actuaries are +2.
+ */
+export function passiveTotal(state, pi, key) {
+  let total = 0;
+  for (const src of abilitySources(state, pi)) {
+    const ab = src.ability;
+    if (ab.trigger !== 'passive' || ab.key !== key) continue;
+    if (ab.requiresUpright && src.kind === 'character' && !isUpright(src.stack)) continue;
+    total += typeof ab.value === 'number' ? ab.value : 1;
+  }
+  return total;
+}
+
+/**
+ * What a partnership is worth to this Character's shift. Two animals paired by `pairCharacters` are
+ * worth more to each other for as long as both are standing in the same town: the moment one of them
+ * leaves — unemployed, upgraded away, sent home — the other's bonus lapses on its own, because it is
+ * read from the partner rather than stored as a promise.
+ */
+export function pairBonusFor(state, pi, stack) {
+  if (!stack || !stack.pairedWith) return 0;
+  const partner = findStack(state, pi, stack.pairedWith);
+  if (!partner || partner.pairedWith !== stack.uid) return 0;
+  return stack.pairBonus || 0;
 }
 
 export function hasPassive(state, pi, key) {

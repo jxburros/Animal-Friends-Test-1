@@ -1395,18 +1395,56 @@ export function cardArtSVG(def, versionKey) {
 /* ---------- card back ---------- */
 
 export function cardBackSVG() {
-  let s = `<rect x="0" y="0" width="100" height="140" fill="${CREAM}"/>`;
-  s += `<rect x="4" y="4" width="92" height="132" rx="6" fill="none" stroke="${GOLD}" stroke-width="2.6"/>`;
-  s += `<rect x="9" y="9" width="82" height="122" rx="4" fill="none" stroke="${INK}" stroke-width="1.3"/>`;
-  const corner = (x, y, rot) => `<g transform="translate(${x} ${y}) rotate(${rot})"><path d="M0 0 Q10 0 10 10 Q10 2 2 2 Q2 10 0 10 Q0 2 0 0 Z" fill="${GOLD}"/><circle cx="3" cy="3" r="1.6" fill="${PLUM}"/></g>`;
-  s += corner(9, 9, 0) + corner(91, 9, 90) + corner(91, 131, 180) + corner(9, 131, 270);
-  s += `<circle cx="50" cy="70" r="30" fill="${PLUM}" opacity="0.12"/>`;
-  for (let i = 0; i < 10; i++) {
-    const a = i * 36;
-    s += `<g transform="translate(50 70) rotate(${a})"><path d="M0 -24 Q5 -30 0 -36 Q-5 -30 0 -24 Z" fill="#7fae6b" opacity="0.9"/></g>`;
+  // The borough's own back: a dark green field inside a gold rule, a paw struck on a gold medal, and
+  // a ring of leaves and berries around it. Vector rather than a bitmap, because a back is drawn at
+  // every size the game uses — a 22px pile chip and a full-size card in the Book — and hairlines and
+  // leaf edges have to survive both.
+  const BACK_GREEN = '#154524';
+  const BACK_GOLD = '#efd27c';
+  const leaf = (x, y, rot, len = 6, wide = 2.6) => `<path d="M0 0 Q${wide} ${-len * 0.45} 0 ${-len} Q${-wide} ${-len * 0.45} 0 0 Z" fill="${BACK_GOLD}" transform="translate(${x} ${y}) rotate(${rot})"/>`;
+  const berry = (x, y, r = 1.15) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${BACK_GOLD}"/>`;
+  // A sprig of three leaves on a stem: the corner ornament, and the fleuron at the top and foot of
+  // the wreath, which are the same shape at different sizes.
+  const sprig = (x, y, rot, s = 1) => `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${s})">`
+    + `<path d="M0 0 V-5" stroke="${BACK_GOLD}" stroke-width="0.7" fill="none"/>`
+    + leaf(0, -5, 0, 6, 2.2) + leaf(0, -3.4, -52, 5.6, 2.2) + leaf(0, -3.4, 52, 5.6, 2.2)
+    + '</g>';
+  const corner = (x, y, rot) => `<g transform="translate(${x} ${y}) rotate(${rot})">`
+    + `<path d="M0 13 Q0 0 13 0" fill="none" stroke="${BACK_GOLD}" stroke-width="0.9"/>`
+    + leaf(3.4, 9.2, 200, 7, 2.4) + leaf(6.6, 6.6, 225, 7.6, 2.6) + leaf(9.2, 3.4, 250, 7, 2.4)
+    + '</g>';
+
+  let s = `<rect x="0" y="0" width="100" height="140" rx="9" fill="${BACK_GREEN}"/>`;
+  s += `<rect x="2.6" y="2.6" width="94.8" height="134.8" rx="7.4" fill="none" stroke="${BACK_GOLD}" stroke-width="2.2"/>`;
+  s += `<rect x="6.6" y="6.6" width="86.8" height="126.8" rx="5.4" fill="none" stroke="${BACK_GOLD}" stroke-width="0.7"/>`;
+  s += corner(6.6, 6.6, 0) + corner(93.4, 6.6, 90) + corner(93.4, 133.4, 180) + corner(6.6, 133.4, 270);
+
+  // The wreath: one thin vine, leaves laid along it in pairs, berries where the leaves meet, and a
+  // three-leaf fleuron closing it at the top and at the foot.
+  const cx = 50;
+  const cy = 70;
+  const R = 34;
+  s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="${BACK_GOLD}" stroke-width="0.8"/>`;
+  for (let i = 0; i < 12; i++) {
+    const a = -75 + i * 30;
+    if (a % 180 === 90 || a % 180 === -90) continue; // the fleurons stand where the vine is left clear
+    const rad = (a * Math.PI) / 180;
+    const lx = cx + R * Math.cos(rad);
+    const ly = cy + R * Math.sin(rad);
+    s += leaf(lx, ly, a + 90 + 34, 8.5, 3);
+    s += leaf(lx, ly, a + 90 - 34, 8.5, 3);
+    if (i % 2 === 0) {
+      const b = ((a + 15) * Math.PI) / 180;
+      s += berry(cx + (R + 1.6) * Math.cos(b), cy + (R + 1.6) * Math.sin(b));
+      s += berry(cx + (R - 1.8) * Math.cos(b), cy + (R - 1.8) * Math.sin(b), 0.95);
+    }
   }
-  s += pawPrint(50, 70, 1.4, INK);
-  s += `<rect x="14" y="14" width="72" height="112" rx="2" fill="none" stroke="${GOLD}" stroke-width="0.8" opacity="0.6"/>`;
+  s += sprig(cx, cy - R - 1, 0, 1.25) + sprig(cx, cy + R + 1, 180, 1.25);
+
+  // The medal: a gold disc with a hairline of the field ruled just inside it, and the paw struck on.
+  s += `<circle cx="${cx}" cy="${cy}" r="25" fill="${BACK_GOLD}"/>`;
+  s += `<circle cx="${cx}" cy="${cy}" r="21.6" fill="none" stroke="${BACK_GREEN}" stroke-width="0.9"/>`;
+  s += pawPrint(cx, cy + 1.5, 1.32, BACK_GREEN);
   return `<svg viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
 }
 

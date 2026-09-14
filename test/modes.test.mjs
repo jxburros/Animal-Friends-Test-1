@@ -35,11 +35,15 @@ test('Classic holds no maker card, and the Maker collection no printed card it d
     assert.ok(borrowed.has(card.id), `${card.id} is in the Maker collection but not borrowed on purpose`);
     assert.equal(card.borrowed, true, `${card.id} must be marked as borrowed`);
   }
-  // Everything borrowed is a Statue, and every Statue the rules ask for is there: the Maker shelf
-  // has none of its own yet, and a game with no Statues cannot be won.
+  // The shelf borrows nothing now: its nine Statues are its own, which is what finished it. A game
+  // with no Statues cannot be won, so the count is still checked — against the Maker cards this time.
+  assert.deepEqual(borrowedIds(MAKER), [], 'the Maker shelf stands on its own cards');
   const statues = maker.cards.filter((c) => c.type === 'statue');
   assert.equal(statues.length, RULES.victory.statueTotal);
-  for (const c of statues) assert.equal(c.borrowed, true);
+  for (const c of statues) {
+    assert.ok(makerIds.has(c.id), `${c.id} is a Statue the Maker shelf does not own`);
+    assert.ok(!c.borrowed, `${c.id} is still marked borrowed`);
+  }
 });
 
 test('every Maker deck is legal, and built out of maker cards alone', () => {

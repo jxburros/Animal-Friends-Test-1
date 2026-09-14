@@ -64,8 +64,10 @@ Invalid answers are replaced by a safe default, so agents never crash the engine
 `topdeck` (asked of the *opponent*), `unemployOpponent`, `raiseBidTarget`, `demolish` (which Building to knock
 down), `storeSupply`, `takeFromCityDump`, `protect`, `moveShiftFrom`, `moveShiftTo`, `advance` (an Owl's
 wake-up call: which Character turns one step toward upright), `scry` (`from: 'deck'`; which of the top
-cards go to the bottom — `min` is 0, so an empty answer keeps them all).
-`confirm` reasons: `raiseBid`, and `mulligan` (answered `true` to throw the opening hand back; the request
+cards go to the bottom — `min` is 0, so an empty answer keeps them all),
+`giveToUnemployed` (which animal out of work is fed back into the town), `pair` (asked once or twice:
+which two animals are put together), `eventFromOpponentDump` (`from: 'opponentDump'`).
+`confirm` reasons: `raiseBid`, `swapBuilding`, and `mulligan` (answered `true` to throw the opening hand back; the request
 carries `hand`).
 
 `await mulliganPhase(state)` runs the free single mulligan before the first turn. `playGame` calls it; a
@@ -173,6 +175,8 @@ Log entries may carry an optional `fx` object describing what happened, for anim
 | `dumpToHand` | player, uid, cardId |
 | `dumpToDeck` | player, uid, cardId |
 | `peekDeck` | player, count |
+| `coinFlip` | player, heads, cardId |
+| `pair` | player, uids, bonus |
 | `peekMarket` | player, cardIds |
 | `unemploy` | player, stackUid, uid, cardId, knockedDown? |
 | `shield` | player, amount?, uid? |
@@ -197,10 +201,11 @@ Mod keys (player.mods): `recruitDiscount`, `rehireDiscount`, `eventCharReduction
 `cancelNextChallenge`, `shiftBonus`, `extraAdvance`, `unemploymentShield`, `lossShield`, `challengeDiscount`,
 `skipNextAdvance`.
 Passive keys: `winTiesAsChallenger`, `blockOpponentBidRaise`, `firstAnnounceMinBidMinus1`, `masterDelayMinus1`,
-`eventCharReductionPerTurn`, `firstBidPlus1`, and the Statue burdens `opponentRehireDiscount`,
+`eventCharReductionPerTurn`, `firstBidPlus1`, `townShiftBonus` (carries a `value`), and the Statue burdens `opponentRehireDiscount`,
 `opponentFirstBidPlus1`, `apprenticeEntersBusy`, `eventCostPlus1`, `resourceSupplyMinus1`, `losingBidsPayFull`.
 
-Opponent-facing ops: `unemployOpponentCharacter`, `opponentTopdeckFromHand`, `makeBusy`, `peekOpponentHand`.
+Opponent-facing ops: `unemployOpponentCharacter`, `opponentTopdeckFromHand`, `makeBusy`, `peekOpponentHand`,
+`eventFromOpponentDump`.
 
 Token ops: `gainToken`, `spendToken` (see **Tokens** below).
 
@@ -255,6 +260,39 @@ printed set uses any of them, so every printed rating is unchanged.
   upgrades a Character the town already has. Whether a recruit is an upgrade is not a property of the
   card, so `recruitCost` passes it to `getModFor`/`consumeModFor` as context and `modFilterMatches`
   reads it there.
+
+## Card data: the third round of wishes (v0.8.0)
+
+The `wantedVerbs` the second round left unbuilt. Same rule again: nothing in the printed set uses any
+of them, so every printed rating is unchanged.
+
+- **`coinFlip`** — `{ do: "coinFlip", heads: eff, tails: eff }`. The borough's method for a call that
+  will not come down on its own. It draws on the same seeded rng every shuffle uses, so a game is
+  still replayable from its seed, and the toss is in the log (`fx.kind === 'coinFlip'`) rather than
+  hidden inside the effect. Either branch may be left off: a flip with only `heads` is a card that
+  does something half the time, which `power.js` rates at exactly half.
+- **`giveToUnemployed`** — the baker's verb, and pointedly not a rehire. An animal in your own
+  Unemployment is fed and turns back up **Busy**, and no Supply changes hands, so a rehire discount
+  neither helps nor applies. Takes `filter` (`maxCost`, `cost`, `study`, `species`) and `optional`.
+- **`pairCharacters`** — two animals worth more to each other. The source Character is one half and
+  picks the other (an Event, having no stack, puts two of the town together); while both keep
+  standing in the same town, each of their shifts pays `bonus` more. The bond is held on both stacks
+  (`stack.pairedWith`, `stack.pairBonus`) and read back through the partner, so it lapses on its own
+  the moment one of them is unemployed, upgraded away or sent home.
+- **`townShiftBonus`** — a passive with a `value`: every shift this town finishes pays that much more
+  while the rule is in force. `passiveTotal(state, pi, key)` in `state.js` is the general form of
+  `hasPassive` for a passive that carries a quantity, and `completeShift` adds it alongside the
+  one-shot `shiftBonus` mod and the pair bonus.
+- **`swapBuilding`** — the yard's trade. One of this town's Buildings comes down (a bought one to the
+  City Dump, a built one home to its own Town Dump) and a Building somebody else threw away goes up
+  in the place it left. Nothing happens unless both halves can: a town with nothing up has nothing to
+  trade, and a City Dump with no Building in it has nothing to trade for.
+- **`eventFromOpponentDump`** — the one pair of hands that crosses the alley. Events go to their own
+  town's Dump and stay there; this takes one out of the *rival's* and into your hand.
+- **`gainToken: { per }`** — a chit per passenger rather than a flat handful. `per:
+  "charactersReadied"` counts the Characters who have stood up in this town this turn (`p.turn.readied`,
+  bumped by the Ready phase and by any effect that readies one); `per: "uprightCharacters"` counts who
+  is standing right now. `count` multiplies it.
 
 ## Tokens (v0.7.2)
 

@@ -137,6 +137,10 @@ const PASSIVE_VALUE = {
   winTiesAsChallenger: 1.8,
   masterDelayMinus1: 2.4,
   eventCharReductionPerTurn: 2.2,
+  // The actuary's standing rate: +1 Supply on every shift this town finishes, for as long as he is
+  // standing. A town finishes something like two shifts a turn, so it is worth rather more per point
+  // than a one-shot shiftBonus mod — and it is priced per point, because the passive carries a value.
+  townShiftBonus: 2.8,
   // Statue burdens: always a cost to their controller, so they are subtracted, not added.
   opponentRehireDiscount: 1.2,
   opponentFirstBidPlus1: 1.4,
@@ -267,7 +271,9 @@ export function effectPower(eff) {
       return 1.2;
     case 'gainToken':
       // A token is stored potential: worth less than the Supply it will one day buy, because
-      // something else has to come along and spend it.
+      // something else has to come along and spend it. `per` pays by the animal — a busy town ferries
+      // about two and a half a turn, which is what a card that counts passengers is really printing.
+      if (eff.per) return 0.6 * n(eff.count) * 2.5;
       return 0.6 * n(eff.count);
     case 'spendToken':
       // The token is the price; what it buys is the rider, and only when the price can be paid.
@@ -307,6 +313,28 @@ export function effectPower(eff) {
       // Sending them to the Town Dump is worth more than bottoming them — the card is gone until the
       // Dump is shuffled back in, rather than merely postponed.
       return 0.45 * n(eff.count) * (eff.to === 'dump' ? 1.35 : 1);
+    case 'coinFlip':
+      // Half of each side. A flip with one branch printed is a card that does something half the
+      // time, which is exactly half a card — and that is the whole appeal of tossing for it.
+      return 0.5 * effectPower(eff.heads) + 0.5 * effectPower(eff.tails);
+    case 'giveToUnemployed':
+      // A body back out of Unemployment for nothing at all — but Busy, so it is a turn behind a
+      // rehire, and worth nothing at all while nobody is out of work.
+      return AVAILABLE.unemployment * (BODY + 2.0) * (eff.filter ? 0.85 : 1);
+    case 'pairCharacters': {
+      // Two animals worth more to each other for the rest of the game — as long as both keep
+      // standing, which is the risk in it. Rated as the bonus on the shifts the pair actually work.
+      const bonus = typeof eff.bonus === 'number' ? eff.bonus : 1;
+      return 2.4 * bonus;
+    }
+    case 'swapBuilding':
+      // The better Building for the worse one, and the town keeps its place either way: worth the
+      // difference between what is standing and what was thrown away, not a whole Building.
+      return AVAILABLE.cityDump * 3.2;
+    case 'eventFromOpponentDump':
+      // The rival's Town Dump has their Events in it, not yours: a card you could not otherwise
+      // have, and one they have already shown you is worth playing.
+      return AVAILABLE.townDump * 2.2;
     case 'makeBusy':
       // The mirror of advanceCharacter, pointed across the table: a turn of the rival's tempo, not a
       // job taken. Worth a little less than waking your own animal, because it never touches a

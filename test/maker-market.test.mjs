@@ -1,0 +1,110 @@
+// The Maker shelf's own market side: nine Statues of its own, a Capital City built out of its own
+// cards, and the first cards on either shelf that spend a token.
+//
+// The token cards are the point of the block in spec/maker_card_set.json → `tokens`: the counter was
+// built before any card used it so that the first three would not each invent their own. These tests
+// pin the bargain each of them strikes, and the rule that makes a spender safe to print — a price a
+// town cannot meet is not paid at all, and the rest of the card still happens.
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { RULES, SET, addStack, addToHand, UPRIGHT } from './helpers.mjs';
+import {
+  createGame, indexSet, composeMakerSet, gainMarketCard,
+} from '../src/engine/index.js';
+import { addTokens, tokenCount } from '../src/engine/state.js';
+
+const MAKER = JSON.parse(fs.readFileSync(new URL('../spec/maker_card_set.json', import.meta.url), 'utf8'));
+const maker = indexSet(composeMakerSet(MAKER, SET));
+
+function makerGame(seed = 5) {
+  const state = createGame(RULES, maker, { seed, decks: MAKER.decks.map((d) => d.id).slice(0, 2) });
+  state.phase = 'actions';
+  state.active = 0;
+  state.agents = [{ choose: async (_s, _pi, req) => (req.kind === 'pick' ? req.options.slice(0, Math.max(1, req.min)).map((o) => o.uid) : true) }, {}];
+  return state;
+}
+
+test('the Maker shelf owns nine Statues and a Capital City dealt entirely from its own cards', () => {
+  const statues = MAKER.cards.filter((c) => c.type === 'statue');
+  assert.equal(statues.length, RULES.victory.statueTotal);
+  const virtues = statues.map((c) => c.virtue).sort();
+  assert.deepEqual(virtues, ['Community', 'Courage', 'Curiosity', 'Generosity', 'Harmony', 'Ingenuity', 'Joy', 'Kindness', 'Patience']);
+  // Every Statue carries a boon and a burden, which is the deal the rules make for all nine.
+  for (const c of statues) {
+    assert.ok(c.burden, `${c.id} has no burden`);
+    assert.ok((c.abilities || []).some((a) => a.burden), `${c.id}'s burden is not on an ability`);
+    assert.ok(c.onGain || (c.abilities || []).some((a) => !a.burden), `${c.id} has no boon`);
+    assert.equal(c.remakes ? typeof c.remakes : 'string', 'string', `${c.id} remakes nothing`);
+  }
+  const own = new Set(MAKER.cards.map((c) => c.id));
+  const spec = MAKER.marketDecks[0];
+  for (const id of [...spec.always, ...spec.pool]) assert.ok(own.has(id), `${id} is not a Maker card`);
+  assert.deepEqual([...spec.always].sort(), statues.map((c) => c.id).sort(), 'all nine are always dealt');
+});
+
+test('Warren Muster takes a Rabbit chit, and spends three for a free upright recruit', async () => {
+  const state = makerGame();
+  const p = state.players[0];
+  addToHand(state, 0, 'mk_clover_plot_sharer_1');
+  const before = p.town.length;
+
+  // One chit in the tin and one from the card is two, and two is not three: the price is not
+  // part-paid, so nothing is spent and nobody is recruited.
+  addTokens(p, 'species:Rabbit', 1);
+  await gainMarketCard(state, 0, 'mk_mkt_warren_muster', 'test');
+  assert.equal(tokenCount(p, 'species:Rabbit'), 2, 'the muster hands out its own chit and spends none');
+  assert.equal(p.town.length, before, 'nobody came');
+
+  // Now the card's own chit makes three, so the second muster pays.
+  await gainMarketCard(state, 0, 'mk_mkt_warren_muster', 'test');
+  assert.equal(tokenCount(p, 'species:Rabbit'), 0, 'three taken in over two cards, three spent');
+  assert.equal(p.town.length, before + 1, 'a rabbit turns up');
+  assert.equal(p.town.at(-1).orientation, UPRIGHT, 'and turns up ready to work');
+});
+
+test("the Ovens' Account pays whether or not the Food chits are there", async () => {
+  const short = makerGame();
+  short.players[0].supply = 0;
+  await gainMarketCard(short, 0, 'mk_mkt_ovens_account', 'test');
+  assert.equal(short.players[0].supply, 2, 'the Supply half happens with an empty tin');
+
+  const paid = makerGame();
+  paid.players[0].supply = 0;
+  addTokens(paid.players[0], 'study:Food', 2);
+  addStack(paid, 0, 'mk_marmalade_night_baker_0', 270); // a Food Character to stand back up
+  await gainMarketCard(paid, 0, 'mk_mkt_ovens_account', 'test');
+  assert.equal(tokenCount(paid.players[0], 'study:Food'), 0);
+  assert.equal(paid.players[0].supply, 4);
+  assert.equal(paid.players[0].town[0].orientation, UPRIGHT);
+});
+
+test("the Surveyor's Table turns two Building chits into a cheap Building", async () => {
+  const state = makerGame();
+  addTokens(state.players[0], 'building', 2);
+  await gainMarketCard(state, 0, 'mk_mkt_surveyors_table', 'test');
+  assert.equal(tokenCount(state.players[0], 'building'), 0);
+  const mod = state.players[0].mods.find((m) => m.key === 'buildingDiscount');
+  assert.ok(mod && mod.value === 3, 'the rate is on the Buildings and nothing else');
+});
+
+test('the shelf hands out the chits its spenders ask for', () => {
+  const gives = (key) => MAKER.cards.filter((c) => JSON.stringify(c).includes(`"do":"gainToken"`) && JSON.stringify(c).includes(key));
+  assert.ok(gives('"of":"building"').length >= 3, 'Building chits come from somewhere');
+  assert.ok(gives('"study":"Food"').length >= 1, 'Food chits come from somewhere');
+  assert.ok(gives('"species":"Rabbit"').length >= 1, 'Rabbit chits come from somewhere');
+});
+
+test('every remade Market card and Statue points at the printed card it replaces', () => {
+  const printedById = Object.fromEntries(SET.cards.map((c) => [c.id, c]));
+  for (const card of MAKER.cards.filter((c) => ['market', 'statue'].includes(c.type))) {
+    if (card.addition) {
+      assert.ok(card.addedBecause, `${card.id} is an addition with no reason`);
+      continue;
+    }
+    for (const id of [].concat(card.remakes)) {
+      assert.ok(printedById[id], `${card.id} remakes unknown ${id}`);
+      assert.equal(printedById[id].type, card.type, `${card.id} remakes a ${printedById[id].type}`);
+    }
+  }
+});
