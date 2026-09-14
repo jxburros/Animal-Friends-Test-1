@@ -14,8 +14,23 @@ export const FULL_ART_CARDS = Object.freeze({
   dx_hard_winter: Object.freeze({ number: '12', title: "Hard Winter", url: new URL('../../assets/art/full-art/dx_hard_winter.png', import.meta.url).href }),
 });
 
+// The Maker shelf's own commissioned portraits (`spec/maker_card_set.json`). Separate from the
+// curated twelve above: these are not part of that fixed collection or its "12" gallery/footer
+// count, just the illustration a remade character's card was given once it existed.
+export const MAKER_ART_CARDS = Object.freeze({
+  mk_peanut_barista_1: Object.freeze({ title: 'Peanut, Barista', url: new URL('../../assets/art/full-art/mk_peanut_barista_1.png', import.meta.url).href }),
+  mk_brooke_balloonist_4: Object.freeze({ title: 'Brooke, Balloonist', url: new URL('../../assets/art/full-art/mk_brooke_balloonist_4.png', import.meta.url).href }),
+  mk_oatmeal_jazz_singer_3: Object.freeze({ title: 'Oatmeal, Jazz Singer', url: new URL('../../assets/art/full-art/mk_oatmeal_jazz_singer_3.png', import.meta.url).href }),
+  mk_comet_astronaut_5: Object.freeze({ title: 'Comet, Astronaut', url: new URL('../../assets/art/full-art/mk_comet_astronaut_5.png', import.meta.url).href }),
+  mk_betty_firework_maker_3: Object.freeze({ title: 'Betty, Firework Maker', url: new URL('../../assets/art/full-art/mk_betty_firework_maker_3.png', import.meta.url).href }),
+  mk_rosabeth_apothecary_3: Object.freeze({ title: 'Rosabeth, Apothecary', url: new URL('../../assets/art/full-art/mk_rosabeth_apothecary_3.png', import.meta.url).href }),
+});
+
 export function fullArtFor(def) {
-  return def && Object.hasOwn(FULL_ART_CARDS, def.id) ? FULL_ART_CARDS[def.id] : null;
+  if (!def) return null;
+  if (Object.hasOwn(FULL_ART_CARDS, def.id)) return FULL_ART_CARDS[def.id];
+  if (Object.hasOwn(MAKER_ART_CARDS, def.id)) return MAKER_ART_CARDS[def.id];
+  return null;
 }
 
 export function fullArtFrameSVG() {

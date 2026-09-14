@@ -348,7 +348,7 @@ export function buildCardFace(def, { large = false, interactive = true } = {}) {
     face.appendChild(h('div', { class: 'foil-sheen' }));
     if (!fullArt) face.appendChild(h('div', { class: 'foil-tag', title: 'Foil card', html: iconSVG('foil') }));
   }
-  const footer = h('div', { class: 'card-footer' }, [h('span', {}, fullArt ? `Full Art · ${fullArt.number}/12` : typeLabel(def))]);
+  const footer = h('div', { class: 'card-footer' }, [h('span', {}, fullArt ? (fullArt.number ? `Full Art · ${fullArt.number}/12` : 'Full Art') : typeLabel(def))]);
   if (interactive) footer.appendChild(h('button', {
     class: 'inspect-card', type: 'button', 'aria-label': `Read ${def.name}`,
     onclick: (event) => { event.stopPropagation(); inspectCard(def); },
