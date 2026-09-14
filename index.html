@@ -9,12 +9,19 @@
 <link rel="stylesheet" href="src/ui/storybook.css">
 <link rel="stylesheet" href="src/ui/full-art.css">
 <link rel="stylesheet" href="src/ui/surroundings.css">
+<link rel="stylesheet" href="src/ui/versions.css">
+<link rel="stylesheet" href="src/ui/book.css">
 </head>
 <body>
 <div id="app">
 
-  <!-- ============ MENU (book cover) ============ -->
-  <section id="screen-menu" class="screen active">
+  <!-- ============ HOME (the three doors) ============ -->
+  <!--
+    The book opens on three ways in. Classic is the printed collection, played as published. Maker is
+    the same game played entirely with the remade cards. Book is the gallery: every card in both
+    collections, in every printing it exists in, and nothing to play.
+  -->
+  <section id="screen-home" class="screen active">
     <div class="book-cover">
       <div class="cover-inner">
         <div class="cover-landscape" aria-hidden="true">
@@ -24,8 +31,34 @@
         <h1 class="logo">Animal Friends</h1>
         <div class="logo-sub">A Storybook of the First Boroughs</div>
         <p class="tagline">Build your town. Win the Capital City. Collect the Statues.</p>
-        <p class="expansion-note">Night Shift · Owls, a Science of the stars, an all-night café and a Cat in space</p>
+        <p class="edition" id="homeEdition" title="Which version of the game is loaded">Loading…</p>
+        <div class="mode-choice" id="modeChoice"></div>
+        <div class="cover-links">
+          <button type="button" id="homeHowToPlayBtn">How to play</button>
+          <button type="button" id="homeWelcomeBtn" title="The welcome and introduction to the game">Welcome</button>
+        </div>
+        <div class="cover-orn bottom">❦</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MENU (book cover) ============ -->
+  <section id="screen-menu" class="screen">
+    <div class="book-cover">
+      <div class="cover-inner">
+        <div class="cover-landscape" aria-hidden="true">
+          <img src="assets/ui/borough-daylight.webp" alt="" width="1536" height="1024" fetchpriority="high">
+          <span class="cover-caption">Welcome to the First Boroughs</span>
+        </div>
+        <h1 class="logo">Animal Friends</h1>
+        <div class="logo-sub">A Storybook of the First Boroughs</div>
+        <p class="tagline">Build your town. Win the Capital City. Collect the Statues.</p>
+        <p class="expansion-note" id="expansionNote">Night Shift · Owls, a Science of the stars, an all-night café and a Cat in space</p>
         <p class="edition" id="edition" title="Which version of the game is loaded">Loading…</p>
+        <div class="mode-banner">
+          <span class="mode-which" id="modeWhich">Classic</span>
+          <button type="button" id="backToHomeBtn">← Choose another way to play</button>
+        </div>
         <button type="button" class="full-art-gallery-link" id="fullArtGalleryBtn">Explore the Full Art cards</button>
 
         <div class="menu-field">
@@ -72,6 +105,11 @@
   <!-- ============ DECK WORKSHOP ============ -->
   <section id="screen-deck" class="screen">
     <div class="deckbuilder" id="deckBuilder"></div>
+  </section>
+
+  <!-- ============ THE BOOK (gallery) ============ -->
+  <section id="screen-book" class="screen">
+    <div class="book" id="bookHost"></div>
   </section>
 
   <!-- ============ GAME ============ -->

@@ -46,14 +46,23 @@ function walkEffect(eff, where) {
   if (eff.then) walkEffect(eff.then, `${where}.then`);
 }
 
-test('the maker set is a separate, non-playable shelf', () => {
+test('the maker set is its own playable collection, never mixed with the printed one', () => {
   assert.equal(MAKER.setId, 'AF-MAKER-01');
-  assert.equal(MAKER.playable, false);
+  assert.equal(MAKER.playable, true, 'Maker Mode plays this shelf');
   assert.ok(Array.isArray(MAKER.cards), 'maker cards must be a list');
-  assert.deepEqual(MAKER.decks, [], 'no deck may be built out of maker cards yet');
+  assert.ok(MAKER.decks.length >= 2, 'Maker Mode offers at least two decks of its own');
+  assert.ok(MAKER.marketDecks.length >= 1, 'Maker Mode needs a Capital City of its own');
   // No maker card may share an id with a printed one: ids are how a remake points at its original.
   for (const card of MAKER.cards) {
     assert.ok(!printedById[card.id], `maker card ${card.id} collides with a printed card id`);
+  }
+  // Every deck is built out of maker cards alone. A printed card in a maker deck would mean the two
+  // collections have quietly merged, which is the one thing Maker Mode must not do.
+  const makerIds = new Set(MAKER.cards.map((c) => c.id));
+  for (const deck of MAKER.decks) {
+    for (const id of Object.keys(deck.list)) {
+      assert.ok(makerIds.has(id), `${deck.id} holds ${id}, which is not a maker card`);
+    }
   }
 });
 

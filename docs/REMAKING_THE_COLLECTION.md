@@ -1,27 +1,32 @@
 # Remaking the collection
 
-The collection is being rebuilt card by card. This is the workbench for that: a second shelf in the
-Deck Workshop holding the remade cards, a tick list for the printed ones, and a spreadsheet of every
+The collection is being rebuilt card by card. This is the workbench for that: **the Book**, where
+both collections are read side by side, a tick list for the printed cards, and a spreadsheet of every
 Character and every version they have.
 
-Nothing here changes the game. Decks still draw only from `spec/starter_card_set.json`, and the
-engine never loads the maker set.
+The two collections stay separate. A Classic deck draws only from `spec/starter_card_set.json` and a
+Maker deck only from `spec/maker_card_set.json`; nothing ever mixes them, and the Deck Workshop
+builds out of whichever collection the mode being played uses.
 
 ## The two shelves
 
-Open **✎ Build your own deck** and the Workshop now starts with a shelf picker:
+The book opens on three doors — **Classic**, **Maker** and **Book**. The Book is the workbench:
 
-| Shelf | What it holds | Playable |
+| Shelf | What it holds | Played by |
 | --- | --- | --- |
-| **The printed book** | `spec/starter_card_set.json` — the published collection | Yes |
-| **Maker cards** | `spec/maker_card_set.json` — the hand-remade collection | **Not yet** |
+| **Classic** | `spec/starter_card_set.json` — the published collection | Classic Mode |
+| **Maker** | `spec/maker_card_set.json` — the hand-remade collection | Maker Mode |
 
-Its cards render exactly like printed ones (hover to read one, or press **Read**), and **Story**
-opens the character's backstory beside the full flavor of every version of them — the flavor a card
-face is too small to show. They carry no `+`/`−` controls and a *Not playable yet* tag instead: they are
-there to be compared against the printed card they replace. When they become playable, the change
-is to let the pool and `deckProblems` see them — the shelf itself, the sort and the ticks all stay
-as they are.
+Cards render exactly as they do at the table (hover to read one, or press **Read**), each with a row
+of chips for the printings it exists in, and **Story** opens a Maker character's backstory beside the
+full flavor of every version of them — the flavor a card face is too small to show.
+
+Maker cards are playable now: Maker Mode has two decks of its own and a Capital City of its own. What
+it has *not* got is Statues, so `spec/maker_card_set.json` carries a `borrowsFromPrinted` list naming
+the printed cards the collection cannot yet do without, by id. `composeMakerSet` in
+`src/engine/modes.js` reads those into the Maker collection at load time and marks them `borrowed`,
+which is why the Book labels them. Remaking one is a matter of writing the Maker card and striking
+the id off that list.
 
 ## Writing a maker card
 
@@ -52,7 +57,7 @@ them in. (Plain `npm run stamp` stamps the printed set — a different file.)
 
 `remakes` is the point of the whole thing: it is **an id, not a name**. Rename the card, give it a
 new title, move it to a different species — the link still points at the printed card it came from,
-and the Workshop keeps that card ticked off. `npm test` checks every `remakes` id exists, that no
+and the Book keeps that card ticked off. `npm test` checks every `remakes` id exists, that no
 two maker cards claim the same printed card, and that no maker id collides with a printed one.
 
 ### Additions: a card that replaces nothing
@@ -79,25 +84,25 @@ Every maker card must carry one label or the other, and `npm test` enforces it. 
 unlabelled card is indistinguishable from a remake whose `remakes` link was forgotten, so a forgotten
 link can no longer pass itself off as new work. An addition may claim nothing — declaring `addition`
 on a card that also carries `remakes` fails — so the label is not a way out of a remake you did not
-finish. The Workshop shows additions as **Added — replaces nothing**, with the reason.
+finish. The Book shows additions as **Added — replaces nothing**, with the reason.
 
 ## Ticking off the printed cards
 
-Every card on the printed shelf has a **Mark remade** button under it.
+Every card on the Book's **Classic** shelf has a **Mark remade** button under it.
 
 * Ticking by hand is kept in this browser (`localStorage`, key `af-remade-cards`) along with the
   name and title the card had at the time, so a tick can still be traced after a rename.
 * A card claimed by a maker card's `remakes` shows **✓ Remade (maker card)** and cannot be unticked
   by hand — that tick lives in the spec file, where it belongs.
-* **Remade: Any / Remade / Not yet** filters the shelf, so "what is left to do" is one click away.
-* The bar reads `Remade N of 461 cards in the printed collection`, and **Export remade list**
+* The line under the Book's heading reads `Remade N of 461 cards in the printed collection`, and **Export remade list**
   downloads the ticks as JSON (ids, names at time of ticking, and which maker card claims each).
   Ticks made by hand for cards that have since left the set are kept in that export rather than
   dropped — they are the trail.
 
 ## Sorting by Character
 
-Both shelves share the **Sort by: Power · Character · Cost · Name** row.
+The Deck Workshop's **Sort by: Power · Character · Cost · Name** row sorts the collection it is
+building from.
 
 **Character** groups the shelf under headings — one per named Character, alphabetical, versions
 cheapest first — so every version of Acorn sits in one run and a new version can be read against

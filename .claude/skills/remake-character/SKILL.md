@@ -51,6 +51,6 @@ npm run identity -- --check   # species identity and power creep
 npm run characters            # regenerate the character spreadsheet
 ```
 
-Check the batch by eye in the Deck Workshop (`npm run serve` → Build your own deck → Maker cards),
+Check the batch by eye in the Book (`npm run serve` → Book → the Maker shelf),
 then commit with the character in the subject — `Remake Acorn: 3 Commerce, 2 Crafts` — saying what
 was retired and why, and anything logged in `wantedVerbs`.
