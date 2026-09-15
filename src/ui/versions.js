@@ -167,7 +167,7 @@ export const PRINTINGS = Object.freeze({
   mk_peanut_ledger_0: impressionistAlternate('slowDays', 0),
   mk_oatmeal_town_warden_4: impressionistAlternate('slowDays', 1),
   mk_brooke_ferry_hand_2: impressionistAlternate('slowDays', 2),
-  mk_clover_plot_sharer_1: impressionistAlternate('slowDays', 3),
+  mk_clover_plot_sharer_1: impressionistAlternate('slowDays', 3, { foil: true }),
   mk_rosabeth_herbalist_physician_5: impressionistAlternate('slowDays', 4),
   mk_bella_forager_0: impressionistAlternate('slowDays', 5),
   mk_lynnette_bookbinder_1: impressionistAlternate('slowDays', 6),
@@ -182,7 +182,7 @@ export const PRINTINGS = Object.freeze({
   mk_mkt_late_ferry: impressionistAlternate('slowDays', 15),
 
   mk_oatmeal_safety_inspector_2: impressionistAlternate('lightAcrossTown', 0),
-  mk_bean_espresso_1: impressionistAlternate('lightAcrossTown', 1),
+  mk_bean_espresso_1: impressionistAlternate('lightAcrossTown', 1, { foil: true }),
   mk_brooke_regatta_caller_3: impressionistAlternate('lightAcrossTown', 2),
   mk_clovers_seed_drive: impressionistAlternate('lightAcrossTown', 3),
   mk_copper_market_steward_5: impressionistAlternate('lightAcrossTown', 4),
@@ -233,7 +233,6 @@ export const PRINTINGS = Object.freeze({
   mk_jessica_song_leader_0: Object.freeze({ foil: true }),
   mk_quill_orchard_hand_0: Object.freeze({ foil: true }),
   mk_lindsay_herb_grower_3: Object.freeze({ foil: true }),
-  mk_clover_plot_sharer_1: Object.freeze({ foil: true }),
   mk_cookie_biscuit_maker_0: Object.freeze({ foil: true }),
 
   // Ten of the coolest cards, given reverse foil.
@@ -255,7 +254,6 @@ export const PRINTINGS = Object.freeze({
 
   // Five cards with a detail worth shining, given a masked detail foil.
   mk_sage_astronomer_3: Object.freeze({ foil: true }),
-  mk_bean_espresso_1: Object.freeze({ foil: true }),
   mk_liz_weighbridge_keeper_4: Object.freeze({ foil: true }),
   mk_copper_scale_polisher_1: Object.freeze({ foil: true }),
   mk_mandee_weather_watcher_2: Object.freeze({ foil: true }),

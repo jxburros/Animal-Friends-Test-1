@@ -30,7 +30,7 @@ import {
   pledgeMinCost, townFootprint, townCap, hasTownRoom, rehireCost, cityRule, hasBuildingRoom, upgradesOver,
   buildingUpkeepFor,
 } from '../engine/index.js';
-import { cardPower, effectPower } from '../engine/power.js';
+import { cardPower, effectPower, BUILDING_RUNS } from '../engine/power.js';
 
 // ---------------------------------------------------------------- tuning knobs
 // Defaults are merged with `options.params` so the weights can be swept from a playtest harness.
@@ -75,6 +75,7 @@ const DEFAULT_PARAMS = {
   oppPad: 5, // Supply we assume the opponent will add before their next turn
   drawWhenRich: 9, // Supply level at which drawing beats taking Supply
   drawHandCap: 6, // ...as long as the hand is no bigger than this
+  buildValueWeight: 2.6, // multiplier on a Town Building's rated power when scoring whether to build it
 };
 
 // ---------------------------------------------------------------- small utils
@@ -621,10 +622,21 @@ function scoreAction(state, ctx, a, agg, out, P) {
       if (!d) return -1;
       const crew = (a.characters || []).map((uid) => findStack(state, ctx.pi, uid));
       const labour = crew.reduce((acc, st) => acc + (st ? stackRate(state, st) : 0), 0) * P.eventCharCost;
-      let s = cardPower(d, state.rules) * 1.4 - labour - a.cost * P.costWeight;
+      // buildValueWeight sits well above a Character's or an Event's own multiplier (effectively 1):
+      // a playtest survey found every Town Building going unbuilt across thousands of simulated
+      // games, whatever its printed power. Raised from 1.4 once the upkeep-horizon mismatch below was
+      // fixed and the model's own math still left most Buildings underwater against the alternative
+      // of just working a shift.
+      let s = cardPower(d, state.rules) * P.buildValueWeight - labour - a.cost * P.costWeight;
       // PROTOTYPE (rules.buildings.chargeUpkeep): what raising this Building goes on to cost, not just
       // what it costs to raise — the same correction applied to a market Building's auction value.
-      if ((state.rules.buildings || {}).chargeUpkeep) s -= buildingUpkeepFor(d) * horizon;
+      // Capped at BUILDING_RUNS, the same number of turns cardPower already assumed the Building
+      // works for: charging the bill against the true remaining horizon (up to horizonCap, almost
+      // always higher) priced the upkeep over more turns than the payout was ever credited for, which
+      // made a `build` action's score negative on the model's own math regardless of the card — every
+      // Building in the set was structurally unbuildable, independent of how good the printed effect
+      // was.
+      if ((state.rules.buildings || {}).chargeUpkeep) s -= buildingUpkeepFor(d) * Math.min(horizon, BUILDING_RUNS);
       // Building into a full row means pulling something down, and a Statue we cannot stand is worse
       // than a Building we never raised.
       if (!hasBuildingRoom(state, ctx.pi)) s -= 4;

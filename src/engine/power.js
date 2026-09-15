@@ -261,7 +261,7 @@ const TRIGGER_WEIGHT = {
  * below a cost-0 Rabbit and the agent almost never bought one. Games run about 17 rounds, and a Building
  * is expensive enough that it is usually bought in the second half, so it works for about six of them.
  */
-const BUILDING_RUNS = 6;
+export const BUILDING_RUNS = 6;
 
 /**
  * How often a permanent's trigger actually comes round, against the turn start that most Buildings
