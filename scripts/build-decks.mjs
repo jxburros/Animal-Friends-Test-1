@@ -16,7 +16,7 @@
 // **Show the collection.** The printed decks used to hold four copies of a Common and between them
 // reached 46 of the 380 cards a deck may legally hold. A deck of four-ofs is a deck that plays the
 // same game every time, and a collection of five hundred cards that prints two decks is a collection
-// nobody meets. So copies are capped at two (one for a Super Rare, which is the rule anyway), the
+// nobody meets. So copies are capped at two (one for a Super Rare or a Legendary, which is the rule anyway), the
 // roster covers all ten species and all eight studies, and a card no earlier deck has taken wins
 // every tie. Consistency is what a Mayor buys in the Deck Workshop with the ten cards over the
 // minimum; the printed decks are the tour.
@@ -68,10 +68,10 @@ const EVENT_CAP = 12;
  */
 const COPY_CAP = 2;
 /**
- * Super Rare cards a deck may hold. One copy each is the deck rule, so this is a count of distinct
- * marquee cards rather than of copies — which is why it is five now and was three before: three
- * copies used to mean as few as one card, and a deck with a single Super Rare in forty draws it
- * about once in seven games.
+ * Marquee cards a deck may hold — Super Rare and Legendary together, since both are one-copy cards.
+ * One copy each is the deck rule, so this is a count of distinct marquee cards rather than of copies
+ * — which is why it is five now and was three before: three copies used to mean as few as one card,
+ * and a deck with a single Super Rare in forty draws it about once in seven games.
  */
 const TOP_RARITY_CAP = 5;
 
@@ -208,7 +208,7 @@ function build(ident) {
     return a + (r === 'Super Rare' || r === 'Legendary' ? n : 0);
   }, 0);
   const take = (card, n) => {
-    // Two of anything, and the deck rules' own limit on top — which is one for a Super Rare.
+    // Two of anything, and the deck rules' own limit on top — one for a Super Rare or a Legendary.
     const limit = Math.min(COPY_CAP, maxCopiesOf(dr, card));
     let room = Math.min(n, limit - (list[card.id] || 0), DECK_SIZE - count());
     // One copy each is the rule; this is the other half of it — a deck has a few marquee cards

@@ -206,11 +206,10 @@ where it had done nothing. The measured effect of this pass was to take mean pai
 
 ### Rarity and the power/cost model
 
-Every card in the set carries a **rarity** — Common, Uncommon, Rare or Super Rare — and it is
+Every card in the set carries a **rarity** — Common, Uncommon, Rare, Super Rare or Legendary — and it is
 derived, not hand-assigned. Rarity is a deck-building limit and nothing more: it says how often a deck may
-repeat a card, not how hard the card is to come by. The fifth tier (Legendary) was retired because it drew a
-line the limits could not see — it capped copies at one exactly as Super Rare does, so it was a label with
-no rule behind it. `src/engine/power.js` rates a card in *Supply-equivalents*:
+repeat a card, not how hard the card is to come by. `src/engine/power.js` rates a card in
+*Supply-equivalents*:
 
 - **Power** is everything the card gives you: a shift is rated by its throughput (`output / delay`) plus a
   little for the lump sum; an ability is rated by what it does times how often its trigger fires, discounted
@@ -245,10 +244,49 @@ no rule behind it. `src/engine/power.js` rates a card in *Supply-equivalents*:
 
 That exponent split is the design decision. Rarity is *not* raw power: of two cards that give you the same,
 the cheaper one rates higher, and a cost-0 Rabbit with a good shift can out-rate a Master. But efficiency alone
-would make every cheap card legendary, so size still decides between two equally efficient cards. The bands
-were re-derived after the repricing to hold the pyramid. The cuts sit on the quantiles of the cards a deck
-may actually hold — Characters, Events and Town Buildings — because that is where a copy limit bites; the
-set currently reads 55% Common, 24% Uncommon, 15% Rare, 7% Super Rare.
+would make every cheap card legendary, so size still decides between two equally efficient cards.
+
+**The cuts are read off the card's own cost group, not off the set.** This is the one thing a single set-wide
+ladder could never do. A cost-0 apprentice and a cost-5 master were asked to clear the same bar and never
+could: the old cuts printed *no Common at all* above cost 0, and made half the cost-5 shelf Super Rare. That
+is not a rarity, it is the cost written out twice. A card is now judged against the cards a Mayor is actually
+choosing between when they have that much Supply in hand, so `RARITY_BANDS` carries a ladder per cost from 0
+to 5 and every cost group has its own Commons and its own marquee card.
+
+The cuts still sit on the quantiles of the cards a deck may actually hold — Characters, Events and Town
+Buildings — because that is where a copy limit bites. What changed is that the quantiles are deliberately
+*not* the same at every cost: dear cards skew rarer and cheap ones commoner, and the slide is gentle on
+purpose, because a cheap card can be the best thing in the set and a Master can be filler. The deck-legal
+catalogue currently reads, cost group by cost group:
+
+| cost | Common | Uncommon | Rare | Super Rare | Legendary |
+| ---- | ------ | -------- | ---- | ---------- | --------- |
+| 0    | 44%    | 29%      | 18%  | 8%         | 1%        |
+| 1    | 44%    | 31%      | 13%  | 10%        | 2%        |
+| 2    | 34%    | 28%      | 29%  | 8%         | 2%        |
+| 3    | 32%    | 27%      | 27%  | 11%        | 3%        |
+| 4    | 27%    | 31%      | 27%  | 12%        | 4%        |
+| 5    | 24%    | 29%      | 29%  | 10%        | 7%        |
+
+Commons thin out all the way down the curve and the marquee cards thicken, but neither table is a straight
+line — the point of the pass was variety, and a strictly monotonic table is exactly what made the old set
+read as a cost chart. Set-wide, including the cards no deck holds, the collection reads 46% Common, 25%
+Uncommon, 17% Rare, 9% Super Rare and 2% Legendary.
+
+**Legendary** is the fifth tier, and it is back. It was retired once because it drew a line the copy limits
+could not see — it capped copies at one exactly as Super Rare does. What it carries now is a fact the limits
+still cannot see: a Legendary is one of the **ten cards that most outclass their own cost group**, and its
+cut sits a clear step — a fifth again — above the Super Rare cut in every group, so a Legendary is never a
+Super Rare that rounded up. Ten cards clear it, at least one at every cost from 0 to 5: Clover the Seedling
+Helper at cost 0, Betty the Whittler at 1, Annabelle the Last One Up at 2, Quill the Cider Maker and The
+Quill Wall at 3, Biff the Chief Constable and Gwen's apron at 4, and Betty, Berry and Quill's Masters at 5.
+The tier is reserved for the catalogue a deck is built from; a Statue or a Capital City lot that rates that
+high is printed Super Rare, because Legendary is a statement about the best card you may hold *one of*.
+
+Comparing cards across cost groups needs a number that is not the raw score, since a cost-5 card starts three
+Supply of power ahead of a cost-0 one. That number is `relativeRating` — the score as a multiple of what a
+Super Rare of that cost has to reach. At 1.0 a card is exactly Super Rare for its cost; the ten Legendaries
+run from 1.28 to 1.44. `rateSet` orders the whole collection on it, which is what it always claimed to do.
 
 The repricing is what finally made Buildings buyable. Every Building in the set now pays for itself —
 power-to-cost ratios of **1.01 to 1.27**, against 0.13 to 0.57 before — while remaining the dearest cards on
@@ -256,10 +294,10 @@ the board, which is what the design wants from its Supply sink. Five Many Hats c
 same pass to hold the 1.08x power-creep gate.
 
 Rarity then does real work at the table: it caps how many copies of a card a town deck may hold —
-**4 / 3 / 2 / 1** — so the cards that carry a game are the ones you may least often repeat. That is the only
+**4 / 3 / 2 / 1 / 1** — so the cards that carry a game are the ones you may least often repeat. That is the only
 thing rarity does, and the copy limits are now the whole of it. The printed decks are built to that shape: a
-base of Commons and Uncommons, a Rare or two at two copies, and at most a single Super Rare as the deck's one
-marquee card. A deck is any size from **40 to 50 cards**, with no Character floor and no Event ceiling — the
+base of Commons and Uncommons, Rares at two copies, and at most five marquee cards — Super Rare or Legendary,
+one copy each, because that is the rule. A deck is any size from **40 to 50 cards**, with no Character floor and no Event ceiling — the
 Workshop warns about a full-size deck holding six animals or fewer rather than refusing to build it.
 
 The model is also what the heuristic AI uses to value an unfamiliar card, so a new card is understood the day

@@ -16,7 +16,7 @@ was rebuilt around the collection rather than around the six identities that hap
 
 - **Fifteen town decks.** The six below keep their names, species and studies and are joined by nine
   more, until every species has three decks written for it and every study three or four. Copies are
-  capped at two (one for a Super Rare), so forty cards are twenty-odd different ones.
+  capped at two (one for a Super Rare or a Legendary), so forty cards are twenty-odd different ones.
 - **Two-thirds of the collection on the table.** The six decks showed 123 distinct cards; the fifteen
   show **249 of the 380 a deck may legally hold**, including every Town Building — which had never
   been in a printed deck at all, because the builder only ever looked at Characters and Events.
@@ -267,7 +267,7 @@ A hired Character is **retained labour, not a citizen**: they may be hired for a
 
 **Market Decks** — the shared market chosen at setup, 35 cards: nine Statues raised from that market's own quarry, plus a 26-card sample of its pool, topped up so the market's own floor of on-reveal cards is always met. Two markets ship with the game and they are not the same place twice. **The Founders' Fair** is the Capital City in a good year: grants, fairs and apprentice hiring, six Buildings worth queueing for, eight animals who came because the town is growing, and nothing overhead worse than a meteor shower — forty-three lots dealt down to twenty-six, at least two of them weather, out of a quarry of twelve open-handed virtues. **The Lean Winter** is the same city in a bad one: the assessors at the door, hard winters and landslides killing the shifts on the board, the Salvage Yard and the Physic Garden open, and a Bob on the gate who makes every pledge dearer — thirty lots dealt down to twenty-six, at least five of them weather, out of a quarry of twelve hard virtues, thrift, mercy and vigilance among them. No card is in both pools, and between the two quarries every one of the fifteen virtues is carved. The Fair runs about thirty-one turns and the Winter about thirty-six, and a deck that does well in one does not always do well in the other.
 
-**Rarity** — every card is rated by what it gives you against what it asks for, and that rating sets its rarity: Common, Uncommon, Rare, Super Rare. Rarity here means **how often a deck may repeat a card, not how hard the card is to find**. The model scores a card `power^0.6 × efficiency^0.4`, so of two cards that do the same thing the cheaper one rates higher, while of two equally efficient cards the bigger one does — a cost-0 Rabbit with a good shift can out-rate a Master. The set reads as a pyramid: 55% Common, 24% Uncommon, 15% Rare, 7% Super Rare. Rarity then caps copies in a deck: **4 / 3 / 2 / 1**. See `src/engine/power.js` and `npm run power`.
+**Rarity** — every card is rated by what it gives you against what it asks for, and that rating sets its rarity: Common, Uncommon, Rare, Super Rare, Legendary. Rarity here means **how often a deck may repeat a card, not how hard the card is to find**. The model scores a card `power^0.6 × efficiency^0.4`, so of two cards that do the same thing the cheaper one rates higher, while of two equally efficient cards the bigger one does — a cost-0 Rabbit with a good shift can out-rate a Master. The cut a card must clear is read off **its own cost group**, not off the set, so every cost from 0 to 5 has its own Commons and its own marquee card: the shares slide from 44% Common at cost 0 down to 24% at cost 5, and the marquee cards thicken the other way. **Legendary** is the top tier — the ten cards that most outclass their own cost group, at least one at every cost, each a clear step above the best Super Rare it shares a cost with. The set as a whole reads 46% Common, 25% Uncommon, 17% Rare, 9% Super Rare, 2% Legendary. Rarity then caps copies in a deck: **4 / 3 / 2 / 1 / 1**. See `src/engine/power.js` and `npm run power`.
 
 **Characters by name** — some cards ask for a particular friend: Nim, Chancellor of Records pays out while you control Pip (any version of him), and Pip's Reading Hour can only be played with an upright Pip. A named requirement or condition matches whichever version of that Character is on top of a stack.
 
@@ -349,7 +349,7 @@ npm test                                   # Run unit tests
 npm run smoke                              # Print one full game log
 npm run invariants                         # Check card conservation over many games
 npm run power                               # Print every card sorted by power/cost, with its rarity
-npm run power -- --type character           # ...one card type, or --rarity 'Super Rare', or --csv
+npm run power -- --type character           # ...one type, or --rarity Legendary, or --cost 3, or --csv
 npm run stamp                               # Restamp rarity/power on every card and reorder the set file
 npm run identity                            # Per-species and per-study effect profiles, similarity and power creep
 npm run identity -- --check                 # ...or fail if two species play alike, a signature is unused, or a set has crept
