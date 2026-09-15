@@ -245,13 +245,13 @@
     "mk_hazel_market_vendor_2": 2,
     "mk_orien_rate_checker_2": 2,
     "mk_pockets_odd_lot_dealer_3": 2,
-    "mk_annabelle_salvage_archivist_3": 2,
+    "mk_annabelle_salvage_archivist_3": 3,
     "mk_morty_watermill_mechanic_3": 1,
     "mk_hazel_market_committee_chair_4": 2,
     "mk_beck_candlelight_reader_4": 1,
     "mk_patch_reclamation_merchant_5": 1,
     "mk_hazel_merchant_5": 1,
-    "mk_tb_gate_hut": 2,
+    "mk_tb_gate_hut": 1,
     "mk_tb_barrows_yard": 1,
     "mk_bins_at_dawn": 2,
     "mk_a_word_beforehand": 2,
@@ -558,11 +558,10 @@
    ],
    "blurb": "Rabbits and Owls of Agriculture and Science: a dome above the allotment strip and a forecast to the minute under it, and more of them arriving than leaving.",
    "list": {
-    "mk_clover_seedling_helper_0": 1,
     "mk_sage_night_assistant_0": 1,
     "mk_clover_plot_sharer_1": 1,
     "mk_eric_smallholder_1": 2,
-    "mk_winter_turned_down_applicant_1": 1,
+    "mk_winter_turned_down_applicant_1": 2,
     "mk_sage_frost_watch_2": 2,
     "mk_peter_the_winters_length_2": 2,
     "mk_clover_market_gardener_2": 1,
@@ -920,11 +919,10 @@
    ],
    "blurb": "Hedgehogs and Badgers of Agriculture and Commerce, built around Quill, Harvest Steward: seven Supply off one shift, a neighbour nobody can touch, and not one animal of yours sent to Unemployment while she is up. The long shifts behind her are the whole point of keeping them safe.",
    "list": {
-    "mk_quill_harvest_steward_5": 1,
     "mk_quill_orchard_hand_0": 1,
     "mk_berry_tinker_0": 1,
     "mk_betty_whittler_1": 1,
-    "mk_moss_ploughwright_1": 2,
+    "mk_moss_ploughwright_1": 4,
     "mk_oatmeal_ward_clerk_1": 2,
     "mk_quill_orchard_keeper_2": 2,
     "mk_morty_grain_miller_2": 2,
@@ -940,7 +938,7 @@
     "mk_the_root_cellar": 2,
     "mk_glut_of_squash": 2,
     "mk_the_cider_social": 2,
-    "mk_thistles_grange_supper": 2,
+    "mk_thistles_grange_supper": 1,
     "mk_tool_lending_day": 2,
     "mk_guild_night": 2,
     "mk_orien_town_planner_5": 1,
@@ -7375,7 +7373,7 @@
    "title": "Town Building",
    "cost": 3,
    "build": {
-    "animals": 2
+    "animals": 1
    },
    "text": "At the start of your turn, if you control an Agriculture Character, gain 2 Supply.",
    "flavor": "Four generations of Clover's family have held this strip, and Clover is the first of them to write down what it does in a wet year.",
@@ -7393,11 +7391,11 @@
      }
     }
    ],
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
-    "score": 3.82,
+    "score": 4.22,
     "power": 9.6,
-    "opportunityCost": 10.02
+    "opportunityCost": 7.82
    }
   },
   {
@@ -7409,21 +7407,21 @@
    "build": {
     "animals": 1
    },
-   "text": "Whenever Supply is taken from you, gain 4 Supply.",
+   "text": "Whenever Supply is taken from you, gain 5 Supply.",
    "flavor": "Under the weights office, stocked since he was an apprentice: salt, lamp oil, candle stock and a shelf of small coin. It was not opened the year the bridge went and it was not opened the winter the Grain Exchange shut — both times the salt went out on the quiet instead.",
    "abilities": [
     {
      "trigger": "onSupplyLost",
      "effect": {
       "do": "gainSupply",
-      "amount": 4
+      "amount": 5
      }
     }
    ],
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
-    "score": 4.06,
-    "power": 9.23,
+    "score": 5.07,
+    "power": 11.54,
     "opportunityCost": 7.82
    }
   },
@@ -7434,7 +7432,7 @@
    "title": "Town Building",
    "cost": 4,
    "build": {
-    "animals": 2
+    "animals": 1
    },
    "text": "At the start of your turn, one of your Characters turns one step toward upright.",
    "flavor": "Berry retired, and was back on the bench inside a fortnight. Whatever the borough breaks, it ends up here, and so does whoever broke it.",
@@ -7449,9 +7447,9 @@
    ],
    "rarity": "Common",
    "power": {
-    "score": 3.45,
+    "score": 3.77,
     "power": 9,
-    "opportunityCost": 11.02
+    "opportunityCost": 8.82
    }
   },
   {
@@ -7459,7 +7457,7 @@
    "type": "townBuilding",
    "name": "Rosabeth's Gate",
    "title": "Town Building",
-   "cost": 3,
+   "cost": 2,
    "build": {
     "animals": 2
    },
@@ -7478,9 +7476,9 @@
    ],
    "rarity": "Rare",
    "power": {
-    "score": 4.77,
+    "score": 4.98,
     "power": 12,
-    "opportunityCost": 10.02
+    "opportunityCost": 9.02
    }
   },
   {
@@ -7490,7 +7488,7 @@
    "title": "Town Building",
    "cost": 3,
    "build": {
-    "animals": 2
+    "animals": 1
    },
    "text": "At the start of your turn, if you control an Entertainment Character, draw 1 card.",
    "flavor": "Whatever room will have them, a night a week, five in the band if two of them stand on the step. Oatmeal has never once cancelled.",
@@ -7510,9 +7508,9 @@
    ],
    "rarity": "Common",
    "power": {
-    "score": 2.86,
+    "score": 3.16,
     "power": 7.2,
-    "opportunityCost": 10.02
+    "opportunityCost": 7.82
    }
   },
   {
@@ -7522,7 +7520,7 @@
    "title": "Town Building",
    "cost": 4,
    "build": {
-    "animals": 2
+    "animals": 1
    },
    "text": "Whenever one of your Characters finishes a shift, gain 2 Supply.",
    "flavor": "Down past the ferry steps, where the lightermen keep what the harbour office would rather not know about. Brooke has had a key for eight years.",
@@ -7537,9 +7535,9 @@
    ],
    "rarity": "Common",
    "power": {
-    "score": 3.18,
+    "score": 3.48,
     "power": 8.31,
-    "opportunityCost": 11.02
+    "opportunityCost": 8.82
    }
   },
   {
@@ -7551,23 +7549,32 @@
    "build": {
     "animals": 1
    },
-   "text": "At the start of your turn, the next card revealed in the Capital City does not affect you.",
+   "text": "At the start of your turn, the next card revealed in the Capital City does not affect you, and you gain 1 Supply.",
    "flavor": "A bar, a lamp, and a hedgehog asleep behind both. The gate is shut from six and Bob does not care who you say you are.",
    "abilities": [
     {
      "trigger": "onTurnStart",
      "effect": {
-      "do": "addMod",
-      "key": "cancelNextReveal",
-      "value": 1,
-      "expires": "nextTurnStart"
+      "do": "seq",
+      "steps": [
+       {
+        "do": "addMod",
+        "key": "cancelNextReveal",
+        "value": 1,
+        "expires": "nextTurnStart"
+       },
+       {
+        "do": "gainSupply",
+        "amount": 1
+       }
+      ]
      }
     }
    ],
-   "rarity": "Common",
+   "rarity": "Super Rare",
    "power": {
-    "score": 2.78,
-    "power": 6,
+    "score": 5.57,
+    "power": 12,
     "opportunityCost": 6.82
    }
   },
@@ -8035,7 +8042,7 @@
      "study": "Agriculture"
     }
    ],
-   "text": "Requires Rosabeth and an Agriculture Character. Rehire an Agriculture Character from your Unemployment for free, then draw 1 card.",
+   "text": "Requires Rosabeth and an Agriculture Character. Rehire an Agriculture Character from your Unemployment for free, then draw 2 cards.",
    "flavor": "She does the beds first and the borough second, and by the time she has got round to the second half of it somebody has been on the beds a fortnight and is fit to be somewhere else.",
    "effect": {
     "do": "seq",
@@ -8050,14 +8057,14 @@
      },
      {
       "do": "draw",
-      "count": 1
+      "count": 2
      }
     ]
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
-    "score": 2.14,
-    "power": 3.57,
+    "score": 3.04,
+    "power": 5.07,
     "opportunityCost": 3.6
    }
   },
@@ -8346,7 +8353,7 @@
    "title": "Town Building",
    "cost": 4,
    "build": {
-    "animals": 2
+    "animals": 1
    },
    "text": "At the start of your turn, the next Building you buy this turn costs 1 less Supply.",
    "flavor": "Stone stacked by size, the good sand under a tarpaulin, and a Badger who will tell you what a wall is worth whether or not you have asked. He bids on every lot that comes up with a roof on it.",
@@ -8363,9 +8370,9 @@
    ],
    "rarity": "Common",
    "power": {
-    "score": 2.76,
+    "score": 3.01,
     "power": 7.2,
-    "opportunityCost": 11.02
+    "opportunityCost": 8.82
    }
   },
   {
@@ -8375,7 +8382,7 @@
    "title": "Town Building",
    "cost": 3,
    "build": {
-    "animals": 2
+    "animals": 1
    },
    "text": "At the start of your turn, if you control a Rabbit, draw 1 card.",
    "flavor": "Nobody built it and nobody can say how far back it goes. Clover’s family came out of one end of it and Lynnette’s press sits over the other, and on any given morning there are more rabbits in it than were in it last night.",
@@ -8395,9 +8402,9 @@
    ],
    "rarity": "Common",
    "power": {
-    "score": 2.86,
+    "score": 3.16,
     "power": 7.2,
-    "opportunityCost": 10.02
+    "opportunityCost": 7.82
    }
   },
   {
@@ -8407,7 +8414,7 @@
    "title": "Town Building",
    "cost": 3,
    "build": {
-    "animals": 2
+    "animals": 1
    },
    "text": "At the start of your turn, if you control a Science Character, look at the top two cards of your deck and put any of them on the bottom, then gain 1 Supply.",
    "flavor": "Inkwell swept them for a season to be allowed up them and Comet read every book at the top before the board would look at her. Whoever is on the steps at four in the morning knows what is coming before the borough does.",
@@ -8436,9 +8443,9 @@
    ],
    "rarity": "Common",
    "power": {
-    "score": 3.63,
+    "score": 4.01,
     "power": 9.12,
-    "opportunityCost": 10.02
+    "opportunityCost": 7.82
    }
   },
   {
@@ -8450,7 +8457,7 @@
    "build": {
     "animals": 2
    },
-   "text": "Whenever one of your Characters finishes a shift, if you control a Commerce Character, gain 2 Supply.",
+   "text": "Whenever one of your Characters finishes a shift, if you control a Commerce Character, gain 3 Supply.",
    "flavor": "A long desk, two lamps and the borough’s quarterly returns in order of age. Copper weighs what comes in and Peanut works out what it was worth, usually between orders and usually before being asked.",
    "abilities": [
     {
@@ -8462,14 +8469,14 @@
      },
      "effect": {
       "do": "gainSupply",
-      "amount": 2
+      "amount": 3
      }
     }
    ],
    "rarity": "Common",
    "power": {
-    "score": 2.64,
-    "power": 6.65,
+    "score": 3.97,
+    "power": 9.97,
     "opportunityCost": 10.02
    }
   },
@@ -8482,7 +8489,7 @@
    "build": {
     "animals": 4
    },
-   "text": "At the start of your turn, one of your Characters cannot be targeted by your opponent until your next turn, and your Characters cannot be sent to Unemployment by an effect this turn.",
+   "text": "At the start of your turn, one of your Characters cannot be targeted by your opponent until your turn after next, and your Characters cannot be sent to Unemployment by an effect this turn.",
    "flavor": "Bob leans on it, Biff walks past it four times a night, and Berry mended the gate in it twice without being asked. It is not much of a wall. Nothing has ever got over it.",
    "abilities": [
     {
@@ -8491,7 +8498,8 @@
       "do": "seq",
       "steps": [
        {
-        "do": "protectCharacter"
+        "do": "protectCharacter",
+        "turns": 2
        },
        {
         "do": "addMod",
@@ -8505,8 +8513,8 @@
    ],
    "rarity": "Legendary",
    "power": {
-    "score": 7.02,
-    "power": 20.4,
+    "score": 9.97,
+    "power": 28.98,
     "opportunityCost": 14.42
    }
   },
@@ -15619,13 +15627,13 @@
      "study": "Agriculture"
     }
    ],
-   "text": "Requires Thistle and an Agriculture Character. Gain 4 Supply, then you may rehire a Character from your Unemployment for 2 less Supply.",
+   "text": "Requires Thistle and an Agriculture Character. Gain 5 Supply, then you may rehire a Character from your Unemployment for 2 less Supply.",
    "effect": {
     "do": "seq",
     "steps": [
      {
       "do": "gainSupply",
-      "amount": 4
+      "amount": 5
      },
      {
       "do": "rehire",
@@ -15639,10 +15647,10 @@
     "atlas": "monuments",
     "tile": 13
    },
-   "rarity": "Rare",
+   "rarity": "Super Rare",
    "power": {
-    "score": 3.53,
-    "power": 5.89,
+    "score": 4.13,
+    "power": 6.89,
     "opportunityCost": 3.6
    }
   },
@@ -19213,7 +19221,7 @@
    "title": "Town Building",
    "cost": 3,
    "build": {
-    "animals": 2
+    "animals": 1
    },
    "text": "At the start of your turn, if you control a Crafts Character, take a Building token. Spend 3 Building tokens: draw 2 cards.",
    "flavor": "The ferry's family struck their own fare chits seven generations ago and everything the borough has stamped since is a copy of them, off Lynnette's press, in the same hard wood.",
@@ -19250,9 +19258,9 @@
    },
    "rarity": "Common",
    "power": {
-    "score": 3.46,
+    "score": 3.82,
     "power": 8.7,
-    "opportunityCost": 10.02
+    "opportunityCost": 7.82
    }
   },
   {
@@ -19264,7 +19272,7 @@
    "build": {
     "animals": 1
    },
-   "text": "At the end of your turn, if you control a Food Character, take a Food token. At the start of your turn, spend 3 Food tokens: rehire a Character costing 2 or less from your Unemployment for nothing.",
+   "text": "At the end of your turn, if you control a Food Character, take a Food token. At the start of your turn, spend 2 Food tokens: rehire a Character costing 2 or less from your Unemployment for nothing.",
    "flavor": "A griddle, a hatch, a row of stools and an apron on a hook by the door. The Hiring Hall has twice asked to make it a formal arrangement and twice been told it would ruin it.",
    "abilities": [
     {
@@ -19287,7 +19295,7 @@
       "do": "spendToken",
       "of": "study",
       "study": "Food",
-      "count": 3,
+      "count": 2,
       "then": {
        "do": "rehire",
        "filter": {
@@ -19305,8 +19313,8 @@
    },
    "rarity": "Common",
    "power": {
-    "score": 2.21,
-    "power": 4.77,
+    "score": 3.33,
+    "power": 7.17,
     "opportunityCost": 6.82
    }
   },
@@ -19319,7 +19327,7 @@
    "build": {
     "animals": 1
    },
-   "text": "At the end of your turn, if you control an Entertainment Character, take an Entertainment token. At the start of your turn, spend 2 Entertainment tokens: draw a card.",
+   "text": "At the end of your turn, if you control an Entertainment Character, take an Entertainment token. At the start of your turn, spend 1 Entertainment token: draw a card.",
    "flavor": "It folds flat and goes home on Gabe's back, and it has stood in the children's corner, the bakery queue and every late room Cassadee has ever given away.",
    "abilities": [
     {
@@ -19342,7 +19350,7 @@
       "do": "spendToken",
       "of": "study",
       "study": "Entertainment",
-      "count": 2,
+      "count": 1,
       "then": {
        "do": "draw",
        "count": 1
@@ -19356,8 +19364,8 @@
    },
    "rarity": "Common",
    "power": {
-    "score": 2.14,
-    "power": 4.61,
+    "score": 3.25,
+    "power": 7.01,
     "opportunityCost": 6.82
    }
   },
@@ -19625,7 +19633,7 @@
    "build": {
     "animals": 1
    },
-   "text": "Whenever any Character is sent to Unemployment, gain 1 Supply, and each Mayor chooses one of their own Characters; until that Mayor’s next turn, nothing may take the chosen Character out of their town.",
+   "text": "Whenever any Character is sent to Unemployment, gain 2 Supply, and each Mayor chooses one of their own Characters; until that Mayor’s next turn, nothing may take the chosen Character out of their town.",
    "abilities": [
     {
      "trigger": "onCharacterUnemployed",
@@ -19634,7 +19642,7 @@
       "steps": [
        {
         "do": "gainSupply",
-        "amount": 1
+        "amount": 2
        },
        {
         "do": "protectCharacter",
@@ -19652,8 +19660,8 @@
    },
    "rarity": "Common",
    "power": {
-    "score": 2.62,
-    "power": 5.65,
+    "score": 3.91,
+    "power": 8.42,
     "opportunityCost": 6.82
    }
   },
@@ -20465,12 +20473,12 @@
    "build": {
     "animals": 1
    },
-   "text": "At the start of your turn, if you have raised three or more Buildings, draw a card and gain 1 Supply.",
+   "text": "At the start of your turn, if you have raised two or more Buildings, draw a card and gain 1 Supply.",
    "abilities": [
     {
      "trigger": "onTurnStart",
      "condition": {
-      "buildingsAtLeast": 3
+      "buildingsAtLeast": 2
      },
      "effect": {
       "do": "seq",
@@ -20543,14 +20551,14 @@
    "build": {
     "animals": 1
    },
-   "text": "Once each turn, when one of your Characters begins a shift, gain 1 Supply.",
+   "text": "Once each turn, when one of your Characters begins a shift, gain 2 Supply.",
    "abilities": [
     {
      "trigger": "onShiftStarted",
      "oncePerTurn": true,
      "effect": {
       "do": "gainSupply",
-      "amount": 1
+      "amount": 2
      }
     }
    ],
@@ -20561,8 +20569,8 @@
    },
    "rarity": "Common",
    "power": {
-    "score": 1.71,
-    "power": 3.69,
+    "score": 3.43,
+    "power": 7.38,
     "opportunityCost": 6.82
    }
   },
