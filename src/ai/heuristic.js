@@ -28,6 +28,7 @@
 import {
   cardDef, topCard, canAct, opponentOf, statueCount, findEventAssignment, eventReduction, rankOf, hasPassive,
   pledgeMinCost, townFootprint, townCap, hasTownRoom, rehireCost, cityRule, hasBuildingRoom, upgradesOver,
+  buildingUpkeepFor,
 } from '../engine/index.js';
 import { cardPower, effectPower } from '../engine/power.js';
 
@@ -607,6 +608,29 @@ function scoreAction(state, ctx, a, agg, out, P) {
       if (!hasBuildingRoom(state, ctx.pi)) s -= 4;
       if (ctx.statueThreat && ctx.upright.length - crew.length <= 0) s -= P.reservePenalty;
       out.why = `build ${d.name}`;
+      return s;
+    }
+
+    case 'demolish': {
+      // PROTOTYPE (rules.buildings.chargeUpkeep): a Building bills us every one of our turns, so it is
+      // only worth keeping while what it does for us beats that bill. An inert one (already unpaid) is
+      // doing nothing right now, so it is an easy call; a live one we tear down only when its upkeep,
+      // summed over how much game is left, outweighs its printed power — or when we are shut out of
+      // building/Statue room and this is the weakest thing standing in the way.
+      const d = def(state, a.cardId);
+      if (!d) return -1;
+      const b = (p.buildings || []).find((x) => x.uid === a.buildingUid);
+      const upkeep = buildingUpkeepFor(d);
+      const inert = !!(b && b.inert);
+      const value = cardPower(d, state.rules) * (inert ? 0.25 : 1);
+      const ongoingCost = upkeep * horizon;
+      const wantsRoom = !hasBuildingRoom(state, ctx.pi) && ctx.statueThreat;
+      const worker = findStack(state, ctx.pi, a.charUid);
+      const labour = worker ? stackRate(state, worker) * P.eventCharCost : 0;
+      let s = ongoingCost - value - upkeep * P.costWeight - P.bodyBonus * 0.5 - labour;
+      if (inert) s += 3;
+      if (wantsRoom) s += 8;
+      out.why = `demolish ${d.name}${inert ? ' (inert)' : ''}`;
       return s;
     }
 

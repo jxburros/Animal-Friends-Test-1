@@ -36,6 +36,8 @@ export const EFFECTS = new Set([
   'allCharactersToUnemployment', 'endAllShifts', 'everyoneLosesSupply', 'everyoneGainsSupply',
   'everyoneDraws', 'everyoneDiscardsDownTo', 'blockNextReady', 'everyoneRehiresFree',
   'everyoneUnemploys',
+  // PROTOTYPE: a toll a Mayor may be refused, rather than merely reduced, if they cannot cover it
+  'everyonePaysTollOrBusy',
 ]);
 export const TRIGGERS = new Set([
   'passive', 'busy', 'onRecruit', 'onTurnStart', 'onTurnEnd', 'onReady', 'onShiftStarted', 'onShiftCompleted',

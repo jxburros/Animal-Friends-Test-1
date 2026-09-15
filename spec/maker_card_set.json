@@ -20350,6 +20350,121 @@
     "power": 17.15,
     "opportunityCost": 2
    }
+  },
+  {
+   "id": "mk_dx_small_fair",
+   "type": "disruption",
+   "name": "The Small Fair",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: each Mayor pays 8 Supply, or everything they have and Busies one Character. Goes to the City Dump.",
+   "onReveal": {
+    "do": "everyonePaysTollOrBusy",
+    "amount": 8
+   },
+   "flavor": "Three stalls and a rope ring, but the toll man stands at the gate all the same. Copper says a fair this size is really just practice for the big one.",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.67,
+    "power": 8.8,
+    "opportunityCost": 2
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 11
+   }
+  },
+  {
+   "id": "mk_dx_county_fair",
+   "type": "disruption",
+   "name": "The County Fair",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: each Mayor pays 14 Supply, or everything they have and Busies one Character. Goes to the City Dump.",
+   "onReveal": {
+    "do": "everyonePaysTollOrBusy",
+    "amount": 14
+   },
+   "flavor": "Every stall in the borough turns up at once, and every one of them wants paying. Nobody remembers who first called it a fair rather than a tax.",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 11.67,
+    "power": 15.4,
+    "opportunityCost": 2
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 11
+   }
+  },
+  {
+   "id": "mk_dx_grand_fair",
+   "type": "disruption",
+   "name": "The Grand Fair",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: each Mayor pays 20 Supply, or everything they have and Busies one Character. Goes to the City Dump.",
+   "onReveal": {
+    "do": "everyonePaysTollOrBusy",
+    "amount": 20
+   },
+   "flavor": "The banners go up a whole season early, which Copper takes as fair warning: whatever is left in the strongbox by the time the Grand Fair arrives, it will not leave with you.",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 16.67,
+    "power": 22,
+    "opportunityCost": 2
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 11
+   }
+  },
+  {
+   "id": "mk_dx_midsummer_fair",
+   "type": "disruption",
+   "name": "The Midsummer Fair",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: each Mayor pays 26 Supply, or everything they have and Busies one Character. Goes to the City Dump.",
+   "onReveal": {
+    "do": "everyonePaysTollOrBusy",
+    "amount": 26
+   },
+   "flavor": "The longest day of the year and the longest queue at the gate. Whoever set the toll knew exactly how much a season of good trading leaves sitting in a strongbox.",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 21.67,
+    "power": 28.6,
+    "opportunityCost": 2
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 11
+   }
+  },
+  {
+   "id": "mk_dx_lord_mayors_fair",
+   "type": "disruption",
+   "name": "The Lord Mayor's Fair",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: each Mayor pays 32 Supply, or everything they have and Busies one Character. Goes to the City Dump.",
+   "onReveal": {
+    "do": "everyonePaysTollOrBusy",
+    "amount": 32
+   },
+   "flavor": "Once a generation, and the whole borough turns out, which is exactly the trouble: everyone with anything put by is expected to put it in the box at the gate.",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 26.68,
+    "power": 35.2,
+    "opportunityCost": 2
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 11
+   }
   }
  ],
  "newStudies": [
@@ -20515,9 +20630,14 @@
    ],
    "statueCount": 9,
    "pool": [
+    "mk_dx_lord_mayors_fair",
+    "mk_dx_midsummer_fair",
+    "mk_dx_grand_fair",
     "mk_dx_the_great_frost",
     "mk_dx_the_year_it_stopped",
+    "mk_dx_county_fair",
     "mk_dylan_river_otter_4",
+    "mk_dx_small_fair",
     "mk_barrow_stonecutter_5",
     "mk_faustus_threadmaster_5",
     "mk_brett_counsel_5",
@@ -20639,6 +20759,11 @@
     "mk_dx_tax_assessors",
     "mk_dx_lean_season",
     "mk_dx_the_short_week",
+    "mk_dx_lord_mayors_fair",
+    "mk_dx_midsummer_fair",
+    "mk_dx_grand_fair",
+    "mk_dx_county_fair",
+    "mk_dx_small_fair",
     "mk_dx_midges",
     "mk_dx_open_hiring",
     "mk_dx_meteor_shower",
@@ -20666,12 +20791,7 @@
     "mk_mittens_rooftop_cat_4",
     "mk_bld_festival_green",
     "mk_barnaby_night_auditor_4",
-    "mk_quinn_town_scrivener_3",
-    "mk_pockets_salvage_raccoon_4",
-    "mk_tuppence_curio_dealer_3",
-    "mk_bld_weighbridge",
-    "mk_bld_hiring_hall",
-    "mk_jake_warren_runner_3"
+    "mk_quinn_town_scrivener_3"
    ],
    "poolSize": 26,
    "minDisruptions": 6
@@ -20735,12 +20855,12 @@
     "mk_mkt_the_fitting",
     "mk_mkt_night_market",
     "mk_mkt_penny_jar",
-    "mk_dx_the_yards_go_quiet",
-    "mk_dx_six_weeks_shut",
-    "mk_dx_the_hiring_freeze",
-    "mk_dx_landslide",
+    "mk_dx_county_fair",
     "mk_dx_the_year_it_stopped",
-    "mk_dx_the_great_frost"
+    "mk_dx_the_great_frost",
+    "mk_dx_grand_fair",
+    "mk_dx_midsummer_fair",
+    "mk_dx_lord_mayors_fair"
    ],
    "poolSize": 26,
    "minDisruptions": 2
