@@ -28,6 +28,12 @@ export const FULL_ART_CARDS = Object.freeze({
   mk_maribel_horticulturist_4: Object.freeze({ number: '22', title: "Maribel, Horticulturist", url: new URL('../../assets/art/full-art/mk_maribel_horticulturist_4.png', import.meta.url).href }),
   mk_sota_telescope_fitter_3: Object.freeze({ number: '23', title: "Sota, Telescope Fitter", url: new URL('../../assets/art/full-art/mk_sota_telescope_fitter_3.png', import.meta.url).href }),
   mk_juniper_stargazer_5: Object.freeze({ number: '24', title: "Juniper, Stargazer", url: new URL('../../assets/art/full-art/mk_juniper_stargazer_5.png', import.meta.url).href }),
+  mk_berry_clockmaker_1: Object.freeze({ number: '25', title: "Berry, Clockmaker", url: new URL('../../assets/art/full-art/mk_berry_clockmaker_1.png', import.meta.url).href }),
+  mk_biff_chief_constable_4: Object.freeze({ number: '26', title: "Biff, Chief Constable", url: new URL('../../assets/art/full-art/mk_biff_chief_constable_4.png', import.meta.url).href }),
+  mk_clover_rocket_botanist_4: Object.freeze({ number: '27', title: "Clover, Rocket Botanist", url: new URL('../../assets/art/full-art/mk_clover_rocket_botanist_4.png', import.meta.url).href }),
+  mk_comet_rocket_mechanic_1: Object.freeze({ number: '28', title: "Comet, Rocket Mechanic", url: new URL('../../assets/art/full-art/mk_comet_rocket_mechanic_1.png', import.meta.url).href }),
+  mk_lynnette_master_printer_5: Object.freeze({ number: '29', title: "Lynnette, Master Printer", url: new URL('../../assets/art/full-art/mk_lynnette_master_printer_5.png', import.meta.url).href }),
+  mk_daisy_night_bloom_florist_3: Object.freeze({ number: '30', title: "Daisy, Night-Bloom Florist", url: new URL('../../assets/art/full-art/mk_daisy_night_bloom_florist_3.png', import.meta.url).href }),
 });
 
 /**
