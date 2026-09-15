@@ -34,6 +34,14 @@ export const FULL_ART_CARDS = Object.freeze({
   mk_comet_rocket_mechanic_1: Object.freeze({ number: '28', title: "Comet, Rocket Mechanic", url: new URL('../../assets/art/full-art/mk_comet_rocket_mechanic_1.png', import.meta.url).href }),
   mk_lynnette_master_printer_5: Object.freeze({ number: '29', title: "Lynnette, Master Printer", url: new URL('../../assets/art/full-art/mk_lynnette_master_printer_5.png', import.meta.url).href }),
   mk_daisy_night_bloom_florist_3: Object.freeze({ number: '30', title: "Daisy, Night-Bloom Florist", url: new URL('../../assets/art/full-art/mk_daisy_night_bloom_florist_3.png', import.meta.url).href }),
+  mk_betty_whittler_1: Object.freeze({ number: '31', title: "Betty, Whittler", url: new URL('../../assets/art/full-art/mk_betty_whittler_1.png', import.meta.url).href }),
+  mk_betty_land_clearer_5: Object.freeze({ number: '32', title: "Betty, Land Clearer", url: new URL('../../assets/art/full-art/mk_betty_land_clearer_5.png', import.meta.url).href }),
+  mk_clover_seedling_helper_0: Object.freeze({ number: '33', title: "Clover, Seedling Helper", url: new URL('../../assets/art/full-art/mk_clover_seedling_helper_0.png', import.meta.url).href }),
+  mk_tb_quill_wall: Object.freeze({ number: '34', title: "The Quill Wall", url: new URL('../../assets/art/full-art/mk_tb_quill_wall.png', import.meta.url).href }),
+  mk_quill_cider_maker_3: Object.freeze({ number: '35', title: "Quill, Cider Maker", url: new URL('../../assets/art/full-art/mk_quill_cider_maker_3.png', import.meta.url).href }),
+  mk_quill_harvest_steward_5: Object.freeze({ number: '36', title: "Quill, Harvest Steward", url: new URL('../../assets/art/full-art/mk_quill_harvest_steward_5.png', import.meta.url).href }),
+  mk_gwen_apron_on_the_hook_4: Object.freeze({ number: '37', title: "Gwen, The Apron on the Hook", url: new URL('../../assets/art/full-art/mk_gwen_apron_on_the_hook_4.png', import.meta.url).href }),
+  mk_annabelle_last_one_up_2: Object.freeze({ number: '38', title: "Annabelle, Last One Up", url: new URL('../../assets/art/full-art/mk_annabelle_last_one_up_2.png', import.meta.url).href }),
 });
 
 /**

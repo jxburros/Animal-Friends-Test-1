@@ -1,12 +1,15 @@
 # Full Art Collection
 
-Twenty-four existing cards get an intentionally distinct collectible presentation: individual 1024 × 1536
+Thirty-eight existing cards get an intentionally distinct collectible presentation: individual 1024 × 1536
 paintings extending across the entire face, deep translucent nameplates and rules panels, fine gold
 corner work, and a soft pearlescent sheen. The restrained highlight follows the pointer and also
 responds to keyboard focus. There is no continuous shimmer animation; reduced motion disables transitions.
 
-The first twelve are printed cards; the last twelve are Maker shelf cards (`spec/maker_card_set.json`)
-that were later given their own commissioned portrait.
+All Legendary Maker cards now have that presentation. Berry, Guild Warden and Biff, Chief Constable
+already had portraits; eight new paintings complete the Legendary set.
+
+The first twelve are printed cards; the later entries are Maker shelf cards
+(`spec/maker_card_set.json`) that were later given their own commissioned portrait.
 
 Open **Explore the Full Art cards** on the book cover. Each gallery card has a **Read** button for
 the complete rules, burden and flavor text. The same shared renderer covers the game table, hand,
@@ -38,6 +41,14 @@ Deck Workshop, previews and animation copies. Escape dismisses the reader or gal
 | 22 | Maribel — Horticulturist | — | Seed trays and drawers in a sunlit glasshouse |
 | 23 | Sota — Telescope Fitter | — | Seating a great lens by lamplight, back to the stars |
 | 24 | Juniper — Stargazer | — | A brass orrery on a hill above town, post satchel beside them |
+| 31 | Betty — Whittler | Legendary | Carving a woodland toy in a sunny nursery workshop |
+| 32 | Betty — Land Clearer | Legendary | Standing proudly at a newly cleared spring meadow |
+| 33 | Clover — Seedling Helper | Legendary | Sharing an oversized watering can in a dawn garden |
+| 34 | The Quill Wall | Legendary | A humble, well-mended wall guarding the borough at dusk |
+| 35 | Quill — Cider Maker | Legendary | Pouring cider in an apple-bright autumn barn |
+| 36 | Quill — Harvest Steward | Legendary | Welcoming workers with baskets and ladders at harvest time |
+| 37 | Gwen — The Apron on the Hook | Legendary | Paying a tired worker in the warm community kitchen |
+| 38 | Annabelle — Last One Up | Legendary | Rescuing rain-damp papers at the silent Salvage Yard |
 
 ## Paintings the Maker shelf inherited
 
