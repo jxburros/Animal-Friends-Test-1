@@ -1,6 +1,6 @@
 # Maker card artwork atlases
 
-Sixteen 4 × 4 painted sheets add 256 card-specific scenes for the Maker shelf. The built-in image-generation tool produced the sheets using existing project atlases as style and layout references only. The second set of four covers every remaining non-token Maker card that had no explicit art. The third set gives every token commissioned art and replaces 45 older shared images with scenes specific to the card. The fourth set replaces 64 more generic or mismatched fallbacks with card-specific civic, garden, masked-worker, diner and stage scenes.
+Twenty 4 × 4 painted sheets add 320 card-specific scenes for the Maker shelf. The built-in image-generation tool produced the sheets using existing project atlases as style and layout references only. The second set of four covers every remaining non-token Maker card that had no explicit art. The third set gives every token commissioned art and replaces 45 older shared images with scenes specific to the card. The fourth set replaces 64 more generic or mismatched fallbacks with card-specific civic, garden, masked-worker, diner and stage scenes. The fifth set corrects every remaining known character-species mismatch, replaces generic place art on 28 characters, and gives 19 additional character roles distinct scenes.
 
 The generated sheets are bundled unchanged:
 
@@ -20,6 +20,10 @@ The generated sheets are bundled unchanged:
 - `assets/art/maker-gardens-post-atlas.png`
 - `assets/art/maker-masked-hands-atlas.png`
 - `assets/art/maker-stage-counter-atlas.png`
+- `assets/art/maker-species-corrections-atlas.png`
+- `assets/art/maker-working-lives-atlas.png`
+- `assets/art/maker-night-stories-atlas.png`
+- `assets/art/maker-lantern-field-atlas.png`
 
 Tile indices are zero-based and row-major. The presentation-only assignments live in `src/ui/painted-art.js`; Maker rules and authoring data remain unchanged.
 
@@ -364,4 +368,88 @@ The later waves used existing Maker atlases as visual references and the same sh
 | 13 | `mk_gabe_whole_cast_5` | Gabe reveals an exuberant many-character puppet finale. |
 | 14 | `mk_faustus_wardrobe_master_4` | Calico wardrobe master fits elaborate practical open-mic costumes. |
 | 15 | `mk_roger_fair_day_judge_0` | Roger lets another animal toss his halfpenny to settle the best fair pitch. |
+
+## Maker Species Corrections
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_unknown_cook_0` | Mysterious raccoon serves hot food from a stationary riverside cart. |
+| 1 | `mk_curtained_performer_2` | Calico performer waits behind a red stage curtain beside the penciled running sheet. |
+| 2 | `mk_cookie_rusk_baker_1` | Red squirrel baker stores twice-baked bread and tests a roof-tile-hard biscuit. |
+| 3 | `mk_liz_plate_clerk_0` | Red fox clerk records loaded carts crossing the brass weighbridge. |
+| 4 | `mk_sota_the_same_bench_4` | Calico lens grinder and owl astronomer share one observatory bench. |
+| 5 | `mk_thistle_at_the_back_0` | Badger listens at the back of the music room with coat still on. |
+| 6 | `mk_osh_fair_fiddler_3` | Tiny mouse opens a fiddle case beside the traveling sharpening cart. |
+| 7 | `mk_sage_frost_watch_2` | Barn owl checks weather instruments and warns glasshouse farmers before frost. |
+| 8 | `mk_andrew_hand_copyist_3` | Barn owl copies and binds pages after midnight in the library. |
+| 9 | `mk_willow_the_harbour_office_0` | Brown otter runs a harbor office and sells a ferry contract. |
+| 10 | `mk_pockets_a_quiet_arrangement_5` | Raccoon makes a dubious quiet arrangement over a closed satchel. |
+| 11 | `mk_ned_the_ward_roll_0` | Red squirrel cross-references immaculate ward rolls. |
+| 12 | `mk_scott_the_index_1` | Red squirrel finds a dispute, an uncle and a joke in three archive volumes. |
+| 13 | `mk_taco_the_four_oclock_cart_2` | Brown otter serves hot food to lightermen at four in the morning. |
+| 14 | `mk_annabelle_last_one_up_2` | Raccoon rescues and dries rain-wet records before dawn. |
+| 15 | `mk_peter_the_winters_length_2` | Cream rabbit lays a living hedge through winter. |
+
+## Maker Working Lives
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_patch_salvage_sorter_2` | Raccoon repairs a discarded mangle and sells it back to its former owner. |
+| 1 | `mk_scott_natural_historian_4` | Squirrel natural historian chases an unwritten discovery through ferns. |
+| 2 | `mk_eric_row_farmer_3` | Rabbit row farmer announces generous wages to relieved field workers. |
+| 3 | `mk_eric_row_boss_4` | Eric recalls the entire planting schedule from memory. |
+| 4 | `mk_eric_best_farmer_5` | Eric holds a giant rosette while lawyers cling to the other end. |
+| 5 | `mk_kevin_counter_hand_2` | Fox counter hand does two animals' work during Gwen's rush. |
+| 6 | `mk_finn_griddle_hand_2` | Fox griddle hand flips breakfast while watching the weighbridge. |
+| 7 | `mk_comet_hatch_hand_2` | Calico hatch hand studies rocket plans between orders. |
+| 8 | `mk_peter_washing_up_1` | Rabbit washes a winter's enormous stack of dishes. |
+| 9 | `mk_adam_road_gang_2` | Badger road planner directs the shorter route to the county gate. |
+| 10 | `mk_osh_round_sharpener_1` | Mouse pushes a wheeled grindstone along the eleven-day round. |
+| 11 | `mk_bob_the_morning_they_share_1` | Sleepy hedgehog shares a rare tea with energetic twin Betty. |
+| 12 | `mk_pockets_four_times_a_year_0` | Raccoon visits the salvage yard, eats and leaves with a mystery object. |
+| 13 | `mk_hibiscus_the_sorting_bench_0` | Rabbit and fox couriers exchange the dawn mailbag. |
+| 14 | `mk_oatmeal_sunday_table_0` | Badger cooks Sunday dinner for nine family members. |
+| 15 | `mk_bob_gate_tolls_2` | Hedgehog closes the county gate while an important traveler protests. |
+
+## Maker Night Stories
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_beck_the_relief_roll_0` | Raccoon clerk keeps the relief roll in his own paw. |
+| 1 | `mk_patch_compost_yard_1` | Raccoon tends the one unpriced compost corner of his salvage yard. |
+| 2 | `mk_gwen_anybodys_counter_2` | Mouse gives an apron and immediate work to anyone who asks. |
+| 3 | `mk_gwen_apron_on_the_hook_4` | Gwen pays a returning worker at the end of the diner shift. |
+| 4 | `mk_liz_the_docket_3` | Fox records a weighbridge reading while studying the carter's face. |
+| 5 | `mk_liz_chief_assessor_5` | Liz gives the quarry's final measure beside precision weights. |
+| 6 | `mk_sage_the_watch_list_4` | Barn owl maintains a celestial watch list beside a star clock. |
+| 7 | `mk_andrew_the_late_desk_4` | Barn owl hand-copies pages into a hidden drawer at two in the morning. |
+| 8 | `mk_bean_the_early_shift_4` | Barn owl opens the café before dawn as night workers arrive. |
+| 9 | `mk_jessica_the_night_school_3` | Barn owl teaches working adults about the coming auction. |
+| 10 | `mk_tuppence_sold_before_the_cart_4` | Squirrel buys strange brass fittings before their use is understood. |
+| 11 | `mk_cassadee_the_only_one_at_the_back_1` | Hedgehog runs every backstage job alone at midnight. |
+| 12 | `mk_morty_the_boiler_test_0` | Badger conducts a faultless boiler test before a disappointed crowd. |
+| 13 | `mk_brett_counsel_5` | Badger counsel works through exactly three days of briefs. |
+| 14 | `mk_barnaby_night_auditor_4` | Barn owl avoids ledger questions by discussing serial stories. |
+| 15 | `mk_barrow_stonecutter_5` | Badger prices a building lot from the pavement with perfect accuracy. |
+
+## Maker Lantern & Field
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_benjamin_wick_trimmer_0` | Brown otter trims every river-path lantern himself. |
+| 1 | `mk_benjamin_lantern_maker_2` | Benjamin studies the blue base of a flame at his workshop bench. |
+| 2 | `mk_benjamin_town_historian_3` | Benjamin holds a lamp to an old beam and recalls its rebuilding. |
+| 3 | `mk_benjamin_master_lantern_maker_4` | Benjamin fills polished brass lamps while Mandee waits. |
+| 4 | `mk_benjamin_keeper_of_the_light_5` | Benjamin studies fire records beside rebuilt river cottages. |
+| 5 | `mk_thistle_almanac_keeper_1` | Badger checks the same frost forecast for the eleventh year. |
+| 6 | `mk_thistle_field_hand_2` | Thistle works a crop row from lantern-light to moonrise. |
+| 7 | `mk_thistle_grange_warden_3` | Thistle teaches new harvesters while one fox causes chaos. |
+| 8 | `mk_thistle_field_surveyor_4` | Thistle measures acreage with long strides and a survey chain. |
+| 9 | `mk_thistle_grange_elder_5` | Thistle sets the exact pace for a whole harvest crew. |
+| 10 | `mk_earl_tea_boy_0` | Fox carries an overloaded tea tray and gives unsolicited advice. |
+| 11 | `mk_earl_tea_trader_2` | Earl offers a spare cup with a hidden price in advice. |
+| 12 | `mk_earl_coffee_roaster_3` | Earl roasts coffee at four in the morning with too many plans. |
+| 13 | `mk_earl_tea_house_keeper_4` | Earl hosts a two-hour afternoon conversation beneath hanging herbs. |
+| 14 | `mk_mandee_night_courier_1` | Fox courier waits at the sorting bench with Benjamin's lantern. |
+| 15 | `mk_mittens_rooftop_cat_4` | Tuxedo cat points out one faulty hinge from a moonlit roof. |
 
