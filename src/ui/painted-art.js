@@ -33,6 +33,10 @@ export const MAKER_SPECIES_CORRECTIONS_ATLAS_URL = new URL('../../assets/art/mak
 export const MAKER_WORKING_LIVES_ATLAS_URL = new URL('../../assets/art/maker-working-lives-atlas.png', import.meta.url).href;
 export const MAKER_NIGHT_STORIES_ATLAS_URL = new URL('../../assets/art/maker-night-stories-atlas.png', import.meta.url).href;
 export const MAKER_LANTERN_FIELD_ATLAS_URL = new URL('../../assets/art/maker-lantern-field-atlas.png', import.meta.url).href;
+export const MAKER_BROADCAST_STAGE_ATLAS_URL = new URL('../../assets/art/maker-broadcast-stage-atlas.png', import.meta.url).href;
+export const MAKER_FAIRS_KITCHENS_ATLAS_URL = new URL('../../assets/art/maker-fairs-kitchens-atlas.png', import.meta.url).href;
+export const MAKER_CRAFT_RIVER_ATLAS_URL = new URL('../../assets/art/maker-craft-river-atlas.png', import.meta.url).href;
+export const MAKER_BOOKS_SCHOOL_ATLAS_URL = new URL('../../assets/art/maker-books-school-atlas.png', import.meta.url).href;
 const SPECIES_TILE = { Rabbit: 0, Mouse: 1, Fox: 2, Raccoon: 3, Hedgehog: 4, Badger: 5, Otter: 6, Squirrel: 7 };
 const ATLASES = {
   boroughs: () => PAINTED_ATLAS_URL,
@@ -63,6 +67,10 @@ const ATLASES = {
   makerworkinglives: () => MAKER_WORKING_LIVES_ATLAS_URL,
   makernightstories: () => MAKER_NIGHT_STORIES_ATLAS_URL,
   makerlanternfield: () => MAKER_LANTERN_FIELD_ATLAS_URL,
+  makerbroadcaststage: () => MAKER_BROADCAST_STAGE_ATLAS_URL,
+  makerfairskitchens: () => MAKER_FAIRS_KITCHENS_ATLAS_URL,
+  makercraftriver: () => MAKER_CRAFT_RIVER_ATLAS_URL,
+  makerbooksschool: () => MAKER_BOOKS_SCHOOL_ATLAS_URL,
 };
 
 // Presentation-only corrections for Maker shelf cards. Keeping these assignments here lets the
@@ -408,6 +416,74 @@ export const MAKER_ART_TILES = Object.freeze({
   mk_earl_tea_house_keeper_4: { atlas: 'makerlanternfield', tile: 13 },
   mk_mandee_night_courier_1: { atlas: 'makerlanternfield', tile: 14 },
   mk_mittens_rooftop_cat_4: { atlas: 'makerlanternfield', tile: 15 },
+
+  mk_tabitha_festival_photographer_0: { atlas: 'makerbroadcaststage', tile: 0 },
+  mk_tabitha_lens_apprentice_1: { atlas: 'makerbroadcaststage', tile: 1 },
+  mk_tabitha_videographer_2: { atlas: 'makerbroadcaststage', tile: 2 },
+  mk_tabitha_optics_scientist_4: { atlas: 'makerbroadcaststage', tile: 3 },
+  mk_tabitha_camerawoman_5: { atlas: 'makerbroadcaststage', tile: 4 },
+  mk_winter_segment_runner_0: { atlas: 'makerbroadcaststage', tile: 5 },
+  mk_winter_turned_down_applicant_1: { atlas: 'makerbroadcaststage', tile: 6 },
+  mk_winter_science_show_host_2: { atlas: 'makerbroadcaststage', tile: 7 },
+  mk_winter_head_science_producer_4: { atlas: 'makerbroadcaststage', tile: 8 },
+  mk_winter_tv_scientist_5: { atlas: 'makerbroadcaststage', tile: 9 },
+  mk_fred_wandered_onto_stage_0: { atlas: 'makerbroadcaststage', tile: 10 },
+  mk_fred_held_the_ladder_wrong_2: { atlas: 'makerbroadcaststage', tile: 11 },
+  mk_fred_backstage_crew_3: { atlas: 'makerbroadcaststage', tile: 12 },
+  mk_fred_crew_doesnt_ask_5: { atlas: 'makerbroadcaststage', tile: 13 },
+  mk_yellow_open_mic_regular_1: { atlas: 'makerbroadcaststage', tile: 14 },
+  mk_yellow_freshest_thing_4: { atlas: 'makerbroadcaststage', tile: 15 },
+
+  mk_abigail_counter_girl_1: { atlas: 'makerfairskitchens', tile: 0 },
+  mk_abigail_five_minutes_2: { atlas: 'makerfairskitchens', tile: 1 },
+  mk_abigail_best_waitress_4: { atlas: 'makerfairskitchens', tile: 2 },
+  mk_abigail_standing_slot_5: { atlas: 'makerfairskitchens', tile: 3 },
+  mk_dx_small_fair: { atlas: 'makerfairskitchens', tile: 4 },
+  mk_dx_county_fair: { atlas: 'makerfairskitchens', tile: 5 },
+  mk_dx_assessors_round: { atlas: 'makerfairskitchens', tile: 6 },
+  mk_dx_the_reckoning: { atlas: 'makerfairskitchens', tile: 7 },
+  mk_dx_midsummer_fair: { atlas: 'makerfairskitchens', tile: 8 },
+  mk_dx_lord_mayors_fair: { atlas: 'makerfairskitchens', tile: 9 },
+  mk_comet_rocket_mechanic_1: { atlas: 'makerfairskitchens', tile: 10 },
+  mk_comet_test_pilot_3: { atlas: 'makerfairskitchens', tile: 11 },
+  mk_morty_watermill_mechanic_3: { atlas: 'makerfairskitchens', tile: 12 },
+  mk_morty_steam_engineer_4: { atlas: 'makerfairskitchens', tile: 13 },
+  mk_morty_master_millwright_5: { atlas: 'makerfairskitchens', tile: 14 },
+  mk_rosabeth_apothecary_3: { atlas: 'makerfairskitchens', tile: 15 },
+
+  mk_moss_ploughwright_1: { atlas: 'makercraftriver', tile: 0 },
+  mk_moss_guild_architect_3: { atlas: 'makercraftriver', tile: 1 },
+  mk_moss_rocketwright_4: { atlas: 'makercraftriver', tile: 2 },
+  mk_patch_junkyard_diver_0: { atlas: 'makercraftriver', tile: 3 },
+  mk_patch_valuer_3: { atlas: 'makercraftriver', tile: 4 },
+  mk_patch_yard_foreman_4: { atlas: 'makercraftriver', tile: 5 },
+  mk_patch_reclamation_merchant_5: { atlas: 'makercraftriver', tile: 6 },
+  mk_pebble_crossing_hand_0: { atlas: 'makercraftriver', tile: 7 },
+  mk_pebble_bridge_courier_1: { atlas: 'makercraftriver', tile: 8 },
+  mk_pebble_ferry_master_3: { atlas: 'makercraftriver', tile: 9 },
+  mk_pebble_towpath_warden_4: { atlas: 'makercraftriver', tile: 10 },
+  mk_pebble_harbour_warden_5: { atlas: 'makercraftriver', tile: 11 },
+  mk_pockets_kerbside_dealer_1: { atlas: 'makercraftriver', tile: 12 },
+  mk_pockets_odd_lot_dealer_3: { atlas: 'makercraftriver', tile: 13 },
+  mk_rosabeth_tincture_counter_4: { atlas: 'makercraftriver', tile: 14 },
+  mk_daisy_garland_cutter_1: { atlas: 'makercraftriver', tile: 15 },
+
+  mk_scott_story_collector_0: { atlas: 'makerbooksschool', tile: 0 },
+  mk_scott_pamphleteer_2: { atlas: 'makerbooksschool', tile: 1 },
+  mk_scott_town_chronicler_3: { atlas: 'makerbooksschool', tile: 2 },
+  mk_scott_author_of_the_boroughs_5: { atlas: 'makerbooksschool', tile: 3 },
+  mk_sage_night_assistant_0: { atlas: 'makerbooksschool', tile: 4 },
+  mk_sage_astronomer_3: { atlas: 'makerbooksschool', tile: 5 },
+  mk_sage_royal_astronomer_5: { atlas: 'makerbooksschool', tile: 6 },
+  mk_eric_smallholder_1: { atlas: 'makerbooksschool', tile: 7 },
+  mk_eric_fair_steward_2: { atlas: 'makerbooksschool', tile: 8 },
+  mk_jessica_song_leader_0: { atlas: 'makerbooksschool', tile: 9 },
+  mk_jessica_infant_teacher_1: { atlas: 'makerbooksschool', tile: 10 },
+  mk_jessica_night_school_teacher_2: { atlas: 'makerbooksschool', tile: 11 },
+  mk_jessica_headmistress_4: { atlas: 'makerbooksschool', tile: 12 },
+  mk_faustus_bolt_boy_0: { atlas: 'makerbooksschool', tile: 13 },
+  mk_faustus_costumier_2: { atlas: 'makerbooksschool', tile: 14 },
+  mk_faustus_sailmaker_3: { atlas: 'makerbooksschool', tile: 15 },
 });
 
 function explicitArt(def) {

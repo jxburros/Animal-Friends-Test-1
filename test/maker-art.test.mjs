@@ -23,6 +23,10 @@ import {
   MAKER_WORKING_LIVES_ATLAS_URL,
   MAKER_NIGHT_STORIES_ATLAS_URL,
   MAKER_LANTERN_FIELD_ATLAS_URL,
+  MAKER_BROADCAST_STAGE_ATLAS_URL,
+  MAKER_FAIRS_KITCHENS_ATLAS_URL,
+  MAKER_CRAFT_RIVER_ATLAS_URL,
+  MAKER_BOOKS_SCHOOL_ATLAS_URL,
   paintedArtSVG,
 } from '../src/ui/painted-art.js';
 
@@ -49,11 +53,15 @@ const atlasUrls = {
   makerworkinglives: MAKER_WORKING_LIVES_ATLAS_URL,
   makernightstories: MAKER_NIGHT_STORIES_ATLAS_URL,
   makerlanternfield: MAKER_LANTERN_FIELD_ATLAS_URL,
+  makerbroadcaststage: MAKER_BROADCAST_STAGE_ATLAS_URL,
+  makerfairskitchens: MAKER_FAIRS_KITCHENS_ATLAS_URL,
+  makercraftriver: MAKER_CRAFT_RIVER_ATLAS_URL,
+  makerbooksschool: MAKER_BOOKS_SCHOOL_ATLAS_URL,
 };
 
-test('twenty Maker atlases assign 320 existing cards to every tile exactly once', () => {
+test('twenty-four Maker atlases assign 384 existing cards to every tile exactly once', () => {
   const entries = Object.entries(MAKER_ART_TILES);
-  assert.equal(entries.length, 320);
+  assert.equal(entries.length, 384);
 
   for (const [atlas, url] of Object.entries(atlasUrls)) {
     const assignments = entries.filter(([, art]) => art.atlas === atlas);
@@ -101,6 +109,63 @@ test('every Maker token has commissioned art and selected shared scenes are repl
   assert.equal(MAKER_ART_TILES.mk_eric_best_farmer_5.atlas, 'makerworkinglives');
   assert.equal(MAKER_ART_TILES.mk_beck_the_relief_roll_0.atlas, 'makernightstories');
   assert.equal(MAKER_ART_TILES.mk_benjamin_keeper_of_the_light_5.atlas, 'makerlanternfield');
+  assert.equal(MAKER_ART_TILES.mk_tabitha_camerawoman_5.atlas, 'makerbroadcaststage');
+  assert.equal(MAKER_ART_TILES.mk_dx_lord_mayors_fair.atlas, 'makerfairskitchens');
+  assert.equal(MAKER_ART_TILES.mk_pebble_harbour_warden_5.atlas, 'makercraftriver');
+  assert.equal(MAKER_ART_TILES.mk_jessica_headmistress_4.atlas, 'makerbooksschool');
+});
+
+test('every newly added character and fair card has a commissioned scene', () => {
+  const newCharacterPrefixes = ['mk_tabitha_', 'mk_abigail_', 'mk_winter_', 'mk_fred_', 'mk_yellow_'];
+  const newFairIds = new Set([
+    'mk_dx_small_fair',
+    'mk_dx_county_fair',
+    'mk_dx_assessors_round',
+    'mk_dx_the_reckoning',
+    'mk_dx_midsummer_fair',
+    'mk_dx_lord_mayors_fair',
+  ]);
+  const newCards = MAKER.cards.filter((card) =>
+    newCharacterPrefixes.some((prefix) => card.id.startsWith(prefix)) || newFairIds.has(card.id));
+
+  assert.equal(newCards.length, 26);
+  assert.deepEqual(newCards.filter((card) => !MAKER_ART_TILES[card.id]), []);
+});
+
+test('the sixth-wave character roster uses the species declared by the card set', () => {
+  const expectedSpeciesByName = {
+    Tabitha: 'Hedgehog',
+    Winter: 'Owl',
+    Fred: 'Owl',
+    Yellow: 'Squirrel',
+    Abigail: 'Otter',
+    Comet: 'Cat',
+    Morty: 'Badger',
+    Rosabeth: 'Mouse',
+    Moss: 'Badger',
+    Patch: 'Raccoon',
+    Pebble: 'Otter',
+    Pockets: 'Raccoon',
+    Daisy: 'Squirrel',
+    Scott: 'Squirrel',
+    Sage: 'Owl',
+    Eric: 'Rabbit',
+    Jessica: 'Owl',
+    Faustus: 'Cat',
+  };
+  const sixthWaveAtlases = new Set([
+    'makerbroadcaststage',
+    'makerfairskitchens',
+    'makercraftriver',
+    'makerbooksschool',
+  ]);
+  const characters = MAKER.cards.filter((card) =>
+    card.type === 'character' && sixthWaveAtlases.has(MAKER_ART_TILES[card.id]?.atlas));
+
+  assert.equal(characters.length, 58);
+  for (const card of characters) {
+    assert.equal(card.species, expectedSpeciesByName[card.name], card.id);
+  }
 });
 
 test('the remaining known character-species mismatches use corrected paintings', () => {
