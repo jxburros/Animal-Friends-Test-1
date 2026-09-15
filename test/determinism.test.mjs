@@ -84,8 +84,12 @@ function checkInvariants(state, seed, marketSize) {
     + p.unemployment.filter((c) => (state.set.cardsById[c.cardId] || {}).type === 'marketCharacter').length,
     0,
   );
+  // Only the Buildings that came out of the Capital City count as market cards: a Town Building is
+  // its own deck's card and stays one while it is standing, which matters now that the printed decks
+  // hold them. Both halves of the census have to agree about which side of the table it is on.
   const marketTotal = m.deck.length + m.city.length + m.cityDump.length + m.outOfPlay.length + m.revealQueue.length
-    + state.players.reduce((a, p) => a + p.victoryRow.length + (p.buildings || []).length, 0) + hired;
+    + state.players.reduce((a, p) => a + p.victoryRow.length
+      + (p.buildings || []).filter((b) => b.source !== 'deck').length, 0) + hired;
   assert.equal(marketTotal, marketSize, `seed ${seed} turn ${state.turnNumber}: market card total`);
   // Deck cards are counted across both towns rather than one at a time, exactly as
   // scripts/invariants.mjs does, because cards change hands: the Bin Round lifts an Event out of the
@@ -93,7 +97,8 @@ function checkInvariants(state, seed, marketSize) {
   // Unemployment. What has to hold is that no deck card is ever created or lost, not that each town
   // still holds the number it was dealt.
   const ownCards = (p) => p.deck.length + p.hand.length + p.dump.length + p.unemployment.length
-    + p.events.length + p.town.reduce((a, s) => a + s.cards.length, 0) - ownHired(state, p);
+    + p.events.length + p.town.reduce((a, s) => a + s.cards.length, 0)
+    + (p.buildings || []).filter((b) => b.source === 'deck').length - ownHired(state, p);
   assert.equal(state.players.reduce((a, p) => a + ownCards(p), 0), RULES.setup.deckSize * 2,
     `seed ${seed} turn ${state.turnNumber}: deck cards between the two towns`);
   for (const p of state.players) {

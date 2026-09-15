@@ -4,9 +4,11 @@
 //   node scripts/playtest.mjs [--games N] [--seed S] [--p0 heuristic|random] [--p1 heuristic|random]
 //                             [--decks <a>,<b>|alternate|all] [--market <id>|all] [--verbose] [--aggression A]
 //
-// Deck names may be full ids (burrow-bloom) or short aliases (bb, pp, br, rr, ll, rw, ww, vl, hh, tt, mm, ss). `alternate` swaps the
-// first two decks between seats; `all` rotates through every ordered pair of decks in the set.
-// `--market` picks the shared Market Deck (first-boroughs, boom-town, hard-times) or rotates through all.
+// Deck names are the ids in the set (mk-ledger-larder, mk-wall-window, …). `alternate` swaps the
+// first two decks between seats; `all` rotates through every ordered pair of decks in the set — with
+// fifteen decks that is 210 ordered pairs, so `--games` wants to be a multiple of it to stay
+// balanced. `--market` picks one Capital City (mk-first-workings, mk-hard-times, mk-hiring-fair) or
+// rotates through all of them.
 //
 // Also exports runPlaytest(opts) -> stats object, for use from tests.
 
@@ -19,11 +21,12 @@ const rules = JSON.parse(fs.readFileSync(new URL('../spec/game.json', import.met
 const set = JSON.parse(fs.readFileSync(new URL('../spec/maker_card_set.json', import.meta.url)));
 
 const DECK_IDS = set.decks.map((d) => d.id);
-const SHORT_ALIAS = {
-  bb: 'burrow-bloom', pp: 'paws-papers', br: 'bramble-bristle', rr: 'ripple-rune', ll: 'lantern-ledger', rw: 'root-rampart',
-  ww: 'whisker-willow', vl: 'velvet-ledger', hh: 'hedge-harvest', tt: 'tales-tolls',
-  mm: 'moon-mocha', ss: 'steam-starlight',
-};
+// Aliases for the ids in the set, so `--decks ll,ww` works. Derived rather than listed: the roster is
+// rebuilt by scripts/build-decks.mjs and a hand-kept table of names goes stale the moment it is.
+const SHORT_ALIAS = Object.fromEntries(DECK_IDS.map((id) => {
+  const words = id.replace(/^mk-/, '').split('-');
+  return [words.map((w) => w[0]).join(''), id];
+}).filter(([alias], i, all) => all.filter(([a]) => a === alias).length === 1));
 const DECK_ALIAS = { ...SHORT_ALIAS, ...Object.fromEntries(DECK_IDS.map((id) => [id, id])) };
 // Stats are keyed by deck id; the pairings cycle through every ordered pair of distinct decks.
 const DECK_PAIRS = DECK_IDS.flatMap((a) => DECK_IDS.filter((b) => b !== a).map((b) => [a, b]));

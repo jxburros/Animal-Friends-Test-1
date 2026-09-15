@@ -1,10 +1,63 @@
 # Playtest notes (prototype, automated)
 
-Method: `npm run playtest -- --games 720 --decks all --market all`, heuristic AI on both sides,
-walking the full cross product of 30 ordered deck pairings and 6 Market Decks. Headline figures are
-the **mean of three independent runs** of 720 games, and `origin/main` was measured with the identical
-harness, so the before-and-after is apples to apples. Numbers are from the current `spec/` after the
-v0.6.0 pass; the v0.7.0 section at the top is a single run over the eight-deck, seven-market set.
+Method: `npm run playtest -- --games N --decks all --market all`, heuristic AI on both sides, walking
+the full cross product of every ordered deck pairing and every Capital City. The set the harness runs
+over has changed several times, so each section below says what it measured: the v0.12.0 run at the
+top is one run of 1260 games over fifteen decks and three Capital Cities, v0.7.0 was one run of 1120
+over eight decks and seven markets, and the v0.6.0 figures further down are the **mean of three
+independent runs** of 720 games with `origin/main` measured on the identical harness.
+
+## v0.12.0 — fifteen decks, three Capital Cities, and a floor that bites
+
+One run of `npm run playtest -- --games 1260 --decks all --market all`: the full cross product of the
+210 ordered pairings of the fifteen printed decks and all three Capital Cities, heuristic AI on both
+sides. A single run, not the mean of three, so read the deck figures as ±3 points.
+
+**The decks were rebuilt to show the collection rather than to win with it.** Copies are capped at two
+(one for a Super Rare), the roster covers all ten species and all eight studies, Town Buildings are in
+a printed deck for the first time, and a card no earlier deck has taken wins every tie in the builder.
+The printed decks between them now reach **255 of the 380 cards a deck may legally hold (67%), against
+46 (12%) before** — every Town Building, 40 of 49 Events, 197 of 313 Characters.
+
+**Deck balance: 31.6 points of spread**, Hedgerow & Hearth at 64.3% and Wall & Window at 32.7%. Games
+still finish: 1259 of 1260 ended on Statues, mean length 36.5 turns.
+
+**The economy floor had stopped biting, and that was most of the spread.** The v0.6.0 floor counts
+*cards* that produce Supply or draw. Once a Character's shift was counted as economy — which it plainly
+is, and which the old rule missed entirely — almost every Character qualified and the floor was met by
+accident. The first rebuild measured at **49.5 points of spread**, and the cause was legible:
+
+| | corr. with win rate |
+|---|---|
+| shift throughput (Σ `output / delay` over the deck's Characters) | **0.78** |
+| Characters in the deck | 0.70 |
+| Events in the deck | −0.70 |
+| total power of the deck's cards | 0.26 |
+| Supply the deck's curve can pledge | 0.01 |
+
+The three decks below 32 throughput won 19%, 21% and 35%, and **all three were Owl decks** — the Owl
+charter working exactly as written ("an Owl town is wise, awake and poor"). A species hole is a thing
+to build around, not a thing to print a losing deck about, so the builder gained a **throughput floor**
+of 42: a deck short of it trades its least useful Events for the best earners it can reach, from
+outside its own two species if that is what it takes. That took the spread from 49.5 to 31.6, lifted
+every Owl deck (Dome & Harbour 34.5 → 46.4, Wall & Window 19.0 → 32.7, Warren & Watch 21.4 → 38.7),
+and dropped throughput's correlation with win rate from 0.78 to 0.25 — which is the point. What is
+left is species identity rather than deck construction, and that is a different job.
+
+**Three Capital Cities, and none of them decides the game.** The First Workings deals from the whole
+market catalogue (88 lots), Hard Times leans on weather and Ordinances with a floor of six on-reveal
+cards in twenty-six, and the Hiring Fair on animals to take on and roofs to put up. Seat advantage
+across them runs 46.7% / 52.9% / 51.3% for the first player, which is the same seat noise the rest of
+the harness shows.
+
+Under *random* agents the three markets finish 82%, 70% and 78% of games inside the turn cap. Hard
+Times being the hardest to finish is the market working as printed; a random agent never clears an
+Ordinance and never rebuilds a town efficiently, and under the heuristic all three finish.
+
+Card conservation holds over 200 random-vs-random games across all three Capital Cities
+(`npm run invariants`). Putting Town Buildings in decks turned up a latent bug in that census and in
+`test/determinism.test.mjs`: a Building raised out of a player's own deck was being counted as a market
+card. No deck had ever held one, so nothing had ever noticed.
 
 ## v0.7.0 — Night Shift: Owls, Science, and the Cat's trick
 
@@ -211,7 +264,12 @@ Card conservation holds over 200 random-vs-random games across all six Market De
 
 ## Still open
 
-1. **Deck balance is still the biggest problem.** 24.4 points of spread is a real improvement on the
+1. **Deck balance is still the biggest problem.** (Superseded by the v0.12.0 section above, which
+   measures 31.6 points across fifteen decks and names what is left: species identity rather than
+   deck construction. The diagnosis below is kept because it is the one that produced the economy
+   floor, and because the floor stopping working is exactly how the problem came back.)
+
+   24.4 points of spread is a real improvement on the
    33.2 on `origin/main` — every run after the pass beat every run before it — but nothing about it is
    solved: Root & Rampart still sits at 40.8% and Paws & Papers at 60.7%.
 

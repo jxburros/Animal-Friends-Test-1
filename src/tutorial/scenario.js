@@ -44,6 +44,20 @@ const C = {
 const HUMAN_HAND = [C.peanut, C.daisy, C.barista, C.freshBatch, C.ledgerDay, C.standingRound];
 const HUMAN_NEXT = [C.ned, C.clover];
 const RIVAL_HAND = [C.comet, C.cometMech, C.moss, C.inkwell, C.guildNight, C.countdown, C.boiler];
+
+/**
+ * The cards each town deck must hold for the arranged match to be arrangeable at all.
+ *
+ * The tutorial is played with the real printed decks rather than a private list, which is the whole
+ * point of it — the lesson is about cards the player will meet again. That makes it a standing
+ * constraint on those two decks, so `scripts/build-decks.mjs` reads this and seeds them first.
+ * Without it, rebuilding the decks silently breaks the tutorial and only the tutorial's own tests
+ * notice.
+ */
+export const TUTORIAL_DECK_CARDS = {
+  [TUTORIAL_HUMAN_DECK]: [...HUMAN_HAND, ...HUMAN_NEXT],
+  [TUTORIAL_RIVAL_DECK]: [...RIVAL_HAND],
+};
 // Display order matters: the Capital City ages from the front, so the Statue goes last and is still
 // on show when the player is ready to bid for it on turn 5.
 const CITY = ['mk_mkt_town_bell', 'mk_mkt_penny_jar', C.grant, 'mk_mkt_telescope_hire', C.kindness];
