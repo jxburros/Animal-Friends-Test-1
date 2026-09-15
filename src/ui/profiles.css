@@ -30,8 +30,8 @@
 .menu-row{display:flex;gap:10px;align-items:center;margin:8px 0}
 
 /* Choosing the card you are known by. */
-.avatar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px;max-height:60vh;overflow:auto;padding:6px;border:1px solid var(--line);border-radius:10px;background:#fffaf055}
-.avatar-pick{padding:3px;border:2px solid transparent;border-radius:12px;background:none;box-shadow:none}
+.avatar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(calc(var(--card-w) + 10px),1fr));gap:14px;justify-items:center;align-items:start;max-height:60vh;overflow:auto;padding:6px;border:1px solid var(--line);border-radius:10px;background:#fffaf055}
+.avatar-pick{display:flex;padding:3px;border:2px solid transparent;border-radius:12px;background:none;box-shadow:none;line-height:0}
 .avatar-pick:hover{border-color:var(--gold)}
 .avatar-pick.selected{border-color:var(--ink);box-shadow:0 0 0 3px var(--gold3)}
 
@@ -51,13 +51,13 @@
 
 /* ---------- opening a pack ---------- */
 .pack-open{max-width:960px;margin:0 auto;padding:18px 16px 28px}
-.pack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-top:8px}
-.pack-slot{position:relative;padding:3px;border:2px solid transparent;border-radius:12px;background:none;box-shadow:none}
+.pack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(calc(var(--card-w) + 10px),1fr));gap:14px;margin-top:8px;justify-items:center;align-items:start}
+.pack-slot{position:relative;display:flex;padding:3px;border:2px solid transparent;border-radius:12px;background:none;box-shadow:none;line-height:0}
 .pack-slot .pack-back{width:var(--card-w);height:var(--card-h);border-radius:10px;border:2px solid var(--ink);background:linear-gradient(140deg,#7a5636,#5d3f27);color:var(--gold3);display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:var(--shadow2)}
 .pack-slot.turned{cursor:default}
 .pack-slot.hit .pack-back{background:linear-gradient(140deg,#6f4a8a,#4a2f5f)}
 .pack-slot.is-new.turned{border-color:var(--gold)}
-.new-flag{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#fff;border:1.5px solid var(--ink);border-radius:6px;font-size:10px;padding:1px 5px;letter-spacing:.04em;text-transform:uppercase}
+.new-flag{position:absolute;top:-4px;right:-4px;z-index:10;background:var(--gold);color:#fff;border:1.5px solid var(--ink);border-radius:6px;font-size:10px;padding:1px 5px;letter-spacing:.04em;text-transform:uppercase}
 .unlock-note{margin:14px 0 0;padding:10px 12px;border:2px solid var(--green);border-radius:8px;background:var(--green2);font-size:13.5px}
 
 /* ---------- games left unfinished ---------- */
