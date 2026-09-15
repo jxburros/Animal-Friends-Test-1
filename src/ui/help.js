@@ -175,6 +175,16 @@ function rulesHTML(rules) {
     or study to pay for them and Town Buildings need a crew to raise them, so a deck with few animals in it
     is a deck that cannot play its own cards.</p>
 
+    <h3>Buildings &amp; upkeep</h3>
+    <p>Buildings bought at auction and Town Buildings raised from your own deck both stand among your
+    ${rules.buildings.maxPerTown} Building places, and both charge <strong>upkeep</strong>: every standing
+    Building bills its owner at the start of their turn — a card's own printed cost, or a quarter of its
+    Supply cost rounded, minimum 1. Cannot pay? The Building is knocked on its side and grants nothing
+    until you can afford the bill, which happens automatically the moment you can. You may also
+    <strong>demolish</strong> a Building of your own on purpose — pay its upkeep fee a second time and
+    make one upright animal Busy to do the tearing-down — a real answer to a Building that has stopped
+    earning its keep. A Statue never charges upkeep and can never be demolished.</p>
+
     <h3>Statues &amp; victory</h3>
     <p>Statues won from the Capital City stand among your Buildings and count toward victory. Control
     ${rules.victory.statuesToWin} of the ${rules.victory.statueTotal} Statues to win the game — the Capital City
@@ -266,6 +276,14 @@ function faqEntries(rules) {
     {
       q: 'What does a face-down animal mean?',
       a: 'It is out of work. Some Events and shared shocks put animals into Unemployment; they stay in your town, face down, still taking up a place, and either Mayor may turn one over to read it. Rehire them for their full printed cost to bring them back upright, promote them with a better version of the same animal for the difference, or lay them off for good, which is free and frees their place.',
+    },
+    {
+      q: 'Why is my Building lying on its side, doing nothing?',
+      a: `It missed its upkeep. Every standing Building — bought at auction or built from your own deck — bills its owner at the start of their turn, a card's own printed cost or a quarter of its Supply cost rounded (minimum 1). A bill you cannot afford goes unpaid: the Building goes inert until you can pay it, which happens automatically the first turn you can. A Statue never charges upkeep.`,
+    },
+    {
+      q: 'Can I tear down my own Building?',
+      a: 'Yes. Pay its upkeep fee a second time and make one upright animal Busy to do the demolishing, and it comes down on purpose — a Capital City Building to the City Dump, a Town Building to your own Town Dump, freeing its place either way. That is deliberately two payments: one for the upkeep you owed, one for pulling it down.',
     },
     {
       q: 'Why did a card vanish from the Capital City?',
