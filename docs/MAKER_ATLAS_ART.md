@@ -1,6 +1,6 @@
 # Maker card artwork atlases
 
-Twenty-four 4 × 4 painted sheets add 384 card-specific scenes for the Maker shelf. The built-in image-generation tool produced the sheets using existing project atlases as style and layout references only. The second set of four covers every remaining non-token Maker card that had no explicit art. The third set gives every token commissioned art and replaces 45 older shared images with scenes specific to the card. The fourth set replaces 64 more generic or mismatched fallbacks with card-specific civic, garden, masked-worker, diner and stage scenes. The fifth set corrects every remaining known character-species mismatch, replaces generic place art on 28 characters, and gives 19 additional character roles distinct scenes. The sixth set gives all 20 newly added characters and six new fair cards commissioned scenes, then replaces 38 generic character images with occupation-specific story moments.
+Twenty-eight 4 × 4 painted sheets add 448 card-specific scenes for the Maker shelf. The built-in image-generation tool produced the sheets using existing project atlases as style and layout references only. The second set of four covers every remaining non-token Maker card that had no explicit art. The third set gives every token commissioned art and replaces 45 older shared images with scenes specific to the card. The fourth set replaces 64 more generic or mismatched fallbacks with card-specific civic, garden, masked-worker, diner and stage scenes. The fifth set corrects every remaining known character-species mismatch, replaces generic place art on 28 characters, and gives 19 additional character roles distinct scenes. The sixth set gives all 20 newly added characters and six new fair cards commissioned scenes, then replaces 38 generic character images with occupation-specific story moments. The seventh set adds 64 dedicated scenes for generic market, event, building and character assignments.
 
 The generated sheets are bundled unchanged:
 
@@ -28,8 +28,21 @@ The generated sheets are bundled unchanged:
 - `assets/art/maker-fairs-kitchens-atlas.png`
 - `assets/art/maker-craft-river-atlas.png`
 - `assets/art/maker-books-school-atlas.png`
+- `assets/art/maker-market-civic-atlas.png`
+- `assets/art/maker-neighborhood-roles-atlas.png`
+- `assets/art/maker-community-events-atlas.png`
+- `assets/art/maker-town-works-atlas.png`
 
 Tile indices are zero-based and row-major. The presentation-only assignments live in `src/ui/painted-art.js`; Maker rules and authoring data remain unchanged.
+
+## Seventh set: shared-scene replacements
+
+| Atlas | Coverage |
+| --- | --- |
+| `maker-market-civic` | Sixteen market cards from Second Founding through Telescope Hire. |
+| `maker-neighborhood-roles` | Velvet, Mandee, Willow, Tuppence, Bean and Lindsay character roles that previously shared species or thematic art. |
+| `maker-community-events` | Sixteen named community events, from Clover's Seed Drive through The Cider Social. |
+| `maker-town-works` | Public venues, town infrastructure and two disruption scenes: Reading Lanterns through The Bridge Goes. |
 
 ## Shared generation prompt
 

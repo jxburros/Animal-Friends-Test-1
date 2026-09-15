@@ -27,6 +27,10 @@ import {
   MAKER_FAIRS_KITCHENS_ATLAS_URL,
   MAKER_CRAFT_RIVER_ATLAS_URL,
   MAKER_BOOKS_SCHOOL_ATLAS_URL,
+  MAKER_MARKET_CIVIC_ATLAS_URL,
+  MAKER_NEIGHBORHOOD_ROLES_ATLAS_URL,
+  MAKER_COMMUNITY_EVENTS_ATLAS_URL,
+  MAKER_TOWN_WORKS_ATLAS_URL,
   paintedArtSVG,
 } from '../src/ui/painted-art.js';
 
@@ -57,11 +61,15 @@ const atlasUrls = {
   makerfairskitchens: MAKER_FAIRS_KITCHENS_ATLAS_URL,
   makercraftriver: MAKER_CRAFT_RIVER_ATLAS_URL,
   makerbooksschool: MAKER_BOOKS_SCHOOL_ATLAS_URL,
+  makermarketcivic: MAKER_MARKET_CIVIC_ATLAS_URL,
+  makerneighborhoodroles: MAKER_NEIGHBORHOOD_ROLES_ATLAS_URL,
+  makercommunityevents: MAKER_COMMUNITY_EVENTS_ATLAS_URL,
+  makertownworks: MAKER_TOWN_WORKS_ATLAS_URL,
 };
 
-test('twenty-four Maker atlases assign 384 existing cards to every tile exactly once', () => {
+test('twenty-eight Maker atlases assign 448 existing cards to every tile exactly once', () => {
   const entries = Object.entries(MAKER_ART_TILES);
-  assert.equal(entries.length, 384);
+  assert.equal(entries.length, 448);
 
   for (const [atlas, url] of Object.entries(atlasUrls)) {
     const assignments = entries.filter(([, art]) => art.atlas === atlas);
