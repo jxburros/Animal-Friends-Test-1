@@ -15,6 +15,10 @@ import {
   MAKER_BAKERY_LIBRARY_ATLAS_URL,
   MAKER_RECORDS_ROOTS_ATLAS_URL,
   MAKER_ROLES_ATLAS_URL,
+  MAKER_LEDGERS_LAMPLIGHT_ATLAS_URL,
+  MAKER_GARDENS_POST_ATLAS_URL,
+  MAKER_MASKED_HANDS_ATLAS_URL,
+  MAKER_STAGE_COUNTER_ATLAS_URL,
   paintedArtSVG,
 } from '../src/ui/painted-art.js';
 
@@ -33,11 +37,15 @@ const atlasUrls = {
   makerbakerylibrary: MAKER_BAKERY_LIBRARY_ATLAS_URL,
   makerrecordsroots: MAKER_RECORDS_ROOTS_ATLAS_URL,
   makerroles: MAKER_ROLES_ATLAS_URL,
+  makerledgerslamplight: MAKER_LEDGERS_LAMPLIGHT_ATLAS_URL,
+  makergardenspost: MAKER_GARDENS_POST_ATLAS_URL,
+  makermaskedhands: MAKER_MASKED_HANDS_ATLAS_URL,
+  makerstagecounter: MAKER_STAGE_COUNTER_ATLAS_URL,
 };
 
-test('twelve Maker atlases assign 192 existing cards to every tile exactly once', () => {
+test('sixteen Maker atlases assign 256 existing cards to every tile exactly once', () => {
   const entries = Object.entries(MAKER_ART_TILES);
-  assert.equal(entries.length, 192);
+  assert.equal(entries.length, 256);
 
   for (const [atlas, url] of Object.entries(atlasUrls)) {
     const assignments = entries.filter(([, art]) => art.atlas === atlas);
@@ -77,5 +85,9 @@ test('every Maker token has commissioned art and selected shared scenes are repl
   assert.equal(MAKER_ART_TILES.mk_marmalade_night_baker_0.atlas, 'makerbakerylibrary');
   assert.equal(MAKER_ART_TILES.mk_daniel_star_charter_3.atlas, 'makerrecordsroots');
   assert.equal(MAKER_ART_TILES.mk_brooke_balloonist_4.atlas, 'makerroles');
+  assert.equal(MAKER_ART_TILES.mk_orien_survey_computer_4.atlas, 'makerledgerslamplight');
+  assert.equal(MAKER_ART_TILES.mk_lindsay_moon_gardener_5.atlas, 'makergardenspost');
+  assert.equal(MAKER_ART_TILES.mk_masked_otter_counter_hand_1.atlas, 'makermaskedhands');
+  assert.equal(MAKER_ART_TILES.mk_gabe_whole_cast_5.atlas, 'makerstagecounter');
 });
 

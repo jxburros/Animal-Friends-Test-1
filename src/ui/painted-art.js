@@ -25,6 +25,10 @@ export const MAKER_TOKENS_ATLAS_URL = new URL('../../assets/art/maker-tokens-atl
 export const MAKER_BAKERY_LIBRARY_ATLAS_URL = new URL('../../assets/art/maker-bakery-library-atlas.png', import.meta.url).href;
 export const MAKER_RECORDS_ROOTS_ATLAS_URL = new URL('../../assets/art/maker-records-roots-atlas.png', import.meta.url).href;
 export const MAKER_ROLES_ATLAS_URL = new URL('../../assets/art/maker-roles-atlas.png', import.meta.url).href;
+export const MAKER_LEDGERS_LAMPLIGHT_ATLAS_URL = new URL('../../assets/art/maker-ledgers-lamplight-atlas.png', import.meta.url).href;
+export const MAKER_GARDENS_POST_ATLAS_URL = new URL('../../assets/art/maker-gardens-post-atlas.png', import.meta.url).href;
+export const MAKER_MASKED_HANDS_ATLAS_URL = new URL('../../assets/art/maker-masked-hands-atlas.png', import.meta.url).href;
+export const MAKER_STAGE_COUNTER_ATLAS_URL = new URL('../../assets/art/maker-stage-counter-atlas.png', import.meta.url).href;
 const SPECIES_TILE = { Rabbit: 0, Mouse: 1, Fox: 2, Raccoon: 3, Hedgehog: 4, Badger: 5, Otter: 6, Squirrel: 7 };
 const ATLASES = {
   boroughs: () => PAINTED_ATLAS_URL,
@@ -47,6 +51,10 @@ const ATLASES = {
   makerbakerylibrary: () => MAKER_BAKERY_LIBRARY_ATLAS_URL,
   makerrecordsroots: () => MAKER_RECORDS_ROOTS_ATLAS_URL,
   makerroles: () => MAKER_ROLES_ATLAS_URL,
+  makerledgerslamplight: () => MAKER_LEDGERS_LAMPLIGHT_ATLAS_URL,
+  makergardenspost: () => MAKER_GARDENS_POST_ATLAS_URL,
+  makermaskedhands: () => MAKER_MASKED_HANDS_ATLAS_URL,
+  makerstagecounter: () => MAKER_STAGE_COUNTER_ATLAS_URL,
 };
 
 // Presentation-only corrections for Maker shelf cards. Keeping these assignments here lets the
@@ -256,6 +264,74 @@ export const MAKER_ART_TILES = Object.freeze({
   mk_juniper_messenger_1: { atlas: 'makerroles', tile: 13 },
   mk_juniper_courier_captain_2: { atlas: 'makerroles', tile: 14 },
   mk_brooke_balloonist_4: { atlas: 'makerroles', tile: 15 },
+
+  mk_orien_tally_clerk_0: { atlas: 'makerledgerslamplight', tile: 0 },
+  mk_orien_rate_checker_2: { atlas: 'makerledgerslamplight', tile: 1 },
+  mk_orien_borough_actuary_3: { atlas: 'makerledgerslamplight', tile: 2 },
+  mk_orien_survey_computer_4: { atlas: 'makerledgerslamplight', tile: 3 },
+  mk_orien_town_planner_5: { atlas: 'makerledgerslamplight', tile: 4 },
+  mk_roger_locksmith_1: { atlas: 'makerledgerslamplight', tile: 5 },
+  mk_roger_records_clerk_2: { atlas: 'makerledgerslamplight', tile: 6 },
+  mk_roger_circuit_judge_3: { atlas: 'makerledgerslamplight', tile: 7 },
+  mk_roger_fair_broker_4: { atlas: 'makerledgerslamplight', tile: 8 },
+  mk_roger_ombudsman_5: { atlas: 'makerledgerslamplight', tile: 9 },
+  mk_quinn_meeting_scribe_1: { atlas: 'makerledgerslamplight', tile: 10 },
+  mk_quinn_town_scrivener_3: { atlas: 'makerledgerslamplight', tile: 11 },
+  mk_quinn_keeper_of_the_record_5: { atlas: 'makerledgerslamplight', tile: 12 },
+  mk_beck_bylaw_reader_1: { atlas: 'makerledgerslamplight', tile: 13 },
+  mk_beck_lamplighters_clerk_3: { atlas: 'makerledgerslamplight', tile: 14 },
+  mk_berry_clockmaker_1: { atlas: 'makerledgerslamplight', tile: 15 },
+
+  mk_lindsay_potting_helper_0: { atlas: 'makergardenspost', tile: 0 },
+  mk_lindsay_glasshouse_hand_2: { atlas: 'makergardenspost', tile: 1 },
+  mk_lindsay_herb_grower_3: { atlas: 'makergardenspost', tile: 2 },
+  mk_lindsay_conservatory_keeper_4: { atlas: 'makergardenspost', tile: 3 },
+  mk_lindsay_moon_gardener_5: { atlas: 'makergardenspost', tile: 4 },
+  mk_hibiscus_post_runner_1: { atlas: 'makergardenspost', tile: 5 },
+  mk_hibiscus_night_mail_2: { atlas: 'makergardenspost', tile: 6 },
+  mk_hibiscus_round_walker_3: { atlas: 'makergardenspost', tile: 7 },
+  mk_hibiscus_mail_coach_driver_4: { atlas: 'makergardenspost', tile: 8 },
+  mk_hibiscus_postmaster_5: { atlas: 'makergardenspost', tile: 9 },
+  mk_quill_orchard_hand_0: { atlas: 'makergardenspost', tile: 10 },
+  mk_quill_orchard_keeper_2: { atlas: 'makergardenspost', tile: 11 },
+  mk_quill_cider_maker_3: { atlas: 'makergardenspost', tile: 12 },
+  mk_quill_orchard_scribe_4: { atlas: 'makergardenspost', tile: 13 },
+  mk_quill_harvest_steward_5: { atlas: 'makergardenspost', tile: 14 },
+  mk_willow_ferry_trader_1: { atlas: 'makergardenspost', tile: 15 },
+
+  mk_masked_otter_counter_hand_1: { atlas: 'makermaskedhands', tile: 0 },
+  mk_mysterious_raccoon_beds_hand_2: { atlas: 'makermaskedhands', tile: 1 },
+  mk_hooded_rabbit_hatch_hand_0: { atlas: 'makermaskedhands', tile: 2 },
+  mk_unsigned_mouse_shelves_hand_1: { atlas: 'makermaskedhands', tile: 3 },
+  mk_shrouded_badger_bench_hand_2: { atlas: 'makermaskedhands', tile: 4 },
+  mk_muffled_hedgehog_stall_hand_0: { atlas: 'makermaskedhands', tile: 5 },
+  mk_shadowed_squirrel_hall_hand_1: { atlas: 'makermaskedhands', tile: 6 },
+  mk_nameless_cat_glass_hand_2: { atlas: 'makermaskedhands', tile: 7 },
+  mk_silhouetted_owl_scales_hand_0: { atlas: 'makermaskedhands', tile: 8 },
+  mk_cowled_fox_far_field_hand_1: { atlas: 'makermaskedhands', tile: 9 },
+  mk_unlisted_grower_2: { atlas: 'makermaskedhands', tile: 10 },
+  mk_faceless_clerk_0: { atlas: 'makermaskedhands', tile: 11 },
+  mk_cloaked_tradesman_1: { atlas: 'makermaskedhands', tile: 12 },
+  mk_veiled_wright_0: { atlas: 'makermaskedhands', tile: 13 },
+  mk_anonymous_scribe_2: { atlas: 'makermaskedhands', tile: 14 },
+  mk_obscured_observer_1: { atlas: 'makermaskedhands', tile: 15 },
+
+  mk_gwen_short_order_cook_1: { atlas: 'makerstagecounter', tile: 0 },
+  mk_gwen_diner_keeper_3: { atlas: 'makerstagecounter', tile: 1 },
+  mk_gwen_owner_of_the_diner_5: { atlas: 'makerstagecounter', tile: 2 },
+  mk_liza_floor_singer_0: { atlas: 'makerstagecounter', tile: 3 },
+  mk_liza_counter_singer_1: { atlas: 'makerstagecounter', tile: 4 },
+  mk_liza_top_of_the_bill_3: { atlas: 'makerstagecounter', tile: 5 },
+  mk_liza_headliner_5: { atlas: 'makerstagecounter', tile: 6 },
+  mk_harrison_piano_boy_0: { atlas: 'makerstagecounter', tile: 7 },
+  mk_harrison_house_pianist_2: { atlas: 'makerstagecounter', tile: 8 },
+  mk_harrison_band_leader_4: { atlas: 'makerstagecounter', tile: 9 },
+  mk_gabe_corner_show_0: { atlas: 'makerstagecounter', tile: 10 },
+  mk_gabe_puppet_maker_2: { atlas: 'makerstagecounter', tile: 11 },
+  mk_gabe_company_of_one_4: { atlas: 'makerstagecounter', tile: 12 },
+  mk_gabe_whole_cast_5: { atlas: 'makerstagecounter', tile: 13 },
+  mk_faustus_wardrobe_master_4: { atlas: 'makerstagecounter', tile: 14 },
+  mk_roger_fair_day_judge_0: { atlas: 'makerstagecounter', tile: 15 },
 });
 
 function explicitArt(def) {
