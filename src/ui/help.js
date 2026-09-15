@@ -169,9 +169,9 @@ function rulesHTML(rules) {
     <p>The book holds far more cards than the printed decks use. <strong>Build your own deck</strong>
     on the cover opens the Deck Workshop: pick any Characters, Events and Town Buildings from the whole
     catalogue (${rules.deckbuilding.minDeckSize} to ${rules.deckbuilding.maxDeckSize} cards, with copies capped
-    by rarity — Common four, Uncommon three, Rare twice, Super Rare once), name it, and it is saved in this
-    browser for later games. There is no floor on animals and no ceiling on Events: the deck is yours to get
-    wrong, and the Workshop only warns you. Remember that Events need upright Characters of the right species
+    by rarity — Common four, Uncommon three, Rare twice, Super Rare or Legendary once), name it, and it
+    is saved in this browser for later games. There is no floor on animals and no ceiling on Events: the
+    deck is yours to get wrong, and the Workshop only warns you. Remember that Events need upright Characters of the right species
     or study to pay for them and Town Buildings need a crew to raise them, so a deck with few animals in it
     is a deck that cannot play its own cards.</p>
 

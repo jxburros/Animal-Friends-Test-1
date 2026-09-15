@@ -55,16 +55,18 @@
     "mk_willow_harbourmaster_4": 1,
     "mk_peanut_comptroller_5": 2,
     "mk_tb_quill_wall": 1,
-    "mk_tb_the_builders_rest": 2,
+    "mk_tb_the_builders_rest": 1,
+    "mk_tb_rosabeths_gate": 1,
     "mk_a_word_beforehand": 2,
     "mk_ledger_day": 2,
     "mk_slack_water": 2,
     "mk_ev_never_handed_back": 2,
     "mk_the_root_cellar": 2,
     "mk_peanuts_standing_round": 2,
-    "mk_kevin_counter_hand_2": 2,
+    "mk_willow_toll_keeper_2": 1,
     "mk_pebble_towpath_warden_4": 1,
-    "mk_willow_tide_reckoner_3": 1
+    "mk_tuppence_sold_before_the_cart_4": 1,
+    "mk_willow_ferry_trader_1": 1
    }
   },
   {
@@ -81,30 +83,29 @@
    "blurb": "Foxes and Raccoons of Civics and Crafts: the town that turns up at the Auction House with something it made this morning. It pledges high, works the City Dump, and dares the other Mayor to keep raising.",
    "list": {
     "mk_beck_the_relief_roll_0": 2,
-    "mk_juniper_messenger_1": 2,
+    "mk_juniper_messenger_1": 1,
     "mk_roger_locksmith_1": 2,
+    "mk_finn_peddler_1": 1,
     "mk_beck_ward_clerk_2": 2,
     "mk_juniper_courier_captain_2": 2,
     "mk_gabe_puppet_maker_2": 1,
-    "mk_beck_lamplighters_clerk_3": 2,
+    "mk_beck_lamplighters_clerk_3": 1,
     "mk_hazel_guildmaster_3": 2,
-    "mk_patch_valuer_3": 1,
+    "mk_patch_valuer_3": 2,
     "mk_earl_tea_house_keeper_4": 1,
     "mk_juniper_diplomat_4": 2,
-    "mk_beck_keeper_of_the_ward_book_5": 1,
-    "mk_roger_ombudsman_5": 1,
-    "mk_tb_rosabeths_gate": 2,
-    "mk_tb_coppers_cellar": 1,
+    "mk_beck_keeper_of_the_ward_book_5": 2,
+    "mk_tb_coppers_cellar": 2,
+    "mk_tb_allotment_strip": 1,
     "mk_bins_at_dawn": 2,
     "mk_fair_hearing": 2,
     "mk_beck_reads_by_candlelight": 2,
     "mk_ev_the_marks_are_struck": 2,
     "mk_hazels_night_market": 2,
+    "mk_patchs_second_opinion": 2,
+    "mk_quill_harvest_steward_5": 1,
     "mk_kevin_counter_hand_2": 2,
-    "mk_liz_weighbridge_keeper_4": 1,
-    "mk_roger_circuit_judge_3": 1,
-    "mk_finn_fair_warden_3": 1,
-    "mk_juniper_ward_councillor_3": 1
+    "mk_roger_circuit_judge_3": 1
    }
   },
   {
@@ -121,29 +122,28 @@
    "blurb": "Owls and Foxes of Science and Commerce: instruments, night work and a price for everything. It knows what the Capital City is about to put up before the other Mayor has looked at the board.",
    "list": {
     "mk_finn_auctioneers_boy_0": 2,
-    "mk_finn_peddler_1": 2,
     "mk_liz_scale_hand_1": 2,
+    "mk_obscured_observer_1": 2,
     "mk_mandee_weather_watcher_2": 2,
     "mk_earl_tea_trader_2": 2,
     "mk_roger_records_clerk_2": 1,
     "mk_sage_astronomer_3": 2,
     "mk_mandee_moonlight_trader_3": 2,
-    "mk_liz_the_docket_3": 2,
+    "mk_liz_the_docket_3": 1,
     "mk_sage_the_watch_list_4": 2,
     "mk_finn_trade_broker_4": 1,
-    "mk_sage_royal_astronomer_5": 1,
-    "mk_liz_chief_assessor_5": 1,
-    "mk_tb_allotment_strip": 2,
-    "mk_tb_observatory_steps": 1,
+    "mk_sage_royal_astronomer_5": 2,
+    "mk_tb_observatory_steps": 2,
+    "mk_tb_chit_press": 1,
     "mk_a_word_beforehand": 2,
-    "mk_ledger_day": 2,
     "mk_sages_star_party": 2,
-    "mk_mandees_forecast": 2,
+    "mk_ledger_day": 2,
     "mk_hall_lecture": 2,
+    "mk_mandees_forecast": 2,
+    "mk_night_round": 2,
+    "mk_quill_harvest_steward_5": 1,
     "mk_kevin_counter_hand_2": 2,
-    "mk_liz_weighbridge_keeper_4": 1,
-    "mk_bean_barista_3": 1,
-    "mk_earl_coffee_roaster_3": 1
+    "mk_betty_land_clearer_5": 1
    }
   },
   {
@@ -159,10 +159,11 @@
    ],
    "blurb": "Hedgehogs and Mice of Food and Crafts: the kitchen and the bench, and a table long enough for everybody. Whatever the weather takes off the board is fed, mended and back at work by morning.",
    "list": {
-    "mk_berry_tinker_0": 2,
+    "mk_berry_tinker_0": 1,
+    "mk_osh_sharpener_s_boy_0": 2,
     "mk_betty_whittler_1": 1,
     "mk_osh_round_sharpener_1": 2,
-    "mk_gwen_short_order_cook_1": 1,
+    "mk_gwen_short_order_cook_1": 2,
     "mk_gwen_anybodys_counter_2": 2,
     "mk_osh_edge_grinder_2": 2,
     "mk_biff_beat_constable_2": 1,
@@ -171,20 +172,18 @@
     "mk_betty_firework_maker_3": 2,
     "mk_gwen_apron_on_the_hook_4": 1,
     "mk_berry_workshop_elder_4": 2,
-    "mk_gwen_owner_of_the_diner_5": 1,
-    "mk_betty_land_clearer_5": 1,
-    "mk_tb_chit_press": 2,
-    "mk_tb_berrys_bench": 1,
-    "mk_hedge_apothecary": 2,
+    "mk_gwen_owner_of_the_diner_5": 2,
+    "mk_tb_berrys_bench": 2,
+    "mk_tb_boat_shed": 1,
     "mk_fresh_batch": 2,
     "mk_the_long_night_at_earls": 2,
+    "mk_hedge_apothecary": 2,
     "mk_guild_night": 2,
     "mk_tool_lending_day": 2,
-    "mk_kevin_counter_hand_2": 2,
-    "mk_rosabeth_tincture_counter_4": 1,
-    "mk_bella_wildlife_warden_3": 1,
-    "mk_daniel_star_charter_3": 1,
-    "mk_rosabeth_apothecary_3": 1
+    "mk_quinn_keeper_of_the_record_5": 1,
+    "mk_rosabeth_herbalist_physician_5": 1,
+    "mk_betty_powder_chemist_4": 1,
+    "mk_maribel_seed_bank_director_5": 1
    }
   },
   {
@@ -201,8 +200,9 @@
    "blurb": "Rabbits and Cats of Entertainment and Civics: a town played at double time. Animals stand back up the turn they sat down, and the hall is open again before the rival has finished their Ready.",
    "list": {
     "mk_hibiscus_the_sorting_bench_0": 2,
-    "mk_velvet_counter_clerk_1": 2,
+    "mk_velvet_counter_clerk_1": 1,
     "mk_hibiscus_post_runner_1": 2,
+    "mk_clover_plot_sharer_1": 1,
     "mk_eric_fair_steward_2": 2,
     "mk_copper_weights_inspector_2": 2,
     "mk_hibiscus_night_mail_2": 1,
@@ -213,16 +213,16 @@
     "mk_marmalade_oven_keeper_4": 1,
     "mk_velvet_clerk_of_the_works_5": 1,
     "mk_liza_headliner_5": 1,
-    "mk_tb_boat_shed": 2,
-    "mk_tb_open_mic_room": 1,
+    "mk_tb_open_mic_room": 2,
+    "mk_tb_the_warren": 1,
     "mk_fair_hearing": 2,
-    "mk_hibiscuss_post_route": 2,
     "mk_warren_muster": 2,
-    "mk_velvets_petition": 2,
+    "mk_hibiscuss_post_route": 2,
     "mk_open_mic_night": 2,
     "mk_ev_the_hat_goes_round": 2,
-    "mk_kevin_counter_hand_2": 2,
-    "mk_copper_cellar_keeper_4": 1
+    "mk_velvets_petition": 2,
+    "mk_quill_harvest_steward_5": 1,
+    "mk_kevin_counter_hand_2": 2
    }
   },
   {
@@ -251,16 +251,16 @@
     "mk_beck_candlelight_reader_4": 1,
     "mk_patch_reclamation_merchant_5": 1,
     "mk_hazel_merchant_5": 1,
-    "mk_tb_the_warren": 2,
-    "mk_tb_gate_hut": 1,
+    "mk_tb_gate_hut": 2,
+    "mk_tb_barrows_yard": 1,
     "mk_bins_at_dawn": 2,
     "mk_a_word_beforehand": 2,
     "mk_ledger_day": 2,
     "mk_reading_lanterns": 2,
     "mk_hazels_night_market": 2,
     "mk_patchs_second_opinion": 2,
+    "mk_quill_harvest_steward_5": 1,
     "mk_kevin_counter_hand_2": 2,
-    "mk_adam_surveyor_of_ways_4": 1,
     "mk_moss_guild_architect_3": 1
    }
   },
@@ -285,21 +285,21 @@
     "mk_scott_pamphleteer_2": 2,
     "mk_cookie_winter_stores_cook_3": 2,
     "mk_gwen_diner_keeper_3": 2,
-    "mk_scott_town_chronicler_3": 1,
+    "mk_bella_wildlife_warden_3": 1,
     "mk_peanut_cafe_manager_4": 2,
-    "mk_tuppence_sold_before_the_cart_4": 1,
-    "mk_gwen_owner_of_the_diner_5": 1,
-    "mk_peanut_comptroller_5": 2,
-    "mk_tb_barrows_yard": 2,
-    "mk_tb_counting_house": 1,
+    "mk_rosabeth_tincture_counter_4": 1,
+    "mk_gwen_owner_of_the_diner_5": 2,
+    "mk_tb_counting_house": 2,
+    "mk_tb_the_long_awning": 1,
     "mk_fresh_batch": 2,
     "mk_the_long_night_at_earls": 2,
     "mk_a_word_beforehand": 2,
     "mk_peanuts_standing_round": 2,
     "mk_ledger_day": 2,
     "mk_scotts_reading_hour": 2,
+    "mk_quill_harvest_steward_5": 1,
     "mk_kevin_counter_hand_2": 2,
-    "mk_rosabeth_tincture_counter_4": 1
+    "mk_daniel_star_charter_3": 1
    }
   },
   {
@@ -315,30 +315,30 @@
    ],
    "blurb": "Badgers and Cats of Crafts and Entertainment: the bench turns out the work, the hall turns out the town, and neither of them stops for weather.",
    "list": {
-    "mk_thistle_at_the_back_0": 2,
+    "mk_thistle_at_the_back_0": 1,
+    "mk_morty_the_boiler_test_0": 1,
     "mk_comet_rocket_mechanic_1": 2,
-    "mk_marmalade_dough_kneader_1": 2,
+    "mk_marmalade_dough_kneader_1": 1,
+    "mk_copper_scale_polisher_1": 1,
     "mk_faustus_costumier_2": 2,
     "mk_moss_toolsmith_2": 2,
     "mk_curtained_performer_2": 1,
     "mk_oatmeal_jazz_singer_3": 2,
     "mk_morty_watermill_mechanic_3": 2,
-    "mk_moss_guild_architect_3": 1,
+    "mk_moss_guild_architect_3": 2,
     "mk_moss_rocketwright_4": 2,
     "mk_faustus_wardrobe_master_4": 1,
-    "mk_moss_bridgewright_5": 1,
-    "mk_morty_master_millwright_5": 1,
-    "mk_tb_the_long_awning": 2,
-    "mk_tb_gwens_counter": 1,
-    "mk_guild_night": 2,
+    "mk_moss_bridgewright_5": 2,
+    "mk_tb_gwens_counter": 2,
+    "mk_tb_puppet_booth": 1,
     "mk_moss_rehiring_day": 2,
+    "mk_guild_night": 2,
     "mk_open_mic_night": 2,
     "mk_ev_the_hat_goes_round": 2,
     "mk_mortys_boiler_test": 2,
     "mk_oatmeals_benefit_night": 2,
-    "mk_kevin_counter_hand_2": 2,
-    "mk_adam_surveyor_of_ways_4": 1,
-    "mk_orien_town_planner_5": 1
+    "mk_quill_harvest_steward_5": 1,
+    "mk_kevin_counter_hand_2": 2
    }
   },
   {
@@ -354,30 +354,31 @@
    ],
    "blurb": "Rabbits and Hedgehogs of Agriculture and Food: a hedge takes a winter to lay and fifteen years to judge, and there is always something on for whoever turns up.",
    "list": {
-    "mk_clover_seedling_helper_0": 2,
-    "mk_clover_plot_sharer_1": 2,
+    "mk_clover_seedling_helper_0": 1,
+    "mk_quill_orchard_hand_0": 1,
     "mk_eric_smallholder_1": 2,
+    "mk_peter_washing_up_1": 2,
     "mk_betty_stump_blaster_2": 2,
     "mk_quill_orchard_keeper_2": 2,
-    "mk_peter_the_winters_length_2": 1,
+    "mk_peter_the_winters_length_2": 2,
     "mk_clover_community_gardener_3": 1,
     "mk_eric_row_farmer_3": 2,
     "mk_peter_hedgelayer_3": 2,
     "mk_eric_row_boss_4": 2,
     "mk_biff_chief_constable_4": 1,
-    "mk_quill_harvest_steward_5": 1,
-    "mk_eric_best_farmer_5": 1,
-    "mk_tb_puppet_booth": 2,
-    "mk_tb_the_muster_bell": 1,
+    "mk_eric_best_farmer_5": 2,
+    "mk_tb_the_muster_bell": 2,
+    "mk_tb_quill_wall": 1,
     "mk_the_root_cellar": 2,
     "mk_glut_of_squash": 2,
     "mk_warren_muster": 2,
-    "mk_clovers_potato_experiment": 2,
-    "mk_clovers_seed_drive": 2,
     "mk_the_cider_social": 2,
-    "mk_kevin_counter_hand_2": 2,
-    "mk_quill_cider_maker_3": 1,
-    "mk_berry_engineer_3": 1
+    "mk_clovers_seed_drive": 2,
+    "mk_clover_master_botanist_5": 1,
+    "mk_liza_counter_singer_1": 1,
+    "mk_betty_barn_sweeper_0": 1,
+    "mk_hooded_rabbit_hatch_hand_0": 1,
+    "mk_peter_hedge_cutter_0": 1
    }
   },
   {
@@ -399,24 +400,24 @@
     "mk_taco_the_four_oclock_cart_2": 1,
     "mk_bean_two_pairs_of_paws_2": 2,
     "mk_jessica_night_school_teacher_2": 2,
+    "mk_willow_tide_reckoner_3": 2,
     "mk_jessica_the_night_school_3": 2,
     "mk_benjamin_town_historian_3": 1,
-    "mk_sage_astronomer_3": 2,
     "mk_brooke_balloonist_4": 2,
-    "mk_sage_the_watch_list_4": 1,
+    "mk_sage_the_watch_list_4": 2,
     "mk_pebble_harbour_warden_5": 1,
-    "mk_willow_harbour_admiral_5": 1,
+    "mk_willow_harbour_admiral_5": 2,
     "mk_tb_quill_wall": 1,
-    "mk_tb_the_builders_rest": 2,
+    "mk_tb_the_builders_rest": 1,
+    "mk_tb_rosabeths_gate": 1,
     "mk_ev_never_handed_back": 2,
-    "mk_night_round": 2,
     "mk_jessicas_night_class": 2,
-    "mk_sages_star_party": 2,
+    "mk_night_round": 2,
     "mk_fair_hearing": 2,
     "mk_hall_lecture": 2,
-    "mk_kevin_counter_hand_2": 2,
-    "mk_pebble_towpath_warden_4": 1,
-    "mk_willow_tide_reckoner_3": 1
+    "mk_the_harbour_office": 2,
+    "mk_sage_royal_astronomer_5": 1,
+    "mk_sage_astronomer_3": 1
    }
   },
   {
@@ -432,33 +433,33 @@
    ],
    "blurb": "Mice and Foxes of Crafts and Lore: the press runs all night and everything that comes off it has been across somebody’s shelves first, because a correction is dearer than a delay.",
    "list": {
-    "mk_osh_sharpener_s_boy_0": 2,
+    "mk_daniel_ink_mixer_0": 2,
     "mk_daniel_chart_copier_1": 2,
     "mk_unsigned_mouse_shelves_hand_1": 2,
     "mk_daniel_canal_cartographer_2": 2,
     "mk_bella_field_recorder_2": 2,
     "mk_osh_edge_grinder_2": 1,
-    "mk_maribel_seed_vault_scientist_3": 2,
-    "mk_osh_fair_fiddler_3": 2,
-    "mk_bella_wildlife_warden_3": 2,
+    "mk_rosabeth_apothecary_3": 2,
+    "mk_earl_coffee_roaster_3": 2,
+    "mk_finn_fair_warden_3": 2,
     "mk_daniel_master_cartographer_4": 1,
     "mk_mandee_keeper_of_tales_4": 2,
-    "mk_quinn_keeper_of_the_record_5": 1,
-    "mk_rosabeth_herbalist_physician_5": 1,
+    "mk_quinn_keeper_of_the_record_5": 2,
     "mk_tb_quill_wall": 1,
-    "mk_tb_the_builders_rest": 2,
+    "mk_tb_the_builders_rest": 1,
+    "mk_tb_rosabeths_gate": 1,
     "mk_reading_lanterns": 2,
     "mk_mandees_forecast": 2,
+    "mk_quill_harvest_steward_5": 1,
     "mk_kevin_counter_hand_2": 2,
-    "mk_liz_weighbridge_keeper_4": 1,
+    "mk_maribel_seed_vault_scientist_3": 1,
+    "mk_osh_fair_fiddler_3": 1,
+    "mk_juniper_ward_councillor_3": 1,
+    "mk_bella_wildlife_warden_3": 1,
     "mk_daniel_star_charter_3": 1,
-    "mk_rosabeth_apothecary_3": 1,
-    "mk_earl_coffee_roaster_3": 1,
     "mk_gwen_diner_keeper_3": 1,
     "mk_mandee_moonlight_trader_3": 1,
-    "mk_roger_circuit_judge_3": 1,
-    "mk_finn_fair_warden_3": 1,
-    "mk_juniper_ward_councillor_3": 1
+    "mk_roger_circuit_judge_3": 1
    }
   },
   {
@@ -482,22 +483,22 @@
     "mk_inkwell_storyteller_2": 1,
     "mk_comet_test_pilot_3": 2,
     "mk_marmalade_neighborhood_baker_3": 2,
-    "mk_sota_telescope_fitter_3": 1,
+    "mk_sota_telescope_fitter_3": 2,
     "mk_scott_natural_historian_4": 1,
     "mk_velvet_surveyor_of_works_4": 2,
-    "mk_marmalade_harvest_head_baker_5": 1,
-    "mk_comet_astronaut_5": 1,
+    "mk_marmalade_harvest_head_baker_5": 2,
     "mk_tb_quill_wall": 1,
-    "mk_tb_the_builders_rest": 2,
+    "mk_tb_the_builders_rest": 1,
+    "mk_tb_rosabeths_gate": 1,
     "mk_fresh_batch": 2,
     "mk_the_long_night_at_earls": 2,
     "mk_hall_lecture": 2,
-    "mk_one_small_step": 2,
+    "mk_one_small_step": 1,
     "mk_comets_countdown": 2,
     "mk_velvets_petition": 2,
+    "mk_quill_harvest_steward_5": 1,
     "mk_kevin_counter_hand_2": 2,
-    "mk_copper_cellar_keeper_4": 1,
-    "mk_scott_author_of_the_boroughs_5": 1
+    "mk_cookie_winter_stores_cook_3": 1
    }
   },
   {
@@ -520,25 +521,27 @@
     "mk_oatmeal_safety_inspector_2": 2,
     "mk_adam_road_gang_2": 1,
     "mk_orien_borough_actuary_3": 2,
+    "mk_berry_engineer_3": 2,
     "mk_thistle_grange_warden_3": 2,
-    "mk_cassadee_hall_manager_3": 1,
     "mk_quill_orchard_scribe_4": 1,
     "mk_oatmeal_town_warden_4": 2,
     "mk_berry_guild_warden_5": 1,
-    "mk_oatmeal_alderman_5": 1,
+    "mk_orien_town_planner_5": 1,
     "mk_tb_quill_wall": 1,
-    "mk_tb_the_builders_rest": 2,
+    "mk_tb_the_builders_rest": 1,
+    "mk_tb_rosabeths_gate": 1,
     "mk_fair_hearing": 2,
     "mk_oatmeals_awning": 2,
-    "mk_thistles_grange_supper": 2,
     "mk_biffs_beat": 2,
-    "mk_kevin_counter_hand_2": 2,
-    "mk_adam_surveyor_of_ways_4": 1,
-    "mk_quill_cider_maker_3": 1,
+    "mk_quill_harvest_steward_5": 1,
+    "mk_kevin_counter_hand_2": 1,
+    "mk_cassadee_hall_manager_3": 1,
     "mk_morty_watermill_mechanic_3": 1,
     "mk_moss_guild_architect_3": 1,
-    "mk_berry_engineer_3": 1,
-    "mk_oatmeal_jazz_singer_3": 1
+    "mk_oatmeal_jazz_singer_3": 1,
+    "mk_betty_firework_maker_3": 1,
+    "mk_scott_town_chronicler_3": 1,
+    "mk_ned_ward_recorder_3": 1
    }
   },
   {
@@ -554,9 +557,11 @@
    ],
    "blurb": "Rabbits and Owls of Agriculture and Science: a dome above the allotment strip and a forecast to the minute under it, and more of them arriving than leaving.",
    "list": {
-    "mk_peter_hedge_cutter_0": 2,
-    "mk_clover_plot_sharer_1": 2,
+    "mk_clover_seedling_helper_0": 1,
+    "mk_sage_night_assistant_0": 1,
+    "mk_clover_plot_sharer_1": 1,
     "mk_eric_smallholder_1": 2,
+    "mk_bean_espresso_1": 1,
     "mk_sage_frost_watch_2": 2,
     "mk_peter_the_winters_length_2": 2,
     "mk_clover_market_gardener_2": 1,
@@ -564,20 +569,19 @@
     "mk_sage_astronomer_3": 2,
     "mk_eric_row_farmer_3": 2,
     "mk_clover_rocket_botanist_4": 2,
-    "mk_eric_row_boss_4": 1,
-    "mk_clover_master_botanist_5": 1,
-    "mk_sage_royal_astronomer_5": 1,
+    "mk_eric_row_boss_4": 2,
+    "mk_sage_royal_astronomer_5": 2,
     "mk_tb_quill_wall": 1,
-    "mk_tb_the_builders_rest": 2,
+    "mk_tb_rosabeths_gate": 2,
     "mk_the_root_cellar": 2,
-    "mk_warren_muster": 2,
-    "mk_glut_of_squash": 2,
-    "mk_clovers_potato_experiment": 2,
-    "mk_clovers_seed_drive": 2,
     "mk_sages_star_party": 2,
-    "mk_kevin_counter_hand_2": 2,
-    "mk_pebble_towpath_warden_4": 1,
-    "mk_eric_best_farmer_5": 1
+    "mk_warren_muster": 2,
+    "mk_clovers_seed_drive": 2,
+    "mk_glut_of_squash": 2,
+    "mk_night_round": 2,
+    "mk_eric_best_farmer_5": 1,
+    "mk_clover_master_botanist_5": 1,
+    "mk_sage_the_watch_list_4": 1
    }
   },
   {
@@ -603,17 +607,18 @@
     "mk_taco_quayside_cook_3": 2,
     "mk_benjamin_town_historian_3": 1,
     "mk_gabe_company_of_one_4": 2,
-    "mk_pebble_towpath_warden_4": 2,
-    "mk_gabe_whole_cast_5": 1,
-    "mk_benjamin_keeper_of_the_light_5": 1,
+    "mk_pebble_towpath_warden_4": 1,
+    "mk_gabe_whole_cast_5": 2,
     "mk_tb_quill_wall": 1,
-    "mk_tb_the_builders_rest": 2,
+    "mk_tb_the_builders_rest": 1,
+    "mk_tb_rosabeths_gate": 1,
     "mk_ev_never_handed_back": 2,
     "mk_bins_at_dawn": 2,
     "mk_open_mic_night": 2,
-    "mk_the_root_cellar": 2,
     "mk_ev_the_hat_goes_round": 2,
+    "mk_the_root_cellar": 2,
     "mk_fresh_batch": 2,
+    "mk_quill_harvest_steward_5": 1,
     "mk_kevin_counter_hand_2": 2,
     "mk_pebble_ferry_master_3": 1
    }
@@ -2497,7 +2502,7 @@
     "atlas": "neighbors",
     "tile": 14
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.95,
     "power": 4.92,
@@ -2529,7 +2534,7 @@
      }
     }
    ],
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.6,
     "power": 6.63,
@@ -2652,7 +2657,7 @@
     "atlas": "neighbors",
     "tile": 14
    },
-   "rarity": "Rare",
+   "rarity": "Common",
    "power": {
     "score": 5.08,
     "power": 13.25,
@@ -2827,7 +2832,7 @@
     "atlas": "neighbors",
     "tile": 10
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.84,
     "power": 12.15,
@@ -2872,7 +2877,7 @@
     "atlas": "neighbors",
     "tile": 10
    },
-   "rarity": "Super Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.59,
     "power": 14.58,
@@ -2987,7 +2992,7 @@
     "atlas": "nightworkers",
     "tile": 2
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
     "score": 4.4,
     "power": 8.1,
@@ -3025,7 +3030,7 @@
     "atlas": "nightworkers",
     "tile": 2
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.74,
     "power": 10.79,
@@ -3063,7 +3068,7 @@
     "atlas": "nightworkers",
     "tile": 2
    },
-   "rarity": "Rare",
+   "rarity": "Common",
    "power": {
     "score": 5.21,
     "power": 13.61,
@@ -3134,7 +3139,7 @@
     "tile": 5
    },
    "leavesAfter": 3,
-   "rarity": "Super Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.81,
     "power": 14.25,
@@ -3168,7 +3173,7 @@
     "atlas": "neighbors",
     "tile": 8
    },
-   "rarity": "Uncommon",
+   "rarity": "Super Rare",
    "power": {
     "score": 3.77,
     "power": 6.3,
@@ -3239,7 +3244,7 @@
     "atlas": "neighbors",
     "tile": 8
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.71,
     "power": 10.14,
@@ -3331,7 +3336,7 @@
    "cost": 5,
    "shift": {
     "delay": 2,
-    "output": 3
+    "output": 5
    },
    "text": "Upgrades Berry. When Berry becomes upright, you may rehire a Character from your Unemployment for 3 less Supply, and one of your other Characters cannot be targeted by an opponent until your next turn.",
    "flavor": "Berry stands in front of the youngest one on the bench and asks, mildly, what exactly the guild thinks it is doing.",
@@ -3360,10 +3365,10 @@
     "atlas": "neighbors",
     "tile": 8
    },
-   "rarity": "Super Rare",
+   "rarity": "Legendary",
    "power": {
-    "score": 7.36,
-    "power": 19.22,
+    "score": 8.55,
+    "power": 22.32,
     "opportunityCost": 11
    }
   },
@@ -3394,7 +3399,7 @@
     "atlas": "capital",
     "tile": 7
    },
-   "rarity": "Rare",
+   "rarity": "Super Rare",
    "power": {
     "score": 5.16,
     "power": 11.11,
@@ -3414,7 +3419,7 @@
     "delay": 2,
     "output": 3
    },
-   "text": "Upgrades Biff. When Biff becomes upright, two of your opponent's Characters are each put back to work, and you may rehire a Character from your Unemployment.",
+   "text": "Upgrades Biff. When Biff becomes upright, two of your opponent's Characters are each put back to work, and you may rehire a Character from your Unemployment for 2 less Supply.",
    "flavor": "He stopped the trouble, walked them home, and by Friday had found them something to do.",
    "abilities": [
     {
@@ -3428,7 +3433,8 @@
        },
        {
         "do": "rehire",
-        "optional": true
+        "optional": true,
+        "discount": 2
        }
       ]
      }
@@ -3438,10 +3444,10 @@
     "atlas": "capital",
     "tile": 7
    },
-   "rarity": "Super Rare",
+   "rarity": "Legendary",
    "power": {
-    "score": 6.33,
-    "power": 15.9,
+    "score": 7.12,
+    "power": 17.88,
     "opportunityCost": 10
    }
   },
@@ -3536,7 +3542,7 @@
     "atlas": "neighbors",
     "tile": 12
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.69,
     "power": 6.8,
@@ -3688,7 +3694,7 @@
      }
     }
    ],
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 6,
     "power": 15.65,
@@ -3748,7 +3754,7 @@
     "atlas": "boroughs",
     "tile": 4
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
     "score": 3.08,
     "power": 5.14,
@@ -3768,13 +3774,22 @@
     "delay": 1,
     "output": 2
    },
-   "text": "Upgrades Betty. When Betty is recruited, Betty cannot be targeted by an opponent's effect until your next turn.",
+   "text": "Upgrades Betty. When Betty is recruited, Betty cannot be targeted by an opponent's effect until your next turn, and gain 1 Supply.",
    "flavor": "One of the hobbies that stuck. Half the toys in the nursery came off that knife, and so did most of the fuse plugs, which the nursery has not been told.",
    "abilities": [
     {
      "trigger": "onRecruit",
      "effect": {
-      "do": "protectCharacter"
+      "do": "seq",
+      "steps": [
+       {
+        "do": "protectCharacter"
+       },
+       {
+        "do": "gainSupply",
+        "amount": 1
+       }
+      ]
      }
     }
    ],
@@ -3782,10 +3797,10 @@
     "atlas": "neighbors",
     "tile": 8
    },
-   "rarity": "Super Rare",
+   "rarity": "Legendary",
    "power": {
-    "score": 5.7,
-    "power": 10.5,
+    "score": 6.25,
+    "power": 11.5,
     "opportunityCost": 4.6
    }
   },
@@ -3909,9 +3924,9 @@
    "cost": 5,
    "shift": {
     "delay": 2,
-    "output": 5
+    "output": 6
    },
-   "text": "Upgrades Betty. When Betty becomes upright, gain 1 Supply, and another Character you control cannot be targeted by an opponent's effect until your next turn.",
+   "text": "Upgrades Betty. When Betty becomes upright, gain 2 Supply, and another Character you control cannot be targeted by an opponent's effect until your next turn.",
    "flavor": "Four seasons on the far hedgerow and a great deal of noise, and it is the best ground in the borough. She sold it in the spring and is already three exploits past it.",
    "abilities": [
     {
@@ -3921,7 +3936,7 @@
       "steps": [
        {
         "do": "gainSupply",
-        "amount": 1
+        "amount": 2
        },
        {
         "do": "protectCharacter",
@@ -3933,10 +3948,10 @@
      }
     }
    ],
-   "rarity": "Super Rare",
+   "rarity": "Legendary",
    "power": {
-    "score": 7.42,
-    "power": 19.37,
+    "score": 8.86,
+    "power": 23.12,
     "opportunityCost": 11
    }
   },
@@ -3953,7 +3968,7 @@
     "delay": 1,
     "output": 1
    },
-   "text": "When Clover is recruited, you may recruit a Character costing 1 or less from your hand for free; it enters Busy.",
+   "text": "When Clover is recruited, you may recruit a Character costing 2 or less from your hand for free; it enters Busy.",
    "flavor": "Four generations on the same strip and Clover on the end of the row with a watering can too big for them, and somebody smaller still holding the other handle.",
    "abilities": [
     {
@@ -3961,17 +3976,17 @@
      "effect": {
       "do": "recruitFromHand",
       "filter": {
-       "maxCost": 1
+       "maxCost": 2
       },
       "orientation": 270,
       "optional": true
      }
     }
    ],
-   "rarity": "Rare",
+   "rarity": "Legendary",
    "power": {
-    "score": 5.03,
-    "power": 8.4,
+    "score": 5.33,
+    "power": 8.9,
     "opportunityCost": 3.6
    }
   },
@@ -4006,7 +4021,7 @@
     "atlas": "neighbors",
     "tile": 1
    },
-   "rarity": "Rare",
+   "rarity": "Super Rare",
    "power": {
     "score": 5.17,
     "power": 11.13,
@@ -4127,7 +4142,7 @@
     "atlas": "neighbors",
     "tile": 1
    },
-   "rarity": "Super Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.79,
     "power": 15.1,
@@ -4163,7 +4178,7 @@
      }
     }
    ],
-   "rarity": "Rare",
+   "rarity": "Super Rare",
    "power": {
     "score": 5.16,
     "power": 9.5,
@@ -4208,7 +4223,7 @@
     "atlas": "nightworkers",
     "tile": 11
    },
-   "rarity": "Uncommon",
+   "rarity": "Super Rare",
    "power": {
     "score": 4.61,
     "power": 7.7,
@@ -4382,7 +4397,7 @@
     "atlas": "nightworkers",
     "tile": 9
    },
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 5.9,
     "power": 15.39,
@@ -4445,7 +4460,7 @@
     "atlas": "nightworkers",
     "tile": 9
    },
-   "rarity": "Uncommon",
+   "rarity": "Super Rare",
    "power": {
     "score": 3.89,
     "power": 6.5,
@@ -4514,7 +4529,7 @@
     "atlas": "townlife",
     "tile": 15
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
     "score": 3.53,
     "power": 5.9,
@@ -4619,7 +4634,7 @@
     "atlas": "whiskerwood",
     "tile": 5
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.07,
     "power": 9.25,
@@ -4663,7 +4678,7 @@
     "atlas": "whiskerwood",
     "tile": 5
    },
-   "rarity": "Super Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.56,
     "power": 14.5,
@@ -4685,7 +4700,7 @@
    },
    "text": "Upgrades Copper. A steady shift: 2 turns, 5 Supply.",
    "flavor": "Salt, lamp oil, candle stock and a shelf of small coin, counted over twice a year and never once opened. This is the card where the cellar simply pays: no trick, no timing, just a Cat who put it by.",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.42,
     "power": 11.1,
@@ -4770,7 +4785,7 @@
     "atlas": "neighbors",
     "tile": 2
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
     "score": 3.08,
     "power": 5.14,
@@ -4889,7 +4904,7 @@
     "atlas": "neighbors",
     "tile": 2
    },
-   "rarity": "Super Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.62,
     "power": 14.65,
@@ -4959,7 +4974,7 @@
     "atlas": "neighbors",
     "tile": 2
    },
-   "rarity": "Uncommon",
+   "rarity": "Super Rare",
    "power": {
     "score": 4.13,
     "power": 6.9,
@@ -5008,7 +5023,7 @@
     "atlas": "neighbors",
     "tile": 2
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
     "score": 4.57,
     "power": 8.41,
@@ -5121,7 +5136,7 @@
     "atlas": "neighbors",
     "tile": 2
    },
-   "rarity": "Rare",
+   "rarity": "Common",
    "power": {
     "score": 5.1,
     "power": 13.3,
@@ -5156,7 +5171,7 @@
      }
     }
    ],
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.91,
     "power": 12.32,
@@ -5192,7 +5207,7 @@
     "atlas": "neighbors",
     "tile": 6
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.94,
     "power": 4.9,
@@ -5236,7 +5251,7 @@
     "atlas": "neighbors",
     "tile": 6
    },
-   "rarity": "Rare",
+   "rarity": "Super Rare",
    "power": {
     "score": 5.11,
     "power": 9.4,
@@ -5361,7 +5376,7 @@
     "atlas": "neighbors",
     "tile": 5
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.76,
     "power": 4.61,
@@ -5440,7 +5455,7 @@
     "atlas": "neighbors",
     "tile": 5
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.67,
     "power": 10.05,
@@ -5520,7 +5535,7 @@
     "atlas": "neighbors",
     "tile": 5
    },
-   "rarity": "Rare",
+   "rarity": "Common",
    "power": {
     "score": 5.32,
     "power": 13.89,
@@ -5556,7 +5571,7 @@
      }
     }
    ],
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.04,
     "power": 12.67,
@@ -5593,7 +5608,7 @@
     "atlas": "boroughs",
     "tile": 13
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.62,
     "power": 3.9,
@@ -5844,7 +5859,7 @@
     "atlas": "whiskerwood",
     "tile": 2
    },
-   "rarity": "Rare",
+   "rarity": "Common",
    "power": {
     "score": 5.17,
     "power": 13.5,
@@ -5881,7 +5896,7 @@
     "atlas": "whiskerwood",
     "tile": 2
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.42,
     "power": 3.6,
@@ -5953,7 +5968,7 @@
     "atlas": "neighbors",
     "tile": 7
    },
-   "rarity": "Rare",
+   "rarity": "Super Rare",
    "power": {
     "score": 4.94,
     "power": 9.1,
@@ -6022,7 +6037,7 @@
     "atlas": "neighbors",
     "tile": 6
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.89,
     "power": 8.85,
@@ -6054,7 +6069,7 @@
     "atlas": "neighbors",
     "tile": 6
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5,
     "power": 12.55,
@@ -6101,7 +6116,7 @@
     "atlas": "neighbors",
     "tile": 7
    },
-   "rarity": "Rare",
+   "rarity": "Common",
    "power": {
     "score": 4.79,
     "power": 12.51,
@@ -6197,7 +6212,7 @@
     "atlas": "whiskerwood",
     "tile": 6
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
     "score": 3.41,
     "power": 5.7,
@@ -6254,7 +6269,7 @@
     "atlas": "whiskerwood",
     "tile": 6
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
     "score": 4.33,
     "power": 7.98,
@@ -6332,7 +6347,7 @@
     "atlas": "whiskerwood",
     "tile": 6
    },
-   "rarity": "Super Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.86,
     "power": 15.3,
@@ -6354,7 +6369,7 @@
    },
    "text": "Upgrades Lynnette. A steady shift: 2 turns, 3 Supply.",
    "flavor": "Sheet on, pull, sheet off, four hundred times, and the ballots are done by morning. Lynnette has fed her own press for fifteen years because nobody else does it without a crease.",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.39,
     "power": 7.3,
@@ -6396,7 +6411,7 @@
     "atlas": "whiskerwood",
     "tile": 15
    },
-   "rarity": "Rare",
+   "rarity": "Common",
    "power": {
     "score": 4.79,
     "power": 11.64,
@@ -6433,7 +6448,7 @@
     "atlas": "monuments",
     "tile": 12
    },
-   "rarity": "Super Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.51,
     "power": 15,
@@ -6462,7 +6477,7 @@
     "atlas": "capital",
     "tile": 11
    },
-   "rarity": "Rare",
+   "rarity": "Common",
    "power": {
     "score": 4.88,
     "power": 11.34,
@@ -6595,7 +6610,7 @@
     "atlas": "boroughs",
     "tile": 4
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.85,
     "power": 4.76,
@@ -6671,7 +6686,7 @@
     ]
    },
    "flavor": "Biff gives his account, which takes a while because he starts with everyone's names. Brett reads the clause. The animal in the dock walks out with a job, which is how it usually goes.",
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.79,
     "power": 4.65,
@@ -6790,7 +6805,7 @@
     "amount": 4
    },
    "flavor": "They come out from the Capital City with clipboards and nobody remembers inviting them. Copper has met them four times and has never once been surprised.",
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.73,
     "power": 3.6,
@@ -6841,7 +6856,7 @@
      }
     }
    ],
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.82,
     "power": 9.6,
@@ -6868,7 +6883,7 @@
      }
     }
    ],
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.06,
     "power": 9.23,
@@ -6895,7 +6910,7 @@
      }
     }
    ],
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.45,
     "power": 9,
@@ -7542,7 +7557,7 @@
      }
     ]
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.64,
     "power": 4.4,
@@ -7608,7 +7623,7 @@
     "orientation": 0,
     "optional": true
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
     "score": 3.59,
     "power": 6,
@@ -7642,7 +7657,7 @@
      }
     ]
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.34,
     "power": 3.9,
@@ -7674,7 +7689,7 @@
      }
     ]
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.38,
     "power": 3.54,
@@ -7746,7 +7761,7 @@
      }
     ]
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.76,
     "power": 4.6,
@@ -7780,7 +7795,7 @@
      }
     ]
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
     "score": 3.29,
     "power": 5.5,
@@ -7882,7 +7897,7 @@
      }
     }
    ],
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.63,
     "power": 9.12,
@@ -7928,7 +7943,7 @@
    "title": "Town Building",
    "cost": 3,
    "build": {
-    "animals": 2
+    "animals": 4
    },
    "text": "At the start of your turn, one of your Characters cannot be targeted by your opponent until your next turn, and your Characters cannot be sent to Unemployment by an effect this turn.",
    "flavor": "Bob leans on it, Biff walks past it four times a night, and Berry mended the gate in it twice without being asked. It is not much of a wall. Nothing has ever got over it.",
@@ -7951,11 +7966,11 @@
      }
     }
    ],
-   "rarity": "Super Rare",
+   "rarity": "Legendary",
    "power": {
-    "score": 8.12,
+    "score": 7.02,
     "power": 20.4,
-    "opportunityCost": 10.02
+    "opportunityCost": 14.42
    }
   },
   {
@@ -7989,7 +8004,7 @@
      }
     }
    ],
-   "rarity": "Rare",
+   "rarity": "Common",
    "power": {
     "score": 4.79,
     "power": 11.64,
@@ -8027,7 +8042,7 @@
      }
     }
    ],
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.93,
     "power": 9.12,
@@ -8065,7 +8080,7 @@
     "atlas": "neighbors",
     "tile": 3
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.64,
     "power": 6.7,
@@ -8221,7 +8236,7 @@
     "atlas": "neighbors",
     "tile": 3
    },
-   "rarity": "Rare",
+   "rarity": "Common",
    "power": {
     "score": 5.23,
     "power": 13.65,
@@ -8349,7 +8364,7 @@
     "atlas": "boroughs",
     "tile": 3
    },
-   "rarity": "Rare",
+   "rarity": "Super Rare",
    "power": {
     "score": 5.34,
     "power": 12.14,
@@ -8387,7 +8402,7 @@
      }
     }
    ],
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 5.96,
     "power": 15.55,
@@ -8421,7 +8436,7 @@
      }
     }
    ],
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.78,
     "power": 12,
@@ -8460,7 +8475,7 @@
     "atlas": "boroughs",
     "tile": 10
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
     "score": 3.09,
     "power": 4.6,
@@ -8501,7 +8516,7 @@
     "atlas": "whiskerwood",
     "tile": 1
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
     "score": 3.69,
     "power": 6.16,
@@ -8539,7 +8554,7 @@
     "atlas": "whiskerwood",
     "tile": 1
    },
-   "rarity": "Rare",
+   "rarity": "Super Rare",
    "power": {
     "score": 5.11,
     "power": 9.4,
@@ -8667,7 +8682,7 @@
     "atlas": "whiskerwood",
     "tile": 1
    },
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 5.92,
     "power": 15.45,
@@ -8775,7 +8790,7 @@
      }
     }
    ],
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.31,
     "power": 6.1,
@@ -8845,7 +8860,7 @@
     "atlas": "nightworkers",
     "tile": 14
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.68,
     "power": 11.75,
@@ -8881,7 +8896,7 @@
     "atlas": "whiskerwood",
     "tile": 9
    },
-   "rarity": "Rare",
+   "rarity": "Common",
    "power": {
     "score": 4.71,
     "power": 12.3,
@@ -8903,7 +8918,7 @@
    },
    "text": "Upgrades Morty. A steady shift: 2 turns, 3 Supply.",
    "flavor": "Before the kitchen, before the boiler, the plain half of the mill: sacks in, stones dressed, flour out, all day. Morty will tell you it is the only part of the job that has never once gone wrong.",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.39,
     "power": 7.3,
@@ -8973,7 +8988,7 @@
     "atlas": "neighbors",
     "tile": 11
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.31,
     "power": 6.1,
@@ -9085,7 +9100,7 @@
     "atlas": "nightworkers",
     "tile": 12
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.96,
     "power": 9.94,
@@ -9117,7 +9132,7 @@
      }
     }
    ],
-   "rarity": "Super Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.48,
     "power": 14.3,
@@ -9394,7 +9409,7 @@
     "atlas": "neighbors",
     "tile": 14
    },
-   "rarity": "Rare",
+   "rarity": "Super Rare",
    "power": {
     "score": 4.96,
     "power": 9.12,
@@ -9509,7 +9524,7 @@
     "atlas": "neighbors",
     "tile": 14
    },
-   "rarity": "Rare",
+   "rarity": "Common",
    "power": {
     "score": 5.33,
     "power": 13.9,
@@ -9583,7 +9598,7 @@
     "atlas": "whiskerwood",
     "tile": 11
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.95,
     "power": 4.92,
@@ -9735,7 +9750,7 @@
    },
    "text": "Upgrades Peter. A steady shift: 2 turns, 4 Supply.",
    "flavor": "Cut it most of the way through, bend it over while it is still alive, peg it down and wait fifteen years to find out whether you were any good. Peter has been good for eleven of them so far.",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.05,
     "power": 9.2,
@@ -9779,7 +9794,7 @@
    },
    "text": "Upgrades Osh. A steady shift: 2 turns, 3 Supply.",
    "flavor": "Eleven days, the same order every time, and at the end of it every edge in the borough is the same edge again. Osh could tell you whose shears these are with his eyes shut, and has.",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.39,
     "power": 7.3,
@@ -9823,7 +9838,7 @@
    },
    "text": "Upgrades Adam. A steady shift: 2 turns, 5 Supply.",
    "flavor": "The long pull to the county gate was his idea, and it is a quarter-hour shorter than the one it replaced. He got carts round the whole of that spring the bridge was down, and he will tell you it was nothing much, at length.",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.42,
     "power": 11.1,
@@ -9867,7 +9882,7 @@
    },
    "text": "Upgrades Cassadee. A steady shift: 2 turns, 4 Supply.",
    "flavor": "The room, the lamp oil, the running order and the chairs away by midnight. Cassadee has never once been on the stage and the evening has never once started without her.",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.05,
     "power": 9.2,
@@ -9911,7 +9926,7 @@
    },
    "text": "Upgrades Annabelle. A steady shift: 2 turns, 4 Supply.",
    "flavor": "Flattened, dried, labelled and shelved: a year of Grain Exchange returns that exist nowhere else because the Grain Exchange threw its own copy out. She has been wrong before, so she keeps the illegible ones too.",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.05,
     "power": 9.2,
@@ -9955,7 +9970,7 @@
    },
    "text": "Upgrades Liz. A steady shift: 2 turns, 5 Supply.",
    "flavor": "Every loaded cart in the borough crosses Liz's plate and is paid on what she writes. Copper certifies the bridge each spring and has never had to move it a hair. She reads the carter's face anyway, out of habit.",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.42,
     "power": 11.1,
@@ -9999,7 +10014,7 @@
    },
    "text": "Upgrades Taco. A steady shift: 2 turns, 4 Supply.",
    "flavor": "Shut at noon, open at four in the morning, and never twice in the same place. The lightermen find him every time and not one of them can tell you how.",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.05,
     "power": 9.2,
@@ -10043,7 +10058,7 @@
    },
    "text": "Upgrades Cookie. A steady shift: 2 turns, 4 Supply.",
    "flavor": "The late heat after the bread is out, and shelves that do not get opened until the weather turns. Cookie has never eaten anything in the year she baked it and does not intend to start.",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.05,
     "power": 9.2,
@@ -10087,7 +10102,7 @@
    },
    "text": "Upgrades Sota. A steady shift: 2 turns, 4 Supply.",
    "flavor": "Every small instrument in the Observatory came off Sota's bench, and the two big ones have been re-seated by them twice. They have looked through exactly as many of them as politeness required.",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.05,
     "power": 9.2,
@@ -10131,7 +10146,7 @@
    },
    "text": "Upgrades Andrew. A steady shift: 2 turns, 3 Supply.",
    "flavor": "He locks the door behind Inkwell's evening and then does not leave. The Counting House has asked twice what exactly it is paying for, and the Library has given up trying to explain.",
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.39,
     "power": 7.3,
@@ -10172,7 +10187,7 @@
     "atlas": "neighbors",
     "tile": 10
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
     "score": 3.08,
     "power": 5.14,
@@ -10281,7 +10296,7 @@
     "atlas": "townlife",
     "tile": 2
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.92,
     "power": 12.35,
@@ -10319,7 +10334,7 @@
     "atlas": "neighbors",
     "tile": 10
    },
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 6.07,
     "power": 15.85,
@@ -10359,7 +10374,7 @@
     "atlas": "neighbors",
     "tile": 4
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
     "score": 3.25,
     "power": 5.43,
@@ -10467,7 +10482,7 @@
     "atlas": "neighbors",
     "tile": 4
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.97,
     "power": 12.49,
@@ -10579,7 +10594,7 @@
     "atlas": "whiskerwood",
     "tile": 10
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.73,
     "power": 4.56,
@@ -10772,7 +10787,7 @@
     "atlas": "neighbors",
     "tile": 14
    },
-   "rarity": "Uncommon",
+   "rarity": "Super Rare",
    "power": {
     "score": 4.03,
     "power": 6.72,
@@ -10982,7 +10997,7 @@
     "atlas": "monuments",
     "tile": 9
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.36,
     "power": 3.8,
@@ -11020,7 +11035,7 @@
     "atlas": "whiskerwood",
     "tile": 0
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
     "score": 3.26,
     "power": 5.44,
@@ -11132,7 +11147,7 @@
     "atlas": "whiskerwood",
     "tile": 0
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.04,
     "power": 12.67,
@@ -11167,7 +11182,7 @@
     "atlas": "nightworkers",
     "tile": 10
    },
-   "rarity": "Super Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.79,
     "power": 15.1,
@@ -11320,7 +11335,7 @@
     "atlas": "neighbors",
     "tile": 0
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.69,
     "power": 6.8,
@@ -11477,7 +11492,7 @@
     "atlas": "neighbors",
     "tile": 0
    },
-   "rarity": "Super Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.4,
     "power": 14.08,
@@ -11548,7 +11563,7 @@
     "atlas": "neighbors",
     "tile": 9
    },
-   "rarity": "Uncommon",
+   "rarity": "Super Rare",
    "power": {
     "score": 3.95,
     "power": 6.6,
@@ -11631,7 +11646,7 @@
     "atlas": "nightskies",
     "tile": 9
    },
-   "rarity": "Super Rare",
+   "rarity": "Legendary",
    "power": {
     "score": 6.85,
     "power": 15.57,
@@ -11695,7 +11710,7 @@
    "cost": 5,
    "shift": {
     "delay": 2,
-    "output": 5
+    "output": 7
    },
    "text": "Upgrades Quill. When Quill becomes upright, one of your other Characters cannot be targeted by your opponent and your Characters cannot be sent to Unemployment by an effect until your next turn.",
    "flavor": "The Hiring Hall sends them and pretends it hasn't; Quill takes them and pretends she hasn't noticed. She hands over a basket, asks whether they can carry a ladder, and puts the kettle on for thirty.",
@@ -11725,10 +11740,10 @@
     "atlas": "neighbors",
     "tile": 9
    },
-   "rarity": "Super Rare",
+   "rarity": "Legendary",
    "power": {
-    "score": 7.25,
-    "power": 18.93,
+    "score": 8.44,
+    "power": 22.03,
     "opportunityCost": 11
    }
   },
@@ -11835,7 +11850,7 @@
     "atlas": "capital",
     "tile": 4
    },
-   "rarity": "Super Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.69,
     "power": 14.85,
@@ -11870,7 +11885,7 @@
     "atlas": "boroughs",
     "tile": 2
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.31,
     "power": 6.1,
@@ -11905,7 +11920,7 @@
     "atlas": "neighbors",
     "tile": 6
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.95,
     "power": 8.5,
@@ -11982,7 +11997,7 @@
     "atlas": "neighbors",
     "tile": 6
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.32,
     "power": 10.85,
@@ -12021,7 +12036,7 @@
     "atlas": "neighbors",
     "tile": 6
    },
-   "rarity": "Super Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.46,
     "power": 14.25,
@@ -12072,7 +12087,7 @@
     "atlas": "whiskerwood",
     "tile": 8
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
     "score": 3.41,
     "power": 5.7,
@@ -12908,7 +12923,7 @@
      }
     ]
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.52,
     "power": 9.5,
@@ -13890,7 +13905,7 @@
     "atlas": "monuments",
     "tile": 14
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
     "score": 3.03,
     "power": 4,
@@ -13925,7 +13940,7 @@
     "atlas": "nightworkers",
     "tile": 0
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.76,
     "power": 4.6,
@@ -14014,7 +14029,7 @@
     "atlas": "nightworkers",
     "tile": 1
    },
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 6.49,
     "power": 16.93,
@@ -14056,7 +14071,7 @@
     "atlas": "whiskerwood",
     "tile": 13
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.76,
     "power": 4.6,
@@ -14215,7 +14230,7 @@
     "atlas": "boroughs",
     "tile": 8
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.76,
     "power": 11.95,
@@ -14249,7 +14264,7 @@
      "requiresUpright": true
     }
    ],
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 6.23,
     "power": 16.25,
@@ -14287,7 +14302,7 @@
     "atlas": "neighbors",
     "tile": 13
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
     "score": 3.06,
     "power": 5.1,
@@ -14444,7 +14459,7 @@
     "atlas": "neighbors",
     "tile": 13
    },
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 6.46,
     "power": 16.86,
@@ -14482,7 +14497,7 @@
     "atlas": "nightworkers",
     "tile": 3
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
     "score": 3.07,
     "power": 5.13,
@@ -14523,7 +14538,7 @@
     "atlas": "nightworkers",
     "tile": 4
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.31,
     "power": 6.1,
@@ -14729,7 +14744,7 @@
     "atlas": "whiskerwood",
     "tile": 3
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.94,
     "power": 4.9,
@@ -14766,7 +14781,7 @@
     "atlas": "nightworkers",
     "tile": 15
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.31,
     "power": 6.1,
@@ -14799,7 +14814,7 @@
     "atlas": "whiskerwood",
     "tile": 3
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.67,
     "power": 10.05,
@@ -14834,7 +14849,7 @@
     "atlas": "whiskerwood",
     "tile": 3
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.65,
     "power": 8.3,
@@ -14872,7 +14887,7 @@
     "atlas": "whiskerwood",
     "tile": 3
    },
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 6.08,
     "power": 14.9,
@@ -15012,7 +15027,7 @@
     "atlas": "neighbors",
     "tile": 10
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.3,
     "power": 10.8,
@@ -15046,7 +15061,7 @@
     "atlas": "neighbors",
     "tile": 11
    },
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 6.17,
     "power": 16.1,
@@ -15087,7 +15102,7 @@
     "atlas": "monuments",
     "tile": 13
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
     "score": 3.53,
     "power": 5.89,
@@ -15172,7 +15187,7 @@
     "atlas": "whiskerwood",
     "tile": 4
    },
-   "rarity": "Rare",
+   "rarity": "Super Rare",
    "power": {
     "score": 4.94,
     "power": 9.1,
@@ -15207,7 +15222,7 @@
     "atlas": "whiskerwood",
     "tile": 4
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.55,
     "power": 7.65,
@@ -15244,7 +15259,7 @@
     "atlas": "whiskerwood",
     "tile": 4
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 4.74,
     "power": 10.77,
@@ -15368,7 +15383,7 @@
     "atlas": "whiskerwood",
     "tile": 4
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.35,
     "power": 3.5,
@@ -15585,7 +15600,7 @@
     "atlas": "neighbors",
     "tile": 12
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.69,
     "power": 6.8,
@@ -15705,7 +15720,7 @@
     "atlas": "neighbors",
     "tile": 12
    },
-   "rarity": "Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.03,
     "power": 12.63,
@@ -15764,7 +15779,7 @@
     "atlas": "neighbors",
     "tile": 12
    },
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 6.12,
     "power": 15.96,
@@ -15793,7 +15808,7 @@
     "atlas": "neighbors",
     "tile": 12
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.42,
     "power": 6.3,
@@ -15822,7 +15837,7 @@
     "atlas": "neighbors",
     "tile": 4
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.23,
     "power": 6.95,
@@ -15851,7 +15866,7 @@
     "atlas": "whiskerwood",
     "tile": 1
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.94,
     "power": 4.9,
@@ -15880,7 +15895,7 @@
     "atlas": "whiskerwood",
     "tile": 2
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.42,
     "power": 6.3,
@@ -15909,7 +15924,7 @@
     "atlas": "neighbors",
     "tile": 8
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.23,
     "power": 6.95,
@@ -15938,7 +15953,7 @@
     "atlas": "boroughs",
     "tile": 13
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.94,
     "power": 4.9,
@@ -15967,7 +15982,7 @@
     "atlas": "whiskerwood",
     "tile": 8
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.42,
     "power": 6.3,
@@ -15996,7 +16011,7 @@
     "atlas": "nightworkers",
     "tile": 0
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.23,
     "power": 6.95,
@@ -16025,7 +16040,7 @@
     "atlas": "nightworkers",
     "tile": 5
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.94,
     "power": 4.9,
@@ -16054,7 +16069,7 @@
     "atlas": "boroughs",
     "tile": 8
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.42,
     "power": 6.3,
@@ -16083,7 +16098,7 @@
     "atlas": "whiskerwood",
     "tile": 0
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.37,
     "power": 7.25,
@@ -16112,7 +16127,7 @@
     "atlas": "whiskerwood",
     "tile": 4
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
     "score": 3.12,
     "power": 5.2,
@@ -16141,7 +16156,7 @@
     "atlas": "capital",
     "tile": 6
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.58,
     "power": 6.6,
@@ -16170,7 +16185,7 @@
     "atlas": "nightworkers",
     "tile": 6
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
     "score": 3.12,
     "power": 5.2,
@@ -16199,7 +16214,7 @@
     "atlas": "neighbors",
     "tile": 10
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.37,
     "power": 7.25,
@@ -16228,7 +16243,7 @@
     "atlas": "nightskies",
     "tile": 8
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.58,
     "power": 6.6,
@@ -16257,7 +16272,7 @@
     "atlas": "whiskerwood",
     "tile": 1
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
     "score": 3.12,
     "power": 5.2,
@@ -16286,7 +16301,7 @@
     "atlas": "whiskerwood",
     "tile": 8
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.37,
     "power": 7.25,
@@ -16324,7 +16339,7 @@
     "atlas": "monuments",
     "tile": 13
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.56,
     "power": 6.55,
@@ -16413,7 +16428,7 @@
     "atlas": "monuments",
     "tile": 13
    },
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 6.1,
     "power": 15.91,
@@ -16549,7 +16564,7 @@
     "atlas": "whiskerwood",
     "tile": 8
    },
-   "rarity": "Super Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.79,
     "power": 15.1,
@@ -16584,7 +16599,7 @@
     "atlas": "whiskerwood",
     "tile": 13
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.46,
     "power": 4.1,
@@ -16620,7 +16635,7 @@
     "atlas": "whiskerwood",
     "tile": 13
    },
-   "rarity": "Rare",
+   "rarity": "Super Rare",
    "power": {
     "score": 5.32,
     "power": 11.45,
@@ -16710,7 +16725,7 @@
     "atlas": "whiskerwood",
     "tile": 8
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.58,
     "power": 4.3,
@@ -16821,7 +16836,7 @@
     "atlas": "whiskerwood",
     "tile": 8
    },
-   "rarity": "Super Rare",
+   "rarity": "Rare",
    "power": {
     "score": 6.51,
     "power": 16.98,
@@ -16903,7 +16918,7 @@
     "atlas": "neighbors",
     "tile": 6
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.97,
     "power": 4.95,
@@ -16931,7 +16946,7 @@
     "atlas": "monuments",
     "tile": 13
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.51,
     "power": 7.55,
@@ -17106,7 +17121,7 @@
     "atlas": "whiskerwood",
     "tile": 1
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.24,
     "power": 5.96,
@@ -17197,7 +17212,7 @@
     "atlas": "whiskerwood",
     "tile": 5
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.73,
     "power": 4.56,
@@ -17326,7 +17341,7 @@
     "atlas": "townlife",
     "tile": 11
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
     "score": 4.63,
     "power": 8.53,
@@ -17365,7 +17380,7 @@
     "atlas": "townlife",
     "tile": 3
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.75,
     "power": 4.6,
@@ -17406,7 +17421,7 @@
     "atlas": "nightworkers",
     "tile": 0
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.36,
     "power": 10.94,
@@ -17446,7 +17461,7 @@
     "atlas": "whiskerwood",
     "tile": 8
    },
-   "rarity": "Uncommon",
+   "rarity": "Super Rare",
    "power": {
     "score": 3.99,
     "power": 6.66,
@@ -17525,7 +17540,7 @@
     "atlas": "townlife",
     "tile": 10
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.79,
     "power": 4.65,
@@ -17551,7 +17566,7 @@
     "atlas": "whiskerwood",
     "tile": 8
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.05,
     "power": 9.2,
@@ -17603,7 +17618,7 @@
     "atlas": "nightskies",
     "tile": 8
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.39,
     "power": 7.3,
@@ -17629,7 +17644,7 @@
     "atlas": "whiskerwood",
     "tile": 6
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.05,
     "power": 9.2,
@@ -17681,7 +17696,7 @@
     "atlas": "townlife",
     "tile": 11
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.39,
     "power": 7.3,
@@ -17733,7 +17748,7 @@
     "atlas": "neighbors",
     "tile": 2
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.42,
     "power": 11.1,
@@ -17759,7 +17774,7 @@
     "atlas": "neighbors",
     "tile": 12
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.42,
     "power": 11.1,
@@ -18100,7 +18115,7 @@
     "atlas": "boroughs",
     "tile": 9
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.21,
     "power": 5.8,
@@ -18316,7 +18331,7 @@
     "atlas": "boroughs",
     "tile": 14
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.59,
     "power": 8.72,
@@ -18344,7 +18359,7 @@
     "atlas": "capital",
     "tile": 10
    },
-   "rarity": "Rare",
+   "rarity": "Common",
    "power": {
     "score": 4.94,
     "power": 12,
@@ -18372,7 +18387,7 @@
     "atlas": "capital",
     "tile": 13
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.28,
     "power": 8.31,
@@ -18404,7 +18419,7 @@
     "atlas": "capital",
     "tile": 15
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.72,
     "power": 8.2,
@@ -18436,7 +18451,7 @@
     "atlas": "boroughs",
     "tile": 11
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
     "score": 3.33,
     "power": 4.4,
@@ -18467,7 +18482,7 @@
     "atlas": "townlife",
     "tile": 13
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
     "score": 3.18,
     "power": 4.2,
@@ -18498,7 +18513,7 @@
     "atlas": "nightskies",
     "tile": 0
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.84,
     "power": 3.75,
@@ -18592,7 +18607,7 @@
     "atlas": "nightskies",
     "tile": 11
    },
-   "rarity": "Rare",
+   "rarity": "Super Rare",
    "power": {
     "score": 4.85,
     "power": 6.4,
@@ -18696,7 +18711,7 @@
     "atlas": "whiskerwood",
     "tile": 6
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.46,
     "power": 8.7,
@@ -19001,15 +19016,15 @@
    "cost": 4,
    "shift": {
     "delay": 2,
-    "output": 3
+    "output": 4
    },
-   "text": "Upgrades Gwen. Busy: give a shift to a Character out of work in either town, or to hired help lying in the City Dump, for 1 less Supply. They arrive upright.",
+   "text": "Upgrades Gwen. Busy: give a shift to a Character out of work in either town, or to hired help lying in the City Dump, for 2 less Supply. They arrive upright.",
    "abilities": [
     {
      "trigger": "busy",
      "effect": {
       "do": "rehireFromAnywhere",
-      "discount": 1,
+      "discount": 2,
       "optional": true
      }
     }
@@ -19019,10 +19034,10 @@
     "atlas": "monuments",
     "tile": 14
    },
-   "rarity": "Super Rare",
+   "rarity": "Legendary",
    "power": {
-    "score": 6.04,
-    "power": 15.18,
+    "score": 7.34,
+    "power": 18.44,
     "opportunityCost": 10
    }
   },
@@ -19136,7 +19151,7 @@
     "atlas": "capital",
     "tile": 8
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.37,
     "power": 3.95,
@@ -19175,7 +19190,7 @@
     "atlas": "neighbors",
     "tile": 3
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.02,
     "power": 10.5,
@@ -19215,7 +19230,7 @@
     "atlas": "capital",
     "tile": 9
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.61,
     "power": 8.21,
@@ -19258,7 +19273,7 @@
     "atlas": "capital",
     "tile": 10
    },
-   "rarity": "Super Rare",
+   "rarity": "Uncommon",
    "power": {
     "score": 5.48,
     "power": 14.3,
@@ -19451,7 +19466,7 @@
     "atlas": "nightskies",
     "tile": 4
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.76,
     "power": 9.45,
@@ -19486,7 +19501,7 @@
     "atlas": "nightskies",
     "tile": 5
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.6,
     "power": 8.18,
@@ -19533,7 +19548,7 @@
     "atlas": "boroughs",
     "tile": 11
    },
-   "rarity": "Uncommon",
+   "rarity": "Super Rare",
    "power": {
     "score": 4.55,
     "power": 6,
@@ -19566,7 +19581,7 @@
     "atlas": "nightskies",
     "tile": 11
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
     "score": 3.3,
     "power": 4.35,
@@ -19659,7 +19674,7 @@
     "atlas": "capital",
     "tile": 12
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 4.16,
     "power": 10.45,
@@ -19792,7 +19807,7 @@
    "cost": 2,
    "shift": {
     "delay": 2,
-    "output": 2
+    "output": 3
    },
    "text": "Upgrades Annabelle. At the start of your turn, if she is the only Raccoon you have standing, gain 2 Supply and draw a card.",
    "abilities": [
@@ -19821,10 +19836,10 @@
     "atlas": "neighbors",
     "tile": 9
    },
-   "rarity": "Super Rare",
+   "rarity": "Legendary",
    "power": {
-    "score": 6.05,
-    "power": 13.03,
+    "score": 6.77,
+    "power": 14.58,
     "opportunityCost": 6.8
    }
   },
@@ -19859,7 +19874,7 @@
     "atlas": "townlife",
     "tile": 9
    },
-   "rarity": "Uncommon",
+   "rarity": "Common",
    "power": {
     "score": 3.66,
     "power": 6.73,
@@ -19897,7 +19912,7 @@
     "atlas": "whiskerwood",
     "tile": 15
    },
-   "rarity": "Uncommon",
+   "rarity": "Super Rare",
    "power": {
     "score": 3.96,
     "power": 6.61,
@@ -19940,7 +19955,7 @@
     "atlas": "boroughs",
     "tile": 14
    },
-   "rarity": "Rare",
+   "rarity": "Super Rare",
    "power": {
     "score": 5.27,
     "power": 12,
@@ -20071,7 +20086,7 @@
     "atlas": "capital",
     "tile": 0
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
     "score": 3.03,
     "power": 4,
@@ -20100,7 +20115,7 @@
     "atlas": "capital",
     "tile": 1
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
     "score": 3.03,
     "power": 4,
@@ -20126,7 +20141,7 @@
     "atlas": "capital",
     "tile": 2
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
     "score": 2.43,
     "power": 3.2,

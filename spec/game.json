@@ -19,13 +19,14 @@
     }
   },
   "deckbuilding": {
-    "$comment": "The Deck Workshop lets a player build any deck of minDeckSize to maxDeckSize cards from the Character, Event and Town Building catalogue. There is no Character floor and no Event ceiling any more: the deck is the Mayor's to get wrong, and the Workshop warns rather than refuses. warnMinCharacters is where that warning starts \u2014 a deck at full size with that few animals cannot pay its own Event requirements or staff its own Buildings. Copies are capped by rarity (maxCopiesByRarity), which src/engine/power.js derives from a card's power-to-opportunity-cost rating. Rarity here means how often a deck may repeat a card, not how hard it is to find: Common four times, Uncommon three, Rare twice, Super Rare once. An Event's Character requirement can be reduced by at most maxEventReduction, however many reductions a player holds.",
+    "$comment": "The Deck Workshop lets a player build any deck of minDeckSize to maxDeckSize cards from the Character, Event and Town Building catalogue. There is no Character floor and no Event ceiling any more: the deck is the Mayor's to get wrong, and the Workshop warns rather than refuses. warnMinCharacters is where that warning starts \u2014 a deck at full size with that few animals cannot pay its own Event requirements or staff its own Buildings. Copies are capped by rarity (maxCopiesByRarity), which src/engine/power.js derives from a card's power-to-opportunity-cost rating read against the other cards of its own cost: a Common four times, an Uncommon three, a Rare twice, a Super Rare once. Rarity here means how often a deck may repeat a card, not how hard it is to find. Legendary is the tier above Super Rare \u2014 the ten cards that beat every other card of their own cost by a clear margin, at least one at every cost from 0 to 5. It shares the one-copy limit, because there is nothing below one. An Event's Character requirement can be reduced by at most maxEventReduction, however many reductions a player holds.",
     "maxCopiesPerCard": 4,
     "maxCopiesByRarity": {
       "Common": 4,
       "Uncommon": 3,
       "Rare": 2,
-      "Super Rare": 1
+      "Super Rare": 1,
+      "Legendary": 1
     },
     "maxEventReduction": 1,
     "minDeckSize": 40,
@@ -224,13 +225,13 @@
     "A hired Capital City Character goes back to the City Dump instead of to Unemployment, so an Unemployment effect aimed at hired help destroys it outright.",
     "A Market card printed `hold: true` goes to the buyer's hand instead of resolving, and is played later for nothing, with no Character requirements.",
     "A town deck is 40 to 50 cards with no Character floor and no Event ceiling; the Deck Workshop warns about a full-size deck with six or fewer animals rather than refusing it.",
-    "Every card carries a rarity computed from its power-to-opportunity-cost rating (src/engine/power.js): Common, Uncommon, Rare or Super Rare. Rarity caps copies in a town deck (4/3/2/1) and means repetition, not scarcity.",
+    "Every card carries a rarity computed from its power-to-opportunity-cost rating (src/engine/power.js), read against the other cards of its own cost rather than against the whole set: Common, Uncommon, Rare, Super Rare or Legendary. Rarity caps copies in a town deck (4/3/2/1/1) and means repetition, not scarcity. Every cost from 0 to 5 has cards of all five kinds, with the dearer costs skewed rarer and the cheap ones commoner; the ten Legendaries are the ten cards that most outclass their own cost group.",
     "A Mayor may shuffle their Town Dump back into their deck once per game; after that an empty deck simply draws nothing.",
     "Tokens are markers, not cards: one kind per species, one per field of study, and one for Buildings, held beside a Mayor's Supply. They are declared by `token` cards in the card set, never go in a deck, and no card spends one yet \u2014 the counter exists so the cards that will can be written without engine work.",
     "A shift may be printed with `decay`: every shift that Character works pays less than the one before, down to `minOutput`. Burning out is a property of the animal, so the count is kept on their stack."
   ],
   "tokens": {
-    "$comment": "Tokens are the small change of the town: markers a Mayor holds beside their Supply rather than cards in anybody's deck. There is one kind for every species, one for every field of study, and one for Buildings, and each kind is declared by a card of type `token` in the card set — the card is the token's face and its rules text; the counts live in `player.tokens`, keyed `species:Rabbit`, `study:Food`, `building`. A token is never drawn, bought, bid on or discarded, and it takes neither a town place nor a Building place. The engine gives and spends them (`gainToken`, `spendToken`) and a card may ask after them (`tokensAtLeast`), but nothing in either shelf spends one yet: the counter is built ahead of the cards that will use it, so the first three of them do not each invent their own. `startingTokens` is the count every Mayor begins with, and `cap` is the most of any one kind a town may hold at once (null for no limit).",
+    "$comment": "Tokens are the small change of the town: markers a Mayor holds beside their Supply rather than cards in anybody's deck. There is one kind for every species, one for every field of study, and one for Buildings, and each kind is declared by a card of type `token` in the card set \u2014 the card is the token's face and its rules text; the counts live in `player.tokens`, keyed `species:Rabbit`, `study:Food`, `building`. A token is never drawn, bought, bid on or discarded, and it takes neither a town place nor a Building place. The engine gives and spends them (`gainToken`, `spendToken`) and a card may ask after them (`tokensAtLeast`), but nothing in either shelf spends one yet: the counter is built ahead of the cards that will use it, so the first three of them do not each invent their own. `startingTokens` is the count every Mayor begins with, and `cap` is the most of any one kind a town may hold at once (null for no limit).",
     "enabled": true,
     "perSpecies": true,
     "perStudy": true,

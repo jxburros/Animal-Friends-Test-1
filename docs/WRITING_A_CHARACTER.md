@@ -183,11 +183,16 @@ Cheap versions do one small thing; expensive ones pay off the arc.
 Printed practice is roughly `delay 1 → output 1–2`, `delay 2 → output 4–5`. A character whose story
 is about patience can sit at the slow end; one whose story is about hustle should not.
 
-**Rarity is computed.** After writing the cards run `npm run stamp`, which rates every card
-(`power^0.6 × efficiency^0.4`) and stamps `rarity` and `power`. Rarity then caps deck copies —
-Common 4, Uncommon 3, Rare 2, Super Rare 1 — so it is a balance fact, not a badge. If a card comes
-back Super Rare and the story says "ordinary cartwright", the card is too strong: change the card,
-not the rarity.
+**Rarity is computed, and it is relative to the card's cost.** After writing the cards run
+`npm run stamp`, which rates every card (`power^0.6 × efficiency^0.4`) and stamps `rarity` and
+`power`. Rarity then caps deck copies — Common 4, Uncommon 3, Rare 2, Super Rare 1, Legendary 1 — so
+it is a balance fact, not a badge. The cut a card has to clear is read off its **own cost group**
+(`RARITY_BANDS` in `src/engine/power.js`), so a cost-1 card is measured against the other cost-1
+cards and not against the Masters: a Rare at cost 0 and a Rare at cost 5 are two quite different
+cards that are each about as far ahead of their neighbours. If a card comes back Super Rare and the
+story says "ordinary cartwright", the card is too strong for its cost: change the card, not the
+rarity. Legendary is rarer still — the ten cards in the whole collection that most outclass their
+own cost group — and a new card landing there is nearly always a mistake, not a triumph.
 
 A useful check: the batch should not rate far above the versions it replaces.
 `npm run identity -- --check` fails on power creep across a set.

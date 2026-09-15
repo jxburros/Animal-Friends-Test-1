@@ -15,6 +15,7 @@ import { ornamentalFrameSVG } from './painted-art.js';
 import { fullArtFor, fullArtFrameSVG, FULL_ART_CARDS } from './full-art.js';
 import { resolveVersionKey, version as versionOf } from './versions.js';
 import { resolveFoil, applyFoil, FOIL_LABELS } from './foil.js';
+import { costBand } from '../engine/power.js';
 import * as fx from './fx.js';
 import * as choreo from './choreo.js';
 
@@ -298,8 +299,11 @@ export function buildCardFace(def, { large = false, interactive = true, foilInte
   banner.appendChild(h('div', { class: 'ticon', html: iconSVG(typeIconName(def)) }));
   if (def.rarity) {
     const p = def.power || {};
+    // The rating is only half the story now that rarity is read against the card's own cost group:
+    // 5.3 is the best cost-0 card in the collection and a filler Master. So the tooltip says which
+    // group the card was judged in.
     const title = p.score !== undefined
-      ? `${def.rarity} — rated ${p.score} (power ${p.power} against an opportunity cost of ${p.opportunityCost})`
+      ? `${def.rarity} for its cost — rated ${p.score} against the other cost-${costBand(def)} cards (power ${p.power} against an opportunity cost of ${p.opportunityCost})`
       : def.rarity;
     banner.appendChild(h('div', { class: `gem rar-${raritySlug(def)}`, title }));
   }

@@ -13,28 +13,67 @@
 // Pure data in, numbers out: nothing here reads game state, so the Deck Workshop, the tests and the
 // balance scripts all rate a card the same way.
 
-export const RARITIES = ['Common', 'Uncommon', 'Rare', 'Super Rare'];
+export const RARITIES = ['Common', 'Uncommon', 'Rare', 'Super Rare', 'Legendary'];
 
 /**
  * Copies of a card a town deck may hold, by rarity. Rarity here is a deck-building limit and nothing
- * else: it says how often a deck may repeat a card, not how hard the card is to come by. Four tiers,
- * because a fifth (the retired Legendary) drew a line the limits could not see — it capped copies at
- * one exactly as Super Rare did, so it was a label with no rule behind it.
+ * else: it says how often a deck may repeat a card, not how hard the card is to come by.
+ *
+ * Legendary and Super Rare both cap at one, which is why the fifth tier was retired once — a label
+ * with no rule behind it. It is back because it now carries something the limits could not see: a
+ * Legendary is one of the ten cards that beat every peer at their own cost, and a deck may hold one
+ * of each. The limit is the same; what the tier says about the card is not.
  */
-export const COPY_LIMITS = { Common: 4, Uncommon: 3, Rare: 2, 'Super Rare': 1 };
+export const COPY_LIMITS = { Common: 4, Uncommon: 3, Rare: 2, 'Super Rare': 1, Legendary: 1 };
 
 /**
- * Score at or above which a card lands in each rarity. Retuned when the fifth tier went and the
- * Building cap opened up: the cuts sit on the quantiles of the cards a deck may actually hold
- * (Characters and Events), which is where a copy limit bites, and they make a pyramid there —
- * about 40% Common, 32% Uncommon, 20% Rare, 8% Super Rare — and set-wide too.
+ * The types a rarity is a *rule* about: the catalogue the Deck Workshop builds from. A Statue or a
+ * Capital City lot carries a rarity too, and it is read the same way, but nothing caps how many of
+ * them you meet — so the Legendary tier, which exists to name the best card at a cost that a deck
+ * may hold one of, is reserved for these three.
  */
-export const RARITY_THRESHOLDS = [
-  ['Super Rare', 5.4],
-  ['Rare', 4.65],
-  ['Uncommon', 3.2],
-  ['Common', 0],
-];
+export const DECK_TYPES = new Set(['character', 'event', 'townBuilding']);
+
+/** The cost groups a card is judged inside. A Character's cost is 0-5; anything dearer bands at 5. */
+export const COST_BANDS = [0, 1, 2, 3, 4, 5];
+export function costBand(card) {
+  const cost = Number.isFinite(card?.cost) ? card.cost : 0;
+  return Math.max(0, Math.min(5, Math.round(cost)));
+}
+
+/**
+ * Score at or above which a card lands in each rarity — **read off its own cost group**, not off the
+ * set as a whole.
+ *
+ * This is the change that matters. A single set-wide ladder asked a cost-0 apprentice and a cost-5
+ * master to clear the same bar, and they never could: the old cuts printed no Common at all above
+ * cost 0, and made half the cost-5 shelf Super Rare. That is not a rarity, it is a restatement of the
+ * cost. A card is now rated against the cards a Mayor is actually choosing between when they have
+ * that much Supply to spend, so every cost group has its own Commons and its own marquee card.
+ *
+ * The cuts sit on the quantiles of the deck-legal cards (Characters, Events, Town Buildings) in each
+ * group, which is where a copy limit bites. The quantiles are deliberately not the same at every
+ * cost: dear cards skew rarer and cheap ones skew commoner, about 42/30/19/9 at cost 0 sliding to
+ * 22/29/30/19 at cost 5. The slide is gentle on purpose — a cheap card can be the best thing in the
+ * set and a Master can be filler, and both should be able to say so on the card.
+ *
+ * Legendary sits a clear step above the Super Rare cut in every group (about a fifth again), so a
+ * Legendary is not a Super Rare that rounded up: it beats the best of its cost group by a visible
+ * margin. Exactly ten cards in the collection clear it, at least one at every cost.
+ */
+export const RARITY_BANDS = {
+  0: [['Legendary', 4.85], ['Super Rare', 3.7], ['Rare', 3.0], ['Uncommon', 2.3], ['Common', 0]],
+  1: [['Legendary', 6.1], ['Super Rare', 4.9], ['Rare', 4.3], ['Uncommon', 3.7], ['Common', 0]],
+  2: [['Legendary', 6.3], ['Super Rare', 5.15], ['Rare', 4.75], ['Uncommon', 4.0], ['Common', 0]],
+  3: [['Legendary', 6.45], ['Super Rare', 5.25], ['Rare', 4.75], ['Uncommon', 4.1], ['Common', 0]],
+  4: [['Legendary', 6.6], ['Super Rare', 5.4], ['Rare', 5.05], ['Uncommon', 4.45], ['Common', 0]],
+  5: [['Legendary', 8.0], ['Super Rare', 6.55], ['Rare', 5.9], ['Uncommon', 5.35], ['Common', 0]],
+};
+
+/** The rarity ladder a card of this cost group is judged against, rarest first. */
+export function thresholdsForBand(band) {
+  return RARITY_BANDS[Math.max(0, Math.min(5, band | 0))];
+}
 
 /**
  * What a Statue is worth beyond its printed effect. Five of the nine win the game, so a Statue is a
@@ -693,10 +732,26 @@ export function powerRating(card, rules) {
   return power ** 0.6 * efficiency ** 0.4;
 }
 
-/** The rarity a rating earns. */
-export function rarityForScore(score) {
-  for (const [rarity, min] of RARITY_THRESHOLDS) if (score >= min) return rarity;
+/**
+ * The rarity a rating earns *inside its cost group*. The same score is a Legendary at cost 0 and a
+ * Common at cost 5, which is the whole point: a card is rare when it beats the cards a Mayor would
+ * otherwise spend that Supply on.
+ */
+export function rarityForScore(score, band = 0) {
+  for (const [rarity, min] of thresholdsForBand(band)) if (score >= min) return rarity;
   return 'Common';
+}
+
+/**
+ * The rarity a whole card earns: its score read against its own cost group's ladder, with the
+ * Legendary tier reserved for the catalogue a deck is built from. A Statue that clears the cut is
+ * printed Super Rare — Legendary is a statement about the best card you may put one of in a deck,
+ * and a card no deck holds cannot make it.
+ */
+export function rarityForCard(card, score) {
+  const rarity = rarityForScore(score, costBand(card));
+  if (rarity === 'Legendary' && !DECK_TYPES.has(card.type)) return 'Super Rare';
+  return rarity;
 }
 
 /** The full rating of a card: power, what it asked for, the ratio, the score and the rarity. */
@@ -704,7 +759,10 @@ export function rateCard(card, rules) {
   const power = round(cardPower(card, rules));
   const cost = round(opportunityCost(card, statuePriceFor(rules), rules));
   const score = round(powerRating(card, rules));
-  return { id: card.id, type: card.type, power, cost, ratio: round(power / cost), score, rarity: rarityForScore(score) };
+  return {
+    id: card.id, type: card.type, band: costBand(card), power, cost,
+    ratio: round(power / cost), score, rarity: rarityForCard(card, score),
+  };
 }
 
 /** How many copies of a card a town deck may hold, from its rarity. */
@@ -712,9 +770,31 @@ export function copyLimit(card, limits = COPY_LIMITS) {
   return limits[card.rarity] ?? limits.Common;
 }
 
-/** Every card in a set, rated and sorted from most to least powerful for its cost. */
+/**
+ * How far a card stands above its own cost group, as a multiple of that group's Super Rare cut. This
+ * is the number that makes "the most powerful cards in the set" a question with an answer: raw score
+ * only ever ranks the Masters, because a cost-5 card starts three Supply of power ahead of a cost-0
+ * one. At 1.0 a card is exactly good enough to be Super Rare for its cost; the ten Legendaries all
+ * sit above 1.2, one of them at every cost from 0 to 5.
+ */
+export function relativeRating(card, score) {
+  const [, superRareCut] = thresholdsForBand(costBand(card))[1];
+  return score / superRareCut;
+}
+
+/**
+ * Every card in a set, rated and sorted from most to least powerful **for its cost** — which is what
+ * this function has always claimed to do and now actually does. Ties break on raw score, then id, so
+ * the order is stable.
+ */
 export function rateSet(set, rules) {
-  return set.cards.map((c) => rateCard(c, rules)).sort((a, b) => b.score - a.score || a.id.localeCompare(b.id));
+  return set.cards
+    .map((c) => {
+      const rated = rateCard(c, rules);
+      // Off the rounded score, so that a printed rating and the order it earns can never disagree.
+      return { ...rated, relative: round(relativeRating(c, rated.score)) };
+    })
+    .sort((a, b) => b.relative - a.relative || b.score - a.score || a.id.localeCompare(b.id));
 }
 
 function round(n) {
