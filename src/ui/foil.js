@@ -5,7 +5,8 @@ export const FOIL_LABELS = Object.freeze({
   reverse: 'Reverse foil', hexagon: 'Hexagon foil',
 });
 
-// Opt in one card/printing at a time. The first draw assigns 15 ordinary Foil printings.
+// Opt in one card/printing at a time. The first draw assigns 15 ordinary Foil printings;
+// the later hexagons and the second, chosen set are listed after it.
 // Example: mk_clover_master_botanist_5: { regular: 'artwork', fullCardArt: false }
 // Detail finish: { mode: 'details', mask: 'assets/art/foil-masks/<id>-regular.svg' }
 // Mask paths are relative to the site root, including on GitHub Pages.
@@ -41,6 +42,49 @@ export const FOIL_ASSIGNMENTS = Object.freeze({
   mk_harrison_piano_boy_0: Object.freeze({ foil: 'hexagon' }),
   mk_hazel_guildmaster_3: Object.freeze({ foil: 'hexagon' }),
   mk_lindsay_potting_helper_0: Object.freeze({ foil: 'hexagon' }),
+
+  // Ten of the cutest cards, artwork foil.
+  mk_comet_bolt_sorter_0: Object.freeze({ foil: 'artwork' }),
+  mk_osh_sharpener_s_boy_0: Object.freeze({ foil: 'artwork' }),
+  mk_marmalade_dough_kneader_1: Object.freeze({ foil: 'artwork' }),
+  mk_gabe_corner_show_0: Object.freeze({ foil: 'artwork' }),
+  mk_jessica_song_leader_0: Object.freeze({ foil: 'artwork' }),
+  mk_quill_orchard_hand_0: Object.freeze({ foil: 'artwork' }),
+  mk_lindsay_herb_grower_3: Object.freeze({ foil: 'artwork' }),
+  mk_rosabeth_garden_hand_1: Object.freeze({ foil: 'artwork' }),
+  mk_clover_plot_sharer_1: Object.freeze({ foil: 'artwork' }),
+  mk_cookie_biscuit_maker_0: Object.freeze({ foil: 'artwork' }),
+
+  // Ten of the coolest cards, reverse foil.
+  mk_brooke_balloonist_4: Object.freeze({ foil: 'reverse' }),
+  mk_morty_steam_engineer_4: Object.freeze({ foil: 'reverse' }),
+  mk_yellow_freshest_thing_4: Object.freeze({ foil: 'reverse' }),
+  mk_dx_solar_eclipse: Object.freeze({ foil: 'reverse' }),
+  mk_willow_harbour_admiral_5: Object.freeze({ foil: 'reverse' }),
+  mk_biff_chief_constable_4: Object.freeze({ foil: 'reverse' }),
+  mk_betty_firework_maker_3: Object.freeze({ foil: 'reverse' }),
+  mk_tabitha_camerawoman_5: Object.freeze({ foil: 'reverse' }),
+  mk_moss_rocketwright_4: Object.freeze({ foil: 'reverse' }),
+  mk_patch_junkyard_diver_0: Object.freeze({ foil: 'reverse' }),
+
+  // Ten of the most underrated cards, full-card foil.
+  mk_cassadee_the_only_one_at_the_back_1: Object.freeze({ foil: 'full' }),
+  mk_abigail_standing_slot_5: Object.freeze({ foil: 'full' }),
+  mk_fred_backstage_crew_3: Object.freeze({ foil: 'full' }),
+  mk_winter_turned_down_applicant_1: Object.freeze({ foil: 'full' }),
+  mk_oatmeal_sunday_table_0: Object.freeze({ foil: 'full' }),
+  mk_ned_the_ward_roll_0: Object.freeze({ foil: 'full' }),
+  mk_kevin_counter_hand_2: Object.freeze({ foil: 'full' }),
+  mk_hibiscus_the_sorting_bench_0: Object.freeze({ foil: 'full' }),
+  mk_sota_the_same_bench_4: Object.freeze({ foil: 'full' }),
+  mk_peter_washing_up_1: Object.freeze({ foil: 'full' }),
+
+  // Five cards whose artwork has a detail worth shining.
+  mk_sage_astronomer_3: Object.freeze({ foil: Object.freeze({ mode: 'details', mask: 'assets/art/foil-masks/mk_sage_astronomer_3-foil.svg' }) }),
+  mk_bean_espresso_1: Object.freeze({ foil: Object.freeze({ mode: 'details', mask: 'assets/art/foil-masks/mk_bean_espresso_1-foil.svg' }) }),
+  mk_liz_weighbridge_keeper_4: Object.freeze({ foil: Object.freeze({ mode: 'details', mask: 'assets/art/foil-masks/mk_liz_weighbridge_keeper_4-foil.svg' }) }),
+  mk_copper_scale_polisher_1: Object.freeze({ foil: Object.freeze({ mode: 'details', mask: 'assets/art/foil-masks/mk_copper_scale_polisher_1-foil.svg' }) }),
+  mk_mandee_weather_watcher_2: Object.freeze({ foil: Object.freeze({ mode: 'details', mask: 'assets/art/foil-masks/mk_mandee_weather_watcher_2-foil.svg' }) }),
 });
 
 /** Invalid/unfinished detail configurations fail closed, never flashing the entire artwork. */

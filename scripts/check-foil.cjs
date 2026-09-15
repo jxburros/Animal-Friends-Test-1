@@ -93,7 +93,8 @@ const baseURL = process.argv[2] || 'http://localhost:8080';
     }
     return { changed, mean: energy / Math.max(changed, 1), peak };
   }
-  for (const id of ['mk_comet_astronaut_5', 'ns_flint_0', 'mk_earl_tea_house_keeper_4']) {
+  for (const id of ['mk_comet_astronaut_5', 'mk_finn_auctioneers_boy_0', 'mk_earl_tea_house_keeper_4',
+    'mk_sage_astronomer_3', 'mk_copper_scale_polisher_1']) {
     for (const large of [false, true]) {
       const captures = [];
       for (const foil of [false, undefined]) {
@@ -126,14 +127,14 @@ const baseURL = process.argv[2] || 'http://localhost:8080';
   await page.goto(baseURL, { waitUntil: 'domcontentloaded' });
   await page.locator('#welcomePlayBtn').click();
   await page.locator('#screen-home button').nth(2).click();
-  await page.getByRole('button', { name: 'Foil · 15', exact: true }).click();
+  await page.getByRole('button', { name: 'Foil · 64', exact: true }).click();
   const bookFaces = page.locator('#bookHost .card-face');
-  assert.equal(await bookFaces.count(), 15);
+  assert.equal(await bookFaces.count(), 64);
   assert.ok(await bookFaces.evaluateAll(els => els.every(el => el.dataset.version === 'foil')));
   assert.deepEqual(await bookFaces.evaluateAll(els => els.reduce((counts, el) => {
     counts[el.dataset.foil] = (counts[el.dataset.foil] || 0) + 1;
     return counts;
-  }, {})), { full: 3, artwork: 3, details: 3, reverse: 3, hexagon: 3 });
+  }, {})), { full: 13, artwork: 13, details: 8, reverse: 13, hexagon: 17 });
   await page.locator('#bookHost .foil-details .inspect-card').first().click();
   assert.equal(await page.locator('.card-reader .card-face').getAttribute('data-version'), 'foil');
   assert.equal(await page.locator('.card-reader .card-face').getAttribute('data-foil'), 'details');
@@ -149,10 +150,10 @@ const baseURL = process.argv[2] || 'http://localhost:8080';
   await page.keyboard.press('Escape');
   await page.locator('#bookHost .book-card').first().getByRole('button', { name: 'Regular', exact: true }).click();
   assert.equal(await bookFaces.first().getAttribute('data-version'), 'regular');
-  await page.getByRole('button', { name: 'Foil · 15', exact: true }).click();
-  await page.getByRole('button', { name: 'Foil · 15', exact: true }).click();
+  await page.getByRole('button', { name: 'Foil · 64', exact: true }).click();
+  await page.getByRole('button', { name: 'Foil · 64', exact: true }).click();
   assert.ok(await bookFaces.evaluateAll(els => els.every(el => el.dataset.version === 'foil')));
   assert.deepEqual(errors,[]);
-  console.log('Browser coverage, reader, motion, viewport and all 15 Book foil printings passed.');
+  console.log('Browser coverage, reader, motion, viewport and all 64 Book foil printings passed.');
   await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});

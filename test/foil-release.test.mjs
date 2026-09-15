@@ -8,6 +8,8 @@ import { paintedArtSVG } from '../src/ui/painted-art.js';
 
 const maker = JSON.parse(readFileSync(new URL('../spec/maker_card_set.json', import.meta.url)));
 const release = JSON.parse(readFileSync(new URL('../docs/FOIL_SELECTION.json', import.meta.url)));
+const chosen = JSON.parse(readFileSync(new URL('../docs/FOIL_CHOICES.json', import.meta.url)));
+const chosenCards = Object.values(chosen.groups).flatMap(group => group.cards.map(card => ({ ...card, mode: group.mode })));
 const cards = [...new Map([...SET.cards, ...maker.cards].map(card => [card.id, card])).values()];
 
 test('the recorded random draw has fifteen distinct ordinary Foils and three of every finish', () => {
@@ -45,8 +47,9 @@ test('the recorded random draw has fifteen distinct ordinary Foils and three of 
 
 test('hexagon Foil printings added after the first release use the ordinary artwork', () => {
   const drawn = new Set(release.selection.map(card => card.id));
+  const picked = new Set(chosenCards.map(card => card.id));
   const added = Object.entries(PRINTINGS)
-    .filter(([id, printings]) => printings.foil && !drawn.has(id))
+    .filter(([id, printings]) => printings.foil && !drawn.has(id) && !picked.has(id))
     .map(([id]) => id);
   assert.equal(added.length, 14);
   for (const id of added) {
@@ -67,8 +70,46 @@ test('hexagon Foil printings added after the first release use the ordinary artw
   }
 });
 
-test('every Foil printing is either drawn or a later hexagon, and no card is foil by accident', () => {
-  assert.equal(countInVersion(cards, 'foil'), 29);
+test('the second, chosen set gives 35 cards without a foil one of the four finishes', () => {
+  const drawn = new Set(release.selection.map(card => card.id));
+  const counts = {};
+  const seen = new Set();
+  for (const entry of chosenCards) {
+    const def = cards.find(card => card.id === entry.id);
+    assert.ok(def, entry.id);
+    assert.equal(seen.has(entry.id), false, `${entry.id} chosen twice`);
+    seen.add(entry.id);
+    assert.equal(drawn.has(entry.id), false, `${entry.id} already held a drawn foil`);
+    assert.equal(def.name, entry.name);
+    assert.equal(def.title || '', entry.title);
+    assert.equal(def.type, entry.type);
+    assert.ok(entry.why.trim(), `${entry.id} says why it was chosen`);
+    assert.equal(PRINTINGS[def.id].foil, true);
+    assert.deepEqual(Object.keys(FOIL_ASSIGNMENTS[def.id]), ['foil']);
+    assert.equal(hasVersion(def, 'foil'), true);
+    assert.equal(hasVersion(def, 'creativeFoil'), false);
+    assert.equal(hasVersion(def, 'alternateArtFoil'), false);
+    const finish = resolveFoil(def, version('foil'));
+    assert.equal(finish.mode, entry.mode);
+    counts[finish.mode] = (counts[finish.mode] || 0) + 1;
+    // A chosen foil decorates the ordinary printing; it adds no painting and leaves the rest matte.
+    assert.equal(versionArtUrl(def, 'foil'), null, 'foil uses ordinary art');
+    assert.equal(paintedArtSVG(def, '<svg/>', 'foil'), paintedArtSVG(def, '<svg/>', 'regular'));
+    for (const key of ['regular', 'fullCardArt']) {
+      assert.deepEqual(resolveFoil(def, version(key)), resolveFoil(def, version(key), undefined, {}));
+    }
+    if (finish.mode === 'details') {
+      assert.match(finish.mask, new RegExp(`${def.id}-foil\\.svg$`), 'each mask is traced for its own card');
+      const svg = readFileSync(new URL(finish.mask), 'utf8');
+      assert.match(svg, /viewBox="0 0 600 600"/);
+      assert.match(svg, /<path/);
+    }
+  }
+  assert.deepEqual(counts, { artwork: 10, reverse: 10, full: 10, details: 5 });
+});
+
+test('every Foil printing is drawn, a later hexagon or a chosen one, and none is foil by accident', () => {
+  assert.equal(countInVersion(cards, 'foil'), 64);
   const foilPrintings = Object.entries(PRINTINGS)
     .filter(([, printings]) => printings.foil)
     .map(([id]) => id);

@@ -3,7 +3,9 @@
 Foil is a presentation setting, independent of rarity, card type, rules and artwork printing.
 Any card (including Maker cards, Tokens, Events and Capital City cards) can use any finish.
 The [first foil release](FIRST_FOILS.md) assigns 15 ordinary Foil printings, three per finish, and
-14 hexagon Foil printings were added after it.
+14 hexagon Foil printings were added after it. A [second, chosen set](SECOND_FOILS.md) adds 35 more
+— artwork foil for ten of the cutest cards, reverse foil for ten of the coolest, full-card foil for
+ten of the most underrated, and five new detail masks — for 64 ordinary Foil printings in all.
 Existing foil flags and printing defaults are
 preserved, including the existing full-art foil default; an explicit `false` makes any of them matte.
 
@@ -33,7 +35,8 @@ create an alternate painting or add a new printing to the Book.
 
 To introduce a separately listed foil printing, also opt it into `PRINTINGS` in `versions.js`
 (e.g. `card_id: { foil: true }`) and assign its finish under the `foil` key. It can use the existing
-ordinary artwork; the fourteen later hexagon Foil printings were all added this way.
+ordinary artwork; the fourteen later hexagon Foil printings and the thirty-five chosen ones were all
+added this way.
 
 | Value | Coverage |
 | --- | --- |
@@ -55,6 +58,8 @@ details that should shine. **Alpha controls coverage**: black opaque pixels shin
 transparency for areas that stay matte. Semitransparent edges soften the transition. Do not embed
 scripts, external resources or the card's rules in the mask.
 
+Trace it against the painting the printing actually shows: a mask authored for a scene that is
+later replaced keeps animating, over the wrong part of the card, and no check will fail.
 Match the coordinate space/aspect ratio of the rendered outer artwork SVG: regular atlas and alternate
 art use `100 × 100`, full-card art uses `100 × 160`. For a vector-only scene, match that scene's viewBox.
 The mask uses centered `cover`, matching the renderer's `xMidYMid slice`, so it follows the same crop
@@ -81,7 +86,7 @@ coverage uses a restrained blend to preserve text; masked details use a brighter
 and a four-second light sweep so small metal and porcelain accents visibly gleam. Read dialogs also
 track pointer light, while passive hover previews and animation clones remain noninteractive.
 
-![Comet, Flint and Earl during the brighter detail-foil sweep](screenshots/detail-foil-shine.png)
+![Detail foil during the brighter light sweep](screenshots/detail-foil-shine.png)
 
 `npm test` covers finish normalization, assignment precedence, every card/printing combination,
 mask validation, coverage placement and unchanged card definitions, alongside engine regressions.
@@ -93,6 +98,8 @@ With the server running, run `node scripts/check-foil.cjs http://localhost:8080`
 This checks actual coverage pixels on ordinary and full-art cards, the Read dialog, motion settings,
 phone/tablet/desktop overflow and the main app loading without browser errors. Full-art panels are
 translucent: artwork foil stays behind them, but a little background shine can show through.
-It also compares two animation phases on each assigned detail mask at table and large sizes, checking
-that reflected light visibly changes rather than merely verifying that a mask exists.
+It also compares two animation phases on assigned detail masks at table and large sizes, checking
+that reflected light visibly changes rather than merely verifying that a mask exists. What it cannot
+check is whether a mask still lands on the details it was traced for; that is an authoring
+responsibility, and the preview is where to confirm it.
 Native screen-reader testing is not automated here.

@@ -79,16 +79,17 @@ function retroAlternate(atlas, tile, other = {}) {
 
 /**
  * Which printings each card exists in, beyond the regular one and the Full Card Art collection.
- * The first random draw has 15 ordinary Foil printings. See docs/FIRST_FOILS.md.
+ * The first random draw has 15 ordinary Foil printings (docs/FIRST_FOILS.md); 14 hexagons and a
+ * second, chosen set of 35 (docs/SECOND_FOILS.md) follow it, for 64 in all.
  *
  *   mk_peanut_barista_1: { alternateArt: true, foil: true, alternateArtFoil: true },
  */
 export const PRINTINGS = Object.freeze({
   // Ink & Watercolor alternate-art collection. The two source atlases and their row-major map live
   // in docs/ALTERNATE_INK_WATERCOLOR.md; cards use conventional per-printing crops at runtime.
-  mk_brooke_balloonist_4: inkAlternate('ambitions', 0),
+  mk_brooke_balloonist_4: inkAlternate('ambitions', 0, { foil: true }),
   mk_clover_rocket_botanist_4: inkAlternate('ambitions', 1),
-  mk_comet_bolt_sorter_0: inkAlternate('ambitions', 2),
+  mk_comet_bolt_sorter_0: inkAlternate('ambitions', 2, { foil: true }),
   mk_inkwell_storyteller_2: inkAlternate('ambitions', 4),
   mk_inkwells_star_chart: inkAlternate('ambitions', 5),
   mk_lindsay_moon_gardener_5: inkAlternate('ambitions', 6),
@@ -100,13 +101,13 @@ export const PRINTINGS = Object.freeze({
   mk_moss_bridgewright_5: inkAlternate('ambitions', 13),
   mk_hazels_night_market: inkAlternate('ambitions', 14),
   mk_one_small_step: inkAlternate('ambitions', 15),
-  mk_rosabeth_garden_hand_1: inkAlternate('kindness', 0),
+  mk_rosabeth_garden_hand_1: inkAlternate('kindness', 0, { foil: true }),
   mk_rosabeth_apothecary_3: inkAlternate('kindness', 1),
   mk_marmalade_neighborhood_baker_3: inkAlternate('kindness', 3),
   mk_peanuts_standing_round: inkAlternate('kindness', 4),
   mk_oatmeal_jazz_singer_3: inkAlternate('kindness', 5),
   mk_scotts_reading_hour: inkAlternate('kindness', 6),
-  mk_biff_chief_constable_4: inkAlternate('kindness', 7),
+  mk_biff_chief_constable_4: inkAlternate('kindness', 7, { foil: true }),
   mk_bella_science_hall_fellow_4: inkAlternate('kindness', 9),
   mk_peanut_comptroller_5: inkAlternate('kindness', 10),
   mk_andrew_keeper_of_the_late_desk_2: inkAlternate('kindness', 11),
@@ -119,17 +120,17 @@ export const PRINTINGS = Object.freeze({
   // stories in a mid-century gouache-and-silkscreen idiom. See docs/ALTERNATE_RETRO_POP.md.
   mk_liza_floor_singer_0: retroAlternate('afterHours', 0),
   mk_harrison_piano_boy_0: retroAlternate('afterHours', 1, { foil: true }),
-  mk_gabe_corner_show_0: retroAlternate('afterHours', 2),
+  mk_gabe_corner_show_0: retroAlternate('afterHours', 2, { foil: true }),
   mk_cassadee_stage_hand_0: retroAlternate('afterHours', 3),
   mk_tabitha_festival_photographer_0: retroAlternate('afterHours', 4),
   mk_yellow_open_mic_regular_1: retroAlternate('afterHours', 5),
   mk_fred_wandered_onto_stage_0: retroAlternate('afterHours', 6),
-  mk_oatmeal_sunday_table_0: retroAlternate('afterHours', 7),
+  mk_oatmeal_sunday_table_0: retroAlternate('afterHours', 7, { foil: true }),
   mk_bean_the_early_shift_4: retroAlternate('afterHours', 8, { foil: true }),
   mk_barnaby_night_auditor_4: retroAlternate('afterHours', 9),
   mk_inkwell_night_librarian_3: retroAlternate('afterHours', 10),
   mk_benjamin_keeper_of_the_light_5: retroAlternate('afterHours', 11),
-  mk_willow_harbour_admiral_5: retroAlternate('afterHours', 12),
+  mk_willow_harbour_admiral_5: retroAlternate('afterHours', 12, { foil: true }),
   mk_unknown_cook_0: retroAlternate('afterHours', 13),
   mk_shadowed_squirrel_hall_hand_1: retroAlternate('afterHours', 14),
   mk_unsigned_mouse_shelves_hand_1: retroAlternate('afterHours', 15),
@@ -137,13 +138,13 @@ export const PRINTINGS = Object.freeze({
   mk_berry_clockmaker_1: retroAlternate('quietTriumphs', 0, { foil: true }),
   mk_clover_community_gardener_3: retroAlternate('quietTriumphs', 1),
   mk_comet_rocket_mechanic_1: retroAlternate('quietTriumphs', 2),
-  mk_betty_firework_maker_3: retroAlternate('quietTriumphs', 3),
+  mk_betty_firework_maker_3: retroAlternate('quietTriumphs', 3, { foil: true }),
   mk_brooke_riverwright_5: retroAlternate('quietTriumphs', 4),
   mk_copper_cellar_keeper_4: retroAlternate('quietTriumphs', 5, { foil: true }),
   mk_gwen_apron_on_the_hook_4: retroAlternate('quietTriumphs', 6),
   mk_gabe_puppet_maker_2: retroAlternate('quietTriumphs', 7),
-  mk_tabitha_camerawoman_5: retroAlternate('quietTriumphs', 8),
-  mk_winter_turned_down_applicant_1: retroAlternate('quietTriumphs', 9),
+  mk_tabitha_camerawoman_5: retroAlternate('quietTriumphs', 8, { foil: true }),
+  mk_winter_turned_down_applicant_1: retroAlternate('quietTriumphs', 9, { foil: true }),
   mk_oatmeal_alderman_5: retroAlternate('quietTriumphs', 10),
   mk_bean_two_pairs_of_paws_2: retroAlternate('quietTriumphs', 11),
   mk_barrows_measure: retroAlternate('quietTriumphs', 12),
@@ -178,6 +179,41 @@ export const PRINTINGS = Object.freeze({
   mk_finn_peddler_1: Object.freeze({ foil: true }),
   mk_hazel_guildmaster_3: Object.freeze({ foil: true }),
   mk_lindsay_potting_helper_0: Object.freeze({ foil: true }),
+
+  // The second, chosen set of 35 foils (docs/SECOND_FOILS.md). Cards from it that already had an
+  // alternate-art entry carry their `foil: true` in the collections above instead of here.
+  // Ten of the cutest cards, given artwork foil.
+  mk_osh_sharpener_s_boy_0: Object.freeze({ foil: true }),
+  mk_marmalade_dough_kneader_1: Object.freeze({ foil: true }),
+  mk_jessica_song_leader_0: Object.freeze({ foil: true }),
+  mk_quill_orchard_hand_0: Object.freeze({ foil: true }),
+  mk_lindsay_herb_grower_3: Object.freeze({ foil: true }),
+  mk_clover_plot_sharer_1: Object.freeze({ foil: true }),
+  mk_cookie_biscuit_maker_0: Object.freeze({ foil: true }),
+
+  // Ten of the coolest cards, given reverse foil.
+  mk_morty_steam_engineer_4: Object.freeze({ foil: true }),
+  mk_yellow_freshest_thing_4: Object.freeze({ foil: true }),
+  mk_dx_solar_eclipse: Object.freeze({ foil: true }),
+  mk_moss_rocketwright_4: Object.freeze({ foil: true }),
+  mk_patch_junkyard_diver_0: Object.freeze({ foil: true }),
+
+  // Ten of the most underrated cards, given full-card foil.
+  mk_cassadee_the_only_one_at_the_back_1: Object.freeze({ foil: true }),
+  mk_abigail_standing_slot_5: Object.freeze({ foil: true }),
+  mk_fred_backstage_crew_3: Object.freeze({ foil: true }),
+  mk_ned_the_ward_roll_0: Object.freeze({ foil: true }),
+  mk_kevin_counter_hand_2: Object.freeze({ foil: true }),
+  mk_hibiscus_the_sorting_bench_0: Object.freeze({ foil: true }),
+  mk_sota_the_same_bench_4: Object.freeze({ foil: true }),
+  mk_peter_washing_up_1: Object.freeze({ foil: true }),
+
+  // Five cards with a detail worth shining, given a masked detail foil.
+  mk_sage_astronomer_3: Object.freeze({ foil: true }),
+  mk_bean_espresso_1: Object.freeze({ foil: true }),
+  mk_liz_weighbridge_keeper_4: Object.freeze({ foil: true }),
+  mk_copper_scale_polisher_1: Object.freeze({ foil: true }),
+  mk_mandee_weather_watcher_2: Object.freeze({ foil: true }),
 });
 
 /** The conventional home of a printing's painting: assets/art/versions/<cardId>/<slot>.png */
