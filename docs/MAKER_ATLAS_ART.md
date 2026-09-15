@@ -1,6 +1,6 @@
 # Maker card artwork atlases
 
-Twelve 4 × 4 painted sheets add 192 card-specific scenes for the Maker shelf. The built-in image-generation tool produced the sheets using existing project atlases as style and layout references only. The second set of four covers every remaining non-token Maker card that had no explicit art. The third set gives every token commissioned art and replaces 45 older shared images with scenes specific to the card.
+Sixteen 4 × 4 painted sheets add 256 card-specific scenes for the Maker shelf. The built-in image-generation tool produced the sheets using existing project atlases as style and layout references only. The second set of four covers every remaining non-token Maker card that had no explicit art. The third set gives every token commissioned art and replaces 45 older shared images with scenes specific to the card. The fourth set replaces 64 more generic or mismatched fallbacks with card-specific civic, garden, masked-worker, diner and stage scenes.
 
 The generated sheets are bundled unchanged:
 
@@ -16,6 +16,10 @@ The generated sheets are bundled unchanged:
 - `assets/art/maker-bakery-library-atlas.png`
 - `assets/art/maker-records-roots-atlas.png`
 - `assets/art/maker-roles-atlas.png`
+- `assets/art/maker-ledgers-lamplight-atlas.png`
+- `assets/art/maker-gardens-post-atlas.png`
+- `assets/art/maker-masked-hands-atlas.png`
+- `assets/art/maker-stage-counter-atlas.png`
 
 Tile indices are zero-based and row-major. The presentation-only assignments live in `src/ui/painted-art.js`; Maker rules and authoring data remain unchanged.
 
@@ -23,7 +27,7 @@ Tile indices are zero-based and row-major. The presentation-only assignments liv
 
 > Create one square production game-art atlas for Animal Friends TCG, divided into an exact seamless 4-column by 4-row grid of 16 equally sized square full-bleed paintings, read strictly row-major. No gutters, margins, borders, grid strokes, captions, text, letters, numbers, labels, signs, readable paperwork, logos, watermarks, card frames, or UI. Use richly detailed hand-painted watercolor and gouache with fine warm ink detail, tactile paper and brush texture, premium antique storybook trading-card illustration. Show cozy cottage-and-small-town life with lush floral and leafy accents, gentle modern flair, affectionate visual humor, and expressive but believable clothed woodland animals. Any technology is whimsical practical steampunk in brass, copper, dark wood, leather, glass, visible gears and pipes—never sleek modern plastic. Keep each named identifying animal, face, hands, and principal prop within the central 70% of its tile for portrait card cropping. Make species anatomy and occupations unmistakable. Fill every square edge to edge and maintain tile boundaries precisely. No humans.
 
-The later waves used the first four Maker atlases as visual references and the same shared prompt. The scene lists below are the complete per-tile prompt additions.
+The later waves used existing Maker atlases as visual references and the same shared prompt. The scene lists below are the complete per-tile prompt additions.
 
 ## Maker Civic
 
@@ -276,4 +280,88 @@ The later waves used the first four Maker atlases as visual references and the s
 | 13 | `mk_juniper_messenger_1` | Swift red fox courier runs a rain-swept flowered lane with sealed satchel. |
 | 14 | `mk_juniper_courier_captain_2` | Red fox directs eleven couriers around a route board with a brass star clock. |
 | 15 | `mk_brooke_balloonist_4` | Brown otter pilots a patchwork hot-air balloon above the winding river. |
+
+## Maker Ledgers & Lamplight
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_orien_tally_clerk_0` | Badger tally clerk makes a meticulous four-color price table among coins and geraniums. |
+| 1 | `mk_orien_rate_checker_2` | Orien studies five auction lots with calculator, magnifier, rule and precise coin margin. |
+| 2 | `mk_orien_borough_actuary_3` | Orien predicts a building auction with an abacus and miniature town model. |
+| 3 | `mk_orien_survey_computer_4` | Orien tends a clicking homemade calculator rebuilt from observatory parts. |
+| 4 | `mk_orien_town_planner_5` | Orien places one decisive number before eleven silent committee animals. |
+| 5 | `mk_roger_locksmith_1` | Fox locksmith cuts a key while juggling a lease, rota and arguing carters. |
+| 6 | `mk_roger_records_clerk_2` | Roger catches wrong figures as a cozy records room turns toward him. |
+| 7 | `mk_roger_circuit_judge_3` | Roger weighs two balanced arguments beneath a leafy courthouse window. |
+| 8 | `mk_roger_fair_broker_4` | Roger watches another animal toss his worn halfpenny above two bidders. |
+| 9 | `mk_roger_ombudsman_5` | Roger settles a boundary dispute with the halfpenny beside a miniature bandstand. |
+| 10 | `mk_quinn_meeting_scribe_1` | Mouse scribe writes faster than a crowded ward meeting can speak. |
+| 11 | `mk_quinn_town_scrivener_3` | Quinn dashes between fair, regatta and Hiring Hall with a wheeled writing desk. |
+| 12 | `mk_quinn_keeper_of_the_record_5` | Quinn finds a forgotten worker in the archive and hands over the decisive slip. |
+| 13 | `mk_beck_bylaw_reader_1` | Reserved raccoon sits behind civic volumes with ivy marking the right page. |
+| 14 | `mk_beck_lamplighters_clerk_3` | Beck finishes the lamp ledger and walks home with a water-stained novel. |
+| 15 | `mk_berry_clockmaker_1` | Elderly hedgehog arranges tiny gears inside an elaborate flower-shaped clock. |
+
+## Maker Gardens & Post
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_lindsay_potting_helper_0` | Dreamy calico waters a perfect seedling row while gazing beyond the glasshouse. |
+| 1 | `mk_lindsay_glasshouse_hand_2` | Lindsay tends overflowing benches while sketching a lunar glasshouse. |
+| 2 | `mk_lindsay_herb_grower_3` | Lindsay cuts exceptional rosemary for a waiting ginger baker. |
+| 3 | `mk_lindsay_conservatory_keeper_4` | Lindsay stands amid impossibly productive beds while a badger's abacus gives up. |
+| 4 | `mk_lindsay_moon_gardener_5` | Lindsay cultivates moonflowers inside a brass lunar glasshouse. |
+| 5 | `mk_hibiscus_post_runner_1` | Cream rabbit receives a mailbag at a flower-covered dawn sorting bench. |
+| 6 | `mk_hibiscus_night_mail_2` | Hibiscus delivers night mail while waving to every lit cottage window. |
+| 7 | `mk_hibiscus_round_walker_3` | Hibiscus is cheerfully trapped in a long doorstep conversation. |
+| 8 | `mk_hibiscus_mail_coach_driver_4` | Hibiscus drives a punctual brass-trimmed coach as late passengers chase it. |
+| 9 | `mk_hibiscus_postmaster_5` | Hibiscus walks a lane full of neighbors, parcels and ferry opinions. |
+| 10 | `mk_quill_orchard_hand_0` | Hedgehog orchard hand receives windfalls from rabbits hidden in long grass. |
+| 11 | `mk_quill_orchard_keeper_2` | Quill gives baskets and paid work to a surprised Saturday work party. |
+| 12 | `mk_quill_cider_maker_3` | Quill hosts a warm barn social with apple press, cider vessel and bonfire. |
+| 13 | `mk_quill_orchard_scribe_4` | Quill records three generations of harvests beneath an ancient apple tree. |
+| 14 | `mk_quill_harvest_steward_5` | Quill hands baskets and ladders to new workers beside a steaming kettle. |
+| 15 | `mk_willow_ferry_trader_1` | Confident otter takes possession of a charmingly unreliable little ferry. |
+
+## Maker Masked Hands
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_masked_otter_counter_hand_1` | Scarfed otter balances three anonymous harbor ledgers that agree exactly. |
+| 1 | `mk_mysterious_raccoon_beds_hand_2` | Hooded raccoon quietly tends medicinal beds at Rosabeth's gate. |
+| 2 | `mk_hooded_rabbit_hatch_hand_0` | Hooded rabbit works the hatch of an ownerless communal oven. |
+| 3 | `mk_unsigned_mouse_shelves_hand_1` | Mouse completes a shelf of manuscript copies overnight, face behind books. |
+| 4 | `mk_shrouded_badger_bench_hand_2` | Badger repairs neighbors' broken objects after dark at Berry's bench. |
+| 5 | `mk_muffled_hedgehog_stall_hand_0` | Scarfed hedgehog tends an eccentric twilight salvage stall. |
+| 6 | `mk_shadowed_squirrel_hall_hand_1` | Squirrel stacks chairs, douses lamps and sweeps an empty hall. |
+| 7 | `mk_nameless_cat_glass_hand_2` | Calico secretly reseats an observatory lens, face hidden by starlight. |
+| 8 | `mk_silhouetted_owl_scales_hand_0` | Owl balances flawless night accounts with one halfpenny on the scales. |
+| 9 | `mk_cowled_fox_far_field_hand_1` | Cowled fox works alone in a distant wheat-and-poppy field. |
+| 10 | `mk_unlisted_grower_2` | Hidden otter protects seed packets while a ledger line remains blank. |
+| 11 | `mk_faceless_clerk_0` | Squirrel reconciles civic records behind a wall of blank folders. |
+| 12 | `mk_cloaked_tradesman_1` | Cloaked mouse exchanges a mysterious brass box outside the Counting House. |
+| 13 | `mk_veiled_wright_0` | Veiled owl leaves an ingenious repair between two baffled craftsfolk. |
+| 14 | `mk_anonymous_scribe_2` | Badger prepares certified chronicles with face hidden by parchment. |
+| 15 | `mk_obscured_observer_1` | Hooded fox studies midges and medicinal leaves beside a pond. |
+
+## Maker Stage & Counter
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_gwen_short_order_cook_1` | Mouse cook works a copper griddle as a worker takes the waiting apron. |
+| 1 | `mk_gwen_diner_keeper_3` | Gwen runs her warm counter opposite an empty city café. |
+| 2 | `mk_gwen_owner_of_the_diner_5` | Gwen vanishes through the hatch while officials hold unused forms. |
+| 3 | `mk_liza_floor_singer_0` | Rabbit singer holds a small tavern still with nothing in her paws. |
+| 4 | `mk_liza_counter_singer_1` | Liza serves plates through a busy hatch while singing through the rush. |
+| 5 | `mk_liza_top_of_the_bill_3` | Liza performs late on the bill as a hedgehog manager watches proudly. |
+| 6 | `mk_liza_headliner_5` | Liza fills an intimate music room while declining the vast festival stage. |
+| 7 | `mk_harrison_piano_boy_0` | Young fox finds the melody at an upright piano beneath trailing ivy. |
+| 8 | `mk_harrison_house_pianist_2` | Harrison anticipates a rabbit singer's next note by half a step. |
+| 9 | `mk_harrison_band_leader_4` | Harrison guides an ensemble and a market negotiation from his piano. |
+| 10 | `mk_gabe_corner_show_0` | Raccoon performs tiny animal puppets for spellbound kittens. |
+| 11 | `mk_gabe_puppet_maker_2` | Gabe turns salvage scraps into three hilarious puppets. |
+| 12 | `mk_gabe_company_of_one_4` | Gabe plays every role in a late-night miniature theater. |
+| 13 | `mk_gabe_whole_cast_5` | Gabe reveals an exuberant many-character puppet finale. |
+| 14 | `mk_faustus_wardrobe_master_4` | Calico wardrobe master fits elaborate practical open-mic costumes. |
+| 15 | `mk_roger_fair_day_judge_0` | Roger lets another animal toss his halfpenny to settle the best fair pitch. |
 
