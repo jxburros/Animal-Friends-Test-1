@@ -1,6 +1,6 @@
 # Maker card artwork atlases
 
-Twenty 4 × 4 painted sheets add 320 card-specific scenes for the Maker shelf. The built-in image-generation tool produced the sheets using existing project atlases as style and layout references only. The second set of four covers every remaining non-token Maker card that had no explicit art. The third set gives every token commissioned art and replaces 45 older shared images with scenes specific to the card. The fourth set replaces 64 more generic or mismatched fallbacks with card-specific civic, garden, masked-worker, diner and stage scenes. The fifth set corrects every remaining known character-species mismatch, replaces generic place art on 28 characters, and gives 19 additional character roles distinct scenes.
+Twenty-four 4 × 4 painted sheets add 384 card-specific scenes for the Maker shelf. The built-in image-generation tool produced the sheets using existing project atlases as style and layout references only. The second set of four covers every remaining non-token Maker card that had no explicit art. The third set gives every token commissioned art and replaces 45 older shared images with scenes specific to the card. The fourth set replaces 64 more generic or mismatched fallbacks with card-specific civic, garden, masked-worker, diner and stage scenes. The fifth set corrects every remaining known character-species mismatch, replaces generic place art on 28 characters, and gives 19 additional character roles distinct scenes. The sixth set gives all 20 newly added characters and six new fair cards commissioned scenes, then replaces 38 generic character images with occupation-specific story moments.
 
 The generated sheets are bundled unchanged:
 
@@ -24,6 +24,10 @@ The generated sheets are bundled unchanged:
 - `assets/art/maker-working-lives-atlas.png`
 - `assets/art/maker-night-stories-atlas.png`
 - `assets/art/maker-lantern-field-atlas.png`
+- `assets/art/maker-broadcast-stage-atlas.png`
+- `assets/art/maker-fairs-kitchens-atlas.png`
+- `assets/art/maker-craft-river-atlas.png`
+- `assets/art/maker-books-school-atlas.png`
 
 Tile indices are zero-based and row-major. The presentation-only assignments live in `src/ui/painted-art.js`; Maker rules and authoring data remain unchanged.
 
@@ -452,4 +456,88 @@ The later waves used existing Maker atlases as visual references and the same sh
 | 13 | `mk_earl_tea_house_keeper_4` | Earl hosts a two-hour afternoon conversation beneath hanging herbs. |
 | 14 | `mk_mandee_night_courier_1` | Fox courier waits at the sorting bench with Benjamin's lantern. |
 | 15 | `mk_mittens_rooftop_cat_4` | Tuxedo cat points out one faulty hinge from a moonlit roof. |
+
+## Maker Broadcast & Stage
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_tabitha_festival_photographer_0` | Hedgehog proudly works a borrowed bellows camera on the festival green. |
+| 1 | `mk_tabitha_lens_apprentice_1` | Hedgehog peers through the wrong end of a brass lens while a squirrel mentor points to the eyepiece. |
+| 2 | `mk_tabitha_videographer_2` | Hedgehog swings a hand-cranked motion camera toward a surprised unwilling subject. |
+| 3 | `mk_tabitha_optics_scientist_4` | Hedgehog repairs a jammed camera among prisms, lenses and tiny gears. |
+| 4 | `mk_tabitha_camerawoman_5` | Accomplished hedgehog composes the decisive festival photograph beneath a floral camera hood. |
+| 5 | `mk_winter_segment_runner_0` | Owl hurries backstage with scrolls and rearranges a brass running-order board. |
+| 6 | `mk_winter_turned_down_applicant_1` | Determined owl studies science beside two rejection letters by moonlight. |
+| 7 | `mk_winter_science_show_host_2` | Owl presents a lively tabletop experiment to a market audience. |
+| 8 | `mk_winter_head_science_producer_4` | Owl producer manages launch-window charts, manifests and brass clocks at a new desk. |
+| 9 | `mk_winter_tv_scientist_5` | Beloved owl scientist opens a tiny Capital City broadcast stall. |
+| 10 | `mk_fred_wandered_onto_stage_0` | Owl who was looking for the toilets freezes in a spotlight among confused actors. |
+| 11 | `mk_fred_held_the_ladder_wrong_2` | Owl holds a backstage ladder the wrong way while a worried rabbit balances above. |
+| 12 | `mk_fred_backstage_crew_3` | Unbothered owl carries scenery for a show whose name he never asked. |
+| 13 | `mk_fred_crew_doesnt_ask_5` | Veteran owl stagehand tosses a coin beside a smoking brass prop machine. |
+| 14 | `mk_yellow_open_mic_regular_1` | Red squirrel arrives with a wheeled valise to perform fresh rhymes at a brass microphone. |
+| 15 | `mk_yellow_freshest_thing_4` | Fluffy-tailed squirrel local celebrity lounges confidently at the open mic. |
+
+## Maker Fairs & Kitchens
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_abigail_counter_girl_1` | Otter counter girl balances a whole café order of teacups and plates. |
+| 1 | `mk_abigail_five_minutes_2` | Otter waitress performs an unexpected five-minute song during a slow night. |
+| 2 | `mk_abigail_best_waitress_4` | Celebrated otter waitress serves briskly beside her portrait-marked tip jar. |
+| 3 | `mk_abigail_standing_slot_5` | Tired but brave otter takes the standing performance slot after a full shift. |
+| 4 | `mk_dx_small_fair` | Three tiny stalls and a rope show-ring surround a modest toll gate. |
+| 5 | `mk_dx_county_fair` | A sprawling fair has every stall occupied and every vendor asking for payment. |
+| 6 | `mk_dx_assessors_round` | Assessors move stall to stall with clipboards and copper collection boxes. |
+| 7 | `mk_dx_the_reckoning` | A formidable badger opens a copper ledger as wealthy stallholders reach for purses. |
+| 8 | `mk_dx_midsummer_fair` | The longest-day sunlight falls on an extremely long queue at a flowered fair gate. |
+| 9 | `mk_dx_lord_mayors_fair` | A spectacular civic fair draws every townsfolk to place a coin in the gate box. |
+| 10 | `mk_comet_rocket_mechanic_1` | Calico cat tightens a bolt beneath an acorn-shaped brass steam rocket. |
+| 11 | `mk_comet_test_pilot_3` | Goggled calico cat sits confidently in a patched leather-and-copper rocket cockpit. |
+| 12 | `mk_morty_watermill_mechanic_3` | Badger repairs wooden paddles and brass bearings beside a mossy millrace. |
+| 13 | `mk_morty_steam_engineer_4` | Badger tends a compact copper boiler whose gauges wobble humorously. |
+| 14 | `mk_morty_master_millwright_5` | Master badger inspects an immense waterwheel and elegant wooden gears. |
+| 15 | `mk_rosabeth_apothecary_3` | Brown mouse mixes an herbal remedy among copper alembics, drying flowers and medicinal leaves. |
+
+## Maker Craft & River
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_moss_ploughwright_1` | Badger shapes a polished wooden ploughshare in a rose-covered open forge. |
+| 1 | `mk_moss_guild_architect_3` | Badger oversees carpenters raising a leafy timber hall from diagrammatic plans. |
+| 2 | `mk_moss_rocketwright_4` | Badger assembles a flower-finned brass cottage rocket. |
+| 3 | `mk_patch_junkyard_diver_0` | Raccoon emerges from curious salvage with one perfect brass cog. |
+| 4 | `mk_patch_valuer_3` | Raccoon examines a clockwork teapot through a jeweler's loupe. |
+| 5 | `mk_patch_yard_foreman_4` | Raccoon directs a reclamation yard sorting salvaged wood, copper and wheels. |
+| 6 | `mk_patch_reclamation_merchant_5` | Raccoon presents restored oddments in a booth made from mismatched doors. |
+| 7 | `mk_pebble_crossing_hand_0` | Brown otter guides a rope ferry through river reeds. |
+| 8 | `mk_pebble_bridge_courier_1` | Brown otter races across a timber bridge as ducks scatter. |
+| 9 | `mk_pebble_ferry_master_3` | Brown otter steers a hand-cranked ferry crowded with baskets and bicycles. |
+| 10 | `mk_pebble_towpath_warden_4` | Brown otter checks canal mooring ropes with lantern and hook. |
+| 11 | `mk_pebble_harbour_warden_5` | Brown otter surveys steam launches and sailboats from a flower-covered dock. |
+| 12 | `mk_pockets_kerbside_dealer_1` | Raccoon opens a coat lined with harmless buttons, gears and spoons. |
+| 13 | `mk_pockets_odd_lot_dealer_3` | Raccoon presides over unmatched teacups, single gloves and brass oddments. |
+| 14 | `mk_rosabeth_tincture_counter_4` | Brown mouse dispenses jewel-toned herbal drops with pipettes amid blossoms. |
+| 15 | `mk_daisy_garland_cutter_1` | Red squirrel snips daisy-and-greenery chains while nearly buried in flowers. |
+
+## Maker Books & School
+
+| Tile | Card | Scene prompt |
+| ---: | --- | --- |
+| 0 | `mk_scott_story_collector_0` | Red squirrel listens to an elderly mouse beside a hearth and sketches picture symbols. |
+| 1 | `mk_scott_pamphleteer_2` | Red squirrel operates a hand press as illustrated leaflets flutter through a flower-filled shop. |
+| 2 | `mk_scott_town_chronicler_3` | Red squirrel records a lively town-square event from an ivy-covered balcony desk. |
+| 3 | `mk_scott_author_of_the_boroughs_5` | Renowned red squirrel welcomes readers among books and maps in a cozy grand library. |
+| 4 | `mk_sage_night_assistant_0` | Owl carries lantern, star charts and tea up moonlit observatory stairs. |
+| 5 | `mk_sage_astronomer_3` | Owl peers through an enormous brass telescope beneath a floral-framed dome. |
+| 6 | `mk_sage_royal_astronomer_5` | Royal owl presents a clockwork planetary model to a woodland court. |
+| 7 | `mk_eric_smallholder_1` | Cream rabbit tends vegetables, hens and beehives behind a stone cottage. |
+| 8 | `mk_eric_fair_steward_2` | Cream rabbit measures a show-ring rope as prize vegetables and entrants wait. |
+| 9 | `mk_jessica_song_leader_0` | Barn owl conducts a cheerful mixed-animal choir beneath a flowering arbor. |
+| 10 | `mk_jessica_infant_teacher_1` | Barn owl leads tiny woodland children in a cottage-classroom circle game. |
+| 11 | `mk_jessica_night_school_teacher_2` | Barn owl teaches adult workers beneath pinned brass constellations. |
+| 12 | `mk_jessica_headmistress_4` | Dignified barn owl greets students at a leafy little schoolhouse. |
+| 13 | `mk_faustus_bolt_boy_0` | Calico cat sorts stage bolts and hardware while trying not to drop an armful. |
+| 14 | `mk_faustus_costumier_2` | Calico cat fits an overdecorated cape on a bashful badger amid sewing tools. |
+| 15 | `mk_faustus_sailmaker_3` | Calico cat stitches a vast cream sail across a riverside loft. |
 
