@@ -2,7 +2,7 @@
 import { cardDef, topCard, log, opponentOf, expireMods, consumeMod, hasMod, hasPassive, refillCity, ageCity, cityRule, freshTurnCounters, buildingCap, UPRIGHT, BUSY, findStack } from './state.js';
 import { ask, draw, gainSupply, completeShift, readyStack, gainMarketCard, makeStatueRoom, fireHook, checkVictory, flushReveals } from './effects.js';
 import { shuffle } from './rng.js';
-import { legalActions, applyAction, forfeitOf, statueTierFor, cardCostFor } from './actions.js';
+import { legalActions, applyAction, forfeitOf, statueTierFor, cardCostFor, buildingUpkeepFor } from './actions.js';
 
 const MAX_ACTIONS_PER_TURN = 60;
 
@@ -37,6 +37,35 @@ export async function mulliganPhase(state) {
   }
 }
 
+/**
+ * PROTOTYPE (rules.buildings.chargeUpkeep): every standing Building bills its owner at the start of
+ * their turn, before anything else happens. A Building already lying inert from a missed bill gets one
+ * automatic chance to pay it off and stand back up; a Building that is paid up but comes up short this
+ * time goes inert instead of forcing a sale — it does nothing (see `abilitySources`) until its Mayor
+ * can cover it, which might not be this turn either.
+ */
+export async function chargeBuildingUpkeep(state, pi) {
+  if (!(state.rules.buildings || {}).chargeUpkeep) return;
+  const p = state.players[pi];
+  for (const b of p.buildings || []) {
+    const def = cardDef(state, b.cardId);
+    const fee = buildingUpkeepFor(def);
+    if (fee <= 0) continue;
+    if (p.supply >= fee) {
+      p.supply -= fee;
+      if (b.inert) {
+        b.inert = false;
+        log(state, pi, `${p.name} pays off ${fee} Supply owed on ${def.name}; it stands back upright.`, { kind: 'upkeepPaid', player: pi, cardId: def.id, cost: fee, revived: true });
+      } else {
+        log(state, pi, `${p.name} pays ${fee} Supply upkeep on ${def.name}.`, { kind: 'upkeepPaid', player: pi, cardId: def.id, cost: fee, revived: false });
+      }
+    } else if (!b.inert) {
+      b.inert = true;
+      log(state, pi, `${p.name} cannot pay ${fee} Supply upkeep on ${def.name}; it is knocked on its side, inert until the bill is paid.`, { kind: 'upkeepMissed', player: pi, cardId: def.id, cost: fee });
+    }
+  }
+}
+
 export async function startPhase(state, pi) {
   const p = state.players[pi];
   state.phase = 'start';
@@ -44,6 +73,7 @@ export async function startPhase(state, pi) {
   p.turn = freshTurnCounters();
   expireMods(p, 'nextTurnStart');
   log(state, pi, `— Turn ${state.turnNumber}: ${p.name} (Supply ${p.supply}, hand ${p.hand.length}, Statues ${p.victoryRow.length}) —`, { kind: 'turnStart', player: pi, turn: state.turnNumber });
+  await chargeBuildingUpkeep(state, pi);
   // Every auction this player is still winning resolves now: the players alternate turns, so a standing
   // high bid at the start of your own turn means your rival had a turn and chose not to answer it.
   const mine = state.market.pending.filter((pd) => pd.high === pi);

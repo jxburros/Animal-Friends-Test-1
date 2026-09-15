@@ -469,6 +469,7 @@ export function abilitySources(state, pi) {
     for (const [i, ab] of (def.abilities || []).entries()) out.push({ kind: 'statue', def, ability: ab, key: `s${j}:${i}` });
   }
   for (const [j, b] of (p.buildings || []).entries()) {
+    if (b.inert) continue; // PROTOTYPE: an unpaid Building is on its side and does nothing until its upkeep is paid
     const def = cardDef(state, b.cardId);
     for (const [i, ab] of (def.abilities || []).entries()) out.push({ kind: 'building', def, ability: ab, key: `b${j}:${i}` });
   }
