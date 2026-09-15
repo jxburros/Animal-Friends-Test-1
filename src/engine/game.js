@@ -39,10 +39,13 @@ export async function mulliganPhase(state) {
 
 /**
  * PROTOTYPE (rules.buildings.chargeUpkeep): every standing Building bills its owner at the start of
- * their turn, before anything else happens. A Building already lying inert from a missed bill gets one
- * automatic chance to pay it off and stand back up; a Building that is paid up but comes up short this
- * time goes inert instead of forcing a sale — it does nothing (see `abilitySources`) until its Mayor
- * can cover it, which might not be this turn either.
+ * their turn — after `onTurnStart` fires, so a Building that pays out on its own turn-start ability
+ * gets to settle its own bill out of what it just earned, but before Resources, Ready or Actions, so a
+ * Mayor still pays it whether or not they can otherwise afford to keep the Building around this turn.
+ * A Building already lying inert from a missed bill gets one automatic chance to pay it off and stand
+ * back up; a Building that is paid up but comes up short this time goes inert instead of forcing a sale
+ * — it does nothing (see `abilitySources`) until its Mayor can cover it, which might not be this turn
+ * either.
  */
 export async function chargeBuildingUpkeep(state, pi) {
   if (!(state.rules.buildings || {}).chargeUpkeep) return;
@@ -73,7 +76,6 @@ export async function startPhase(state, pi) {
   p.turn = freshTurnCounters();
   expireMods(p, 'nextTurnStart');
   log(state, pi, `— Turn ${state.turnNumber}: ${p.name} (Supply ${p.supply}, hand ${p.hand.length}, Statues ${p.victoryRow.length}) —`, { kind: 'turnStart', player: pi, turn: state.turnNumber });
-  await chargeBuildingUpkeep(state, pi);
   // Every auction this player is still winning resolves now: the players alternate turns, so a standing
   // high bid at the start of your own turn means your rival had a turn and chose not to answer it.
   const mine = state.market.pending.filter((pd) => pd.high === pi);
@@ -94,6 +96,10 @@ export async function startPhase(state, pi) {
   // Characters flagged to be ready at the start of this turn.
   for (const s of p.town.slice()) if (s.readyNextTurn) await readyStack(state, pi, s, 'ready-next-turn effect');
   await fireHook(state, 'onTurnStart', { player: pi });
+  // Billed after onTurnStart, not before: a Building that pays out on its own turn-start ability (an
+  // onTurnStart passive) settles its own bill out of what it just earned, rather than going inert for
+  // want of the very Supply it was about to produce.
+  await chargeBuildingUpkeep(state, pi);
 }
 
 /** Free every Character pledged to this auction: they resume advancing at their owner's next Ready. */
