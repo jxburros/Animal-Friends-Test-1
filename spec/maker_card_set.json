@@ -7490,16 +7490,11 @@
    "build": {
     "animals": 1
    },
-   "text": "At the start of your turn, if you control an Entertainment Character, draw 1 card.",
+   "text": "At the start of your turn, draw 1 card.",
    "flavor": "Whatever room will have them, a night a week, five in the band if two of them stand on the step. Oatmeal has never once cancelled.",
    "abilities": [
     {
      "trigger": "onTurnStart",
-     "condition": {
-      "otherCharacterInTown": {
-       "study": "Entertainment"
-      }
-     },
      "effect": {
       "do": "draw",
       "count": 1
@@ -7508,8 +7503,8 @@
    ],
    "rarity": "Common",
    "power": {
-    "score": 3.16,
-    "power": 7.2,
+    "score": 3.95,
+    "power": 9,
     "opportunityCost": 7.82
    }
   },
@@ -7522,7 +7517,7 @@
    "build": {
     "animals": 1
    },
-   "text": "Whenever one of your Characters finishes a shift, gain 2 Supply.",
+   "text": "Whenever one of your Characters finishes a shift, gain 2 Supply. Raised and kept for nothing: this Building has no upkeep.",
    "flavor": "Down past the ferry steps, where the lightermen keep what the harbour office would rather not know about. Brooke has had a key for eight years.",
    "abilities": [
     {
@@ -7538,7 +7533,8 @@
     "score": 3.48,
     "power": 8.31,
     "opportunityCost": 8.82
-   }
+   },
+   "upkeep": 0
   },
   {
    "id": "mk_tb_gate_hut",
@@ -8037,12 +8033,9 @@
    "requires": [
     {
      "name": "Rosabeth"
-    },
-    {
-     "study": "Agriculture"
     }
    ],
-   "text": "Requires Rosabeth and an Agriculture Character. Rehire an Agriculture Character from your Unemployment for free, then draw 2 cards.",
+   "text": "Requires Rosabeth. Rehire an Agriculture Character from your Unemployment for free, then draw 2 cards.",
    "flavor": "She does the beds first and the borough second, and by the time she has got round to the second half of it somebody has been on the beds a fortnight and is fit to be somewhere else.",
    "effect": {
     "do": "seq",
@@ -8063,9 +8056,9 @@
    },
    "rarity": "Rare",
    "power": {
-    "score": 3.04,
+    "score": 3.41,
     "power": 5.07,
-    "opportunityCost": 3.6
+    "opportunityCost": 2.7
    }
   },
   {
@@ -8355,7 +8348,7 @@
    "build": {
     "animals": 1
    },
-   "text": "At the start of your turn, the next Building you buy this turn costs 1 less Supply.",
+   "text": "At the start of your turn, the next Building you buy this turn costs 1 less Supply. Raised and kept for nothing: this Building has no upkeep.",
    "flavor": "Stone stacked by size, the good sand under a tarpaulin, and a Badger who will tell you what a wall is worth whether or not you have asked. He bids on every lot that comes up with a roof on it.",
    "abilities": [
     {
@@ -8373,7 +8366,8 @@
     "score": 3.01,
     "power": 7.2,
     "opportunityCost": 8.82
-   }
+   },
+   "upkeep": 0
   },
   {
    "id": "mk_tb_the_warren",
@@ -8384,16 +8378,11 @@
    "build": {
     "animals": 1
    },
-   "text": "At the start of your turn, if you control a Rabbit, draw 1 card.",
+   "text": "At the start of your turn, draw 1 card.",
    "flavor": "Nobody built it and nobody can say how far back it goes. Clover’s family came out of one end of it and Lynnette’s press sits over the other, and on any given morning there are more rabbits in it than were in it last night.",
    "abilities": [
     {
      "trigger": "onTurnStart",
-     "condition": {
-      "otherCharacterInTown": {
-       "species": "Rabbit"
-      }
-     },
      "effect": {
       "do": "draw",
       "count": 1
@@ -8402,8 +8391,8 @@
    ],
    "rarity": "Common",
    "power": {
-    "score": 3.16,
-    "power": 7.2,
+    "score": 3.95,
+    "power": 9,
     "opportunityCost": 7.82
    }
   },
@@ -15622,12 +15611,9 @@
    "requires": [
     {
      "name": "Thistle"
-    },
-    {
-     "study": "Agriculture"
     }
    ],
-   "text": "Requires Thistle and an Agriculture Character. Gain 5 Supply, then you may rehire a Character from your Unemployment for 2 less Supply.",
+   "text": "Requires Thistle. Gain 5 Supply, then you may rehire a Character from your Unemployment for 2 less Supply.",
    "effect": {
     "do": "seq",
     "steps": [
@@ -15649,9 +15635,9 @@
    },
    "rarity": "Super Rare",
    "power": {
-    "score": 4.13,
+    "score": 4.63,
     "power": 6.89,
-    "opportunityCost": 3.6
+    "opportunityCost": 2.7
    }
   },
   {
