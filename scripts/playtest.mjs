@@ -157,7 +157,7 @@ export async function runPlaytest(opts = {}) {
         : MARKET_DECK_IDS[g % MARKET_DECK_IDS.length]);
     const state = createGame(rules, set, { seed, decks, market, names: ['P0', 'P1'] });
     const sink = (pi, action) => {
-      if (action.type === 'recruit' || action.type === 'playEvent') {
+      if (action.type === 'recruit' || action.type === 'playEvent' || action.type === 'build') {
         stats.plays.set(action.cardId, (stats.plays.get(action.cardId) || 0) + 1);
       }
     };
