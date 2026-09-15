@@ -69,12 +69,21 @@ const RETRO_ALT_ATLASES = Object.freeze({
   quietTriumphs: new URL('../../assets/art/alternate-retro-quiet-triumphs-atlas.png', import.meta.url).href,
 });
 
+const IMPRESSIONIST_ALT_ATLASES = Object.freeze({
+  slowDays: new URL('../../assets/art/alternate-impressionist-slow-days-atlas.png', import.meta.url).href,
+  lightAcrossTown: new URL('../../assets/art/alternate-impressionist-light-across-town-atlas.png', import.meta.url).href,
+});
+
 function inkAlternate(atlas, tile, other = {}) {
   return Object.freeze({ alternateArt: `${INK_ALT_ATLASES[atlas]}#tile=${tile}`, ...other });
 }
 
 function retroAlternate(atlas, tile, other = {}) {
   return Object.freeze({ alternateArt: `${RETRO_ALT_ATLASES[atlas]}#tile=${tile}`, ...other });
+}
+
+function impressionistAlternate(atlas, tile, other = {}) {
+  return Object.freeze({ alternateArt: `${IMPRESSIONIST_ALT_ATLASES[atlas]}#tile=${tile}`, ...other });
 }
 
 /**
@@ -151,6 +160,43 @@ export const PRINTINGS = Object.freeze({
   mk_veiled_wright_0: retroAlternate('quietTriumphs', 14),
   mk_shrouded_badger_bench_hand_2: retroAlternate('quietTriumphs', 15),
 
+  // Relaxed Impressionist alternate-art collection. Loose brushwork and luminous atmosphere frame
+  // small acts of work and care drawn directly from the cards' flavor. See
+  // docs/ALTERNATE_IMPRESSIONIST.md for the two row-major atlas maps.
+  mk_peanut_ledger_0: impressionistAlternate('slowDays', 0),
+  mk_oatmeal_town_warden_4: impressionistAlternate('slowDays', 1),
+  mk_brooke_ferry_hand_2: impressionistAlternate('slowDays', 2),
+  mk_clover_plot_sharer_1: impressionistAlternate('slowDays', 3),
+  mk_rosabeth_herbalist_physician_5: impressionistAlternate('slowDays', 4),
+  mk_bella_forager_0: impressionistAlternate('slowDays', 5),
+  mk_lynnette_bookbinder_1: impressionistAlternate('slowDays', 6),
+  mk_maribel_seed_vault_scientist_3: impressionistAlternate('slowDays', 7),
+  mk_marmalade_night_baker_0: impressionistAlternate('slowDays', 8),
+  mk_morty_mill_kitchen_cook_1: impressionistAlternate('slowDays', 9),
+  mk_daisy_festival_florist_4: impressionistAlternate('slowDays', 10),
+  mk_quill_cider_maker_3: impressionistAlternate('slowDays', 11),
+  mk_earl_tea_house_keeper_4: impressionistAlternate('slowDays', 12, { foil: true }),
+  mk_jessica_night_school_teacher_2: impressionistAlternate('slowDays', 13),
+  mk_mkt_long_table: impressionistAlternate('slowDays', 14),
+  mk_mkt_late_ferry: impressionistAlternate('slowDays', 15),
+
+  mk_oatmeal_safety_inspector_2: impressionistAlternate('lightAcrossTown', 0),
+  mk_bean_espresso_1: impressionistAlternate('lightAcrossTown', 1),
+  mk_brooke_regatta_caller_3: impressionistAlternate('lightAcrossTown', 2),
+  mk_clovers_seed_drive: impressionistAlternate('lightAcrossTown', 3),
+  mk_copper_market_steward_5: impressionistAlternate('lightAcrossTown', 4),
+  mk_bella_field_recorder_2: impressionistAlternate('lightAcrossTown', 5),
+  mk_hazel_night_market_vendor_1: impressionistAlternate('lightAcrossTown', 6),
+  mk_juniper_stargazer_5: impressionistAlternate('lightAcrossTown', 7),
+  mk_lynnette_master_printer_5: impressionistAlternate('lightAcrossTown', 8),
+  mk_daniel_canal_cartographer_2: impressionistAlternate('lightAcrossTown', 9),
+  mk_hibiscus_night_mail_2: impressionistAlternate('lightAcrossTown', 10),
+  mk_benjamin_wick_trimmer_0: impressionistAlternate('lightAcrossTown', 11),
+  mk_sage_night_assistant_0: impressionistAlternate('lightAcrossTown', 12),
+  mk_sota_telescope_fitter_3: impressionistAlternate('lightAcrossTown', 13),
+  mk_faustus_sailmaker_3: impressionistAlternate('lightAcrossTown', 14),
+  mk_bld_festival_green: impressionistAlternate('lightAcrossTown', 15),
+
   mk_beck_bylaw_reader_1: Object.freeze({ foil: true }),
   mk_clover_seedling_helper_0: inkAlternate('kindness', 2, { foil: true }),
   mk_earl_tea_trader_2: Object.freeze({ foil: true }),
@@ -159,7 +205,6 @@ export const PRINTINGS = Object.freeze({
   mk_moss_rehiring_day: inkAlternate('kindness', 8, { foil: true }),
   mk_comet_astronaut_5: inkAlternate('ambitions', 3, { foil: true }),
   mk_finn_auctioneers_boy_0: Object.freeze({ foil: true }),
-  mk_earl_tea_house_keeper_4: Object.freeze({ foil: true }),
   mk_night_round: Object.freeze({ foil: true }),
   mk_willow_ferry_trader_1: Object.freeze({ foil: true }),
   mk_faustus_costumier_2: Object.freeze({ foil: true }),

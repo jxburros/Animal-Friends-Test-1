@@ -41,6 +41,18 @@ const ALTERNATE_ART_IDS = Object.freeze([
   'mk_tabitha_camerawoman_5', 'mk_winter_turned_down_applicant_1',
   'mk_oatmeal_alderman_5', 'mk_bean_two_pairs_of_paws_2', 'mk_barrows_measure',
   'mk_unlisted_grower_2', 'mk_veiled_wright_0', 'mk_shrouded_badger_bench_hand_2',
+  'mk_peanut_ledger_0', 'mk_oatmeal_town_warden_4', 'mk_brooke_ferry_hand_2',
+  'mk_clover_plot_sharer_1', 'mk_rosabeth_herbalist_physician_5', 'mk_bella_forager_0',
+  'mk_lynnette_bookbinder_1', 'mk_maribel_seed_vault_scientist_3',
+  'mk_marmalade_night_baker_0', 'mk_morty_mill_kitchen_cook_1',
+  'mk_daisy_festival_florist_4', 'mk_quill_cider_maker_3', 'mk_earl_tea_house_keeper_4',
+  'mk_jessica_night_school_teacher_2', 'mk_mkt_long_table', 'mk_mkt_late_ferry',
+  'mk_oatmeal_safety_inspector_2', 'mk_bean_espresso_1', 'mk_brooke_regatta_caller_3',
+  'mk_clovers_seed_drive', 'mk_copper_market_steward_5', 'mk_bella_field_recorder_2',
+  'mk_hazel_night_market_vendor_1', 'mk_juniper_stargazer_5', 'mk_lynnette_master_printer_5',
+  'mk_daniel_canal_cartographer_2', 'mk_hibiscus_night_mail_2',
+  'mk_benjamin_wick_trimmer_0', 'mk_sage_night_assistant_0',
+  'mk_sota_telescope_fitter_3', 'mk_faustus_sailmaker_3', 'mk_bld_festival_green',
 ]);
 const alternateArtIds = new Set(ALTERNATE_ART_IDS);
 
@@ -87,7 +99,7 @@ test('the commissioned alternate-art cards are offered and point to bundled pain
     assert.equal(hasVersion(card, 'alternateArtFoil'), false, `${card.id} alternateArtFoil`);
     assert.equal(hasVersion(card, 'creativeFoil'), false, `${card.id} creativeFoil`);
   }
-  assert.equal(alternateArtIds.size, 64);
+  assert.equal(alternateArtIds.size, 96);
   assert.ok(versionAssetUrl('mk_clover_master_botanist_5', 'alternateArt').endsWith('/assets/art/versions/mk_clover_master_botanist_5/alternateArt.png'));
 });
 
@@ -125,4 +137,11 @@ test('asking for a printing changes the art, and asking for none changes nothing
   const retroSvg = paintedArtSVG(retro, '<svg data-fallback="retro"/>', 'alternateArt');
   assert.match(retroSvg, /alternate-retro-quiet-triumphs-atlas\.png/);
   assert.match(retroSvg, /x="-300" y="-300" width="400" height="400"/);
+
+  const impressionist = SET.cards.find((c) => c.id === 'mk_bld_festival_green');
+  const impressionistSvg = paintedArtSVG(
+    impressionist, '<svg data-fallback="impressionist"/>', 'alternateArt',
+  );
+  assert.match(impressionistSvg, /alternate-impressionist-light-across-town-atlas\.png/);
+  assert.match(impressionistSvg, /x="-300" y="-300" width="400" height="400"/);
 });
