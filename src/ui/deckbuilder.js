@@ -65,13 +65,14 @@ export function deleteSavedDeck(id) {
 let host = null;
 let ctx = null; // { rules, set, list, name, id, onSave, onCancel }
 let filter = { type: 'all', species: null, study: null, rarity: null };
-let sort = 'power'; // 'power' | 'character' | 'cost' | 'name'
+let sort = 'power'; // 'power' | 'character' | 'cost' | 'name' | 'rarity'
 
 const SORTS = [
   ['power', 'Power'],
   ['character', 'Character'],
   ['cost', 'Cost'],
   ['name', 'Name'],
+  ['rarity', 'Rarity'],
 ];
 
 function counts() {
@@ -143,8 +144,12 @@ function matchesFilters(c) {
 function compare(a, b) {
   if (sort === 'cost') return (a.cost || 0) - (b.cost || 0) || a.name.localeCompare(b.name);
   if (sort === 'name') return a.name.localeCompare(b.name) || (a.cost || 0) - (b.cost || 0);
+  if (sort === 'rarity') return rarityRank(b) - rarityRank(a) || a.name.localeCompare(b.name);
   // Strongest for its cost first: the book is browsed down the power curve.
   return score(b) - score(a) || a.name.localeCompare(b.name);
+}
+function rarityRank(def) {
+  return RARITIES.indexOf(def.rarity || 'Common');
 }
 
 function poolCards() {

@@ -14,6 +14,7 @@ import { iconSVG } from './art.js';
 import { VERSIONS, versionsOf, hasVersion, defaultVersionKey } from './versions.js';
 import { characterOf } from '../engine/characters.js';
 import { ownedCopies, ownsPrinting, collectionSize } from '../engine/profile.js';
+import { RARITIES } from '../engine/power.js';
 
 const PAGE = 48;
 
@@ -33,8 +34,16 @@ function ownsThisPrinting(cardId, key) {
 let host = null;
 let ctx = null; // { rules, set, cards, shelf, onClose }
 let filter = { type: 'all', species: null, study: null, rarity: null, version: 'any', text: '' };
+let sort = 'type'; // 'type' | 'rarity' | 'name' | 'cost'
 let shown = PAGE;
 const chosenVersion = new Map(); // cardId -> version key the reader has turned it to
+
+const SORTS = [
+  ['type', 'Type'],
+  ['rarity', 'Rarity'],
+  ['name', 'Name'],
+  ['cost', 'Cost'],
+];
 
 function h(tag, attrs = {}, children = []) {
   const el = document.createElement(tag);
@@ -83,11 +92,19 @@ function matches(card) {
   return true;
 }
 
+function rarityRank(card) {
+  return RARITIES.indexOf(card.rarity || 'Common');
+}
+
 function results() {
-  return allCards().filter(matches)
-    .sort((a, b) => (a.type || '').localeCompare(b.type || '')
+  return allCards().filter(matches).sort((a, b) => {
+    if (sort === 'rarity') return rarityRank(a) - rarityRank(b) || a.name.localeCompare(b.name);
+    if (sort === 'name') return a.name.localeCompare(b.name) || (a.cost || 0) - (b.cost || 0);
+    if (sort === 'cost') return (a.cost || 0) - (b.cost || 0) || a.name.localeCompare(b.name);
+    return (a.type || '').localeCompare(b.type || '')
       || a.name.localeCompare(b.name)
-      || (a.cost || 0) - (b.cost || 0));
+      || (a.cost || 0) - (b.cost || 0);
+  });
 }
 
 function listOf(key) {
@@ -236,6 +253,11 @@ function buildFilters() {
     .map(([key, label]) => chip(label, filter.type === key, () => { filter.type = key; shown = PAGE; render(); }))));
 
   bar.appendChild(h('div', { class: 'db-chiprow' }, [
+    h('span', { class: 'db-chiplabel' }, 'Sort by:'),
+    ...SORTS.map(([key, label]) => chip(label, sort === key, () => { sort = key; render(); })),
+  ]));
+
+  bar.appendChild(h('div', { class: 'db-chiprow' }, [
     chip('Any species', !filter.species, () => { filter.species = null; shown = PAGE; render(); }),
     ...listOf('species').map((sp) => chip(sp, filter.species === sp, () => {
       filter.species = filter.species === sp ? null : sp; shown = PAGE; render();
@@ -246,6 +268,12 @@ function buildFilters() {
     ...listOf('studies').map((st) => chip(st, filter.study === st, () => {
       filter.study = filter.study === st ? null : st; shown = PAGE; render();
     }, st)),
+  ]));
+  bar.appendChild(h('div', { class: 'db-chiprow' }, [
+    chip('Any rarity', !filter.rarity, () => { filter.rarity = null; shown = PAGE; render(); }),
+    ...RARITIES.map((r) => chip(r, filter.rarity === r, () => {
+      filter.rarity = filter.rarity === r ? null : r; shown = PAGE; render();
+    })),
   ]));
 
   // Printings: how many cards exist in each, against the whole Book rather than the current filter,
