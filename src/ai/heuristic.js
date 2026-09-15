@@ -188,12 +188,31 @@ function pledgeLadderCost(state, ctx, pending) {
 }
 
 /**
+ * A rough remaining-game horizon for corrections that do not have a `ctx` on hand (a `pick` handler,
+ * mainly). Mirrors `buildContext`'s horizon but off the shared default cap rather than a per-agent
+ * override — fine for a secondary correction term, wrong for the main scoring weights.
+ */
+function remainingHorizon(state) {
+  const cap = (state.rules.simulation.maxTurnsPerPlayer || 40) * 2;
+  return clamp((cap - state.turnNumber) / 2, 1, DEFAULT_PARAMS.horizonCap);
+}
+
+/**
  * What a Market card is worth beyond its printed effect, because of where it ends up. A one-shot
  * goes to the City Dump; a Building stays in town and keeps paying; a hired animal is a worker and
  * a rung on every future pledge ladder. The power model rates the effect — this rates the permanence.
+ *
+ * PROTOTYPE (rules.buildings.chargeUpkeep): a Building is no longer permanence for free. Its printed
+ * effect is what `cardPower` already rates; this bonus is what standing in town is worth on top of
+ * that, and upkeep is what standing in town now costs, so the two net against each other here rather
+ * than the agent paying full price at auction for a bill it has not yet priced in.
  */
 function permanenceBonus(state, d) {
-  if (d.type === 'building') return 6.0;
+  if (d.type === 'building') {
+    let bonus = 6.0;
+    if ((state.rules.buildings || {}).chargeUpkeep) bonus -= buildingUpkeepFor(d) * remainingHorizon(state);
+    return bonus;
+  }
   if (d.type === 'marketCharacter') return 3.0 + d.cost * 0.4;
   return 0;
 }
@@ -603,6 +622,9 @@ function scoreAction(state, ctx, a, agg, out, P) {
       const crew = (a.characters || []).map((uid) => findStack(state, ctx.pi, uid));
       const labour = crew.reduce((acc, st) => acc + (st ? stackRate(state, st) : 0), 0) * P.eventCharCost;
       let s = cardPower(d, state.rules) * 1.4 - labour - a.cost * P.costWeight;
+      // PROTOTYPE (rules.buildings.chargeUpkeep): what raising this Building goes on to cost, not just
+      // what it costs to raise — the same correction applied to a market Building's auction value.
+      if ((state.rules.buildings || {}).chargeUpkeep) s -= buildingUpkeepFor(d) * horizon;
       // Building into a full row means pulling something down, and a Statue we cannot stand is worse
       // than a Building we never raised.
       if (!hasBuildingRoom(state, ctx.pi)) s -= 4;
@@ -693,6 +715,12 @@ export function makeHeuristicAgent(options = {}) {
       if (d && d.type === 'statue') need = Math.max(need, pd.bid + pd.bonus + 1);
     }
     if (need > 0 && p.supply < need + 2 && p.supply + 2 >= need) return 'supply';
+    // PROTOTYPE (rules.buildings.chargeUpkeep): don't let a Building we are actually holding onto go
+    // inert for the sake of drawing a card, when gaining Supply instead would have covered its bill.
+    if ((state.rules.buildings || {}).chargeUpkeep && (p.buildings || []).length) {
+      const dueNextTurn = p.buildings.reduce((a, b) => a + buildingUpkeepFor(def(state, b.cardId)), 0);
+      if (dueNextTurn > 0 && p.supply < dueNextTurn) return 'supply';
+    }
     if (p.hand.length <= 2) return 'draw';
     if (p.supply >= P.drawWhenRich && p.hand.length <= P.drawHandCap) return 'draw';
     if (p.hand.length >= 8) return 'supply';
