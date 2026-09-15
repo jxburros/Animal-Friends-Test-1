@@ -332,11 +332,12 @@ If you test by downloading the ZIP from GitHub and unzipping it:
 
 - `docs/ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md` - design reference and source of truth
 - `spec/game.json` - rules constants and prototype decisions
+- `spec/progression.json` - what winning pays and what things cost: pack and deck prices, the coverage that opens a deck by itself, how many unfinished games a Mayor keeps. Tuning, not rules; the defaults in `src/engine/profile.js` stand in if the file is missing
 - `spec/species.json` - the ten species charters (centre of gravity, hole, signature); the contract `npm run identity` checks
 - `spec/maker_card_set.json` - the collection, and the only card set the game reads: 502 cards, 15 40-card town decks, and 3 Capital Cities, each with a quarry of twelve virtues to raise nine from. The decks and the Capital Cities are built by `npm run decks` from stated identities rather than hand-listed. It holds each character's backstory alongside their cards, the card types the game grew into — Town Buildings, and the nineteen Tokens — and each character's `wantedVerbs`, the effects their story wanted, with a `resolved` line once the engine can say it. A Market Deck is dealt as 9 Statues raised from its `statuePool` plus a 26-card sample of its own pool — 35 cards — topped up from that pool until at least three on-reveal cards are in it, so the market keeps one size while the display varies from game to game. Writing for it is documented in two files: [WRITING_A_CHARACTER.md](docs/WRITING_A_CHARACTER.md) (the process an agent follows to write one character's cards) and [TOWN_BIBLE.md](docs/TOWN_BIBLE.md) (the shared world every backstory must agree with)
-- `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`. `power.js` is the power/cost model that rates every card and assigns its rarity
+- `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`. `power.js` is the power/cost model that rates every card and assigns its rarity. `profile.js` is a Mayor - their collection, decks, coins and record - and `snapshot.js` saves a game in progress and puts it back together; both are pure, so all of it is tested headlessly
 - `src/ai/` - agents: `random.js` (baseline), `heuristic.js` (opponent)
-- `src/ui/` - browser interface: `main.js` (the two doors, and the cover), `humanAgent.js`, `render.js`, `book.js` (the Book: every card, its printings and the Story panel), `versions.js` (the six printings and which cards have been painted in them), `deckbuilder.js` (the Deck Workshop), `help.js` (the welcome, quick start, rules and FAQ), `tutorial.js` (the coach chips), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations)
+- `src/ui/` - browser interface: `main.js` (the two doors, and the cover), `humanAgent.js`, `render.js`, `book.js` (the Book: every card, its printings and the Story panel), `versions.js` (the six printings and which cards have been painted in them), `deckbuilder.js` (the Deck Workshop), `help.js` (the welcome, quick start, rules and FAQ), `tutorial.js` (the coach chips), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations). The account layer is `profiles.js` (the shelf of Mayors and the portrait chooser), `shop.js` (the Post Office: packs, coins and the decks still to open) and `store.js` (the only file that writes progress to `localStorage`)
 - `src/tutorial/scenario.js` - the tutorial mini-match: the arranged decks and market, the step script (what to do and why, and which moves are allowed), and the rival's plan; DOM-free so the tests can play it
 - `index.html` - playable game
 - `scripts/` - test utilities: `smoke.mjs` (one game log), `invariants.mjs` (card conservation), `playtest.mjs` (AI vs AI), `power.mjs` (the card set sorted by power/cost), `stamp.mjs` (restamp every card's rarity and rating after editing the set), `identity.mjs` (species/study identity and power-creep gate), `build-decks.mjs` (rebuild the town decks from the ratings, or just the ones named with `--only`), `characters.mjs` (the character spreadsheet: every Character and every version they have), `characters_xlsx.py` (binds those CSVs into one workbook)
@@ -446,6 +447,35 @@ generation prompt, and [the rendered card preview](docs/screenshots/painted-card
 
 The user-supplied [Neighbors sheet](docs/NEIGHBORS_ART.md) adds 16 job-specific paintings assigned
 to 71 Characters from the original set and Many Hats. See the [updated card preview](docs/screenshots/neighbors-cards.png).
+
+## Mayors, the collection, and games you can come back to
+
+The game opens on the question of who is playing. A **Mayor** is a save file held in this browser -
+a name, a card they are known by, the cards they own, the decks they have, the coins they have
+earned, and the games they have not finished. There is no account server and no network call.
+
+A new Mayor chooses one of the printed decks. Its list is their whole collection to begin with, in
+the Deck Workshop and in the Book alike: the Workshop offers only cards they own and caps copies at
+how many they hold, and the Book greys the rest of the set as locked silhouettes with their rarity
+still showing, so it says how big the set is without giving away a card that has not been earned.
+
+Cards come from **booster packs** - eleven cards across the rarity slots plus one guaranteed
+non-regular hit - bought with coins in the Post Office or paid out for winning. Inventory is counted
+per printing, because collecting a foil is the point of opening a pack, but for deck legality a copy
+is a copy: a foil and a regular are two copies of one card, and which printing a deck shows is
+cosmetic. More **decks** open two ways - bought outright, or collected: cross `deckCoverage` of a
+deck's list from packs and the rest is given to you. A deck always arrives with its whole list, so a
+deck you own is a deck you can play and a deck you can take apart.
+
+A game is **saved at the end of every turn**, so walking away from one costs nothing and the cover
+offers it back where it stood. Finishing one takes it off the shelf and pays for it.
+
+**"Play with everything unlocked"** on the shelf is the Sandbox Mayor: every card, every printing,
+every deck, for trying things out. It is a separate profile, so it cannot touch real progress, and
+it keeps no record of what it plays.
+
+The design, the storage keys and the migration of decks built before any of this existed are in
+[PROFILES.md](docs/PROFILES.md).
 
 ## Design notes
 
