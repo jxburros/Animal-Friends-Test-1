@@ -19,7 +19,7 @@ test('the recorded random draw has fifteen distinct ordinary Foils and three of 
   for (const entry of release.selection) {
     const def = cards.find(card => card.id === entry.id);
     assert.ok(def, entry.id);
-    assert.deepEqual(PRINTINGS[def.id], { foil: true });
+    assert.equal(PRINTINGS[def.id].foil, true);
     assert.deepEqual(Object.keys(FOIL_ASSIGNMENTS[def.id]), ['foil']);
     assert.equal(hasVersion(def, 'foil'), true);
     assert.equal(hasVersion(def, 'creativeFoil'), false);
@@ -45,12 +45,14 @@ test('the recorded random draw has fifteen distinct ordinary Foils and three of 
 
 test('hexagon Foil printings added after the first release use the ordinary artwork', () => {
   const drawn = new Set(release.selection.map(card => card.id));
-  const added = Object.keys(PRINTINGS).filter(id => !drawn.has(id));
+  const added = Object.entries(PRINTINGS)
+    .filter(([id, printings]) => printings.foil && !drawn.has(id))
+    .map(([id]) => id);
   assert.equal(added.length, 14);
   for (const id of added) {
     const def = cards.find(card => card.id === id);
     assert.ok(def, id);
-    assert.deepEqual(PRINTINGS[id], { foil: true });
+    assert.equal(PRINTINGS[id].foil, true);
     assert.deepEqual(Object.keys(FOIL_ASSIGNMENTS[id]), ['foil']);
     assert.equal(resolveFoil(def, version('foil')).mode, 'hexagon');
     assert.equal(hasVersion(def, 'foil'), true);
@@ -67,8 +69,11 @@ test('hexagon Foil printings added after the first release use the ordinary artw
 
 test('every Foil printing is either drawn or a later hexagon, and no card is foil by accident', () => {
   assert.equal(countInVersion(cards, 'foil'), 29);
-  assert.deepEqual(new Set(Object.keys(FOIL_ASSIGNMENTS)), new Set(Object.keys(PRINTINGS)));
-  for (const card of cards.filter(card => !Object.hasOwn(PRINTINGS, card.id))) {
+  const foilPrintings = Object.entries(PRINTINGS)
+    .filter(([, printings]) => printings.foil)
+    .map(([id]) => id);
+  assert.deepEqual(new Set(Object.keys(FOIL_ASSIGNMENTS)), new Set(foilPrintings));
+  for (const card of cards.filter(card => !PRINTINGS[card.id]?.foil)) {
     assert.equal(hasVersion(card, 'foil'), false);
   }
 });
