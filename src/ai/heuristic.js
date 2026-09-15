@@ -216,7 +216,22 @@ function marketCardValue(state, pi, d) {
 function plainBusyEffect(eff) {
   if (!eff) return false;
   if (eff.do === 'seq') return (eff.steps || []).every(plainBusyEffect);
-  return ['gainSupply', 'draw', 'discard', 'peekMarketDeck', 'reorderDeckTop', 'scryDeck', 'advanceCharacter'].includes(eff.do);
+  // Verbs the power model rates well enough on its own, so a new card carrying one is used without
+  // a rule of its own here. The paid verbs are in the list because the fee is what makes them
+  // ratable: an ability nobody ever walks up to is a Supply sink that sinks nothing.
+  return ['gainSupply', 'draw', 'discard', 'peekMarketDeck', 'reorderDeckTop', 'scryDeck', 'advanceCharacter',
+    'searchDeck', 'addMod', 'unemployOpponentCharacter', 'rehireFromAnywhere'].includes(eff.do);
+}
+/**
+ * What a fee on a Busy ability actually costs this Mayor, which is not what it is printed at.
+ *
+ * A sink exists for the Supply a Mayor has no other use for, so ten Supply out of a purse of forty
+ * is most of the way to free and ten out of twelve is the whole turn. Priced any other way the agent
+ * either never pays a fee at all or empties its purse at the first counter it walks past.
+ */
+function feeCost(fee, supply) {
+  if (fee <= 0) return 0;
+  return fee * (0.2 + 0.8 * (fee / Math.max(fee, supply)));
 }
 function usesVerb(eff, verb) {
   if (!eff) return false;
@@ -418,9 +433,16 @@ function scoreAction(state, ctx, a, agg, out, P) {
       if (!plainBusyEffect(ab.effect)) return -1;
       // A wake-up call with nobody to wake is a wasted turn.
       if (usesVerb(ab.effect, 'advanceCharacter') && !wakeable(state, ctx.pi, a.charUid).length) return -1;
+      // Nor is there any point paying to remove an animal from an empty town, or to give a shift to
+      // nobody: both verbs find their target or find nothing at all.
+      const opp = state.players[opponentOf(ctx.pi)];
+      if (usesVerb(ab.effect, 'unemployOpponentCharacter') && !opp.town.length) return -1;
+      if (usesVerb(ab.effect, 'rehireFromAnywhere')
+        && !p.unemployment.length && !opp.unemployment.length && !state.market.cityDump.length) return -1;
+      const fee = feeCost(a.cost || 0, p.supply);
       const own = stackRate(state, self);
-      out.why = `busy for ${effectPower(ab.effect).toFixed(1)}`;
-      return effectPower(ab.effect) * 2.2 - own * P.workBase * 0.5;
+      out.why = `busy for ${effectPower(ab.effect).toFixed(1)}${a.cost ? ` at ${a.cost} Supply` : ''}`;
+      return effectPower(ab.effect) * 2.2 - own * P.workBase * 0.5 - fee;
     }
 
     case 'playEvent': {

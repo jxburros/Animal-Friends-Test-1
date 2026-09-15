@@ -188,6 +188,13 @@ export async function readyStack(state, pi, stack, why = '') {
 /** Send a stack to Unemployment following the knock-down rule. Returns false if prevented. */
 export async function unemployStack(state, ownerPi, stack, { byEffect = true, sourcePi = null } = {}) {
   const p = state.players[ownerPi];
+  // A sheltered animal is not merely untargetable: nothing takes them out of the town while the
+  // cover holds — not a rival's removal, and not weather that falls on both towns. Their own Mayor
+  // may still let them go, because a shelter is not a contract.
+  if (byEffect && sourcePi !== ownerPi && isProtected(state, stack)) {
+    log(state, ownerPi, `${topCard(state, stack).name} is under cover and stays in ${p.name}'s town.`, { kind: 'shield', player: ownerPi, uid: stack.uid });
+    return false;
+  }
   if (byEffect && hasMod(p, 'unemploymentShield')) {
     log(state, ownerPi, `${p.name}'s Characters are protected; ${topCard(state, stack).name} stays in town.`, { kind: 'shield', player: ownerPi, uid: stack.uid });
     return false;
@@ -535,6 +542,73 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       }
       return;
     }
+    case 'rehireFromAnywhere': {
+      // Gwen's verb, and the only hiring in the collection that does not read your own Unemployment
+      // and stop there. The diner's rule is that anybody who walks in gets a shift, so the door is
+      // open to three queues at once: your own animals out of work, the rival's animals out of work
+      // — who are nobody's while they are face down, and become yours the moment they take the
+      // shift — and the hired help lying in the City Dump with no town to go back to.
+      //
+      // `from` names which queues this card reaches; leaving it off opens all three. An animal taken
+      // out of the rival's Unemployment is a deck card changing hands, which the card census counts
+      // across both towns rather than one at a time, so nothing is created or lost by the move.
+      if (!hasTownRoom(state, pi)) return; // a full town has no counter to put anybody behind
+      const f = eff.filter || {};
+      const from = eff.from || ['unemployment', 'opponentUnemployment', 'cityDump'];
+      const affordable = (d) => eff.free || Math.max(0, (d.cost || 0) - (eff.discount || 0)) <= p.supply;
+      const wanted = (d) => {
+        if (!d) return false;
+        if (f.cost !== undefined && d.cost !== f.cost) return false;
+        if (f.maxCost !== undefined && d.cost > f.maxCost) return false;
+        if (f.minCost !== undefined && d.cost < f.minCost) return false;
+        if (f.study && d.study !== f.study) return false;
+        if (f.species && d.species !== f.species) return false;
+        if (f.name && d.name !== f.name) return false;
+        return affordable(d);
+      };
+      const opts = [];
+      if (from.includes('unemployment')) {
+        for (const c of p.unemployment) {
+          if (wanted(cardDef(state, c.cardId))) opts.push({ uid: `own:${c.uid}`, cardId: c.cardId, name: `${cardDef(state, c.cardId).name} (out of work here)`, where: 'unemployment', cardUid: c.uid });
+        }
+      }
+      if (from.includes('opponentUnemployment')) {
+        for (const c of o.unemployment) {
+          if (wanted(cardDef(state, c.cardId))) opts.push({ uid: `opp:${c.uid}`, cardId: c.cardId, name: `${cardDef(state, c.cardId).name} (out of work across the way)`, where: 'opponentUnemployment', cardUid: c.uid });
+        }
+      }
+      if (from.includes('cityDump')) {
+        state.market.cityDump.forEach((id, i) => {
+          const d = cardDef(state, id);
+          if (d && d.type === 'marketCharacter' && wanted(d)) opts.push({ uid: `dump:${i}`, cardId: id, name: `${d.name} (nobody's, out of the City Dump)`, where: 'cityDump', index: i });
+        });
+      }
+      if (!opts.length) return;
+      const chosen = await ask(state, pi, { kind: 'pick', reason: 'rehireFromAnywhere', from: 'anywhere', options: opts.map((x) => ({ uid: x.uid, cardId: x.cardId, name: x.name })), min: eff.optional ? 0 : 1, max: 1 });
+      const pickId = chosen[0];
+      const pick = opts.find((x) => x.uid === pickId) || (eff.optional ? null : opts[0]);
+      if (!pick) return;
+      const d = cardDef(state, pick.cardId);
+      const cost = eff.free ? 0 : Math.max(0, (d.cost || 0) - (eff.discount || 0));
+      if (cost > p.supply) return;
+      let card;
+      if (pick.where === 'cityDump') {
+        const at = state.market.cityDump.indexOf(pick.cardId);
+        if (at < 0) return;
+        state.market.cityDump.splice(at, 1);
+        card = { uid: nextUid(state), cardId: pick.cardId };
+      } else {
+        const owner = pick.where === 'opponentUnemployment' ? o : p;
+        const at = owner.unemployment.findIndex((x) => x.uid === pick.cardUid);
+        if (at < 0) return;
+        card = owner.unemployment.splice(at, 1)[0];
+      }
+      p.supply -= cost;
+      const s2 = makeStack(state, pi, card, eff.orientation ?? UPRIGHT);
+      log(state, pi, `${p.name} gives ${d.name}, ${d.title} a shift for ${cost} Supply — ${pick.where === 'opponentUnemployment' ? `out of ${o.name}'s Unemployment` : pick.where === 'cityDump' ? 'off the City Dump' : 'off their own books'}.`, { kind: 'rehire', player: pi, uid: s2.uid, cardUid: card.uid, cardId: pick.cardId, cost, source: pick.where });
+      await fireHook(state, 'onRecruit', { player: pi, stackUid: s2.uid, listeners: [pi], selfOnly: s2.uid });
+      return;
+    }
     case 'recruitFromHand': {
       if (!hasTownRoom(state, pi)) return; // a full town cannot take another body
       const opts = p.hand.filter((c) => {
@@ -568,6 +642,45 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       const byUid = Object.fromEntries(top.map((c) => [c.uid, c]));
       p.deck.splice(0, n, ...order.map((uid) => byUid[uid]));
       log(state, pi, `${p.name} looks at the top ${n} cards of the deck and reorders them.`, { kind: 'peekDeck', player: pi, count: n });
+      return;
+    }
+    case 'searchDeck': {
+      // The whole deck, not the top of it. Every other way a town looks at its own cards is a look
+      // at what is coming — `reorderDeckTop` and `scryDeck` both work the first few — and this is
+      // the animal who goes and fetches the card you actually want. It is the dearest thing a
+      // Character does, which is why every card printed with it charges Supply for the privilege:
+      // a search with no price is a deck that holds one card in four copies and draws it every game.
+      const f = eff.filter || {};
+      const legal = p.deck.filter((c) => {
+        const d = cardDef(state, c.cardId);
+        if (!d) return false;
+        if (f.type && d.type !== f.type) return false;
+        if (f.typeIn && !f.typeIn.includes(d.type)) return false;
+        if (f.maxCost !== undefined && (d.cost || 0) > f.maxCost) return false;
+        if (f.study && d.study !== f.study) return false;
+        if (f.species && d.species !== f.species) return false;
+        if (f.name && d.name !== f.name) return false;
+        return true;
+      });
+      const max = Math.min(eff.count || 1, legal.length);
+      if (!max) {
+        // A search that finds nothing still disturbs the deck, and the rival still watched you do it.
+        p.deck = shuffle(state, p.deck);
+        log(state, pi, `${p.name} goes through the whole deck and finds nothing worth carrying back.`, { kind: 'searchDeck', player: pi, found: 0 });
+        return;
+      }
+      const chosen = await ask(state, pi, { kind: 'pick', reason: 'searchDeck', from: 'deck', options: legal.map((c) => inst(state, c)), min: eff.optional ? 0 : Math.min(1, max), max });
+      const taken = legal.filter((c) => chosen.includes(c.uid));
+      p.deck = p.deck.filter((c) => !chosen.includes(c.uid));
+      // The deck is shuffled afterwards whether anything was found or not, so a search never doubles
+      // as a free look at the order of what is left.
+      p.deck = shuffle(state, p.deck);
+      // `to` says where the search puts what it found: the hand by default, the top of the deck for
+      // a card that means to draw it in the ordinary way.
+      if (eff.to === 'deckTop') p.deck.unshift(...taken);
+      else p.hand.push(...taken);
+      const names = taken.map((c) => cardDef(state, c.cardId).name);
+      log(state, pi, `${p.name} searches the deck and carries back ${names.length ? names.join(', ') : 'nothing'}${eff.to === 'deckTop' ? ' to the top of the deck' : ''}, then shuffles.`, { kind: 'searchDeck', player: pi, found: taken.length, cardIds: taken.map((c) => c.cardId), to: eff.to || 'hand' });
       return;
     }
     case 'eventFromDumpToDeckBottom':
@@ -657,9 +770,26 @@ export async function runEffect(state, pi, eff, ctx = {}) {
         ids = order.map((uid) => byUid[uid]);
         state.market.deck.splice(0, n, ...ids);
       }
+      // `toBottom` is the other half of manipulating a deck neither Mayor owns: having looked, send
+      // one of them to the bottom of it, where it will not be dealt into the display this game. It
+      // is the only way in the collection to take a lot off the table before anybody can bid on it,
+      // so it is written for the animals who read the Capital City rather than fight over it.
+      let sunk = null;
+      if (eff.toBottom && ids.length) {
+        const opts = ids.map((id, i) => ({ uid: `sink${i}`, cardId: id, name: cardDef(state, id).name }));
+        const chosen = await ask(state, pi, { kind: 'pick', reason: 'marketToBottom', from: 'marketDeck', options: opts, min: eff.optional ? 0 : 1, max: 1 });
+        const at = opts.findIndex((o2) => o2.uid === chosen[0]);
+        if (at >= 0) {
+          sunk = ids[at];
+          ids.splice(at, 1);
+          state.market.deck.splice(0, n, ...ids);
+          state.market.deck.push(sunk);
+          log(state, pi, `${p.name} puts ${cardDef(state, sunk).name} to the bottom of the Market Deck.`, { kind: 'marketToBottom', player: pi, cardId: sunk });
+        }
+      }
       p.knownMarketTop = ids.slice();
       const names = ids.map((id) => cardDef(state, id).name);
-      log(state, pi, `${p.name} looks at the top of the Market Deck${names.length ? `: ${names.join(', ')}` : ' (empty)'}${eff.reorder && n > 1 ? ', and puts them back in that order' : ''}.`, { kind: 'peekMarket', player: pi, cardIds: ids.slice(), reordered: !!(eff.reorder && n > 1) });
+      log(state, pi, `${p.name} looks at the top of the Market Deck${names.length ? `: ${names.join(', ')}` : ' (empty)'}${eff.reorder && n > 1 ? ', and puts them back in that order' : ''}.`, { kind: 'peekMarket', player: pi, cardIds: ids.slice(), reordered: !!(eff.reorder && n > 1), sunk });
       return;
     }
     case 'peekOpponentHand': {
@@ -809,9 +939,19 @@ export async function runEffect(state, pi, eff, ctx = {}) {
         log(state, pl.index, `${pl.name}'s Characters will not advance at the next Ready.`, { kind: 'mod', player: pl.index, key: 'skipNextAdvance', value: 1 });
       }
       return;
-    case 'everyoneRehiresFree':
-      for (const pl of state.players) await runEffect(state, pl.index, { do: 'rehire', free: true, optional: true }, ctx);
+    case 'everyoneRehiresFree': {
+      // `count` is how many each Mayor takes back, and it is what makes the total shocks printable.
+      // A card that empties both towns and hands back one animal is not a hard winter, it is the end
+      // of the game; the borough's actual bad years are the ones everybody comes back from, shorter
+      // a few animals and out of step. One is the old behaviour and stays the default.
+      const times = Math.max(1, eff.count || 1);
+      for (const pl of state.players) {
+        for (let k = 0; k < times; k++) {
+          await runEffect(state, pl.index, { do: 'rehire', free: true, optional: true }, ctx);
+        }
+      }
       return;
+    }
     case 'raiseOwnBid': {
       if (hasPassive(state, oi, 'blockOpponentBidRaise')) return;
       const own = state.market.pending.filter((pd) => pd.high === pi); // top up an auction you are currently winning
@@ -910,19 +1050,38 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       // Hedgehog: a Character an opponent's effect simply cannot reach, until this player's next turn.
       // `filter: { notSelf: true }` is the grandparently version: the quills go around somebody else.
       // Without it the source Character protects itself whenever it legally can, as it always has.
+      //
+      // Two things make this a stronger shield than it was. `turns` is how many of the protected
+      // Mayor's turns it holds for, and a protected animal is now out of reach of Unemployment
+      // itself — a rival's removal, and the weather that falls on both towns — rather than merely
+      // untargetable. `everyone: true` is Oatmeal's: the shelter is put up over the whole square,
+      // so each Mayor names one of their own animals and both are covered. That it helps the rival
+      // too is the price of it being this good, and it is the only protection in the collection
+      // written from outside one town.
       const pf = { ...(eff.filter || {}) };
       const protectNotSelf = pf.notSelf;
       delete pf.notSelf;
+      const turns = Math.max(1, eff.turns || 1);
       const self = ctx.sourceStackUid || ctx.stackUid;
-      const opts = p.town.filter((st) => matchesFilter(state, st, pf) && !(protectNotSelf && st.uid === self));
-      if (!opts.length) return;
-      const chosen = !protectNotSelf && ctx.sourceStackUid && opts.some((st) => st.uid === ctx.sourceStackUid)
-        ? [ctx.sourceStackUid]
-        : await ask(state, pi, { kind: 'pick', reason: 'protect', from: 'town', options: opts.map((st) => stackOpt(state, st)), min: 1, max: 1 });
-      const st = findStack(state, pi, chosen[0]);
-      if (!st) return;
-      st.protectedUntil = state.turnNumber + 2;
-      log(state, pi, `${topCard(state, st).name} cannot be targeted by ${state.players[oi].name} until ${p.name}'s next turn.`, { kind: 'protect', player: pi, uid: st.uid });
+      const shelter = async (pl, allowSelf) => {
+        const opts = pl.town.filter((st) => matchesFilter(state, st, pf) && !(protectNotSelf && allowSelf && st.uid === self));
+        if (!opts.length) return;
+        const auto = allowSelf && !protectNotSelf && ctx.sourceStackUid && opts.some((st) => st.uid === ctx.sourceStackUid);
+        const chosen = auto
+          ? [ctx.sourceStackUid]
+          : await ask(state, pl.index, { kind: 'pick', reason: 'protect', from: 'town', options: opts.map((st) => stackOpt(state, st)), min: 1, max: 1 });
+        const st = findStack(state, pl.index, chosen[0]) || opts[0];
+        if (!st) return;
+        st.protectedUntil = state.turnNumber + 2 * turns;
+        log(state, pl.index, `${topCard(state, st).name} is under cover: nothing may take them out of ${pl.name}'s town until ${pl.name}'s ${turns > 1 ? `${turns}th turn from now` : 'next turn'}.`, { kind: 'protect', player: pl.index, uid: st.uid, turns });
+      };
+      if (eff.everyone) {
+        // The playing Mayor first, so the card reads in the order it is printed.
+        await shelter(p, true);
+        await shelter(o, false);
+        return;
+      }
+      await shelter(p, true);
       return;
     }
     case 'moveShift': {

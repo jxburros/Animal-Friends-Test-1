@@ -11,6 +11,52 @@ in the [finish preview](src/ui/foil-preview.html) after starting the local serve
 The [painted app surroundings](docs/APP_SURROUNDINGS.md) extend the card illustrations into the menu,
 Capital City banner, welcome screen and deck workshop, with locally bundled artwork and matching parchment frames.
 
+**New in v0.12.0 — the open door, the awning, and something to spend Supply on.** Two wishes built,
+the game's first Supply sink that is not a purchase, forty-two cards, and every verb in the engine
+spoken by a card at last.
+
+- **Gwen's door is open to everybody.** `rehireFromAnywhere` is the one hiring verb in the collection
+  that does not read your own Unemployment and stop there: it reaches your own animals out of work,
+  the rival's — who are nobody's while they are face down, and become yours the moment they take the
+  shift — and the hired help lying in the City Dump with no town to go back to. The diner's actual
+  rule was always that anybody who walks in gets a shift, and the engine can say it now.
+- **Oatmeal's awning goes over the whole square, rival included.** A shelter is no longer merely
+  untargetability: **nothing takes a sheltered animal out of their town while the cover holds** — not
+  a rival's removal, and not weather that falls on both towns. `everyone: true` shelters one Character
+  in *each* town, both Mayors choosing their own. That it helps the rival is the price of it being
+  that good, and the model prices it that way. Eight cards already in the set re-rate upward, because
+  protection now stops a great deal more than it did.
+- **An ability can have a price.** A Character's Busy ability may charge Supply to use. This is the
+  game's first sink that is not a purchase, and it is the answer to the second thing the
+  [playtest notes](docs/PLAYTEST_NOTES.md) leave open — 51 Supply a player unspent at the end is a
+  shortage of places to spend, not a surplus of earnings. Willow will unemploy a rival's animal for
+  10; Liz's docket marks every lot in the Capital City down for you and nobody else; Ned and Scott
+  will go through the whole deck and fetch the card you actually wanted. The power model learned what
+  a Supply handed over a counter is worth against one earned when you needed it, and the agent learned
+  to tell a surplus from a turn's income.
+- **Ordinances, at last.** The collection printed none, so four of the five rules the Capital City can
+  have changed — the Statue yard closed, Statues dearer or cheaper, Buildings dearer or cheaper, the
+  bidding sealed — were read by nothing. There are eight now, two for every rule, and the ones that
+  block the Statue yard can be cleared by either Mayor or by one alone, so they cannot deadlock.
+- **Five more ways for the market to put animals out of work**, plus two hard winters that empty both
+  towns and hand most of them straight back — which is what `everyoneRehiresFree: { count }` was added
+  for, because a card that empties both towns and returns one animal is the end of a game rather than
+  a bad year.
+- **Four Owls who read the Capital City's deck**, including the first way in the collection to take a
+  lot off the table before anybody can bid on it.
+- **Every name the engine interprets is now spoken by a card, and the test says so.** Ten were not:
+  four Ordinance rules, `unchallengeable`, `skipNextAdvance`, `onlyUprightOfSpecies`,
+  `buildingsAtLeast`, `onShiftStarted` and `onCharacterUnemployed`. Each has two cards now, and
+  `npm test` fails if a future verb is built and never printed.
+
+Measured against the set before the pass with the same harness on both — 40 games of the heuristic
+agent on the two printed decks: statue victories **40/40 → 40/40**, mean game length **30.4 → 30.6**
+turns. The new cards are in the collection and the Capital City's pool, not in the two printed decks,
+so the Supply figure has not moved yet and should not be expected to; that is a deck-building pass,
+not this one. Under *random* agents the shared shocks do slow the game (50.9 → 54.6 turns over 40
+seeds), which is what a random agent that never clears an Ordinance and never rebuilds a town
+efficiently looks like.
+
 **New in v0.11.0 — the incorporation, the quarry and the unsigned column.** Three changes to what the
 game is about, and seventy-one cards.
 

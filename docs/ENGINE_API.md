@@ -358,6 +358,97 @@ every printed rating is unchanged.
   they read on the card. `power.js` pays the card the least of its branches, because the rival picks,
   which is also the design rule: print two you would be happy with.
 
+## Card data: the fifth round of wishes, and the game's first Supply sink (v0.12.0)
+
+Two things here. The last two `wantedVerbs` anybody still wanted, and a mechanism the collection had
+been missing rather than a card: an ability with a price on it. Unlike the four rounds before this
+one, the changes here **re-rate cards already in the set** — a protection is worth more than it was,
+because it now stops more.
+
+### The two wishes
+
+- **`rehireFromAnywhere`** — Gwen's wish, and the one hiring verb that does not read your own
+  Unemployment and stop there. `from` names the queues a card may reach: `unemployment` (your own),
+  `opponentUnemployment` (the rival's, who are nobody's while they are face down) and `cityDump`
+  (hired help with no town to go back to). Left off, it reads all three. Takes `filter` (`cost`,
+  `maxCost`, `minCost`, `study`, `species`, `name`), `free`/`discount`, `optional` and `orientation`;
+  the animal arrives upright by default, and `onRecruit` fires for them, because they have just
+  arrived. A full town is offered nobody: there is no counter to put them behind.
+
+  An animal taken out of the rival's Unemployment is a **deck card changing hands**. That is why the
+  card census counts deck cards across both towns rather than one at a time — `scripts/invariants.mjs`
+  always did, for the Bin Round, and `test/determinism.test.mjs` now does too.
+
+- **`protectCharacter: { everyone: true, turns: N }`** — Oatmeal's wish, built with the help to the
+  rival kept rather than designed out. `everyone` shelters one Character in *each* town, both Mayors
+  choosing their own, and `turns` is how many of that Mayor's turns the cover holds for (one by
+  default, exactly as before).
+
+  The shelter is also stronger than it was, for every card that already had one. A protected
+  Character is no longer merely untargetable by an opponent's effect: **nothing takes them out of
+  their town while the cover holds** — not a rival's removal, not weather that falls on both towns.
+  `unemployStack` is the authority, and the one exception is their own Mayor, who may always let them
+  go. `power.js` prices protection at 2.6 a turn with diminishing returns rather than 0.7, and pays a
+  shared shelter 0.4 of a private one, which is what re-rated the eight Hedgehog cards in the set.
+
+### A price on an ability
+
+A Character's `busy` ability may carry **`cost: { supply: N }`**. `abilityFee` in `src/engine/actions.js`
+reads it; `legalActions` does not offer an ability its Mayor cannot pay for (the shift is still
+offered — a fee takes the ability off the table and nothing else), and `applyAction` charges it
+before the effect runs and refuses a forged action that cannot be paid for. Only a `busy` ability may
+charge: a trigger that fires on its own has nobody to ask for the money.
+
+This is the game's first Supply sink that is not a purchase, and it is here because the playtest
+notes' second open problem — 51 Supply a player unspent at the end — is a problem about *places to
+spend*, not about earnings. An ability with a price is on the table every turn, competes with the
+shift the animal would otherwise work, and is the only sink that scales with how rich a Mayor
+actually is.
+
+Pricing one needed two figures in `power.js`, both documented at their definitions:
+
+- **`SINK_SUPPLY` (0.35)** — what a Supply handed over a counter is worth against one earned on the
+  turn you wanted it. The model's unit is the second kind; a sink eats the first. Charging a fee at
+  face value rates every sink below zero, which is the mispricing that left the game with no sinks.
+- **`feeRuns`** — a free Busy ability is used whenever the animal is standing; one that costs ten
+  Supply is used when a Mayor has ten Supply they would rather not have. The fee shortens the
+  ability's life and never lengthens it, with one use as the floor.
+
+`src/ai/heuristic.js` reads the fee too, through `feeCost(fee, supply)`: ten Supply out of a purse of
+forty is most of the way to free and ten out of twelve is the whole turn. Without it the agent either
+never pays a fee at all or empties its purse at the first counter it passes.
+
+### The rest of the round
+
+- **`searchDeck`** — the whole deck, not the top of it. `reorderDeckTop` and `scryDeck` both work the
+  first few cards; this is the animal who goes and fetches the one you want. Takes `count`, `filter`
+  (`type`, `typeIn`, `maxCost`, `study`, `species`, `name`), `optional` and `to: 'deckTop'`. The deck
+  is shuffled afterwards whether anything was found or not, so a search never doubles as a free look
+  at what is left. Every card printed with it charges Supply, deliberately: a search with no price is
+  a deck that holds one card in four copies and draws it every game.
+- **`peekMarketDeck: { toBottom: true }`** — having looked, send one of them to the bottom of the
+  Capital City's deck. The only way in the collection to take a lot off the table before anybody can
+  bid on it, and written for the animals who read the market rather than fight over it.
+- **`lotDiscount`** — a mod, read by `cardCostFor`, that marks a lot down **for one Mayor only**. It
+  moves the minimum bid, the announcement and the settlement together, exactly as an Ordinance does,
+  and a `filter` of `{ type }` narrows it to one kind of lot. A lot is never priced below nothing.
+- **`everyoneRehiresFree: { count: N }`** — how many each Mayor takes back. It is what makes
+  `allCharactersToUnemployment` printable at all: a card that empties both towns and hands back one
+  animal is the end of the game rather than a hard winter. One is the old behaviour and the default.
+- **`CITY_RULE_VALUE` in `power.js`** — a `displayed` ability is now rated. An Ordinance is never
+  bought and never in a deck, so this settles no rarity and no copy limit; what it does is let the
+  balance scripts see a card that closes the Statue yard, which until there were Ordinances on the
+  shelf the model had no opinion about. `value` is read as a magnitude, because an Ordinance that
+  makes Statues dearer and one that makes them cheaper bend the same game by the same amount.
+
+### The vocabulary is a two-way contract
+
+`test/maker-cards.test.mjs` now asserts that **every name the engine interprets is spoken by at least
+one card**, and that the Capital City rules and this round's verbs are each on two. The collection
+carried ten unspoken names at once before this round — four Ordinance rules among them, with no
+Ordinance on the shelf to say any of them — and nothing failed, because nothing fails when a card set
+simply declines to use a feature. That is exactly why the test is worth having.
+
 ## Tokens (v0.7.2)
 
 Tokens are markers a Mayor holds beside their Supply: one kind per species, one per field of study,

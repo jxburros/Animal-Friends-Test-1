@@ -76,6 +76,13 @@ test('every card stays inside the vocabulary the engine interprets', () => {
         assert.ok(PASSIVE_KEYS.has(ab.key), `${card.id}: unknown passive key "${ab.key}"`);
         continue;
       }
+      // A fee is Supply handed over to use the ability, and only a Busy ability is ever used: a
+      // trigger that fires on its own has nobody to ask for the money.
+      if (ab.cost !== undefined) {
+        assert.equal(ab.trigger, 'busy', `${card.id}: only a Busy ability may charge a fee`);
+        assert.deepEqual(Object.keys(ab.cost), ['supply'], `${card.id}: a fee is paid in Supply and nothing else`);
+        assert.ok(Number.isInteger(ab.cost.supply) && ab.cost.supply > 0, `${card.id}: a fee of ${ab.cost.supply} is not a price`);
+      }
       if (ab.trigger === 'displayed') {
         assert.ok(CITY_RULE_KEYS.has(ab.key), `${card.id}: unknown Capital City rule "${ab.key}"`);
         assert.ok(['ordinance', 'marketCharacter'].includes(card.type), `${card.id}: a ${card.type} is never displayed, so its displayed ability would be read by nothing`);
@@ -139,4 +146,76 @@ test('groupByCharacter puts a Character’s versions in one run', () => {
   // Events with no named Character land in the final, unnamed group.
   const last = groups[groups.length - 1];
   if (last.name === null) for (const def of last.cards) assert.equal(characterOf(def), null);
+});
+
+
+/**
+ * The vocabulary is a two-way contract. A name the engine interprets that no card ever says is a
+ * verb built for nothing — the collection carried ten of them at once before the fifth round — and
+ * it is exactly the kind of thing that goes unnoticed, because nothing fails when a card set simply
+ * declines to use a feature. So: every effect, trigger, mod key, condition, passive and Capital City
+ * rule the engine reads is spoken by at least one card here, and the newer ones by two, which is the
+ * number that says a verb is a design space rather than a single card's private machinery.
+ */
+function vocabularySpoken() {
+  const spoken = { effect: new Map(), trigger: new Map(), mod: new Map(), condition: new Map(), passive: new Map(), city: new Map() };
+  const note = (kind, name, cardId) => {
+    if (!name) return;
+    if (!spoken[kind].has(name)) spoken[kind].set(name, new Set());
+    spoken[kind].get(name).add(cardId);
+  };
+  const walk = (eff, cardId) => {
+    if (!eff || typeof eff !== 'object') return;
+    if (eff.do) {
+      note('effect', eff.do, cardId);
+      if (eff.do === 'addMod') note('mod', eff.key, cardId);
+    }
+    for (const value of Object.values(eff)) {
+      if (Array.isArray(value)) value.forEach((v) => walk(v, cardId));
+      else if (value && typeof value === 'object') walk(value, cardId);
+    }
+  };
+  for (const card of SET.cards) {
+    for (const key of ['effect', 'onGain', 'onReveal']) walk(card[key], card.id);
+    for (const ab of card.abilities || []) {
+      note('trigger', ab.trigger, card.id);
+      if (ab.trigger === 'passive') note('passive', ab.key, card.id);
+      if (ab.trigger === 'displayed') note('city', ab.key, card.id);
+      for (const cond of Object.keys(ab.condition || {})) note('condition', cond, card.id);
+      walk(ab.effect, card.id);
+    }
+  }
+  return spoken;
+}
+
+test('every name the engine interprets is spoken by a card', () => {
+  const spoken = vocabularySpoken();
+  const unspoken = [];
+  for (const [kind, vocabulary] of [['effect', EFFECTS], ['trigger', TRIGGERS], ['mod', MOD_KEYS],
+    ['condition', CONDITIONS], ['passive', PASSIVE_KEYS], ['city', CITY_RULE_KEYS]]) {
+    for (const name of vocabulary) if (!spoken[kind].has(name)) unspoken.push(`${kind}:${name}`);
+  }
+  assert.deepEqual(unspoken, [], 'a verb no card says is a verb built for nothing');
+});
+
+test('the Capital City rules and the newest verbs each have a design space, not one card', () => {
+  const spoken = vocabularySpoken();
+  // An Ordinance is the one card type that changes the rules of the room, so every rule it can
+  // change is printed twice — once in each direction where the rule has one.
+  for (const rule of CITY_RULE_KEYS) {
+    assert.ok((spoken.city.get(rule) || new Set()).size >= 2,
+      `${rule} is a Capital City rule printed on fewer than two Ordinances`);
+  }
+  for (const name of ['unchallengeable', 'skipNextAdvance']) {
+    assert.ok((spoken.mod.get(name) || new Set()).size >= 2, `${name} is on fewer than two cards`);
+  }
+  for (const name of ['onlyUprightOfSpecies', 'buildingsAtLeast']) {
+    assert.ok((spoken.condition.get(name) || new Set()).size >= 2, `${name} is on fewer than two cards`);
+  }
+  for (const name of ['onShiftStarted', 'onCharacterUnemployed']) {
+    assert.ok((spoken.trigger.get(name) || new Set()).size >= 2, `${name} is on fewer than two cards`);
+  }
+  for (const name of ['rehireFromAnywhere', 'searchDeck', 'allCharactersToUnemployment']) {
+    assert.ok((spoken.effect.get(name) || new Set()).size >= 2, `${name} is on fewer than two cards`);
+  }
 });

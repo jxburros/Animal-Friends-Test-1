@@ -57,11 +57,16 @@ describe('determinism', () => {
   });
 });
 
-/** Market cards that have joined this player's own zones, which do not belong to their deck count. */
+/**
+ * Market cards that have joined this player's own zones, which do not belong to their deck count.
+ * The deck is in the list because a hired animal can reach it: laid off into the Town Dump, they are
+ * shuffled back in when the deck runs out (rules.deckOut).
+ */
 function ownHired(state, p) {
   const isHired = (c) => (state.set.cardsById[c.cardId] || {}).type === 'marketCharacter';
   return p.town.reduce((b, st) => b + st.cards.filter(isHired).length, 0)
-    + p.dump.filter(isHired).length + p.unemployment.filter(isHired).length + p.hand.filter(isHired).length;
+    + p.dump.filter(isHired).length + p.unemployment.filter(isHired).length + p.hand.filter(isHired).length
+    + p.deck.filter(isHired).length;
 }
 
 // ---------- whole-game invariants (mirrors scripts/invariants.mjs) ----------
@@ -82,10 +87,16 @@ function checkInvariants(state, seed, marketSize) {
   const marketTotal = m.deck.length + m.city.length + m.cityDump.length + m.outOfPlay.length + m.revealQueue.length
     + state.players.reduce((a, p) => a + p.victoryRow.length + (p.buildings || []).length, 0) + hired;
   assert.equal(marketTotal, marketSize, `seed ${seed} turn ${state.turnNumber}: market card total`);
+  // Deck cards are counted across both towns rather than one at a time, exactly as
+  // scripts/invariants.mjs does, because cards change hands: the Bin Round lifts an Event out of the
+  // other Mayor's Town Dump, and Gwen's counter gives a shift to an animal off the rival's
+  // Unemployment. What has to hold is that no deck card is ever created or lost, not that each town
+  // still holds the number it was dealt.
+  const ownCards = (p) => p.deck.length + p.hand.length + p.dump.length + p.unemployment.length
+    + p.events.length + p.town.reduce((a, s) => a + s.cards.length, 0) - ownHired(state, p);
+  assert.equal(state.players.reduce((a, p) => a + ownCards(p), 0), RULES.setup.deckSize * 2,
+    `seed ${seed} turn ${state.turnNumber}: deck cards between the two towns`);
   for (const p of state.players) {
-    const n = p.deck.length + p.hand.length + p.dump.length + p.unemployment.length + p.events.length
-      + p.town.reduce((a, s) => a + s.cards.length, 0);
-    assert.equal(n - ownHired(state, p), RULES.setup.deckSize, `seed ${seed} turn ${state.turnNumber}: ${p.name} total card count`);
     assert.ok(p.supply >= 0, `seed ${seed}: negative supply`);
     assert.ok(p.escrow >= 0, `seed ${seed}: negative escrow`);
     const esc = m.pending.reduce((a, pd) => a + pd.committed[p.index], 0);

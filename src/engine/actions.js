@@ -162,19 +162,38 @@ export function statueTierFor(rules, held) {
 }
 
 /**
+ * What a Character's Busy ability charges to use, over and above going Busy.
+ *
+ * The game's designated Supply sinks were all purchases — a Building, a lot, a Statue — and a town
+ * finishing on fifty unspent Supply is a town that ran out of places to put it rather than one that
+ * earned too much. An ability with a price is the other kind of sink: it is on the table every turn,
+ * it competes with the shift the animal would otherwise be working, and it is the only one that
+ * scales with how rich you actually are. A fee you cannot pay is not offered.
+ */
+export function abilityFee(ab) {
+  const fee = ab && ab.cost && ab.cost.supply;
+  return typeof fee === 'number' && fee > 0 ? fee : 0;
+}
+
+/**
  * What this card costs *this* player. A Statue is priced from the buyer's own Victory Row (see
  * `statueTierFor`), so the two Mayors can face different prices for the same card in the same auction.
  */
 export function cardCostFor(state, pi, cardId) {
   const def = cardDef(state, cardId);
+  // What a lot costs *this* Mayor, before the type-by-type rules below. `lotDiscount` is the
+  // assessor's mod: a price marked down on this Mayor's side of the table only, which is why it is
+  // read here rather than in the auction — it moves the minimum bid, the announcement and the
+  // settlement together, exactly as an Ordinance does. A filter narrows it to one kind of lot.
+  const adjust = (n) => Math.max(0, n - getModFor(state.players[pi], 'lotDiscount', def));
   if (def.type === 'statue') {
     const tier = statueTierFor(state.rules, state.players[pi].victoryRow.length);
-    if (tier !== null) return Math.max(0, tier + cityRule(state, 'statueCostDelta'));
+    if (tier !== null) return adjust(Math.max(0, tier + cityRule(state, 'statueCostDelta')));
   }
-  if (def.type !== 'building') return Math.max(0, def.cost);
+  if (def.type !== 'building') return adjust(Math.max(0, def.cost));
   // A Building is the one Capital City card a Character may make cheaper: the stonecutter knows
   // what a roof is worth. City rules (an Ordinance) and a `buildingDiscount` mod both apply.
-  return Math.max(0, def.cost + cityRule(state, 'buildingCostDelta') - getMod(state.players[pi], 'buildingDiscount'));
+  return adjust(Math.max(0, def.cost + cityRule(state, 'buildingCostDelta') - getMod(state.players[pi], 'buildingDiscount')));
 }
 
 
@@ -351,17 +370,21 @@ export function legalActions(state, pi) {
   for (const s of p.town) {
     const def = topCard(state, s);
     const busyAb = (def.abilities || []).find((a) => a.trigger === 'busy');
+    // A fee you cannot pay takes the ability off the table and nothing else: the animal can still
+    // work a shift, which is usually what a Mayor short of Supply wants from them anyway.
+    const fee = abilityFee(busyAb);
+    const canPayFee = fee <= p.supply;
     if (!canAct(s)) {
       // The Cat's trick: a bare "readies itself" Busy ability is exactly the one you use when the
       // Character is *not* upright — Busy, or a Master still rotating in — once per game. Going Busy
       // and standing straight back up would be nothing, so it is only offered from the wrong side.
-      if (busyAb && isSelfReadyEffect(busyAb.effect) && !s.selfReadyUsed && !s.lockedBid && s.orientation !== UPRIGHT) {
-        acts.push({ type: 'ability', charUid: s.uid, cardId: def.id, selfReady: true });
+      if (busyAb && canPayFee && isSelfReadyEffect(busyAb.effect) && !s.selfReadyUsed && !s.lockedBid && s.orientation !== UPRIGHT) {
+        acts.push({ type: 'ability', charUid: s.uid, cardId: def.id, selfReady: true, cost: fee });
       }
       continue;
     }
     acts.push({ type: 'work', charUid: s.uid, cardId: def.id, delay: def.shift.delay, output: shiftOutputFor(def, s) });
-    if (busyAb && !isSelfReadyEffect(busyAb.effect)) acts.push({ type: 'ability', charUid: s.uid, cardId: def.id });
+    if (busyAb && canPayFee && !isSelfReadyEffect(busyAb.effect)) acts.push({ type: 'ability', charUid: s.uid, cardId: def.id, cost: fee });
   }
   // events
   const waive = eventReduction(state, pi);
@@ -520,6 +543,8 @@ export async function applyAction(state, pi, a) {
       const ab = (def.abilities || []).find((x) => x.trigger === 'busy');
       if (!ab) throw new Error('No Busy ability');
       const wake = isSelfReadyEffect(ab.effect);
+      const fee = abilityFee(ab);
+      if (fee > p.supply) throw new Error('Cannot afford this ability');
       if (!canAct(s)) {
         // Only the Cat's self-ready may be used from the wrong side of upright, and only once.
         if (!wake || s.selfReadyUsed || s.lockedBid) throw new Error('Character cannot act');
@@ -527,6 +552,10 @@ export async function applyAction(state, pi, a) {
         throw new Error('Already upright');
       } else {
         s.orientation = BUSY;
+      }
+      if (fee) {
+        p.supply -= fee;
+        log(state, pi, `${p.name} pays ${fee} Supply for ${def.name}, ${def.title}.`, { kind: 'supply', player: pi, amount: -fee, why: def.name });
       }
       log(state, pi, `${def.name}, ${def.title} uses its Busy ability.`, { kind: 'ability', player: pi, uid: s.uid, cardId: def.id });
       await runEffect(state, pi, ab.effect, { player: pi, stackUid: s.uid, sourceStackUid: s.uid, sourceCardId: def.id });

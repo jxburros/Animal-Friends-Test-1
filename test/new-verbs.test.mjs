@@ -179,6 +179,9 @@ test('only a displayed card with the rule carries it: a Building in town is not 
   const state = stage();
   const bld = { id: 'test_bld', type: 'building', name: 'Shed', cost: 3, abilities: [{ trigger: 'displayed', key: 'buildingCostDelta', value: 2 }] };
   state.set.cardsById[bld.id] = bld;
+  // The display is emptied first: the collection prints Ordinances that move this very rule, and
+  // setup may well have dealt one, which would make the assertion about that card rather than this.
+  state.market.city.length = 0;
   state.market.city.push(bld.id);
   assert.equal(cityRule(state, 'buildingCostDelta'), 0, 'a Building is bought, not a standing rule');
 });

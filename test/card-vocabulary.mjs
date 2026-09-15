@@ -27,6 +27,9 @@ export const EFFECTS = new Set([
   // the fourth round of wishes (docs/ENGINE_API.md): the whole bin rather than the Events in it,
   // the Supply taken off a rival, and the hardship the rival gets to pick between
   'cardFromDumpToHand', 'opponentLosesSupply', 'opponentChoice',
+  // the fifth round of wishes (docs/ENGINE_API.md): the door that is open to everybody, and the
+  // two verbs written to be paid for — the whole deck searched, and a lot sunk out of the market
+  'rehireFromAnywhere', 'searchDeck',
   // on-reveal catch-up
   'behindPlayerGains', 'behindPlayerReadies',
   // shared shocks, used by Disruption cards
@@ -62,6 +65,9 @@ export const MOD_KEYS = new Set([
   'cancelNextReveal',
   // a Building bought cheaper: the one Capital City card a Character may discount
   'buildingDiscount',
+  // the assessor's mark-down: every lot in the Capital City is cheaper for this Mayor, and for
+  // nobody else. A `filter` of `{ type }` narrows it to one kind of lot.
+  'lotDiscount',
 ]);
 /** Keys an Ordinance may change while it is displayed; read by cityRule() in the engine. */
 export const CITY_RULE_KEYS = new Set(['pledgeLadderDelta', 'statueCostDelta', 'buildingCostDelta', 'noRaises',
