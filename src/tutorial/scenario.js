@@ -323,7 +323,7 @@ export function buildTutorialSteps() {
     note({
       id: 'first-statue', final: true,
       title: 'Your first Statue!',
-      text: 'The Statue of Kindness stands in your Victory Row. Its boon pays you 1 Supply at the start of each turn while your town has no more animals out of work than your rival’s; its burden lets your rival rehire for 1 less. Four more Statues win the game, each dearer than the last. You know everything you need: earn, recruit, work, play Events, and fight for the Capital City.',
+      text: 'The Statue of Kindness stands in your Victory Row. Its boon pays you 1 Supply at the start of each turn while your town has no more animals out of work than your rival’s; its burden lets your rival rehire for 1 less. Four more Statues win the game, each dearer than the last — and winning them is how the Capital City decides which of the two boroughs is the prosperous one, after which your town takes the other onto its books and you say what the whole of it is called. You know everything you need: earn, recruit, work, play Events, and fight for the Capital City.',
       when: (req, state) => req.kind === 'resources' && state.turnNumber === TUTORIAL_LAST_TURN,
     }),
   ];

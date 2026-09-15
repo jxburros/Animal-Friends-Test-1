@@ -28,7 +28,18 @@ These are the premises of the game itself, and they are not up for revision by a
 - Characters take **work shifts** to produce **Supply**, the town's money and its bidding power.
 - The **Capital City** is the shared market: Buildings, hired animals, Ordinances and the nine
   **Statues** are won there in bidding wars. Holding five Statues wins the game; each grants a boon
-  and imposes a burden.
+  and imposes a burden. More than nine virtues have been carved over the years and the quarry still
+  holds them, so which nine monuments pass through the Capital City is not the same from one year to
+  the next.
+- **The two towns do not stay two towns.** A majority of the Statues is the Capital City's own test of
+  which borough is the prosperous one, and the Capital City settles it the way it has always settled
+  it: the prosperous town **incorporates** the other. Nothing is razed and nobody is turned out — the
+  wards are merged, the two Hiring Halls put up one board, every animal in both towns keeps their work
+  — but the incorporated town's charter is closed, its Mayor is no longer a Mayor, and **the single
+  town that results takes whatever name the winning Mayor gives it**. That is what the fifth Statue
+  actually buys: not the town next door, but the right to say what all of it is called from then on.
+  This has happened before, which is why the place is called the First Boroughs and not the First
+  Borough, and why the older names survive only on Ned's shelves.
 - Work is organised by **study** — Agriculture, Civics, Commerce, Crafts, Lore, Science — which is
   what an animal *does*. **Species** is what an animal *is*, and each of the ten has its own charter
   in `spec/species.json`. Both are established; a remake works within them.
@@ -43,8 +54,11 @@ add to the list.
 - **Buildings of the Capital City** — The Festival Green, the Apprentice School, The Observatory, the
   Grain Exchange, the Hiring Hall, the Salvage Yard, The Long Hall, The Old Wall, the Counting House,
   The Auction House, the Winter Stores, the Lending Library, the Town Workshop, The All-Night Café.
-- **The nine Statues** — Kindness, Patience, Ingenuity, Curiosity, Generosity, Joy, Courage,
-  Community, Harmony. They are the town's stated virtues; a backstory that touches one should mean it.
+- **The Statues** — Kindness, Patience, Ingenuity, Curiosity, Generosity, Joy, Courage, Community and
+  Harmony, and six more out of the same quarry: Diligence, Hospitality, Vigilance, Wonder, Thrift and
+  Mercy. They are the town's stated virtues; a backstory that touches one should mean it. Nine stand in
+  the Capital City in any one year and the rest are still in the quarry, which is why two animals can
+  remember a different set. [town cards]
 - **The City Dump** and **Unemployment** are where cards and animals go when work runs out. Both are
   ordinary parts of town life, not disgrace.
 - **Bought out of the Capital City by the borough** — the Weighbridge at the Grain Exchange, the
@@ -53,7 +67,8 @@ add to the list.
   and is won at auction; the borough's use of it is its own business, which is how the Physic Garden
   came to be full of animals rather than specimens. [town cards]
 - **Places a town builds for itself** — the Allotment Strip, Copper's Cellar, Berry's Bench, Rosabeth's
-  Gate, the Open Mic Room, the Boat Shed and the Gate Hut. These are Town Buildings: small, local, and
+  Gate, the Open Mic Room, the Boat Shed, the Gate Hut, the Chit Press, Gwen's Counter and the Puppet
+  Booth. These are Town Buildings: small, local, and
   raised by a Mayor's own animals rather than won in the Capital City. Each one already belonged to
   somebody in this file before it was a card.
 
@@ -392,6 +407,41 @@ add to the list.
   Tuesday, and Quinn turning back four years for the animals who did that exact work in the last one.
   The borough distinguishes it carefully from the winter the Exchange shut and the year the bridge
   went, which were. [town cards, Quinn]
+- **Gwen's diner is on the square at the Hiring Hall corner, opposite Bean's**, and the two counters
+  have divided the borough's bad mornings between them without ever discussing it: at Bean's you find
+  out there is nothing on the board, and at Gwen's you get a shift anyway. Anybody who asks for work
+  gets an apron that day, with no questions, no term and no mention of it afterwards. It is the third
+  of the borough's soft landings — Rosabeth's gate takes the animals who have stopped getting up, the
+  orchard takes everybody all the time, and Gwen's pays you at the end of the shift — and the least
+  sentimental of the three. Half the borough has worked a fortnight there between one career and the
+  next, and the borough has agreed without agreeing anything that a fortnight at Gwen's is not worth
+  mentioning. The Hiring Hall has twice tried to make it a formal arrangement. [Gwen, Bean, Rosabeth, Quill]
+- **The singer Thistle comes for is Liza**, who has been on Cassadee's list since she was seventeen,
+  comes on her own with nothing, sings for twenty minutes to a room that stops moving, and has never
+  been paid more than the hat. She has turned the Festival Green down twice on the grounds that it is
+  too big a room to be honest in. She does not know about Thistle and Cassadee has never told her.
+  [Liza, Thistle, Cassadee]
+- **The Fox on the piano is Harrison**, and he is on the piano in everybody else's band too. He cannot
+  read a note, has never learned, and can follow an animal who has never rehearsed: eight bars in he
+  has the shape of it. Lynnette printed a paragraph about this once and it hangs at the back of the
+  open mic room where he cannot see it from the stool. [Harrison, Oatmeal, Lynnette, Cassadee]
+- **The Salvage Yard has a third pile, and it is Gabe's.** Annabelle takes the paper, Patch takes
+  everything else, and Gabe takes what Patch has looked at and put down, and makes puppets out of it —
+  about forty now, all named. The shows are free: Saturday mornings in the Lending Library's children's
+  corner, the bakery queue on the mornings Marmalade is handing out to the kittens, and whatever late
+  room Cassadee has going. The children's version and the late version are not the same show and the
+  borough has noticed. [Gabe, Patch, Annabelle, Marmalade, Cassadee]
+- **Ned's ward records have an unsigned column.** When a post in this borough is worked by an animal
+  who gives no name, Ned will not leave the entry blank and will not invent a name for it, so the
+  record says what the ward saw: the masked otter, the hooded rabbit, the clerk at the second window.
+  There are eighteen such standing entries. Almost always, in the end, some animal the borough already
+  knows turns out to have been the one standing there, and the record is corrected to their name — which
+  is a correction and not a promotion, and Ned files it as one. [town cards, Ned, Velvet, Scott]
+- **The borough has been incorporated before, and does not talk about it.** Ned's shelves hold the
+  closed charters: three of them, under names nobody in the First Boroughs uses out loud and two of
+  which Scott has printed and Ned has certified. Being incorporated is not remembered here as a defeat
+  and is not remembered as a kindness either; it is remembered as the year the board changed and the
+  work carried on. Any animal old enough may have been on the wrong side of one. [town cards, Ned, Scott]
 - **Jake can be taken on again.** He has run the warrens' long errands twice and left twice, and the
   Hiring Hall's position is that there will be a third time and that they will hire him for it.
   There is still no address. [Jake]
@@ -505,6 +555,11 @@ Characters the maker added to the shelf who replace no printed card. They carry 
 | Sota | The Observatory's lens grinder, added by the maker: no printed Sota, and no version of them carries an effect. | 2026-09-14 |
 | Andrew | The Lending Library's late desk, added by the maker: no printed Andrew, and no version of him carries an effect. | 2026-09-14 |
 | Quill | The printed Quill was two animals under one name — a Mouse Town Scrivener and a Hedgehog who kept an orchard. The scrivener took the remake and the new name (Quinn); the orchard hedgehog kept the name Quill and stands as her own character, claiming nothing. Quinn's entry retires the five printed orchard versions and says why. | 2026-09-14 |
+| Gwen | The diner on the square, added by the maker: no printed Gwen. She is the reason a handful of animals on this shelf now have a Food job they do not put on the board. | 2026-09-15 |
+| Liza | The singer Thistle comes for, added by the maker and given the name the bible had left blank: no printed Liza. | 2026-09-15 |
+| Harrison | The Fox on the piano in Oatmeal's band, added by the maker and given the name the bible had left blank: no printed Harrison. | 2026-09-15 |
+| Gabe | The Salvage Yard's puppeteer, added by the maker: no printed Gabe, and no relation to Patch or Pockets. | 2026-09-15 |
+| The eighteen obscured figures | The Masked Otter, The Mysterious Raccoon, The Hooded Rabbit, The Unsigned Mouse, The Shrouded Badger, The Muffled Hedgehog, The Shadowed Squirrel, The Nameless Cat, The Silhouetted Owl, The Cowled Fox, The Unlisted Grower, The Faceless Clerk, The Cloaked Tradesman, The Veiled Wright, The Anonymous Scribe, The Obscured Observer, The Unknown Cook and The Curtained Performer — one for every species and one for every study, each named for what the ward could see. They are the unsigned column of Ned's records, and each carries an `anchor` rather than an ability: a dearer animal of the same species, or in the same study, may be played over them whatever their name. | 2026-09-15 |
 | Faustus | The printed Thimble was two animals under one name — a Rabbit Warren Runner hired out of the Capital City and a Cat who worked thread. The Rabbit took the remake and the new name (Jake); the Cat is Faustus and stands as his own character, claiming nothing, because a remake may not change species. Jake's entry retires the five printed Cat versions and says where each went. | 2026-09-14 |
 
 Cards may be additions too — an extra rung in a remade character's arc, an added character's own

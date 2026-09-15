@@ -332,6 +332,16 @@ every printed rating is unchanged.
   zero adds no mod at all. `max` is not optional in practice: `power.js` rates a scaling mod on the
   row a Mayor usually has up and honours the ceiling, and a value with no ceiling is a card nobody
   can price. Velvet's wish.
+- **`anchor: { species: true } | { study: true }`** on a Character — an **obscured figure**, and the
+  one place in the collection where an upgrade is not a promotion. The ordinary rule is that a
+  version may only be played over a cheaper card of the *same name*; a figure carrying an anchor may
+  be played over by any dearer Character of its species (or of its study), whatever that Character is
+  called. `upgradesOver` in `src/engine/actions.js` is the authority and both upgrade paths read it,
+  so an anchored figure can be promoted out of Unemployment as well as upgraded in town. The cost is
+  the plain printed difference, as every upgrade's is, and the figure still has to be the cheaper
+  card: an anchor is a cheap place for a career to have started, never a discount on one. `power.js`
+  pays the card for it (a study anchor a little more than a species one, because a study is what half
+  the shelf does), so a figure rates above a vanilla body of the same cost.
 - **`entersUpright: true`** on a card — the animal arrives ready, whatever the cost says. Entry
   orientation is otherwise read off the cost alone (`entryOrientation`) before the card is on the
   table, so this is the only thing that can say otherwise; it is read by the recruit action and by

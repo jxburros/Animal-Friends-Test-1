@@ -82,12 +82,15 @@ export function resolveMarketDeck(set, ref) {
 
 /**
  * Build the Market Deck. `spec` is either a plain array of card ids (fixed deck) or
- * `{ always, pool, poolSize }`: every `always` card plus a random `poolSize` of `pool`,
- * so the deck keeps one size while the Capital City pool varies from game to game.
- */
-/**
- * Build a Market Deck: everything in `always` (the nine Statues) plus a `poolSize` sample of the
- * market's own pool.
+ * `{ always, statuePool, statueCount, pool, poolSize }`: everything in `always`, a `statueCount`
+ * sample of `statuePool`, and a `poolSize` sample of `pool`, so the deck keeps one size while what
+ * is in it varies from game to game.
+ *
+ * The Statues are the game's victory cards and exactly `victory.statueTotal` of them are quarried for
+ * any one game — but the borough has carved more virtues than that. `statuePool` is the quarry and
+ * `statueCount` is how many are raised, so which nine monuments the two Mayors are fighting over is
+ * itself a thing the shuffle decides. A market that names no `statuePool` deals whatever its `always`
+ * list holds, exactly as before.
  *
  * `minDisruptions` guarantees the sample carries at least that many on-reveal cards, so every game
  * gets some shared weather however the shuffle falls. The floor is topped up from the same market's
@@ -98,6 +101,13 @@ export function resolveMarketDeck(set, ref) {
 export function buildMarketDeck(state, spec) {
   if (Array.isArray(spec)) return spec.slice();
   const always = (spec.always || []).slice();
+  const statuePool = (spec.statuePool || []).slice();
+  if (statuePool.length) {
+    const want = spec.statueCount === undefined
+      ? (state.rules?.victory?.statueTotal ?? statuePool.length)
+      : spec.statueCount;
+    always.push(...shuffle(state, statuePool).slice(0, Math.min(want, statuePool.length)));
+  }
   const pool = shuffle(state, (spec.pool || []).slice());
   const want = spec.poolSize === undefined ? pool.length : Math.min(spec.poolSize, pool.length);
   const picked = pool.slice(0, want);

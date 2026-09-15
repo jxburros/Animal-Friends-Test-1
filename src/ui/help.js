@@ -50,9 +50,14 @@ function welcomeHTML(rules) {
       </div>
       <div class="welcome-col">
         <h3>How you win</h3>
-        <p>Nine <strong>Statues</strong> pass through the Capital City. Win
-        <strong>${v.statuesToWin} of the ${v.statueTotal}</strong> at auction and the game is yours. Each one you
-        hold makes the next dearer, and every Statue carries a boon and a burden, so the race is close to the end.</p>
+        <p>Nine <strong>Statues</strong> pass through the Capital City, raised out of a quarry that holds more, so
+        the monuments change from game to game. Win <strong>${v.statuesToWin} of the ${v.statueTotal}</strong> at
+        auction and the game is yours. Each one you hold makes the next dearer, and every Statue carries a boon and
+        a burden, so the race is close to the end.</p>
+        <p>What that wins is an <strong>incorporation</strong>. The Capital City reads a majority of the Statues as
+        the answer to which of the two boroughs is the prosperous one, and the prosperous town takes the other onto
+        its books: nothing is razed, nobody is turned out, both Hiring Halls put up one board — and
+        <strong>the single town that results is named by the winning Mayor</strong>.</p>
       </div>
       <div class="welcome-col">
         <h3>How a turn goes</h3>
@@ -72,7 +77,8 @@ function rulesHTML(rules) {
     <h3>The goal</h3>
     <p>You are the Mayor of a town of animal Characters. Recruit workers, run shifts for
     <strong>Supply</strong>, play Events, and bid for cards in the shared <strong>Capital City</strong>.
-    Win by controlling <strong>${rules.victory.statuesToWin} of the ${rules.victory.statueTotal} Statues</strong>.</p>
+    Win by controlling <strong>${rules.victory.statuesToWin} of the ${rules.victory.statueTotal} Statues</strong> —
+    at which point your town incorporates your rival's, and you choose what the borough that results is called.</p>
 
     <h3>Supply</h3>
     <p>Supply pays for recruiting, rehiring, market bids and card effects. Work shifts are the main
@@ -171,7 +177,10 @@ function rulesHTML(rules) {
 
     <h3>Statues &amp; victory</h3>
     <p>Statues won from the Capital City stand among your Buildings and count toward victory. Control
-    ${rules.victory.statuesToWin} of the ${rules.victory.statueTotal} Statues to win the game. A town has
+    ${rules.victory.statuesToWin} of the ${rules.victory.statueTotal} Statues to win the game — the Capital City
+    reads that majority as which borough is the prosperous one, your town incorporates your rival's, and the town
+    the two of them become takes the name you give it. The ${rules.victory.statueTotal} on the table are raised at
+    setup out of a deeper quarry of virtues, so which boons and burdens are available is part of the deal. A town has
     ${rules.buildings.maxPerTown} Building places in all, shared by Buildings and Statues alike, so you need an
     empty place to bid on a Statue and another empty place when that auction resolves. A Building can be pulled
     down to make room; a Statue never can.</p>
@@ -198,7 +207,8 @@ function quickStartHTML(rules) {
       <li><strong>Mind the ladder.</strong> Your first pledge in an auction needs an animal costing 1 or more,
       your second one costing 2, your third 3. That, not the price, is what ends a bidding war.</li>
       <li><strong>Win Statues.</strong> They cost ${statuePriceSentence(rules)}. Control
-      <strong>${rules.victory.statuesToWin} of ${rules.victory.statueTotal}</strong> and the book closes on your victory.</li>
+      <strong>${rules.victory.statuesToWin} of ${rules.victory.statueTotal}</strong> and the book closes on your
+      victory: your town takes your rival's onto its books, and you name the borough that results.</li>
     </ol>
     <p class="help-intro">A town holds ${rules.town.maxCharacters} animals in all, so upgrading an animal you
     already have (pay only the difference) is often better than hiring one more.</p>
@@ -212,6 +222,14 @@ function faqEntries(rules) {
     {
       q: 'What is the fastest way to win?',
       a: `Win ${v.statuesToWin} of the ${v.statueTotal} Statues at auction. There is no other way. Everything else — Supply, animals, Events — exists to pay for Statues or to stop your rival paying for theirs. If a game reaches the turn limit, the Mayor with more Statues wins, then the one with more Supply.`,
+    },
+    {
+      q: 'What actually happens when I win?',
+      a: `Your town incorporates your rival's. A majority of the Statues is how the Capital City decides which of the two boroughs is the prosperous one, and the prosperous town absorbs the other: the wards are merged, the two Hiring Halls put up one board, and every animal in both towns keeps their work. What changes is the charter. Your rival is no longer a Mayor, and the single town the two of them become takes whatever name you give it. If the turn limit is reached instead, nobody is incorporated and both charters stay open.`,
+    },
+    {
+      q: 'Are the Statues the same every game?',
+      a: `No. The collection carves more virtues than a game uses, and each Market Deck names the quarry it raises from; setup picks ${v.statueTotal} of them at random. Kindness and Patience may both be on the table, or neither, and Diligence, Hospitality, Vigilance, Wonder, Thrift and Mercy are all in the quarry too. Since every Statue carries a boon and a burden, which nine came up is worth reading before you decide what kind of town you are building.`,
     },
     {
       q: 'Why is my new animal sideways, or upside down?',

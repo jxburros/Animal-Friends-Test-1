@@ -1403,19 +1403,60 @@ function renderModal() {
 }
 
 // ---------- win overlay ----------
+/**
+ * The end of the story. A majority of the Statues is not a scoreboard: it is the Capital City
+ * recognising one borough where there were two, so the winning Mayor's town incorporates the other
+ * and the single town that results takes whatever name that Mayor gives it. When the winner is the
+ * player, the naming is theirs to do here; when it is the rival, they have already done it.
+ */
+const RIVAL_TOWN_NAMES = [
+  'Greater Whiskerwood', 'Bramblemarch', 'New Foundry', 'Statue Green', 'Hollowmere',
+  'Lanternside', 'Copperfield', 'Oakmarch', 'Quillford', 'Nine Virtues',
+];
+
 function showWinOverlay() {
   const overlay = document.getElementById('winOverlay');
   if (overlay.classList.contains('active')) return;
   const title = document.getElementById('winTitle');
   const body = document.getElementById('winBody');
+  const naming = document.getElementById('winNaming');
+  const charter = document.getElementById('winCharter');
+  const input = document.getElementById('winTownName');
+  if (naming) naming.hidden = true;
+  if (charter) charter.hidden = true;
   if (state.winner === null) {
     title.textContent = 'A Draw';
-    body.textContent = 'The turn limit was reached and neither Mayor held the edge.';
+    body.textContent = 'The turn limit was reached and neither Mayor held the edge, so the two towns stay two towns and the charters stay open.';
   } else {
     const won = state.winner === humanIndex;
-    title.textContent = won ? 'Happily Ever After' : 'The Rival Prevails';
     const [a, b] = state.players;
-    body.textContent = `${state.players[state.winner].name} wins${state.result === 'statues' ? ' by controlling a majority of the Statues' : ' on tiebreak'}. Final Statues — ${a.name}: ${a.victoryRow.length}, ${b.name}: ${b.victoryRow.length}.`;
+    const win = state.players[state.winner];
+    const lose = state.players[state.winner === 0 ? 1 : 0];
+    title.textContent = won ? 'Happily Ever After' : 'The Rival Prevails';
+    const how = state.result === 'statues' ? 'by controlling a majority of the Statues' : 'on tiebreak';
+    body.textContent = `${win.name} wins ${how}. Final Statues — ${a.name}: ${a.victoryRow.length}, ${b.name}: ${b.victoryRow.length}. `
+      + `The Capital City recognises one borough where there were two: ${lose.name}'s wards, animals and work go on the books of ${win.name}'s town, and the name of the town that results is ${win.name}'s to choose.`;
+    const label = naming && naming.querySelector('label');
+    if (won && naming && input) {
+      naming.hidden = false;
+      if (label) label.hidden = false;
+      input.value = '';
+      const name = () => {
+        const given = input.value.trim();
+        if (!given) { charter.hidden = true; return; }
+        charter.hidden = false;
+        charter.textContent = `The charter is written out, both Hiring Halls put up the same board, and every animal in either town wakes up tomorrow in ${given}.`;
+      };
+      input.oninput = name;
+    } else if (naming && charter) {
+      // The rival names it, and the borough finds out the way it finds out everything else.
+      const pick = RIVAL_TOWN_NAMES[Math.abs(state.seed || state.turnNumber || 0) % RIVAL_TOWN_NAMES.length];
+      naming.hidden = false;
+      if (label) label.hidden = true; // the naming was not yours to do
+      if (input) input.hidden = true;
+      charter.hidden = false;
+      charter.textContent = `${win.name} has already given the charter a name. The notices went up overnight: it is ${pick} now, all of it.`;
+    }
   }
   overlay.classList.add('active');
   gameActive = false;

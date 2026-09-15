@@ -33,9 +33,11 @@
     "warnMinCharacters": 6
   },
   "victory": {
+    "$statueTotalComment": "How many Statues stand in any one game, not how many the collection holds. A Market Deck may name a `statuePool` deeper than this and a `statueCount` equal to it, in which case setup raises this many at random out of that quarry, so which virtues \u2014 and therefore which boons and burdens \u2014 are on the table changes from game to game.",
     "statueTotal": 9,
     "statuesToWin": 5,
     "rule": "strict majority of Statues",
+    "lore": "A majority of the Statues is the Capital City's test of which of the two boroughs is the prosperous one, and it settles the question by incorporation: the prosperous town takes the other onto its books. Nothing is razed and nobody is turned out \u2014 the wards merge, both Hiring Halls put up one board, every animal in both towns keeps their work \u2014 but the losing Mayor's charter is closed and the single town that results takes whatever name the winning Mayor gives it. That, and not the rival's town, is what the fifth Statue buys.",
     "forbidStealingFinalStatue": true,
     "statuesCarryBurdens": true,
     "statueCostTiers": [
@@ -201,6 +203,8 @@
     "The pledge ladder: your Nth pledge in an auction must be a Character costing at least N, so no Mayor can bid more than five times in one auction and cost-0 Characters cannot bid at all.",
     "Pledged Characters move to the Capital City beneath the card they are bidding on and stay there until the auction ends.",
     "A losing bidder is refunded their escrow in full and gets their animals back; there is no forfeit.",
+    "Winning is an incorporation: a majority of the Statues makes the winning Mayor's town absorb the other, and the single town that results is named by that Mayor. Nothing in the engine turns on this \u2014 it is what the majority means.",
+    "The Statues in play are raised at setup out of the Market Deck's `statuePool`, `statueCount` of them, so the collection may carve more virtues than any one game uses.",
     "Statues cost 10 to a Mayor holding fewer than 2, 20 to one holding 2 or 3, and 30 to one holding 4, so the Statue that wins the game is always the dearest. The tier is read again when the auction resolves, against the Victory Row as it stands then, so several auctions opened at once cannot all be locked in at a cheaper tier.",
     "Every Statue carries a burden as well as a boon; burdens apply while the Statue sits in that player's Victory Row.",
     "The Capital City ages: one card that nobody is bidding on is discarded and replaced once a round, at the start of the second player's turn, so first sight of the replacement belongs to the Mayor who moves second.",
