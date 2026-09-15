@@ -367,6 +367,14 @@ add to the list.
   not to compare notes. Scott keeps a whole shelf of her tales and files it with the invention, and
   has said once, not as a joke, that he is not sure that is the right shelf.
   [Mandee, Barnaby, Hoot, Scott]
+- **Sota has taken on more than one apprentice at the lens bench**, and not always ones bound for the
+  sky: Tabitha spent two winters there arguing about focal length and came away able to say exactly
+  why a lens does what it does, which she now turns on cameras rather than telescopes. [Tabitha, Sota]
+- **The Observatory's selection board has turned down more than one applicant it later leaned on
+  anyway.** Comet got in on her third try; Winter never did, and ended up reading the manifests,
+  the order book and the launch windows for a different room entirely. [Winter, Comet]
+- **Roger has twice asked another animal to be the one who calls his ha'penny in the air**, on the
+  grounds that even the coin needs a hand that isn't his, and been refused both times. [Fred, Roger]
 - **Willow signs for everything that floats between the ferry steps and the county line**, and for
   the boat yard, the towpath cottages and the arcade lease besides. She started at nineteen with one
   bad ferry and terms its previous owner described for years as generous of him. The Harbourmaster's
@@ -561,6 +569,11 @@ Characters the maker added to the shelf who replace no printed card. They carry 
 | Gabe | The Salvage Yard's puppeteer, added by the maker: no printed Gabe, and no relation to Patch or Pockets. | 2026-09-15 |
 | The eighteen obscured figures | The Masked Otter, The Mysterious Raccoon, The Hooded Rabbit, The Unsigned Mouse, The Shrouded Badger, The Muffled Hedgehog, The Shadowed Squirrel, The Nameless Cat, The Silhouetted Owl, The Cowled Fox, The Unlisted Grower, The Faceless Clerk, The Cloaked Tradesman, The Veiled Wright, The Anonymous Scribe, The Obscured Observer, The Unknown Cook and The Curtained Performer — one for every species and one for every study, each named for what the ward could see. They are the unsigned column of Ned's records, and each carries an `anchor` rather than an ability: a dearer animal of the same species, or in the same study, may be played over them whatever their name. | 2026-09-15 |
 | Faustus | The printed Thimble was two animals under one name — a Rabbit Warren Runner hired out of the Capital City and a Cat who worked thread. The Rabbit took the remake and the new name (Jake); the Cat is Faustus and stands as his own character, claiming nothing, because a remake may not change species. Jake's entry retires the five printed Cat versions and says where each went. | 2026-09-14 |
+| Tabitha | A Hedgehog photographer and lens scientist the maker added: no printed Tabitha, and no relation to Berry, Betty or Quill. | 2026-09-15 |
+| Abigail | An Otter waitress and tap dancer the maker added: no printed Abigail. She is the second animal on this shelf who works Gwen's counter without it being the whole story. | 2026-09-15 |
+| Winter | An Owl TV scientist the maker added: no printed Winter, and no relation to Sage beyond both having sat the Observatory's selection board. | 2026-09-15 |
+| Fred | An Owl who is a mess, added by the maker: no printed Fred, and no relation to Biff beyond both being able to send an opponent's animal back to work. | 2026-09-15 |
+| Yellow | A Squirrel rapper the maker added: no printed Yellow. | 2026-09-15 |
 
 Cards may be additions too — an extra rung in a remade character's arc, an added character's own
 cards, or a card of a type the printed set never had. All twelve **Town Buildings** and all nineteen
