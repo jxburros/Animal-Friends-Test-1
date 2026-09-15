@@ -10,16 +10,25 @@ import {
 import { openFullArtGallery } from './full-art-gallery.js';
 import { fullArtCount } from './full-art.js';
 import { VERSIONS } from './versions.js';
-import { openDeckBuilder, loadSavedDecks, saveDeck, deleteSavedDeck } from './deckbuilder.js';
+import { openDeckBuilder } from './deckbuilder.js';
 import { openBook } from './book.js';
 import { buildHelp, openHelp, openWelcome, hasBeenWelcomed } from './help.js';
 import { createTutorialSession, stopTutorial } from './tutorial.js';
+import { openProfiles, chooseAvatar, avatarNode } from './profiles.js';
+import { openShop } from './shop.js';
+import { activeProfile, saveProfile, setActiveProfile } from './store.js';
+import { snapshot, restore, isResumable } from '../engine/snapshot.js';
+import {
+  unlockedDecks, saveCustomDeck, deleteCustomDeck, recordResult, autoUnlockDecks,
+  putSavedGame, dropSavedGame, sanePrintings,
+} from '../engine/profile.js';
 import { TUTORIAL_SEED } from '../tutorial/scenario.js';
 import * as fx from './fx.js';
 
 const RULES_URL = new URL('../../spec/game.json', import.meta.url);
 const SET_URL = new URL('../../spec/maker_card_set.json', import.meta.url);
 const PACKAGE_URL = new URL('../../package.json', import.meta.url);
+const PROGRESSION_URL = new URL('../../spec/progression.json', import.meta.url);
 
 let rules = null;
 // The collection, as read off the shelf. Kept raw — the character backstories live on it, and the
@@ -31,12 +40,23 @@ let chosenDeckId = null;
 let chosenMarketId = null;
 let customDecks = [];
 let renderTicker = null;
+// The Mayor playing, and what winning pays them. Everything a Mayor owns is read through these.
+let profile = null;
+let progression = {};
+// The game on the table: its id on the Mayor's shelf, the decks it was built from, and whether it
+// is the tutorial — which is a lesson, not a game, so it is neither saved nor paid for.
+let currentGameId = null;
+let currentDecks = null;
+let currentIsTutorial = false;
 const PACE_KEY = 'af-pace';
 const THINK_DELAY = { storybook: 900, brisk: 400, instant: 0 };
 
 function $(id) { return document.getElementById(id); }
 
-const SCREENS = { home: 'screen-home', menu: 'screen-menu', deck: 'screen-deck', book: 'screen-book', game: 'screen-game' };
+const SCREENS = {
+  profiles: 'screen-profiles', home: 'screen-home', menu: 'screen-menu', deck: 'screen-deck',
+  book: 'screen-book', shop: 'screen-shop', game: 'screen-game',
+};
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach((s) => s.classList.remove('active'));
   $(SCREENS[name] || SCREENS.game).classList.add('active');
@@ -47,9 +67,12 @@ function cardSet() {
   return collection;
 }
 
-/** Every deck a player can pick: the collection's own decks, then their own. */
+/**
+ * Every deck this Mayor can pick: the printed decks they have opened, then the ones they built.
+ * A Mayor who owns one deck sees one deck — the rest of the shelf is in the Post Office.
+ */
 function allDecks() {
-  return [...cardSet().decks, ...customDecks.map((d) => ({ ...d, custom: true }))];
+  return [...unlockedDecks(cardSet(), profile), ...customDecks.map((d) => ({ ...d, custom: true }))];
 }
 function deckById(id) {
   return allDecks().find((d) => d.id === id) || null;
@@ -100,20 +123,113 @@ function openTheBook() {
     rules,
     set: collection,
     shelf,
+    profile,
     onClose: goHome,
   });
 }
 
 function goHome() {
   renderHome();
+  renderMayorStrip('homeMayorStrip');
   showScreen('home');
+}
+
+// ---------- the Mayor ----------
+
+/** Open the shelf of Mayors. Nothing else on the page is usable until one is chosen. */
+function openMayors() {
+  showScreen('profiles');
+  openProfiles($('profilesHost'), {
+    rules,
+    set: cardSet(),
+    progression,
+    onPlay: playAs,
+  });
+}
+
+/** Take up a Mayor: their decks, their collection, their unfinished games. */
+function playAs(chosen) {
+  profile = chosen;
+  setActiveProfile(chosen.id);
+  customDecks = ownDecks();
+  chosenDeckId = null;
+  goHome();
+}
+
+/** This Mayor's own decks, dropped to the cards the collection actually holds. */
+function ownDecks() {
+  const set = cardSet();
+  return (profile.customDecks || [])
+    .filter((d) => Object.keys(d.list).every((cardId) => set.cardsById[cardId]))
+    .map((d) => ({ ...d, printings: sanePrintings(profile, d) }));
+}
+
+/** Who is playing, what they are carrying, and the ways out: the Post Office, or another Mayor. */
+function renderMayorStrip(id) {
+  const el = $(id);
+  if (!el || !profile) return;
+  el.hidden = false;
+  el.innerHTML = '';
+  el.appendChild(avatarNode(profile, cardSet()));
+  const who = document.createElement('span');
+  who.className = 'who';
+  who.textContent = profile.name;
+  el.appendChild(who);
+  const carrying = document.createElement('span');
+  carrying.className = 'mayor-record';
+  carrying.textContent = profile.sandbox
+    ? 'everything unlocked'
+    : `${profile.coins} coins · ${profile.packs} sealed pack${profile.packs === 1 ? '' : 's'}`;
+  el.appendChild(carrying);
+  el.appendChild(Object.assign(document.createElement('span'), { className: 'spacer' }));
+
+  const post = document.createElement('button');
+  post.type = 'button';
+  post.textContent = 'The Post Office';
+  post.title = 'Packs, coins and the decks still to be opened';
+  post.addEventListener('click', openPostOffice);
+  el.appendChild(post);
+
+  const portrait = document.createElement('button');
+  portrait.type = 'button';
+  portrait.textContent = 'Portrait';
+  portrait.title = 'Choose the card you are known by';
+  portrait.addEventListener('click', () => {
+    showScreen('profiles');
+    chooseAvatar($('profilesHost'), { rules, set: cardSet(), progression, onPlay: playAs }, profile);
+  });
+  el.appendChild(portrait);
+
+  const switcher = document.createElement('button');
+  switcher.type = 'button';
+  switcher.textContent = 'Switch Mayor';
+  switcher.addEventListener('click', openMayors);
+  el.appendChild(switcher);
+}
+
+/** Packs, coins and the decks still to be opened. */
+function openPostOffice() {
+  showScreen('shop');
+  openShop($('shopHost'), {
+    rules,
+    set: cardSet(),
+    progression,
+    profile,
+    onChange: () => { renderMayorStrip('homeMayorStrip'); renderMayorStrip('menuMayorStrip'); },
+    onClose: () => {
+      // A pack may have opened a deck, and the Workshop may now have cards it did not have.
+      customDecks = ownDecks();
+      renderDeckChoice();
+      goHome();
+    },
+  });
 }
 
 /** Open the cover: the decks, the Capital Cities, the decks you built yourself. */
 function enterPlay() {
-  const set = cardSet();
-  customDecks = loadSavedDecks().filter((d) => Object.keys(d.list).every((cardId) => set.cardsById[cardId]));
-  chosenDeckId = set.decks[0].id;
+  customDecks = ownDecks();
+  const decks = allDecks();
+  chosenDeckId = decks[0] ? decks[0].id : null;
   chosenMarketId = null;
   buildMenu();
   showScreen('menu');
@@ -127,8 +243,90 @@ function buildMenu() {
   $('edition').textContent = editionLine(set);
   $('fullArtGalleryBtn').textContent = `Explore the ${fullArtCount(set)} Full Art cards`;
   $('fullArtGalleryBtn').onclick = () => openFullArtGallery(rules, set);
+  renderMayorStrip('menuMayorStrip');
+  renderResumeShelf();
   renderDeckChoice();
   renderMarketChoice();
+}
+
+// ---------- games left unfinished ----------
+
+/**
+ * The games this Mayor walked away from. A save is taken at the end of every turn, so what is
+ * offered here is the game as it stood when they last put it down — not the start of it.
+ */
+function renderResumeShelf() {
+  const field = $('resumeField');
+  const shelf = $('resumeShelf');
+  if (!field || !shelf) return;
+  const set = cardSet();
+  const games = (profile.games || []).filter((g) => isResumable(g, set));
+  field.hidden = games.length === 0;
+  shelf.innerHTML = '';
+  for (const entry of games) {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'resume-card';
+    const turn = Math.floor((entry.meta.turnNumber || 0) / 2) + 1;
+    card.innerHTML = `<h4>${entry.meta.you} vs ${entry.meta.rival}</h4>`
+      + `<p>Round ${turn} · ${entry.meta.market || 'the Capital City'} · left ${whenLeft(entry.savedAt)}</p>`;
+    card.addEventListener('click', () => resumeGame(entry));
+    const forget = document.createElement('button');
+    forget.type = 'button';
+    forget.className = 'resume-forget';
+    forget.title = 'Forget this game';
+    forget.setAttribute('aria-label', 'Forget this game');
+    forget.textContent = '×';
+    forget.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropSavedGame(profile, entry.id);
+      saveProfile(profile);
+      renderResumeShelf();
+    });
+    const slot = document.createElement('div');
+    slot.className = 'resume-slot';
+    slot.append(card, forget);
+    shelf.appendChild(slot);
+  }
+}
+
+/** "left this morning", near enough. A saved game does not need a timestamp to the second. */
+function whenLeft(at) {
+  const mins = Math.round((Date.now() - at) / 60000);
+  if (mins < 2) return 'just now';
+  if (mins < 60) return `${mins} minutes ago`;
+  const hours = Math.round(mins / 60);
+  if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+  const days = Math.round(hours / 24);
+  return `${days} day${days === 1 ? '' : 's'} ago`;
+}
+
+/** Pick a game back up exactly where it was put down. */
+async function resumeGame(entry) {
+  let state;
+  try {
+    state = restore(entry, rules, cardSet());
+  } catch (e) {
+    dropSavedGame(profile, entry.id);
+    saveProfile(profile);
+    renderResumeShelf();
+    // eslint-disable-next-line no-alert
+    window.alert(e.message);
+    return;
+  }
+  currentGameId = entry.id;
+  currentDecks = entry.decks;
+  currentIsTutorial = false;
+  const human = makeHumanAgent(state.players[0].name);
+  const ai = await makeAIAgent((state.seed || 0) + 1);
+  launch(state, [human, ai], { resumed: true });
+}
+
+/** Put the game on the table onto the Mayor's shelf, as it stands. */
+function saveInProgress(state) {
+  if (currentIsTutorial || !profile || state.winner !== null) return;
+  putSavedGame(profile, snapshot(state, { id: currentGameId, decks: currentDecks }), progression);
+  saveProfile(profile);
 }
 
 function renderDeckChoice() {
@@ -191,9 +389,12 @@ function openWorkshop(deck) {
   openDeckBuilder($('deckBuilder'), {
     rules,
     set: cardSet(),
+    profile,
     deck,
     onSave: (saved) => {
-      customDecks = saveDeck(saved).map((d) => ({ ...d }));
+      saveCustomDeck(profile, saved);
+      saveProfile(profile);
+      customDecks = ownDecks();
       chosenDeckId = saved.id;
       renderDeckChoice();
       showScreen('menu');
@@ -260,6 +461,9 @@ async function runGame(state, agents) {
   while (state.winner === null && state.turnNumber < cap && !quitRequested) {
     // eslint-disable-next-line no-await-in-loop
     await playTurn(state);
+    // The save is taken between turns, when the game is at rest: a Mayor who closes the tab
+    // mid-thought comes back to the start of the turn they were thinking about.
+    saveInProgress(state);
     scheduleRender();
   }
   if (!quitRequested && state.winner === null) {
@@ -269,34 +473,89 @@ async function runGame(state, agents) {
     state.result = 'turnLimit';
     log(state, null, `Turn limit reached. ${state.winner === null ? 'The game is a draw.' : `${state.players[state.winner].name} leads on tiebreak.`}`);
   }
+  if (!quitRequested && state.winner !== null) settleUp(state);
   scheduleRender();
+}
+
+/**
+ * The end of a game: take it off the shelf, write it into the Mayor's record, and pay for it. A win
+ * pays a pack and coins, a loss pays coins alone, and a collection that has quietly crossed a
+ * deck's coverage opens that deck here rather than waiting for the next pack.
+ */
+function settleUp(state) {
+  if (currentIsTutorial || !profile) return;
+  dropSavedGame(profile, currentGameId);
+  const mine = state.players[0];
+  const theirs = state.players[1];
+  const reward = recordResult(profile, {
+    won: state.winner === 0,
+    deckId: mine.deckId,
+    deckName: mine.deckName,
+    opponentDeckId: theirs.deckId,
+    opponentDeckName: theirs.deckName,
+    marketId: state.market.deckId,
+    turns: state.turnNumber,
+    seed: state.seed,
+  }, progression);
+  const opened = autoUnlockDecks(profile, cardSet(), progression);
+  saveProfile(profile);
+  announceReward(reward, opened);
+}
+
+/** Say what the game paid, on the overlay that says who won. */
+function announceReward(reward, opened) {
+  const el = $('winReward');
+  if (!el) return;
+  if (profile.sandbox) { el.hidden = true; return; }
+  const parts = [];
+  if (reward.coins) parts.push(`${reward.coins} coins`);
+  if (reward.packs) parts.push(`${reward.packs} booster pack${reward.packs === 1 ? '' : 's'}`);
+  const lines = [];
+  if (parts.length) lines.push(`The borough settles up: ${parts.join(' and ')}.`);
+  if (reward.firstWin) lines.push('First win with that deck.');
+  if (opened.length) {
+    const names = opened.map((id) => cardSet().decksById[id].name).join(', ');
+    lines.push(`Your collection has opened a deck: ${names}.`);
+  }
+  el.textContent = lines.join(' ');
+  el.hidden = lines.length === 0;
 }
 
 async function startGame() {
   const seedText = $('seedInput').value.trim();
   const seed = seedText ? Number(seedText) : Math.floor(Math.random() * 2 ** 31);
 
-  // The rival always plays one of the collection's own decks — a different one where possible.
+  // The rival plays one of the collection's own decks — any of them, whether or not the Mayor has
+  // opened it. What you have to beat is not limited to what you own.
   const set = cardSet();
   const rivals = set.decks.filter((d) => d.id !== chosenDeckId);
   const rivalDeck = rivals[Math.floor(Math.random() * rivals.length)] || set.decks[0];
   const mine = deckById(chosenDeckId);
-  const myDeckRef = mine && mine.custom ? { id: mine.id, name: mine.name, list: mine.list } : chosenDeckId;
+  if (!mine) return;
+  const myDeckRef = mine.custom ? { id: mine.id, name: mine.name, list: mine.list } : chosenDeckId;
 
   const state = createGame(rules, set, {
     seed,
     decks: [myDeckRef, rivalDeck.id],
     market: chosenMarketId,
-    names: ['Mayor Bramble', 'Mayor Sable'],
+    names: [profile.name || 'Mayor Bramble', 'Mayor Sable'],
   });
-  const human = makeHumanAgent('Mayor Bramble');
+  currentGameId = null; // the first save names it
+  currentDecks = [myDeckRef, rivalDeck.id];
+  currentIsTutorial = false;
+  const human = makeHumanAgent(state.players[0].name);
   const ai = await makeAIAgent(seed + 1);
   launch(state, [human, ai]);
 }
 
 /** Put a built game on screen and start its turn loop. Shared by an ordinary game and the tutorial. */
-function launch(state, agents) {
+function launch(state, agents, { resumed = false } = {}) {
   quitRequested = false;
+  if (!resumed && !currentIsTutorial) {
+    currentGameId = `game-${Date.now().toString(36)}-${Math.floor(Math.random() * 1e6).toString(36)}`;
+  }
+  const reward = $('winReward');
+  if (reward) reward.hidden = true;
   showScreen('game'); // before setGame: the first render must measure a visible board
   setGame(state, 0);
   if (renderTicker) clearInterval(renderTicker);
@@ -313,6 +572,7 @@ async function startTutorial() {
   // cover first, so closing the book afterwards lands on a screen that has been filled in.
   if (!chosenDeckId) enterPlay();
   const brain = await loadRivalBrain(TUTORIAL_SEED + 1);
+  currentIsTutorial = true;
   const { state, agents } = createTutorialSession({
     rules, cardSet: cardSet(), fallbackRival: brain, thinkDelay: getDelay, onLeave: leaveGame,
   });
@@ -324,8 +584,12 @@ function leaveGame() {
   quitRequested = true;
   stopGame();
   stopTutorial();
+  currentIsTutorial = false;
   if (renderTicker) clearInterval(renderTicker);
   $('winOverlay').classList.remove('active');
+  // The game that was on the table is already on the shelf: a save is taken at the end of every
+  // turn, so walking away needs no save of its own and an unfinished game is never lost.
+  buildMenu();
   showScreen('menu');
 }
 
@@ -340,8 +604,11 @@ function wireMenu() {
   $('deleteDeckBtn').addEventListener('click', () => {
     const deck = deckById(chosenDeckId);
     if (!deck || !deck.custom) return;
-    customDecks = deleteSavedDeck(deck.id).map((d) => ({ ...d }));
-    chosenDeckId = cardSet().decks[0].id;
+    deleteCustomDeck(profile, deck.id);
+    saveProfile(profile);
+    customDecks = ownDecks();
+    const left = allDecks();
+    chosenDeckId = left[0] ? left[0].id : null;
     renderDeckChoice();
   });
   $('tutorialBtn').addEventListener('click', () => { startTutorial(); });
@@ -440,13 +707,17 @@ function stampEdition() {
 let version = null;
 
 async function main() {
-  const [loadedRules, loadedSet, loadedVersion] = await Promise.all([
+  const [loadedRules, loadedSet, loadedVersion, loadedProgression] = await Promise.all([
     loadSpec(RULES_URL, 'the rules (spec/game.json)'),
     loadSpec(SET_URL, 'the card set (spec/maker_card_set.json)'),
     loadVersion(),
+    // What winning pays is tuning, not rules: a missing file falls back to the defaults in
+    // engine/profile.js rather than stopping the game from opening.
+    loadSpec(PROGRESSION_URL, 'the progression (spec/progression.json)').catch(() => ({})),
   ]);
   rules = loadedRules;
   version = loadedVersion;
+  progression = loadedProgression || {};
   // One collection, and the game cannot start without all of it: cards to play, town decks to play
   // them out of, and a Capital City to fight over.
   if (!Array.isArray(loadedSet.cards) || !loadedSet.cards.length) throw new Error('The card set has no cards.');
@@ -457,7 +728,11 @@ async function main() {
   stampEdition();
   wireMenu();
   loadPace();
-  goHome();
+  // Who is playing comes first: the cover, the Workshop and the Book all read a Mayor's collection,
+  // and there is nothing sensible to show before one is chosen. A Mayor already in play is taken
+  // straight to the cover.
+  profile = activeProfile();
+  if (profile) playAs(profile); else openMayors();
   // A first visit opens on the welcome, which offers the tutorial before the cover.
   if (!hasBeenWelcomed()) openWelcome();
 }

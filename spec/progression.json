@@ -1,0 +1,14 @@
+{
+  "$comment": "What a Mayor earns and what things cost. Tuning lives here, not in code. See docs/PROFILES.md.",
+  "startingCoins": 0,
+  "startingPacks": 1,
+  "rewards": {
+    "win": { "coins": 60, "packs": 1 },
+    "loss": { "coins": 20, "packs": 0 },
+    "firstWinWithDeck": { "coins": 40, "packs": 0 }
+  },
+  "packPrice": 100,
+  "deckPrice": 500,
+  "deckCoverage": 0.7,
+  "maxSavedGames": 5
+}

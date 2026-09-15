@@ -4,12 +4,31 @@
 // reading size, and lets a card be turned over to any printing it has — Regular, Alternate Art,
 // Foil, Alternate Art Foil, Creative Foil or Full Card Art. A printing the card has not been given
 // yet is still shown, greyed, so the shelf says plainly what exists and what is still to come.
+//
+// A card the Mayor does not own is greyed the same way, with its rarity still showing: the Book
+// stays a map of the whole set — how big it is, and what is still out there — without giving away
+// the rules of a card that has not been earned. Everything a Mayor does own is shown in full, in
+// every printing they hold it in.
 import { buildCardFace, setPreviewContext, raritySlug } from './render.js';
 import { iconSVG } from './art.js';
 import { VERSIONS, versionsOf, hasVersion, defaultVersionKey } from './versions.js';
 import { characterOf } from '../engine/characters.js';
+import { ownedCopies, ownsPrinting, collectionSize } from '../engine/profile.js';
 
 const PAGE = 48;
+
+/** Does the reader own this card? A Book opened with no Mayor shows the whole set, as it always did. */
+function ownsCard(cardId) {
+  return !ctx.profile || ownedCopies(ctx.profile, cardId) > 0;
+}
+/** How many copies the reader holds, or null when the Book is not reading a collection. */
+function heldCount(cardId) {
+  return ctx.profile && !ctx.profile.sandbox ? ownedCopies(ctx.profile, cardId) : null;
+}
+/** Does the reader own this particular printing? */
+function ownsThisPrinting(cardId, key) {
+  return !ctx.profile || ownsPrinting(ctx.profile, cardId, key);
+}
 
 let host = null;
 let ctx = null; // { rules, set, cards, shelf, onClose }
@@ -145,30 +164,52 @@ function openStory(def) {
 
 // ---------- one card on the shelf ----------
 function buildEntry(card) {
+  const owned = ownsCard(card.id);
   const chosen = chosenVersion.get(card.id) || (filter.version === 'any' ? defaultVersionKey(card) : filter.version);
   const have = new Set(versionsOf(card).map((v) => v.key));
-  const fig = h('figure', { class: 'book-card' });
-  fig.appendChild(buildCardFace(card, { large: true, interactive: true, version: chosen }));
+  const fig = h('figure', { class: `book-card${owned ? '' : ' locked'}` });
+
+  const slot = h('div', { class: `card-slot${owned ? '' : ' locked'}` });
+  slot.appendChild(buildCardFace(card, { large: true, interactive: owned, version: owned ? chosen : 'regular' }));
+  if (!owned) {
+    slot.appendChild(h('span', { class: 'locked-flag', title: 'Not in your collection yet' }, 'Locked'));
+  } else {
+    const held = heldCount(card.id);
+    if (held) slot.appendChild(h('span', { class: 'owned-count', title: `You have ${held}` }, `×${held}`));
+  }
+  fig.appendChild(slot);
+
   const cap = h('figcaption', {}, [
     h('span', { class: `rarity-tag rar-${raritySlug(card)}` }, card.rarity || 'Common'),
   ]);
   fig.appendChild(cap);
+
   const row = h('div', { class: 'version-row' });
   for (const v of VERSIONS) {
     const exists = have.has(v.key);
+    const held = exists && ownsThisPrinting(card.id, v.key);
+    let title;
+    if (!exists) title = `${v.name}: not printed yet for ${card.name}`;
+    else if (!held) title = `${v.name}: printed, but not in your collection`;
+    else title = `${v.name} — ${v.blurb}`;
     row.appendChild(h('button', {
-      class: `version-chip${chosen === v.key ? ' on' : ''}`,
+      class: `version-chip${chosen === v.key && owned ? ' on' : ''}`,
       type: 'button',
-      disabled: !exists,
-      title: exists ? `${v.name} — ${v.blurb}` : `${v.name}: not printed yet for ${card.name}`,
+      disabled: !exists || !held,
+      title,
       onclick: () => { chosenVersion.set(card.id, v.key); render(); },
     }, v.short));
   }
   fig.appendChild(row);
+
+  // A locked card keeps its story to itself. That is the thing still worth opening a pack for.
   fig.appendChild(h('button', {
     class: 'small', type: 'button',
-    title: `Read ${card.name}'s backstory and the full flavor of every version`,
-    onclick: (e) => { e.stopPropagation(); openStory(card); },
+    disabled: !owned,
+    title: owned
+      ? `Read ${card.name}'s backstory and the full flavor of every version`
+      : 'Earn this card to read its story',
+    onclick: (e) => { e.stopPropagation(); if (ownsCard(card.id)) openStory(card); },
   }, 'Story'));
   return fig;
 }
@@ -183,7 +224,9 @@ function buildFilters() {
   search.addEventListener('input', () => { filter.text = search.value.trim().toLowerCase(); shown = PAGE; render({ keepFocus: 'search' }); });
 
   bar.appendChild(h('div', { class: 'db-chiprow' }, [
-    h('span', { class: 'db-chiplabel' }, `${allCards().length} cards:`),
+    h('span', { class: 'db-chiplabel' }, ctx.profile && !ctx.profile.sandbox
+      ? `${collectionSize(ctx.profile)} of ${allCards().length} cards:`
+      : `${allCards().length} cards:`),
     search,
   ]));
 
@@ -271,6 +314,9 @@ export function openBook(hostEl, opts) {
     set: opts.set,
     cards: (opts.set.cards || []).slice(),
     shelf: opts.shelf || opts.set,
+    // The Mayor whose collection is being read. Without one the Book shows the whole set unlocked,
+    // which is what it did before there were Mayors and what the Full Art gallery still wants.
+    profile: opts.profile || null,
     onClose: opts.onClose,
   };
   setPreviewContext(opts.rules, opts.set);
