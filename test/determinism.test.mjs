@@ -33,7 +33,7 @@ describe('serialisation', () => {
 describe('determinism', () => {
   test('the same seed and agents produce identical logs across two runs', async () => {
     async function run(seed) {
-      const state = createGame(RULES, SET, { seed, decks: ['mk-ledger-larder', 'mk-bench-bandstand'], names: ['You', 'Rival'] });
+      const state = createGame(RULES, SET, { seed, decks: ['mk-tin-tally', 'mk-gavel-ribbon'], names: ['You', 'Rival'] });
       await playGame(state, [makeRandomAgent(seed * 7), makeRandomAgent(seed * 13)], { maxTurnsPerPlayer: 15 });
       return state;
     }
@@ -47,7 +47,7 @@ describe('determinism', () => {
 
   test('a different seed generally produces a different log', async () => {
     async function run(seed) {
-      const state = createGame(RULES, SET, { seed, decks: ['mk-ledger-larder', 'mk-bench-bandstand'] });
+      const state = createGame(RULES, SET, { seed, decks: ['mk-tin-tally', 'mk-gavel-ribbon'] });
       await playGame(state, [makeRandomAgent(seed * 7), makeRandomAgent(seed * 13)], { maxTurnsPerPlayer: 15 });
       return state;
     }
@@ -57,11 +57,7 @@ describe('determinism', () => {
   });
 });
 
-/**
- * Market cards that have joined this player's own zones, which do not belong to their deck count.
- * The deck is in the list because a hired animal can reach it: laid off into the Town Dump, they are
- * shuffled back in when the deck runs out (rules.deckOut).
- */
+/** Market cards that have joined this player's own zones, which do not belong to their deck count. */
 function ownHired(state, p) {
   const isHired = (c) => (state.set.cardsById[c.cardId] || {}).type === 'marketCharacter';
   return p.town.reduce((b, st) => b + st.cards.filter(isHired).length, 0)
@@ -84,12 +80,10 @@ function checkInvariants(state, seed, marketSize) {
     + p.unemployment.filter((c) => (state.set.cardsById[c.cardId] || {}).type === 'marketCharacter').length,
     0,
   );
-  // Only the Buildings that came out of the Capital City count as market cards: a Town Building is
-  // its own deck's card and stays one while it is standing, which matters now that the printed decks
-  // hold them. Both halves of the census have to agree about which side of the table it is on.
+  // A town's Building places hold both a Capital City Building bought out of the market and a Town
+  // Building raised out of the Mayor's own deck; only the market's own belong to the market's count.
   const marketTotal = m.deck.length + m.city.length + m.cityDump.length + m.outOfPlay.length + m.revealQueue.length
-    + state.players.reduce((a, p) => a + p.victoryRow.length
-      + (p.buildings || []).filter((b) => b.source !== 'deck').length, 0) + hired;
+    + state.players.reduce((a, p) => a + p.victoryRow.length + (p.buildings || []).filter((b) => b.source !== 'deck').length, 0) + hired;
   assert.equal(marketTotal, marketSize, `seed ${seed} turn ${state.turnNumber}: market card total`);
   // Deck cards are counted across both towns rather than one at a time, exactly as
   // scripts/invariants.mjs does, because cards change hands: the Bin Round lifts an Event out of the
@@ -116,7 +110,7 @@ describe('whole game', () => {
     for (let seed = 1; seed <= 8; seed++) {
       const state = createGame(RULES, SET, {
         seed,
-        decks: seed % 2 ? ['mk-ledger-larder', 'mk-bench-bandstand'] : ['mk-bench-bandstand', 'mk-ledger-larder'],
+        decks: seed % 2 ? ['mk-tin-tally', 'mk-gavel-ribbon'] : ['mk-gavel-ribbon', 'mk-tin-tally'],
         names: ['You', 'Rival'],
       });
       state.agents = [makeRandomAgent(seed * 7), makeRandomAgent(seed * 13)];
@@ -135,7 +129,7 @@ describe('whole game', () => {
   });
 
   test('playGame itself reaches a decided winner/draw and sets state.result', async () => {
-    const state = createGame(RULES, SET, { seed: 99, decks: ['mk-ledger-larder', 'mk-bench-bandstand'] });
+    const state = createGame(RULES, SET, { seed: 99, decks: ['mk-tin-tally', 'mk-gavel-ribbon'] });
     const marketSize = state.market.deck.length + state.market.city.length + state.market.cityDump.length;
     await playGame(state, [makeRandomAgent(99), makeRandomAgent(100)]);
     assert.ok(state.winner === 0 || state.winner === 1 || state.winner === null);

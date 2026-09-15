@@ -12,15 +12,16 @@
 import { createGame, log, topCard, cardDef } from '../engine/index.js';
 
 export const TUTORIAL_SEED = 1889;
-export const TUTORIAL_HUMAN_DECK = 'mk-ledger-larder';
-export const TUTORIAL_RIVAL_DECK = 'mk-bench-bandstand';
-export const TUTORIAL_MARKET = 'mk-first-workings';
+export const TUTORIAL_HUMAN_DECK = 'mk-tin-tally';
+export const TUTORIAL_RIVAL_DECK = 'mk-gavel-ribbon';
+export const TUTORIAL_MARKET = 'mk-founders-fair';
 export const TUTORIAL_NAMES = ['Mayor Bramble', 'Mayor Sable'];
 /** The turn on which the last scripted step fires; from the next turn on the rival plays for itself. */
 export const TUTORIAL_LAST_TURN = 7;
 
 // Card ids the script depends on. Every one of these is in the deck or the market pool it is taken
-// from, so the arranged match is still played with real decks.
+// from, so the arranged match is still played with real decks: the two decks name them in their
+// `must` lists in scripts/build-decks.mjs, which is what keeps them there when the decks are rebuilt.
 const C = {
   peanut: 'mk_peanut_ledger_0', // cost 0 Apprentice, Commerce; puts a Supply by every time they finish a shift
   daisy: 'mk_daisy_bouquet_weaver_2', // cost 2 Journeyman; on arrival she pairs up with somebody
@@ -44,20 +45,8 @@ const C = {
 const HUMAN_HAND = [C.peanut, C.daisy, C.barista, C.freshBatch, C.ledgerDay, C.standingRound];
 const HUMAN_NEXT = [C.ned, C.clover];
 const RIVAL_HAND = [C.comet, C.cometMech, C.moss, C.inkwell, C.guildNight, C.countdown, C.boiler];
-
-/**
- * The cards each town deck must hold for the arranged match to be arrangeable at all.
- *
- * The tutorial is played with the real printed decks rather than a private list, which is the whole
- * point of it — the lesson is about cards the player will meet again. That makes it a standing
- * constraint on those two decks, so `scripts/build-decks.mjs` reads this and seeds them first.
- * Without it, rebuilding the decks silently breaks the tutorial and only the tutorial's own tests
- * notice.
- */
-export const TUTORIAL_DECK_CARDS = {
-  [TUTORIAL_HUMAN_DECK]: [...HUMAN_HAND, ...HUMAN_NEXT],
-  [TUTORIAL_RIVAL_DECK]: [...RIVAL_HAND],
-};
+/** Every card the script needs in each town's deck, by seat: the hand it is dealt and its next draws. */
+export const TUTORIAL_HANDS = [[...HUMAN_HAND, ...HUMAN_NEXT], RIVAL_HAND];
 // Display order matters: the Capital City ages from the front, so the Statue goes last and is still
 // on show when the player is ready to bid for it on turn 5.
 const CITY = ['mk_mkt_town_bell', 'mk_mkt_penny_jar', C.grant, 'mk_mkt_telescope_hire', C.kindness];
@@ -96,14 +85,44 @@ function arrangeMarket(state) {
   m.revealQueue = [];
   m.pending = [];
   m.clearing = {};
-  m.deckName = 'The First Workings, arranged for the lesson';
+  m.deckName = "The Founders' Fair, arranged for the lesson";
 }
 
-/** Build the tutorial match: a real game between the two town decks, arranged so the script holds. */
+/**
+ * A town deck arranged for the lesson: the printed list with the cards the script deals guaranteed
+ * to be in it. The six decks are built from the ratings (scripts/build-decks.mjs) and none of them is
+ * written around a tutorial, so any scripted card the deck does not hold is swapped in over a copy of
+ * whatever the deck holds most of. The deck keeps its id, its name and its forty cards; what changes
+ * is a handful of copies, which is the same liberty the lesson already takes with the opening hands
+ * and the Capital City.
+ */
+export function lessonDeck(set, deckId, needed) {
+  const printed = set.decks.find((d) => d.id === deckId);
+  if (!printed) throw new Error(`Tutorial: no deck ${deckId}`);
+  const list = { ...printed.list };
+  const want = needed.filter((id) => !list[id]);
+  for (const id of want) {
+    if (!set.cards.some((c) => c.id === id)) throw new Error(`Tutorial: ${id} is not a card in this set`);
+    // Take the copy back off the deck's deepest stack, never off a card the script needs.
+    const deepest = Object.entries(list)
+      .filter(([cardId]) => !needed.includes(cardId))
+      .sort((a, b) => b[1] - a[1])[0];
+    if (!deepest) throw new Error(`Tutorial: nothing in ${deckId} to make room for ${id}`);
+    list[deepest[0]]--;
+    if (!list[deepest[0]]) delete list[deepest[0]];
+    list[id] = 1;
+  }
+  return { id: printed.id, name: printed.name, list };
+}
+
+/** Build the tutorial match: a real game between two town decks, arranged so the script holds. */
 export function createTutorialGame(rules, set, { names = TUTORIAL_NAMES } = {}) {
   const state = createGame(rules, set, {
     seed: TUTORIAL_SEED,
-    decks: [TUTORIAL_HUMAN_DECK, TUTORIAL_RIVAL_DECK],
+    decks: [
+      lessonDeck(set, TUTORIAL_HUMAN_DECK, TUTORIAL_HANDS[0]),
+      lessonDeck(set, TUTORIAL_RIVAL_DECK, TUTORIAL_HANDS[1]),
+    ],
     market: TUTORIAL_MARKET,
     names,
   });

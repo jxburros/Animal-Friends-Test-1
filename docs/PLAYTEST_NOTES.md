@@ -13,14 +13,25 @@ One run of `npm run playtest -- --games 1260 --decks all --market all`: the full
 210 ordered pairings of the fifteen printed decks and all three Capital Cities, heuristic AI on both
 sides. A single run, not the mean of three, so read the deck figures as ±3 points.
 
+This pass followed the six-deck, two-market pass straight away and rebuilt on top of it: the six
+identities settled there keep their names, species and studies and are six of the fifteen here.
+
 **The decks were rebuilt to show the collection rather than to win with it.** Copies are capped at two
 (one for a Super Rare), the roster covers all ten species and all eight studies, Town Buildings are in
 a printed deck for the first time, and a card no earlier deck has taken wins every tie in the builder.
-The printed decks between them now reach **255 of the 380 cards a deck may legally hold (67%), against
-46 (12%) before** — every Town Building, 40 of 49 Events, 197 of 313 Characters.
+The printed decks between them now reach **249 of the 380 cards a deck may legally hold (66%), against
+123 (35%) after the six-deck pass** — every Town Building, and the fifteen decks are not all the same forty cards.
 
-**Deck balance: 31.6 points of spread**, Hedgerow & Hearth at 64.3% and Wall & Window at 32.7%. Games
-still finish: 1259 of 1260 ended on Statues, mean length 36.5 turns.
+**Deck balance: 19.0 points of spread**, Tin & Tally at 59.5% and Towpath & Bazaar at 40.5% — tighter
+than the 24.4 the v0.6.0 pass managed over six decks, across fifteen. Games finish: all 1260 ended on
+Statues, mean length 35.4 turns.
+
+That figure is the one part of this pass that came out better than either half of it on its own. Built
+on fifteen fresh identities the spread was 31.6 points; keeping the six identities the six-deck pass
+had already settled by playtest, and adding nine around them, took it to 19.0. The six were tuned
+against a different builder and their printed lists here are not the ones that pass measured, so what
+carried over was the *pairings* — which two species and which two studies a deck is written for, which
+is most of what a deck's power level is.
 
 **The economy floor had stopped biting, and that was most of the spread.** The v0.6.0 floor counts
 *cards* that produce Supply or draw. Once a Character's shift was counted as economy — which it plainly
@@ -40,13 +51,16 @@ charter working exactly as written ("an Owl town is wise, awake and poor"). A sp
 to build around, not a thing to print a losing deck about, so the builder gained a **throughput floor**
 of 42: a deck short of it trades its least useful Events for the best earners it can reach, from
 outside its own two species if that is what it takes. That took the spread from 49.5 to 31.6, lifted
-every Owl deck (Dome & Harbour 34.5 → 46.4, Wall & Window 19.0 → 32.7, Warren & Watch 21.4 → 38.7),
-and dropped throughput's correlation with win rate from 0.78 to 0.25 — which is the point. What is
-left is species identity rather than deck construction, and that is a different job.
+every Owl deck by 12 to 17 points, and dropped throughput's correlation with win rate from 0.78 to
+0.25 — which is the point. Folding in the six settled pairings then took it the rest of the way to
+19.0, and both Owl decks in the merged roster now sit within six points of even (Lamp & Lens 44.0%,
+Warren & Watch 56.5%). What is left is species identity rather than deck construction.
 
-**Three Capital Cities, and none of them decides the game.** The First Workings deals from the whole
-market catalogue (88 lots), Hard Times leans on weather and Ordinances with a floor of six on-reveal
-cards in twenty-six, and the Hiring Fair on animals to take on and roofs to put up. Seat advantage
+**Three Capital Cities, and none of them decides the game.** The Founders' Fair deals from the whole
+market catalogue (88 lots), the Lean Winter leans on weather and Ordinances with a floor of six
+on-reveal cards in twenty-six, and the Hiring Fair on animals to take on and roofs to put up. Each
+quarries twelve of the fifteen virtues, overlapping but not equal, so which monuments are on the
+table is part of where you chose to play. Seat advantage
 across them runs 46.7% / 52.9% / 51.3% for the first player, which is the same seat noise the rest of
 the harness shows.
 

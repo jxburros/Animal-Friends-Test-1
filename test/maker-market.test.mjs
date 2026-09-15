@@ -23,10 +23,14 @@ function makerGame(seed = 5) {
 
 test('the shelf quarries more virtues than a game raises, and deals its Capital City from its own cards', () => {
   const statues = MAKER.cards.filter((c) => c.type === 'statue');
-  const spec = MAKER.marketDecks[0];
-  // Nine Statues stand in any one game; the quarry holds more, so which nine is the shuffle's call.
-  assert.equal(spec.statueCount, RULES.victory.statueTotal);
-  assert.ok(statues.length > RULES.victory.statueTotal, 'the quarry is deeper than one game needs');
+  // Nine Statues stand in any one game; each market's quarry holds more, so which nine is the
+  // shuffle's call — and the two markets quarry different virtues, which is half of what makes them
+  // different places to play. Between them they raise every virtue the collection carves.
+  for (const spec of MAKER.marketDecks) {
+    assert.equal(spec.statueCount, RULES.victory.statueTotal, `${spec.id} raises nine`);
+    assert.ok(spec.statuePool.length > RULES.victory.statueTotal, `${spec.id}'s quarry is deeper than one game needs`);
+  }
+  assert.ok(statues.length > RULES.victory.statueTotal, 'the collection carves more than one game raises');
   const virtues = statues.map((c) => c.virtue);
   assert.equal(new Set(virtues).size, virtues.length, 'a virtue is carved once');
   for (const v of ['Community', 'Courage', 'Curiosity', 'Generosity', 'Harmony', 'Ingenuity', 'Joy', 'Kindness', 'Patience']) {
@@ -39,8 +43,42 @@ test('the shelf quarries more virtues than a game raises, and deals its Capital 
     assert.ok(c.onGain || (c.abilities || []).some((a) => !a.burden), `${c.id} has no boon`);
   }
   const own = new Set(MAKER.cards.map((c) => c.id));
-  for (const id of [...(spec.always || []), ...spec.statuePool, ...spec.pool]) assert.ok(own.has(id), `${id} is not a card in this set`);
-  assert.deepEqual([...spec.statuePool].sort(), statues.map((c) => c.id).sort(), 'every Statue is in the quarry');
+  const quarried = new Set();
+  for (const spec of MAKER.marketDecks) {
+    for (const id of [...(spec.always || []), ...spec.statuePool, ...spec.pool]) assert.ok(own.has(id), `${id} is not a card in this set`);
+    for (const id of spec.statuePool) quarried.add(id);
+  }
+  assert.deepEqual([...quarried].sort(), statues.map((c) => c.id).sort(), 'every Statue is quarried by some market');
+  const [a, b] = MAKER.marketDecks.map((spec) => new Set(spec.statuePool));
+  assert.ok([...a].some((id) => !b.has(id)) && [...b].some((id) => !a.has(id)), 'the two markets quarry different virtues');
+});
+
+test('the Capital Cities are different places, and each can fill its own market', () => {
+  const byId = new Map(MAKER.cards.map((c) => [c.id, c]));
+  const fair = MAKER.marketDecks.find((m) => m.id === 'mk-founders-fair');
+  const winter = MAKER.marketDecks.find((m) => m.id === 'mk-lean-winter');
+  assert.ok(fair && winter, 'the Fair and the Winter are both on the shelf');
+  const isShock = (id) => byId.get(id)?.type === 'disruption';
+  const weather = (spec) => spec.pool.filter(isShock).length;
+  // The Fair is a good year and the Winter is a bad one: the weather is most of the difference.
+  assert.ok(winter.minDisruptions > fair.minDisruptions, 'the Winter deals more shared weather than the Fair');
+  // The pools are not required to be disjoint. The Founders' Fair quarries the whole catalogue on
+  // purpose — it is the market to play to meet everything — so what makes a market its own place is
+  // that it holds something the others do not and leaves out something they have.
+  for (const spec of MAKER.marketDecks) {
+    assert.ok(weather(spec) >= spec.minDisruptions, `${spec.id} cannot meet its own weather floor`);
+    assert.ok(spec.pool.length >= spec.poolSize, `${spec.id} cannot fill its own market`);
+    const others = MAKER.marketDecks.filter((m) => m.id !== spec.id);
+    assert.ok(others.some((m) => spec.pool.some((id) => !m.pool.includes(id))
+      || m.pool.some((id) => !spec.pool.includes(id))), `${spec.id} is the same place as another market`);
+  }
+  // And every market card in the collection is dealt by some Capital City: a lot in no pool is a
+  // card nobody can ever buy.
+  const dealt = new Set(MAKER.marketDecks.flatMap((m) => m.pool));
+  const orphans = MAKER.cards
+    .filter((c) => ['market', 'building', 'marketCharacter', 'disruption', 'ordinance'].includes(c.type))
+    .filter((c) => !dealt.has(c.id));
+  assert.deepEqual(orphans.map((c) => c.id), [], 'every lot is in some Capital City');
 });
 
 test('a game raises exactly nine Statues, and a different nine from game to game', () => {

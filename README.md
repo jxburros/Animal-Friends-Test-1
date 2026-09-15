@@ -11,78 +11,51 @@ in the [finish preview](src/ui/foil-preview.html) after starting the local serve
 The [painted app surroundings](docs/APP_SURROUNDINGS.md) extend the card illustrations into the menu,
 Capital City banner, welcome screen and deck workshop, with locally bundled artwork and matching parchment frames.
 
-**New in v0.12.1 — fifteen decks, three Capital Cities, and a floor that bites.** The printed decks
-and the market were rebuilt around the collection rather than around the two decks that happened to
-exist.
+**New in v0.12.1 — fifteen towns, three weathers, and a floor that bites.** The six-deck pass below
+was rebuilt around the collection rather than around the six identities that happened to be tuned.
 
-- **Fifteen town decks, and they are a tour rather than a metagame.** Copies are capped at two (one
-  for a Super Rare), the roster covers all ten species and all eight studies, and a card no earlier
-  deck has taken wins every tie in the builder. Between them the printed decks now reach **255 of the
-  380 cards a deck may legally hold — 67%, against 46 cards and 12% before**. Consistency is what a
-  Mayor buys in the Deck Workshop with the ten cards over the minimum; a printed deck is where you
-  meet the cast.
-- **Town Buildings are in a printed deck for the first time.** They were always deck cards; the
-  builder had simply never looked at anything but Characters and Events.
-- **Three Capital Cities.** The First Workings deals from the whole market catalogue, **Hard Times**
-  leans on the weather and the Ordinances, and **The Hiring Fair** on animals to take on and roofs to
-  put up — and the markets are built by the same script rather than hand-listed, with a check that no
-  market card in the collection is left out of every one of them.
+- **Fifteen town decks.** The six below keep their names, species and studies and are joined by nine
+  more, until every species has three decks written for it and every study three or four. Copies are
+  capped at two (one for a Super Rare), so forty cards are twenty-odd different ones.
+- **Two-thirds of the collection on the table.** The six decks showed 123 distinct cards; the fifteen
+  show **249 of the 380 a deck may legally hold**, including every Town Building — which had never
+  been in a printed deck at all, because the builder only ever looked at Characters and Events.
+- **Three Capital Cities.** The Founders' Fair and the Lean Winter are joined by **The Hiring Fair**,
+  where the bidding is over labour rather than weather. The Fair now quarries the whole market
+  catalogue on purpose — it is the one to play to meet everything — while the Winter and the Hiring
+  Fair lean, and each still carves its own twelve virtues for the nine a game raises.
 - **The economy floor had stopped working, and that was most of the deck spread.** The v0.6.0 floor
   counts cards that produce Supply or draw; once a shift counted as economy — which it plainly is —
-  almost every Character qualified and the floor was met by accident. Measured over 1260 games, a
-  deck's **shift throughput** predicts its win rate better than anything else on the sheet (r = 0.78,
+  almost every Character qualified and the floor was met by accident. Over 1260 games a deck's
+  **shift throughput** predicts its win rate better than anything else on the sheet (r = 0.78,
   against 0.26 for the total power of its cards), and the three worst decks were all Owl decks, which
   is the Owl charter working as written. A throughput floor took the spread from **49.5 points to
-  31.6** and lifted every Owl deck by 12 to 17 points. See the
+  31.6**, and keeping the six pairings the six-deck pass had already settled took it to **19.0** —
+  tighter than the 24.4 the v0.6.0 pass managed over six decks, across fifteen. See the
   [playtest notes](docs/PLAYTEST_NOTES.md).
-- **A latent bug in the card census, found by putting Buildings in decks:** a Town Building raised out
-  of a player's own deck was being counted as a Capital City card. No deck had ever held one.
+- **A latent bug in the card census, found by putting Buildings in decks:** a Town Building raised
+  out of a player's own deck was being counted as a Capital City card. No deck had ever held one.
 
-**New in v0.12.0 — the open door, the awning, and something to spend Supply on.** Two wishes built,
-the game's first Supply sink that is not a purchase, forty-two cards, and every verb in the engine
-spoken by a card at last.
+**New in v0.12.0 — six towns and two weathers.** The two decks that shipped with the game have been
+replaced by six, and the one Capital City by two markets that are not the same place twice.
 
-- **Gwen's door is open to everybody.** `rehireFromAnywhere` is the one hiring verb in the collection
-  that does not read your own Unemployment and stop there: it reaches your own animals out of work,
-  the rival's — who are nobody's while they are face down, and become yours the moment they take the
-  shift — and the hired help lying in the City Dump with no town to go back to. The diner's actual
-  rule was always that anybody who walks in gets a shift, and the engine can say it now.
-- **Oatmeal's awning goes over the whole square, rival included.** A shelter is no longer merely
-  untargetability: **nothing takes a sheltered animal out of their town while the cover holds** — not
-  a rival's removal, and not weather that falls on both towns. `everyone: true` shelters one Character
-  in *each* town, both Mayors choosing their own. That it helps the rival is the price of it being
-  that good, and the model prices it that way. Eight cards already in the set re-rate upward, because
-  protection now stops a great deal more than it did.
-- **An ability can have a price.** A Character's Busy ability may charge Supply to use. This is the
-  game's first sink that is not a purchase, and it is the answer to the second thing the
-  [playtest notes](docs/PLAYTEST_NOTES.md) leave open — 51 Supply a player unspent at the end is a
-  shortage of places to spend, not a surplus of earnings. Willow will unemploy a rival's animal for
-  10; Liz's docket marks every lot in the Capital City down for you and nobody else; Ned and Scott
-  will go through the whole deck and fetch the card you actually wanted. The power model learned what
-  a Supply handed over a counter is worth against one earned when you needed it, and the agent learned
-  to tell a surplus from a turn's income.
-- **Ordinances, at last.** The collection printed none, so four of the five rules the Capital City can
-  have changed — the Statue yard closed, Statues dearer or cheaper, Buildings dearer or cheaper, the
-  bidding sealed — were read by nothing. There are eight now, two for every rule, and the ones that
-  block the Statue yard can be cleared by either Mayor or by one alone, so they cannot deadlock.
-- **Five more ways for the market to put animals out of work**, plus two hard winters that empty both
-  towns and hand most of them straight back — which is what `everyoneRehiresFree: { count }` was added
-  for, because a card that empties both towns and returns one animal is the end of a game rather than
-  a bad year.
-- **Four Owls who read the Capital City's deck**, including the first way in the collection to take a
-  lot off the table before anybody can bid on it.
-- **Every name the engine interprets is now spoken by a card, and the test says so.** Ten were not:
-  four Ordinance rules, `unchallengeable`, `skipNextAdvance`, `onlyUprightOfSpecies`,
-  `buildingsAtLeast`, `onShiftStarted` and `onCharacterUnemployed`. Each has two cards now, and
-  `npm test` fails if a future verb is built and never printed.
-
-Measured against the set before the pass with the same harness on both — 40 games of the heuristic
-agent on the two printed decks: statue victories **40/40 → 40/40**, mean game length **30.4 → 30.6**
-turns. The new cards are in the collection and the Capital City's pool, not in the two printed decks,
-so the Supply figure has not moved yet and should not be expected to; that is a deck-building pass,
-not this one. Under *random* agents the shared shocks do slow the game (50.9 → 54.6 turns over 40
-seeds), which is what a random agent that never clears an Ordinance and never rebuilds a town
-efficiently looks like.
+- **Six decks, each about something different.** Tin & Tally works the long shift and the tin behind
+  the desk; Gavel & Ribbon turns up at the Auction House with something it made this morning; Lamp &
+  Lens prices what the Capital City is about to put up; Larder & Long Table feeds and mends whoever
+  the weather turned out; Bandstand & Bell plays at double time; Ledger & Legend keeps the books and
+  the stories. Between them they field all ten species and all eight studies.
+- **Two and a half times as much of the collection on the table.** The old pair of decks showed 48
+  distinct cards; the six show **123**, because six identities pull on six different corners of the
+  catalogue.
+- **Evenly matched, and measured.** The deck builder is unchanged — the identity is the whole input,
+  so a deck's two species and two studies are also its power level. These six pairings were settled
+  by playtest: over every ordered pairing on both markets they win between 46% and 56% of their
+  games, where the first six identities tried ran from 29% to 78%.
+- **Two Capital Cities.** The First Workings has been retired for **The Founders' Fair** and **The
+  Lean Winter**, which share no market card at all: the Fair deals grants, hiring fairs and Buildings
+  out of forty-three lots with barely any weather, the Winter deals salvage, second chances and
+  defence out of thirty with at least five shared shocks in every game. Each quarries twelve virtues
+  of its own for the nine Statues a game raises.
 
 **New in v0.11.0 — the incorporation, the quarry and the unsigned column.** Three changes to what the
 game is about, and seventy-one cards.
@@ -126,7 +99,7 @@ cards now hang under the cards that took their places, and so do the five foil p
 masks and all.
 
 - **Two doors, not three.** The cover opens on **Play** and **Book**. Play is the game: the printed
-  decks (two at the time; 15 now), the First Workings Capital City, and a Deck Workshop that
+  decks (two at the time; fifteen now), the Capital City (three of those now), and a Deck Workshop that
   builds out of the collection. Book is the gallery: every card at reading size (502 of them today),
   filters for type,
   species, study and printing, a search over names and rules text, and the **Story** panel with each
@@ -292,7 +265,7 @@ A hired Character is **retained labour, not a citizen**: they may be hired for a
 
 **Statues** are the victory cards. Control 5 of 9 to win — and winning is an incorporation, not a scoreboard: your rival's charter closes, their town goes on your books, and you name the borough that results. The collection carves **fifteen** virtues and any one game raises nine of them, drawn from the market's quarry at setup, so the monuments on the table change from game to game. A Statue needs an **empty Building place** both to announce the auction and to resolve it — and the places can fill while an auction runs, so a Statue won with nowhere to stand offers its buyer a demolition, and a Mayor who will not or cannot pull anything down loses the purchase and keeps their Supply. **A Statue costs 10 while you hold fewer than two, 20 once you hold two or three, and 30 at four** — so the purchase that wins the game is the dearest thing in the game by a wide margin. The price is read from your Victory Row **at the moment the auction resolves**, not when you announced it, so if a fourth Statue arrived while this auction was running you top up the difference out of Supply at resolution. If you cannot cover the risen price, the purchase fizzles and your bid comes back — this is the main brake on a runaway. Each Statue also carries a **boon and a burden** lasting as long as you hold it: Community's extra shift Supply comes with a thinner Resources choice, Patience speeds your Masters but slows your Apprentices, and Harmony puts every pledge you make one rung higher up the ladder.
 
-**Market Decks** — the shared market chosen at setup, 35 cards: nine Statues raised from the market's own quarry of fifteen, plus a 26-card sample of its pool, topped up so that at least three on-reveal cards are always in it. **The First Workings** deals from fifty-one lots — a hiring hall, an all-night café, a bandstand, the assessors at the door — so no two games put the same market in front of you.
+**Market Decks** — the shared market chosen at setup, 35 cards: nine Statues raised from that market's own quarry, plus a 26-card sample of its pool, topped up so the market's own floor of on-reveal cards is always met. Two markets ship with the game and they are not the same place twice. **The Founders' Fair** is the Capital City in a good year: grants, fairs and apprentice hiring, six Buildings worth queueing for, eight animals who came because the town is growing, and nothing overhead worse than a meteor shower — forty-three lots dealt down to twenty-six, at least two of them weather, out of a quarry of twelve open-handed virtues. **The Lean Winter** is the same city in a bad one: the assessors at the door, hard winters and landslides killing the shifts on the board, the Salvage Yard and the Physic Garden open, and a Bob on the gate who makes every pledge dearer — thirty lots dealt down to twenty-six, at least five of them weather, out of a quarry of twelve hard virtues, thrift, mercy and vigilance among them. No card is in both pools, and between the two quarries every one of the fifteen virtues is carved. The Fair runs about thirty-one turns and the Winter about thirty-six, and a deck that does well in one does not always do well in the other.
 
 **Rarity** — every card is rated by what it gives you against what it asks for, and that rating sets its rarity: Common, Uncommon, Rare, Super Rare. Rarity here means **how often a deck may repeat a card, not how hard the card is to find**. The model scores a card `power^0.6 × efficiency^0.4`, so of two cards that do the same thing the cheaper one rates higher, while of two equally efficient cards the bigger one does — a cost-0 Rabbit with a good shift can out-rate a Master. The set reads as a pyramid: 55% Common, 24% Uncommon, 15% Rare, 7% Super Rare. Rarity then caps copies in a deck: **4 / 3 / 2 / 1**. See `src/engine/power.js` and `npm run power`.
 
@@ -300,7 +273,7 @@ A hired Character is **retained labour, not a citizen**: they may be hired for a
 
 **Species and study** — species is what a card *is*, study is what it *does*. Species is a design space, not a keyword: each of the ten owns a centre of gravity, a hole and a signature effect (Rabbits arrive in crowds; Badgers shrug off shocks; Raccoons work the City Dump; Squirrels put Supply by; Cats act when they should not be able to; Owls wake the town before dawn). The charters live in `spec/species.json` and `npm run identity` fails the build if two species stop playing differently. Studies — Agriculture, Civics, Commerce, Crafts, Lore, Science — are the horizontal axis that cuts across species.
 
-**Decks** — two 40-card decks ship with the game (Ledger & Larder, Bench & Bandstand), and you can build your own in the **Deck Workshop**: 40 to 50 cards of Characters, Events and Town Buildings, with copies capped by rarity. There is no Character floor and no Event ceiling — the deck is yours to get wrong, and the Workshop warns rather than refuses when a full-size deck holds six animals or fewer. Each Mayor may **mulligan once, free**. Custom decks are saved in the browser.
+**Decks** — six 40-card decks ship with the game: **Tin & Tally** (Squirrels and Otters of Commerce and Agriculture), **Gavel & Ribbon** (Foxes and Raccoons of Civics and Crafts), **Lamp & Lens** (Owls and Foxes of Science and Commerce), **Larder & Long Table** (Hedgehogs and Mice of Food and Crafts), **Bandstand & Bell** (Rabbits and Cats of Entertainment and Civics) and **Ledger & Legend** (Badgers and Raccoons of Commerce and Lore). Between them they field all ten species and all eight studies, and they hold 123 distinct cards. They are built by `npm run decks` rather than hand-listed — the identity is the whole input, so which two species and which two studies a deck is written for is also its power level, and these six were settled by playtest: over every ordered pairing on both markets they win between 46% and 56% of their games. You can also build your own in the **Deck Workshop**: 40 to 50 cards of Characters, Events and Town Buildings, with copies capped by rarity. There is no Character floor and no Event ceiling — the deck is yours to get wrong, and the Workshop warns rather than refuses when a full-size deck holds six animals or fewer. Each Mayor may **mulligan once, free**. Custom decks are saved in the browser.
 
 ## Play it online
 
@@ -360,7 +333,7 @@ If you test by downloading the ZIP from GitHub and unzipping it:
 - `docs/ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md` - design reference and source of truth
 - `spec/game.json` - rules constants and prototype decisions
 - `spec/species.json` - the ten species charters (centre of gravity, hole, signature); the contract `npm run identity` checks
-- `spec/maker_card_set.json` - the collection, and the only card set the game reads: 502 cards, 15 40-card town decks, and 3 Capital Cities, each with a quarry of fifteen Statues to raise nine from. The decks and the Capital Cities are built by `npm run decks` from stated identities rather than hand-listed. It holds each character's backstory alongside their cards, the card types the game grew into — Town Buildings, and the nineteen Tokens — and each character's `wantedVerbs`, the effects their story wanted, with a `resolved` line once the engine can say it. A Market Deck is dealt as 9 Statues raised from its `statuePool` plus a 26-card sample of its own pool — 35 cards — topped up from that pool until at least three on-reveal cards are in it, so the market keeps one size while the display varies from game to game. Writing for it is documented in two files: [WRITING_A_CHARACTER.md](docs/WRITING_A_CHARACTER.md) (the process an agent follows to write one character's cards) and [TOWN_BIBLE.md](docs/TOWN_BIBLE.md) (the shared world every backstory must agree with)
+- `spec/maker_card_set.json` - the collection, and the only card set the game reads: 502 cards, 15 40-card town decks, and 3 Capital Cities, each with a quarry of twelve virtues to raise nine from. The decks and the Capital Cities are built by `npm run decks` from stated identities rather than hand-listed. It holds each character's backstory alongside their cards, the card types the game grew into — Town Buildings, and the nineteen Tokens — and each character's `wantedVerbs`, the effects their story wanted, with a `resolved` line once the engine can say it. A Market Deck is dealt as 9 Statues raised from its `statuePool` plus a 26-card sample of its own pool — 35 cards — topped up from that pool until at least three on-reveal cards are in it, so the market keeps one size while the display varies from game to game. Writing for it is documented in two files: [WRITING_A_CHARACTER.md](docs/WRITING_A_CHARACTER.md) (the process an agent follows to write one character's cards) and [TOWN_BIBLE.md](docs/TOWN_BIBLE.md) (the shared world every backstory must agree with)
 - `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`. `power.js` is the power/cost model that rates every card and assigns its rarity
 - `src/ai/` - agents: `random.js` (baseline), `heuristic.js` (opponent)
 - `src/ui/` - browser interface: `main.js` (the two doors, and the cover), `humanAgent.js`, `render.js`, `book.js` (the Book: every card, its printings and the Story panel), `versions.js` (the six printings and which cards have been painted in them), `deckbuilder.js` (the Deck Workshop), `help.js` (the welcome, quick start, rules and FAQ), `tutorial.js` (the coach chips), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations)

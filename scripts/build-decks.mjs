@@ -26,7 +26,6 @@
 
 import fs from 'node:fs';
 import { deckProblems, deckRules, maxCopiesOf } from '../src/engine/deckbuilding.js';
-import { TUTORIAL_DECK_CARDS } from '../src/tutorial/scenario.js';
 
 const setUrl = new URL('../spec/maker_card_set.json', import.meta.url);
 const set = JSON.parse(fs.readFileSync(setUrl, 'utf8'));
@@ -77,70 +76,81 @@ const COPY_CAP = 2;
 const TOP_RARITY_CAP = 5;
 
 /**
- * The town decks: ten identities, every species in two of them and every study in two or three.
- * Between them they are meant to be a tour of the cast rather than a tuned metagame — the Deck
- * Workshop is where a Mayor builds the deck they actually want.
+ * The town decks: fifteen identities, every species in three of them and every study in three or
+ * four. Between them they are meant to be a tour of the cast rather than a tuned metagame — the
+ * Deck Workshop is where a Mayor builds the deck they actually want.
+ *
+ * The first six are the identities settled by playtest in the six-deck pass, unchanged in name,
+ * species and studies. What changed under them is the builder, so their printed lists are not the
+ * ones that pass measured. The nine after them widen the roster until every species has three decks
+ * written for it, which is what the coverage in the header is bought with.
  */
 const IDENTITIES = [
+  { id: 'mk-tin-tally', name: 'Tin & Tally', species: ['Squirrel', 'Otter'], studies: ['Commerce', 'Agriculture'],
+    blurb: 'Squirrels and Otters of Commerce and Agriculture: the long shift is the whole plan. Every animal works, every shift is costed twice, and the tin behind the desk is fuller than the ledger admits.' },
+  { id: 'mk-gavel-ribbon', name: 'Gavel & Ribbon', species: ['Fox', 'Raccoon'], studies: ['Civics', 'Crafts'],
+    blurb: 'Foxes and Raccoons of Civics and Crafts: the town that turns up at the Auction House with something it made this morning. It pledges high, works the City Dump, and dares the other Mayor to keep raising.' },
+  { id: 'mk-lamp-lens', name: 'Lamp & Lens', species: ['Owl', 'Fox'], studies: ['Science', 'Commerce'],
+    blurb: 'Owls and Foxes of Science and Commerce: instruments, night work and a price for everything. It knows what the Capital City is about to put up before the other Mayor has looked at the board.' },
+  { id: 'mk-larder-long-table', name: 'Larder & Long Table', species: ['Hedgehog', 'Mouse'], studies: ['Food', 'Crafts'],
+    blurb: 'Hedgehogs and Mice of Food and Crafts: the kitchen and the bench, and a table long enough for everybody. Whatever the weather takes off the board is fed, mended and back at work by morning.' },
+  { id: 'mk-bandstand-bell', name: 'Bandstand & Bell', species: ['Rabbit', 'Cat'], studies: ['Entertainment', 'Civics'],
+    blurb: 'Rabbits and Cats of Entertainment and Civics: a town played at double time. Animals stand back up the turn they sat down, and the hall is open again before the rival has finished their Ready.' },
+  { id: 'mk-ledger-legend', name: 'Ledger & Legend', species: ['Badger', 'Raccoon'], studies: ['Commerce', 'Lore'],
+    blurb: 'Badgers and Raccoons of Commerce and Lore: the counting house and the long room in one town. It keeps the books, keeps the stories, and knows which of the two the borough will actually pay for.' },
   { id: 'mk-ledger-larder', name: 'Ledger & Larder', species: ['Squirrel', 'Mouse'], studies: ['Commerce', 'Food'],
     blurb: 'Squirrels and Mice of Commerce and Food: the books balance, the counter never closes, and everything the town eats has been costed twice.' },
   { id: 'mk-bench-bandstand', name: 'Bench & Bandstand', species: ['Badger', 'Cat'], studies: ['Crafts', 'Entertainment'],
     blurb: 'Badgers and Cats of Crafts and Entertainment: the bench turns out the work, the hall turns out the town, and neither of them stops for weather.' },
   { id: 'mk-hedgerow-hearth', name: 'Hedgerow & Hearth', species: ['Rabbit', 'Hedgehog'], studies: ['Agriculture', 'Food'],
     blurb: 'Rabbits and Hedgehogs of Agriculture and Food: a hedge takes a winter to lay and fifteen years to judge, and there is always something on for whoever turns up.' },
-  { id: 'mk-dome-harbour', name: 'Dome & Harbour', species: ['Owl', 'Otter'], studies: ['Science', 'Commerce'],
-    blurb: 'Owls and Otters of Science and Commerce: the watch list is kept to the minute, the river trade is signed for by the mile, and both of them are awake at four.' },
-  { id: 'mk-den-docket', name: 'Den & Docket', species: ['Fox', 'Raccoon'], studies: ['Lore', 'Commerce'],
-    blurb: 'Foxes and Raccoons of Lore and Commerce: everything the borough throws out has words on it, a price, or both, and these two can tell you which.' },
-  { id: 'mk-ward-almanac', name: 'Ward & Almanac', species: ['Mouse', 'Raccoon'], studies: ['Civics', 'Lore'],
-    blurb: 'Mice and Raccoons of Civics and Lore: the ward book is right, the split almanac off the Dump is readable again, and somebody was at the back of that meeting writing.' },
-  { id: 'mk-lens-limelight', name: 'Lens & Limelight', species: ['Cat', 'Fox'], studies: ['Science', 'Entertainment'],
-    blurb: 'Cats and Foxes of Science and Entertainment: the lens is ground to a tolerance nobody asked for and the room is full by nine, and it is the same animals both times.' },
-  { id: 'mk-quill-quarry', name: 'Quill & Quarry', species: ['Hedgehog', 'Badger'], studies: ['Crafts', 'Civics'],
-    blurb: 'Hedgehogs and Badgers of Crafts and Civics: immovable at the wall, unhurried at the bench, and still there at the end of the day when everybody who came to watch has gone home.' },
-  { id: 'mk-towpath-tally', name: 'Towpath & Tally', species: ['Otter', 'Squirrel'], studies: ['Agriculture', 'Lore'],
-    blurb: 'Otters and Squirrels of Agriculture and Lore: what grows on the bank, what was put by against the year it does not, and the record of every year it did not.' },
-  { id: 'mk-warren-watch', name: 'Warren & Watch', species: ['Rabbit', 'Owl'], studies: ['Civics', 'Agriculture'],
-    blurb: 'Rabbits and Owls of Civics and Agriculture: a hillside with a dozen doors in it, a dome above the allotment strip, and more of them arriving than leaving.' },
+  { id: 'mk-dome-harbour', name: 'Dome & Harbour', species: ['Owl', 'Otter'], studies: ['Science', 'Civics'],
+    blurb: 'Owls and Otters of Science and Civics: the watch list is kept to the minute and the river licence is granted out of one office, and both of them are awake at four to say so at the meeting.' },
+  { id: 'mk-press-parlour', name: 'Press & Parlour', species: ['Mouse', 'Fox'], studies: ['Crafts', 'Lore'],
+    blurb: 'Mice and Foxes of Crafts and Lore: the press runs all night and everything that comes off it has been across somebody’s shelves first, because a correction is dearer than a delay.' },
   { id: 'mk-galley-glass', name: 'Galley & Glass', species: ['Squirrel', 'Cat'], studies: ['Food', 'Science'],
     blurb: 'Squirrels and Cats of Food and Science: a lens ground to a tolerance nobody asked for, a tin of something put by for the year somebody needs it, and a very long night between them.' },
-  { id: 'mk-press-parlour', name: 'Press & Parlour', species: ['Mouse', 'Fox'], studies: ['Crafts', 'Entertainment'],
-    blurb: 'Mice and Foxes of Crafts and Entertainment: the press runs, the room fills, and nobody has ever had to be asked twice to come out on a Tuesday.' },
-  { id: 'mk-mill-mooring', name: 'Mill & Mooring', species: ['Badger', 'Otter'], studies: ['Food', 'Crafts'],
-    blurb: 'Badgers and Otters of Food and Crafts: it is ground at the mill, it is cooked at the mill, and whatever is left goes down the river before the tide turns.' },
-  { id: 'mk-wall-window', name: 'Wall & Window', species: ['Hedgehog', 'Owl'], studies: ['Science', 'Lore'],
-    blurb: 'Hedgehogs and Owls of Science and Lore: nothing gets over the wall and nothing gets past the window, and both of them will be there in the morning to tell you so.' },
-  { id: 'mk-burrow-bazaar', name: 'Burrow & Bazaar', species: ['Rabbit', 'Raccoon'], studies: ['Entertainment', 'Agriculture'],
-    blurb: 'Rabbits and Raccoons of Entertainment and Agriculture: everything the borough throws out turns up on a trestle by the allotment gate, and by evening somebody is singing over it.' },
+  { id: 'mk-quill-quarry', name: 'Quill & Quarry', species: ['Hedgehog', 'Badger'], studies: ['Civics', 'Lore'],
+    blurb: 'Hedgehogs and Badgers of Civics and Lore: immovable at the meeting, unhurried in the record, and still there at the end of the day when everybody who came to watch has gone home.' },
+  { id: 'mk-warren-watch', name: 'Warren & Watch', species: ['Rabbit', 'Owl'], studies: ['Agriculture', 'Science'],
+    blurb: 'Rabbits and Owls of Agriculture and Science: a dome above the allotment strip and a forecast to the minute under it, and more of them arriving than leaving.' },
+  { id: 'mk-towpath-bazaar', name: 'Towpath & Bazaar', species: ['Otter', 'Raccoon'], studies: ['Agriculture', 'Entertainment'],
+    blurb: 'Otters and Raccoons of Agriculture and Entertainment: everything the borough throws out turns up on a trestle by the allotment gate, and by evening somebody is singing over it.' },
 ];
 
 /**
  * The Capital Cities. A market deck is a quarry of Statues and a pool of lots to deal a sample from,
  * so what is on the board changes from game to game; a market's *identity* is what its pool leans
  * towards. `weigh` scores a card for that leaning and the pool is filled best-first, but every
- * market-side card in the collection lands in at least one pool — the First Workings takes the whole
- * catalogue, which is what makes it the one to play if you want to meet everything.
+ * market-side card in the collection lands in at least one pool.
+ *
+ * `quarry` picks the virtues this market carves from. Nine Statues are raised in any one game and the
+ * collection carves fifteen, so a market that took the lot would make the choice of Capital City a
+ * choice of pool size and nothing else. Twelve each, overlapping but not equal, makes which monuments
+ * are on the table part of where you chose to play; between them the three quarry all fifteen.
  *
  * `poolSize` is how many lots are dealt from the pool for one game, so a bigger pool is more variety
  * between games rather than a longer game.
  */
 const MARKETS = [
   {
-    id: 'mk-first-workings',
-    name: 'The First Workings',
-    blurb: 'The whole catalogue in one quarry: every lot the borough has ever put up, every Ordinance the Capital City can post, and fifteen virtues to raise nine of — so no two games put the same market, or the same monuments, in front of you.',
+    id: 'mk-founders-fair',
+    name: "The Founders' Fair",
+    blurb: 'The whole catalogue in one quarry: every lot the borough has ever put up, every Ordinance the Capital City can post, and a dozen virtues to raise nine of \u2014 so no two games put the same market, or the same monuments, in front of you.',
     poolSize: 26,
     poolDepth: Infinity, // the whole catalogue: this is the market to play to meet everything
     minDisruptions: 3,
+    quarry: (statues) => statues.slice(0, 12),
     weigh: () => 1, // everything, equally
   },
   {
-    id: 'mk-hard-times',
-    name: 'Hard Times',
+    id: 'mk-lean-winter',
+    name: 'The Lean Winter',
     blurb: 'The winter the Grain Exchange shut, the year the bridge went, the assessors at the door and the works in the square: a Capital City that takes animals off your board and then makes the monuments dearer.',
     poolSize: 26,
     poolDepth: 45,
     minDisruptions: 6,
+    quarry: (statues) => statues.slice(-12),
     weigh: (c, mentions) => (c.type === 'disruption' ? 6 : 0)
       + (c.type === 'ordinance' ? 5 : 0)
       + (mentions(/Unemploy|unemploy|LosesSupply|blockNextReady|endAllShifts/) ? 4 : 0),
@@ -152,6 +162,7 @@ const MARKETS = [
     poolSize: 26,
     poolDepth: 45,
     minDisruptions: 2,
+    quarry: (statues) => statues.filter((_, i) => i % 5 !== 0).slice(0, 12),
     weigh: (c, mentions) => (c.type === 'marketCharacter' ? 6 : 0)
       + (c.type === 'building' ? 5 : 0)
       + (mentions(/rehire|recruitFromHand|readyCharacter|advanceCharacter|gainSupply/) ? 3 : 0)
@@ -232,13 +243,10 @@ function build(ident) {
   /** Whichever band is furthest behind the curve first, then the ordinary order. */
   const byCurveThen = (ident2) => (a, b) => shortfall(b) - shortfall(a) || pick(ident2)(a, b);
 
-  // The tutorial is played with the real printed decks, so the cards its arranged match needs are
-  // seeded before anything else. They are read from the scenario itself rather than listed here, so
-  // a change to the lesson cannot quietly leave a deck without the card it teaches.
-  for (const id of TUTORIAL_DECK_CARDS[ident.id] || []) {
-    const card = cards.find((c) => c.id === id);
-    if (card) take(card, 1);
-  }
+  // Nothing is seeded for the tutorial here. The lesson arranges its own decks at play time
+  // (`lessonDeck` in src/tutorial/scenario.js), swapping the cards its script deals into whichever
+  // list the builder printed — which is the better place for it, because it holds however the decks
+  // are rebuilt and costs the builder no freedom at all.
 
   // Characters, cost band by cost band, best fit then best rated.
   let chars = 0;
@@ -460,7 +468,7 @@ function buildMarket(ident) {
     id: ident.id,
     name: ident.name,
     blurb: ident.blurb,
-    statuePool: cards.filter((c) => c.type === 'statue').map((c) => c.id),
+    statuePool: ident.quarry(cards.filter((c) => c.type === 'statue').map((c) => c.id)),
     statueCount: rules.victory.statueTotal,
     pool: poolIds,
     poolSize: Math.min(ident.poolSize, poolIds.length),

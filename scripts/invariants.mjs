@@ -19,12 +19,12 @@ function hiredIn(state, p) {
 
 function check(state, seed, marketSize, deckSizes) {
   const m = state.market;
-  // Market cards now also come to rest as Buildings in a town and as hired animals in it.
-  // A Town Building raised out of a player's own deck is a deck card standing in a town, not a market
-  // card: only the Buildings bought from the Capital City belong to this side of the census.
+  // Market cards now also come to rest as Buildings in a town and as hired animals in it. A town's
+  // Building places hold both kinds — a Capital City Building bought out of the market and a Town
+  // Building raised out of the Mayor's own deck — so only the market's own are counted here.
+  const marketBuildings = (p) => (p.buildings || []).filter((b) => b.source !== 'deck').length;
   const total = m.deck.length + m.city.length + m.cityDump.length + m.outOfPlay.length + m.revealQueue.length
-    + state.players.reduce((a, p) => a + p.victoryRow.length
-      + (p.buildings || []).filter((b) => b.source !== 'deck').length + hiredIn(state, p), 0);
+    + state.players.reduce((a, p) => a + p.victoryRow.length + marketBuildings(p) + hiredIn(state, p), 0);
   if (total !== marketSize) throw new Error(`seed ${seed} turn ${state.turnNumber}: market card count ${total} (expected ${marketSize})`);
   // Deck cards are counted across both towns rather than one at a time. A deck may be any legal
   // size, so the invariant is that no deck card is ever created or lost — and cards do change hands:

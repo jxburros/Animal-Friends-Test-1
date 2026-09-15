@@ -43,6 +43,40 @@ test('the collection is complete enough to be played', () => {
   }
 });
 
+test('the town decks are different towns, and every card in them is playable', () => {
+  const byId = Object.fromEntries(SET.cards.map((c) => [c.id, c]));
+  // Not a fixed count any more: the roster is built from a list of identities in
+  // scripts/build-decks.mjs and grew from six to fifteen in one pass, so what is worth holding the
+  // decks to is the properties below — every species and every study has a deck written for it, no
+  // deck holds an Event it can never pay for, and they are not all the same forty cards.
+  assert.ok(SET.decks.length >= 6, 'enough decks to choose between');
+  const species = new Set();
+  const studies = new Set();
+  const everywhere = new Set();
+  for (const deck of SET.decks) {
+    const held = Object.entries(deck.list).map(([id, n]) => ({ card: byId[id], n }));
+    for (const { card } of held) everywhere.add(card.id);
+    for (const s of deck.species) species.add(s);
+    for (const s of deck.studies) studies.add(s);
+    // An Event names the animal it needs. A deck holding one it cannot field is holding a dead card.
+    const bodies = (req) => held.reduce((a, { card, n }) => {
+      if (card.type !== 'character') return a;
+      if (req.name) return a + (card.name === req.name ? n : 0);
+      if (req.species && card.species !== req.species) return a;
+      if (req.study && card.study !== req.study) return a;
+      return a + n;
+    }, 0);
+    for (const { card } of held) {
+      for (const r of (card.type === 'event' && card.requires) || []) {
+        assert.ok(bodies(r) >= (r.count || 1), `${deck.id} holds ${card.name}, which it can never pay for`);
+      }
+    }
+  }
+  assert.equal(species.size, SET.species.length, 'every species is somebody\'s deck');
+  assert.equal(studies.size, SET.studies.length, 'every study is somebody\'s deck');
+  assert.ok(everywhere.size > 40 * 2, 'the decks are not all the same forty cards');
+});
+
 test('a game plays through to a Statue victory', async () => {
   for (const seed of [3, 11]) {
     const state = createGame(RULES, SET, { seed, decks: SET.decks.slice(0, 2).map((d) => d.id) });
