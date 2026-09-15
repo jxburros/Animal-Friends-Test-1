@@ -8,6 +8,10 @@ import { createGame, flushReveals, refillCity, startPhase, UPRIGHT, BUSY } from 
 
 /** Put `cardId` on top of the Market Deck, empty a display slot, and deal it out. */
 async function reveal(state, cardId) {
+  // The City Dump is emptied first so that what is under test is the Disruption named here and
+  // nothing else: setup may already have dealt one, and a dump shuffled back into an exhausted
+  // Market Deck would deal that one a second time and resolve two shocks instead of one.
+  state.market.cityDump.length = 0;
   state.market.deck.unshift(cardId);
   state.market.city.pop();
   refillCity(state);
@@ -116,6 +120,10 @@ describe('revealing a Disruption', () => {
     const state = newGame();
     setSupply(state, 0, 10);
     setCity(state, ['mk_mkt_community_oven']);
+    // The City Dump is emptied first, for the same reason the `reveal` helper above does it: setup
+    // may already have dealt a Disruption, and a dump shuffled back into an exhausted Market Deck
+    // would fire that one too and make this assertion about both shocks rather than the named one.
+    state.market.cityDump.length = 0;
     state.market.deck = ['mk_dx_tax_assessors', 'mk_mkt_penny_jar', 'mk_mkt_town_bell', 'mk_mkt_chit_tin', 'mk_mkt_ledger_audit'];
     const s = addBidder(state, 0, 1);
     state.phase = 'actions';

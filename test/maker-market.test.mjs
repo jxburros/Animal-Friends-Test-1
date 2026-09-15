@@ -53,19 +53,32 @@ test('the shelf quarries more virtues than a game raises, and deals its Capital 
   assert.ok([...a].some((id) => !b.has(id)) && [...b].some((id) => !a.has(id)), 'the two markets quarry different virtues');
 });
 
-test('the two Capital Cities are two different places', () => {
-  const [fair, winter] = MAKER.marketDecks;
-  assert.equal(MAKER.marketDecks.length, 2, 'two markets to choose between');
-  const shared = fair.pool.filter((id) => winter.pool.includes(id));
-  assert.deepEqual(shared, [], 'a market card belongs to one market or the other, never both');
-  const isShock = (id) => MAKER.cards.find((c) => c.id === id)?.type === 'disruption';
+test('the Capital Cities are different places, and each can fill its own market', () => {
+  const byId = new Map(MAKER.cards.map((c) => [c.id, c]));
+  const fair = MAKER.marketDecks.find((m) => m.id === 'mk-founders-fair');
+  const winter = MAKER.marketDecks.find((m) => m.id === 'mk-lean-winter');
+  assert.ok(fair && winter, 'the Fair and the Winter are both on the shelf');
+  const isShock = (id) => byId.get(id)?.type === 'disruption';
   const weather = (spec) => spec.pool.filter(isShock).length;
   // The Fair is a good year and the Winter is a bad one: the weather is most of the difference.
   assert.ok(winter.minDisruptions > fair.minDisruptions, 'the Winter deals more shared weather than the Fair');
+  // The pools are not required to be disjoint. The Founders' Fair quarries the whole catalogue on
+  // purpose — it is the market to play to meet everything — so what makes a market its own place is
+  // that it holds something the others do not and leaves out something they have.
   for (const spec of MAKER.marketDecks) {
     assert.ok(weather(spec) >= spec.minDisruptions, `${spec.id} cannot meet its own weather floor`);
     assert.ok(spec.pool.length >= spec.poolSize, `${spec.id} cannot fill its own market`);
+    const others = MAKER.marketDecks.filter((m) => m.id !== spec.id);
+    assert.ok(others.some((m) => spec.pool.some((id) => !m.pool.includes(id))
+      || m.pool.some((id) => !spec.pool.includes(id))), `${spec.id} is the same place as another market`);
   }
+  // And every market card in the collection is dealt by some Capital City: a lot in no pool is a
+  // card nobody can ever buy.
+  const dealt = new Set(MAKER.marketDecks.flatMap((m) => m.pool));
+  const orphans = MAKER.cards
+    .filter((c) => ['market', 'building', 'marketCharacter', 'disruption', 'ordinance'].includes(c.type))
+    .filter((c) => !dealt.has(c.id));
+  assert.deepEqual(orphans.map((c) => c.id), [], 'every lot is in some Capital City');
 });
 
 test('a game raises exactly nine Statues, and a different nine from game to game', () => {

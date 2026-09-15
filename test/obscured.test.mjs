@@ -64,6 +64,9 @@ test('upgrading over a figure costs the plain difference and takes no second tow
   state.phase = 'actions';
   state.active = 0;
   addStack(state, 0, 'mk_masked_otter_counter_hand_1');
+  // The opening hand is cleared first: legalActions offers one recruit per card id, so a copy of
+  // this card dealt into the hand would carry the action and the uid asserted on below would not.
+  state.players[0].hand = [];
   const card = addToHand(state, 0, 'mk_brooke_regatta_caller_3');
   setSupply(state, 0, 10);
   const before = state.players[0].town.length;

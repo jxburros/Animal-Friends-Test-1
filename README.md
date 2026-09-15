@@ -11,6 +11,31 @@ in the [finish preview](src/ui/foil-preview.html) after starting the local serve
 The [painted app surroundings](docs/APP_SURROUNDINGS.md) extend the card illustrations into the menu,
 Capital City banner, welcome screen and deck workshop, with locally bundled artwork and matching parchment frames.
 
+**New in v0.12.1 — fifteen towns, three weathers, and a floor that bites.** The six-deck pass below
+was rebuilt around the collection rather than around the six identities that happened to be tuned.
+
+- **Fifteen town decks.** The six below keep their names, species and studies and are joined by nine
+  more, until every species has three decks written for it and every study three or four. Copies are
+  capped at two (one for a Super Rare), so forty cards are twenty-odd different ones.
+- **Two-thirds of the collection on the table.** The six decks showed 123 distinct cards; the fifteen
+  show **249 of the 380 a deck may legally hold**, including every Town Building — which had never
+  been in a printed deck at all, because the builder only ever looked at Characters and Events.
+- **Three Capital Cities.** The Founders' Fair and the Lean Winter are joined by **The Hiring Fair**,
+  where the bidding is over labour rather than weather. The Fair now quarries the whole market
+  catalogue on purpose — it is the one to play to meet everything — while the Winter and the Hiring
+  Fair lean, and each still carves its own twelve virtues for the nine a game raises.
+- **The economy floor had stopped working, and that was most of the deck spread.** The v0.6.0 floor
+  counts cards that produce Supply or draw; once a shift counted as economy — which it plainly is —
+  almost every Character qualified and the floor was met by accident. Over 1260 games a deck's
+  **shift throughput** predicts its win rate better than anything else on the sheet (r = 0.78,
+  against 0.26 for the total power of its cards), and the three worst decks were all Owl decks, which
+  is the Owl charter working as written. A throughput floor took the spread from **49.5 points to
+  31.6**, and keeping the six pairings the six-deck pass had already settled took it to **19.0** —
+  tighter than the 24.4 the v0.6.0 pass managed over six decks, across fifteen. See the
+  [playtest notes](docs/PLAYTEST_NOTES.md).
+- **A latent bug in the card census, found by putting Buildings in decks:** a Town Building raised
+  out of a player's own deck was being counted as a Capital City card. No deck had ever held one.
+
 **New in v0.12.0 — six towns and two weathers.** The two decks that shipped with the game have been
 replaced by six, and the one Capital City by two markets that are not the same place twice.
 
@@ -73,9 +98,10 @@ card, every backstory, every painting. The eleven full-art portraits that were c
 cards now hang under the cards that took their places, and so do the five foil printings drawn for them,
 masks and all.
 
-- **Two doors, not three.** The cover opens on **Play** and **Book**. Play is the game: two decks
-  (Ledger & Larder, Bench & Bandstand), the First Workings Capital City, and a Deck Workshop that
-  builds out of the collection. Book is the gallery: all 462 cards at reading size, filters for type,
+- **Two doors, not three.** The cover opens on **Play** and **Book**. Play is the game: the printed
+  decks (two at the time; fifteen now), the Capital City (three of those now), and a Deck Workshop that
+  builds out of the collection. Book is the gallery: every card at reading size (502 of them today),
+  filters for type,
   species, study and printing, a search over names and rules text, and the **Story** panel with each
   character's backstory beside the flavor of every version of them.
 - **The tutorial is played on the Maker cards.** The seven-turn lesson is rewritten around Peanut, the
@@ -289,7 +315,7 @@ Then open http://localhost:8080/ in any modern browser. During play, use the **P
   **Quick start**, **The rules** in full, and **Questions & answers** — the twenty questions new Mayors
   ask most, from "why can't my cost-0 animal bid?" to "why did a card vanish from the Capital City?".
 
-The server (`scripts/serve.mjs`, no dependencies) sends every file with `Cache-Control: no-store`, so each reload plays exactly what is on disk. When it starts it prints the version and the folder it is serving; the book cover shows the same version line (e.g. `v0.11.0 · 462 cards · 2 decks · 1 Capital City`). If the two disagree, the browser is showing an old copy.
+The server (`scripts/serve.mjs`, no dependencies) sends every file with `Cache-Control: no-store`, so each reload plays exactly what is on disk. When it starts it prints the version and the folder it is serving; the book cover shows the same version line (e.g. `v0.12.1 · 502 cards · 15 decks · 3 Capital Cities`). If the two disagree, the browser is showing an old copy.
 
 ### Testing a fresh download
 
@@ -307,7 +333,7 @@ If you test by downloading the ZIP from GitHub and unzipping it:
 - `docs/ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md` - design reference and source of truth
 - `spec/game.json` - rules constants and prototype decisions
 - `spec/species.json` - the ten species charters (centre of gravity, hole, signature); the contract `npm run identity` checks
-- `spec/maker_card_set.json` - the collection, and the only card set the game reads: 462 cards, two 40-card town decks, and one Capital City with a quarry of fifteen Statues to raise nine from. It holds each character's backstory alongside their cards, the card types the game grew into — Town Buildings, and the nineteen Tokens — and each character's `wantedVerbs`, the effects their story wanted, with a `resolved` line once the engine can say it. A Market Deck is dealt as 9 Statues raised from its `statuePool` plus a 26-card sample of its own pool — 35 cards — topped up from that pool until at least three on-reveal cards are in it, so the market keeps one size while the display varies from game to game. Writing for it is documented in two files: [WRITING_A_CHARACTER.md](docs/WRITING_A_CHARACTER.md) (the process an agent follows to write one character's cards) and [TOWN_BIBLE.md](docs/TOWN_BIBLE.md) (the shared world every backstory must agree with)
+- `spec/maker_card_set.json` - the collection, and the only card set the game reads: 502 cards, 15 40-card town decks, and 3 Capital Cities, each with a quarry of twelve virtues to raise nine from. The decks and the Capital Cities are built by `npm run decks` from stated identities rather than hand-listed. It holds each character's backstory alongside their cards, the card types the game grew into — Town Buildings, and the nineteen Tokens — and each character's `wantedVerbs`, the effects their story wanted, with a `resolved` line once the engine can say it. A Market Deck is dealt as 9 Statues raised from its `statuePool` plus a 26-card sample of its own pool — 35 cards — topped up from that pool until at least three on-reveal cards are in it, so the market keeps one size while the display varies from game to game. Writing for it is documented in two files: [WRITING_A_CHARACTER.md](docs/WRITING_A_CHARACTER.md) (the process an agent follows to write one character's cards) and [TOWN_BIBLE.md](docs/TOWN_BIBLE.md) (the shared world every backstory must agree with)
 - `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`. `power.js` is the power/cost model that rates every card and assigns its rarity
 - `src/ai/` - agents: `random.js` (baseline), `heuristic.js` (opponent)
 - `src/ui/` - browser interface: `main.js` (the two doors, and the cover), `humanAgent.js`, `render.js`, `book.js` (the Book: every card, its printings and the Story panel), `versions.js` (the six printings and which cards have been painted in them), `deckbuilder.js` (the Deck Workshop), `help.js` (the welcome, quick start, rules and FAQ), `tutorial.js` (the coach chips), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations)
@@ -327,8 +353,8 @@ npm run power -- --type character           # ...one card type, or --rarity 'Sup
 npm run stamp                               # Restamp rarity/power on every card and reorder the set file
 npm run identity                            # Per-species and per-study effect profiles, similarity and power creep
 npm run identity -- --check                 # ...or fail if two species play alike, a signature is unused, or a set has crept
-npm run decks                              # Rebuild every printed deck from the current ratings
-npm run decks -- --only moon-mocha         # ...or only the decks named, leaving the others as printed
+npm run decks                              # Rebuild every printed deck and Capital City from the current ratings
+npm run decks -- --only mk-wall-window     # ...or only the town decks named, leaving the others as printed
 npm run decks -- --check                    # ...or just check the printed decks are legal
 npm run characters                         # Write docs/characters.csv and docs/character_versions.csv
 npm run characters:xlsx                    # ...and bind both into docs/character_versions.xlsx (needs openpyxl)

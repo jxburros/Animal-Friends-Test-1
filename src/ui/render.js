@@ -762,7 +762,12 @@ function openCharacterPopover(stack, groups, anchorEl) {
     const work = groups.byCharWork.get(stack.uid);
     if (work) actions.appendChild(h('button', { onclick: () => resolvePending(work) }, `Work a shift (${work.delay} turn${work.delay === 1 ? '' : 's'} → ${work.output} Supply)`));
     const ability = groups.byCharAbility.get(stack.uid);
-    if (ability) actions.appendChild(h('button', { onclick: () => resolvePending(ability) }, ability.selfReady ? 'Ready itself now (once per game)' : 'Use Busy ability'));
+    if (ability) {
+      // A Busy ability may carry a price in Supply; the button says so, because a Mayor deciding
+      // between working a shift and paying at a counter needs to see what the counter charges.
+      const fee = ability.cost ? ` — ${ability.cost} Supply` : '';
+      actions.appendChild(h('button', { onclick: () => resolvePending(ability) }, `${ability.selfReady ? 'Ready itself now (once per game)' : 'Use Busy ability'}${fee}`));
+    }
     const announceOpts = groups.byCharAnnounce.get(stack.uid);
     if (announceOpts && announceOpts.length) {
       actions.appendChild(h('button', {
@@ -1279,6 +1284,9 @@ const PICK_REASON_TEXT = {
   moveShiftTo: 'Give the shift to whom?',
   advance: 'Wake someone: turn a Character one step toward upright',
   scry: 'The top of your deck — choose any to put on the bottom (or keep them all)',
+  rehireFromAnywhere: 'Give somebody a shift — from either town’s Unemployment, or the City Dump',
+  searchDeck: 'Search your deck — take what you came for, then shuffle',
+  marketToBottom: 'Put one of these to the bottom of the Market Deck',
 };
 
 function optionFace(o) {

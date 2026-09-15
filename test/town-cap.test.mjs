@@ -122,6 +122,11 @@ describe('promoting out of Unemployment', () => {
     p.town = [];
     p.unemployment = [];
     const { low, high } = upgradePair();
+    // The opening hand is cleared first: the printed decks hold several versions of a Character and
+    // the obscured figures any dearer animal of their species may be played over, so a dealt hand
+    // can offer a second, cheaper promotion onto the same animal — and the assertion below is about
+    // the pair this test named, not whichever one the deal put first.
+    state.players[0].hand = [];
     const idle = addToUnemployment(state, 0, low.id);
     const card = addToHand(state, 0, high.id);
     setSupply(state, 0, 40);

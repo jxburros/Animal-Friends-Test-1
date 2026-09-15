@@ -122,6 +122,10 @@ function statuePriceFor(rules) {
 const MOD_VALUE = {
   recruitDiscount: 1.0,
   buildingDiscount: 1.2, // a Building is bought at auction against a rival, so a discount on one is a bid
+  // The assessor's mark-down: every lot in the Capital City is cheaper for this Mayor and nobody
+  // else. Dearer per point than a Building discount because it reaches the Statues too, and the
+  // Statue bought at the top tier is the dearest thing in the game.
+  lotDiscount: 1.1,
   challengeDiscount: 1.0,
   rehireDiscount: 1.0,
   shiftBonus: 1.2,
@@ -133,6 +137,24 @@ const MOD_VALUE = {
   eventCharReduction: 1.6,
   skipNextAdvance: -1.5,
   cancelNextReveal: 1.0,
+};
+
+/**
+ * How hard a rule of the room bends the game, per point of its printed value.
+ *
+ * An Ordinance is never bought and never in a deck, so this changes no copy limit and settles no
+ * argument about rarity. What it does is let the balance scripts see an Ordinance at all: a card
+ * that blocks every Statue purchase in the Capital City is not worth nothing, and until there were
+ * Ordinances on the shelf the model had no opinion about it. `value` is read as a magnitude — an
+ * Ordinance that makes Statues dearer and one that makes them cheaper bend the same game by the same
+ * amount, and which of the two Mayors it suits is a fact about the table, not about the card.
+ */
+const CITY_RULE_VALUE = {
+  blockStatuePurchase: 4.0, // the win condition itself, closed until the works are finished
+  statueCostDelta: 0.8, // per Supply on the dearest thing in the game
+  buildingCostDelta: 0.7,
+  pledgeLadderDelta: 2.4, // a rung on every ladder in the room
+  noRaises: 3.0, // every auction settles at its opening bid
 };
 
 const PASSIVE_VALUE = {
@@ -312,7 +334,9 @@ export function effectPower(eff) {
       // Looking is worth knowing what is coming. Putting the Capital City's deck back in a chosen
       // order is worth rather more than that: it is what both Mayors will be bidding on next, set
       // by one of them. Dearer per card than reordering your own deck, for exactly that reason.
-      return 0.4 * n(eff.count) * (eff.reorder ? 2 : 1);
+      // `toBottom` takes a lot off the table before either Mayor can bid on it, which is a different
+      // kind of thing again from knowing or ordering: it is a removal aimed at the Capital City.
+      return 0.4 * n(eff.count) * (eff.reorder ? 2 : 1) + (eff.toBottom ? 1.6 : 0);
     case 'peekOpponentHand':
       // Knowing what is coming, once: worth about a card's worth of not guessing, and worth it
       // whether the hand is full or nearly empty, which is why it is not counted per card.
@@ -342,8 +366,36 @@ export function effectPower(eff) {
     case 'takeFromCityDump':
       // A free Market card, chosen — but only from the ordinary ones that have already been used.
       return AVAILABLE.cityDump * 2.4;
-    case 'protectCharacter':
-      return 0.7; // worth what there is to be protected from, which is not much yet
+    case 'protectCharacter': {
+      // A shelter is worth what there is to be sheltered from, and there is a good deal more now:
+      // a protected animal is out of reach of Unemployment itself, not merely untargetable, and the
+      // collection sends animals to Unemployment several times a game. `turns` multiplies the
+      // cover, with diminishing returns — the second turn of a shield is worth less than the first,
+      // because most of what it stops was going to happen this round or not at all.
+      const turns = Math.max(1, n(eff.turns, 1));
+      const cover = 2.6 * (1 + 0.55 * (turns - 1));
+      // `everyone` shelters one animal in each town, so the rival gets the same cover you do. What
+      // the card is worth is your half less most of what theirs is worth to them.
+      return eff.everyone ? 0.4 * cover : cover;
+    }
+    case 'rehireFromAnywhere': {
+      // `rehire`, priced the same way, except for the reach. A rehire is discounted for availability
+      // because Unemployment stands empty in most towns for most of the game; this reads two more
+      // queues — the rival's Unemployment and the hired help in the City Dump — so it finds somebody
+      // far more often, and the extra queues are worth something in themselves: taking an animal out
+      // of the rival's Unemployment gains you a body and costs them the chance to buy one back.
+      const reach = eff.from ? eff.from.length : 3;
+      const avail = Math.min(0.95, AVAILABLE.unemployment * (1 + 0.45 * (reach - 1)));
+      const worth = BODY + (eff.free ? 3.2 : 0.4 + n(eff.discount, 0)) + (eff.filter ? -0.4 : 0) + 0.5 * (reach - 1);
+      return avail * worth;
+    }
+    case 'searchDeck': {
+      // A card you chose out of the whole deck, not a card the deck chose for you. Worth well over
+      // a draw, and worth more the narrower the filter is not: an unfiltered search finds the best
+      // card in forty, a search for one named card finds that card.
+      const narrow = eff.filter && (eff.filter.name || eff.filter.cost !== undefined);
+      return (DRAW * 1.9 + (narrow ? 0.6 : 0.2)) * n(eff.count);
+    }
     case 'moveShift':
       // Frees a working Character and keeps the work: worth most of a ready, plus the tempo.
       return READY * 0.9;
@@ -417,10 +469,33 @@ export function effectPower(eff) {
     case 'blockNextReady':
       return 2.4;
     case 'everyoneRehiresFree':
-      return 2.6;
+      // Both Mayors take the same number back, so what it is worth to the card's owner is the tempo
+      // of the rebuild rather than the bodies: the rival rebuilds too.
+      return 2.6 * (eff.count === undefined ? 1 : Math.min(3, eff.count));
     default:
       return 0;
   }
+}
+
+/**
+ * What one Supply handed back over a counter is worth, against one earned on the turn you wanted it.
+ *
+ * This is the whole reason an activated ability can be a Supply sink at all. The model's unit is a
+ * Supply gained when it was useful; the Supply an ability eats is the other kind — the fifty a Mayor
+ * is sitting on at the end of a game with nothing left to buy. Charging a fee at face value would
+ * rate every sink in the collection below zero, which is exactly the mispricing that left the game
+ * with no sinks to begin with.
+ */
+const SINK_SUPPLY = 0.35;
+
+/**
+ * How often an ability with a fee actually gets used. A free Busy ability is used whenever the
+ * animal is standing; one that costs ten Supply is used when a Mayor has ten Supply they would
+ * rather not have, which is not every turn. The fee shortens the ability's life and never lengthens
+ * it, and one use is the floor — a card nobody ever pays for would not be printed.
+ */
+function feeRuns(weight, fee) {
+  return fee > 0 ? Math.max(1, weight / (1 + fee / 5)) : weight;
 }
 
 /** An effect printed "once per game" (the Cat's self-ready) pays out once, whatever its trigger. */
@@ -438,9 +513,16 @@ function oncePerGame(eff) {
  */
 export function abilityPower(ab, runs) {
   if (!ab) return 0;
-  const weight = runs ?? (oncePerGame(ab.effect) ? 1 : TRIGGER_WEIGHT[ab.trigger] ?? 1);
-  const base = ab.trigger === 'passive' ? (PASSIVE_VALUE[ab.key] ?? 1.5) * (ab.value ?? 1) : effectPower(ab.effect) * weight;
-  const value = base * conditionFactor(ab.condition);
+  const asked = runs ?? (oncePerGame(ab.effect) ? 1 : TRIGGER_WEIGHT[ab.trigger] ?? 1);
+  const fee = ab.cost && typeof ab.cost.supply === 'number' ? ab.cost.supply : 0;
+  // A fee shortens the ability's life: it is used when the Mayor can and wants to pay, not every
+  // turn the animal is standing. Both halves are counted over the same shortened life, because you
+  // cannot have the effect without paying for it.
+  const weight = feeRuns(asked, fee);
+  const base = ab.trigger === 'passive' ? (PASSIVE_VALUE[ab.key] ?? 1.5) * (ab.value ?? 1)
+    : ab.trigger === 'displayed' ? (CITY_RULE_VALUE[ab.key] ?? 1.5) * Math.abs(ab.value ?? 1)
+      : effectPower(ab.effect) * weight;
+  const value = (base - fee * SINK_SUPPLY * weight) * conditionFactor(ab.condition);
   // A burden is the price of a Statue's boon, so it subtracts from the card's power.
   return ab.burden ? -Math.abs(value) : value;
 }
