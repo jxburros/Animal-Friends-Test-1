@@ -11,6 +11,33 @@ in the [finish preview](src/ui/foil-preview.html) after starting the local serve
 The [painted app surroundings](docs/APP_SURROUNDINGS.md) extend the card illustrations into the menu,
 Capital City banner, welcome screen and deck workshop, with locally bundled artwork and matching parchment frames.
 
+**New in v0.12.2 — a deck for every Legendary.** The collection carves ten Legendary cards and, until
+now, no printed deck was written around any of them: a one-copy card turned up in about a third of
+games and landed in a town arranged for something else. There are now **ten more decks, one per
+Legendary**, each built around that card as its engine.
+
+- **The card is the input.** Each of the ten states the Legendary it is built around and a `support`
+  rule saying what feeds it — Berry's town keeps animals in Unemployment worth rehiring for three
+  less, Clover's is nothing but animals she can pull out of hand for free, Annabelle's holds exactly
+  one Raccoon because her Supply and her card only come while she is the only one standing. The
+  Legendary is seeded before anything else and the support rule steers every pass of the builder, so
+  the deck is arranged around the card rather than holding it.
+- **Twenty-five decks, and three quarters of the collection.** The fifteen towns are untouched — their
+  printed lists are the ones playtest settled. Between all twenty-five, **303 of the 400 cards a deck
+  may legally hold** are in a printed list — 253 of them in the fifteen towns.
+- **Three builder bugs found by decks that had to reach further.** A marquee card the deck had no
+  room left for was still picked as the best earner, `take` refused it and the loop broke with the
+  deck under the throughput floor; the character top-up sorted the whole catalogue once and then took
+  a whole cost band in order, which is how a deck ends up with thirteen cost-3 animals; and a heavy
+  support weight buys engine pieces with card quality — the first cut of Apron & Hook weighted every
+  mention of `rehire` at 4, hired the borough's slowest Otters because their cards say the word, and
+  won 21% of 240 games. At a weight of 2, with a town that can pay behind it, the same identity wins
+  about half.
+- **Measured over 4500 games** (see the [Legendary decks](docs/LEGENDARY_DECKS.md)), all twenty-five decks and all three Capital Cities, heuristic on both
+  seats: the ten win between **42.8% and 69.5%**, against 32.0% to 62.4% for the fifteen towns. The
+  two at the top are Betty's hedgerow and Biff's beat, both a few points above the strongest printed
+  town.
+
 **New in v0.12.1 — fifteen towns, three weathers, and a floor that bites.** The six-deck pass below
 was rebuilt around the collection rather than around the six identities that happened to be tuned.
 
@@ -278,7 +305,7 @@ A hired Character is **retained labour, not a citizen**: they may be hired for a
 
 **Species and study** — species is what a card *is*, study is what it *does*. Species is a design space, not a keyword: each of the ten owns a centre of gravity, a hole and a signature effect (Rabbits arrive in crowds; Badgers shrug off shocks; Raccoons work the City Dump; Squirrels put Supply by; Cats act when they should not be able to; Owls wake the town before dawn). The charters live in `spec/species.json` and `npm run identity` fails the build if two species stop playing differently. Studies — Agriculture, Civics, Commerce, Crafts, Lore, Science — are the horizontal axis that cuts across species.
 
-**Decks** — six 40-card decks ship with the game: **Tin & Tally** (Squirrels and Otters of Commerce and Agriculture), **Gavel & Ribbon** (Foxes and Raccoons of Civics and Crafts), **Lamp & Lens** (Owls and Foxes of Science and Commerce), **Larder & Long Table** (Hedgehogs and Mice of Food and Crafts), **Bandstand & Bell** (Rabbits and Cats of Entertainment and Civics) and **Ledger & Legend** (Badgers and Raccoons of Commerce and Lore). Between them they field all ten species and all eight studies, and they hold 123 distinct cards. They are built by `npm run decks` rather than hand-listed — the identity is the whole input, so which two species and which two studies a deck is written for is also its power level, and these six were settled by playtest: over every ordered pairing on both markets they win between 46% and 56% of their games. You can also build your own in the **Deck Workshop**: 40 to 50 cards of Characters, Events and Town Buildings, with copies capped by rarity. There is no Character floor and no Event ceiling — the deck is yours to get wrong, and the Workshop warns rather than refuses when a full-size deck holds six animals or fewer. Each Mayor may **mulligan once, free**. Custom decks are saved in the browser.
+**Decks** — twenty-five 40-card decks ship with the game. **Fifteen town decks** are written as identities — two species and two studies — beginning with the six the six-deck pass settled: **Tin & Tally** (Squirrels and Otters of Commerce and Agriculture), **Gavel & Ribbon** (Foxes and Raccoons of Civics and Crafts), **Lamp & Lens** (Owls and Foxes of Science and Commerce), **Larder & Long Table** (Hedgehogs and Mice of Food and Crafts), **Bandstand & Bell** (Rabbits and Cats of Entertainment and Civics) and **Ledger & Legend** (Badgers and Raccoons of Commerce and Lore). Between them the fifteen field all ten species and all eight studies. **Ten more are written around a card**: one for each Legendary in the collection, which the deck holds from the first pass of the builder and is arranged to pay off — Berry's guild bench, Biff's beat, Betty's knife and her hedgerow, Clover's seedling row, The Quill Wall, Quill's barn social and her harvest, Gwen's apron, and Annabelle's one Raccoon. All of them are built by `npm run decks` rather than hand-listed — the identity, and for the ten the card, is the whole input, so what a deck is written for is also its power level. Over every ordered pairing on all three markets the fifteen towns win between 32% and 62% of their games and the ten Legendary decks between 43% and 70%. You can also build your own in the **Deck Workshop**: 40 to 50 cards of Characters, Events and Town Buildings, with copies capped by rarity. There is no Character floor and no Event ceiling — the deck is yours to get wrong, and the Workshop warns rather than refuses when a full-size deck holds six animals or fewer. Each Mayor may **mulligan once, free**. Custom decks are saved in the browser.
 
 ## Play it online
 
@@ -320,7 +347,7 @@ Then open http://localhost:8080/ in any modern browser. During play, use the **P
   **Quick start**, **The rules** in full, and **Questions & answers** — the twenty questions new Mayors
   ask most, from "why can't my cost-0 animal bid?" to "why did a card vanish from the Capital City?".
 
-The server (`scripts/serve.mjs`, no dependencies) sends every file with `Cache-Control: no-store`, so each reload plays exactly what is on disk. When it starts it prints the version and the folder it is serving; the book cover shows the same version line (e.g. `v0.12.1 · 528 cards · 15 decks · 3 Capital Cities`). If the two disagree, the browser is showing an old copy.
+The server (`scripts/serve.mjs`, no dependencies) sends every file with `Cache-Control: no-store`, so each reload plays exactly what is on disk. When it starts it prints the version and the folder it is serving; the book cover shows the same version line (e.g. `v0.12.2 · 528 cards · 25 decks · 3 Capital Cities`). If the two disagree, the browser is showing an old copy.
 
 ### Testing a fresh download
 
