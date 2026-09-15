@@ -623,6 +623,412 @@
     "mk_pebble_ferry_master_3": 1,
     "mk_hazel_guildmaster_3": 1
    }
+  },
+  {
+   "id": "mk-warden-bench",
+   "name": "Warden & Bench",
+   "species": [
+    "Hedgehog",
+    "Badger"
+   ],
+   "studies": [
+    "Civics",
+    "Crafts"
+   ],
+   "blurb": "Hedgehogs and Badgers of Civics and Crafts, built around Berry, Guild Warden: the town that hires its own back. Berry stands up, somebody out of work is behind the bench again three Supply cheaper, and whoever the rival was about to reach for is out of reach.",
+   "list": {
+    "mk_berry_guild_warden_5": 1,
+    "mk_moss_timber_hand_0": 2,
+    "mk_adam_road_mender_1": 2,
+    "mk_betty_whittler_1": 1,
+    "mk_oatmeal_ward_clerk_1": 2,
+    "mk_berry_committee_2": 2,
+    "mk_oatmeal_safety_inspector_2": 2,
+    "mk_biff_beat_constable_2": 1,
+    "mk_morty_watermill_mechanic_3": 2,
+    "mk_moss_guild_architect_3": 2,
+    "mk_betty_firework_maker_3": 1,
+    "mk_biff_chief_constable_4": 1,
+    "mk_berry_workshop_elder_4": 2,
+    "mk_oatmeal_alderman_5": 1,
+    "mk_tb_quill_wall": 1,
+    "mk_tb_rosabeths_gate": 2,
+    "mk_ev_the_marks_are_struck": 2,
+    "mk_fair_hearing": 2,
+    "mk_tool_lending_day": 2,
+    "mk_guild_night": 2,
+    "mk_moss_rehiring_day": 2,
+    "mk_oatmeals_awning": 2,
+    "mk_adam_surveyor_of_ways_4": 1,
+    "mk_andrew_hand_copyist_3": 1,
+    "mk_quill_orchard_keeper_2": 1
+   }
+  },
+  {
+   "id": "mk-whistle-lamp",
+   "name": "Whistle & Lamp",
+   "species": [
+    "Hedgehog",
+    "Fox"
+   ],
+   "studies": [
+    "Civics",
+    "Lore"
+   ],
+   "blurb": "Hedgehogs and Foxes of Civics and Lore, built around Biff, Chief Constable: two of theirs put back to work and one of yours found something to do, every time he stands up. A town that wins the turn rather than the card.",
+   "list": {
+    "mk_biff_chief_constable_4": 1,
+    "mk_biff_cadet_constable_0": 2,
+    "mk_juniper_messenger_1": 1,
+    "mk_tabitha_lens_apprentice_1": 2,
+    "mk_mandee_night_courier_1": 1,
+    "mk_biff_beat_constable_2": 1,
+    "mk_berry_committee_2": 2,
+    "mk_tabitha_videographer_2": 1,
+    "mk_juniper_courier_captain_2": 2,
+    "mk_roger_circuit_judge_3": 2,
+    "mk_finn_fair_warden_3": 2,
+    "mk_juniper_ward_councillor_3": 2,
+    "mk_tabitha_optics_scientist_4": 1,
+    "mk_mandee_keeper_of_tales_4": 2,
+    "mk_roger_ombudsman_5": 2,
+    "mk_tb_rosabeths_gate": 2,
+    "mk_tb_gwens_counter": 1,
+    "mk_fair_hearing": 2,
+    "mk_biffs_beat": 2,
+    "mk_mandees_forecast": 2,
+    "mk_liz_weighbridge_keeper_4": 1,
+    "mk_kevin_counter_hand_2": 1,
+    "mk_bob_the_morning_they_share_1": 2,
+    "mk_tabitha_camerawoman_5": 1,
+    "mk_earl_tea_boy_0": 1,
+    "mk_earl_coffee_roaster_3": 1
+   }
+  },
+  {
+   "id": "mk-knife-kindling",
+   "name": "Knife & Kindling",
+   "species": [
+    "Hedgehog",
+    "Mouse"
+   ],
+   "studies": [
+    "Crafts",
+    "Commerce"
+   ],
+   "blurb": "Hedgehogs and Mice of Crafts and Commerce, built around Betty, Whittler: a Supply back on the turn she arrives and nothing the rival can do about her. The cheapest animal in the borough, in the deck that plays four of its friends behind her.",
+   "list": {
+    "mk_betty_whittler_1": 1,
+    "mk_berry_tinker_0": 1,
+    "mk_bella_forager_0": 1,
+    "mk_osh_round_sharpener_1": 2,
+    "mk_copper_scale_polisher_1": 2,
+    "mk_rosabeth_tincture_maker_2": 2,
+    "mk_bob_gate_tolls_2": 2,
+    "mk_daniel_canal_cartographer_2": 1,
+    "mk_betty_firework_maker_3": 2,
+    "mk_pockets_odd_lot_dealer_3": 2,
+    "mk_quill_cider_maker_3": 1,
+    "mk_berry_workshop_elder_4": 2,
+    "mk_rosabeth_tincture_counter_4": 2,
+    "mk_maribel_seed_bank_director_5": 2,
+    "mk_tb_quill_wall": 1,
+    "mk_tb_rosabeths_gate": 2,
+    "mk_hedge_apothecary": 2,
+    "mk_a_word_beforehand": 2,
+    "mk_guild_night": 2,
+    "mk_tool_lending_day": 2,
+    "mk_ledger_day": 2,
+    "mk_andrew_keeper_of_the_late_desk_2": 1,
+    "mk_andrew_hand_copyist_3": 1,
+    "mk_muffled_hedgehog_stall_hand_0": 1,
+    "mk_bella_ecologist_5": 1
+   }
+  },
+  {
+   "id": "mk-hedge-horizon",
+   "name": "Hedge & Horizon",
+   "species": [
+    "Hedgehog",
+    "Rabbit"
+   ],
+   "studies": [
+    "Agriculture",
+    "Civics"
+   ],
+   "blurb": "Hedgehogs and Rabbits of Agriculture and Civics, built around Betty, Land Clearer: four seasons of noise on the far hedgerow and the best ground in the borough at the end of it. The deck exists to get her upright early and then again sooner than she ought to be.",
+   "list": {
+    "mk_betty_land_clearer_5": 1,
+    "mk_betty_barn_sweeper_0": 2,
+    "mk_clover_plot_sharer_1": 1,
+    "mk_eric_smallholder_1": 2,
+    "mk_betty_whittler_1": 1,
+    "mk_betty_stump_blaster_2": 2,
+    "mk_biff_beat_constable_2": 1,
+    "mk_quill_orchard_keeper_2": 2,
+    "mk_clover_community_gardener_3": 1,
+    "mk_liza_top_of_the_bill_3": 2,
+    "mk_hibiscus_round_walker_3": 2,
+    "mk_eric_row_boss_4": 2,
+    "mk_maribel_horticulturist_4": 1,
+    "mk_hibiscus_postmaster_5": 1,
+    "mk_tb_berrys_bench": 2,
+    "mk_tb_coppers_cellar": 1,
+    "mk_the_root_cellar": 2,
+    "mk_glut_of_squash": 2,
+    "mk_warren_muster": 2,
+    "mk_hibiscuss_post_route": 2,
+    "mk_the_cider_social": 2,
+    "mk_clovers_seed_drive": 2,
+    "mk_eric_best_farmer_5": 1,
+    "mk_sage_frost_watch_2": 1,
+    "mk_peter_hedgelayer_3": 1,
+    "mk_bob_the_morning_they_share_1": 1
+   }
+  },
+  {
+   "id": "mk-can-row",
+   "name": "Can & Row",
+   "species": [
+    "Rabbit",
+    "Mouse"
+   ],
+   "studies": [
+    "Agriculture",
+    "Entertainment"
+   ],
+   "blurb": "Rabbits and Mice of Agriculture and Entertainment, built around Clover, Seedling Helper: free, and brings somebody smaller still along by the other handle. Every animal in this town is one Clover can pull out of your hand for nothing.",
+   "list": {
+    "mk_clover_seedling_helper_0": 1,
+    "mk_bella_forager_0": 1,
+    "mk_clover_plot_sharer_1": 1,
+    "mk_eric_smallholder_1": 2,
+    "mk_rosabeth_garden_hand_1": 2,
+    "mk_maribel_seed_bank_clerk_2": 2,
+    "mk_daniel_canal_cartographer_2": 2,
+    "mk_rosabeth_tincture_maker_2": 1,
+    "mk_clover_community_gardener_3": 1,
+    "mk_liza_top_of_the_bill_3": 2,
+    "mk_bella_wildlife_warden_3": 2,
+    "mk_maribel_horticulturist_4": 2,
+    "mk_eric_row_boss_4": 2,
+    "mk_clover_master_botanist_5": 2,
+    "mk_tb_quill_wall": 1,
+    "mk_tb_rosabeths_gate": 2,
+    "mk_the_root_cellar": 2,
+    "mk_glut_of_squash": 2,
+    "mk_warren_muster": 2,
+    "mk_clovers_seed_drive": 2,
+    "mk_rosabeths_rounds": 2,
+    "mk_abigail_five_minutes_2": 1,
+    "mk_andrew_hand_copyist_3": 1,
+    "mk_rosabeth_herb_gatherer_0": 1,
+    "mk_liza_headliner_5": 1
+   }
+  },
+  {
+   "id": "mk-gate-wall",
+   "name": "Gate & Wall",
+   "species": [
+    "Hedgehog",
+    "Otter"
+   ],
+   "studies": [
+    "Crafts",
+    "Civics"
+   ],
+   "blurb": "Hedgehogs and Otters of Crafts and Civics, built around The Quill Wall: four animals to raise it and, from then on, nobody of yours goes to Unemployment by anybody else’s doing. It is not much of a wall. Nothing has ever got over it.",
+   "list": {
+    "mk_tb_quill_wall": 1,
+    "mk_berry_tinker_0": 1,
+    "mk_biff_cadet_constable_0": 1,
+    "mk_betty_whittler_1": 1,
+    "mk_taco_cart_cook_1": 2,
+    "mk_bob_the_morning_they_share_1": 2,
+    "mk_benjamin_lantern_maker_2": 2,
+    "mk_biff_beat_constable_2": 1,
+    "mk_berry_committee_2": 2,
+    "mk_betty_firework_maker_3": 2,
+    "mk_benjamin_town_historian_3": 1,
+    "mk_brooke_regatta_caller_3": 2,
+    "mk_berry_workshop_elder_4": 2,
+    "mk_abigail_best_waitress_4": 1,
+    "mk_brooke_riverwright_5": 2,
+    "mk_tb_the_long_awning": 2,
+    "mk_ev_never_handed_back": 2,
+    "mk_ev_the_marks_are_struck": 2,
+    "mk_tool_lending_day": 2,
+    "mk_guild_night": 2,
+    "mk_fair_hearing": 2,
+    "mk_fresh_batch": 2,
+    "mk_abigail_five_minutes_2": 1,
+    "mk_andrew_hand_copyist_3": 1,
+    "mk_betty_powder_chemist_4": 1
+   }
+  },
+  {
+   "id": "mk-barrel-bonfire",
+   "name": "Barrel & Bonfire",
+   "species": [
+    "Hedgehog",
+    "Mouse"
+   ],
+   "studies": [
+    "Food",
+    "Lore"
+   ],
+   "blurb": "Hedgehogs and Mice of Food and Lore, built around Quill, Cider Maker: the social runs in the barn from September to February and the bonfires happen whenever she can invent a reason. A Supply and a shielded neighbour every time she comes upright, so the town is arranged to make that happen twice a round.",
+   "list": {
+    "mk_quill_cider_maker_3": 1,
+    "mk_daniel_ink_mixer_0": 2,
+    "mk_daniel_chart_copier_1": 2,
+    "mk_betty_whittler_1": 1,
+    "mk_rosabeth_garden_hand_1": 2,
+    "mk_daniel_canal_cartographer_2": 2,
+    "mk_bella_field_recorder_2": 2,
+    "mk_biff_beat_constable_2": 1,
+    "mk_bean_barista_3": 2,
+    "mk_gwen_diner_keeper_3": 2,
+    "mk_daniel_master_cartographer_4": 1,
+    "mk_gwen_apron_on_the_hook_4": 1,
+    "mk_bella_science_hall_fellow_4": 1,
+    "mk_quinn_keeper_of_the_record_5": 2,
+    "mk_tb_berrys_bench": 2,
+    "mk_tb_rosabeths_gate": 1,
+    "mk_reading_lanterns": 2,
+    "mk_fresh_batch": 2,
+    "mk_the_long_night_at_earls": 2,
+    "mk_hedge_apothecary": 2,
+    "mk_beans_coffee_break": 2,
+    "mk_bean_proprietor_5": 1,
+    "mk_andrew_keeper_of_the_late_desk_2": 1,
+    "mk_andrew_hand_copyist_3": 1,
+    "mk_betty_powder_chemist_4": 1,
+    "mk_cassadee_stage_hand_0": 1
+   }
+  },
+  {
+   "id": "mk-basket-ladder",
+   "name": "Basket & Ladder",
+   "species": [
+    "Hedgehog",
+    "Badger"
+   ],
+   "studies": [
+    "Agriculture",
+    "Commerce"
+   ],
+   "blurb": "Hedgehogs and Badgers of Agriculture and Commerce, built around Quill, Harvest Steward: seven Supply off one shift, a neighbour nobody can touch, and not one animal of yours sent to Unemployment while she is up. The long shifts behind her are the whole point of keeping them safe.",
+   "list": {
+    "mk_quill_harvest_steward_5": 1,
+    "mk_quill_orchard_hand_0": 1,
+    "mk_berry_tinker_0": 1,
+    "mk_betty_whittler_1": 1,
+    "mk_moss_ploughwright_1": 2,
+    "mk_oatmeal_ward_clerk_1": 2,
+    "mk_quill_orchard_keeper_2": 2,
+    "mk_morty_grain_miller_2": 2,
+    "mk_betty_stump_blaster_2": 1,
+    "mk_quill_cider_maker_3": 1,
+    "mk_betty_firework_maker_3": 2,
+    "mk_thistle_grange_warden_3": 2,
+    "mk_berry_workshop_elder_4": 2,
+    "mk_orien_survey_computer_4": 1,
+    "mk_thistle_grange_elder_5": 1,
+    "mk_tb_the_long_awning": 2,
+    "mk_tb_rosabeths_gate": 1,
+    "mk_the_root_cellar": 2,
+    "mk_glut_of_squash": 2,
+    "mk_the_cider_social": 2,
+    "mk_thistles_grange_supper": 2,
+    "mk_tool_lending_day": 2,
+    "mk_guild_night": 2,
+    "mk_orien_town_planner_5": 1,
+    "mk_sage_frost_watch_2": 1,
+    "mk_andrew_hand_copyist_3": 1
+   }
+  },
+  {
+   "id": "mk-apron-hook",
+   "name": "Apron & Hook",
+   "species": [
+    "Mouse",
+    "Otter"
+   ],
+   "studies": [
+    "Food",
+    "Commerce"
+   ],
+   "blurb": "Mice and Otters of Food and Commerce, built around Gwen, The Apron on the Hook: she works while she is Busy, and what she does with the hour is put somebody on — out of either town’s Unemployment, or off the floor of the City Dump, two Supply cheaper and upright on arrival. It has never mattered to her whose books you were on.",
+   "list": {
+    "mk_gwen_apron_on_the_hook_4": 1,
+    "mk_willow_the_harbour_office_0": 2,
+    "mk_abigail_counter_girl_1": 2,
+    "mk_taco_cart_cook_1": 2,
+    "mk_gwen_anybodys_counter_2": 2,
+    "mk_taco_the_four_oclock_cart_2": 1,
+    "mk_willow_toll_keeper_2": 2,
+    "mk_gwen_diner_keeper_3": 2,
+    "mk_pebble_ferry_master_3": 1,
+    "mk_benjamin_town_historian_3": 1,
+    "mk_brooke_regatta_caller_3": 1,
+    "mk_benjamin_master_lantern_maker_4": 1,
+    "mk_willow_harbourmaster_4": 1,
+    "mk_gwen_owner_of_the_diner_5": 2,
+    "mk_tb_rosabeths_gate": 2,
+    "mk_tb_the_long_awning": 1,
+    "mk_ev_never_handed_back": 2,
+    "mk_fresh_batch": 2,
+    "mk_the_long_night_at_earls": 2,
+    "mk_a_word_beforehand": 2,
+    "mk_ledger_day": 2,
+    "mk_abigail_best_waitress_4": 1,
+    "mk_abigail_five_minutes_2": 1,
+    "mk_andrew_hand_copyist_3": 1,
+    "mk_marmalade_harvest_head_baker_5": 1,
+    "mk_gwen_short_order_cook_1": 1,
+    "mk_pebble_crossing_hand_0": 1
+   }
+  },
+  {
+   "id": "mk-paper-lamplight",
+   "name": "Paper & Lamplight",
+   "species": [
+    "Owl",
+    "Cat"
+   ],
+   "studies": [
+    "Lore",
+    "Science"
+   ],
+   "blurb": "Owls and Cats of Lore and Science, built around Annabelle, Last One Up: two Supply and a card every turn she is the only Raccoon standing — so this is a town with exactly one Raccoon in it, and everybody else is awake at that hour anyway.",
+   "list": {
+    "mk_annabelle_last_one_up_2": 1,
+    "mk_sage_night_assistant_0": 1,
+    "mk_andrew_night_copyist_0": 1,
+    "mk_sota_lens_grinder_1": 2,
+    "mk_inkwell_bookmark_keeper_1": 2,
+    "mk_inkwell_storyteller_2": 2,
+    "mk_jessica_night_school_teacher_2": 2,
+    "mk_inkwell_night_librarian_3": 1,
+    "mk_comet_test_pilot_3": 2,
+    "mk_sage_astronomer_3": 2,
+    "mk_jessica_headmistress_4": 2,
+    "mk_inkwell_astronomer_4": 1,
+    "mk_inkwell_keeper_of_stories_5": 2,
+    "mk_tb_the_builders_rest": 1,
+    "mk_tb_chit_press": 2,
+    "mk_reading_lanterns": 2,
+    "mk_inkwells_late_shift": 2,
+    "mk_inkwells_star_chart": 2,
+    "mk_hall_lecture": 2,
+    "mk_night_round": 2,
+    "mk_jessicas_night_class": 2,
+    "mk_andrew_keeper_of_the_late_desk_2": 1,
+    "mk_andrew_hand_copyist_3": 1,
+    "mk_copper_cellar_keeper_4": 1,
+    "mk_copper_scale_polisher_1": 1
+   }
   }
  ],
  "characters": [

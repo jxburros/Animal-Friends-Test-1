@@ -85,7 +85,7 @@ const TOP_RARITY_CAP = 5;
  * ones that pass measured. The nine after them widen the roster until every species has three decks
  * written for it, which is what the coverage in the header is bought with.
  */
-const IDENTITIES = [
+const TOWNS = [
   { id: 'mk-tin-tally', name: 'Tin & Tally', species: ['Squirrel', 'Otter'], studies: ['Commerce', 'Agriculture'],
     blurb: 'Squirrels and Otters of Commerce and Agriculture: the long shift is the whole plan. Every animal works, every shift is costed twice, and the tin behind the desk is fuller than the ledger admits.' },
   { id: 'mk-gavel-ribbon', name: 'Gavel & Ribbon', species: ['Fox', 'Raccoon'], studies: ['Civics', 'Crafts'],
@@ -117,6 +117,117 @@ const IDENTITIES = [
   { id: 'mk-towpath-bazaar', name: 'Towpath & Bazaar', species: ['Otter', 'Raccoon'], studies: ['Agriculture', 'Entertainment'],
     blurb: 'Otters and Raccoons of Agriculture and Entertainment: everything the borough throws out turns up on a trestle by the allotment gate, and by evening somebody is singing over it.' },
 ];
+
+/**
+ * What a Character earns per turn on shift, and 0 for anything that does not work.
+ *
+ * Every `support` below leans on this as well as on its own engine, and it is not decoration. A
+ * support weight competes with the species and study bonuses, so a heavy one buys engine pieces with
+ * card quality: the first cut of the Apron & Hook deck weighted every mention of `rehire` at 4, took
+ * the borough's slowest Otters because their cards say the word, and won 21% of 240 games. The same
+ * identity, its engine weighted at 2 and a town that can pay behind it, wins half.
+ */
+const worksFor = (c) => (c.type === 'character' && c.shift && c.shift.delay ? c.shift.output / c.shift.delay : 0);
+
+/**
+ * The legendary decks: one deck for each of the ten Legendary cards, written around that card.
+ *
+ * A town deck above is an identity — two species and two studies — and the builder fills it with
+ * whatever fits. That is a fine way to print a tour of the collection and a poor way to meet a
+ * Legendary: a one-copy card in a forty-card deck turns up in about a third of games, and when it
+ * does it wants a town already arranged for what it does. So each deck here states an `anchor` (the
+ * Legendary it is built around, seeded into the list before anything else) and a `support` function
+ * that says what feeds it — the cards that make its ability worth the slot. `support` adds to
+ * affinity, so it steers every pass of the builder rather than bolting a few cards on the end, and
+ * it may go negative: Annabelle only pays out while she is the only Raccoon standing, so her deck is
+ * written to keep her that way.
+ *
+ * The anchor's own species and studies are not automatically the deck's. Most of the time they are,
+ * because the animals who work alongside her are the ones her ability reaches; where the card says
+ * otherwise, the identity says otherwise too.
+ */
+const LEGENDS = [
+  {
+    id: 'mk-warden-bench', name: 'Warden & Bench', anchor: 'mk_berry_guild_warden_5',
+    species: ['Hedgehog', 'Badger'], studies: ['Civics', 'Crafts'],
+    blurb: 'Hedgehogs and Badgers of Civics and Crafts, built around Berry, Guild Warden: the town that hires its own back. Berry stands up, somebody out of work is behind the bench again three Supply cheaper, and whoever the rival was about to reach for is out of reach.',
+    support: (c, m) => (m(/rehire|nemploy/) ? 2 : 0) + (c.type === 'character' && c.cost >= 3 ? 1 : 0)
+      + (worksFor(c) >= 1.5 ? 2 : 0),
+  },
+  {
+    id: 'mk-whistle-lamp', name: 'Whistle & Lamp', anchor: 'mk_biff_chief_constable_4',
+    species: ['Hedgehog', 'Fox'], studies: ['Civics', 'Lore'],
+    blurb: 'Hedgehogs and Foxes of Civics and Lore, built around Biff, Chief Constable: two of theirs put back to work and one of yours found something to do, every time he stands up. A town that wins the turn rather than the card.',
+    support: (c, m) => (m(/makeBusy|endShift|endAllShifts|blockNextReady/) ? 2 : 0) + (m(/rehire/) ? 1 : 0)
+      + (worksFor(c) >= 1.5 ? 2 : 0),
+  },
+  {
+    id: 'mk-knife-kindling', name: 'Knife & Kindling', anchor: 'mk_betty_whittler_1',
+    species: ['Hedgehog', 'Mouse'], studies: ['Crafts', 'Commerce'],
+    blurb: 'Hedgehogs and Mice of Crafts and Commerce, built around Betty, Whittler: a Supply back on the turn she arrives and nothing the rival can do about her. The cheapest animal in the borough, in the deck that plays four of its friends behind her.',
+    support: (c, m) => (c.type === 'character' && c.cost <= 2 ? 2 : 0)
+      + (c.type === 'character' && c.cost >= 4 ? -1 : 0)
+      + (m(/onRecruit|recruitFromHand/) ? 2 : 0)
+      + (worksFor(c) >= 1.5 ? 2 : 0),
+  },
+  {
+    id: 'mk-hedge-horizon', name: 'Hedge & Horizon', anchor: 'mk_betty_land_clearer_5',
+    species: ['Hedgehog', 'Rabbit'], studies: ['Agriculture', 'Civics'],
+    blurb: 'Hedgehogs and Rabbits of Agriculture and Civics, built around Betty, Land Clearer: four seasons of noise on the far hedgerow and the best ground in the borough at the end of it. The deck exists to get her upright early and then again sooner than she ought to be.',
+    support: (c, m) => (m(/advanceCharacter|readyCharacter/) ? 2 : 0) + (m(/gainSupply/) ? 1 : 0)
+      + (worksFor(c) >= 1.5 ? 2 : 0),
+  },
+  {
+    id: 'mk-can-row', name: 'Can & Row', anchor: 'mk_clover_seedling_helper_0',
+    species: ['Rabbit', 'Mouse'], studies: ['Agriculture', 'Entertainment'],
+    blurb: 'Rabbits and Mice of Agriculture and Entertainment, built around Clover, Seedling Helper: free, and brings somebody smaller still along by the other handle. Every animal in this town is one Clover can pull out of your hand for nothing.',
+    support: (c, m) => (c.type === 'character' && c.cost <= 2 ? 3 : 0)
+      + (c.type === 'character' && c.cost >= 4 ? -2 : 0)
+      + (m(/onRecruit/) ? 1 : 0)
+      + (worksFor(c) >= 1.5 ? 2 : 0),
+  },
+  {
+    id: 'mk-gate-wall', name: 'Gate & Wall', anchor: 'mk_tb_quill_wall',
+    species: ['Hedgehog', 'Otter'], studies: ['Crafts', 'Civics'],
+    blurb: 'Hedgehogs and Otters of Crafts and Civics, built around The Quill Wall: four animals to raise it and, from then on, nobody of yours goes to Unemployment by anybody else\u2019s doing. It is not much of a wall. Nothing has ever got over it.',
+    support: (c, m) => (c.type === 'townBuilding' ? 4 : 0)
+      + (c.type === 'character' && c.cost <= 2 ? 1 : 0)
+      + (m(/unemploymentShield|protectCharacter/) ? 1 : 0)
+      + (worksFor(c) >= 1.5 ? 2 : 0),
+  },
+  {
+    id: 'mk-barrel-bonfire', name: 'Barrel & Bonfire', anchor: 'mk_quill_cider_maker_3',
+    species: ['Hedgehog', 'Mouse'], studies: ['Food', 'Lore'],
+    blurb: 'Hedgehogs and Mice of Food and Lore, built around Quill, Cider Maker: the social runs in the barn from September to February and the bonfires happen whenever she can invent a reason. A Supply and a shielded neighbour every time she comes upright, so the town is arranged to make that happen twice a round.',
+    support: (c, m) => (m(/advanceCharacter|readyCharacter/) ? 2 : 0) + (m(/"onReady"/) ? 1 : 0)
+      + (worksFor(c) >= 1.5 ? 2 : 0),
+  },
+  {
+    id: 'mk-basket-ladder', name: 'Basket & Ladder', anchor: 'mk_quill_harvest_steward_5',
+    species: ['Hedgehog', 'Badger'], studies: ['Agriculture', 'Commerce'],
+    blurb: 'Hedgehogs and Badgers of Agriculture and Commerce, built around Quill, Harvest Steward: seven Supply off one shift, a neighbour nobody can touch, and not one animal of yours sent to Unemployment while she is up. The long shifts behind her are the whole point of keeping them safe.',
+    support: (c, m) => (c.type === 'character' && c.shift && c.shift.output >= 4 ? 2 : 0)
+      + (m(/unemploymentShield|protectCharacter/) ? 2 : 0)
+      + (worksFor(c) >= 1.5 ? 2 : 0),
+  },
+  {
+    id: 'mk-apron-hook', name: 'Apron & Hook', anchor: 'mk_gwen_apron_on_the_hook_4',
+    species: ['Mouse', 'Otter'], studies: ['Food', 'Commerce'],
+    blurb: 'Mice and Otters of Food and Commerce, built around Gwen, The Apron on the Hook: she works while she is Busy, and what she does with the hour is put somebody on \u2014 out of either town\u2019s Unemployment, or off the floor of the City Dump, two Supply cheaper and upright on arrival. It has never mattered to her whose books you were on.',
+    support: (c, m) => (m(/rehire|nemploy/) ? 2 : 0) + (m(/"busy"/) ? 2 : 0)
+      + (worksFor(c) >= 1.5 ? 2 : 0),
+  },
+  {
+    id: 'mk-paper-lamplight', name: 'Paper & Lamplight', anchor: 'mk_annabelle_last_one_up_2',
+    species: ['Owl', 'Cat'], studies: ['Lore', 'Science'],
+    blurb: 'Owls and Cats of Lore and Science, built around Annabelle, Last One Up: two Supply and a card every turn she is the only Raccoon standing \u2014 so this is a town with exactly one Raccoon in it, and everybody else is awake at that hour anyway.',
+    support: (c, m) => (c.species === 'Raccoon' ? -8 : 0) + (m(/"draw"/) ? 2 : 0) + (m(/protectCharacter/) ? 1 : 0)
+      + (worksFor(c) >= 1.5 ? 2 : 0),
+  },
+];
+
+/** Every printed deck: the fifteen town identities, then one deck for each Legendary. */
+const IDENTITIES = [...TOWNS, ...LEGENDS];
 
 /**
  * The Capital Cities. A market deck is a quarry of Statues and a pool of lots to deal a sample from,
@@ -187,7 +298,20 @@ const pick = (ident) => (a, b) => affinity(b, ident) - affinity(a, ident)
   || score(b) - score(a)
   || a.id.localeCompare(b.id);
 
-/** How well a card fits an identity: its own species and studies first, then anything playable. */
+/**
+ * A tester for what a card's rules actually say: `mentionsOf(card)(/rehire/)` is true if `rehire`
+ * appears anywhere in its triggers or effects. Used by the Legendary decks' `support` functions and
+ * by the Capital Cities' `weigh`, which is where it started.
+ */
+const mentionsOf = (c) => {
+  const blob = JSON.stringify([c.abilities || [], c.effect || null, c.onGain || null, c.onReveal || null]);
+  return (re) => re.test(blob);
+};
+
+/**
+ * How well a card fits an identity: its own species and studies first, then anything playable, and
+ * then — for a deck written around a Legendary — whatever that card's engine runs on.
+ */
 function affinity(card, ident) {
   let a = 0;
   if (ident.species.includes(card.species)) a += 3;
@@ -197,6 +321,7 @@ function affinity(card, ident) {
     if (ident.studies.includes(r.study)) a += 2;
     if (r.name) a += cards.some((c) => c.name === r.name && ident.species.includes(c.species)) ? 2 : -3;
   }
+  if (ident.support) a += ident.support(card, mentionsOf(card));
   return a;
 }
 
@@ -207,6 +332,9 @@ function build(ident) {
     const r = cards.find((c) => c.id === id).rarity;
     return a + (r === 'Super Rare' || r === 'Legendary' ? n : 0);
   }, 0);
+  /** Whether a card can still go in: copies left, and room under the marquee cap for a marquee card. */
+  const hasRoomFor = (card) => (list[card.id] || 0) < Math.min(COPY_CAP, maxCopiesOf(dr, card))
+    && !((card.rarity === 'Super Rare' || card.rarity === 'Legendary') && topCopies() >= TOP_RARITY_CAP);
   const take = (card, n) => {
     // Two of anything, and the deck rules' own limit on top — one for a Super Rare or a Legendary.
     const limit = Math.min(COPY_CAP, maxCopiesOf(dr, card));
@@ -248,19 +376,27 @@ function build(ident) {
   // list the builder printed — which is the better place for it, because it holds however the decks
   // are rebuilt and costs the builder no freedom at all.
 
-  // Characters, cost band by cost band, best fit then best rated.
-  let chars = 0;
+  // The Legendary this deck is written around goes in before anything else, so that every pass
+  // below builds around a card that is already in the list rather than hoping to reach it. One copy
+  // is the rule for a Legendary and one copy is the point: this is the card the deck is about.
+  const anchor = ident.anchor ? cards.find((c) => c.id === ident.anchor) : null;
+  if (ident.anchor && !anchor) throw new Error(`${ident.id}: no card ${ident.anchor} to build around`);
+  if (anchor) take(anchor, maxCopiesOf(dr, anchor));
+
+  // Characters, cost band by cost band, best fit then best rated. The anchor, if it is a Character,
+  // is already standing in its own band and counts against what that band still wants — otherwise a
+  // deck written around a cost-5 Legendary prints three cost-5 animals and calls it a curve.
   for (const [cost, want] of Object.entries(CURVE)) {
     const band = cards
       .filter((c) => c.type === 'character' && c.cost === Number(cost) && affinity(c, ident) > 0)
       .sort(pick(ident));
-    let got = 0;
+    let got = atCost(Number(cost));
     for (const c of band) {
       if (got >= want) break;
       got += take(c, Math.min(want - got, maxCopiesOf(dr, c)));
     }
-    chars += got;
   }
+  let chars = charCount();
   // Anything the curve could not fill from the identity, fill from the whole catalogue.
   if (chars < CHARACTER_TARGET) {
     const rest = cards.filter((c) => c.type === 'character' && !list[c.id])
@@ -275,7 +411,8 @@ function build(ident) {
   // one — this script only ever looked at Characters and Events. A Building is raised by putting
   // animals to work, so a deck takes a few and leans on the town it has already built.
   const buildings = cards.filter((c) => c.type === 'townBuilding').sort(pick(ident));
-  let blds = 0;
+  // A deck anchored on a Town Building has already raised one of its three.
+  let blds = Object.entries(list).reduce((a, [id, n]) => a + (cards.find((c) => c.id === id).type === 'townBuilding' ? n : 0), 0);
   for (const c of buildings) {
     if (blds >= BUILDING_TARGET) break;
     blds += take(c, Math.min(COPY_CAP, BUILDING_TARGET - blds));
@@ -343,7 +480,7 @@ function build(ident) {
     // Make room by dropping the least useful non-engine cards we took.
     const droppable = Object.keys(list)
       .map((id) => cards.find((c) => c.id === id))
-      .filter((c) => !economyOf(c))
+      .filter((c) => !economyOf(c) && c !== anchor)
       .sort((a, b) => pick(ident)(b, a));
     let di = 0;
     for (const c of engines) {
@@ -366,13 +503,24 @@ function build(ident) {
   if (throughput() < THROUGHPUT_FLOOR) {
     const spare = () => Object.keys(list)
       .map((id) => cards.find((c) => c.id === id))
-      .filter((c) => c.type === 'event')
+      .filter((c) => c.type === 'event' && c !== anchor)
       .sort((a, b) => pick(ident)(b, a))[0];
     let guard = 0;
     while (throughput() < THROUGHPUT_FLOOR && guard++ < DECK_SIZE) {
-      const earner = cards.filter((c) => c.type === 'character'
-        && (list[c.id] || 0) < Math.min(COPY_CAP, maxCopiesOf(dr, c)))
-        .sort((a, b) => rateOf(b) - rateOf(a) || shortfall(b) - shortfall(a) || pick(ident)(a, b))[0];
+      // A marquee card the deck has no room left for is not a candidate: it used to be picked as the
+      // best earner, `take` would refuse it, and the loop broke with the deck still under the floor.
+      // A marquee card the deck has no room left for is not a candidate: it used to be picked as the
+      // best earner, `take` would refuse it, and the loop broke with the deck still under the floor.
+      const hirable = cards.filter((c) => c.type === 'character' && hasRoomFor(c));
+      // Hire into a band that is still short of the curve while any is, so that a town which has to
+      // hire its way up to the floor does not end up with thirteen animals on the same rung.
+      const room = hirable.filter((c) => shortfall(c) > 0);
+      const earner = (room.length ? room : hirable)
+        // Rate to the nearest whole Supply a turn, then the curve, then fit. Sorting on the raw rate
+        // hires the same half-dozen best earners in the collection into every deck that is short,
+        // which is how a deck written around a cost-0 Legendary ends up with no cheap animals in it.
+        .sort((a, b) => Math.round(rateOf(b)) - Math.round(rateOf(a))
+          || shortfall(b) - shortfall(a) || pick(ident)(a, b))[0];
       if (!earner) break;
       if (count() >= DECK_SIZE) {
         const drop = spare();
@@ -386,22 +534,26 @@ function build(ident) {
 
   // If the identity simply has not got enough payable Events, take Characters instead of dead cards.
   if (count() < DECK_SIZE) {
-    const moreChars = cards.filter((c) => c.type === 'character')
-      .sort(byCurveThen(ident));
-    for (const c of moreChars) {
-      if (count() >= DECK_SIZE) break;
-      take(c, 1);
+    // Re-picked each time round rather than sorted once: hiring a cost-3 animal changes which band
+    // is furthest behind, and a list sorted once takes the whole of the band that was behind when
+    // the sort ran — which is how a deck short of payable Events ends up with thirteen cost-3s.
+    while (count() < DECK_SIZE) {
+      const next = cards.filter((c) => c.type === 'character' && hasRoomFor(c))
+        .sort(byCurveThen(ident))[0];
+      if (!next || !take(next, 1)) break;
     }
   }
   // Top up to exactly 40 with whatever still has room, Characters first.
   for (const pool of [cards.filter((c) => c.type === 'character'), cards.filter((c) => c.type === 'event')]) {
     // Re-sorted each time round: taking a cost-3 animal changes which band is furthest behind.
     while (count() < DECK_SIZE) {
-      const next = pool.filter((c) => (list[c.id] || 0) < Math.min(COPY_CAP, maxCopiesOf(dr, c)))
+      const next = pool.filter(hasRoomFor)
         .sort(byCurveThen(ident))[0];
       if (!next || !take(next, 1)) break;
     }
   }
+  // The one thing this deck is not allowed to come out without.
+  if (anchor && !list[anchor.id]) throw new Error(`${ident.id} lost ${anchor.id}, the card it is built around`);
   return list;
 }
 
@@ -434,10 +586,6 @@ const MARKET_TYPES = new Set(['market', 'building', 'marketCharacter', 'disrupti
 
 function buildMarket(ident) {
   const lots = cards.filter((c) => MARKET_TYPES.has(c.type));
-  const mentionsOf = (c) => {
-    const blob = JSON.stringify([c.abilities || [], c.effect || null, c.onGain || null, c.onReveal || null]);
-    return (re) => re.test(blob);
-  };
   const weight = (c) => ident.weigh(c, mentionsOf(c));
   // Everything the market leans towards, then the rest of the catalogue behind it. The First
   // Workings weighs everything the same, so it simply takes the lot.
