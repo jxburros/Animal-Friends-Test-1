@@ -19,6 +19,10 @@ import {
   MAKER_GARDENS_POST_ATLAS_URL,
   MAKER_MASKED_HANDS_ATLAS_URL,
   MAKER_STAGE_COUNTER_ATLAS_URL,
+  MAKER_SPECIES_CORRECTIONS_ATLAS_URL,
+  MAKER_WORKING_LIVES_ATLAS_URL,
+  MAKER_NIGHT_STORIES_ATLAS_URL,
+  MAKER_LANTERN_FIELD_ATLAS_URL,
   paintedArtSVG,
 } from '../src/ui/painted-art.js';
 
@@ -41,11 +45,15 @@ const atlasUrls = {
   makergardenspost: MAKER_GARDENS_POST_ATLAS_URL,
   makermaskedhands: MAKER_MASKED_HANDS_ATLAS_URL,
   makerstagecounter: MAKER_STAGE_COUNTER_ATLAS_URL,
+  makerspeciescorrections: MAKER_SPECIES_CORRECTIONS_ATLAS_URL,
+  makerworkinglives: MAKER_WORKING_LIVES_ATLAS_URL,
+  makernightstories: MAKER_NIGHT_STORIES_ATLAS_URL,
+  makerlanternfield: MAKER_LANTERN_FIELD_ATLAS_URL,
 };
 
-test('sixteen Maker atlases assign 256 existing cards to every tile exactly once', () => {
+test('twenty Maker atlases assign 320 existing cards to every tile exactly once', () => {
   const entries = Object.entries(MAKER_ART_TILES);
-  assert.equal(entries.length, 256);
+  assert.equal(entries.length, 320);
 
   for (const [atlas, url] of Object.entries(atlasUrls)) {
     const assignments = entries.filter(([, art]) => art.atlas === atlas);
@@ -89,5 +97,39 @@ test('every Maker token has commissioned art and selected shared scenes are repl
   assert.equal(MAKER_ART_TILES.mk_lindsay_moon_gardener_5.atlas, 'makergardenspost');
   assert.equal(MAKER_ART_TILES.mk_masked_otter_counter_hand_1.atlas, 'makermaskedhands');
   assert.equal(MAKER_ART_TILES.mk_gabe_whole_cast_5.atlas, 'makerstagecounter');
+  assert.equal(MAKER_ART_TILES.mk_unknown_cook_0.atlas, 'makerspeciescorrections');
+  assert.equal(MAKER_ART_TILES.mk_eric_best_farmer_5.atlas, 'makerworkinglives');
+  assert.equal(MAKER_ART_TILES.mk_beck_the_relief_roll_0.atlas, 'makernightstories');
+  assert.equal(MAKER_ART_TILES.mk_benjamin_keeper_of_the_light_5.atlas, 'makerlanternfield');
+});
+
+test('the remaining known character-species mismatches use corrected paintings', () => {
+  const correctedSpecies = {
+    mk_unknown_cook_0: 'Raccoon',
+    mk_curtained_performer_2: 'Cat',
+    mk_cookie_rusk_baker_1: 'Squirrel',
+    mk_liz_plate_clerk_0: 'Fox',
+    mk_sota_the_same_bench_4: 'Cat',
+    mk_thistle_at_the_back_0: 'Badger',
+    mk_osh_fair_fiddler_3: 'Mouse',
+    mk_sage_frost_watch_2: 'Owl',
+    mk_andrew_hand_copyist_3: 'Owl',
+    mk_willow_the_harbour_office_0: 'Otter',
+    mk_pockets_a_quiet_arrangement_5: 'Raccoon',
+    mk_ned_the_ward_roll_0: 'Squirrel',
+    mk_scott_the_index_1: 'Squirrel',
+    mk_taco_the_four_oclock_cart_2: 'Otter',
+    mk_annabelle_last_one_up_2: 'Raccoon',
+    mk_peter_the_winters_length_2: 'Rabbit',
+    mk_beck_the_relief_roll_0: 'Raccoon',
+  };
+
+  for (const [id, species] of Object.entries(correctedSpecies)) {
+    assert.equal(cardsById[id].species, species, id);
+    assert.ok(
+      ['makerspeciescorrections', 'makernightstories'].includes(MAKER_ART_TILES[id].atlas),
+      id,
+    );
+  }
 });
 

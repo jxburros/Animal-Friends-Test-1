@@ -29,6 +29,10 @@ export const MAKER_LEDGERS_LAMPLIGHT_ATLAS_URL = new URL('../../assets/art/maker
 export const MAKER_GARDENS_POST_ATLAS_URL = new URL('../../assets/art/maker-gardens-post-atlas.png', import.meta.url).href;
 export const MAKER_MASKED_HANDS_ATLAS_URL = new URL('../../assets/art/maker-masked-hands-atlas.png', import.meta.url).href;
 export const MAKER_STAGE_COUNTER_ATLAS_URL = new URL('../../assets/art/maker-stage-counter-atlas.png', import.meta.url).href;
+export const MAKER_SPECIES_CORRECTIONS_ATLAS_URL = new URL('../../assets/art/maker-species-corrections-atlas.png', import.meta.url).href;
+export const MAKER_WORKING_LIVES_ATLAS_URL = new URL('../../assets/art/maker-working-lives-atlas.png', import.meta.url).href;
+export const MAKER_NIGHT_STORIES_ATLAS_URL = new URL('../../assets/art/maker-night-stories-atlas.png', import.meta.url).href;
+export const MAKER_LANTERN_FIELD_ATLAS_URL = new URL('../../assets/art/maker-lantern-field-atlas.png', import.meta.url).href;
 const SPECIES_TILE = { Rabbit: 0, Mouse: 1, Fox: 2, Raccoon: 3, Hedgehog: 4, Badger: 5, Otter: 6, Squirrel: 7 };
 const ATLASES = {
   boroughs: () => PAINTED_ATLAS_URL,
@@ -55,6 +59,10 @@ const ATLASES = {
   makergardenspost: () => MAKER_GARDENS_POST_ATLAS_URL,
   makermaskedhands: () => MAKER_MASKED_HANDS_ATLAS_URL,
   makerstagecounter: () => MAKER_STAGE_COUNTER_ATLAS_URL,
+  makerspeciescorrections: () => MAKER_SPECIES_CORRECTIONS_ATLAS_URL,
+  makerworkinglives: () => MAKER_WORKING_LIVES_ATLAS_URL,
+  makernightstories: () => MAKER_NIGHT_STORIES_ATLAS_URL,
+  makerlanternfield: () => MAKER_LANTERN_FIELD_ATLAS_URL,
 };
 
 // Presentation-only corrections for Maker shelf cards. Keeping these assignments here lets the
@@ -332,6 +340,74 @@ export const MAKER_ART_TILES = Object.freeze({
   mk_gabe_whole_cast_5: { atlas: 'makerstagecounter', tile: 13 },
   mk_faustus_wardrobe_master_4: { atlas: 'makerstagecounter', tile: 14 },
   mk_roger_fair_day_judge_0: { atlas: 'makerstagecounter', tile: 15 },
+
+  mk_unknown_cook_0: { atlas: 'makerspeciescorrections', tile: 0 },
+  mk_curtained_performer_2: { atlas: 'makerspeciescorrections', tile: 1 },
+  mk_cookie_rusk_baker_1: { atlas: 'makerspeciescorrections', tile: 2 },
+  mk_liz_plate_clerk_0: { atlas: 'makerspeciescorrections', tile: 3 },
+  mk_sota_the_same_bench_4: { atlas: 'makerspeciescorrections', tile: 4 },
+  mk_thistle_at_the_back_0: { atlas: 'makerspeciescorrections', tile: 5 },
+  mk_osh_fair_fiddler_3: { atlas: 'makerspeciescorrections', tile: 6 },
+  mk_sage_frost_watch_2: { atlas: 'makerspeciescorrections', tile: 7 },
+  mk_andrew_hand_copyist_3: { atlas: 'makerspeciescorrections', tile: 8 },
+  mk_willow_the_harbour_office_0: { atlas: 'makerspeciescorrections', tile: 9 },
+  mk_pockets_a_quiet_arrangement_5: { atlas: 'makerspeciescorrections', tile: 10 },
+  mk_ned_the_ward_roll_0: { atlas: 'makerspeciescorrections', tile: 11 },
+  mk_scott_the_index_1: { atlas: 'makerspeciescorrections', tile: 12 },
+  mk_taco_the_four_oclock_cart_2: { atlas: 'makerspeciescorrections', tile: 13 },
+  mk_annabelle_last_one_up_2: { atlas: 'makerspeciescorrections', tile: 14 },
+  mk_peter_the_winters_length_2: { atlas: 'makerspeciescorrections', tile: 15 },
+
+  mk_patch_salvage_sorter_2: { atlas: 'makerworkinglives', tile: 0 },
+  mk_scott_natural_historian_4: { atlas: 'makerworkinglives', tile: 1 },
+  mk_eric_row_farmer_3: { atlas: 'makerworkinglives', tile: 2 },
+  mk_eric_row_boss_4: { atlas: 'makerworkinglives', tile: 3 },
+  mk_eric_best_farmer_5: { atlas: 'makerworkinglives', tile: 4 },
+  mk_kevin_counter_hand_2: { atlas: 'makerworkinglives', tile: 5 },
+  mk_finn_griddle_hand_2: { atlas: 'makerworkinglives', tile: 6 },
+  mk_comet_hatch_hand_2: { atlas: 'makerworkinglives', tile: 7 },
+  mk_peter_washing_up_1: { atlas: 'makerworkinglives', tile: 8 },
+  mk_adam_road_gang_2: { atlas: 'makerworkinglives', tile: 9 },
+  mk_osh_round_sharpener_1: { atlas: 'makerworkinglives', tile: 10 },
+  mk_bob_the_morning_they_share_1: { atlas: 'makerworkinglives', tile: 11 },
+  mk_pockets_four_times_a_year_0: { atlas: 'makerworkinglives', tile: 12 },
+  mk_hibiscus_the_sorting_bench_0: { atlas: 'makerworkinglives', tile: 13 },
+  mk_oatmeal_sunday_table_0: { atlas: 'makerworkinglives', tile: 14 },
+  mk_bob_gate_tolls_2: { atlas: 'makerworkinglives', tile: 15 },
+
+  mk_beck_the_relief_roll_0: { atlas: 'makernightstories', tile: 0 },
+  mk_patch_compost_yard_1: { atlas: 'makernightstories', tile: 1 },
+  mk_gwen_anybodys_counter_2: { atlas: 'makernightstories', tile: 2 },
+  mk_gwen_apron_on_the_hook_4: { atlas: 'makernightstories', tile: 3 },
+  mk_liz_the_docket_3: { atlas: 'makernightstories', tile: 4 },
+  mk_liz_chief_assessor_5: { atlas: 'makernightstories', tile: 5 },
+  mk_sage_the_watch_list_4: { atlas: 'makernightstories', tile: 6 },
+  mk_andrew_the_late_desk_4: { atlas: 'makernightstories', tile: 7 },
+  mk_bean_the_early_shift_4: { atlas: 'makernightstories', tile: 8 },
+  mk_jessica_the_night_school_3: { atlas: 'makernightstories', tile: 9 },
+  mk_tuppence_sold_before_the_cart_4: { atlas: 'makernightstories', tile: 10 },
+  mk_cassadee_the_only_one_at_the_back_1: { atlas: 'makernightstories', tile: 11 },
+  mk_morty_the_boiler_test_0: { atlas: 'makernightstories', tile: 12 },
+  mk_brett_counsel_5: { atlas: 'makernightstories', tile: 13 },
+  mk_barnaby_night_auditor_4: { atlas: 'makernightstories', tile: 14 },
+  mk_barrow_stonecutter_5: { atlas: 'makernightstories', tile: 15 },
+
+  mk_benjamin_wick_trimmer_0: { atlas: 'makerlanternfield', tile: 0 },
+  mk_benjamin_lantern_maker_2: { atlas: 'makerlanternfield', tile: 1 },
+  mk_benjamin_town_historian_3: { atlas: 'makerlanternfield', tile: 2 },
+  mk_benjamin_master_lantern_maker_4: { atlas: 'makerlanternfield', tile: 3 },
+  mk_benjamin_keeper_of_the_light_5: { atlas: 'makerlanternfield', tile: 4 },
+  mk_thistle_almanac_keeper_1: { atlas: 'makerlanternfield', tile: 5 },
+  mk_thistle_field_hand_2: { atlas: 'makerlanternfield', tile: 6 },
+  mk_thistle_grange_warden_3: { atlas: 'makerlanternfield', tile: 7 },
+  mk_thistle_field_surveyor_4: { atlas: 'makerlanternfield', tile: 8 },
+  mk_thistle_grange_elder_5: { atlas: 'makerlanternfield', tile: 9 },
+  mk_earl_tea_boy_0: { atlas: 'makerlanternfield', tile: 10 },
+  mk_earl_tea_trader_2: { atlas: 'makerlanternfield', tile: 11 },
+  mk_earl_coffee_roaster_3: { atlas: 'makerlanternfield', tile: 12 },
+  mk_earl_tea_house_keeper_4: { atlas: 'makerlanternfield', tile: 13 },
+  mk_mandee_night_courier_1: { atlas: 'makerlanternfield', tile: 14 },
+  mk_mittens_rooftop_cat_4: { atlas: 'makerlanternfield', tile: 15 },
 });
 
 function explicitArt(def) {
