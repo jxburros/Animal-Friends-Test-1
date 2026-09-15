@@ -433,7 +433,7 @@ const handlers = {
       return;
     }
     fx.confetti();
-    await fx.ribbon('The End', `${name(e.player)} wins the First Boroughs!`, { cls: 'fx-ribbon-story', dur: 2400 });
+    await fx.ribbon('The End', `${name(e.player)} incorporates the borough next door — and names what is left!`, { cls: 'fx-ribbon-story', dur: 2400 });
   },
 };
 

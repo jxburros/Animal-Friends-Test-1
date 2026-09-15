@@ -228,10 +228,19 @@ const AVAILABLE = {
   townDump: 0.8, // an Event of your own to recover
 };
 
-/** Every condition on an ability is a chance it does nothing, so it discounts the payout. */
+/**
+ * Every condition on an ability is a chance it does nothing, so it discounts the payout. Naming a
+ * particular animal discounts it much harder than naming a study or a species does: "if you control
+ * a Science Character" asks for one of dozens of cards, and "if you control Sage" asks for one card,
+ * drawn, paid for and still standing. A card written for one friendship is only ever as good as the
+ * odds of both halves being on the table, so the model prices the pair rather than the ability.
+ */
 function conditionFactor(condition) {
-  const n = Object.keys(condition || {}).length;
-  return n ? Math.max(0.6, 0.8 ** n) : 1;
+  const keys = Object.keys(condition || {});
+  if (!keys.length) return 1;
+  const named = condition.otherCharacterInTown && condition.otherCharacterInTown.name;
+  const factor = Math.max(0.6, 0.8 ** keys.length);
+  return named ? Math.max(0.35, factor * 0.55) : factor;
 }
 
 /** What one effect is worth the single time it resolves. */
@@ -364,7 +373,11 @@ export function effectPower(eff) {
       // Two animals worth more to each other for the rest of the game — as long as both keep
       // standing, which is the risk in it. Rated as the bonus on the shifts the pair actually work.
       const bonus = typeof eff.bonus === 'number' ? eff.bonus : 1;
-      return 2.4 * bonus;
+      // A pairing that names its other half is a card written for one friendship: it pays nothing at
+      // all unless that particular animal is also in the town, which is a second card drawn, paid for
+      // and still standing. Same discount the named condition takes above, for the same reason.
+      const named = eff.filter && eff.filter.name ? 0.55 : 1;
+      return 2.4 * bonus * named;
     }
     case 'swapBuilding':
       // The better Building for the worse one, and the town keeps its place either way: worth the
@@ -564,6 +577,12 @@ export function cardPower(card, rules) {
   // Market Deck comes round to them. It is a chance rather than a promise — the rival may be the
   // one who takes it — so it is worth a little, not a second term.
   if (card.returnsToMarket) power += 0.4;
+  // An obscured figure is a place in the town somebody turns out to have been standing in. `anchor`
+  // means any Character of that species — or in that study — may be played over them for the plain
+  // difference, so the card buys an upgrade path a cheap body does not normally have: a saved action
+  // and a body the town cap never has to find room for twice. A study anchor reaches further than a
+  // species one, because a study is what an animal does and half the shelf does each of them.
+  if (card.anchor) power += card.anchor.study ? 1.5 : 1.2;
   // A held Event waits in hand for the turn that suits it, and asks for no Characters when it comes
   // down. Playing the same effect exactly when you want it is worth more than playing it on reveal.
   if (card.hold) power *= 1.12;

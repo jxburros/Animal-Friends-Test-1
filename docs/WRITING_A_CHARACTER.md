@@ -33,7 +33,7 @@ and the existing set:
 | sometimes a card to keep or kill | abilities, from the engine's vocabulary |
 | | rules text and flavor text for every card |
 
-**"Field" means study**: Agriculture, Civics, Commerce, Crafts, Lore, Science. "3 in Commerce and 2
+**"Field" means study**: Agriculture, Civics, Commerce, Crafts, Lore, Science, Food, Entertainment. "3 in Commerce and 2
 in Crafts" means three of the five versions have `"study": "Commerce"`.
 
 **A new study is the maker's call, and it is a bigger change than it looks.** Peanut opened **Food**.
@@ -226,12 +226,17 @@ may carry `decay` and `minOutput`: the animal burns out, and every shift they wo
 one before. A mod's `filter` may carry `upgradesOwn`, which is good only for a recruit that upgrades a
 Character the town already has.
 
-**A card itself may carry three things besides its abilities.** `leavesAfter: N` is a hire with a
+**A card itself may carry four things besides its abilities.** `leavesAfter: N` is a hire with a
 term, and `returnsToMarket: true` sends them back to the bottom of the Market Deck rather than the
 City Dump when it runs out, so they may be taken on again. `entersUpright: true` is an animal who
 arrives ready whatever their cost. A mod may be counted rather than printed: `addMod` takes
 `valuePer: "buildingsBuilt"` with a `max`, which is a rate that scales with what the town has
-raised — always print the `max`, or the card cannot be rated.
+raised — always print the `max`, or the card cannot be rated. And `anchor` — `{ species: true }` or
+`{ study: true }` — is an **obscured figure**: an animal the borough never got a name for, over whom
+any *dearer* Character of that species, or in that study, may be played as an upgrade, whatever their
+name. There is one for every species and one for every study already, so a new one needs the maker to
+say why; an existing one is written like any other character, with a short backstory about a post that
+was worked and an entry in the ward record that was never finished.
 
 Some of the vocabulary exists *because* a character asked for it — `makeBusy`, `scryDeck`'s `to: "dump"`,
 `protectCharacter`'s `notSelf`, filtered mods, `buildingDiscount`, `leavesAfter`, and then the second

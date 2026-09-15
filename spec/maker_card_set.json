@@ -1,8 +1,8 @@
 {
- "$comment": "Animal Friends TCG — the First Boroughs collection (AF-MAKER-01), and the only card set the game plays. 'characters' holds one entry per named character: name, species, studies, pronouns, backstory, voice, arc, plus 'wantedVerbs' (effects the story wanted that the engine cannot yet do) and 'wantedArt' (scenes still to be painted). 'cards' are the cards themselves; a 'token' card is a third thing again, declaring that a kind of token exists — one per species, one per study, one for Buildings — rather than being a card anybody draws, and the 'tokens' block below says what they are for. The world the writing draws on is docs/TOWN_BIBLE.md. 'rarity' and 'power' are computed by npm run stamp, never hand-written.",
+ "$comment": "Animal Friends TCG — the First Boroughs collection (AF-MAKER-01), and the only card set the game plays. 'characters' holds one entry per named character: name, species, studies, pronouns, backstory, voice, arc, plus 'wantedVerbs' (effects the story wanted that the engine cannot yet do) and 'wantedArt' (scenes still to be painted). 'cards' are the cards themselves; a 'token' card is a third thing again, declaring that a kind of token exists — one per species, one per study, one for Buildings — rather than being a card anybody draws, and the 'tokens' block below says what they are for. An 'obscured figure' is a fourth thing: a Character the borough never got a name for, carrying `anchor` so that any dearer Character of the same species — or in the same study — may be played over them, whatever their name, which is the ward record being corrected rather than a promotion. The world the writing draws on is docs/TOWN_BIBLE.md. 'rarity' and 'power' are computed by npm run stamp, never hand-written.",
  "setId": "AF-MAKER-01",
  "name": "Maker Cards",
- "blurb": "The First Boroughs: ten species, eight studies, sixty-five named animals and the town they all argue in.",
+ "blurb": "The First Boroughs: ten species, eight studies, eighty-seven named animals — eighteen of whom the borough never got a name for — and the town they all argue in.",
  "playable": true,
  "note": "The whole game is played off this shelf: the two decks above, a deck of your own out of the Deck Workshop, and the one Capital City below.",
  "species": [
@@ -149,7 +149,8 @@
    "species": "Badger",
    "studies": [
     "Civics",
-    "Entertainment"
+    "Entertainment",
+    "Food"
    ],
    "pronouns": "he/him",
    "backstory": "Oatmeal is the oldest of nine, and it shows in everything he does. He was the one who counted heads at the door, who stood between the little ones and whatever was coming, who learned early that the way to keep everybody safe is to know the rules better than the trouble does. The habit never left him; it just got a desk.\n\nHe works for the town now — the ward office, the safety notices, the register of who lives where and who to call when the river comes up. Badgers dig in, and Oatmeal digs in on other animals' behalf: when a shock passes through the borough, the households that come through it unbothered are usually the ones he got to first. He is not fast and he is not clever about it. He is simply always already there.\n\nTuesdays he sings. The band is four of his own brothers and sisters and a Fox on the piano, the venue is whatever room will have them, and Oatmeal — who spends every other night of the week being the most responsible animal in the First Boroughs — stands up in front of a room and is, for an hour, somebody's favourite singer. His family has never missed a show.",
@@ -292,7 +293,8 @@
    "name": "Bob",
    "species": "Hedgehog",
    "studies": [
-    "Civics"
+    "Civics",
+    "Commerce"
    ],
    "pronouns": "he/him",
    "backstory": "Bob and Betty were born the same wet morning at the far end of the borough, and between them they were issued exactly one animal's worth of energy. Betty took it. Bob has been tired ever since. He is not unwell and he is not unhappy; he is simply a hedgehog who has never once in his life been fully awake at the hour somebody wanted him to be.\n\nThe county gate solved him. It is a post nobody else would take, because its whole duty is saying no — no carts after six, no barrows without a docket, no you cannot just this once. Bob is a Hedgehog. He is immovable, he is unembarrassable, and he can say no in his sleep, which is the arrangement the county and Bob have quietly come to. Carters who arrive at the wrong hour find the bar down and a hedgehog folded against it like a dropped coat, and neither the bar nor the hedgehog is going anywhere until morning.\n\nThe difficulty is the other half of the job. A gate has to open as well, and Bob is unbeatable at keeping the borough out and only intermittently good at letting it back in. There is a standing complaint at the Hiring Hall about the mail cart, three separate ones about the fish. It has never come to anything, because everyone who has ever tried to get past him at night agrees that nobody else could have kept them out either.",
@@ -393,7 +395,8 @@
    "species": "Cat",
    "studies": [
     "Science",
-    "Crafts"
+    "Crafts",
+    "Food"
    ],
    "pronouns": "she/her",
    "backstory": "Comet has wanted to be an astronaut since she was old enough to say the word, and unusually for an animal who wants something that badly, she has never once been talked out of it or distracted from it. She read every book the Lending Library had, then wrote to the Observatory until they let her sweep it, then took the Crafts hall's engine course twice because she did not think she had understood it the first time. She had. She wanted to be sure.\n\nThe problem has always been her paws. Comet is clumsy in a way that is genuinely remarkable to watch — she has put a foot through a wing panel, upended a tray of instruments into a fuel tank, and once ended a test by falling out of the machine before it left the ground. The selection board turned her down twice. She did not argue either time; she went away, learned the part they had marked her down on until she knew it better than the board did, and came back.\n\nWhat she has instead of hands is a head. Comet knows what the Capital City is going to put up for sale before the Capital City has finished deciding, because she has read the manifests, the dock lists and the Observatory's own order book, and she is the animal the whole Science hall asks before anyone bids on anything. She got the seat on the third application. She fell over on the way to the launch. She went anyway, which is the only thing about Comet that has ever needed explaining and the one thing that never does.",
@@ -446,7 +449,8 @@
     "Agriculture",
     "Science",
     "Civics",
-    "Lore"
+    "Lore",
+    "Commerce"
    ],
    "pronouns": "she/her",
    "backstory": "Rosabeth talks to her plants. She sings to them too, and on a good morning she dances down the rows doing it, and she has been doing this for thirty years in full view of a borough that gave up being surprised about it some time in the second decade. There is a persistent and not entirely unfair joke that she likes the garden better than the animals in it. Rosabeth has heard the joke and finds it funny and has never bothered to correct it.\n\nShe ought to be correcting it, because the whole point of the garden is the shelf it fills. Rosabeth's tinctures are half herb and half something she will describe as the moon, or the mood of the bed, or what the rosemary told her, and they are the only remedies in the First Boroughs that reliably work. Nobody can account for it. The Science hall has been through her notes twice and come away with a list of ingredients and no method. She is entirely relaxed about this and says the method is the singing.\n\nWhat she is actually for, and what the borough forgets to say out loud, is getting animals back on their feet. An animal who has lost a place and stopped getting up in the morning ends up at Rosabeth's gate sooner or later, usually sent by somebody, and Rosabeth puts a mug of something in their paws and sets them to work on the beds until they are fit to be somewhere else. Half the Hiring Hall's second chances started in that garden. She charges for the tincture and never for the rest of it.",
@@ -500,7 +504,8 @@
    "species": "Fox",
    "studies": [
     "Commerce",
-    "Civics"
+    "Civics",
+    "Food"
    ],
    "pronouns": "he/him",
    "backstory": "Finn sells. Over the years he has sold hedge cuttings, subscriptions to a newspaper that was never printed, six identical clocks to the same household across four years, and — currently, legitimately, and rather well — most of the borough's dry goods. He is not a crook and he is not a saint, and the First Boroughs have known exactly where he sits on that line since he was about nine.\n\nClean jobs he has had plenty of. Weighing at the Grain Exchange, a season on the toll gate, two separate stints on the fair committee. They never last. Something always comes up that Finn cannot resist being clever about, and he moves on before anybody has to make it a formal matter, and everyone stays on speaking terms. What he has instead of a record is a reputation: if you need a thing sold, bought or valued inside the hour you go to Finn, you go in with your eyes open, and it gets done.\n\nThe odd part, which the borough long ago stopped finding odd, is that he is genuinely respected. He is on the committee more often than not, he chairs the fair, and when the Capital City sends somebody out to do business with the First Boroughs it is Finn who meets them, because he is the only animal in town who enjoys it. He keeps the fair's weights honest and he remembers, vividly, what the Finn of five years ago would have done with them.",
@@ -570,7 +575,8 @@
    "name": "Kevin",
    "species": "Fox",
    "studies": [
-    "Civics"
+    "Civics",
+    "Food"
    ],
    "pronouns": "he/him",
    "backstory": "Kevin came out from the Capital City at seventeen because somebody told him there was work, and there was. He is the easiest hire in the First Boroughs: he says yes before you have finished the sentence, he is at the yard before the animal who hired him, and for about a fortnight he is worth two of anybody. Then the fortnight ends. Kevin goes flat all at once, sleeps through a morning, apologises far more than anyone wants him to, and is on to the next thing by the end of the week.\n\nThe borough has worked out how to use him and mostly does not mind. You get Kevin for a short stretch, you get a great deal out of it, and you do not build anything long around him. He is nineteen and has had eleven jobs, and every one of them would have him back.\n\nWhat he does with the flat fortnight is read. Novels, four or five on the go at once, in stacks by the bed and the kettle and the chair and one on the windowsill of whatever room he is renting that month. Lynnette keeps him a shelf at the print shop. He will tell you the plots of all five at once, badly, with enormous enthusiasm, and then he is up and off again.",
@@ -737,7 +743,8 @@
    "species": "Squirrel",
    "studies": [
     "Agriculture",
-    "Commerce"
+    "Commerce",
+    "Crafts"
    ],
    "pronouns": "she/her",
    "backstory": "Daisy is the borough's florist and a hopeless romantic in the full, unembarrassed sense of the word. She knows every scent in the hedgerow by name, she can tell you what a posy is saying and what the animal who ordered it thinks it is saying, and she has sold flowers to most of the couples in the First Boroughs at one end of things or the other.\n\nHer own life is entirely ahead of her. Daisy is waiting to be swept off her feet — properly, without warning, by somebody who turns up at the stall and means it — and she has been waiting cheerfully for years, which the borough finds either lovely or maddening depending on who you ask. In the meantime she sweeps the petals up at the end of the day and dries them, because a Squirrel does not throw away anything that will keep, and the night-bloom stock and the wedding trade and the Festival Green garlands all come out of what she put by in the quiet months.\n\nFestival week is hers. Every garland on the square, every buttonhole in the hall, four days of no sleep, and a full year's takings in one go — which is exactly how a Squirrel likes to be paid.",
@@ -756,7 +763,8 @@
    "name": "Peter",
    "species": "Rabbit",
    "studies": [
-    "Agriculture"
+    "Agriculture",
+    "Food"
    ],
    "pronouns": "he/him",
    "backstory": "Peter lays hedges. He was born at the far end of the borough within sight of the far hedgerow and has spent his working life inside it: cutting the stems most of the way through, bending them over while they are still living, pegging them down and letting them grow back into a wall. It takes a winter to do a field's length and about fifteen years to find out whether you did it properly.\n\nThis is why the borough's hedges are harder to take down than they look. Maribel files the objection at the meeting; Peter is the reason there is still something there to object about. The two of them have never discussed it.",
@@ -778,7 +786,8 @@
    "name": "Osh",
    "species": "Mouse",
    "studies": [
-    "Crafts"
+    "Crafts",
+    "Entertainment"
    ],
    "pronouns": "he/him",
    "backstory": "Osh goes round the borough with a treadle wheel on a handcart and puts an edge back on things. Knives, shears, billhooks, the mill's dressing picks, the bakery's scrapers, one ceremonial sword that has never cut anything. He does a circuit that takes eleven days and has done it in the same order since he was small enough to need a box to stand on.\n\nHe is a mouse and the wheel is nearly as big as he is, which the borough finds funnier than he does. Morty's mill kitchen and Marmalade's bakery are both on day four.",
@@ -954,7 +963,8 @@
    "name": "Andrew",
    "species": "Owl",
    "studies": [
-    "Lore"
+    "Lore",
+    "Crafts"
    ],
    "pronouns": "he/him",
    "backstory": "Andrew keeps the late desk at the Lending Library — the hours after the children's corner has emptied and the last of the evening readers have gone. He locks up after Inkwell's evening and does not go home. What cannot be lent out he copies by hand, a page or two a night, so that there is a second one.\n\nHe is an Owl, so the hours suit him and the pay does not. The library has never been able to explain the arrangement to the Counting House and has stopped trying.",
@@ -1007,7 +1017,8 @@
     "Commerce",
     "Science",
     "Civics",
-    "Crafts"
+    "Crafts",
+    "Agriculture"
    ],
    "pronouns": "he/him",
    "backstory": "Patch went into the Salvage Yard as a kit because there was money in it if you were small enough to get under things and quick enough to get out again. That was the whole of the plan for about two years. Then he sold a mangle back to the animal who had thrown it away, for more than it had cost new, because he had put a new roller in it — and he understood, standing there with the coin in his paw, that the diving was the least interesting part of the business.\n\nSo he built the rest of it. He takes it out, he sorts it, he mends what is worth mending and improves what is worth improving, and he sells it back to the borough at a price nobody has ever complained about. Annabelle takes the paper — that is hers, and the two of them have never once discussed it — and Patch takes everything else. What he is really known for now is the judging. Animals bring him things and ask whether they are worth keeping, and he turns them over twice and tells them, and he is right. Word got round, and now they bring him other things to ask the same question about: a trade, a lease, a season that has not gone well, somebody they are not sure about. He turns those over twice as well.\n\nHe will tell you he is not qualified, which is true, and that he is only a raccoon with a yard, which is also true, and then he will tell you to keep the lease and sell the cart, and you will, and it will have been the right way round.",
@@ -1034,7 +1045,8 @@
    "species": "Otter",
    "studies": [
     "Commerce",
-    "Civics"
+    "Civics",
+    "Agriculture"
    ],
    "pronouns": "they/them",
    "backstory": "The crossing has been Pebble's family's for seven generations. Their father had it, and his father, and his grandmother before that, and her daughter after her, and the borough long ago stopped bothering with the names: whoever is on the boat is the ferryotter, and the ferryotter is whoever is on the boat. Most families with a thing like that behind them produce, sooner or later, somebody who wants out. Pebble's family has been waiting three generations for that animal and it is not going to be Pebble.\n\nThey like it. That is the whole of it, and it takes some animals a while to believe. Four crossings an hour, the same bank, the same rope, the same eleven regulars and their eleven opinions, and Pebble goes home at the end of it perfectly content. Brooke, who is climbing the ladder out of exactly this job toward the River Otter licence, has asked them about it directly, twice. Pebble said that standing where their father stood, doing what their father did, with his grandmother's fare chits still in the tin, is not a thing you climb out of. The chits are the other half of it: their family struck their own, a worn wooden otter on a round of hard wood, handed to every passenger and counted back at the far bank. Half the borough has one in a pocket that they never handed back, and the rest of the town's chits — the study marks, the building marks — are copies of the ferry's.\n\nThey are not ambitious and they are not bored, and both of those facts make the Harbourmaster's office slightly uneasy. Willow has offered Pebble the warden's post three times. Pebble took it on the third offer on the condition that it did not mean giving up the boat.",
@@ -1172,7 +1184,8 @@
    "studies": [
     "Crafts",
     "Commerce",
-    "Civics"
+    "Civics",
+    "Entertainment"
    ],
    "pronouns": "he/him",
    "backstory": "Roger can fix things. Not one kind of thing — the lock, the lease, the rota, the argument between the two carters, the reason the ward's accounts do not add up — and he does it without much fuss and usually on the way to somewhere else. The borough has noticed. The borough's response to noticing an animal like that is always the same, and Roger has been made chair, warden, clerk, judge and ombudsman of one thing or another since he was about twenty-two, every single time by a room turning round and looking at him.\n\nHe is bad at it. Not at the work — at the office. The job of a chair is to decide, and deciding means one of the two animals in front of you walks out having lost, and Roger cannot do it. He sees it from where they are standing. He sees it from where the other one is standing too, immediately and completely, and he sits there with both of them true at once and the room waiting. He has adjourned hearings to think about it for a week. He has found for both sides in writing, twice, which Ned had to file as two documents.\n\nWhat the borough worked out, eventually, is the ha'penny. When a call is genuinely even Roger takes it out, and somebody else calls it in the air, and whatever it does is what happens, and Roger writes it down and everyone goes home. He has never once called it himself. He says that would be taking a side. The ha'penny is worn almost smooth now and it has settled four boundary questions, a dispute about a bandstand, and who was to have the good pitch at the fair, and the borough considers all four of those settled forever.",
@@ -1220,7 +1233,8 @@
    "name": "Sage",
    "species": "Owl",
    "studies": [
-    "Science"
+    "Science",
+    "Agriculture"
    ],
    "pronouns": "they/them",
    "backstory": "Sage learned to read on the Lending Library's low shelf, which is where the scientific romances live — the penny serials about the other side of the sky, rockets the shape of a thumb, animals on a red world who are polite and terrifying. They read the lot before they were ten and then read them again, and they have never entirely stopped. Everything Sage knows about the sky started as somebody's invention, and the fact that some of it turned out to be true is, they will tell you, the best thing that has ever happened to anybody.\n\nSo they took the dome. Sage keeps the borough's watch list — what is due, what is late, what has not been seen since a year nobody here was alive for — and they keep it to the minute. The Crown wanted to know when the comet would come and Sage told them to the minute and then went back to bed. Sota grinds the lenses and has no interest whatever in what they are pointed at; Sage is the opposite animal, and the two of them work the same bench for whole nights without either saying anything the other wants to hear.\n\nAnd they will not go. The selection board has left the application form on Sage's desk three times, flat, unmentioned, the way you leave a thing for somebody who has said no politely. Sage knows the space division better than the space division does — they have read the manifests, they sit in on the launch meetings, they are the animal Comet writes to from the pad — and they have never once put a name on the form. It is very high up, they say, and there is no one to tell if something goes wrong, and anyway somebody has to be down here looking, or what is the point of anyone going.",
@@ -1335,7 +1349,8 @@
    "studies": [
     "Crafts",
     "Science",
-    "Commerce"
+    "Commerce",
+    "Entertainment"
    ],
    "pronouns": "he/him",
    "backstory": "Faustus is the loudest animal in any room he is measuring, and he is usually measuring. He is a threadmaster of all types — cloth, canvas, cord, the awful modern stuff the Science hall sends over in sealed tins — and the trick everybody knows him for is that you do not bring him a drawing. You tell him what you want it to look like. You describe it, badly, waving, and he watches your paws rather than your face, and by the time you have finished the sentence he has the bolt down off the shelf and is cutting.\n\nWhat that has made him, in a town that settles everything by auction, is a fixture of the auction room. Festival week, the regatta, the big lots at the Auction House: Faustus dresses the bidders, and he dresses them on the understanding that he will be in the room to see it. He has opinions about what a well-cut coat does to a bidding war and they are not modest opinions and they are, annoyingly, correct. A Mayor who turns up to the Capital City in something Faustus made has already cost everybody else a rung before anybody has said a number, and the Auction House has quietly stopped pretending otherwise.\n\nHe is a Cat, which means all of this happens exactly when it suits him and not a moment before, and he has walked out of a fitting because the light was wrong. Daisy does the flowers for festival week and Faustus does the coats, and the two of them have an arrangement about the square that neither will describe as a friendship.",
@@ -1362,7 +1377,8 @@
    "studies": [
     "Agriculture",
     "Lore",
-    "Civics"
+    "Civics",
+    "Entertainment"
    ],
    "pronouns": "he/him",
    "backstory": "Thistle works, and that is nearly the whole of what the borough can tell you about him. Up before the lanterns, home after the moon, thirty-odd years of it, and in all that time nobody has had a word out of him that was not about the job or worth hearing. He is not shy and he is not sullen. He simply does not see why a thing that can be done should be discussed first.\n\nWhat he is actually for, the grange worked out early and has never said to his face: put Thistle at the head of a row and the row keeps his pace. Not because he drives it — he has never once looked back — but because the pace is exactly right, and an animal who falls in behind him comes off that field at dusk having done half again what they meant to and not feeling it until the morning. The grange sends him out with the ones who think they are no good. It works about nine times in ten, and the tenth is usually a fox.\n\nAnd there is the other thing. Two evenings a month, in whatever room is having the open mic, there is a badger at the back by the door who does not take his coat off, does not drink anything, listens to one singer's set with his eyes shut, and is gone before the applause. Cassadee keeps the list and knows exactly which nights he comes, and has never mentioned it to him, and has twice moved that singer up the running order so he would not have to stay so late. The borough has decided, collectively and without discussion, that this is nobody's business. It is the only thing about Thistle anybody gossips about, and they do it very quietly.",
@@ -1457,6 +1473,480 @@
      "why": "The maker asked for a card that makes the other Mayor choose between losing Supply or another hardship. Two things are missing: nothing on a Character can take Supply off a rival at all — `everyoneLosesSupply` is a Disruption's shared shock and `giveSupplyToOpponent` runs the other way — and no effect offers a rival a choice of branches. Every reaching verb in the vocabulary (`makeBusy`, `opponentTopdeckFromHand`, `unemployOpponentCharacter`) simply happens to them.",
      "workaround": "The choice became a toss. The Harbourmaster and the Harbour Admiral put both bad outcomes on the table with `coinFlip` — an animal goes back to work, or a card goes back on top of the deck — so the pair is real even though the rival does not get to pick which. Roger's ha'penny is the borough's own method for a call that will not come down on its own, which makes the seam a thing the town already does rather than a thing the engine could not do.",
      "resolved": "Built, both halves: `opponentLosesSupply` takes Supply off a rival and tells them it happened (`onSupplyLost` fires for them), and `opponentChoice` puts two branches on the table and lets the rival pick which one they take. The Harbourmaster offers 2 Supply or a card back on top; the Harbour Admiral offers 3 Supply or an animal put back to work. `power.js` pays the card the least of its branches, because the rival picks — which is also the design rule: print two you would be happy with. Roger's ha'penny stays the borough's method for a call nobody will make; this is the harbour office's, which is to make somebody else make it."
+    }
+   ]
+  },
+  {
+   "name": "The Anonymous Scribe",
+   "species": "Badger",
+   "studies": [
+    "Lore"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Everything Scott prints about a real animal or a real year goes across Ned's shelves first, and Ned certifies it or Scott cuts it; in fifteen years Lynnette has never printed a correction to a word of his. The other half of Scott's shelf is invention, and it is not kept separate.\n\nThree accounts on the certified half arrived at the print shop finished, on paper Annabelle pulled out of the Salvage Yard before the weather got at it, in a hand nobody has placed. Ned certified all three: names, dates, the year the bridge went, all of it right, including two details the ward records confirm and nobody outside the ward office had cause to know. Scott has never claimed them and has never taken them off the shelf.",
+   "voice": "None recorded. The dates are given the long way round, the way an animal writes who has been corrected once.",
+   "arc": "One rung, at Journeyman: a hand Ned will certify is not a hand that learned this week.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_anonymous_scribe_2"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Cloaked Tradesman",
+   "species": "Mouse",
+   "studies": [
+    "Commerce"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Half of what is bolted, glazed or hung in this town came off Tuppence's cart, bought out of the Capital City before anybody here could say what it was for. What the day market cannot name goes on to Hazel's night market, and somewhere in the gap between the two there is a mouse in a long cloak who has been selling to both of them for years.\n\nTuppence buys from them without querying the price, which is not like Tuppence; the Counting House stopped querying Tuppence's prices some time ago, which is not like the Counting House. Patch, who judges things for a living and is right, was brought a box off that cloak once and said it was worth keeping.",
+   "voice": "None recorded. A price, and then the same price again.",
+   "arc": "One rung. A tradesman the whole borough has bought from is an animal the whole borough already knows.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_cloaked_tradesman_1"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Cowled Fox",
+   "species": "Fox",
+   "studies": [
+    "Agriculture"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Thistle sets the pace at the head of a row and the row keeps it, and the grange sends him out with the ones who are sure they are no good at it. One season the row was a head longer than the grange had booked, every day, in the same place: second from the end, hood up, keeping the pace exactly and never once coming up to the hedge for the water.\n\nThistle has never looked back at a row in his life and so is, by his own account, the last animal in the borough who could tell you anything about it. The reclaimed strip along the far hedgerow is Betty's and was sold on years ago; the field in question is the grange's, and it came in four days early.",
+   "voice": "None recorded. Nobody in that row heard them speak and every one of them finished.",
+   "arc": "One rung. A row that is one animal longer than the booking is a row with a story in it, and this is as much of it as the borough has.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_cowled_fox_far_field_hand_1"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Curtained Performer",
+   "species": "Cat",
+   "studies": [
+    "Entertainment"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Open mic nights happen in whatever room will have them and Cassadee decides which room, sets it, runs the list and puts the chairs away at midnight. Her list is a document: names, times, how long they ran. There is one recurring entry on it with no name, given a slot on the same evening of the month for two years, always last, always after the room has thinned.\n\nThe borough gossips about one thing and one thing only where that room is concerned, and this is not it. What it will say is that on those nights the animals who stayed to the end stayed to the end, and that Faustus — who will not make a thing for a room he is not going to be in — was in that room every one of those nights and has said nothing about it at all.",
+   "voice": "None recorded. The set is the same length every time, to the minute.",
+   "arc": "One rung, at Journeyman. A slot held for two years is held by somebody the room already knows.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_curtained_performer_2"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Faceless Clerk",
+   "species": "Squirrel",
+   "studies": [
+    "Civics"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Velvet's counter is where the building consents are read aloud, slowly, all of them, and Velvet genuinely enjoys the queue — he said so in a public meeting and the borough thought about it and decided to believe him. The queue on a Wednesday morning is therefore long and nobody much minds.\n\nOn four Wednesdays over two years the queue moved at a speed the counter has never otherwise managed, worked by a clerk in the second window that the ward office does not staff and cannot account for. Every form filed on those days is correct; Ned's shelves and Velvet's have never disagreed in fifteen years and did not begin here.",
+   "voice": "None recorded. The forms were read aloud, all of them, and quickly.",
+   "arc": "One rung, at cost 0. Standing in the second window is where a great many of this borough's careers turn out to have begun.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_faceless_clerk_0"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Hooded Rabbit",
+   "species": "Rabbit",
+   "studies": [
+    "Food"
+   ],
+   "pronouns": "they/them",
+   "backstory": "The borough's ovens are banked overnight and shared out by morning, and for one winter somebody was at the hatch before Marmalade was, with the trays already turned. Rabbit, hood up against the cold in a room nobody has ever called cold, out the side door the moment the queue started.\n\nMarmalade hands his bread out to the kittens first and usually before it is paid for, so a second pair of paws doing the same thing without being asked did not strike him as worth reporting. It struck Ned as worth recording, because a winter of the Community Oven working better than usual is exactly the sort of thing the borough argues about four years later.",
+   "voice": "None recorded. Marmalade says they said 'go on then' once, to a kitten.",
+   "arc": "One rung, at the cheapest end of the shelf, because a hood at the hatch is where half the borough's bakers say they started.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_hooded_rabbit_hatch_hand_0"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Masked Otter",
+   "species": "Otter",
+   "studies": [
+    "Commerce"
+   ],
+   "pronouns": "they/them",
+   "backstory": "The arcade counter under Willow's lease wanted covering for a fortnight and somebody covered it. Otter, a scarf up over the muzzle the whole while, correct to the halfpenny, gone on the Friday without collecting the last three days' wages. Copper's office checked the takings twice because a clean set of books from an animal nobody can name is exactly the kind of thing his office exists to check, and found them clean.\n\nNed would not leave the fortnight blank and would not invent a name for it, so the ward record says what the ward saw: the masked otter, the counter, fourteen days. That entry has been corrected twice in thirty years, both times when an otter the borough did know turned out to have been the one standing there.",
+   "voice": "None recorded. Two words at the counter, both of them prices.",
+   "arc": "One rung and one rung only. The Masked Otter is not a career; it is the place a career turns out to have started.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_masked_otter_counter_hand_1"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Muffled Hedgehog",
+   "species": "Hedgehog",
+   "studies": [
+    "Commerce"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Hazel's night market keeps its own hours — trestles up when the lamps go on, down about four — and it is where the town buys the things it cannot name. An unnamed animal on a stall is therefore not news there. This one is news only because it kept coming back: a hedgehog, scarf round the face, one trestle at the cold end, four winters running.\n\nHazel's position, given twice at the market committee and once at the guild hall, is that she takes a pitch fee and not a pedigree, and that anybody who wants a name off her stallholders can come down at two in the morning and ask them.",
+   "voice": "None recorded. Hazel says the prices were fair and quietly high.",
+   "arc": "One rung, and cheap: a trestle at the cold end is where everything in the night market starts.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_muffled_hedgehog_stall_hand_0"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Mysterious Raccoon",
+   "species": "Raccoon",
+   "studies": [
+    "Agriculture"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Rosabeth's gate takes whoever is sent and asks nothing, which is the whole point of it, so a raccoon on the beds at six in the morning for most of one spring was not a thing anybody was going to interrupt. Good hands, apparently: the far bed came in over, and the tinctures that year were the ones the Science hall failed to account for the second time.\n\nRosabeth sings to her plants in full view and has for thirty years, and says only that the singing did not stop while the raccoon was there and the raccoon did not once look up. When the Hiring Hall asked, she gave them the work and not the animal, and Ned wrote down what he was given.",
+   "voice": "None recorded. Rosabeth says there was humming, and that it was not hers.",
+   "arc": "One rung: a spring on the beds that somebody has always turned out to have worked.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_mysterious_raccoon_beds_hand_2"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Nameless Cat",
+   "species": "Cat",
+   "studies": [
+    "Science"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Sota grinds the Observatory's lenses and has no interest whatever in what they are pointed at, which means Sota is the worst possible witness to the animal who sat at the glass on the nights the re-seating ran long. A cat, is as far as it goes, in the dark, at the eyepiece, for months while the big instrument was a blank.\n\nSage keeps the borough's sky watch and was not there; the two of them work the same bench for whole nights without either saying anything the other wants to hear, and neither has ever suggested a different arrangement. The observation book from those months is in a hand the Observatory does not have on file and has never had cause to doubt.",
+   "voice": "None recorded. Sota remembers being asked, once, to take a thousandth off one edge.",
+   "arc": "One rung, at Journeyman: whoever kept that book knew what they were looking at.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_nameless_cat_glass_hand_2"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Obscured Observer",
+   "species": "Fox",
+   "studies": [
+    "Science"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Bella's field recordings are filed and cited by the Science hall and are the borough's one piece of formal ecology, and she has never bid on anything in the Capital City in her life. She also, by her own account, has never been on the water at night.\n\nThe midges come off the water for three days most summers and stop everything, and the note the Science hall files on them every year is in two hands. One is Bella's. The other has been turning up in the same folder for six years, from a hide on the far bank that Bella did not build, with counts she says are better than hers because whoever took them was willing to be out there at the worst hour of the worst night of it.",
+   "voice": "None recorded. Six years of counts and not one word of commentary.",
+   "arc": "One rung. Six summers in a hide is somebody's habit, and habits belong to animals the borough can name.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_obscured_observer_1"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Shadowed Squirrel",
+   "species": "Squirrel",
+   "studies": [
+    "Entertainment"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Cassadee runs the open mic list, sets the room, and puts the chairs away at midnight, and there is exactly one night on her records she did not do the last of those: the night she was ill and came in anyway to find the chairs stacked, the lamps out and the floor swept. A squirrel, she thinks, at the back, in the dark half of the room, for three or four evenings that season.\n\nShe has never mentioned it to anybody except Ned, in the way she has never mentioned the other thing she knows about that room, and the entry in the ward record is four words long.",
+   "voice": "None recorded. Cassadee says they were at the back by the door and did not take their coat off.",
+   "arc": "One rung. A room that is set and swept by somebody is a room somebody has been in for years.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_shadowed_squirrel_hall_hand_1"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Shrouded Badger",
+   "species": "Badger",
+   "studies": [
+    "Crafts"
+   ],
+   "pronouns": "they/them",
+   "backstory": "The rule of Berry's bench is that the animal who brought the thing is the animal who mends it, with Berry on the second stool asking what they think is wrong with it. On tool lending day one autumn there was a badger on the second stool who was not Berry, in a work coat with the collar up, asking the same question in the same order.\n\nBerry was three streets away with the Town Clock stopped and did not get back until dark. Everything on the bench was mended, by the animals who brought it, and Berry — who taught Moss at twelve and is still the one animal Moss listens to — went along the row, looked at each one, and said that whoever it was had done it properly.",
+   "voice": "None recorded. The question was 'and what do you think is wrong with it', every time.",
+   "arc": "One rung, at Journeyman, because standing in for Berry at that bench is not an apprentice's afternoon.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_shrouded_badger_bench_hand_2"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Silhouetted Owl",
+   "species": "Owl",
+   "studies": [
+    "Commerce"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Barnaby audits the Capital City's night books and has no address on file at the Hiring Hall, and the borough has collectively decided not to pry. What the borough has never decided is what to do about the second set of night figures that turns up beside Barnaby's about twice a year, in a different hand, agreeing with them to the last halfpenny.\n\nOrien can tell you what a Building will go for within a Supply and says the second hand is better than his engine at the small columns. Liz certifies the weighbridge plate every spring with Copper's office and says only that the scale figures in that hand have never once needed adjusting.",
+   "voice": "None recorded. The margins carry a tick and nothing else.",
+   "arc": "One rung, and cost 0, because nobody has ever paid this animal anything.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_silhouetted_owl_scales_hand_0"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Unknown Cook",
+   "species": "Raccoon",
+   "studies": [
+    "Food"
+   ],
+   "pronouns": "they/them",
+   "backstory": "There is a cart at the ferry steps that keeps the river's hours and not the town's: Taco's, shut at noon, open at four in the morning, and never twice in the same place. Any lighterman coming off a night run has eaten there, which is precisely why nobody can say with confidence who was behind the hatch on any given night.\n\nTaco's answer, given to Brooke and to the Hiring Hall and to Ned in identical words, is that the cart was open and the food was good. A raccoon, the lightermen say, most of one summer, on the nights Taco was at the mill kitchen trading recipes against repairs with Morty. The cart did not move those nights, which is the only thing about it anybody found strange.",
+   "voice": "None recorded. Orders were repeated back and then got right.",
+   "arc": "One rung, cost 0: a hatch at four in the morning is the cheapest start in the borough and the hardest.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_unknown_cook_0"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Unlisted Grower",
+   "species": "Otter",
+   "studies": [
+    "Agriculture"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Maribel keeps the seed bank and writes down everything: every variety the First Boroughs have ever grown, dried, doubled and labelled against a bad year. The open day is the one occasion she gives packets away for nothing, on the understanding that you come back next autumn with two of them, and she writes that down as well.\n\nThere is a line in the returns column that has been paid every autumn for eleven years and has nothing in the name column. Two packets, always, of whatever was taken, dry and clean and better than what went out. Maribel has filed the objection to a hedgerow being taken down twice and had it thrown out twice, so she is not an animal who lets a form go unfinished; this one she leaves.",
+   "voice": "None recorded. The packets are labelled in block capitals and the labels are correct.",
+   "arc": "One rung, at Journeyman, because seed that comes back better than it went out is not a beginner's year.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_unlisted_grower_2"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Unsigned Mouse",
+   "species": "Mouse",
+   "studies": [
+    "Lore"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Andrew keeps the Lending Library's late desk and copies out by hand what cannot be lent, a page or two a night, so that there is a second one. Twice now he has come in to find the night's pages already done, in a hand that is not his and is better than his, and the book squared away on the shelf it came off.\n\nThe Library has twice filed Andrew's copy as the original, which is a joke the borough enjoys; it has never worked out what to do about these. Lynnette will not print a claim Ned cannot certify and Ned will not certify a hand without an animal attached to it, so the pages sit in the stack unsigned and everybody uses them.",
+   "voice": "None recorded. The marginal corrections are polite and, Andrew says, right.",
+   "arc": "One rung. Whoever was at the shelves is somebody the Library already knows; it simply does not know which one.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_unsigned_mouse_shelves_hand_1"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "The Veiled Wright",
+   "species": "Owl",
+   "studies": [
+    "Crafts"
+   ],
+   "pronouns": "they/them",
+   "backstory": "Hoot keeps the ward's keys and a standing list of animals who have asked to be woken, and knocks at four in the morning on anybody who is on it. Being woken in the First Boroughs is a service you sign up for. Nobody signs up to have the sash cord replaced while they sleep, and yet.\n\nIt is a small and specific list: a sash cord, a dropped gate hinge, a pump handle, a stair tread, each done overnight in a ward where somebody had complained about it out loud the previous day. Berry's position is that the work is good and that it is not hers. Moss's position, which cost him a formal warning at Velvet's counter for something unrelated, is that it is not his either and that whoever it is does not foul a hitch.",
+   "voice": "None recorded. Nothing has ever been left behind but the shavings, swept.",
+   "arc": "One rung, at cost 0, because this is an animal the borough has never yet paid.",
+   "wantedVerbs": [],
+   "obscured": true,
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_veiled_wright_0"
+     ],
+     "why": "An obscured figure has no face and no painted tile of their own; this card stands on a borrowed scene of the right work. What it wants is the work in full and the animal in shadow — a hood, a scarf, a coat collar, the light on the job and not on whoever is doing it — so that the card reads as the entry in Ned's unsigned column that it is."
+    }
+   ]
+  },
+  {
+   "name": "Gwen",
+   "species": "Mouse",
+   "studies": [
+    "Food"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Gwen's diner is on the square, at the Hiring Hall corner, directly opposite Bean's café, and the two counters have divided the borough's bad mornings between them without ever discussing it. At Bean's you find out there is nothing on the board. At Gwen's you get a shift anyway.\n\nThat is the whole of her policy and she has never dressed it up. Anybody who walks in and asks for work gets an apron, that day, with no questions about why they are not doing whatever it is the borough thinks they do; there is no term, no interview and no mention of it afterwards. She pays at the end of the shift, in coin, and if you come back the next day she puts you on again, and if you never come back she does not ask Ned to write it down. The Hiring Hall has twice tried to make this a formal arrangement and twice been told, politely and at speed, that a formal arrangement would ruin it.\n\nRosabeth's gate takes the animals who have stopped getting up and Quill's orchard takes everybody, all the time, so that nobody has to admit to anything. Gwen's is the third of those doors and the least sentimental: the diner is busy, the griddle is hot, and there is no time to feel anything about it until the rush is over. Half the borough has worked a fortnight there between one career and the next, and the borough has agreed without agreeing anything that a fortnight at Gwen's is not worth mentioning.",
+   "voice": "Flat, fast and entirely unsentimental. Says 'apron's on the hook' rather than yes, and never says the other thing at all.",
+   "arc": "The rungs are about who counts as one of hers. Short-Order Cook (1) feeds one animal back onto the floor; Diner Keeper (3) puts anybody who works in Food back on the books cheap; Owner of the Diner (5) does it for anybody at all, whatever they think their job is, and still has the Food chit at the end of the shift. All three read out of the same policy, which is that a counter with a gap in it is a problem and an animal out of work is a solution.",
+   "wantedVerbs": [
+    {
+     "verb": "rehireFromAnywhere",
+     "why": "The diner's actual rule is that anybody who walks in gets a shift, including an animal who is nobody's — out of the City Dump, or out of the other Mayor's Unemployment. Every rehiring verb in the engine reads your own Unemployment only.",
+     "workaround": "Her rungs rehire and feed out of her own town's Unemployment, widening the filter as the cost climbs: Food only at 3, anybody at 5."
+    }
+   ],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_gwen_short_order_cook_1",
+      "mk_gwen_diner_keeper_3",
+      "mk_gwen_owner_of_the_diner_5"
+     ],
+     "why": "No painted tile shows a diner counter mid-rush. The three cards stand on the Community Kitchen scene, which is the right warmth and the wrong room — Gwen's is a griddle, a hatch, a row of stools and an apron on a hook by the door."
+    }
+   ]
+  },
+  {
+   "name": "Liza",
+   "species": "Rabbit",
+   "studies": [
+    "Entertainment",
+    "Food"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Liza is on Cassadee's list more often than anybody except Oatmeal's band, and unlike the band she comes on her own, with nothing, and sings for twenty minutes to a room that stops moving. She has done this since she was seventeen. She has never been paid more than the hat, has never asked to be, and has turned down the Festival Green twice on the grounds that it is too big a room to be honest in.\n\nThe borough gossips about one thing where that room is concerned, very quietly, and Liza is one half of it and does not know. Thistle comes on the nights she is on the list, stands at the back by the door, does not take his coat off, listens to the one set with his eyes shut and is gone before the applause; Cassadee has twice moved Liza up the running order so that he would not have to stay so late, and has never mentioned it to either of them.\n\nBetween bookings Liza works Gwen's counter, which is the least remarkable fact about her and the one she would give you first. She is quick on a hatch, she remembers an order without writing it down, and she sings while she does it, which Gwen permits on the grounds that the rush goes faster.",
+   "voice": "Offhand about everything except the running order. Talks about her own singing the way other animals talk about the weather in a week they were not there for.",
+   "arc": "Rabbits fill rooms, so Liza's rungs fill a town. Floor Singer (0) is twenty minutes and a hat. Counter Singer (1) is the fortnight at Gwen's and pays like it. Top of the Bill (3) gets somebody else in the town back on their feet, and Headliner (5) brings a whole other animal in out of hand, which is what a room that is suddenly full actually looks like from the door.",
+   "wantedVerbs": [],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_liza_floor_singer_0",
+      "mk_liza_top_of_the_bill_3",
+      "mk_liza_headliner_5"
+     ],
+     "why": "The Open Mic Night scene is the right room and shows no singer in it. A rabbit alone at the front of a stopped room, hat on the floor, is the painting these three want."
+    }
+   ]
+  },
+  {
+   "name": "Harrison",
+   "species": "Fox",
+   "studies": [
+    "Entertainment"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Harrison is the Fox on the piano in Oatmeal's band, and the Fox on the piano in everybody else's. He cannot read a note, has never learned, and can follow an animal who has never rehearsed anything in their life through a song he has not heard — eight bars in he has the shape of it, and by the second verse he is a half-step ahead, putting the chord under the note the singer is about to reach for.\n\nThat is the whole of his talent and it is not really a musical one: Harrison knows what a room is going to want before the room does. Cassadee books him without asking who else is on. Finn, who meets the Capital City's traders because he is the only animal in town who enjoys it, has twice taken Harrison along to sit at the back of a negotiation and say nothing, and both times has come home with the number he wanted. Harrison will not discuss this and puts it down to the piano.\n\nLynnette printed a paragraph about him once, in the paper, about an animal who plays for four hours a week and cannot read a word of it. Harrison has never mentioned the paragraph and has never had it framed, and it is on the wall at the back of the open mic room where he cannot see it from the stool.",
+   "voice": "Amiable, unhurried, and a half-step ahead of you. Answers the question you are about to ask.",
+   "arc": "Foxes read the room, so Harrison reads the Capital City. Piano Boy (0) glances at what is coming; House Pianist (2) puts the top of the deck back in the order he wants it; Band Leader (4) does both at once and makes the next raise cheaper, which is the same trick applied to a room full of bidders.",
+   "wantedVerbs": [],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_harrison_piano_boy_0",
+      "mk_harrison_house_pianist_2",
+      "mk_harrison_band_leader_4"
+     ],
+     "why": "The Bandstand is the right borough and the wrong instrument: it holds a band of five if two stand on the step, and Harrison is one fox and an upright piano in a room with the chairs pushed back."
+    }
+   ]
+  },
+  {
+   "name": "Gabe",
+   "species": "Raccoon",
+   "studies": [
+    "Entertainment",
+    "Crafts"
+   ],
+   "pronouns": "he/him",
+   "backstory": "The Salvage Yard is divided without anybody having said so: Annabelle takes the paper and Patch takes everything else. Gabe takes the third pile, which is what Patch has looked at and put down — a split glove, a bent spoon, half a curtain ring, the sort of thing even the yard has given up on — and out of it he makes a cast.\n\nHe has about forty of them now and they all have names. The shows are free and there are three regular ones: Saturday mornings in the Lending Library's children's corner, which is the slot Inkwell and Lynnette do not use; the bakery queue on the mornings Marmalade is handing out to the kittens first, which is a captive audience and Marmalade has never objected; and whatever room Cassadee will give him, late, when the list has run short. The children's version and the late version are not the same show and the borough has noticed.\n\nPatch judges things for a living — animals bring him a thing and ask whether it is worth keeping, and then they start bringing him leases and seasons that have not gone well, and he is right. He has never once judged the third pile. Gabe is not his brother; Pockets is. But Gabe turns up at the yard about as often, is fed, and leaves with something, and Patch has never asked what for either.",
+   "voice": "Two voices, and neither of them his. Says almost nothing as himself and will not be drawn on which of the puppets he agrees with.",
+   "arc": "Raccoons work the bins, so Gabe's rungs go deeper into them. Corner Show (0) turns a card over. Puppet Maker (2) takes what the Capital City threw away — the Raccoon signature, doing exactly what the story says he does with it. Company of One (4) gets an Event back out of his own Town Dump, because the late show is the same script every time and he has never written it down. The Whole Cast (5) does both, every turn, which is forty puppets and one raccoon.",
+   "wantedVerbs": [],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_gabe_corner_show_0",
+      "mk_gabe_company_of_one_4",
+      "mk_gabe_whole_cast_5"
+     ],
+     "why": "No painted tile shows a puppet booth. The Scrap Yard scene stands under the Puppet Maker and is exactly right there; the three show cards want a booth, a raccoon behind it, and a floor of kittens."
     }
    ]
   }
@@ -8084,8 +8574,8 @@
    },
    "rarity": "Uncommon",
    "power": {
-    "score": 4.59,
-    "power": 11.52,
+    "score": 3.96,
+    "power": 9.94,
     "opportunityCost": 10
    }
   },
@@ -11617,6 +12107,264 @@
    }
   },
   {
+   "type": "statue",
+   "id": "mk_st_diligence",
+   "virtue": "Diligence",
+   "cost": 3,
+   "name": "Statue of Diligence",
+   "text": "Every shift your town finishes pays 1 more Supply.",
+   "flavor": "Carved mid-stride, one pace ahead of a row of four who are all looking at its back. Thistle sets the pace at the head of a row and has never once looked back, and the mason put the row in anyway — half a length behind, doing half again what they meant to, and not feeling it until morning.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "townShiftBonus",
+     "value": 1
+    },
+    {
+     "trigger": "onTurnEnd",
+     "burden": true,
+     "effect": {
+      "do": "opponentGainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "burden": "Burden: at the end of your turn, your opponent gains 1 Supply.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 8
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.58,
+    "power": 10.36,
+    "opportunityCost": 32.22
+   }
+  },
+  {
+   "type": "statue",
+   "id": "mk_st_hospitality",
+   "virtue": "Hospitality",
+   "cost": 2,
+   "name": "Statue of Hospitality",
+   "text": "On gain: rehire a Character costing 3 or less out of your Unemployment for nothing. At the end of your turn, take a Food token.",
+   "flavor": "A figure with the door held open and a basket already out, offered to nobody in particular. Quill's orchard takes everybody, all the time, so that nobody has to admit to anything; the mason picked there one autumn and carved the door rather than the barn.",
+   "onGain": {
+    "do": "rehire",
+    "filter": {
+     "maxCost": 3
+    },
+    "free": true,
+    "optional": true
+   },
+   "abilities": [
+    {
+     "trigger": "onTurnEnd",
+     "effect": {
+      "do": "gainToken",
+      "of": "study",
+      "study": "Food",
+      "count": 1
+     }
+    },
+    {
+     "trigger": "onShiftCompleted",
+     "oncePerTurn": true,
+     "burden": true,
+     "effect": {
+      "do": "opponentGainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "burden": "Burden: the first shift you complete each turn also pays your opponent 1 Supply.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 13
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.85,
+    "power": 11.43,
+    "opportunityCost": 32.22
+   }
+  },
+  {
+   "type": "statue",
+   "id": "mk_st_vigilance",
+   "virtue": "Vigilance",
+   "cost": 4,
+   "name": "Statue of Vigilance",
+   "text": "On gain: look at your opponent's hand. At the start of your turn, your Characters cannot be sent to Unemployment by an effect until your next turn.",
+   "flavor": "Its eyes are on the sheds and not on the square, which the commission queried and did not win. Benjamin walks that line himself in the dry weeks, with a lamp he filled at his own bench, and everything in this borough that has ever burned is written down in his hand.",
+   "onGain": {
+    "do": "peekOpponentHand"
+   },
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "unemploymentShield",
+      "value": 1,
+      "expires": "nextTurnStart"
+     }
+    },
+    {
+     "trigger": "onSupplyLost",
+     "burden": true,
+     "effect": {
+      "do": "discard",
+      "count": 1
+     }
+    }
+   ],
+   "burden": "Burden: whenever Supply is taken from you, discard a card.",
+   "art": {
+    "atlas": "townlife",
+    "tile": 8
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.84,
+    "power": 11.38,
+    "opportunityCost": 32.22
+   }
+  },
+  {
+   "type": "statue",
+   "id": "mk_st_wonder",
+   "virtue": "Wonder",
+   "cost": 2,
+   "name": "Statue of Wonder",
+   "text": "On gain: look at the top 2 cards of the Market Deck and put them back in any order. At the start of your turn, look at the top card of the Market Deck.",
+   "flavor": "Head back, both paws empty, and a smoked-glass disc set into one of them that the night class holds up to the sun on eclipse mornings. Sage has the eclipses to the minute eleven months out and has still never applied to go up.",
+   "onGain": {
+    "do": "peekMarketDeck",
+    "count": 2,
+    "reorder": true
+   },
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 1
+     }
+    },
+    {
+     "trigger": "passive",
+     "key": "losingBidsPayFull",
+     "burden": true
+    }
+   ],
+   "burden": "Burden: when you lose an auction, your escrow is not refunded.",
+   "art": {
+    "atlas": "nightskies",
+    "tile": 0
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.55,
+    "power": 10.24,
+    "opportunityCost": 32.22
+   }
+  },
+  {
+   "type": "statue",
+   "id": "mk_st_thrift",
+   "virtue": "Thrift",
+   "cost": 4,
+   "name": "Statue of Thrift",
+   "text": "On gain: gain 2 Supply. At the start of your turn, if you hold 5 or more cards, your next raise in a Capital City auction costs 1 less Supply to pay.",
+   "flavor": "A plain figure with a full sack at its feet and its paw resolutely not on it. The cellar under the weights office has never been opened; both bad seasons Copper lent the salt out on the quiet instead and said there would be worse.",
+   "onGain": {
+    "do": "gainSupply",
+    "amount": 2
+   },
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "handAtLeast": 5
+     },
+     "effect": {
+      "do": "addMod",
+      "key": "challengeDiscount",
+      "value": 1,
+      "expires": "untilUsed"
+     }
+    },
+    {
+     "trigger": "onGainMarketCard",
+     "condition": {
+      "nonStatue": true
+     },
+     "burden": true,
+     "effect": {
+      "do": "opponentGainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "burden": "Burden: whenever you win a card out of the Capital City that is not a Statue, your opponent gains 2 Supply.",
+   "art": {
+    "atlas": "townlife",
+    "tile": 0
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.95,
+    "power": 11.83,
+    "opportunityCost": 32.22
+   }
+  },
+  {
+   "type": "statue",
+   "id": "mk_st_mercy",
+   "virtue": "Mercy",
+   "cost": 5,
+   "name": "Statue of Mercy",
+   "text": "On gain: a Character in your Unemployment is fed and comes back to work Busy, for nothing. At the start of your turn, you may rehire a Character costing 1 or less for 1 less Supply.",
+   "flavor": "Kneeling, with both paws busy and its face turned away from whoever is in them. Rosabeth's gate is where an animal who has stopped getting up is sent, set to work on the beds, and never once told that is what is happening. She charges for the tincture and for nothing else.",
+   "onGain": {
+    "do": "giveToUnemployed",
+    "optional": true
+   },
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "rehire",
+      "filter": {
+       "maxCost": 1
+      },
+      "discount": 1,
+      "optional": true
+     }
+    },
+    {
+     "trigger": "onTurnStart",
+     "burden": true,
+     "effect": {
+      "do": "discard",
+      "count": 1
+     }
+    }
+   ],
+   "burden": "Burden: at the start of your turn, discard a card.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 15
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.9,
+    "power": 11.65,
+    "opportunityCost": 32.22
+   }
+  },
+  {
    "type": "market",
    "disposal": "cityDump",
    "id": "mk_mkt_second_founding",
@@ -14511,6 +15259,2001 @@
    }
   },
   {
+   "id": "mk_masked_otter_counter_hand_1",
+   "type": "character",
+   "name": "The Masked Otter",
+   "title": "Hand at the Counter",
+   "job": "Hand at the Counter",
+   "species": "Otter",
+   "study": "Commerce",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Any Otter costing more may be played over this card as an upgrade, whatever their name. A short shift: 1 turn, 1 Supply.",
+   "flavor": "Willow's office has the lease, Copper's has the takings, and Ned's has fourteen days under a scarf. All three sets of books agree and not one of them has a name in it.",
+   "anchor": {
+    "species": true
+   },
+   "art": {
+    "atlas": "neighbors",
+    "tile": 12
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.42,
+    "power": 6.3,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_mysterious_raccoon_beds_hand_2",
+   "type": "character",
+   "name": "The Mysterious Raccoon",
+   "title": "Hand on the Beds",
+   "job": "Hand on the Beds",
+   "species": "Raccoon",
+   "study": "Agriculture",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "Any Raccoon costing more may be played over this card as an upgrade, whatever their name. A slow shift: 2 turns, 2 Supply.",
+   "flavor": "Sent by somebody, as they all are. Rosabeth never asks who sent them and has never once been wrong about who needed the gate.",
+   "anchor": {
+    "species": true
+   },
+   "art": {
+    "atlas": "neighbors",
+    "tile": 4
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.23,
+    "power": 6.95,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_hooded_rabbit_hatch_hand_0",
+   "type": "character",
+   "name": "The Hooded Rabbit",
+   "title": "Hand at the Hatch",
+   "job": "Hand at the Hatch",
+   "species": "Rabbit",
+   "study": "Food",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Any Rabbit costing more may be played over this card as an upgrade, whatever their name. A short shift: 1 turn, 1 Supply.",
+   "flavor": "The Community Oven is an arrangement and not a building anybody owns, which is why nobody thought to ask who was in it.",
+   "anchor": {
+    "species": true
+   },
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 1
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.94,
+    "power": 4.9,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_unsigned_mouse_shelves_hand_1",
+   "type": "character",
+   "name": "The Unsigned Mouse",
+   "title": "Hand at the Shelves",
+   "job": "Hand at the Shelves",
+   "species": "Mouse",
+   "study": "Lore",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Any Mouse costing more may be played over this card as an upgrade, whatever their name. A short shift: 1 turn, 1 Supply.",
+   "flavor": "Andrew came in, found the night's pages done, read them through twice, and then went and did the next two hours anyway.",
+   "anchor": {
+    "species": true
+   },
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 2
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.42,
+    "power": 6.3,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_shrouded_badger_bench_hand_2",
+   "type": "character",
+   "name": "The Shrouded Badger",
+   "title": "Hand at the Bench",
+   "job": "Hand at the Bench",
+   "species": "Badger",
+   "study": "Crafts",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "Any Badger costing more may be played over this card as an upgrade, whatever their name. A slow shift: 2 turns, 2 Supply.",
+   "flavor": "Berry came back after dark, went along the whole row, and said the only thing that mattered: they were mended by the animals who brought them.",
+   "anchor": {
+    "species": true
+   },
+   "art": {
+    "atlas": "neighbors",
+    "tile": 8
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.23,
+    "power": 6.95,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_muffled_hedgehog_stall_hand_0",
+   "type": "character",
+   "name": "The Muffled Hedgehog",
+   "title": "Hand at the Stall",
+   "job": "Hand at the Stall",
+   "species": "Hedgehog",
+   "study": "Commerce",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Any Hedgehog costing more may be played over this card as an upgrade, whatever their name. A short shift: 1 turn, 1 Supply.",
+   "flavor": "Not being able to name a thing is the whole appeal of Hazel's market, and the borough has never once thought to apply that to the stallholders.",
+   "anchor": {
+    "species": true
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 13
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.94,
+    "power": 4.9,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_shadowed_squirrel_hall_hand_1",
+   "type": "character",
+   "name": "The Shadowed Squirrel",
+   "title": "Hand at the Back of the Hall",
+   "job": "Hand at the Back of the Hall",
+   "species": "Squirrel",
+   "study": "Entertainment",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Any Squirrel costing more may be played over this card as an upgrade, whatever their name. A short shift: 1 turn, 1 Supply.",
+   "flavor": "The chairs were stacked, the lamps were out and the floor was swept, and Cassadee — who has never performed anything — went home and did not ask.",
+   "anchor": {
+    "species": true
+   },
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.42,
+    "power": 6.3,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_nameless_cat_glass_hand_2",
+   "type": "character",
+   "name": "The Nameless Cat",
+   "title": "Hand at the Glass",
+   "job": "Hand at the Glass",
+   "species": "Cat",
+   "study": "Science",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "Any Cat costing more may be played over this card as an upgrade, whatever their name. A slow shift: 2 turns, 2 Supply.",
+   "flavor": "Sota re-seated the big glass twice, months a blank, the last of it by hand — and never once looked through it to see who was already there.",
+   "anchor": {
+    "species": true
+   },
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 0
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.23,
+    "power": 6.95,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_silhouetted_owl_scales_hand_0",
+   "type": "character",
+   "name": "The Silhouetted Owl",
+   "title": "Hand at the Scales",
+   "job": "Hand at the Scales",
+   "species": "Owl",
+   "study": "Commerce",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Any Owl costing more may be played over this card as an upgrade, whatever their name. A short shift: 1 turn, 1 Supply.",
+   "flavor": "Two sets of night figures, two hands, one halfpenny apart from each other in neither direction. The borough does not ask about the first of them either.",
+   "anchor": {
+    "species": true
+   },
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 5
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.94,
+    "power": 4.9,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_cowled_fox_far_field_hand_1",
+   "type": "character",
+   "name": "The Cowled Fox",
+   "title": "Hand in the Far Field",
+   "job": "Hand in the Far Field",
+   "species": "Fox",
+   "study": "Agriculture",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Any Fox costing more may be played over this card as an upgrade, whatever their name. A short shift: 1 turn, 1 Supply.",
+   "flavor": "Thistle does not look back, so he never saw them. The row did, all season, and every animal in it assumed somebody else had been told.",
+   "anchor": {
+    "species": true
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 8
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.42,
+    "power": 6.3,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_unlisted_grower_2",
+   "type": "character",
+   "name": "The Unlisted Grower",
+   "title": "Unlisted Grower",
+   "job": "Unlisted Grower",
+   "species": "Otter",
+   "study": "Agriculture",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "Any Character who works in Agriculture and costs more may be played over this card as an upgrade, whatever their name. A slow shift: 2 turns, 2 Supply.",
+   "flavor": "Eleven autumns, twenty-two packets, and the one line in Maribel's book she has decided not to finish.",
+   "anchor": {
+    "study": true
+   },
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 0
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.37,
+    "power": 7.25,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_faceless_clerk_0",
+   "type": "character",
+   "name": "The Faceless Clerk",
+   "title": "Faceless Clerk",
+   "job": "Faceless Clerk",
+   "species": "Squirrel",
+   "study": "Civics",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Any Character who works in Civics and costs more may be played over this card as an upgrade, whatever their name. A short shift: 1 turn, 1 Supply.",
+   "flavor": "Velvet's consents and Ned's ward records have never disagreed in fifteen years — not even about the four Wednesdays neither of them can explain.",
+   "anchor": {
+    "study": true
+   },
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 4
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 3.12,
+    "power": 5.2,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_cloaked_tradesman_1",
+   "type": "character",
+   "name": "The Cloaked Tradesman",
+   "title": "Cloaked Tradesman",
+   "job": "Cloaked Tradesman",
+   "species": "Mouse",
+   "study": "Commerce",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Any Character who works in Commerce and costs more may be played over this card as an upgrade, whatever their name. A short shift: 1 turn, 1 Supply.",
+   "flavor": "Tuppence does not query the price and the Counting House does not query Tuppence. Somewhere at the end of that there is a cloak, and a box Patch said was worth keeping.",
+   "anchor": {
+    "study": true
+   },
+   "art": {
+    "atlas": "capital",
+    "tile": 6
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.58,
+    "power": 6.6,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_veiled_wright_0",
+   "type": "character",
+   "name": "The Veiled Wright",
+   "title": "Veiled Wright",
+   "job": "Veiled Wright",
+   "species": "Owl",
+   "study": "Crafts",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Any Character who works in Crafts and costs more may be played over this card as an upgrade, whatever their name. A short shift: 1 turn, 1 Supply.",
+   "flavor": "Berry says the work is good and not hers. Moss says it is not his. Between the two of them that is as close as this borough comes to a verdict.",
+   "anchor": {
+    "study": true
+   },
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 6
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 3.12,
+    "power": 5.2,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_anonymous_scribe_2",
+   "type": "character",
+   "name": "The Anonymous Scribe",
+   "title": "Anonymous Scribe",
+   "job": "Anonymous Scribe",
+   "species": "Badger",
+   "study": "Lore",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "Any Character who works in Lore and costs more may be played over this card as an upgrade, whatever their name. A slow shift: 2 turns, 2 Supply.",
+   "flavor": "Ned certified all three, which is the whole of what the borough knows. When Scott says the bridge went in a particular spring, the arguing stops.",
+   "anchor": {
+    "study": true
+   },
+   "art": {
+    "atlas": "neighbors",
+    "tile": 10
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.37,
+    "power": 7.25,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_obscured_observer_1",
+   "type": "character",
+   "name": "The Obscured Observer",
+   "title": "Obscured Observer",
+   "job": "Obscured Observer",
+   "species": "Fox",
+   "study": "Science",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Any Character who works in Science and costs more may be played over this card as an upgrade, whatever their name. A short shift: 1 turn, 1 Supply.",
+   "flavor": "Rosabeth sells a green tincture for the midges and Bella files a note on them. The second hand in that folder has never asked for either.",
+   "anchor": {
+    "study": true
+   },
+   "art": {
+    "atlas": "nightskies",
+    "tile": 8
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.58,
+    "power": 6.6,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_unknown_cook_0",
+   "type": "character",
+   "name": "The Unknown Cook",
+   "title": "Unknown Cook",
+   "job": "Unknown Cook",
+   "species": "Raccoon",
+   "study": "Food",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Any Character who works in Food and costs more may be played over this card as an upgrade, whatever their name. A short shift: 1 turn, 1 Supply.",
+   "flavor": "The cart did not move all summer, which every lighterman on the river noticed and not one of them mentioned to Taco.",
+   "anchor": {
+    "study": true
+   },
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 1
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 3.12,
+    "power": 5.2,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_curtained_performer_2",
+   "type": "character",
+   "name": "The Curtained Performer",
+   "title": "Curtained Performer",
+   "job": "Curtained Performer",
+   "species": "Cat",
+   "study": "Entertainment",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 2
+   },
+   "text": "Any Character who works in Entertainment and costs more may be played over this card as an upgrade, whatever their name. A slow shift: 2 turns, 2 Supply.",
+   "flavor": "Cassadee's list is a document and this is the one line in it she wrote in pencil. Faustus was there every time and has never once said so.",
+   "anchor": {
+    "study": true
+   },
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.37,
+    "power": 7.25,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_gwen_short_order_cook_1",
+   "type": "character",
+   "name": "Gwen",
+   "title": "Short-Order Cook",
+   "job": "Short-Order Cook",
+   "species": "Mouse",
+   "study": "Food",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Gwen is recruited, a Character costing 1 or less in your Unemployment is fed and comes back to work Busy, for nothing.",
+   "flavor": "The apron is on the hook by the door and has been since she opened. She has never once handed it to anybody; she looks at the hook, and they go and get it.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "giveToUnemployed",
+      "filter": {
+       "maxCost": 1
+      },
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 13
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.56,
+    "power": 6.55,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_gwen_diner_keeper_3",
+   "type": "character",
+   "name": "Gwen",
+   "title": "Diner Keeper",
+   "job": "Diner Keeper",
+   "species": "Mouse",
+   "study": "Food",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Gwen. Busy: you may rehire a Character who works in Food from your Unemployment for 1 less Supply.",
+   "flavor": "Bean's counter is where the borough finds out there is nothing on the board. Gwen's is directly opposite it, which she says is a coincidence and which nobody in the First Boroughs believes.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "rehire",
+      "filter": {
+       "study": "Food"
+      },
+      "discount": 1,
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 13
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.47,
+    "power": 10.17,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_gwen_owner_of_the_diner_5",
+   "type": "character",
+   "name": "Gwen",
+   "title": "Owner of the Diner",
+   "job": "Owner of the Diner",
+   "species": "Mouse",
+   "study": "Food",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Gwen. At the start of your turn, you may rehire a Character costing 3 or less from your Unemployment for 2 less Supply, whatever their study, and take a Food token.",
+   "flavor": "The Hiring Hall has twice asked her to make it a formal arrangement. The second time she said a formal arrangement would ruin it, and went back through the hatch before anybody could write that down either.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "rehire",
+        "filter": {
+         "maxCost": 3
+        },
+        "discount": 2,
+        "optional": true
+       },
+       {
+        "do": "gainToken",
+        "of": "study",
+        "study": "Food",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 13
+   },
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.1,
+    "power": 15.91,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_liza_floor_singer_0",
+   "type": "character",
+   "name": "Liza",
+   "title": "Floor Singer",
+   "job": "Floor Singer",
+   "species": "Rabbit",
+   "study": "Entertainment",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "Twenty minutes, nothing in her paws, and a room that stops moving. She has been paid the hat for it since she was seventeen and has never asked for anything else.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.22,
+    "power": 3.7,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_liza_counter_singer_1",
+   "type": "character",
+   "name": "Liza",
+   "title": "Counter Singer",
+   "job": "Counter Singer",
+   "species": "Rabbit",
+   "study": "Food",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Upgrades Liza. Busy: gain 1 Supply.",
+   "flavor": "Quick on the hatch, remembers an order without writing it down, and sings the whole way through the rush. Gwen permits it on the grounds that the rush goes faster.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 13
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.86,
+    "power": 7.1,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_liza_top_of_the_bill_3",
+   "type": "character",
+   "name": "Liza",
+   "title": "Top of the Bill",
+   "job": "Top of the Bill",
+   "species": "Rabbit",
+   "study": "Entertainment",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Liza. When Liza becomes upright, ready one of your Characters.",
+   "flavor": "Cassadee has moved her up the running order twice in ten years and given a different reason both times, neither of which was the reason.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "readyCharacter",
+      "count": 1,
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "rarity": "Rare",
+   "power": {
+    "score": 5.2,
+    "power": 11.83,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_liza_headliner_5",
+   "type": "character",
+   "name": "Liza",
+   "title": "Headliner",
+   "job": "Headliner",
+   "species": "Rabbit",
+   "study": "Entertainment",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Liza. When Liza is recruited, you may recruit a Character costing 2 or less from your hand for free; it enters Busy.",
+   "flavor": "She has turned the Festival Green down twice, on the grounds that it is too big a room to be honest in. The room she does take fills up anyway, from the door inward, which is the part she never sees.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "recruitFromHand",
+      "filter": {
+       "maxCost": 2
+      },
+      "orientation": 270,
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.79,
+    "power": 15.1,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_harrison_piano_boy_0",
+   "type": "character",
+   "name": "Harrison",
+   "title": "Piano Boy",
+   "job": "Piano Boy",
+   "species": "Fox",
+   "study": "Entertainment",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Harrison is recruited, look at the top card of the Market Deck.",
+   "flavor": "Eight bars in he has the shape of it. He could not tell you how and has stopped being asked.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 13
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.46,
+    "power": 4.1,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_harrison_house_pianist_2",
+   "type": "character",
+   "name": "Harrison",
+   "title": "House Pianist",
+   "job": "House Pianist",
+   "species": "Fox",
+   "study": "Entertainment",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Harrison. Busy: look at the top 2 cards of the Market Deck and put them back in any order.",
+   "flavor": "By the second verse he is a half-step ahead, putting the chord under the note the singer has not reached for yet. Nobody on that stage has ever noticed it happening.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 2,
+      "reorder": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 13
+   },
+   "rarity": "Rare",
+   "power": {
+    "score": 5.32,
+    "power": 11.45,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_harrison_band_leader_4",
+   "type": "character",
+   "name": "Harrison",
+   "title": "Band Leader",
+   "job": "Band Leader",
+   "species": "Fox",
+   "study": "Entertainment",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Harrison. At the start of your turn, look at the top card of the Market Deck, and your next raise in a Capital City auction costs 1 less Supply to pay.",
+   "flavor": "Finn has twice sat him at the back of a negotiation to say nothing, and twice come home with the number he wanted. Harrison will not discuss it and puts it down to the piano.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "peekMarketDeck",
+        "count": 1
+       },
+       {
+        "do": "addMod",
+        "key": "challengeDiscount",
+        "value": 1,
+        "expires": "untilUsed"
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 13
+   },
+   "rarity": "Rare",
+   "power": {
+    "score": 5.25,
+    "power": 13.19,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_gabe_corner_show_0",
+   "type": "character",
+   "name": "Gabe",
+   "title": "Corner Show",
+   "job": "Corner Show",
+   "species": "Raccoon",
+   "study": "Entertainment",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Gabe is recruited, draw a card, then discard a card.",
+   "flavor": "Saturday mornings in the children's corner, which is the slot Inkwell and Lynnette do not use. Forty puppets, all named, and a floor of kittens who know every one of them.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "draw",
+        "count": 1
+       },
+       {
+        "do": "discard",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.58,
+    "power": 4.3,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_gabe_puppet_maker_2",
+   "type": "character",
+   "name": "Gabe",
+   "title": "Puppet Maker",
+   "job": "Puppet Maker",
+   "species": "Raccoon",
+   "study": "Crafts",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Upgrades Gabe. Busy: take a card out of the City Dump.",
+   "flavor": "A split glove, a bent spoon, half a curtain ring. Patch has judged everything else in that yard and never once judged the third pile.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "takeFromCityDump"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "townlife",
+    "tile": 3
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.43,
+    "power": 9.53,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_gabe_company_of_one_4",
+   "type": "character",
+   "name": "Gabe",
+   "title": "Company of One",
+   "job": "Company of One",
+   "species": "Raccoon",
+   "study": "Entertainment",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Gabe. When Gabe becomes upright, take an Event out of your Town Dump into your hand.",
+   "flavor": "The late show is the same script every time and he has never written a word of it down. Cassadee gives him the room when the list runs short and stays for it.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "eventFromDumpToHand"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "rarity": "Rare",
+   "power": {
+    "score": 5.2,
+    "power": 13.07,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_gabe_whole_cast_5",
+   "type": "character",
+   "name": "Gabe",
+   "title": "The Whole Cast",
+   "job": "The Whole Cast",
+   "species": "Raccoon",
+   "study": "Entertainment",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Gabe. Busy: take a card out of the City Dump, then draw a card.",
+   "flavor": "The children's version and the late version are not the same show, and the borough has noticed, and has never asked him about it once.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "takeFromCityDump"
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.51,
+    "power": 16.98,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_faustus_wardrobe_master_4",
+   "type": "character",
+   "name": "Faustus",
+   "title": "Wardrobe Master",
+   "job": "Wardrobe Master",
+   "species": "Cat",
+   "study": "Entertainment",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Faustus. While Faustus is upright, every pledge your opponent makes in an auction must be one step more expensive than the ladder asks. Busy, once per game: Faustus readies himself.",
+   "flavor": "He will not make a thing for a room he is not going to be in, which is why the open mic has a wardrobe at all and why he was in it every one of the nights nobody can account for.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "opponentPledgeLadderPlus1",
+     "requiresUpright": true
+    },
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "selfReady",
+      "oncePerGame": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 3
+   },
+   "rarity": "Rare",
+   "power": {
+    "score": 5.1,
+    "power": 12.8,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_roger_fair_day_judge_0",
+   "type": "character",
+   "name": "Roger",
+   "title": "Fair Day Judge",
+   "job": "Fair Day Judge",
+   "species": "Fox",
+   "study": "Entertainment",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Roger is recruited, somebody else tosses the ha'penny: heads, gain 1 Supply; tails, draw a card.",
+   "flavor": "Who was to have the good pitch at the fair was settled off this coin, along with four boundary questions and a dispute about a bandstand. Roger has never once called it in the air and says that would be taking a side.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "coinFlip",
+      "heads": {
+       "do": "gainSupply",
+       "amount": 1
+      },
+      "tails": {
+       "do": "draw",
+       "count": 1
+      }
+     }
+    }
+   ],
+   "art": {
+    "atlas": "neighbors",
+    "tile": 6
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.97,
+    "power": 4.95,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_kevin_counter_hand_2",
+   "type": "character",
+   "name": "Kevin",
+   "title": "Counter Hand",
+   "job": "Counter Hand",
+   "species": "Fox",
+   "study": "Food",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 3,
+    "decay": 1,
+    "minOutput": 1
+   },
+   "text": "Kevin works the diner counter. Each shift Kevin works pays 1 less Supply than the last, down to 1.",
+   "flavor": "Job nine of the eleven, and the only one nobody counts, because a fortnight at Gwen's is not worth mentioning. He was worth two of anybody for the first four days of it.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 13
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.51,
+    "power": 7.55,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_finn_griddle_hand_2",
+   "type": "character",
+   "name": "Finn",
+   "title": "Griddle Hand",
+   "job": "Griddle Hand",
+   "species": "Fox",
+   "study": "Food",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "When Finn is recruited, look at the top card of the Market Deck.",
+   "flavor": "After the weighbridge and before the toll gate, and Gwen put him on the same morning he asked. The borough knows exactly where he sits between honest and otherwise and put him on the committee anyway.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 13
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.02,
+    "power": 8.65,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_comet_hatch_hand_2",
+   "type": "character",
+   "name": "Comet",
+   "title": "Hatch Hand",
+   "job": "Hatch Hand",
+   "species": "Cat",
+   "study": "Food",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Busy, once per game: Comet readies herself.",
+   "flavor": "The two years the selection board turned her down she was on the hatch at Gwen's, reading the Capital City's manifests between rushes. She applied a third time from behind that counter.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "selfReady",
+      "oncePerGame": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 13
+   },
+   "rarity": "Rare",
+   "power": {
+    "score": 4.85,
+    "power": 10.45,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_peter_washing_up_1",
+   "type": "character",
+   "name": "Peter",
+   "title": "Washing Up",
+   "job": "Washing Up",
+   "species": "Rabbit",
+   "study": "Food",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "A short shift: 1 turn, 2 Supply.",
+   "flavor": "A laid hedge is fifteen years before anybody knows whether you did it properly, and a winter is four months. He was at the sink from November and back on the hedge in March, and said nothing about either.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 13
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.29,
+    "power": 7.9,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_adam_road_gang_2",
+   "type": "character",
+   "name": "Adam",
+   "title": "Road Gang",
+   "job": "Road Gang",
+   "species": "Badger",
+   "study": "Civics",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "When Adam completes a shift, take a Building token.",
+   "flavor": "The pull to the county gate is a quarter-hour shorter than the road it replaced, which was his idea, and every chit for it came out of his own tin.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "gainToken",
+      "of": "building",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "townlife",
+    "tile": 14
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.23,
+    "power": 9.11,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_cookie_rusk_baker_1",
+   "type": "character",
+   "name": "Cookie",
+   "title": "Rusk Baker",
+   "job": "Rusk Baker",
+   "species": "Squirrel",
+   "study": "Food",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Cookie completes a shift, take a Food token.",
+   "flavor": "Everything off her board is made to be opened in a different season from the one it was made in, which is the whole of a Squirrel's argument with the calendar.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "gainToken",
+      "of": "study",
+      "study": "Food",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 1
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.24,
+    "power": 5.96,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_osh_round_sharpener_1",
+   "type": "character",
+   "name": "Osh",
+   "title": "Round Sharpener",
+   "job": "Round Sharpener",
+   "species": "Mouse",
+   "study": "Crafts",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Osh is recruited, take a Crafts token. Busy: spend 2 Crafts tokens: ready one of your Characters.",
+   "flavor": "Eleven days, the same order since he was a kitten, and a mark chalked on every gate he has already done. He has never once been asked to come back sooner.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "gainToken",
+      "of": "study",
+      "study": "Crafts",
+      "count": 1
+     }
+    },
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "spendToken",
+      "of": "study",
+      "study": "Crafts",
+      "count": 2,
+      "then": {
+       "do": "readyCharacter",
+       "count": 1,
+       "optional": true
+      }
+     }
+    }
+   ],
+   "art": {
+    "atlas": "townlife",
+    "tile": 4
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.77,
+    "power": 6.95,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_liz_plate_clerk_0",
+   "type": "character",
+   "name": "Liz",
+   "title": "Plate Clerk",
+   "job": "Plate Clerk",
+   "species": "Fox",
+   "study": "Commerce",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Liz completes a shift, take a Commerce token.",
+   "flavor": "Every loaded cart in or out of the borough crosses her plate and is paid on what she writes. Copper's office certifies the bridge each spring and has never had to adjust it.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "gainToken",
+      "of": "study",
+      "study": "Commerce",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 5
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.73,
+    "power": 4.56,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_tuppence_cart_boy_1",
+   "type": "character",
+   "name": "Tuppence",
+   "title": "Cart Boy",
+   "job": "Cart Boy",
+   "species": "Squirrel",
+   "study": "Commerce",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Tuppence is recruited, take a Squirrel token. Busy, if you hold at least 4 Squirrel tokens: gain 2 Supply.",
+   "flavor": "Bought out of the Capital City before anybody here could say what it was for, and sold on at a price the Counting House has stopped querying. What the day market cannot name goes on to Hazel's.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "gainToken",
+      "of": "species",
+      "species": "Squirrel",
+      "count": 1
+     }
+    },
+    {
+     "trigger": "busy",
+     "condition": {
+      "tokensAtLeast": {
+       "of": "species",
+       "species": "Squirrel",
+       "count": 4
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "art": {
+    "atlas": "capital",
+    "tile": 6
+   },
+   "rarity": "Rare",
+   "power": {
+    "score": 4.83,
+    "power": 8.9,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_bean_two_pairs_of_paws_2",
+   "type": "character",
+   "name": "Bean",
+   "title": "Two Pairs of Paws",
+   "job": "Counter Keeper",
+   "species": "Owl",
+   "study": "Food",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Bean. When Bean is recruited, Bean and Peanut work together: while both are in your town, each of their shifts pays 2 more Supply.",
+   "flavor": "Bean owns it and never stops moving; Peanut keeps the books and works the day counter. On the mornings Bean is coming apart, Peanut takes over without either of them saying so.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "pairCharacters",
+      "bonus": 2,
+      "filter": {
+       "name": "Peanut"
+      }
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 2
+   },
+   "rarity": "Rare",
+   "power": {
+    "score": 5.06,
+    "power": 10.89,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_bob_the_morning_they_share_1",
+   "type": "character",
+   "name": "Bob",
+   "title": "Off the Gate",
+   "job": "Off the Gate",
+   "species": "Hedgehog",
+   "study": "Civics",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "At the start of your turn, if you control Betty, gain 3 Supply.",
+   "flavor": "Born the same morning at the far end of the borough and as unlike as two hedgehogs can be: Bob stops, Betty goes. They are on good terms and see each other rarely, and both regard that as the natural order.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "name": "Betty"
+      }
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 3
+     }
+    }
+   ],
+   "art": {
+    "atlas": "townlife",
+    "tile": 11
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.63,
+    "power": 8.53,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_pockets_four_times_a_year_0",
+   "type": "character",
+   "name": "Pockets",
+   "title": "Four Times a Year",
+   "job": "Four Times a Year",
+   "species": "Raccoon",
+   "study": "Commerce",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Pockets is recruited, if you control Patch, take a card out of the City Dump.",
+   "flavor": "He taught Patch to dive. Patch built a yard, a counter and a price list out of it; Pockets got range instead, and turns up about four times a year, is fed, and leaves with something.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "otherCharacterInTown": {
+       "name": "Patch"
+      }
+     },
+     "effect": {
+      "do": "takeFromCityDump"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "townlife",
+    "tile": 3
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.75,
+    "power": 4.6,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_sota_the_same_bench_4",
+   "type": "character",
+   "name": "Sota",
+   "title": "The Same Bench",
+   "job": "The Same Bench",
+   "species": "Cat",
+   "study": "Science",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Sota. At the start of your turn, if you control Sage, look at the top 2 cards of your deck and you may send them to your Town Dump.",
+   "flavor": "Whole nights on the same bench without either of them saying anything the other wants to hear. Sota grinds the glass and will not look through it; Sage looks through it and could not grind one. Neither has ever suggested a different arrangement.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "name": "Sage"
+      }
+     },
+     "effect": {
+      "do": "scryDeck",
+      "count": 2,
+      "to": "dump"
+     }
+    }
+   ],
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 0
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.36,
+    "power": 10.94,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_thistle_at_the_back_0",
+   "type": "character",
+   "name": "Thistle",
+   "title": "At the Back by the Door",
+   "job": "At the Back by the Door",
+   "species": "Badger",
+   "study": "Entertainment",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "At the start of your turn, if you control an Entertainment Character, one of your Characters turns one step toward upright.",
+   "flavor": "He does not take his coat off, listens to the one set with his eyes shut, and is gone before the applause. The borough gossips about this and only this, and does it very quietly.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Entertainment"
+      }
+     },
+     "effect": {
+      "do": "advanceCharacter",
+      "optional": true
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.99,
+    "power": 6.66,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_lindsay_the_other_bench_1",
+   "type": "character",
+   "name": "Lindsay",
+   "title": "The Other Bench",
+   "job": "The Other Bench",
+   "species": "Cat",
+   "study": "Agriculture",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Lindsay is recruited, she and Rosabeth work together: while both are in your town, each of their shifts pays 2 more Supply.",
+   "flavor": "Rosabeth sings to the beds in full view and has for thirty years. Lindsay is not there at all, waters the whole bench without noticing, and cannot afterwards tell you what she did. Both sets come in over.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "pairCharacters",
+      "bonus": 2,
+      "filter": {
+       "name": "Rosabeth"
+      }
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 0
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.2,
+    "power": 7.74,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_hibiscus_the_sorting_bench_0",
+   "type": "character",
+   "name": "Hibiscus",
+   "title": "The Sorting Bench",
+   "job": "The Sorting Bench",
+   "species": "Rabbit",
+   "study": "Civics",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Hibiscus completes a shift, if you control Juniper, draw a card.",
+   "flavor": "Hibiscus walks the round and Juniper carries what leaves it, and the two of them hand over at five every morning. The round takes seven hours because Hibiscus cannot be got off a doorstep in under ten minutes.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true,
+      "otherCharacterInTown": {
+       "name": "Juniper"
+      }
+     },
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "art": {
+    "atlas": "townlife",
+    "tile": 10
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.79,
+    "power": 4.65,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_osh_fair_fiddler_3",
+   "type": "character",
+   "name": "Osh",
+   "title": "Fair Fiddler",
+   "job": "Fair Fiddler",
+   "species": "Mouse",
+   "study": "Entertainment",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "A steady shift: 2 turns, 4 Supply.",
+   "flavor": "The round takes eleven days and lands on a fair about twice a year, and on those two evenings the stones go back in the cart and the case comes out of it. Nobody on the round has ever been told in advance which evenings those are.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.05,
+    "power": 9.2,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_daisy_garland_cutter_1",
+   "type": "character",
+   "name": "Daisy",
+   "title": "Garland Cutter",
+   "job": "Garland Cutter",
+   "species": "Squirrel",
+   "study": "Crafts",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "A short shift: 1 turn, 2 Supply.",
+   "flavor": "Four days of festival week and a year's takings, and none of it grows on a stem: the wire, the frames and the hooks over the square are cut and bent on her own bench in the fortnight before anybody sees a flower.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 11
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.29,
+    "power": 7.9,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_sage_frost_watch_2",
+   "type": "character",
+   "name": "Sage",
+   "title": "Frost Watch",
+   "job": "Frost Watch",
+   "species": "Owl",
+   "study": "Agriculture",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "A steady shift: 2 turns, 3 Supply.",
+   "flavor": "The eclipses are to the minute eleven months out, and the grange worked out some years ago that the same animal will tell them, free, which of the next four nights is the one to get the sheets on.",
+   "art": {
+    "atlas": "nightskies",
+    "tile": 8
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.39,
+    "power": 7.3,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_andrew_hand_copyist_3",
+   "type": "character",
+   "name": "Andrew",
+   "title": "Hand Copyist",
+   "job": "Hand Copyist",
+   "species": "Owl",
+   "study": "Crafts",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "A steady shift: 2 turns, 4 Supply.",
+   "flavor": "A page or two a night, after the children's corner has emptied and the evening readers have gone, and then the sewing and the boards, which he taught himself because the Library would not pay for it twice.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 6
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.05,
+    "power": 9.2,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_oatmeal_sunday_table_0",
+   "type": "character",
+   "name": "Oatmeal",
+   "title": "Sunday Table",
+   "job": "Sunday Table",
+   "species": "Badger",
+   "study": "Food",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "Nine at the table and he has cooked for all of them since he was eleven. It is the one thing in his week nobody has ever thanked him for and the one he would miss.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 13
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.22,
+    "power": 3.7,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_bob_gate_tolls_2",
+   "type": "character",
+   "name": "Bob",
+   "title": "Gate Tolls",
+   "job": "Gate Tolls",
+   "species": "Hedgehog",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "A steady shift: 2 turns, 3 Supply.",
+   "flavor": "The county gate is shut from six and the toll is the toll, and Bob has never once cared who you say you are or how far you have come. The standing complaints are at the Hiring Hall and have never come to anything.",
+   "art": {
+    "atlas": "townlife",
+    "tile": 11
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.39,
+    "power": 7.3,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_patch_compost_yard_1",
+   "type": "character",
+   "name": "Patch",
+   "title": "Compost Yard",
+   "job": "Compost Yard",
+   "species": "Raccoon",
+   "study": "Agriculture",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "A short shift: 1 turn, 2 Supply.",
+   "flavor": "The far corner of the Salvage Yard is the only part of it Patch has never put a price on: it goes back on the beds, and half the borough's gardeners collect a barrow of it without asking.",
+   "art": {
+    "atlas": "townlife",
+    "tile": 3
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.29,
+    "power": 7.9,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_rosabeth_tincture_counter_4",
+   "type": "character",
+   "name": "Rosabeth",
+   "title": "Tincture Counter",
+   "job": "Tincture Counter",
+   "species": "Mouse",
+   "study": "Commerce",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "A long shift: 2 turns, 5 Supply.",
+   "flavor": "She charges for the tincture and never for the rest, which is the only line she draws and the only one she has never had to explain. The Science hall has twice failed to account for what is in the bottle.",
+   "art": {
+    "atlas": "neighbors",
+    "tile": 2
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.42,
+    "power": 11.1,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_pebble_towpath_warden_4",
+   "type": "character",
+   "name": "Pebble",
+   "title": "Towpath Warden",
+   "job": "Towpath Warden",
+   "species": "Otter",
+   "study": "Agriculture",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "A long shift: 2 turns, 5 Supply.",
+   "flavor": "Seven generations on the crossing and the bank either side of it cut twice a summer, because a towpath that has gone over is a horse in the river and the family has seen that happen once.",
+   "art": {
+    "atlas": "neighbors",
+    "tile": 12
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.42,
+    "power": 11.1,
+    "opportunityCost": 10
+   }
+  },
+  {
    "id": "mk_the_late_desk",
    "type": "event",
    "name": "The Late Desk",
@@ -15397,6 +18140,302 @@
     "power": 3,
     "opportunityCost": 2
    }
+  },
+  {
+   "id": "mk_tb_chit_press",
+   "type": "townBuilding",
+   "name": "The Chit Press",
+   "title": "Town Building",
+   "cost": 3,
+   "build": {
+    "animals": 2
+   },
+   "text": "At the start of your turn, if you control a Crafts Character, take a Building token. Spend 3 Building tokens: draw 2 cards.",
+   "flavor": "The ferry's family struck their own fare chits seven generations ago and everything the borough has stamped since is a copy of them, off Lynnette's press, in the same hard wood.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Crafts"
+      }
+     },
+     "effect": {
+      "do": "gainToken",
+      "of": "building",
+      "count": 1
+     }
+    },
+    {
+     "trigger": "onTurnEnd",
+     "effect": {
+      "do": "spendToken",
+      "of": "building",
+      "count": 3,
+      "then": {
+       "do": "draw",
+       "count": 2
+      }
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 6
+   },
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.46,
+    "power": 8.7,
+    "opportunityCost": 10.02
+   }
+  },
+  {
+   "id": "mk_tb_gwens_counter",
+   "type": "townBuilding",
+   "name": "Gwen's Counter",
+   "title": "Town Building",
+   "cost": 2,
+   "build": {
+    "animals": 1
+   },
+   "text": "At the end of your turn, if you control a Food Character, take a Food token. At the start of your turn, spend 3 Food tokens: rehire a Character costing 2 or less from your Unemployment for nothing.",
+   "flavor": "A griddle, a hatch, a row of stools and an apron on a hook by the door. The Hiring Hall has twice asked to make it a formal arrangement and twice been told it would ruin it.",
+   "abilities": [
+    {
+     "trigger": "onTurnEnd",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Food"
+      }
+     },
+     "effect": {
+      "do": "gainToken",
+      "of": "study",
+      "study": "Food",
+      "count": 1
+     }
+    },
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "spendToken",
+      "of": "study",
+      "study": "Food",
+      "count": 3,
+      "then": {
+       "do": "rehire",
+       "filter": {
+        "maxCost": 2
+       },
+       "free": true,
+       "optional": true
+      }
+     }
+    }
+   ],
+   "art": {
+    "atlas": "monuments",
+    "tile": 13
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.21,
+    "power": 4.77,
+    "opportunityCost": 6.82
+   }
+  },
+  {
+   "id": "mk_tb_puppet_booth",
+   "type": "townBuilding",
+   "name": "The Puppet Booth",
+   "title": "Town Building",
+   "cost": 2,
+   "build": {
+    "animals": 1
+   },
+   "text": "At the end of your turn, if you control an Entertainment Character, take an Entertainment token. At the start of your turn, spend 2 Entertainment tokens: draw a card.",
+   "flavor": "It folds flat and goes home on Gabe's back, and it has stood in the children's corner, the bakery queue and every late room Cassadee has ever given away.",
+   "abilities": [
+    {
+     "trigger": "onTurnEnd",
+     "condition": {
+      "otherCharacterInTown": {
+       "study": "Entertainment"
+      }
+     },
+     "effect": {
+      "do": "gainToken",
+      "of": "study",
+      "study": "Entertainment",
+      "count": 1
+     }
+    },
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "spendToken",
+      "of": "study",
+      "study": "Entertainment",
+      "count": 2,
+      "then": {
+       "do": "draw",
+       "count": 1
+      }
+     }
+    }
+   ],
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.14,
+    "power": 4.61,
+    "opportunityCost": 6.82
+   }
+  },
+  {
+   "id": "mk_ev_never_handed_back",
+   "type": "event",
+   "name": "Never Handed Back",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "species": "Otter"
+    }
+   ],
+   "text": "Requires an Otter. Take 2 Otter tokens, then spend 3 Otter tokens: gain 4 Supply.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainToken",
+      "of": "species",
+      "species": "Otter",
+      "count": 2
+     },
+     {
+      "do": "spendToken",
+      "of": "species",
+      "species": "Otter",
+      "count": 3,
+      "then": {
+       "do": "gainSupply",
+       "amount": 4
+      }
+     }
+    ]
+   },
+   "flavor": "A worn wooden otter on a round of hard wood, handed over at one bank and counted back at the other. Half the borough has one in a pocket it never handed back, and every one of them is still good.",
+   "art": {
+    "atlas": "monuments",
+    "tile": 10
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.02,
+    "power": 3,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_ev_the_hat_goes_round",
+   "type": "event",
+   "name": "The Hat Goes Round",
+   "kind": "instant",
+   "cost": 1,
+   "requires": [
+    {
+     "study": "Entertainment"
+    }
+   ],
+   "text": "Requires an Entertainment Character. Take an Entertainment token, then spend 3 Entertainment tokens: ready one of your Characters and gain 2 Supply.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainToken",
+      "of": "study",
+      "study": "Entertainment",
+      "count": 1
+     },
+     {
+      "do": "spendToken",
+      "of": "study",
+      "study": "Entertainment",
+      "count": 3,
+      "then": {
+       "do": "seq",
+       "steps": [
+        {
+         "do": "readyCharacter",
+         "count": 1,
+         "optional": true
+        },
+        {
+         "do": "gainSupply",
+         "amount": 2
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "flavor": "Nobody has ever been paid more than the hat in that room and nobody has ever asked to be. It goes round at the end, it comes back heavier than the set was worth, and Cassadee puts the chairs away.",
+   "art": {
+    "atlas": "whiskerwood",
+    "tile": 8
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 1.56,
+    "power": 2.32,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_ev_the_marks_are_struck",
+   "type": "event",
+   "name": "The Marks Are Struck",
+   "kind": "instant",
+   "cost": 1,
+   "requires": [
+    {
+     "study": "Crafts"
+    },
+    {
+     "study": "Civics"
+    }
+   ],
+   "text": "Requires a Crafts Character and a Civics Character. Take 2 Building tokens and draw a card.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "gainToken",
+      "of": "building",
+      "count": 2
+     },
+     {
+      "do": "draw",
+      "count": 1
+     }
+    ]
+   },
+   "flavor": "The building mark is struck twice a year and the consents are read aloud over the top of it, slowly, all of them. Velvet genuinely enjoys this and said so in a public meeting.",
+   "art": {
+    "atlas": "townlife",
+    "tile": 14
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 1.62,
+    "power": 2.7,
+    "opportunityCost": 3.6
+   }
   }
  ],
  "newStudies": [
@@ -15483,6 +18522,17 @@
     "id": "mk_bld_long_room",
     "what": "The Lending Library's upper floor: ribbons in a long drawer, the reading lamps still lit, one chair that is plainly somebody's.",
     "painted": "Painted. mk_bld_long_room → the makercivic atlas, tile 15. (A Maker atlas tile wins over anything on the card itself — `explicitArt` in src/ui/painted-art.js reads MAKER_ART_TILES first — so a card that still carries the older shared `art` shows the commissioned scene.)"
+   },
+   {
+    "ids": [
+     "mk_st_diligence",
+     "mk_st_hospitality",
+     "mk_st_mercy",
+     "mk_st_thrift",
+     "mk_st_vigilance",
+     "mk_st_wonder"
+    ],
+    "what": "Six more monuments for the quarry, carved in the same hand as the nine: Diligence a pace ahead of a row that is looking at its back; Hospitality with the door held open and a basket already out; Vigilance with its eyes on the sheds rather than the square; Wonder head-back with a smoked-glass disc set into one paw; Thrift with a full sack at its feet and its paw off it; Mercy kneeling, both paws busy, face turned away. Each stands on a borrowed scene until then."
    }
   ],
   "wantedArtNote": "Audited 2026-09-14: every wish on this list has since been painted — the eight Maker atlases (docs/MAKER_ATLAS_ART.md) cover all fourteen Town Buildings and Capital City Buildings, and each entry now carries a `painted` line naming the tile that answers it. They are kept rather than deleted because the wish is what the tile was painted from."
@@ -15534,8 +18584,8 @@
   {
    "id": "mk-first-workings",
    "name": "The First Workings",
-   "blurb": "The Capital City and its nine Statues: a hiring hall, an all-night café, a bandstand, the assessors at the door, and fifty-one lots to deal twenty-six from, so no two games put the same market in front of you.",
-   "always": [
+   "blurb": "The Capital City and its Statues: a hiring hall, an all-night café, a bandstand, the assessors at the door, fifty-one lots to deal twenty-six from, and fifteen virtues in the quarry to raise nine of — so no two games put the same market, or the same monuments, in front of you.",
+   "statuePool": [
     "mk_st_kindness",
     "mk_st_curiosity",
     "mk_st_courage",
@@ -15544,8 +18594,15 @@
     "mk_st_ingenuity",
     "mk_st_community",
     "mk_st_harmony",
-    "mk_st_joy"
+    "mk_st_joy",
+    "mk_st_diligence",
+    "mk_st_hospitality",
+    "mk_st_vigilance",
+    "mk_st_wonder",
+    "mk_st_thrift",
+    "mk_st_mercy"
    ],
+   "statueCount": 9,
    "pool": [
     "mk_barnaby_night_auditor_4",
     "mk_barrow_stonecutter_5",

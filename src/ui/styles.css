@@ -377,6 +377,10 @@ input[type=range]{width:100%;accent-color:var(--gold)}
 .overlay .box h2{font-variant:small-caps;letter-spacing:1px;color:var(--plum);font-size:28px}
 .win-box .cover-orn{font-size:28px;margin-bottom:6px}
 .win-box p{font-size:16px;font-style:italic}
+#winNaming{margin:10px 0 14px}
+#winNaming label{display:block;font-size:14px;font-style:italic;opacity:.85;margin-bottom:6px}
+#winTownName{width:100%;max-width:320px;padding:8px 10px;font:inherit;font-size:16px;text-align:center}
+#winCharter{margin-top:10px}
 .help h3{margin-top:14px;color:var(--plum);font-variant:small-caps;letter-spacing:.5px}
 .help p{font-family:var(--sans);font-size:14px}
 .help table{border-collapse:collapse;width:100%;font-size:13px;margin:6px 0;font-family:var(--sans)}

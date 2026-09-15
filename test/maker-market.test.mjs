@@ -21,21 +21,42 @@ function makerGame(seed = 5) {
   return state;
 }
 
-test('the shelf owns nine Statues and a Capital City dealt entirely from its own cards', () => {
+test('the shelf quarries more virtues than a game raises, and deals its Capital City from its own cards', () => {
   const statues = MAKER.cards.filter((c) => c.type === 'statue');
-  assert.equal(statues.length, RULES.victory.statueTotal);
-  const virtues = statues.map((c) => c.virtue).sort();
-  assert.deepEqual(virtues, ['Community', 'Courage', 'Curiosity', 'Generosity', 'Harmony', 'Ingenuity', 'Joy', 'Kindness', 'Patience']);
-  // Every Statue carries a boon and a burden, which is the deal the rules make for all nine.
+  const spec = MAKER.marketDecks[0];
+  // Nine Statues stand in any one game; the quarry holds more, so which nine is the shuffle's call.
+  assert.equal(spec.statueCount, RULES.victory.statueTotal);
+  assert.ok(statues.length > RULES.victory.statueTotal, 'the quarry is deeper than one game needs');
+  const virtues = statues.map((c) => c.virtue);
+  assert.equal(new Set(virtues).size, virtues.length, 'a virtue is carved once');
+  for (const v of ['Community', 'Courage', 'Curiosity', 'Generosity', 'Harmony', 'Ingenuity', 'Joy', 'Kindness', 'Patience']) {
+    assert.ok(virtues.includes(v), `${v} is no longer carved`);
+  }
+  // Every Statue carries a boon and a burden, which is the deal the rules make for all of them.
   for (const c of statues) {
     assert.ok(c.burden, `${c.id} has no burden`);
     assert.ok((c.abilities || []).some((a) => a.burden), `${c.id}'s burden is not on an ability`);
     assert.ok(c.onGain || (c.abilities || []).some((a) => !a.burden), `${c.id} has no boon`);
   }
   const own = new Set(MAKER.cards.map((c) => c.id));
-  const spec = MAKER.marketDecks[0];
-  for (const id of [...spec.always, ...spec.pool]) assert.ok(own.has(id), `${id} is not a card in this set`);
-  assert.deepEqual([...spec.always].sort(), statues.map((c) => c.id).sort(), 'all nine are always dealt');
+  for (const id of [...(spec.always || []), ...spec.statuePool, ...spec.pool]) assert.ok(own.has(id), `${id} is not a card in this set`);
+  assert.deepEqual([...spec.statuePool].sort(), statues.map((c) => c.id).sort(), 'every Statue is in the quarry');
+});
+
+test('a game raises exactly nine Statues, and a different nine from game to game', () => {
+  const nine = (seed) => {
+    const state = makerGame(seed);
+    const everywhere = [...state.market.deck, ...state.market.city, ...state.market.cityDump];
+    return everywhere.filter((id) => MAKER.cards.find((c) => c.id === id)?.type === 'statue');
+  };
+  const a = nine(5);
+  assert.equal(a.length, RULES.victory.statueTotal, 'nine monuments, whatever the quarry holds');
+  assert.equal(new Set(a).size, a.length, 'and no virtue twice');
+  const varies = [11, 23, 41, 77].some((seed) => {
+    const b = nine(seed);
+    return b.some((id) => !a.includes(id));
+  });
+  assert.ok(varies, 'the line-up changes with the shuffle');
 });
 
 test('Warren Muster takes a Rabbit chit, and spends three for a free upright recruit', async () => {

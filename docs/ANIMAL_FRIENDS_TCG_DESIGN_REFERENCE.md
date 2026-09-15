@@ -410,7 +410,9 @@ This top-up refill replaced the earlier refill-only-when-empty rule: playtests f
 
 ## 9. Statues, victory, theft, and the endgame
 
-Statues are visible Victory cards that remain in the controller's Victory Row. The total number of Statues should always be odd so that the goal is obvious. The current starter set has nine; control of five is a strict majority and wins.
+Statues are visible Victory cards that remain in the controller's Victory Row. The total number of Statues **in play** should always be odd so that the goal is obvious: `victory.statueTotal` of them stand in any one game and control of a strict majority wins. The **collection** may hold more than that. A Market Deck names a `statuePool` and a `statueCount`, and setup raises that many at random out of the pool, so the nine monuments the two Mayors fight over are not the same nine from one game to the next — which changes what the boons and burdens on the table are, and therefore what a town is trying to be, before a card is played. The First Workings quarries fifteen and raises nine.
+
+**What winning is, in the world.** A majority of the Statues is the Capital City's own test of which of the two boroughs is the prosperous one, and it settles the question by **incorporation**: the prosperous town absorbs the other. Nothing is razed and nobody is turned out — the wards merge, the two Hiring Halls put up one board, every animal in both towns keeps their work — but the losing Mayor's charter is closed, and the single town that results takes **whatever name the winning Mayor gives it**. The stake of the game is therefore not the rival's town but the right to name what both towns become, which is why the fifth Statue is the dearest purchase in the game and why the burdens on the first four are a tax worth paying.
 
 ### What a Statue costs
 
@@ -442,12 +444,18 @@ Every Statue grants its controller a lasting **boon** and imposes a lasting **bu
 | Community | With three species, your first completed shift each turn gains 1 | Choosing Supply in Resources gives 1 less |
 | Harmony | Ready a Character after a tied bid | Every pledge you make sits one rung higher on the ladder |
 | Joy | On gain, ready up to two Apprentices | Give your opponent 1 Supply at the start of each of your turns |
+| Diligence | Every shift your town finishes pays 1 more | Your opponent gains 1 Supply at the end of each of your turns |
+| Hospitality | On gain, rehire a Character costing 3 or less for nothing; a Food token each turn | Your first completed shift each turn also pays your opponent 1 |
+| Vigilance | Read the rival's hand on gain; your animals cannot be unemployed by an effect | Every Supply taken off you also costs you a card |
+| Wonder | Order the top of the Market Deck on gain; see its top card each turn | A losing bid is not refunded |
+| Thrift | Supply on gain; a cheaper raise each turn while your hand is full | Every non-Statue you win out of the Capital City pays your opponent 2 |
+| Mercy | Feed an animal back to work on gain; a cheap rehire every turn | Discard a card at the start of each of your turns |
 
 Statues are not automatically safe. Expensive theft or return effects can interfere with Victory Rows, but must include a significant cost, requirement, restriction, or drawback. A player may **not** steal the final opponent Statue in a way that immediately gives them the winning majority. This boundary prevents the game ending purely through taking an opponent's last needed Statue.
 
 ## 10. Current starter set: First Boroughs
 
-The set holds **375 cards**: 136 Characters, 88 Events, 9 Statues, an 86-card one-shot Market pool, 12 Buildings, 10 hired animals, 7 Ordinances and 27 on-reveal cards. A game uses two 40-card player decks and a **35-card** Capital City deck (nine Statues and twenty-six cards sampled from the chosen Market Deck's pool, topped up from that pool until at least three of them are on-reveal cards).
+The set holds **375 cards**: 136 Characters, 88 Events, 9 Statues, an 86-card one-shot Market pool, 12 Buildings, 10 hired animals, 7 Ordinances and 27 on-reveal cards. A game uses two 40-card player decks and a **35-card** Capital City deck (nine Statues raised at random from the chosen Market Deck's `statuePool`, and twenty-six cards sampled from that deck's card pool, topped up from the same pool until at least three of them are on-reveal cards).
 
 Six printed decks are provided: **Burrow & Bloom** (Rabbit/Mouse, Agriculture/Lore), **Paws & Papers** (Raccoon/Fox, Commerce/Civics), **Bramble & Bastion** (Hedgehog/Badger, Crafts/Agriculture), **Ripple & Rune** (Otter/Squirrel, Lore/Commerce), **Whisker & Willow** (Cat/Mouse, Lore/Crafts) and **Root & Rampart** (Badger/Rabbit, Civics/Crafts). They are not hand-listed: `npm run decks` builds each from its stated identity out of the rated card set, so they track the set as it changes.
 

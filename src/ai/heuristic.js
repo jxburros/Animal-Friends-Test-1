@@ -27,7 +27,7 @@
 
 import {
   cardDef, topCard, canAct, opponentOf, statueCount, findEventAssignment, eventReduction, rankOf, hasPassive,
-  pledgeMinCost, townFootprint, townCap, hasTownRoom, rehireCost, cityRule, hasBuildingRoom,
+  pledgeMinCost, townFootprint, townCap, hasTownRoom, rehireCost, cityRule, hasBuildingRoom, upgradesOver,
 } from '../engine/index.js';
 import { cardPower, effectPower } from '../engine/power.js';
 
@@ -248,10 +248,7 @@ function handCardValue(state, pi, cardId) {
   }
   // character
   let v = rateOf(d) * 3.0 + 2.0 - d.cost * 0.9;
-  const upgradeTarget = p.town.some((s) => {
-    const t = stackTop(state, s);
-    return t && t.name === d.name && t.cost < d.cost;
-  });
+  const upgradeTarget = p.town.some((s) => upgradesOver(stackTop(state, s), d));
   const alreadyBetter = p.town.some((s) => {
     const t = stackTop(state, s);
     return t && t.name === d.name && t.cost >= d.cost;

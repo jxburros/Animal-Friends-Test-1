@@ -34,12 +34,28 @@ export function recruitCost(state, pi, cardId, targetUid = null) {
   return cost;
 }
 
+/**
+ * Whether `def` may be played over `t` as an upgrade. Normally that means the same animal, one rung
+ * further on: same name, dearer card. The exception is an **obscured figure** — an animal the borough
+ * never got a name for, printed with an `anchor` — whose whole use is that somebody turns out to be
+ * standing there. A figure anchored on species takes any Character of that species; one anchored on a
+ * study takes any Character who does that work. Either way the newcomer still has to cost more, so an
+ * anchor is a cheap place to start a career, never a discount on one.
+ */
+export function upgradesOver(t, def) {
+  if (!t || t.cost >= def.cost) return false;
+  const anchor = t.anchor;
+  if (anchor) {
+    if (anchor.species && t.species && t.species === def.species) return true;
+    if (anchor.study && t.study && t.study === def.study) return true;
+    return false;
+  }
+  return t.name === def.name;
+}
+
 export function upgradeTargets(state, pi, cardId) {
   const def = cardDef(state, cardId);
-  return state.players[pi].town.filter((s) => {
-    const t = topCard(state, s);
-    return t.name === def.name && t.cost < def.cost;
-  });
+  return state.players[pi].town.filter((s) => upgradesOver(topCard(state, s), def));
 }
 
 /**
@@ -51,10 +67,7 @@ export function upgradeTargets(state, pi, cardId) {
 export function unemployedUpgradeTargets(state, pi, cardId) {
   if (!(state.rules.upgrades || {}).fromUnemployment) return [];
   const def = cardDef(state, cardId);
-  return state.players[pi].unemployment.filter((c) => {
-    const t = cardDef(state, c.cardId);
-    return t.name === def.name && t.cost < def.cost;
-  });
+  return state.players[pi].unemployment.filter((c) => upgradesOver(cardDef(state, c.cardId), def));
 }
 
 /** Number of requirement "units" this player may waive on the next Event (Mabel Horticulturist mod + Statue of Ingenuity). */

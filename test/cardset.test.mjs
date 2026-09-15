@@ -87,19 +87,23 @@ test('card set', async (t) => {
     }
   });
 
-  await t.test('every Market Deck holds all nine Statues and a pool of its printed size', () => {
+  await t.test('every Market Deck raises nine Statues out of the quarry and a pool of its printed size', () => {
     const ids = new Set(SET.cards.map((c) => c.id));
-    const statues = byType('statue').map((c) => c.id);
     assert.ok(SET.marketDecks.length >= 1, 'at least one Market Deck to play');
     for (const spec of SET.marketDecks) {
-      for (const id of [...spec.always, ...spec.pool]) assert.ok(ids.has(id), `${spec.id} references unknown card ${id}`);
+      const quarry = spec.statuePool || spec.always || [];
+      const raised = spec.statuePool ? spec.statueCount : quarry.length;
+      for (const id of [...(spec.always || []), ...quarry, ...spec.pool]) assert.ok(ids.has(id), `${spec.id} references unknown card ${id}`);
       assert.equal(new Set(spec.pool).size, spec.pool.length, `${spec.id}: a card appears twice in the pool`);
       const byIdMap = Object.fromEntries(SET.cards.map((c) => [c.id, c]));
-      const build = (seed) => buildMarketDeck({ rng: seedRng(seed), set: { cardsById: byIdMap } }, spec);
+      const build = (seed) => buildMarketDeck({ rng: seedRng(seed), set: { cardsById: byIdMap }, rules: RULES }, spec);
       const deck = build(7);
-      assert.equal(deck.length, statues.length + spec.poolSize, `${spec.id}: Market Deck size`);
+      assert.equal(deck.length, raised + spec.poolSize, `${spec.id}: Market Deck size`);
       assert.equal(deck.length, RULES.setup.marketDeckSize, `${spec.id}: Market Deck matches the printed size`);
-      for (const id of statues) assert.ok(deck.includes(id), `${spec.id}: Statue ${id} must always be in the Market Deck`);
+      const statuesDealt = deck.filter((id) => byIdMap[id].type === 'statue');
+      assert.equal(statuesDealt.length, RULES.victory.statueTotal, `${spec.id}: a game raises nine Statues`);
+      assert.equal(new Set(statuesDealt).size, statuesDealt.length, `${spec.id}: and no virtue twice`);
+      for (const id of statuesDealt) assert.ok(quarry.includes(id), `${spec.id}: ${id} came from outside the quarry`);
       assert.equal(build(99).length, deck.length);
       // Every market guarantees some shared weather, topped up from its own pool.
       for (const seed of [7, 99, 1234, 5150]) {

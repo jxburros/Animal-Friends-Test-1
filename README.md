@@ -1,6 +1,6 @@
 # Animal Friends TCG - First Boroughs Prototype
 
-A two-player town-building trading card game where each player is the **Mayor** of a town populated by cute animal workers. Recruit Characters, send them on work shifts to produce **Supply**, play Events, and fight bidding wars against your rival in the shared **Capital City**. Win by controlling 5 of the 9 **Statues** — each of which grants a boon and imposes a burden.
+A two-player town-building trading card game where each player is the **Mayor** of a town populated by cute animal workers. Recruit Characters, send them on work shifts to produce **Supply**, play Events, and fight bidding wars against your rival in the shared **Capital City**. Win by controlling 5 of the 9 **Statues** — each of which grants a boon and imposes a burden. A majority of the Statues is the Capital City's test of which borough is the prosperous one, and the prosperous town **incorporates** the other: the wards merge, both Hiring Halls put up one board, everybody keeps their work — and the single town that results takes **whatever name the winning Mayor gives it**. That is what the fifth Statue buys.
 
 This repo replaced the earlier single-file "Critter Town" game (archived at `docs/legacy-critter-town.html`).
 
@@ -10,6 +10,38 @@ in the [finish preview](src/ui/foil-preview.html) after starting the local serve
 
 The [painted app surroundings](docs/APP_SURROUNDINGS.md) extend the card illustrations into the menu,
 Capital City banner, welcome screen and deck workshop, with locally bundled artwork and matching parchment frames.
+
+**New in v0.11.0 — the incorporation, the quarry and the unsigned column.** Three changes to what the
+game is about, and seventy-one cards.
+
+- **Winning is an incorporation.** A majority of the Statues is not a scoreboard: it is the Capital City
+  deciding which of the two boroughs is the prosperous one. The prosperous town absorbs the other —
+  nothing razed, nobody turned out, both Hiring Halls putting up one board — and **the single town that
+  results takes whatever name the winning Mayor gives it**. Win the game and the end screen asks you for
+  that name. The borough has been through this before, which is why it is the First Borough*s*.
+- **Fifteen Statues, nine of them raised.** The collection now carves six more virtues — Diligence,
+  Hospitality, Vigilance, Wonder, Thrift and Mercy — and a Market Deck names the quarry it raises from.
+  Setup picks nine at random, so which boons and burdens are on the table, and therefore what kind of
+  town is worth building, changes from game to game.
+- **The eighteen obscured figures.** One for every species and one for every study, each named for what
+  the ward could see: The Masked Otter, The Cloaked Tradesman, The Mysterious Raccoon, The Faceless
+  Clerk, The Curtained Performer, and thirteen more, at cost 0, 1 and 2. They are the unsigned column of
+  Ned's ward records, and their power is the `anchor`: **any dearer Character of the same species — or in
+  the same study — may be played over them as an upgrade, whatever their name**, because somebody turns
+  out to have been standing there all along. It is the one upgrade in the collection that is a correction
+  rather than a promotion.
+- **Four animals the town had left unnamed.** **Liza**, the singer Thistle comes for; **Harrison**, the
+  Fox on Oatmeal's piano; **Gabe**, who makes puppets out of the pile even the Salvage Yard has given up
+  on; and **Gwen**, whose diner on the square gives a shift to anybody who asks for one, which is why
+  Kevin, Finn, Comet, Peter and Liza all now have a Food job they do not put on the board.
+- **The tokens are spent at last.** Three Town Buildings (the Chit Press, Gwen's Counter, the Puppet
+  Booth), three Events and five Characters gain and spend the species, study and Building chits, so the
+  counter that was built ahead of the cards now has cards on both sides of it.
+- **Cards that are about two animals rather than one.** Bean and Peanut on the same counter, Bob and the
+  twin he sees twice a year, Pockets at Patch's yard, Sota on Sage's bench, Lindsay on the bench next to
+  Rosabeth's, Hibiscus handing over to Juniper at five in the morning — and the power model now prices a
+  card written for one friendship as what it is, which is only ever as good as the odds of both halves
+  being on the table.
 
 **New in v0.10.0 — one collection.** The printed book has been retired and the Maker cards are now the
 whole game. Every screen, every deck, the Deck Workshop, the Book, the tutorial and the tests read one
@@ -22,7 +54,7 @@ masks and all.
 
 - **Two doors, not three.** The cover opens on **Play** and **Book**. Play is the game: two decks
   (Ledger & Larder, Bench & Bandstand), the First Workings Capital City, and a Deck Workshop that
-  builds out of the collection. Book is the gallery: all 391 cards at reading size, filters for type,
+  builds out of the collection. Book is the gallery: all 462 cards at reading size, filters for type,
   species, study and printing, a search over names and rules text, and the **Story** panel with each
   character's backstory beside the flavor of every version of them.
 - **The tutorial is played on the Maker cards.** The seven-turn lesson is rewritten around Peanut, the
@@ -184,9 +216,9 @@ A hired Character is **retained labour, not a citizen**: they may be hired for a
 
 **Upgrades** let higher-cost versions of the same Character replace lower ones; pay only the difference. A higher version may also be played onto an animal **in Unemployment**, promoting it straight back into work upright for the same plain difference. That is not a flat discount — against a cost-0 base version a plain rehire is still cheaper — it is a saved action: rehiring pays the full printed cost of the *old* version and then still needs a second action, plus the difference, to upgrade it.
 
-**Statues** are the victory cards. Control 5 of 9 to win. A Statue needs an **empty Building place** both to announce the auction and to resolve it — and the places can fill while an auction runs, so a Statue won with nowhere to stand offers its buyer a demolition, and a Mayor who will not or cannot pull anything down loses the purchase and keeps their Supply. **A Statue costs 10 while you hold fewer than two, 20 once you hold two or three, and 30 at four** — so the purchase that wins the game is the dearest thing in the game by a wide margin. The price is read from your Victory Row **at the moment the auction resolves**, not when you announced it, so if a fourth Statue arrived while this auction was running you top up the difference out of Supply at resolution. If you cannot cover the risen price, the purchase fizzles and your bid comes back — this is the main brake on a runaway. Each Statue also carries a **boon and a burden** lasting as long as you hold it: Community's extra shift Supply comes with a thinner Resources choice, Patience speeds your Masters but slows your Apprentices, and Harmony puts every pledge you make one rung higher up the ladder.
+**Statues** are the victory cards. Control 5 of 9 to win — and winning is an incorporation, not a scoreboard: your rival's charter closes, their town goes on your books, and you name the borough that results. The collection carves **fifteen** virtues and any one game raises nine of them, drawn from the market's quarry at setup, so the monuments on the table change from game to game. A Statue needs an **empty Building place** both to announce the auction and to resolve it — and the places can fill while an auction runs, so a Statue won with nowhere to stand offers its buyer a demolition, and a Mayor who will not or cannot pull anything down loses the purchase and keeps their Supply. **A Statue costs 10 while you hold fewer than two, 20 once you hold two or three, and 30 at four** — so the purchase that wins the game is the dearest thing in the game by a wide margin. The price is read from your Victory Row **at the moment the auction resolves**, not when you announced it, so if a fourth Statue arrived while this auction was running you top up the difference out of Supply at resolution. If you cannot cover the risen price, the purchase fizzles and your bid comes back — this is the main brake on a runaway. Each Statue also carries a **boon and a burden** lasting as long as you hold it: Community's extra shift Supply comes with a thinner Resources choice, Patience speeds your Masters but slows your Apprentices, and Harmony puts every pledge you make one rung higher up the ladder.
 
-**Market Decks** — the shared market chosen at setup, 35 cards: all nine Statues plus a 26-card sample of its own pool, topped up so that at least three on-reveal cards are always in it. **The First Workings** deals from fifty-one lots — a hiring hall, an all-night café, a bandstand, the assessors at the door — so no two games put the same market in front of you.
+**Market Decks** — the shared market chosen at setup, 35 cards: nine Statues raised from the market's own quarry of fifteen, plus a 26-card sample of its pool, topped up so that at least three on-reveal cards are always in it. **The First Workings** deals from fifty-one lots — a hiring hall, an all-night café, a bandstand, the assessors at the door — so no two games put the same market in front of you.
 
 **Rarity** — every card is rated by what it gives you against what it asks for, and that rating sets its rarity: Common, Uncommon, Rare, Super Rare. Rarity here means **how often a deck may repeat a card, not how hard the card is to find**. The model scores a card `power^0.6 × efficiency^0.4`, so of two cards that do the same thing the cheaper one rates higher, while of two equally efficient cards the bigger one does — a cost-0 Rabbit with a good shift can out-rate a Master. The set reads as a pyramid: 55% Common, 24% Uncommon, 15% Rare, 7% Super Rare. Rarity then caps copies in a deck: **4 / 3 / 2 / 1**. See `src/engine/power.js` and `npm run power`.
 
@@ -236,7 +268,7 @@ Then open http://localhost:8080/ in any modern browser. During play, use the **P
   **Quick start**, **The rules** in full, and **Questions & answers** — the twenty questions new Mayors
   ask most, from "why can't my cost-0 animal bid?" to "why did a card vanish from the Capital City?".
 
-The server (`scripts/serve.mjs`, no dependencies) sends every file with `Cache-Control: no-store`, so each reload plays exactly what is on disk. When it starts it prints the version and the folder it is serving; the book cover shows the same version line (e.g. `v0.10.0 · 391 cards · 2 decks · 1 Capital City`). If the two disagree, the browser is showing an old copy.
+The server (`scripts/serve.mjs`, no dependencies) sends every file with `Cache-Control: no-store`, so each reload plays exactly what is on disk. When it starts it prints the version and the folder it is serving; the book cover shows the same version line (e.g. `v0.11.0 · 462 cards · 2 decks · 1 Capital City`). If the two disagree, the browser is showing an old copy.
 
 ### Testing a fresh download
 
@@ -254,7 +286,7 @@ If you test by downloading the ZIP from GitHub and unzipping it:
 - `docs/ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md` - design reference and source of truth
 - `spec/game.json` - rules constants and prototype decisions
 - `spec/species.json` - the ten species charters (centre of gravity, hole, signature); the contract `npm run identity` checks
-- `spec/maker_card_set.json` - the collection, and the only card set the game reads: 391 cards, two 40-card town decks, and one Capital City with its own nine Statues. It holds each character's backstory alongside their cards, the card types the game grew into — Town Buildings, and the nineteen Tokens — and each character's `wantedVerbs`, the effects their story wanted, with a `resolved` line once the engine can say it. A Market Deck is dealt as all 9 Statues plus a 26-card sample of its own pool — 35 cards — topped up from that pool until at least three on-reveal cards are in it, so the market keeps one size while the display varies from game to game. Writing for it is documented in two files: [WRITING_A_CHARACTER.md](docs/WRITING_A_CHARACTER.md) (the process an agent follows to write one character's cards) and [TOWN_BIBLE.md](docs/TOWN_BIBLE.md) (the shared world every backstory must agree with)
+- `spec/maker_card_set.json` - the collection, and the only card set the game reads: 462 cards, two 40-card town decks, and one Capital City with a quarry of fifteen Statues to raise nine from. It holds each character's backstory alongside their cards, the card types the game grew into — Town Buildings, and the nineteen Tokens — and each character's `wantedVerbs`, the effects their story wanted, with a `resolved` line once the engine can say it. A Market Deck is dealt as 9 Statues raised from its `statuePool` plus a 26-card sample of its own pool — 35 cards — topped up from that pool until at least three on-reveal cards are in it, so the market keeps one size while the display varies from game to game. Writing for it is documented in two files: [WRITING_A_CHARACTER.md](docs/WRITING_A_CHARACTER.md) (the process an agent follows to write one character's cards) and [TOWN_BIBLE.md](docs/TOWN_BIBLE.md) (the shared world every backstory must agree with)
 - `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`. `power.js` is the power/cost model that rates every card and assigns its rarity
 - `src/ai/` - agents: `random.js` (baseline), `heuristic.js` (opponent)
 - `src/ui/` - browser interface: `main.js` (the two doors, and the cover), `humanAgent.js`, `render.js`, `book.js` (the Book: every card, its printings and the Story panel), `versions.js` (the six printings and which cards have been painted in them), `deckbuilder.js` (the Deck Workshop), `help.js` (the welcome, quick start, rules and FAQ), `tutorial.js` (the coach chips), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations)
