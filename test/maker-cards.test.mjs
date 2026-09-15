@@ -43,6 +43,40 @@ test('the collection is complete enough to be played', () => {
   }
 });
 
+test('the six town decks are six different towns, and every card in them is playable', () => {
+  const byId = Object.fromEntries(SET.cards.map((c) => [c.id, c]));
+  assert.equal(SET.decks.length, 6, 'six decks ship with the game');
+  const species = new Set();
+  const studies = new Set();
+  const everywhere = new Set();
+  for (const deck of SET.decks) {
+    const held = Object.entries(deck.list).map(([id, n]) => ({ card: byId[id], n }));
+    for (const { card } of held) everywhere.add(card.id);
+    for (const s of deck.species) species.add(s);
+    for (const s of deck.studies) studies.add(s);
+    // A deck is built as singletons with a second copy of what leads each band, so a deck that has
+    // collapsed back onto four-of-a-kind is a bug in scripts/build-decks.mjs, not a style choice.
+    assert.ok(Object.keys(deck.list).length >= 24, `${deck.id} holds only ${Object.keys(deck.list).length} distinct cards`);
+    // An Event names the animal it needs. A deck holding one it cannot field is holding a dead card.
+    const bodies = (req) => held.reduce((a, { card, n }) => {
+      if (card.type !== 'character') return a;
+      if (req.name) return a + (card.name === req.name ? n : 0);
+      if (req.species && card.species !== req.species) return a;
+      if (req.study && card.study !== req.study) return a;
+      return a + n;
+    }, 0);
+    for (const { card } of held) {
+      for (const r of (card.type === 'event' && card.requires) || []) {
+        assert.ok(bodies(r) >= (r.count || 1), `${deck.id} holds ${card.name}, which it can never pay for`);
+      }
+    }
+  }
+  assert.equal(species.size, SET.species.length, 'every species is somebody\'s deck');
+  assert.equal(studies.size, SET.studies.length, 'every study is somebody\'s deck');
+  // The point of building the six together: they are filled out of what the others left.
+  assert.ok(everywhere.size >= 120, `the six decks show only ${everywhere.size} distinct cards`);
+});
+
 test('a game plays through to a Statue victory', async () => {
   for (const seed of [3, 11]) {
     const state = createGame(RULES, SET, { seed, decks: SET.decks.slice(0, 2).map((d) => d.id) });
