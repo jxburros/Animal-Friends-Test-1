@@ -1,0 +1,270 @@
+{
+  "$comment": "The second set of foil printings, chosen rather than drawn: artwork foil for ten of the cutest cards, reverse foil for ten of the coolest, full-card foil for ten of the most underrated, and a detail mask for five cards with a detail worth shining. Every card here had no foil printing before. See SECOND_FOILS.md.",
+  "groups": {
+    "cutest": {
+      "mode": "artwork",
+      "cards": [
+        {
+          "id": "mk_comet_bolt_sorter_0",
+          "name": "Comet",
+          "title": "Bolt Sorter",
+          "type": "character",
+          "why": "A kitten on the hangar floor, putting bolts in the right tin."
+        },
+        {
+          "id": "mk_osh_sharpener_s_boy_0",
+          "name": "Osh",
+          "title": "Sharpener's Boy",
+          "type": "character",
+          "why": "Not yet allowed the wheel, and carrying the wheel anyway."
+        },
+        {
+          "id": "mk_marmalade_dough_kneader_1",
+          "name": "Marmalade",
+          "title": "Dough Kneader",
+          "type": "character",
+          "why": "Paws in the flour, with a smaller kitten asleep on the bench."
+        },
+        {
+          "id": "mk_gabe_corner_show_0",
+          "name": "Gabe",
+          "title": "Corner Show",
+          "type": "character",
+          "why": "Forty puppets and a floor of kittens who know every one of them."
+        },
+        {
+          "id": "mk_jessica_song_leader_0",
+          "name": "Jessica",
+          "title": "Song and Game Leader",
+          "type": "character",
+          "why": "The constellations as a round, with actions, in a ring of kits."
+        },
+        {
+          "id": "mk_quill_orchard_hand_0",
+          "name": "Quill",
+          "title": "Orchard Hand",
+          "type": "character",
+          "why": "Grown up under the rows, handing windfalls to smaller ones."
+        },
+        {
+          "id": "mk_lindsay_herb_grower_3",
+          "name": "Lindsay",
+          "title": "Herb Grower",
+          "type": "character",
+          "why": "Two kittens up to their elbows in the herb bed."
+        },
+        {
+          "id": "mk_rosabeth_garden_hand_1",
+          "name": "Rosabeth",
+          "title": "Garden Hand",
+          "type": "character",
+          "why": "Singing at the far end of the beds, with the new hand alongside."
+        },
+        {
+          "id": "mk_clover_plot_sharer_1",
+          "name": "Clover",
+          "title": "Plot Sharer",
+          "type": "character",
+          "why": "A pot handed down to the smallest gardener on the strip."
+        },
+        {
+          "id": "mk_cookie_biscuit_maker_0",
+          "name": "Cookie",
+          "title": "Biscuit Maker",
+          "type": "character",
+          "why": "A squirrel, the last of the oven heat, and a biscuit held up to it."
+        }
+      ]
+    },
+    "coolest": {
+      "mode": "reverse",
+      "cards": [
+        {
+          "id": "mk_brooke_balloonist_4",
+          "name": "Brooke",
+          "title": "Balloonist",
+          "type": "character",
+          "why": "Sunrise over the river from a basket, one paw on the brass burner."
+        },
+        {
+          "id": "mk_morty_steam_engineer_4",
+          "name": "Morty",
+          "title": "Steam Engineer",
+          "type": "character",
+          "why": "Copper, steam and a pressure gauge that has never yet been wrong."
+        },
+        {
+          "id": "mk_yellow_freshest_thing_4",
+          "name": "Yellow",
+          "title": "Freshest Thing in a Small Town",
+          "type": "character",
+          "why": "Sunglasses indoors, a brass microphone, and the room already won."
+        },
+        {
+          "id": "mk_dx_solar_eclipse",
+          "name": "The Eclipse",
+          "title": "",
+          "type": "disruption",
+          "why": "The whole borough out on the wall, looking up at a ring of fire."
+        },
+        {
+          "id": "mk_willow_harbour_admiral_5",
+          "name": "Willow",
+          "title": "Harbour Admiral",
+          "type": "character",
+          "why": "The harbour’s whole coat, worn as though it weighed nothing."
+        },
+        {
+          "id": "mk_biff_chief_constable_4",
+          "name": "Biff",
+          "title": "Chief Constable",
+          "type": "character",
+          "why": "Chain of office, lit street, and everybody’s name."
+        },
+        {
+          "id": "mk_betty_firework_maker_3",
+          "name": "Betty",
+          "title": "Firework Maker",
+          "type": "character",
+          "why": "Ear defenders on, fuse in hand, rockets ranked along the bench."
+        },
+        {
+          "id": "mk_tabitha_camerawoman_5",
+          "name": "Tabitha",
+          "title": "Camerawoman",
+          "type": "character",
+          "why": "Under the hood in the dark with the whole festival behind her."
+        },
+        {
+          "id": "mk_moss_rocketwright_4",
+          "name": "Moss",
+          "title": "Rocketwright",
+          "type": "character",
+          "why": "A copper rocket on trestles, in a shop that mostly builds bridges."
+        },
+        {
+          "id": "mk_patch_junkyard_diver_0",
+          "name": "Patch",
+          "title": "Junkyard Diver",
+          "type": "character",
+          "why": "On top of the scrap mountain, holding up the one good gear."
+        }
+      ]
+    },
+    "underrated": {
+      "mode": "full",
+      "cards": [
+        {
+          "id": "mk_cassadee_the_only_one_at_the_back_1",
+          "name": "Cassadee",
+          "title": "The Only One at the Back",
+          "type": "character",
+          "why": "Books it, sweeps it, sets the chairs, and puts them away at midnight."
+        },
+        {
+          "id": "mk_abigail_standing_slot_5",
+          "name": "Abigail",
+          "title": "The Standing Slot",
+          "type": "character",
+          "why": "Never the thing the room remembers, and on her feet after a full shift."
+        },
+        {
+          "id": "mk_fred_backstage_crew_3",
+          "name": "Fred",
+          "title": "Backstage Crew (Nobody Asked)",
+          "type": "character",
+          "why": "Never told the name of the show, and still has not asked."
+        },
+        {
+          "id": "mk_winter_turned_down_applicant_1",
+          "name": "Winter",
+          "title": "Turned-Down Applicant",
+          "type": "character",
+          "why": "Two courteous letters, no seat, and everything he read for the second one."
+        },
+        {
+          "id": "mk_oatmeal_sunday_table_0",
+          "name": "Oatmeal",
+          "title": "Sunday Table",
+          "type": "character",
+          "why": "Nine at the table since he was eleven, and never once thanked for it."
+        },
+        {
+          "id": "mk_ned_the_ward_roll_0",
+          "name": "Ned",
+          "title": "The Ward Roll",
+          "type": "character",
+          "why": "Every roll and return, filed and correct, because nearly correct is not."
+        },
+        {
+          "id": "mk_kevin_counter_hand_2",
+          "name": "Kevin",
+          "title": "Counter Hand",
+          "type": "character",
+          "why": "Job nine of eleven, the one nobody counts, worth two of anybody at it."
+        },
+        {
+          "id": "mk_hibiscus_the_sorting_bench_0",
+          "name": "Hibiscus",
+          "title": "The Sorting Bench",
+          "type": "character",
+          "why": "The handover at five, and a round that takes seven hours on purpose."
+        },
+        {
+          "id": "mk_sota_the_same_bench_4",
+          "name": "Sota",
+          "title": "The Same Bench",
+          "type": "character",
+          "why": "Grinds the glass all night and will not look through it."
+        },
+        {
+          "id": "mk_peter_washing_up_1",
+          "name": "Peter",
+          "title": "Washing Up",
+          "type": "character",
+          "why": "At the sink from November, back on the hedge in March, said nothing about either."
+        }
+      ]
+    },
+    "details": {
+      "mode": "details",
+      "cards": [
+        {
+          "id": "mk_sage_astronomer_3",
+          "name": "Sage",
+          "title": "Astronomer",
+          "type": "character",
+          "why": "The brass telescope barrel and the pillars of its stand."
+        },
+        {
+          "id": "mk_bean_espresso_1",
+          "name": "Bean",
+          "title": "Espresso Puller",
+          "type": "character",
+          "why": "The copper and brass of the espresso machine."
+        },
+        {
+          "id": "mk_liz_weighbridge_keeper_4",
+          "name": "Liz",
+          "title": "Weighbridge Keeper",
+          "type": "character",
+          "why": "The weighing dial and the pillars it stands on."
+        },
+        {
+          "id": "mk_copper_scale_polisher_1",
+          "name": "Copper",
+          "title": "Scale Polisher",
+          "type": "character",
+          "why": "The pan polished to a mirror, its stand and the chain above it."
+        },
+        {
+          "id": "mk_mandee_weather_watcher_2",
+          "name": "Mandee",
+          "title": "Weather Watcher",
+          "type": "character",
+          "why": "The barometer she reads and the weathervane above it."
+        }
+      ]
+    }
+  }
+}

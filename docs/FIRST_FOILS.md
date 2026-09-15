@@ -4,8 +4,8 @@ The first release drew fifteen distinct cards, each of the five finishes appeari
 times. Every selection is an
 ordinary **Foil** printing (`foil`), including hexagons and masked details; none is Creative Foil
 or Alternate Art Foil. Regular and Full Card Art printings keep their existing appearance.
-Fourteen hexagon Foil printings were [added afterwards](#hexagon-foil-printings-added-later), for
-29 foils in all.
+Fourteen hexagon Foil printings were [added afterwards](#hexagon-foil-printings-added-later), and
+thirty-five more were [chosen rather than drawn](SECOND_FOILS.md), for 64 foils in all.
 
 | Card | Card ID | Foil finish |
 | --- | --- | --- |
@@ -29,18 +29,21 @@ The finishes were drawn with a randomly generated 32-bit seed, **3461026837**, a
 shuffle with Mulberry32 over the unique IDs sorted alphabetically; the first 15 draws were assigned in
 groups of three to full, artwork, details, reverse and hexagon. Five of those fifteen named cards the
 collection has since replaced, and in each case the foil stayed with the card that took its place, so
-the finish counts and the masks are unchanged. The list is recorded in
+the finish counts are unchanged; the three detail masks were retraced to the new paintings. The list
+is recorded in
 [FOIL_SELECTION.json](FOIL_SELECTION.json); it is fixed at authoring time, never rerolled in-game.
 
 ## Detail masks
 
-Each mask is traced to the ordinary printing's square artwork, not its full-art portrait:
+Each mask is traced to the ordinary printing's square artwork, not its full-art portrait. All three
+were [retraced](SECOND_FOILS.md#the-three-older-masks-were-retraced) after their paintings were
+replaced, and now read:
 
 - **Comet — Astronaut:** brass helmet rim, chest gauge and the comet in the sky.
-- **Finn — Auctioneer’s Boy:** gilded gavel and the two candle flames.
-- **Earl — Tea House Keeper:** porcelain teapot and the cup rims.
+- **Finn — Auctioneer’s Boy:** the two lantern flames and the brass candlesticks on the block.
+- **Earl — Tea House Keeper:** the porcelain teapot and cups, and the brass lantern in front of them.
 
-The transparent SVG masks live in `assets/art/foil-masks/`. The original paintings are unchanged.
+The transparent SVG masks live in `assets/art/foil-masks/`. The paintings themselves are unchanged.
 If one of these ordinary paintings is replaced later, retrace its mask to the new details.
 
 ## Hexagon Foil printings added later
@@ -68,7 +71,8 @@ and Benjamin — Master Lantern Maker for Lantern Maker.
 | Hazel — Guildmaster | `mk_hazel_guildmaster_3` |
 | Lindsay — Potting Helper | `mk_lindsay_potting_helper_0` |
 
-Open **The Book** and select the **Foil** printing to see all 29.
+Thirty-five more foils were [chosen, not drawn](SECOND_FOILS.md), for 64 in all.
+Open **The Book** and select the **Foil** printing to see them.
 Every card also retains its Regular printing. The [finish preview](../src/ui/foil-preview.html)
 can compare effects, while the Book shows the actual assigned finish.
 
