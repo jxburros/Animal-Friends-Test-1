@@ -1450,56 +1450,47 @@ export function cardBackSVG() {
 
 /* ---------- icons ---------- */
 
-function iconStarShape(cx, cy, r) {
-  let pts = '';
-  for (let i = 0; i < 10; i++) {
-    const ang = -90 + i * 36;
-    const rad = i % 2 === 0 ? r : r * 0.45;
-    pts += `${cx + rad * Math.cos(ang * Math.PI / 180)},${cy + rad * Math.sin(ang * Math.PI / 180)} `;
-  }
-  return `<polygon points="${pts.trim()}" fill="currentColor"/>`;
-}
-function iconSparkle4(cx, cy, r) {
-  return `<path d="M${cx} ${cy - r} Q${cx + r * 0.3} ${cy - r * 0.3} ${cx + r} ${cy} Q${cx + r * 0.3} ${cy + r * 0.3} ${cx} ${cy + r} Q${cx - r * 0.3} ${cy + r * 0.3} ${cx - r} ${cy} Q${cx - r * 0.3} ${cy - r * 0.3} ${cx} ${cy - r} Z" fill="currentColor"/>`;
-}
+const line = (d, width = 1.6, extra = '') => `<path d="${d}" fill="none" stroke="currentColor" stroke-width="${width}" stroke-linecap="round" stroke-linejoin="round" ${extra}/>`;
+const dot = (cx, cy, r = 1.2) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="currentColor"/>`;
 
+// A fresh, inked storybook icon family. Each mark is built for legibility at 12–20px.
 const ICONS = {
-  Cat: () => `<path d="M4 10 L3 2 L8 6 Q10 5 12 6 L17 2 L16 10 Q18 17 10 18 Q2 17 4 10Z" fill="currentColor"/><path d="M5 12 L1 11 M5 14 L1 15 M15 12 L19 11 M15 14 L19 15" stroke="currentColor" stroke-width="1.2"/>`,
-  supply: () => `<circle cx="10" cy="10" r="8" fill="currentColor"/><circle cx="10" cy="10" r="4.4" fill="currentColor" opacity="0.4"/>`,
-  statue: () => `<rect x="6" y="15" width="8" height="3" fill="currentColor"/><rect x="7" y="11" width="6" height="4" fill="currentColor"/><circle cx="10" cy="7" r="4" fill="currentColor"/>`,
-  shift: () => `<path d="M6 3 H14 L10 10 L14 17 H6 L10 10 Z" fill="currentColor"/>`,
-  hand: () => `<g fill="currentColor"><rect x="4" y="5" width="7" height="10" rx="1.4" opacity="0.85" transform="rotate(-18 7.5 10)"/><rect x="6.5" y="5" width="7" height="10" rx="1.4"/><rect x="9" y="5" width="7" height="10" rx="1.4" opacity="0.85" transform="rotate(18 12.5 10)"/></g>`,
-  deck: () => `<g fill="currentColor"><rect x="6" y="9" width="10" height="12" rx="1.4" opacity="0.45"/><rect x="4.5" y="6" width="10" height="12" rx="1.4" opacity="0.7"/><rect x="3" y="3" width="10" height="12" rx="1.4"/></g>`,
-  dump: () => `<path d="M4 6 H16 L15 17 H5 Z" fill="currentColor"/><rect x="3" y="4" width="14" height="2.4" fill="currentColor"/>`,
-  escrow: () => `<rect x="5" y="9" width="10" height="8" rx="1.6" fill="currentColor"/><path d="M7 9 V6.5 a3 3 0 0 1 6 0 V9" fill="none" stroke="currentColor" stroke-width="2"/>`,
-  Rabbit: () => `<circle cx="10" cy="12" r="5.4" fill="currentColor"/><ellipse cx="7" cy="4" rx="1.8" ry="5" fill="currentColor" transform="rotate(-10 7 4)"/><ellipse cx="13" cy="4" rx="1.8" ry="5" fill="currentColor" transform="rotate(10 13 4)"/>`,
-  Mouse: () => `<circle cx="10" cy="12" r="5" fill="currentColor"/><circle cx="5" cy="7" r="3" fill="currentColor"/><circle cx="15" cy="7" r="3" fill="currentColor"/>`,
-  Raccoon: () => `<circle cx="10" cy="12" r="5.4" fill="currentColor"/><polygon points="5,7 7,2 9,7" fill="currentColor"/><polygon points="15,7 13,2 11,7" fill="currentColor"/>`,
-  Fox: () => `<circle cx="10" cy="12" r="5" fill="currentColor"/><polygon points="4,7 6,1 9,7" fill="currentColor"/><polygon points="16,7 14,1 11,7" fill="currentColor"/>`,
-  Hedgehog: () => `<circle cx="10" cy="13" r="5" fill="currentColor"/><path d="M3 11 L5 4 L8 8 L10 2 L12 8 L15 4 L17 11 Z" fill="currentColor"/>`,
-  Badger: () => `<circle cx="10" cy="12" r="5.4" fill="currentColor"/><circle cx="5" cy="6" r="2.6" fill="currentColor"/><circle cx="15" cy="6" r="2.6" fill="currentColor"/><rect x="8.6" y="7" width="2.8" height="10" fill="#fff" opacity="0.85"/>`,
-  Otter: () => `<circle cx="10" cy="12" r="5.4" fill="currentColor"/><circle cx="5.4" cy="7" r="2.4" fill="currentColor"/><circle cx="14.6" cy="7" r="2.4" fill="currentColor"/><path d="M4 12 L1 11 M4 14 L1 15 M16 12 L19 11 M16 14 L19 15" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>`,
-  Owl: () => `<ellipse cx="10" cy="11" rx="6.5" ry="7.5" fill="currentColor"/><polygon points="4,6 3,1 8,4" fill="currentColor"/><polygon points="16,6 17,1 12,4" fill="currentColor"/><circle cx="7.4" cy="9.5" r="2.4" fill="#fff" opacity="0.9"/><circle cx="12.6" cy="9.5" r="2.4" fill="#fff" opacity="0.9"/><circle cx="7.4" cy="9.5" r="1.1" fill="currentColor"/><circle cx="12.6" cy="9.5" r="1.1" fill="currentColor"/><polygon points="10,11.5 8.6,13.5 11.4,13.5" fill="#fff" opacity="0.9"/>`,
-  Squirrel: () => `<circle cx="8" cy="12" r="5" fill="currentColor"/><polygon points="4,7 5,2 8,6" fill="currentColor"/><polygon points="12,7 11,2 8,6" fill="currentColor"/><path d="M13 17 Q19 15 18 8 Q17 3 13 4 Q16 7 15 11 Q14 14 12 14 Z" fill="currentColor"/>`,
-  Crafts: () => `<rect x="9" y="7" width="2.4" height="11" rx="1" fill="currentColor"/><rect x="4" y="2" width="12" height="5" rx="1.5" fill="currentColor"/>`,
-  Lore: () => `<path d="M2 5 Q10 1 10 5 L10 16 Q10 12 2 16 Z" fill="currentColor"/><path d="M18 5 Q10 1 10 5 L10 16 Q10 12 18 16 Z" fill="currentColor" opacity="0.72"/>`,
-  Agriculture: () => `<line x1="10" y1="18" x2="10" y2="6" stroke="currentColor" stroke-width="1.6"/><g fill="currentColor"><ellipse cx="10" cy="6" rx="1.6" ry="3"/><ellipse cx="7" cy="9" rx="1.6" ry="3" transform="rotate(-30 7 9)"/><ellipse cx="13" cy="9" rx="1.6" ry="3" transform="rotate(30 13 9)"/><ellipse cx="7" cy="13" rx="1.6" ry="3" transform="rotate(-30 7 13)"/><ellipse cx="13" cy="13" rx="1.6" ry="3" transform="rotate(30 13 13)"/></g>`,
-  Botany: () => `<path d="M10 18 V9" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M10 9 Q3 8 3 2 Q10 3 10 9Z" fill="currentColor"/><path d="M10 9 Q17 8 17 2 Q10 3 10 9Z" fill="currentColor"/>`,
-  Commerce: () => `<line x1="10" y1="2" x2="10" y2="16" stroke="currentColor" stroke-width="1.6"/><line x1="4" y1="6" x2="16" y2="6" stroke="currentColor" stroke-width="1.6"/><path d="M4 6 L1.5 12 A3 3 0 0 0 6.5 12 Z" fill="currentColor"/><path d="M16 6 L13.5 12 A3 3 0 0 0 18.5 12 Z" fill="currentColor"/><rect x="7" y="16" width="6" height="2" fill="currentColor"/>`,
-  Science: () => `<path d="M8 2 H12 M9 2 V8 L4 16 Q3 18 5 18 H15 Q17 18 16 16 L11 8 V2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M6.5 13 H13.5 L15.4 16.6 H4.6 Z" fill="currentColor"/><circle cx="14" cy="4" r="1.2" fill="currentColor"/><circle cx="17" cy="8" r="0.9" fill="currentColor"/>`,
-  Food: () => `<path d="M4 7 H14 V13 Q14 16 11 16 H7 Q4 16 4 13 Z" fill="currentColor"/><path d="M14 8.5 Q18 8.5 18 11 Q18 13.5 14 13.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 5 Q8.6 3 7 1 M11 5 Q12.6 3 11 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>`,
-  Entertainment: () => `<path d="M8 16 V4 L16 2 V13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><ellipse cx="5.6" cy="16" rx="3.4" ry="2.6" transform="rotate(-18 5.6 16)" fill="currentColor"/><ellipse cx="13.6" cy="13" rx="3.4" ry="2.6" transform="rotate(-18 13.6 13)" fill="currentColor"/>`,
-  Civics: () => `<polygon points="10,2 17,7 3,7" fill="currentColor"/><rect x="4" y="8" width="2" height="8" fill="currentColor"/><rect x="9" y="8" width="2" height="8" fill="currentColor"/><rect x="14" y="8" width="2" height="8" fill="currentColor"/><rect x="3" y="16" width="14" height="2" fill="currentColor"/>`,
-  apprentice: () => iconStarShape(10, 10, 7),
-  journeyman: () => iconStarShape(6, 11, 5) + iconStarShape(14, 11, 5),
-  master: () => `<path d="M3 15 L4 7 L8 11 L10 5 L12 11 L16 7 L17 15 Z" fill="currentColor"/>`,
-  foil: () => iconSparkle4(10, 10, 8),
-  busy: () => `<path d="M5 10 A5 5 0 1 1 8 14.3" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="8,14.3 4.5,15 6,11" fill="currentColor"/>`,
-  upright: () => `<path d="M4 11 L8 15 L16 5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`,
-  instant: () => `<polygon points="11,2 5,11 9,11 8,18 15,8 11,8" fill="currentColor"/>`,
-  limited: () => `<rect x="3" y="4" width="14" height="13" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="3" y1="8" x2="17" y2="8" stroke="currentColor" stroke-width="1.6"/><line x1="6" y1="2" x2="6" y2="5" stroke="currentColor" stroke-width="1.6"/><line x1="14" y1="2" x2="14" y2="5" stroke="currentColor" stroke-width="1.6"/>`,
-  event: () => `<path d="M3 6 Q10 3 17 6 L17 13 Q10 10 3 13 Z" fill="currentColor"/>`,
-  market: () => `<path d="M2 8 L10 2 L18 8 Z" fill="currentColor"/><rect x="4" y="8" width="12" height="7" fill="currentColor" opacity="0.65"/><path d="M4 15 Q6 17.5 8 15 Q10 17.5 12 15 Q14 17.5 16 15" stroke="currentColor" stroke-width="1.6" fill="none"/>`,
+  Cat: () => `${line('M4 9 3 3l5 3a7 7 0 0 1 4 0l5-3-1 6c1 2.6.1 7.6-6 8.3C3.9 16.6 3 11.6 4 9Z')} ${dot(7.3, 11, .8)} ${dot(12.7, 11, .8)} ${line('M8.2 14q1.8 1.2 3.6 0', 1.2)}`,
+  supply: () => `${line('M10 2.6 16.5 6v8L10 17.4 3.5 14V6Z')} ${line('m3.7 6.2 6.3 3.6 6.3-3.6M10 9.8v7.2', 1.35)}`,
+  statue: () => `${line('M5 17h10M7 17v-3h6v3M8 14V9.5h4V14M10 3.2a3 3 0 0 1 2 5.2v1.1H8V8.4A3 3 0 0 1 10 3.2Z')} ${line('M9.1 6.2h1.8', 1.15)}`,
+  shift: () => `${line('M4 6h10l-2.4-2.4M16 14H6l2.4 2.4', 1.9)} ${line('M14 6 16.4 8.4M6 14 3.6 11.6', 1.9)}`,
+  hand: () => `${line('M5.2 10.8V5.6a1.3 1.3 0 0 1 2.6 0v4.3M7.8 9V4.5a1.3 1.3 0 0 1 2.6 0V9m0-.6V5.2a1.3 1.3 0 0 1 2.6 0v5.7l1-1a1.5 1.5 0 0 1 2.1 2.1l-3.4 4a4 4 0 0 1-3 1.4H9a3.8 3.8 0 0 1-3.8-3.8v-2.8Z')} ${line('M7.8 10.5v-1.1', 1.35)}`,
+  deck: () => `${line('m5 5 9-2.2 2 8.2-9 2.2Z')} ${line('m4 8.4 9 2.2 2 6.4-9 2.2-2-6.4Z')} ${line('m6 10.6 9-2.2', 1.25)}`,
+  dump: () => `${line('M4 6h12M7 6V3.7h6V6M5.2 6l.7 11h8.2l.7-11M8.2 9v5M11.8 9v5', 1.7)}`,
+  escrow: () => `${line('M4 8h12v9H4Z')} ${line('M6.5 8V6.2a3.5 3.5 0 0 1 7 0V8M10 11.2v2.6', 1.7)} ${dot(10, 14.6, .75)}`,
+  Rabbit: () => `${line('M5.1 11.3C4.8 7.2 5.4 2.5 7.5 2.4c2 0 1.4 4.8 1.2 6.2M10.7 8.6c-.2-1.4-.8-6.2 1.2-6.2 2.1.1 2.7 4.8 2.4 8.9')} ${line('M4 13a6 4.6 0 0 0 12 0c0-2.7-2.4-4.8-6-4.8S4 10.3 4 13Z')} ${dot(8, 12.5, .72)} ${dot(12, 12.5, .72)} ${dot(10, 14.3, .75)}`,
+  Mouse: () => `${line('M5.2 9.5C2.7 8.9 2.4 5 4.7 4.2c2-.7 3.5.9 3.7 3M14.8 9.5c2.5-.6 2.8-4.5.5-5.3-2-.7-3.5.9-3.7 3M4.2 13a5.8 4.4 0 0 0 11.6 0c0-2.7-2.5-4.7-5.8-4.7S4.2 10.3 4.2 13Z')} ${dot(8, 12.2, .68)} ${dot(12, 12.2, .68)} ${dot(10, 14.1, .8)}`,
+  Raccoon: () => `${line('M4.5 9 5 3.5l3.2 2.3h3.6L15 3.5l.5 5.5a6 6 0 0 1 0 5.7c-2.4 3.4-8.6 3.4-11 0A6 6 0 0 1 4.5 9Z')} ${line('M5.2 10.3q4.8-3.1 9.6 0M6.7 12.3h.1m6.4 0h.1', 1.45)} ${dot(10, 14.4, .75)}`,
+  Fox: () => `${line('M4 10 4.6 2l4 3.3h2.8l4-3.3.6 8a6 6 0 0 1-12 0Z')} ${dot(7.7, 11.2, .72)} ${dot(12.3, 11.2, .72)} ${line('M10 12.5v2.4M7.7 15.8q2.3 1.7 4.6 0', 1.2)}`,
+  Hedgehog: () => `${line('M3.2 11.5 5.1 8l1.3-3.6 2.1 2.4L10 2.7l1.8 4.1 2.4-2.4 1.1 3.6 1.5 3.5')} ${line('M4.2 12.6a5.8 4.6 0 0 0 11.6 0c0-2.6-2.6-4.6-5.8-4.6s-5.8 2-5.8 4.6Z')} ${dot(8, 12.2, .68)} ${dot(12, 12.2, .68)} ${dot(10, 14.1, .8)}`,
+  Badger: () => `${line('M4.5 9 5.5 4l2.8 2h3.4l2.8-2 1 5a6.2 6.2 0 0 1-11 0Z')} ${line('M10 5.7v9.1')} ${dot(7.6, 11.2, .7)} ${dot(12.4, 11.2, .7)} ${dot(10, 14.6, .75)}`,
+  Otter: () => `${line('M4.7 9.5 5.5 5l2.7 2h3.6l2.7-2 .8 4.5a6.2 6.2 0 0 1 0 5.3c-2.6 3.3-8 3.3-10.6 0a6.2 6.2 0 0 1 0-5.3Z')} ${dot(7.6, 11.2, .7)} ${dot(12.4, 11.2, .7)} ${dot(10, 13.7, .75)} ${line('M5.5 13.6 2.2 13M14.5 13.6l3.3-.6M7.5 15.8q2.5 1.5 5 0', 1.15)}`,
+  Owl: () => `${line('M4.2 7.5 4 3.2 7.3 5l2.7-1.2L12.7 5 16 3.2l-.2 4.3a7 7 0 0 1 .5 4.4c-.6 3.6-3 5.6-6.3 5.6s-5.7-2-6.3-5.6a7 7 0 0 1 .5-4.4Z')} ${line('M5.4 10.6a2.4 2.4 0 1 0 4.8 0 2.4 2.4 0 1 0-4.8 0ZM9.8 10.6a2.4 2.4 0 1 0 4.8 0 2.4 2.4 0 1 0-4.8 0Z', 1.25)} ${dot(7.8, 10.6, .65)} ${dot(12.2, 10.6, .65)} ${line('m10 13 .9 1.2h-1.8Z', 1.1)}`,
+  Squirrel: () => `${line('M5 9.4 5.4 4l2.8 2.3L10 4l1.1 3.1')} ${line('M5 10.2a5.2 5.2 0 1 0 7.2 6.9')} ${line('M11.5 15.6c6.3 1.4 7.4-4.9 4.4-8.5-1.2-1.4-3.1-.6-2.8.9.2 1.1 1.6 1.5 1 3.6-.4 1.4-1.5 2.3-3 2.4')} ${dot(7.8, 11.6, .7)} ${dot(10.4, 11.6, .7)}`,
+  Crafts: () => `${line('m4 15 8.6-8.6 2 2L6 17H3v-3l7.2-7.2')} ${line('m12.6 4.4 1.2-1.2a1.5 1.5 0 0 1 2.1 2.1l-1.3 1.2M5.4 4.2h4.2M4.2 6.3l3-3M11.8 14.6l2.7 2.7', 1.55)}`,
+  Lore: () => `${line('M3 4.8c2.7-1.4 5.2-1.1 7 1.1 1.8-2.2 4.3-2.5 7-1.1v10.6c-2.7-1.4-5.2-1.1-7 1.1-1.8-2.2-4.3-2.5-7-1.1Z')} ${line('M10 5.9v10.6M5.5 7.2h2.3M12.2 7.2h2.3', 1.2)}`,
+  Agriculture: () => `${line('M10 17.5V4.2')} ${line('M10 7.2C7.7 4.4 5.5 4.8 4.4 5.3c.1 2.8 2 4.6 5.6 4.3M10 11.2c2.3-2.8 4.5-2.4 5.6-1.9-.1 2.8-2 4.6-5.6 4.3')} ${line('M7.2 17.5h5.6', 1.2)}`,
+  Botany: () => `${line('M10 17.5V9.2')} ${line('M10 10C5.4 9.5 3.5 6.4 4.2 3.2 8.6 3.5 10 6.2 10 10ZM10 12.2c4.6-.5 6.5-3.6 5.8-6.8-4.4.3-5.8 3-5.8 6.8Z')} ${line('M7.2 17.5h5.6', 1.2)}`,
+  Commerce: () => `${line('M5 7h10v9H5Z')} ${line('M3.7 7 5.3 3.5h9.4L16.3 7M3.7 7c.1 2.1 2.6 2.1 3.2 0 1.1 2.1 3.1 2.1 4.2 0 1.1 2.1 3.1 2.1 4.2 0 1 2.1 2.6 2.1 3.2 0M8 16v-4h4v4', 1.4)}`,
+  Science: () => `${line('M8 3h4M9 3v5l-4 7.2A1.2 1.2 0 0 0 6 17h8a1.2 1.2 0 0 0 1-1.8L11 8V3')} ${line('M6.6 13h6.8M13.7 5.1h.1M16 8h.1', 1.25)} ${dot(13.7, 5.1, .7)} ${dot(16, 8, .6)}`,
+  Food: () => `${line('M5 7.5h9v6.8a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3Z')} ${line('M14 9.2h1.1a2.2 2.2 0 0 1 0 4.4H14M7.4 5.6c0-1.1.7-1.4.7-2.4M11 5.6c0-1.1.7-1.4.7-2.4', 1.45)}`,
+  Entertainment: () => `${line('M7 4v10.4M7 5.5l8-2v9.2')} ${line('M4.2 16.1a2.6 1.7 0 1 0 5.2 0 2.6 1.7 0 1 0-5.2 0ZM12.2 14.2a2.6 1.7 0 1 0 5.2 0 2.6 1.7 0 1 0-5.2 0Z', 1.35)}`,
+  Civics: () => `${line('M3 7 10 3l7 4M4.5 8.2h11M5.5 8.2v6.5M8.5 8.2v6.5M11.5 8.2v6.5M14.5 8.2v6.5M3.5 16.5h13', 1.55)}`,
+  apprentice: () => `${line('M10 3.2 11.8 7l4.2.6-3 2.9.7 4.1-3.7-2-3.7 2 .7-4.1-3-2.9 4.2-.6Z', 1.45)}`,
+  journeyman: () => `${line('M6.3 5.2 7.5 7.7l2.8.4-2 2 .5 2.7-2.5-1.4-2.5 1.4.5-2.7-2-2 2.8-.4ZM14 9.2l1.2 2.5 2.8.4-2 2 .5 2.7-2.5-1.4-2.5 1.4.5-2.7-2-2 2.8-.4Z', 1.3)}`,
+  master: () => `${line('M4 15.8V8.5l3.3 2.7L10 5l2.7 6.2L16 8.5v7.3Z')} ${line('M4 17h12', 1.45)}`,
+  foil: () => `${line('M10 2.5c.6 4.6 2.8 6.8 7 7.5-4.2.7-6.4 2.9-7 7.5-.6-4.6-2.8-6.8-7-7.5 4.2-.7 6.4-2.9 7-7.5Z')} ${line('m15.7 2.8.4 1.2 1.2.4-1.2.4-.4 1.2-.4-1.2-1.2-.4 1.2-.4Z', 1.05)}`,
+  busy: () => `${line('M10 3a7 7 0 1 1-6.1 3.6M3.1 3.8v3.6h3.6M10 6.2v4.2l2.8 1.7', 1.7)}`,
+  upright: () => `${line('m4 10.5 3.7 3.7L16 5.8', 2.2)}`,
+  instant: () => `${line('m11.5 2.5-6.7 8.1h4l-.5 6.9 6.8-8.1h-4Z', 1.65)}`,
+  limited: () => `${line('M4 4.5h12v12H4ZM7 2.7v3.5M13 2.7v3.5M4 8h12M7 11h2M11 11h2M7 14h2', 1.45)}`,
+  event: () => `${line('M4 5.2c2.5-1.5 5-1.5 6 0 1-1.5 3.5-1.5 6 0v10.3c-2.5-1.5-5-1.5-6 0-1-1.5-3.5-1.5-6 0Z')} ${line('M10 5.2v10.3M6.2 8.3h2M11.8 8.3h2', 1.2)}`,
+  market: () => `${line('M3 8h14v8.5H3ZM4.2 8l1.4-4h8.8l1.4 4M3.2 8c.1 2.1 2.4 2.1 3.1 0 .9 2.1 3.5 2.1 4.4 0 .9 2.1 3.5 2.1 4.4 0 .8 2.1 3 2.1 3.1 0M6.5 16.5v-4h3v4', 1.35)}`,
 };
 
 export function iconSVG(name) {
