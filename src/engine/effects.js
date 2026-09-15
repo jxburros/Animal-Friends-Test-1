@@ -2,7 +2,7 @@
 import { shuffle, rand } from './rng.js';
 import {
   cardDef, topCard, log, nextUid, opponentOf, entryOrientation, rankOf, abilitySources, hasPassive,
-  hasMod, consumeMod, isUpright, speciesInTown, refillCity, UPRIGHT, BUSY, findStack, hasTownRoom,
+  hasMod, consumeMod, isUpright, canAct, speciesInTown, refillCity, UPRIGHT, BUSY, findStack, hasTownRoom,
   hasBuildingRoom, canDemolishFor, buildingsBuilt, tokenKey, tokenCount, addTokens, spendTokens,
   passiveTotal, pairBonusFor,
 } from './state.js';
@@ -924,6 +924,44 @@ export async function runEffect(state, pi, eff, ctx = {}) {
     case 'everyoneLosesSupply':
       for (const pl of state.players) await loseSupplyAndNotify(state, pl.index, eff.amount);
       return;
+    /**
+     * PROTOTYPE: a flat shared toll (the County Fair). Each Mayor pays `eff.amount` Supply; a Mayor
+     * who cannot cover it pays everything they have (loseSupplyAndNotify already clamps to what they
+     * hold) and Busies one upright Character instead of the shortfall — the fair still gets its due,
+     * one way or the other.
+     */
+    /**
+     * PROTOTYPE: a toll set as a share of what each Mayor is actually holding, not a flat amount — a
+     * wealth tax rather than a flat one. Always payable in full (a percentage of what you have is
+     * never more than what you have), so there is no Busy fallback: the rich pay more in absolute
+     * terms, the poor barely feel it, which is the point next to the flat-amount Fair cards.
+     */
+    case 'everyoneLosesPercentSupply': {
+      const pct = Math.max(0, Math.min(100, eff.percent || 0)) / 100;
+      for (const pl of state.players) {
+        const amount = Math.round(pl.supply * pct);
+        if (amount > 0) await loseSupplyAndNotify(state, pl.index, amount);
+      }
+      return;
+    }
+    case 'everyonePaysTollOrBusy': {
+      for (const pl of state.players) {
+        const owed = eff.amount;
+        const paid = await loseSupplyAndNotify(state, pl.index, owed);
+        if (paid < owed) {
+          const uprights = pl.town.filter(canAct);
+          if (uprights.length) {
+            const options = uprights.map((s) => ({ uid: s.uid, cardId: topCard(state, s).id, name: topCard(state, s).name }));
+            const picked = await ask(state, pl.index, { kind: 'pick', reason: 'tollShortfall', from: 'town', options, min: 1, max: 1 });
+            const uid = Array.isArray(picked) && picked.length ? picked[0] : options[0].uid;
+            const s = uprights.find((x) => x.uid === uid) || uprights[0];
+            s.orientation = BUSY;
+            log(state, pl.index, `${pl.name} cannot cover the full ${owed} Supply, so ${topCard(state, s).name} is put to work instead.`, { kind: 'tollShortfall', player: pl.index, uid: s.uid, owed, paid });
+          }
+        }
+      }
+      return;
+    }
     case 'everyoneGainsSupply':
       for (const pl of state.players) gainSupply(state, pl.index, eff.amount, ctx.sourceCardId ? cardDef(state, ctx.sourceCardId).name : '');
       return;

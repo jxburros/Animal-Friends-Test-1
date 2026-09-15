@@ -249,6 +249,8 @@ export function pledgeMinCost(state, pending, pi) {
 
 /** Can this Character be pledged as the player's next bid in this auction? */
 export function canPledge(state, pi, pending, stack) {
+  const cap = state.rules.market.auction?.bidCapPerPlayer;
+  if (cap && pending && pending.chars[pi].length >= cap) return false;
   return topCard(state, stack).cost >= pledgeMinCost(state, pending, pi);
 }
 
@@ -275,7 +277,8 @@ export function raiseIncrement(state, pending) {
 }
 export function raiseMinBid(state, pi, pending) {
   const standing = pending.bid + pending.bonus;
-  const winsTies = hasPassive(state, pi, 'winTiesAsChallenger');
+  const noMatch = state.rules.market.auction?.noMatchingBids;
+  const winsTies = !noMatch && hasPassive(state, pi, 'winTiesAsChallenger');
   return Math.max(0, (winsTies ? standing : standing + raiseIncrement(state, pending)) - bidBonus(state, pi));
 }
 
@@ -335,6 +338,17 @@ export function rehireCost(state, pi, cardId) {
 /** Whether the Statue rule that ties a Statue to a Building place is switched on. */
 export function statueNeedsRoom(state) {
   return (state.rules.victory || {}).requiresBuildingSlot !== false;
+}
+
+/**
+ * PROTOTYPE (rules.buildings.chargeUpkeep): what a standing Building costs its Mayor at the start of
+ * each of their turns. A card may print its own `upkeep`; absent that it is a quarter of the printed
+ * cost (minimum 1), so a prototype run does not need every Building card hand-edited before it can be
+ * measured. A Statue never has upkeep — it already carries its own tiered cost.
+ */
+export function buildingUpkeepFor(def) {
+  if (typeof def.upkeep === 'number') return Math.max(0, def.upkeep);
+  return Math.max(1, Math.round((def.cost || 0) / 4));
 }
 
 // ---------- legal actions ----------
@@ -450,6 +464,19 @@ export function legalActions(state, pi) {
   for (const cardId of clearableOrdinances(state)) {
     const needed = clearingNeeded(state, cardId);
     for (const st of uprights) acts.push({ type: 'clearOrdinance', cardId, charUid: st.uid, needed });
+  }
+  // PROTOTYPE: pay a standing Building's upkeep fee again, plus Busy one upright Character, to tear
+  // it down voluntarily and free its place. Paying the upkeep at the start of the turn and demolishing
+  // later the same turn is deliberately two payments, not one.
+  if ((state.rules.buildings || {}).chargeUpkeep) {
+    for (const b of p.buildings || []) {
+      const def = cardDef(state, b.cardId);
+      const fee = buildingUpkeepFor(def);
+      if (fee > p.supply) continue;
+      for (const s of uprights) {
+        acts.push({ type: 'demolish', buildingUid: b.uid, cardId: b.cardId, charUid: s.uid, cost: fee });
+      }
+    }
   }
   // rehire
   for (const c of p.unemployment) {
@@ -757,6 +784,24 @@ export async function applyAction(state, pi, a) {
           { kind: 'ordinanceCleared', player: pi, cardId, shared });
         refillCity(state);
       }
+      return false;
+    }
+    case 'demolish': {
+      if (!(state.rules.buildings || {}).chargeUpkeep) throw new Error('Demolishing is not allowed');
+      const idx = (p.buildings || []).findIndex((b) => b.uid === a.buildingUid);
+      if (idx < 0) throw new Error('No such Building');
+      const def = cardDef(state, p.buildings[idx].cardId);
+      const fee = buildingUpkeepFor(def);
+      if (fee > p.supply) throw new Error('Cannot afford to demolish');
+      const s = findStack(state, pi, a.charUid);
+      if (!s || !canAct(s)) throw new Error('Character cannot work');
+      p.supply -= fee;
+      s.orientation = BUSY;
+      const [gone] = p.buildings.splice(idx, 1);
+      if (gone.source === 'deck') p.dump.push({ uid: gone.uid, cardId: gone.cardId });
+      else state.market.cityDump.push(gone.cardId);
+      log(state, pi, `${p.name} demolishes ${def.name}, paying its ${fee} Supply upkeep once more and putting ${topCard(state, s).name} to work tearing it down.`,
+        { kind: 'demolish', player: pi, cardId: def.id, cost: fee, uid: s.uid, voluntary: true });
       return false;
     }
     case 'layOff': {

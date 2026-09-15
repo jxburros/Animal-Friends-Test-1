@@ -28,6 +28,7 @@
 import {
   cardDef, topCard, canAct, opponentOf, statueCount, findEventAssignment, eventReduction, rankOf, hasPassive,
   pledgeMinCost, townFootprint, townCap, hasTownRoom, rehireCost, cityRule, hasBuildingRoom, upgradesOver,
+  buildingUpkeepFor,
 } from '../engine/index.js';
 import { cardPower, effectPower } from '../engine/power.js';
 
@@ -187,12 +188,31 @@ function pledgeLadderCost(state, ctx, pending) {
 }
 
 /**
+ * A rough remaining-game horizon for corrections that do not have a `ctx` on hand (a `pick` handler,
+ * mainly). Mirrors `buildContext`'s horizon but off the shared default cap rather than a per-agent
+ * override — fine for a secondary correction term, wrong for the main scoring weights.
+ */
+function remainingHorizon(state) {
+  const cap = (state.rules.simulation.maxTurnsPerPlayer || 40) * 2;
+  return clamp((cap - state.turnNumber) / 2, 1, DEFAULT_PARAMS.horizonCap);
+}
+
+/**
  * What a Market card is worth beyond its printed effect, because of where it ends up. A one-shot
  * goes to the City Dump; a Building stays in town and keeps paying; a hired animal is a worker and
  * a rung on every future pledge ladder. The power model rates the effect — this rates the permanence.
+ *
+ * PROTOTYPE (rules.buildings.chargeUpkeep): a Building is no longer permanence for free. Its printed
+ * effect is what `cardPower` already rates; this bonus is what standing in town is worth on top of
+ * that, and upkeep is what standing in town now costs, so the two net against each other here rather
+ * than the agent paying full price at auction for a bill it has not yet priced in.
  */
 function permanenceBonus(state, d) {
-  if (d.type === 'building') return 6.0;
+  if (d.type === 'building') {
+    let bonus = 6.0;
+    if ((state.rules.buildings || {}).chargeUpkeep) bonus -= buildingUpkeepFor(d) * remainingHorizon(state);
+    return bonus;
+  }
   if (d.type === 'marketCharacter') return 3.0 + d.cost * 0.4;
   return 0;
 }
@@ -602,11 +622,37 @@ function scoreAction(state, ctx, a, agg, out, P) {
       const crew = (a.characters || []).map((uid) => findStack(state, ctx.pi, uid));
       const labour = crew.reduce((acc, st) => acc + (st ? stackRate(state, st) : 0), 0) * P.eventCharCost;
       let s = cardPower(d, state.rules) * 1.4 - labour - a.cost * P.costWeight;
+      // PROTOTYPE (rules.buildings.chargeUpkeep): what raising this Building goes on to cost, not just
+      // what it costs to raise — the same correction applied to a market Building's auction value.
+      if ((state.rules.buildings || {}).chargeUpkeep) s -= buildingUpkeepFor(d) * horizon;
       // Building into a full row means pulling something down, and a Statue we cannot stand is worse
       // than a Building we never raised.
       if (!hasBuildingRoom(state, ctx.pi)) s -= 4;
       if (ctx.statueThreat && ctx.upright.length - crew.length <= 0) s -= P.reservePenalty;
       out.why = `build ${d.name}`;
+      return s;
+    }
+
+    case 'demolish': {
+      // PROTOTYPE (rules.buildings.chargeUpkeep): a Building bills us every one of our turns, so it is
+      // only worth keeping while what it does for us beats that bill. An inert one (already unpaid) is
+      // doing nothing right now, so it is an easy call; a live one we tear down only when its upkeep,
+      // summed over how much game is left, outweighs its printed power — or when we are shut out of
+      // building/Statue room and this is the weakest thing standing in the way.
+      const d = def(state, a.cardId);
+      if (!d) return -1;
+      const b = (p.buildings || []).find((x) => x.uid === a.buildingUid);
+      const upkeep = buildingUpkeepFor(d);
+      const inert = !!(b && b.inert);
+      const value = cardPower(d, state.rules) * (inert ? 0.25 : 1);
+      const ongoingCost = upkeep * horizon;
+      const wantsRoom = !hasBuildingRoom(state, ctx.pi) && ctx.statueThreat;
+      const worker = findStack(state, ctx.pi, a.charUid);
+      const labour = worker ? stackRate(state, worker) * P.eventCharCost : 0;
+      let s = ongoingCost - value - upkeep * P.costWeight - P.bodyBonus * 0.5 - labour;
+      if (inert) s += 3;
+      if (wantsRoom) s += 8;
+      out.why = `demolish ${d.name}${inert ? ' (inert)' : ''}`;
       return s;
     }
 
@@ -669,6 +715,12 @@ export function makeHeuristicAgent(options = {}) {
       if (d && d.type === 'statue') need = Math.max(need, pd.bid + pd.bonus + 1);
     }
     if (need > 0 && p.supply < need + 2 && p.supply + 2 >= need) return 'supply';
+    // PROTOTYPE (rules.buildings.chargeUpkeep): don't let a Building we are actually holding onto go
+    // inert for the sake of drawing a card, when gaining Supply instead would have covered its bill.
+    if ((state.rules.buildings || {}).chargeUpkeep && (p.buildings || []).length) {
+      const dueNextTurn = p.buildings.reduce((a, b) => a + buildingUpkeepFor(def(state, b.cardId)), 0);
+      if (dueNextTurn > 0 && p.supply < dueNextTurn) return 'supply';
+    }
     if (p.hand.length <= 2) return 'draw';
     if (p.supply >= P.drawWhenRich && p.hand.length <= P.drawHandCap) return 'draw';
     if (p.hand.length >= 8) return 'supply';

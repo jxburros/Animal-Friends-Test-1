@@ -27,8 +27,11 @@ function townBuildingCard(state, { id = 'tb_test_mill', cost = 3, animals = 2 } 
     name: 'The Test Mill',
     cost,
     build: { animals },
-    text: `Build for ${cost} Supply and ${animals} animals. At the start of your turn, gain 1 Supply.`,
-    abilities: [{ trigger: 'onTurnStart', effect: { do: 'gainSupply', amount: 1 } }],
+    // Its turn-start income is printed above its own Building-upkeep bill (RULES.buildings.chargeUpkeep,
+    // which nets any standing Building's cost/4 rounded against its owner every turn) so a test that
+    // starts a Mayor at 0 Supply can still see this ability net out positive after its own bill is paid.
+    text: `Build for ${cost} Supply and ${animals} animals. At the start of your turn, gain 2 Supply.`,
+    abilities: [{ trigger: 'onTurnStart', effect: { do: 'gainSupply', amount: 2 } }],
     rarity: 'Common',
   });
 }

@@ -80,7 +80,10 @@ test('the town decks are different towns, and every card in them is playable', (
 test('a game plays through to a Statue victory', async () => {
   for (const seed of [3, 11]) {
     const state = createGame(RULES, SET, { seed, decks: SET.decks.slice(0, 2).map((d) => d.id) });
-    await playGame(state, [makeRandomAgent(seed), makeRandomAgent(seed + 1)]);
+    // Random play is already the slowest-converging case; Building upkeep stretches it further, so
+    // this smoke test (does the engine ever reach a Statue win, not how fast) gets a taller cap than
+    // real play needs.
+    await playGame(state, [makeRandomAgent(seed), makeRandomAgent(seed + 1)], { maxTurnsPerPlayer: 150 });
     assert.notEqual(state.winner, null, `seed ${seed} ended with no winner`);
     assert.equal(state.result, 'statues', `seed ${seed} did not end on Statues`);
   }

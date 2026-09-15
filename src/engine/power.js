@@ -499,6 +499,16 @@ export function effectPower(eff) {
       return 4.0;
     case 'everyoneLosesSupply':
       return 0.9 * n(eff.amount);
+    // PROTOTYPE: a toll that is refused rather than merely reduced when a Mayor cannot cover it —
+    // they pay everything and lose a body's turn besides — so it bites a poor Mayor harder than a
+    // plain Supply loss of the same amount, and the rating says so.
+    case 'everyonePaysTollOrBusy':
+      return 1.1 * n(eff.amount);
+    // PROTOTYPE: a percent-of-Supply toll. Rated off an assumed mid-game holding (35, roughly the
+    // measured average) so two cards can be compared on paper before anyone has played a game with
+    // them; the real bite is whatever a table's actual Supply happens to be when it fires.
+    case 'everyoneLosesPercentSupply':
+      return 0.9 * (n(eff.percent) / 100) * 35;
     case 'everyoneGainsSupply':
       return 0.9 * n(eff.amount);
     case 'everyoneDraws':

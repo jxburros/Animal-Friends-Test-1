@@ -121,7 +121,8 @@
    ],
    "blurb": "Owls and Foxes of Science and Commerce: instruments, night work and a price for everything. It knows what the Capital City is about to put up before the other Mayor has looked at the board.",
    "list": {
-    "mk_finn_auctioneers_boy_0": 2,
+    "mk_sage_night_assistant_0": 1,
+    "mk_finn_auctioneers_boy_0": 1,
     "mk_liz_scale_hand_1": 2,
     "mk_obscured_observer_1": 2,
     "mk_mandee_weather_watcher_2": 2,
@@ -129,7 +130,7 @@
     "mk_roger_records_clerk_2": 1,
     "mk_sage_astronomer_3": 2,
     "mk_mandee_moonlight_trader_3": 2,
-    "mk_liz_the_docket_3": 1,
+    "mk_liz_the_docket_3": 2,
     "mk_sage_the_watch_list_4": 2,
     "mk_finn_trade_broker_4": 1,
     "mk_sage_royal_astronomer_5": 2,
@@ -137,13 +138,12 @@
     "mk_tb_chit_press": 1,
     "mk_a_word_beforehand": 2,
     "mk_sages_star_party": 2,
-    "mk_ledger_day": 2,
     "mk_hall_lecture": 2,
+    "mk_ledger_day": 2,
     "mk_mandees_forecast": 2,
     "mk_night_round": 2,
     "mk_quill_harvest_steward_5": 1,
-    "mk_kevin_counter_hand_2": 2,
-    "mk_betty_land_clearer_5": 1
+    "mk_kevin_counter_hand_2": 2
    }
   },
   {
@@ -360,15 +360,16 @@
     "mk_peter_washing_up_1": 2,
     "mk_betty_stump_blaster_2": 2,
     "mk_quill_orchard_keeper_2": 2,
-    "mk_peter_the_winters_length_2": 2,
+    "mk_peter_the_winters_length_2": 1,
     "mk_clover_community_gardener_3": 1,
     "mk_eric_row_farmer_3": 2,
     "mk_peter_hedgelayer_3": 2,
     "mk_eric_row_boss_4": 2,
     "mk_biff_chief_constable_4": 1,
+    "mk_betty_land_clearer_5": 1,
     "mk_eric_best_farmer_5": 2,
     "mk_tb_the_muster_bell": 2,
-    "mk_tb_quill_wall": 1,
+    "mk_tb_rosabeths_gate": 1,
     "mk_the_root_cellar": 2,
     "mk_glut_of_squash": 2,
     "mk_warren_muster": 2,
@@ -394,28 +395,28 @@
    ],
    "blurb": "Owls and Otters of Science and Civics: the watch list is kept to the minute and the river licence is granted out of one office, and both of them are awake at four to say so at the meeting.",
    "list": {
-    "mk_sage_night_assistant_0": 2,
-    "mk_pebble_bridge_courier_1": 2,
+    "mk_sage_night_assistant_0": 1,
+    "mk_andrew_night_copyist_0": 1,
     "mk_jessica_infant_teacher_1": 2,
+    "mk_pebble_bridge_courier_1": 2,
     "mk_taco_the_four_oclock_cart_2": 1,
     "mk_bean_two_pairs_of_paws_2": 2,
     "mk_jessica_night_school_teacher_2": 2,
-    "mk_willow_tide_reckoner_3": 2,
     "mk_jessica_the_night_school_3": 2,
+    "mk_willow_tide_reckoner_3": 2,
     "mk_benjamin_town_historian_3": 1,
     "mk_brooke_balloonist_4": 2,
     "mk_sage_the_watch_list_4": 2,
     "mk_pebble_harbour_warden_5": 1,
     "mk_willow_harbour_admiral_5": 2,
-    "mk_tb_quill_wall": 1,
-    "mk_tb_the_builders_rest": 1,
-    "mk_tb_rosabeths_gate": 1,
+    "mk_tb_rosabeths_gate": 2,
+    "mk_tb_coppers_cellar": 1,
     "mk_ev_never_handed_back": 2,
     "mk_jessicas_night_class": 2,
     "mk_night_round": 2,
     "mk_fair_hearing": 2,
-    "mk_hall_lecture": 2,
     "mk_the_harbour_office": 2,
+    "mk_hall_lecture": 2,
     "mk_sage_royal_astronomer_5": 1,
     "mk_sage_astronomer_3": 1
    }
@@ -569,10 +570,10 @@
     "mk_sage_astronomer_3": 2,
     "mk_eric_row_farmer_3": 2,
     "mk_clover_rocket_botanist_4": 2,
-    "mk_eric_row_boss_4": 2,
+    "mk_sage_the_watch_list_4": 2,
     "mk_sage_royal_astronomer_5": 2,
-    "mk_tb_quill_wall": 1,
     "mk_tb_rosabeths_gate": 2,
+    "mk_tb_coppers_cellar": 1,
     "mk_the_root_cellar": 2,
     "mk_sages_star_party": 2,
     "mk_warren_muster": 2,
@@ -581,7 +582,7 @@
     "mk_night_round": 2,
     "mk_eric_best_farmer_5": 1,
     "mk_clover_master_botanist_5": 1,
-    "mk_sage_the_watch_list_4": 1
+    "mk_eric_row_boss_4": 1
    }
   },
   {
@@ -3048,7 +3049,7 @@
    "cost": 5,
    "shift": {
     "delay": 2,
-    "output": 4
+    "output": 6
    },
    "text": "At the start of your turn, one of your other Characters turns one step toward upright.",
    "flavor": "Their parents' name is still over the door. Bean has never once considered taking it down.",
@@ -3068,10 +3069,10 @@
     "atlas": "nightworkers",
     "tile": 2
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
-    "score": 5.21,
-    "power": 13.61,
+    "score": 6.4,
+    "power": 16.71,
     "opportunityCost": 11
    }
   },
@@ -10120,14 +10121,14 @@
    "cost": 0,
    "shift": {
     "delay": 1,
-    "output": 1
+    "output": 2
    },
    "text": "A short shift: 1 turn, 1 Supply.",
    "flavor": "A page or two a night, in a hand so even the Library has twice filed his copy as the original. Andrew has never pointed this out.",
-   "rarity": "Common",
+   "rarity": "Super Rare",
    "power": {
-    "score": 2.22,
-    "power": 3.7,
+    "score": 3.89,
+    "power": 6.5,
     "opportunityCost": 3.6
    }
   },
@@ -10142,14 +10143,14 @@
    "cost": 2,
    "shift": {
     "delay": 2,
-    "output": 3
+    "output": 5
    },
    "text": "Upgrades Andrew. A steady shift: 2 turns, 3 Supply.",
    "flavor": "He locks the door behind Inkwell's evening and then does not leave. The Counting House has asked twice what exactly it is paying for, and the Library has given up trying to explain.",
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
-    "score": 3.39,
-    "power": 7.3,
+    "score": 4.83,
+    "power": 10.4,
     "opportunityCost": 6.8
    }
   },
@@ -13923,7 +13924,7 @@
    "cost": 0,
    "shift": {
     "delay": 1,
-    "output": 1
+    "output": 2
    },
    "text": "Recruit: look at the top two cards of your deck and put any of them on the bottom.",
    "flavor": "Sage is on the ladder at two in the morning with a serial folded into the watch book, reading ahead in both. Sota grinds the lens and does not ask; Sage tells them anyway.",
@@ -13940,10 +13941,10 @@
     "atlas": "nightworkers",
     "tile": 0
    },
-   "rarity": "Uncommon",
+   "rarity": "Super Rare",
    "power": {
-    "score": 2.76,
-    "power": 4.6,
+    "score": 4.43,
+    "power": 7.4,
     "opportunityCost": 3.6
    }
   },
@@ -14515,7 +14516,7 @@
    "cost": 1,
    "shift": {
     "delay": 1,
-    "output": 1
+    "output": 2
    },
    "text": "When Jessica is recruited, your next recruit that upgrades a Character you control costs 1 less Supply.",
    "flavor": "She gets them singing the thing before they know it is the thing. By the time a kitten notices they are doing arithmetic they have been doing it for a fortnight and are furious about it.",
@@ -14538,10 +14539,10 @@
     "atlas": "nightworkers",
     "tile": 4
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
-    "score": 3.31,
-    "power": 6.1,
+    "score": 4.83,
+    "power": 8.9,
     "opportunityCost": 4.6
    }
   },
@@ -17610,7 +17611,7 @@
    "cost": 2,
    "shift": {
     "delay": 2,
-    "output": 3
+    "output": 5
    },
    "text": "A steady shift: 2 turns, 3 Supply.",
    "flavor": "The eclipses are to the minute eleven months out, and the grange worked out some years ago that the same animal will tell them, free, which of the next four nights is the one to get the sheets on.",
@@ -17618,10 +17619,10 @@
     "atlas": "nightskies",
     "tile": 8
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
-    "score": 3.39,
-    "power": 7.3,
+    "score": 4.83,
+    "power": 10.4,
     "opportunityCost": 6.8
    }
   },
@@ -17636,7 +17637,7 @@
    "cost": 3,
    "shift": {
     "delay": 2,
-    "output": 4
+    "output": 5
    },
    "text": "A steady shift: 2 turns, 4 Supply.",
    "flavor": "A page or two a night, after the children's corner has emptied and the evening readers have gone, and then the sewing and the boards, which he taught himself because the Library would not pay for it twice.",
@@ -17644,10 +17645,10 @@
     "atlas": "whiskerwood",
     "tile": 6
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
-    "score": 4.05,
-    "power": 9.2,
+    "score": 4.73,
+    "power": 10.75,
     "opportunityCost": 7.8
    }
   },
@@ -19373,7 +19374,7 @@
    "cost": 4,
    "shift": {
     "delay": 2,
-    "output": 2
+    "output": 3
    },
    "text": "Upgrades Sage. Busy: look at the top three cards of the Market Deck and put them back in any order.",
    "abilities": [
@@ -19391,10 +19392,10 @@
     "atlas": "nightskies",
     "tile": 2
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
-    "score": 4.48,
-    "power": 11.25,
+    "score": 5.1,
+    "power": 12.8,
     "opportunityCost": 10
    }
   },
@@ -19409,7 +19410,7 @@
    "cost": 4,
    "shift": {
     "delay": 2,
-    "output": 2
+    "output": 3
    },
    "text": "Upgrades Andrew. Busy: look at the top two cards of the Market Deck and put one of them on the bottom.",
    "abilities": [
@@ -19427,10 +19428,10 @@
     "atlas": "nightskies",
     "tile": 3
    },
-   "rarity": "Uncommon",
+   "rarity": "Rare",
    "power": {
-    "score": 4.48,
-    "power": 11.25,
+    "score": 5.1,
+    "power": 12.8,
     "opportunityCost": 10
    }
   },
@@ -19445,7 +19446,7 @@
    "cost": 4,
    "shift": {
     "delay": 2,
-    "output": 2
+    "output": 4
    },
    "text": "Upgrades Bean. Busy, pay 2 Supply: look at the top three cards of the Market Deck and put one of them on the bottom.",
    "abilities": [
@@ -19466,10 +19467,10 @@
     "atlas": "nightskies",
     "tile": 4
    },
-   "rarity": "Common",
+   "rarity": "Uncommon",
    "power": {
-    "score": 3.76,
-    "power": 9.45,
+    "score": 5,
+    "power": 12.55,
     "opportunityCost": 10
    }
   },
@@ -19484,7 +19485,7 @@
    "cost": 3,
    "shift": {
     "delay": 2,
-    "output": 2
+    "output": 4
    },
    "text": "Upgrades Jessica. At the start of your turn, look at the top two cards of the Market Deck.",
    "abilities": [
@@ -19501,10 +19502,10 @@
     "atlas": "nightskies",
     "tile": 5
    },
-   "rarity": "Common",
+   "rarity": "Rare",
    "power": {
-    "score": 3.6,
-    "power": 8.18,
+    "score": 4.96,
+    "power": 11.28,
     "opportunityCost": 7.8
    }
   },
@@ -20350,6 +20351,144 @@
     "power": 17.15,
     "opportunityCost": 2
    }
+  },
+  {
+   "id": "mk_dx_small_fair",
+   "type": "disruption",
+   "name": "The Small Fair",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: each Mayor pays 8 Supply, or everything they have and Busies one Character. Goes to the City Dump.",
+   "onReveal": {
+    "do": "everyonePaysTollOrBusy",
+    "amount": 8
+   },
+   "flavor": "Three stalls and a rope ring, but the toll man stands at the gate all the same. Copper says a fair this size is really just practice for the big one.",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.67,
+    "power": 8.8,
+    "opportunityCost": 2
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 11
+   }
+  },
+  {
+   "id": "mk_dx_county_fair",
+   "type": "disruption",
+   "name": "The County Fair",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: each Mayor pays 14 Supply, or everything they have and Busies one Character. Goes to the City Dump.",
+   "onReveal": {
+    "do": "everyonePaysTollOrBusy",
+    "amount": 14
+   },
+   "flavor": "Every stall in the borough turns up at once, and every one of them wants paying. Nobody remembers who first called it a fair rather than a tax.",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 11.67,
+    "power": 15.4,
+    "opportunityCost": 2
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 11
+   }
+  },
+  {
+   "id": "mk_dx_assessors_round",
+   "type": "disruption",
+   "name": "The Assessor's Round",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: each Mayor loses 25% of their Supply, rounded to the nearest whole number.",
+   "onReveal": {
+    "do": "everyoneLosesPercentSupply",
+    "percent": 25
+   },
+   "flavor": "The clipboards again, but this time they do not ask what you have put by; they can see it from the doorway and take their share off the top.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 11
+   },
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.97,
+    "power": 7.88,
+    "opportunityCost": 2
+   }
+  },
+  {
+   "id": "mk_dx_the_reckoning",
+   "type": "disruption",
+   "name": "The Reckoning",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: each Mayor loses half their Supply, rounded to the nearest whole number.",
+   "onReveal": {
+    "do": "everyoneLosesPercentSupply",
+    "percent": 50
+   },
+   "flavor": "Copper keeps a second ledger for years like this one. He says it is not that the borough takes more from the rich; it is that the rich have more for the borough to take.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 11
+   },
+   "rarity": "Super Rare",
+   "power": {
+    "score": 11.94,
+    "power": 15.75,
+    "opportunityCost": 2
+   }
+  },
+  {
+   "id": "mk_dx_midsummer_fair",
+   "type": "disruption",
+   "name": "The Midsummer Fair",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: each Mayor pays 26 Supply, or everything they have and Busies one Character. Goes to the City Dump.",
+   "onReveal": {
+    "do": "everyonePaysTollOrBusy",
+    "amount": 26
+   },
+   "flavor": "The longest day of the year and the longest queue at the gate. Whoever set the toll knew exactly how much a season of good trading leaves sitting in a strongbox.",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 21.67,
+    "power": 28.6,
+    "opportunityCost": 2
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 11
+   }
+  },
+  {
+   "id": "mk_dx_lord_mayors_fair",
+   "type": "disruption",
+   "name": "The Lord Mayor's Fair",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: each Mayor pays 32 Supply, or everything they have and Busies one Character. Goes to the City Dump.",
+   "onReveal": {
+    "do": "everyonePaysTollOrBusy",
+    "amount": 32
+   },
+   "flavor": "Once a generation, and the whole borough turns out, which is exactly the trouble: everyone with anything put by is expected to put it in the box at the gate.",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 26.68,
+    "power": 35.2,
+    "opportunityCost": 2
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 11
+   }
   }
  ],
  "newStudies": [
@@ -20515,11 +20654,17 @@
    ],
    "statueCount": 9,
    "pool": [
+    "mk_dx_lord_mayors_fair",
+    "mk_dx_midsummer_fair",
     "mk_dx_the_great_frost",
     "mk_dx_the_year_it_stopped",
+    "mk_dx_the_reckoning",
+    "mk_dx_county_fair",
     "mk_dylan_river_otter_4",
+    "mk_dx_small_fair",
     "mk_barrow_stonecutter_5",
     "mk_faustus_threadmaster_5",
+    "mk_dx_assessors_round",
     "mk_brett_counsel_5",
     "mk_bob_gate_attendant_4",
     "mk_mittens_rooftop_cat_4",
@@ -20639,6 +20784,12 @@
     "mk_dx_tax_assessors",
     "mk_dx_lean_season",
     "mk_dx_the_short_week",
+    "mk_dx_lord_mayors_fair",
+    "mk_dx_midsummer_fair",
+    "mk_dx_the_reckoning",
+    "mk_dx_county_fair",
+    "mk_dx_small_fair",
+    "mk_dx_assessors_round",
     "mk_dx_midges",
     "mk_dx_open_hiring",
     "mk_dx_meteor_shower",
@@ -20665,13 +20816,7 @@
     "mk_bob_gate_attendant_4",
     "mk_mittens_rooftop_cat_4",
     "mk_bld_festival_green",
-    "mk_barnaby_night_auditor_4",
-    "mk_quinn_town_scrivener_3",
-    "mk_pockets_salvage_raccoon_4",
-    "mk_tuppence_curio_dealer_3",
-    "mk_bld_weighbridge",
-    "mk_bld_hiring_hall",
-    "mk_jake_warren_runner_3"
+    "mk_barnaby_night_auditor_4"
    ],
    "poolSize": 26,
    "minDisruptions": 6
@@ -20735,12 +20880,12 @@
     "mk_mkt_the_fitting",
     "mk_mkt_night_market",
     "mk_mkt_penny_jar",
-    "mk_dx_the_yards_go_quiet",
-    "mk_dx_six_weeks_shut",
-    "mk_dx_the_hiring_freeze",
-    "mk_dx_landslide",
+    "mk_dx_county_fair",
+    "mk_dx_the_reckoning",
     "mk_dx_the_year_it_stopped",
-    "mk_dx_the_great_frost"
+    "mk_dx_the_great_frost",
+    "mk_dx_midsummer_fair",
+    "mk_dx_lord_mayors_fair"
    ],
    "poolSize": 26,
    "minDisruptions": 2

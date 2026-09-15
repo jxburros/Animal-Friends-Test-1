@@ -107,12 +107,13 @@
     "readyEffectCompletesShift": true
   },
   "buildings": {
-    "$comment": "Buildings are the permanent half of a town: Capital City Buildings bought at auction, Town Buildings built out of your own deck, and the Statues in the Victory Row, all standing in the same eight places. A Statue counts as a Building, so a Mayor closing on a victory is also running out of room to build, and cannot buy a Statue at all without an empty place to stand it in. A Building may be demolished to make room; a Statue never can. A demolished Capital City Building goes to the City Dump, where it can be dealt again; a demolished Town Building goes to its owner's Town Dump.",
+    "$comment": "Buildings are the permanent half of a town: Capital City Buildings bought at auction, Town Buildings built out of your own deck, and the Statues in the Victory Row, all standing in the same eight places. A Statue counts as a Building, so a Mayor closing on a victory is also running out of room to build, and cannot buy a Statue at all without an empty place to stand it in. A Building may be demolished to make room; a Statue never can. A demolished Capital City Building goes to the City Dump, where it can be dealt again; a demolished Town Building goes to its owner's Town Dump. chargeUpkeep bills each standing Building's owner at the start of their own turn (buildingUpkeepFor: a card's own `upkeep`, or cost/4 rounded, minimum 1); a Building that cannot be paid for goes inert — it grants nothing until the bill is paid, which happens automatically the first later turn its owner can afford it — and a Mayor may also demolish a standing Building outright by paying its upkeep fee again and Busying one Character, a real answer to a Building that has stopped earning its keep.",
     "maxPerTown": 8,
     "statuesOccupySlots": true,
     "statuesCannotBeDemolished": true,
     "demolishToCityDump": true,
-    "townBuildingsDemolishToTownDump": true
+    "townBuildingsDemolishToTownDump": true,
+    "chargeUpkeep": true
   },
   "town": {
     "$comment": "A town holds at most maxCharacters animals. The count is the town's whole footprint: animals at work, animals pledged into a Capital City auction, and animals face down in Unemployment all take a slot. Capping bodies is what gives the upgrade path a reason to exist \u2014 with an unlimited field, recruiting a second animal always beat improving the one you had, and upgrades ran at a quarter of one per game. Rehiring and promoting move an animal from Unemployment back into work, so both are footprint-neutral and the cap can never block them; only a genuinely new body is refused. layOffToDump is the release valve: a Mayor may send one face-down animal to the Town Dump for good, as a free action, so a town buried under shared shocks is never locked out of recruiting.",
