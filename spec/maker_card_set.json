@@ -20398,26 +20398,49 @@
    }
   },
   {
-   "id": "mk_dx_grand_fair",
+   "id": "mk_dx_assessors_round",
    "type": "disruption",
-   "name": "The Grand Fair",
+   "name": "The Assessor's Round",
    "cost": 0,
    "shock": true,
-   "text": "On reveal: each Mayor pays 20 Supply, or everything they have and Busies one Character. Goes to the City Dump.",
+   "text": "On reveal: each Mayor loses 25% of their Supply, rounded to the nearest whole number.",
    "onReveal": {
-    "do": "everyonePaysTollOrBusy",
-    "amount": 20
+    "do": "everyoneLosesPercentSupply",
+    "percent": 25
    },
-   "flavor": "The banners go up a whole season early, which Copper takes as fair warning: whatever is left in the strongbox by the time the Grand Fair arrives, it will not leave with you.",
-   "rarity": "Super Rare",
-   "power": {
-    "score": 16.67,
-    "power": 22,
-    "opportunityCost": 2
-   },
+   "flavor": "The clipboards again, but this time they do not ask what you have put by; they can see it from the doorway and take their share off the top.",
    "art": {
     "atlas": "boroughs",
     "tile": 11
+   },
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.97,
+    "power": 7.88,
+    "opportunityCost": 2
+   }
+  },
+  {
+   "id": "mk_dx_the_reckoning",
+   "type": "disruption",
+   "name": "The Reckoning",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: each Mayor loses half their Supply, rounded to the nearest whole number.",
+   "onReveal": {
+    "do": "everyoneLosesPercentSupply",
+    "percent": 50
+   },
+   "flavor": "Copper keeps a second ledger for years like this one. He says it is not that the borough takes more from the rich; it is that the rich have more for the borough to take.",
+   "art": {
+    "atlas": "boroughs",
+    "tile": 11
+   },
+   "rarity": "Super Rare",
+   "power": {
+    "score": 11.94,
+    "power": 15.75,
+    "opportunityCost": 2
    }
   },
   {
@@ -20632,14 +20655,15 @@
    "pool": [
     "mk_dx_lord_mayors_fair",
     "mk_dx_midsummer_fair",
-    "mk_dx_grand_fair",
     "mk_dx_the_great_frost",
     "mk_dx_the_year_it_stopped",
+    "mk_dx_the_reckoning",
     "mk_dx_county_fair",
     "mk_dylan_river_otter_4",
     "mk_dx_small_fair",
     "mk_barrow_stonecutter_5",
     "mk_faustus_threadmaster_5",
+    "mk_dx_assessors_round",
     "mk_brett_counsel_5",
     "mk_bob_gate_attendant_4",
     "mk_mittens_rooftop_cat_4",
@@ -20761,9 +20785,10 @@
     "mk_dx_the_short_week",
     "mk_dx_lord_mayors_fair",
     "mk_dx_midsummer_fair",
-    "mk_dx_grand_fair",
+    "mk_dx_the_reckoning",
     "mk_dx_county_fair",
     "mk_dx_small_fair",
+    "mk_dx_assessors_round",
     "mk_dx_midges",
     "mk_dx_open_hiring",
     "mk_dx_meteor_shower",
@@ -20790,8 +20815,7 @@
     "mk_bob_gate_attendant_4",
     "mk_mittens_rooftop_cat_4",
     "mk_bld_festival_green",
-    "mk_barnaby_night_auditor_4",
-    "mk_quinn_town_scrivener_3"
+    "mk_barnaby_night_auditor_4"
    ],
    "poolSize": 26,
    "minDisruptions": 6
@@ -20856,9 +20880,9 @@
     "mk_mkt_night_market",
     "mk_mkt_penny_jar",
     "mk_dx_county_fair",
+    "mk_dx_the_reckoning",
     "mk_dx_the_year_it_stopped",
     "mk_dx_the_great_frost",
-    "mk_dx_grand_fair",
     "mk_dx_midsummer_fair",
     "mk_dx_lord_mayors_fair"
    ],

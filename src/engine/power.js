@@ -504,6 +504,11 @@ export function effectPower(eff) {
     // plain Supply loss of the same amount, and the rating says so.
     case 'everyonePaysTollOrBusy':
       return 1.1 * n(eff.amount);
+    // PROTOTYPE: a percent-of-Supply toll. Rated off an assumed mid-game holding (35, roughly the
+    // measured average) so two cards can be compared on paper before anyone has played a game with
+    // them; the real bite is whatever a table's actual Supply happens to be when it fires.
+    case 'everyoneLosesPercentSupply':
+      return 0.9 * (n(eff.percent) / 100) * 35;
     case 'everyoneGainsSupply':
       return 0.9 * n(eff.amount);
     case 'everyoneDraws':

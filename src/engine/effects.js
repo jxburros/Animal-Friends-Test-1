@@ -930,6 +930,20 @@ export async function runEffect(state, pi, eff, ctx = {}) {
      * hold) and Busies one upright Character instead of the shortfall — the fair still gets its due,
      * one way or the other.
      */
+    /**
+     * PROTOTYPE: a toll set as a share of what each Mayor is actually holding, not a flat amount — a
+     * wealth tax rather than a flat one. Always payable in full (a percentage of what you have is
+     * never more than what you have), so there is no Busy fallback: the rich pay more in absolute
+     * terms, the poor barely feel it, which is the point next to the flat-amount Fair cards.
+     */
+    case 'everyoneLosesPercentSupply': {
+      const pct = Math.max(0, Math.min(100, eff.percent || 0)) / 100;
+      for (const pl of state.players) {
+        const amount = Math.round(pl.supply * pct);
+        if (amount > 0) await loseSupplyAndNotify(state, pl.index, amount);
+      }
+      return;
+    }
     case 'everyonePaysTollOrBusy': {
       for (const pl of state.players) {
         const owed = eff.amount;
