@@ -449,6 +449,41 @@ carried ten unspoken names at once before this round — four Ordinance rules am
 Ordinance on the shelf to say any of them — and nothing failed, because nothing fails when a card set
 simply declines to use a feature. That is exactly why the test is worth having.
 
+## Card data: the sixth round of wishes (v0.12.1)
+
+The two `wantedVerbs` the fifth round left unbuilt, and the only two logged against characters added
+after the printed collection rather than a remake of one: Winter's Capital City, and Yellow's
+Unemployment. Both re-rate the one card apiece that carried the wish rather than anything already in
+the set, because nothing printed used either name before this round.
+
+- **`capitalCityExtraStalls`** — a `passive` key, read by the new `capitalCitySize(state)` in
+  `state.js` rather than by `passiveTotal` alone: the display is shared, so the target `refillCity`
+  deals to is the printed `setup.capitalCitySize` plus this passive's total **across both Mayors**,
+  not just its owner. Winter wanted a sixth stall in the Capital City and there is no rule in
+  `spec/game.json` a Character can move — `capitalCitySize` was fixed at setup and read nowhere else
+  — so the fix is at the one place that reads it. A stall that stops (its animal sits down, if the
+  passive carries `requiresUpright`, or leaves town) is never clawed back: `refillCity`'s existing
+  `city.length >= target` guard already means a shrinking target simply stops the next refill short,
+  the same way it always stopped a full display from over-dealing. `mk_winter_tv_scientist_5` carries
+  it at `value: 1`, `requiresUpright: true` — the show has to be on the air.
+
+- **`immuneToUnemployment: true`** — a fact printed directly on a card, read once, at the top of
+  `unemployStack` in `effects.js`, ahead of `isProtected` and the `unemploymentShield` mod. Yellow's
+  wish was unconditional: not a shelter that lapses at a turn boundary and has to be renewed, which is
+  what `protectCharacter` already gave every Hedgehog on the shelf, but a printed guarantee that never
+  expires and needs no ability to keep firing. It sits beside `entersUpright`, `leavesAfter` and
+  `returnsToMarket` as a fourth thing a card may say about itself without an ability doing the
+  saying — `docs/WRITING_A_CHARACTER.md` §6 lists it with the others. Nothing in the collection
+  currently sends a Mayor's own Character to Unemployment by choice, so the check does not need to
+  carve out the owner's own hand the way `isProtected` does; if a voluntary path is ever added, that
+  carve-out is the one thing this verb would still need. `mk_yellow_freshest_thing_4` carries it.
+  `power.js` prices it at 1.6, above `unemploymentShield`'s 0.8 (one lapsing application) because this
+  one never lapses.
+
+Both are logged as `resolved` in their character's `wantedVerbs` entry in
+`spec/maker_card_set.json`, naming what was built and what the card says now, per
+`docs/WRITING_A_CHARACTER.md`'s convention.
+
 ## Tokens (v0.7.2)
 
 Tokens are markers a Mayor holds beside their Supply: one kind per species, one per field of study,

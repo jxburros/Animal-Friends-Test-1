@@ -223,6 +223,10 @@ const PASSIVE_VALUE = {
   resourceSupplyMinus1: 2.2,
   losingBidsPayFull: 1.4,
   pledgeLadderPlus1: 2.6,
+  // The producer's rule: the Capital City deals one more stall than it is printed for, while she is
+  // standing. Priced below a passive that only pays its own Mayor, because the extra stall is a fact
+  // about the shared display — the rival gets first look at it exactly as often as she does.
+  capitalCityExtraStalls: 1.6,
 };
 
 // How many times a trigger is expected to pay out over a game, relative to a one-shot.
@@ -708,6 +712,10 @@ export function cardPower(card, rules) {
   // Market Deck comes round to them. It is a chance rather than a promise — the rival may be the
   // one who takes it — so it is worth a little, not a second term.
   if (card.returnsToMarket) power += 0.4;
+  // Yellow's wish: a fact about the card rather than a mod that can lapse. Priced above
+  // `unemploymentShield`'s 0.8 (one lapsing application) because this one never does, but it still
+  // only ever saves a body the collection rarely threatens in the first place.
+  if (card.immuneToUnemployment) power += 1.6;
   // An obscured figure is a place in the town somebody turns out to have been standing in. `anchor`
   // means any Character of that species — or in that study — may be played over them for the plain
   // difference, so the card buys an upgrade path a cheap body does not normally have: a saved action

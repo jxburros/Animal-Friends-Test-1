@@ -260,12 +260,27 @@ export function ageCity(state) {
 }
 
 /**
+ * How many stalls the Capital City deals to. `setup.capitalCitySize` is the printed floor; a
+ * `capitalCityExtraStalls` passive adds to it for as long as the animal holding it is upright, and it
+ * is read for both Mayors, because the display is shared — an extra stall one town opens is a stall
+ * either Mayor may bid on. Winter's wish (docs/ENGINE_API.md, sixth round): he could not move a fixed
+ * rule, so the rule reads what he is carrying instead. A stall that stops (Winter sits down, or
+ * leaves town) is never clawed back mid-game; the display simply stops refilling past whatever is
+ * standing until it next runs short, which `refillCity`'s own `>= target` guard already does for free.
+ */
+export function capitalCitySize(state) {
+  return state.rules.setup.capitalCitySize
+    + passiveTotal(state, 0, 'capitalCityExtraStalls')
+    + passiveTotal(state, 1, 'capitalCityExtraStalls');
+}
+
+/**
  * Deal the Capital City back up to full. A Disruption never takes a display slot: it is queued in
  * `market.revealQueue` for `flushReveals` to resolve against both towns, and dealing continues past it.
  */
 export function refillCity(state) {
   const m = state.market;
-  const target = state.rules.setup.capitalCitySize;
+  const target = capitalCitySize(state);
   if (m.city.length >= target) return false;
   const added = [];
   let guard = 0;

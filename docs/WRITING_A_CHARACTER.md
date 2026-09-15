@@ -231,10 +231,13 @@ may carry `decay` and `minOutput`: the animal burns out, and every shift they wo
 one before. A mod's `filter` may carry `upgradesOwn`, which is good only for a recruit that upgrades a
 Character the town already has.
 
-**A card itself may carry four things besides its abilities.** `leavesAfter: N` is a hire with a
+**A card itself may carry five things besides its abilities.** `leavesAfter: N` is a hire with a
 term, and `returnsToMarket: true` sends them back to the bottom of the Market Deck rather than the
 City Dump when it runs out, so they may be taken on again. `entersUpright: true` is an animal who
-arrives ready whatever their cost. A mod may be counted rather than printed: `addMod` takes
+arrives ready whatever their cost. `immuneToUnemployment: true` is an animal Unemployment simply does
+not reach — not a shelter with a turn number on it, a printed fact, checked once at the top of
+`unemployStack` ahead of everything that can lapse (Yellow's wish; see the engine's sixth round in
+`docs/ENGINE_API.md`). A mod may be counted rather than printed: `addMod` takes
 `valuePer: "buildingsBuilt"` with a `max`, which is a rate that scales with what the town has
 raised — always print the `max`, or the card cannot be rated. And `anchor` — `{ species: true }` or
 `{ study: true }` — is an **obscured figure**: an animal the borough never got a name for, over whom
@@ -242,6 +245,11 @@ any *dearer* Character of that species, or in that study, may be played as an up
 name. There is one for every species and one for every study already, so a new one needs the maker to
 say why; an existing one is written like any other character, with a short backstory about a post that
 was worked and an entry in the ward record that was never finished.
+
+A passive may also change a rule that is not printed on any card, the way `capitalCityExtraStalls`
+does: the Capital City deals one more stall than `spec/game.json` sets up, for as long as the animal
+carrying it is upright, read for both Mayors because the display is shared (Winter's wish, the other
+half of the engine's sixth round).
 
 Some of the vocabulary exists *because* a character asked for it — `makeBusy`, `scryDeck`'s `to: "dump"`,
 `protectCharacter`'s `notSelf`, filtered mods, `buildingDiscount`, `leavesAfter`, and then the second

@@ -2526,12 +2526,13 @@
    "pronouns": "he/him",
    "backstory": "Before he was the borough's TV scientist, Winter sat the Observatory's selection board twice, same as Comet, and came away both times with a courteous letter and no seat. He took the rejection the way an Owl takes most things: awake, at four in the morning, turning it over until it stopped looking like a loss and started looking like a different job. What the board never gave him was a launch. What it did give him, over two applications and a great deal of reading he was not required to do, was an actual working knowledge of how the sky gets studied — the manifests, the order book, the instruments Sota grinds — and that turned out to be worth more to the borough than the seat would have been.\n\nNow he has the whole town's children believing science is the best thing that happens on a given evening, because he has never once faked understanding something for the sake of a segment. He plans every show himself — the experiment, the running order, the follow-up question a kitten is about to ask — and he plans it because he has actually done the science, not merely reported on animals who have.\n\nHe tapes in whatever hall Cassadee will give him, and treats the Capital City's own market days the way Orien treats a set of figures: something to be read closely and rearranged to his advantage before anyone else notices there was an advantage to be had.",
    "voice": "Warm on camera, exacting off it. Explains everything twice: once for the room, once correctly.",
-   "arc": "The cheap Winters are still finding the format; the dear ones have learned to read the Capital City's own market the way they once read the Observatory's manifests, and put what is coming up next exactly where they want it.",
+   "arc": "The cheap Winters are still finding the format; the middle ones have learned to read the Capital City's own market the way they once read the Observatory's manifests; the top one gets the thing he actually wanted, and opens a sixth stall in the display for as long as he's standing at the desk.",
    "wantedVerbs": [
     {
      "verb": "a card that opens a sixth stall in the Capital City display",
      "why": "Winter wanted a top card that puts a sixth animal, Building or Ordinance up for bid alongside the usual five, so his show always has one more thing to point at.",
-     "workaround": "capitalCitySize is a fixed rule, not a thing any Character can move, so he cannot add a sixth booth. His top card instead goes as far as the vocabulary allows on the same idea: look at the top three cards of the Market Deck, put them back in whichever order he likes, then send the one he does not want to the bottom — reading and rearranging the market rather than widening it."
+     "workaround": "capitalCitySize is a fixed rule, not a thing any Character can move, so he cannot add a sixth booth. His top card instead goes as far as the vocabulary allows on the same idea: look at the top three cards of the Market Deck, put them back in whichever order he likes, then send the one he does not want to the bottom — reading and rearranging the market rather than widening it.",
+     "resolved": "Built as capitalCityExtraStalls, a passive read by both Mayors' abilitySources and summed in state.js's capitalCitySize() — the Capital City's refill target is the printed floor plus whatever either town is carrying. mk_winter_tv_scientist_5 now carries it: while he is upright, the display deals a sixth stall, shared exactly like the other five."
     }
    ],
    "wantedArt": [
@@ -2579,12 +2580,13 @@
    "pronouns": "he/him",
    "backstory": "Yellow came up from the suburbs at the edge of the Capital City telling anyone who'd listen exactly how fresh his rhymes were, and arrived in the First Boroughs to find a town with an open mic list, a booker who does not care where you're from, and absolutely no street to speak of. He has not let either fact slow him down. His whole catalogue is built out of what the borough actually has to offer — a verse about the seed bank's open day, four bars about Marmalade's ovens, an entire closing number about peanut butter and pecan pie that has nothing to do with anything and that Cassadee has stopped trying to cut from his set.\n\nNobody in the First Boroughs is going to mistake him for where he says he's from, and he knows it, and it has never once cost him a booking. Cassadee keeps him on the list because the room likes him, which is the whole of her job description and the only part of it Yellow has ever cared about. He shows up, he raps about pecan pie like it's a grudge, and somehow it works.\n\nWhat the Hiring Hall has actually noticed about Yellow, over several seasons of watching him, is that he is never between jobs. He has never once turned up in Unemployment, not for a day, not for an hour — whatever else is true about his rhymes, the borough has never had cause to wonder where he is.",
    "voice": "Loud, proud, entirely unbothered by the gap between the persona and the postcode. Works 'suburbs' and 'pecan pie' into everything, unironically.",
-   "arc": "Both versions carry the same standing rule — Yellow does not go to Unemployment — priced differently: the cheap one covers himself the week he arrives, the dear one keeps doing it every single morning.",
+   "arc": "Priced differently for what they actually promise: the cheap one shelters him the week he arrives, the way any protected animal is sheltered, until your next turn. The dear one doesn't need the shelter renewed, because he simply does not go to Unemployment, full stop.",
    "wantedVerbs": [
     {
      "verb": "permanent, unconditional immunity to Unemployment",
      "why": "Yellow's story says he simply never goes to Unemployment, full stop, not 'until your next turn'.",
-     "workaround": "protectCharacter, run once on recruit and then again every onTurnStart, keeps him out of reach of an opponent's effects and of the shared shocks that send both towns to Unemployment — the nearest the vocabulary gets to 'never', short of a card that reads the Unemployment phase itself."
+     "workaround": "protectCharacter, run once on recruit and then again every onTurnStart, keeps him out of reach of an opponent's effects and of the shared shocks that send both towns to Unemployment — the nearest the vocabulary gets to 'never', short of a card that reads the Unemployment phase itself.",
+     "resolved": "Built as immuneToUnemployment, a fact printed on the card and checked once, at the top of unemployStack() in effects.js, before anything that can lapse — not a mod, not a shelter with a turn number on it. mk_yellow_freshest_thing_4 now carries it and is exactly as permanent as the story says."
     }
    ],
    "wantedArt": [
@@ -21028,25 +21030,22 @@
    "cost": 5,
    "shift": {
     "delay": 2,
-    "output": 3
+    "output": 5
    },
-   "text": "Upgrades Winter. When Winter becomes upright, look at the top 3 cards of the Market Deck, put them back in whichever order you choose, then send one of them to the bottom of the deck.",
-   "flavor": "He wanted a sixth stall in the Capital City so the show would always have one more thing to point at. What he got instead was the next three, in whatever order suits the segment, and the one he doesn't like sent well out of the way.",
+   "text": "Upgrades Winter. While Winter is upright, the Capital City deals one extra stall.",
+   "flavor": "He wanted a sixth stall in the Capital City so the show would always have one more thing to point at. Now there is one, and it is his.",
    "abilities": [
     {
-     "trigger": "onReady",
-     "effect": {
-      "do": "peekMarketDeck",
-      "count": 3,
-      "reorder": true,
-      "toBottom": true
-     }
+     "trigger": "passive",
+     "key": "capitalCityExtraStalls",
+     "value": 1,
+     "requiresUpright": true
     }
    ],
-   "rarity": "Super Rare",
+   "rarity": "Common",
    "power": {
-    "score": 6.57,
-    "power": 17.15,
+    "score": 5,
+    "power": 13.05,
     "opportunityCost": 11
    },
    "art": {
@@ -21248,26 +21247,20 @@
     "delay": 2,
     "output": 4
    },
-   "text": "Upgrades Yellow. At the start of your turn, Yellow cannot be targeted by an opponent's effect until your next turn.",
-   "flavor": "Whatever else is true about the rhymes, the Hiring Hall has never once had cause to wonder where he is.",
-   "abilities": [
-    {
-     "trigger": "onTurnStart",
-     "effect": {
-      "do": "protectCharacter"
-     }
-    }
-   ],
-   "rarity": "Super Rare",
+   "text": "Upgrades Yellow. Yellow cannot be sent to Unemployment.",
+   "flavor": "Whatever else is true about the rhymes, the Hiring Hall has never once had cause to wonder where he is. Now it never will.",
+   "abilities": null,
+   "rarity": "Common",
    "power": {
-    "score": 6.49,
-    "power": 16.31,
+    "score": 4.44,
+    "power": 11.15,
     "opportunityCost": 10
    },
    "art": {
     "atlas": "boroughs",
     "tile": 7
-   }
+   },
+   "immuneToUnemployment": true
   }
  ],
  "newStudies": [
