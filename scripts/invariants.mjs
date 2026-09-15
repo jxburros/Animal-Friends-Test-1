@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { createGame, playTurn, cardDef } from '../src/engine/index.js';
 import { makeRandomAgent } from '../src/ai/random.js';
 const rules = JSON.parse(fs.readFileSync(new URL('../spec/game.json', import.meta.url)));
-const set = JSON.parse(fs.readFileSync(new URL('../spec/starter_card_set.json', import.meta.url)));
+const set = JSON.parse(fs.readFileSync(new URL('../spec/maker_card_set.json', import.meta.url)));
 /**
  * Market cards that have come to rest in a player's own zones (hired animals).
  *
@@ -23,12 +23,17 @@ function check(state, seed, marketSize, deckSizes) {
   const total = m.deck.length + m.city.length + m.cityDump.length + m.outOfPlay.length + m.revealQueue.length
     + state.players.reduce((a, p) => a + p.victoryRow.length + (p.buildings || []).length + hiredIn(state, p), 0);
   if (total !== marketSize) throw new Error(`seed ${seed} turn ${state.turnNumber}: market card count ${total} (expected ${marketSize})`);
+  // Deck cards are counted across both towns rather than one at a time. A deck may be any legal
+  // size, so the invariant is that no deck card is ever created or lost — and cards do change hands:
+  // The Bin Round lifts an Event straight out of the other Mayor's Town Dump. Town Buildings
+  // standing in a town are still its own deck's cards.
+  const ownCards = (p) => p.deck.length + p.hand.length + p.dump.length + p.unemployment.length
+    + p.events.length + p.town.reduce((a, s) => a + s.cards.length, 0) - hiredIn(state, p)
+    + (p.buildings || []).filter((b) => b.source === 'deck').length;
+  const held = state.players.reduce((a, p) => a + ownCards(p), 0);
+  const dealt = deckSizes.reduce((a, n) => a + n, 0);
+  if (held !== dealt) throw new Error(`seed ${seed} turn ${state.turnNumber}: ${held} deck cards between the two towns (${dealt} were dealt)`);
   for (const p of state.players) {
-    const n = p.deck.length + p.hand.length + p.dump.length + p.unemployment.length + p.events.length + p.town.reduce((a, s) => a + s.cards.length, 0) - hiredIn(state, p);
-    // A deck may be any legal size now, so the invariant is that its own card count never changes,
-    // not that it matches one printed number. Town Buildings standing in a town are still its cards.
-    const built = (p.buildings || []).filter((b) => b.source === 'deck').length;
-    if (n + built !== deckSizes[p.index]) throw new Error(`seed ${seed} turn ${state.turnNumber}: ${p.name} has ${n + built} deck cards (started with ${deckSizes[p.index]})`);
     if (p.supply < 0) throw new Error(`seed ${seed}: negative supply ${p.supply}`);
     if (p.escrow < 0) throw new Error(`seed ${seed}: negative escrow`);
     const esc = m.pending.reduce((a, pd) => a + pd.committed[p.index], 0);

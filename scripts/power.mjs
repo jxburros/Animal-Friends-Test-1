@@ -5,13 +5,13 @@
 //
 // The rating is src/engine/power.js: power^0.6 x efficiency^0.4, in Supply-equivalents. Run this
 // after editing a card to see where it lands on the curve — and to check that the `rarity` printed
-// on it in spec/starter_card_set.json is still the one the model gives it.
+// on it in spec/maker_card_set.json is still the one the model gives it.
 import fs from 'node:fs';
 import { rateSet, RARITIES, RARITY_THRESHOLDS, COPY_LIMITS } from '../src/engine/power.js';
 
 const args = process.argv.slice(2);
 const flag = (name) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : null; };
-const set = JSON.parse(fs.readFileSync(new URL('../spec/starter_card_set.json', import.meta.url)));
+const set = JSON.parse(fs.readFileSync(new URL('../spec/maker_card_set.json', import.meta.url)));
 const byId = new Map(set.cards.map((c) => [c.id, c]));
 
 let rows = rateSet(set);

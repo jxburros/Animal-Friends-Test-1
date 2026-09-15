@@ -1,23 +1,19 @@
-// The Book: a gallery of every card in the game, Classic and Maker alike, in every printing it
-// exists in.
+// The Book: a gallery of every card in the game, in every printing it exists in.
 //
-// The Book plays nothing and changes nothing. It reads the two collections, shows each card's face
-// at reading size, and lets a card be turned over to any printing it has — Regular, Alternate Art,
+// The Book plays nothing and changes nothing. It reads the collection, shows each card's face at
+// reading size, and lets a card be turned over to any printing it has — Regular, Alternate Art,
 // Foil, Alternate Art Foil, Creative Foil or Full Card Art. A printing the card has not been given
 // yet is still shown, greyed, so the shelf says plainly what exists and what is still to come.
 import { buildCardFace, setPreviewContext, raritySlug } from './render.js';
 import { iconSVG } from './art.js';
 import { VERSIONS, versionsOf, hasVersion, defaultVersionKey } from './versions.js';
 import { characterOf } from '../engine/characters.js';
-import {
-  loadRemade, setRemade, makerRemakesIndex, remadeStatus, remadeProgress, downloadRemade,
-} from './remade.js';
 
 const PAGE = 48;
 
 let host = null;
-let ctx = null; // { rules, shelves: [{id,name,set,cards}], makerSet, marks, makerIndex, onClose }
-let filter = { shelf: 'all', type: 'all', species: null, study: null, rarity: null, version: 'any', text: '' };
+let ctx = null; // { rules, set, cards, shelf, onClose }
+let filter = { type: 'all', species: null, study: null, rarity: null, version: 'any', text: '' };
 let shown = PAGE;
 const chosenVersion = new Map(); // cardId -> version key the reader has turned it to
 
@@ -43,27 +39,9 @@ function chip(label, active, onClick, iconName, extra = {}) {
     iconName ? [icon(iconName), label] : [label]);
 }
 
-/**
- * Every card the Book holds, each tagged with the shelf it was read from. A card the Maker shelf has
- * borrowed is the same card the printed book already showed, so it appears once here, under the
- * shelf it was printed in; the Maker shelf still shows its own copy when that shelf is chosen.
- */
-function allEntries() {
-  const seen = new Set();
-  const out = [];
-  for (const shelf of ctx.shelves) {
-    for (const card of shelf.cards) {
-      if (seen.has(card.id)) continue;
-      seen.add(card.id);
-      out.push({ card, shelf });
-    }
-  }
-  return out;
-}
-function shelfEntries() {
-  if (filter.shelf === 'all') return allEntries();
-  const shelf = ctx.shelves.find((s) => s.id === filter.shelf);
-  return shelf ? shelf.cards.map((card) => ({ card, shelf })) : [];
+/** Every card the Book holds. */
+function allCards() {
+  return ctx.cards;
 }
 
 const TYPE_LABELS = [
@@ -87,43 +65,22 @@ function matches(card) {
 }
 
 function results() {
-  return shelfEntries().filter((e) => matches(e.card))
-    .sort((a, b) => (a.card.type || '').localeCompare(b.card.type || '')
-      || a.card.name.localeCompare(b.card.name)
-      || (a.card.cost || 0) - (b.card.cost || 0));
+  return allCards().filter(matches)
+    .sort((a, b) => (a.type || '').localeCompare(b.type || '')
+      || a.name.localeCompare(b.name)
+      || (a.cost || 0) - (b.cost || 0));
 }
 
 function listOf(key) {
-  const out = new Set();
-  for (const shelf of ctx.shelves) for (const v of shelf.set[key] || []) out.add(v);
-  return [...out];
-}
-
-// ---------- the rebuild, card by card ----------
-// The Book is where the two collections are read side by side, so it is also where the slow rebuild
-// is tracked: a printed card is ticked off once a Maker card replaces it. A Maker card's `remakes`
-// link does that by itself and cannot be unticked here; a hand tick is this browser's own note.
-function statusOf(cardId) {
-  return remadeStatus(ctx.marks, ctx.makerIndex, cardId);
-}
-function toggleRemade(def) {
-  const status = statusOf(def.id);
-  if (status && status.by === 'maker') return; // a Maker card owns this tick
-  ctx.marks = setRemade(ctx.marks, def, !status);
-  render();
-}
-
-/** Is this card one of the printed ones the rebuild is working through? */
-function isPrinted(entry) {
-  return entry.shelf.id === 'classic';
+  return [...new Set(ctx.set[key] || [])];
 }
 
 function characterEntry(name) {
-  return ((ctx.makerSet && ctx.makerSet.characters) || []).find((c) => c.name === name) || null;
+  return ((ctx.shelf && ctx.shelf.characters) || []).find((c) => c.name === name) || null;
 }
 
 /**
- * The story panel: a remade character's backstory beside the flavor of every version of them. Card
+ * The story panel: a character's backstory beside the flavor of every version of them. Card
  * faces clip long flavor and a backstory has nowhere to live on a card at all — this is where the
  * writing the cards came out of is actually read.
  */
@@ -132,7 +89,7 @@ function openStory(def) {
   // A town card belongs to nobody: a Building is not somebody's backstory. Rather than apologise for
   // a character entry it was never going to have, it tells its own story.
   const townCard = !entry && !def.species;
-  const versions = ((ctx.makerSet && ctx.makerSet.cards) || [])
+  const versions = (ctx.cards || [])
     .filter((c) => characterOf(c) === def.name)
     .sort((a, b) => (a.cost || 0) - (b.cost || 0));
   // tabindex: showModal() otherwise focuses the close button at the foot of a long story and
@@ -145,7 +102,6 @@ function openStory(def) {
       : townCard ? (def.title || 'A town card')
         : `${def.species || ''} ${def.study ? `· ${def.study}` : ''}`.trim()),
   ]);
-  if (entry && entry.renamedFrom) head.appendChild(h('p', { class: 'db-story-renamed' }, `Remade from ${entry.renamedFrom}.`));
   const body = h('div', { class: 'db-story-body' });
   if (entry) {
     for (const para of String(entry.backstory || '').split('\n\n')) {
@@ -154,12 +110,11 @@ function openStory(def) {
     if (entry.voice) body.appendChild(h('p', { class: 'db-story-note' }, [h('strong', {}, 'Voice. '), entry.voice]));
     if (entry.arc) body.appendChild(h('p', { class: 'db-story-note' }, [h('strong', {}, 'The arc. '), entry.arc]));
   } else if (townCard) {
-    if (def.addedBecause) body.appendChild(h('p', {}, def.addedBecause));
     if (def.text) body.appendChild(h('p', { class: 'db-story-rules' }, def.text));
     if (def.flavor) body.appendChild(h('p', { class: 'db-story-flavor' }, def.flavor));
     body.appendChild(h('p', { class: 'db-story-note' }, [
       h('strong', {}, 'A town card. '),
-      'It belongs to no character — a Building is not somebody\u2019s backstory. Why each batch of them exists is recorded under townCards in spec/maker_card_set.json.',
+      'It belongs to no character \u2014 a Building is not somebody\u2019s backstory.',
     ]));
   } else {
     body.appendChild(h('p', { class: 'db-empty' }, 'No backstory written for this character yet.'));
@@ -188,46 +143,14 @@ function openStory(def) {
   dialog.scrollTop = 0;
 }
 
-/** The line under a card that says where it stands in the rebuild, if anywhere. */
-function rebuildNote(entry) {
-  const { card } = entry;
-  if (isPrinted(entry)) {
-    const status = statusOf(card.id);
-    const byMaker = status && status.by === 'maker';
-    return h('button', {
-      class: `db-remade${status ? ' on' : ''}`,
-      type: 'button',
-      disabled: byMaker,
-      title: byMaker
-        ? `Remade as the Maker card ${status.makerCard.name} (${status.makerCard.id}) — the link lives in spec/maker_card_set.json`
-        : `Tick ${card.name} (${card.id}) off once it has been remade`,
-      onclick: (e) => { e.stopPropagation(); toggleRemade(card); },
-    }, status ? `✓ Remade${byMaker ? ' (maker card)' : ''}` : 'Mark remade');
-  }
-  const remakes = [].concat(card.remakes || []);
-  if (remakes.length) {
-    const printed = ctx.shelves.find((sh) => sh.id === 'classic');
-    const byId = printed ? Object.fromEntries(printed.cards.map((c) => [c.id, c])) : {};
-    return h('div', { class: 'db-maker-note' },
-      `Remakes ${remakes.map((id) => (byId[id] ? `${byId[id].name} (${id})` : id)).join(', ')}`);
-  }
-  if (card.addition) {
-    return h('div', { class: 'db-maker-note added', title: card.addedBecause || '' },
-      `Added — replaces nothing${card.addedBecause ? `: ${card.addedBecause}` : ''}`);
-  }
-  return null;
-}
-
 // ---------- one card on the shelf ----------
-function buildEntry({ card, shelf }) {
+function buildEntry(card) {
   const chosen = chosenVersion.get(card.id) || (filter.version === 'any' ? defaultVersionKey(card) : filter.version);
   const have = new Set(versionsOf(card).map((v) => v.key));
   const fig = h('figure', { class: 'book-card' });
   fig.appendChild(buildCardFace(card, { large: true, interactive: true, version: chosen }));
   const cap = h('figcaption', {}, [
     h('span', { class: `rarity-tag rar-${raritySlug(card)}` }, card.rarity || 'Common'),
-    h('span', { class: 'book-shelf-tag' }, shelf.name),
-    card.borrowed ? h('span', { class: 'book-borrowed', title: `Borrowed from ${ctx.shelves[0].name} — the Maker shelf has no card of its own for this yet` }, 'borrowed') : null,
   ]);
   fig.appendChild(cap);
   const row = h('div', { class: 'version-row' });
@@ -242,15 +165,11 @@ function buildEntry({ card, shelf }) {
     }, v.short));
   }
   fig.appendChild(row);
-  const note = rebuildNote({ card, shelf });
-  if (note) fig.appendChild(note);
-  if (!isPrinted({ card, shelf })) {
-    fig.appendChild(h('button', {
-      class: 'small', type: 'button',
-      title: `Read ${card.name}'s backstory and the full flavor of every version`,
-      onclick: (e) => { e.stopPropagation(); openStory(card); },
-    }, 'Story'));
-  }
+  fig.appendChild(h('button', {
+    class: 'small', type: 'button',
+    title: `Read ${card.name}'s backstory and the full flavor of every version`,
+    onclick: (e) => { e.stopPropagation(); openStory(card); },
+  }, 'Story'));
   return fig;
 }
 
@@ -264,13 +183,11 @@ function buildFilters() {
   search.addEventListener('input', () => { filter.text = search.value.trim().toLowerCase(); shown = PAGE; render({ keepFocus: 'search' }); });
 
   bar.appendChild(h('div', { class: 'db-chiprow' }, [
-    h('span', { class: 'db-chiplabel' }, 'Shelf:'),
-    chip(`Everything · ${allEntries().length}`, filter.shelf === 'all', () => { filter.shelf = 'all'; shown = PAGE; render(); }),
-    ...ctx.shelves.map((s) => chip(`${s.name} · ${s.cards.length}`, filter.shelf === s.id, () => { filter.shelf = s.id; shown = PAGE; render(); })),
+    h('span', { class: 'db-chiplabel' }, `${allCards().length} cards:`),
     search,
   ]));
 
-  const typesPresent = new Set(shelfEntries().map((e) => e.card.type));
+  const typesPresent = new Set(allCards().map((c) => c.type));
   bar.appendChild(h('div', { class: 'db-chiprow' }, TYPE_LABELS
     .filter(([key]) => key === 'all' || typesPresent.has(key))
     .map(([key, label]) => chip(label, filter.type === key, () => { filter.type = key; shown = PAGE; render(); }))));
@@ -290,7 +207,7 @@ function buildFilters() {
 
   // Printings: how many cards exist in each, against the whole Book rather than the current filter,
   // so the row reads as a tally of what has actually been painted.
-  const everything = allEntries().map((e) => e.card);
+  const everything = allCards();
   bar.appendChild(h('div', { class: 'db-chiprow' }, [
     h('span', { class: 'db-chiplabel' }, 'Printing:'),
     chip('Any', filter.version === 'any', () => { filter.version = 'any'; chosenVersion.clear(); shown = PAGE; render(); }),
@@ -307,21 +224,6 @@ function buildFilters() {
   return bar;
 }
 
-/** How far the rebuild has got: printed cards remade, over printed cards there are. */
-function buildProgress() {
-  const printed = ctx.shelves.find((sh) => sh.id === 'classic');
-  if (!printed || !ctx.makerSet) return null;
-  const progress = remadeProgress(ctx.marks, ctx.makerIndex, printed.cards);
-  return h('div', { class: 'db-progress' }, [
-    h('span', {}, `Remade ${progress.done} of ${progress.total} cards in the printed collection.`),
-    h('button', {
-      class: 'small', type: 'button',
-      title: 'Download the remade list as JSON — ids first, so it still reads after a rename',
-      onclick: () => downloadRemade(ctx.marks, ctx.makerIndex, printed.set),
-    }, 'Export remade list'),
-  ]);
-}
-
 function render({ keepFocus = null } = {}) {
   const found = results();
   host.innerHTML = '';
@@ -329,8 +231,7 @@ function render({ keepFocus = null } = {}) {
   host.appendChild(h('div', { class: 'book-head' }, [
     h('div', {}, [
       h('h2', {}, 'The Book'),
-      h('p', { class: 'db-sub' }, 'Every card in the game, Classic and Maker, in every printing it exists in. Turn a card over with the chips beneath it; a greyed chip is a printing that has not been painted yet.'),
-      buildProgress(),
+      h('p', { class: 'db-sub' }, 'Every card in the game, in every printing it exists in. Turn a card over with the chips beneath it; a greyed chip is a printing that has not been painted yet.'),
     ]),
     h('button', { type: 'button', class: 'primary', onclick: () => ctx.onClose() }, 'Close the book'),
   ]));
@@ -342,7 +243,7 @@ function render({ keepFocus = null } = {}) {
   host.appendChild(count);
 
   const grid = h('div', { class: 'book-grid' });
-  for (const entry of found.slice(0, shown)) grid.appendChild(buildEntry(entry));
+  for (const card of found.slice(0, shown)) grid.appendChild(buildEntry(card));
   host.appendChild(grid);
 
   if (found.length > shown) {
@@ -358,26 +259,22 @@ function render({ keepFocus = null } = {}) {
 
 /**
  * Open the Book in `hostEl`.
- * @param opts { rules, shelves: [{ id, name, set }], makerSet?, onClose() }
- *   A shelf is one collection: its `set` is an indexed or raw card set. Cards are read straight out
- *   of it, so whatever the game can play, the Book can show. `makerSet` is the raw Maker shelf, read
- *   for the character backstories and the remake links; without it the rebuild notes simply go away.
+ * @param opts { rules, set, shelf?, onClose() }
+ *   `set` is the collection, indexed or raw: cards are read straight out of it, so whatever the
+ *   game can play, the Book can show. `shelf` is the same collection as it is written on disk, read
+ *   for the character backstories; without it the Story panel simply has nothing to say.
  */
 export function openBook(hostEl, opts) {
   host = hostEl;
   ctx = {
     rules: opts.rules,
-    shelves: opts.shelves.map((s) => ({ ...s, cards: (s.set.cards || []).slice() })),
-    makerSet: opts.makerSet || null,
-    marks: loadRemade(),
-    makerIndex: makerRemakesIndex(opts.makerSet || { cards: [] }),
+    set: opts.set,
+    cards: (opts.set.cards || []).slice(),
+    shelf: opts.shelf || opts.set,
     onClose: opts.onClose,
   };
-  // Card previews look cards up by id, so the preview index carries every shelf at once.
-  const merged = {};
-  for (const shelf of ctx.shelves) for (const card of shelf.cards) if (!merged[card.id]) merged[card.id] = card;
-  setPreviewContext(opts.rules, { ...ctx.shelves[0].set, cardsById: merged });
-  filter = { shelf: 'all', type: 'all', species: null, study: null, rarity: null, version: 'any', text: '' };
+  setPreviewContext(opts.rules, opts.set);
+  filter = { type: 'all', species: null, study: null, rarity: null, version: 'any', text: '' };
   shown = PAGE;
   render();
 }

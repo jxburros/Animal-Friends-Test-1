@@ -1,5 +1,5 @@
-// The Maker shelf's own market side: nine Statues of its own, a Capital City built out of its own
-// cards, and the first cards on either shelf that spend a token.
+// The market side of the shelf: the nine Statues, the Capital City built out of the collection's
+// own cards, and the cards that spend a token.
 //
 // The token cards are the point of the block in spec/maker_card_set.json → `tokens`: the counter was
 // built before any card used it so that the first three would not each invent their own. These tests
@@ -7,25 +7,21 @@
 // town cannot meet is not paid at all, and the rest of the card still happens.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import fs from 'node:fs';
 import { RULES, SET, addStack, addToHand, UPRIGHT } from './helpers.mjs';
-import {
-  createGame, indexSet, composeMakerSet, gainMarketCard,
-} from '../src/engine/index.js';
+import { createGame, gainMarketCard } from '../src/engine/index.js';
 import { addTokens, tokenCount } from '../src/engine/state.js';
 
-const MAKER = JSON.parse(fs.readFileSync(new URL('../spec/maker_card_set.json', import.meta.url), 'utf8'));
-const maker = indexSet(composeMakerSet(MAKER, SET));
+const MAKER = SET;
 
 function makerGame(seed = 5) {
-  const state = createGame(RULES, maker, { seed, decks: MAKER.decks.map((d) => d.id).slice(0, 2) });
+  const state = createGame(RULES, MAKER, { seed, decks: MAKER.decks.map((d) => d.id).slice(0, 2) });
   state.phase = 'actions';
   state.active = 0;
   state.agents = [{ choose: async (_s, _pi, req) => (req.kind === 'pick' ? req.options.slice(0, Math.max(1, req.min)).map((o) => o.uid) : true) }, {}];
   return state;
 }
 
-test('the Maker shelf owns nine Statues and a Capital City dealt entirely from its own cards', () => {
+test('the shelf owns nine Statues and a Capital City dealt entirely from its own cards', () => {
   const statues = MAKER.cards.filter((c) => c.type === 'statue');
   assert.equal(statues.length, RULES.victory.statueTotal);
   const virtues = statues.map((c) => c.virtue).sort();
@@ -35,11 +31,10 @@ test('the Maker shelf owns nine Statues and a Capital City dealt entirely from i
     assert.ok(c.burden, `${c.id} has no burden`);
     assert.ok((c.abilities || []).some((a) => a.burden), `${c.id}'s burden is not on an ability`);
     assert.ok(c.onGain || (c.abilities || []).some((a) => !a.burden), `${c.id} has no boon`);
-    assert.equal(c.remakes ? typeof c.remakes : 'string', 'string', `${c.id} remakes nothing`);
   }
   const own = new Set(MAKER.cards.map((c) => c.id));
   const spec = MAKER.marketDecks[0];
-  for (const id of [...spec.always, ...spec.pool]) assert.ok(own.has(id), `${id} is not a Maker card`);
+  for (const id of [...spec.always, ...spec.pool]) assert.ok(own.has(id), `${id} is not a card in this set`);
   assert.deepEqual([...spec.always].sort(), statues.map((c) => c.id).sort(), 'all nine are always dealt');
 });
 
@@ -93,18 +88,4 @@ test('the shelf hands out the chits its spenders ask for', () => {
   assert.ok(gives('"of":"building"').length >= 3, 'Building chits come from somewhere');
   assert.ok(gives('"study":"Food"').length >= 1, 'Food chits come from somewhere');
   assert.ok(gives('"species":"Rabbit"').length >= 1, 'Rabbit chits come from somewhere');
-});
-
-test('every remade Market card and Statue points at the printed card it replaces', () => {
-  const printedById = Object.fromEntries(SET.cards.map((c) => [c.id, c]));
-  for (const card of MAKER.cards.filter((c) => ['market', 'statue'].includes(c.type))) {
-    if (card.addition) {
-      assert.ok(card.addedBecause, `${card.id} is an addition with no reason`);
-      continue;
-    }
-    for (const id of [].concat(card.remakes)) {
-      assert.ok(printedById[id], `${card.id} remakes unknown ${id}`);
-      assert.equal(printedById[id].type, card.type, `${card.id} remakes a ${printedById[id].type}`);
-    }
-  }
 });

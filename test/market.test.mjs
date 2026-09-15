@@ -2,7 +2,7 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  newGame, addStack, setSupply, setCity, addMod, giveStatue, addLimitedEvent, addBidder, SET,
+  newGame, addStack, setSupply, setCity, addMod, giveStatue, addLimitedEvent, addBidder, defineCard, SET,
 } from './helpers.mjs';
 import {
   applyAction, legalActions, startPhase, resolvePurchase, refillCity, UPRIGHT, BUSY, pledgeMinCost,
@@ -17,20 +17,20 @@ describe('announcing a purchase', () => {
   test('requires an upright character', async () => {
     const state = newGame();
     setSupply(state, 0, 10);
-    setCity(state, ['mk_festival_grant']); // cost 2
-    const s = addStack(state, 0, 'bb_clover_1', BUSY);
+    setCity(state, ['mk_mkt_community_oven']); // cost 2
+    const s = addStack(state, 0, 'mk_clover_seedling_helper_0', BUSY);
     begin(state, 0);
-    await assert.rejects(() => applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 }));
+    await assert.rejects(() => applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 }));
   });
 
   test('bid must be at least the card cost, and Supply is escrowed', async () => {
     const state = newGame();
     setSupply(state, 0, 10);
-    setCity(state, ['mk_festival_grant']); // cost 2
+    setCity(state, ['mk_mkt_community_oven']); // cost 2
     const s = addBidder(state, 0, 1);
     begin(state, 0);
-    await assert.rejects(() => applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 1, minBid: 2, maxBid: 10 }), /Invalid bid/);
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 3, minBid: 2, maxBid: 10 });
+    await assert.rejects(() => applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: s.uid, bid: 1, minBid: 2, maxBid: 10 }), /Invalid bid/);
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: s.uid, bid: 3, minBid: 2, maxBid: 10 });
     assert.equal(state.players[0].supply, 7, 'bid Supply is moved out of the wallet');
     assert.equal(state.players[0].escrow, 3, 'bid Supply is held in escrow');
     assert.equal(s.orientation, BUSY, 'the announcing character becomes Busy');
@@ -40,29 +40,29 @@ describe('announcing a purchase', () => {
   test('the pending purchase resolves at the start of the announcer\'s next turn', async () => {
     const state = newGame();
     setSupply(state, 0, 10);
-    setCity(state, ['mk_festival_grant']);
+    setCity(state, ['mk_mkt_community_oven']);
     const s = addBidder(state, 0, 1);
     begin(state, 0);
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
-    assert.ok(state.market.city.includes('mk_festival_grant'), 'card stays displayed while pending');
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
+    assert.ok(state.market.city.includes('mk_mkt_community_oven'), 'card stays displayed while pending');
     state.agents = [{ choose: async () => 'supply' }, { choose: async () => 'supply' }];
     await startPhase(state, 0);
     assert.equal(state.market.pending.length, 0, 'purchase resolved');
-    assert.ok(!state.market.city.includes('mk_festival_grant'), 'card left the Capital City');
-    assert.equal(state.players[0].supply, 8 + 4, 'paid the 2-Supply bid and gained the 4-Supply card effect');
+    assert.ok(!state.market.city.includes('mk_mkt_community_oven'), 'card left the Capital City');
+    assert.equal(state.players[0].supply, 8 + 3, 'paid the 2-Supply bid and gained the 3-Supply card effect');
   });
 
   test('unchallenged purchases pay the bid', async () => {
     const state = newGame();
     setSupply(state, 0, 10);
-    setCity(state, ['mk_festival_grant']);
+    setCity(state, ['mk_mkt_community_oven']);
     const s = addBidder(state, 0, 1);
     begin(state, 0);
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 4, minBid: 2, maxBid: 10 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: s.uid, bid: 4, minBid: 2, maxBid: 10 });
     const pd = state.market.pending[0];
     await resolvePurchase(state, pd);
     assert.equal(state.players[0].escrow, 0, 'escrow is released after resolving');
-    assert.equal(state.players[0].supply, 6 + 4, '10-4(bid)+4(effect)=10... paid the bid, gained the card');
+    assert.equal(state.players[0].supply, 6 + 3, '10-4(bid)+3(effect): paid the bid, gained the card');
   });
 });
 
@@ -70,10 +70,10 @@ describe('bid wars', () => {
   function setupPending(state, { annBid = 3 } = {}) {
     setSupply(state, 0, 10);
     setSupply(state, 1, 10);
-    setCity(state, ['mk_festival_grant']); // cost 2
+    setCity(state, ['mk_mkt_community_oven']); // cost 2
     const annChar = addBidder(state, 0, 1);
     begin(state, 0);
-    return applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: annChar.uid, bid: annBid, minBid: 2, maxBid: 10 })
+    return applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: annChar.uid, bid: annBid, minBid: 2, maxBid: 10 })
       .then(() => state.market.pending[0]);
   }
   const resolveFor = (state, pi) => {
@@ -95,7 +95,7 @@ describe('bid wars', () => {
     assert.equal(state.players[1].escrow, 5);
     assert.equal(pd.high, 1, 'the raiser is now the high bidder');
     await resolveFor(state, 1); // resolves at the high bidder's next turn
-    assert.equal(state.players[1].supply, 10 - 5 + 4, 'the winner paid their bid in full and gained the card');
+    assert.equal(state.players[1].supply, 10 - 5 + 3, 'the winner paid their bid in full and gained the card');
     assert.equal(state.players[1].escrow, 0);
     assert.equal(state.players[0].supply, 10, 'the loser is refunded everything they pledged — there is no forfeit');
     assert.equal(state.players[0].escrow, 0, 'nothing is left in escrow');
@@ -126,7 +126,7 @@ describe('bid wars', () => {
     begin(state, 0);
     assert.equal(legalActions(state, 0).some((a) => a.type === 'raise'), false, 'no upright Character means no answer');
     await resolveFor(state, 1);
-    assert.equal(state.players[1].supply, 10 - 8 + 4, 'the last bidder standing pays 8 and gains the card');
+    assert.equal(state.players[1].supply, 10 - 8 + 3, 'the last bidder standing pays 8 and gains the card');
     assert.equal(state.players[0].supply, 10, 'the loser gets all 6 back: the animals were the price, not the Supply');
   });
 
@@ -144,19 +144,19 @@ describe('bid wars', () => {
     assert.equal(pd.high, 0, 'a tie never takes the lead');
     void chChar;
     await resolveFor(state, 0);
-    assert.equal(state.players[0].supply, 10 - 3 + 4, 'the standing bidder wins the tie and gains the card');
+    assert.equal(state.players[0].supply, 10 - 3 + 3, 'the standing bidder wins the tie and gains the card');
     assert.equal(state.players[1].supply, 10, 'the tied loser is refunded in full — there is no forfeit');
   });
 
-  test('Poppy, Civic Planner lets her controller take the lead on a tie', async () => {
+  test('Roger, Ombudsman lets his controller take the lead on a tie', async () => {
     const state = newGame();
     const pd = await setupPending(state, { annBid: 3 });
-    giveStatue(state, 1, 'st_patience'); // an unrelated Statue, to prove it is Poppy granting this
-    addStack(state, 1, 'bb_poppy_2', UPRIGHT); // Poppy, Civic Planner: winTiesAsChallenger passive
+    giveStatue(state, 1, 'mk_st_patience'); // an unrelated Statue, to prove it is Roger granting this
+    addStack(state, 1, 'mk_roger_ombudsman_5', UPRIGHT); // winTiesAsChallenger passive
     begin(state, 1);
     const raise = legalActions(state, 1).find((a) => a.type === 'raise');
     assert.ok(raise, 'a raise should be legal');
-    assert.equal(raise.minBid, 3, 'Poppy can match the standing 3 instead of needing 4');
+    assert.equal(raise.minBid, 3, 'Roger can match the standing 3 instead of needing 4');
     await applyAction(state, 1, raise);
     void pd;
     await resolveFor(state, 1);
@@ -179,11 +179,11 @@ describe('bid wars', () => {
     const state = newGame();
     setSupply(state, 0, 10);
     setSupply(state, 1, 10);
-    setCity(state, ['mk_festival_grant']);
+    setCity(state, ['mk_mkt_community_oven']);
     addMod(state, 0, 'unchallengeable', 1, 'untilUsed');
     const s = addBidder(state, 0, 1);
     begin(state, 0);
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     const pd = state.market.pending[0];
     assert.equal(pd.unchallengeable, true);
     const chChar = addBidder(state, 1, 2);
@@ -195,10 +195,10 @@ describe('bid wars', () => {
     const state = newGame();
     setSupply(state, 0, 10);
     setSupply(state, 1, 10);
-    setCity(state, ['mk_festival_grant']);
+    setCity(state, ['mk_mkt_community_oven']);
     const s = addBidder(state, 0, 1);
     begin(state, 0);
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     addMod(state, 0, 'cancelNextChallenge', 1, 'untilUsed'); // as if Quiet Mediation had been gained earlier
     const pd = state.market.pending[0];
     const chChar = addBidder(state, 1, 2);
@@ -225,7 +225,7 @@ describe('bid wars', () => {
     // The old burden priced a forfeiture that no longer exists; the new one taxes the thing that
     // now decides auctions — which animal you are allowed to bid with.
     const state = newGame();
-    giveStatue(state, 0, 'st_harmony');
+    giveStatue(state, 0, 'mk_st_harmony');
     assert.equal(pledgeMinCost(state, null, 0), pledgeMinCost(state, null, 1) + 1);
   });
 
@@ -239,11 +239,11 @@ describe('bid wars', () => {
     const state = newGame();
     setSupply(state, 0, 10);
     setSupply(state, 1, 10);
-    setCity(state, ['mk_festival_grant']);
+    setCity(state, ['mk_mkt_community_oven']);
     addStack(state, 0, watcher.id, UPRIGHT);
     const s = addBidder(state, 0, 1);
     begin(state, 0);
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     const pd = state.market.pending[0];
     const chChar = addBidder(state, 1, 3);
     begin(state, 1);
@@ -252,29 +252,41 @@ describe('bid wars', () => {
     assert.ok(state.players[0].hand.length > before, 'the outbid Mayor draws');
   });
 
-  test('Market Day draws on the first announcement of the turn', async () => {
+  test('a limited Event that draws on an announcement draws on the first one of the turn', async () => {
     const state = newGame();
     setSupply(state, 0, 10);
-    setCity(state, ['mk_festival_grant', 'mk_supply_depot']);
-    addLimitedEvent(state, 0, 'pp_market_day', 2);
+    setCity(state, ['mk_mkt_community_oven', 'mk_mkt_chit_tin']);
+    // Nothing in the collection carries this shape; the rule under test is the engine's
+    // once-per-turn accounting on `onAnnounce`, so the test builds the Event it needs.
+    defineCard(state, {
+      id: 'tst_market_day', type: 'event', kind: 'limited', cost: 0, duration: 2,
+      name: 'Market Day', text: 'Limited 2: your first purchase announcement each turn draws 1 card.',
+      abilities: [{ trigger: 'onAnnounce', oncePerTurn: true, effect: { do: 'draw', count: 1 } }],
+    });
+    addLimitedEvent(state, 0, 'tst_market_day', 2);
     const s1 = addBidder(state, 0, 1);
     const s2 = addBidder(state, 0, 2);
     begin(state, 0);
     const before = state.players[0].hand.length;
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s1.uid, bid: 2, minBid: 2, maxBid: 10 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: s1.uid, bid: 2, minBid: 2, maxBid: 10 });
     assert.equal(state.players[0].hand.length, before + 1, 'first announcement draws a card');
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_supply_depot', charUid: s2.uid, bid: 2, minBid: 2, maxBid: 10 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_chit_tin', charUid: s2.uid, bid: 2, minBid: 2, maxBid: 10 });
     assert.equal(state.players[0].hand.length, before + 1, 'second announcement this turn does not draw again');
   });
 
-  test('Civic Rally adds +1 to the first bid of the turn', async () => {
+  test('a limited Event carrying firstBidPlus1 adds 1 to the first bid of the turn', async () => {
     const state = newGame();
     setSupply(state, 0, 10);
-    setCity(state, ['mk_festival_grant']);
-    addLimitedEvent(state, 0, 'pp_civic_rally', 2);
+    setCity(state, ['mk_mkt_community_oven']);
+    defineCard(state, {
+      id: 'tst_civic_rally', type: 'event', kind: 'limited', cost: 0, duration: 2,
+      name: 'Civic Rally', text: 'Limited 2: your first bid each turn counts as 1 higher.',
+      abilities: [{ trigger: 'passive', key: 'firstBidPlus1' }],
+    });
+    addLimitedEvent(state, 0, 'tst_civic_rally', 2);
     const s = addBidder(state, 0, 1);
     begin(state, 0);
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     const pd = state.market.pending[0];
     assert.equal(pd.bonus, 1, 'the first bid this turn counts as 1 higher');
   });
@@ -285,68 +297,68 @@ describe('bid wars', () => {
 describe('Capital City refresh and disposal', () => {
   test('the City tops back up to five cards as soon as a purchase resolves', async () => {
     const state = newGame();
-    setCity(state, ['mk_festival_grant', 'mk_supply_depot']);
-    state.market.deck = ['mk_town_bell', 'mk_town_clock', 'mk_courier_network', 'mk_library_annex'];
+    setCity(state, ['mk_mkt_community_oven', 'mk_mkt_chit_tin']);
+    state.market.deck = ['mk_mkt_town_bell', 'mk_mkt_town_clock', 'mk_mkt_courier_network', 'mk_mkt_ledger_audit'];
     setSupply(state, 0, 10);
     const s = addBidder(state, 0, 1);
     begin(state, 0);
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     const pd = state.market.pending[0];
     const logLen = state.log.length;
     await resolvePurchase(state, pd);
-    assert.ok(!state.market.city.includes('mk_festival_grant'), 'the bought card left the display');
-    assert.ok(state.market.cityDump.includes('mk_festival_grant'), 'and went to the City Dump');
-    assert.equal(state.market.city[0], 'mk_supply_depot', 'the unsold card stays where it was');
+    assert.ok(!state.market.city.includes('mk_mkt_community_oven'), 'the bought card left the display');
+    assert.ok(state.market.cityDump.includes('mk_mkt_community_oven'), 'and went to the City Dump');
+    assert.equal(state.market.city[0], 'mk_mkt_chit_tin', 'the unsold card stays where it was');
     assert.equal(state.market.city.length, 5, 'the display is topped up: 1 remaining + 4 dealt');
     assert.equal(state.market.deck.length, 0, 'the Market Deck was drawn down to refill the display');
-    assert.deepEqual(state.market.city.slice(1), ['mk_town_bell', 'mk_town_clock', 'mk_courier_network', 'mk_library_annex'], 'dealt in deck order');
+    assert.deepEqual(state.market.city.slice(1), ['mk_mkt_town_bell', 'mk_mkt_town_clock', 'mk_mkt_courier_network', 'mk_mkt_ledger_audit'], 'dealt in deck order');
     const refillLine = state.log.slice(logLen).find((l) => l.fx && l.fx.kind === 'refill');
     assert.ok(refillLine, 'the refill is logged with a structured fx event');
-    assert.deepEqual(refillLine.fx.cardIds, ['mk_town_bell', 'mk_town_clock', 'mk_courier_network', 'mk_library_annex']);
+    assert.deepEqual(refillLine.fx.cardIds, ['mk_mkt_town_bell', 'mk_mkt_town_clock', 'mk_mkt_courier_network', 'mk_mkt_ledger_audit']);
   });
 
   test('a full display is not touched, and a 5-card deck fully restocks after a purchase', async () => {
     const state = newGame();
     assert.equal(state.market.city.length, 5);
     assert.equal(refillCity(state), false, 'nothing to deal when the display is full');
-    setCity(state, ['mk_festival_grant', 'mk_supply_depot', 'mk_town_bell', 'mk_town_clock', 'mk_courier_network']);
-    state.market.deck = ['mk_library_annex', 'mk_public_gardens'];
+    setCity(state, ['mk_mkt_community_oven', 'mk_mkt_chit_tin', 'mk_mkt_town_bell', 'mk_mkt_town_clock', 'mk_mkt_courier_network']);
+    state.market.deck = ['mk_mkt_ledger_audit', 'mk_mkt_watermill'];
     setSupply(state, 0, 10);
     const s = addBidder(state, 0, 1);
     begin(state, 0);
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     await resolvePurchase(state, state.market.pending[0]);
     assert.equal(state.market.city.length, 5, 'back to five');
     assert.equal(state.market.deck.length, 1, 'exactly one card dealt');
-    assert.equal(state.market.city[4], 'mk_library_annex');
+    assert.equal(state.market.city[4], 'mk_mkt_ledger_audit');
   });
 
   test('the Market Deck reshuffles the City Dump mid-deal when it runs out while topping up', async () => {
     const state = newGame();
-    setCity(state, ['mk_festival_grant', 'mk_supply_depot', 'mk_town_bell']);
-    state.market.deck = ['mk_library_annex'];
-    state.market.cityDump = ['mk_public_gardens', 'mk_town_clock'];
+    setCity(state, ['mk_mkt_community_oven', 'mk_mkt_chit_tin', 'mk_mkt_town_bell']);
+    state.market.deck = ['mk_mkt_ledger_audit'];
+    state.market.cityDump = ['mk_mkt_watermill', 'mk_mkt_town_clock'];
     setSupply(state, 0, 10);
     const s = addBidder(state, 0, 1);
     begin(state, 0);
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     await resolvePurchase(state, state.market.pending[0]);
     // 2 remaining + 1 from the deck + 2 needed: the deck is empty so the dump (2 old + festival grant) is reshuffled in.
     assert.equal(state.market.city.length, 5, 'topped back up to five');
     assert.equal(state.market.cityDump.length, 0, 'the City Dump was shuffled into the Market Deck');
     assert.equal(state.market.deck.length, 1, 'one reshuffled card is left in the deck');
-    assert.ok(state.market.city.includes('mk_library_annex'));
+    assert.ok(state.market.city.includes('mk_mkt_ledger_audit'));
   });
 
   test('the City Dump reshuffles into the Market Deck once the deck is empty, refilling the City', async () => {
     const state = newGame();
-    setCity(state, ['mk_festival_grant']);
+    setCity(state, ['mk_mkt_community_oven']);
     state.market.deck = [];
-    state.market.cityDump = ['mk_town_bell', 'mk_supply_depot', 'mk_courier_network', 'mk_town_clock'];
+    state.market.cityDump = ['mk_mkt_town_bell', 'mk_mkt_chit_tin', 'mk_mkt_courier_network', 'mk_mkt_town_clock'];
     setSupply(state, 0, 10);
     const s = addBidder(state, 0, 1);
     begin(state, 0);
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     const pd = state.market.pending[0];
     await resolvePurchase(state, pd); // City becomes empty -> refill triggers reshuffle
     assert.equal(state.market.cityDump.length, 0, 'City Dump emptied into the Market Deck');
@@ -358,23 +370,23 @@ describe('Capital City refresh and disposal', () => {
 
   test('Out of Play cards (Emergency Reserve, Town Archives) never return to the deck or City Dump', async () => {
     const state = newGame();
-    setCity(state, ['mk_emergency_reserve']);
+    setCity(state, ['mk_mkt_emergency_reserve']);
     state.market.deck = []; // isolate: only the explicitly placed card exists in the market for this test
     state.market.cityDump = [];
     setSupply(state, 0, 10);
     const s = addBidder(state, 0, 1);
     begin(state, 0);
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_emergency_reserve', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_emergency_reserve', charUid: s.uid, bid: 2, minBid: 2, maxBid: 10 });
     const pd = state.market.pending[0];
     await resolvePurchase(state, pd);
-    assert.ok(state.market.outOfPlay.includes('mk_emergency_reserve'));
-    assert.ok(!state.market.cityDump.includes('mk_emergency_reserve'));
-    assert.ok(!state.market.deck.includes('mk_emergency_reserve'));
+    assert.ok(state.market.outOfPlay.includes('mk_mkt_emergency_reserve'));
+    assert.ok(!state.market.cityDump.includes('mk_mkt_emergency_reserve'));
+    assert.ok(!state.market.deck.includes('mk_mkt_emergency_reserve'));
     // Exhaust the market deck/city dump entirely and confirm the Out of Play card still never reappears.
     state.market.deck = [];
     state.market.cityDump = [];
     state.market.city = [];
     refillCity(state);
-    assert.ok(!state.market.city.includes('mk_emergency_reserve'));
+    assert.ok(!state.market.city.includes('mk_mkt_emergency_reserve'));
   });
 });

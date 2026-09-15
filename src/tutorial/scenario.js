@@ -2,8 +2,8 @@
 // time. This module is DOM-free so the script can be played headlessly in tests; src/ui/tutorial.js
 // puts the coach chips on screen and wires the same script to the game screen.
 //
-// How it works. The match is an ordinary game built by createGame with the two printed starter
-// decks, and then *arranged*: the opening hands, the next few draws and the Capital City are put in
+// How it works. The match is an ordinary game built by createGame with the two town decks, and
+// then *arranged*: the opening hands, the next few draws and the Capital City are put in
 // a known order, so every turn plays out the same way. The player is walked through a script of
 // steps. A `move` step names the one decision the player should make now — the request the engine
 // is asking is narrowed down to that choice, and any other answer is refused with a nudge. A `note`
@@ -12,44 +12,44 @@
 import { createGame, log, topCard, cardDef } from '../engine/index.js';
 
 export const TUTORIAL_SEED = 1889;
-export const TUTORIAL_HUMAN_DECK = 'burrow-bloom';
-export const TUTORIAL_RIVAL_DECK = 'paws-papers';
-export const TUTORIAL_MARKET = 'first-boroughs';
+export const TUTORIAL_HUMAN_DECK = 'mk-ledger-larder';
+export const TUTORIAL_RIVAL_DECK = 'mk-bench-bandstand';
+export const TUTORIAL_MARKET = 'mk-first-workings';
 export const TUTORIAL_NAMES = ['Mayor Bramble', 'Mayor Sable'];
 /** The turn on which the last scripted step fires; from the next turn on the rival plays for itself. */
 export const TUTORIAL_LAST_TURN = 7;
 
-// Card ids the script depends on. Every one of these is in the printed deck or the market pool it
-// is taken from, so the arranged match is still played with real decks.
+// Card ids the script depends on. Every one of these is in the deck or the market pool it is taken
+// from, so the arranged match is still played with real decks.
 const C = {
-  clover: 'bb_clover_1', // cost 0 Apprentice; on recruit may bring a friend from hand for free
-  sorrel: 'bb_sorrel_1', // cost 1 Apprentice; the first pledge in an auction
-  mabel: 'bb_mabel_3', // cost 2 Journeyman; draws a card for the first Event each turn
-  garden: 'bb_community_garden', // Event: Agriculture -> gain 3 Supply
-  cloverUp: 'bb_clover_2', // cost 3, upgrades Clover for the difference
-  harvest: 'bb_patient_harvest',
-  freshBatch: 'ww_fresh_batch',
-  furrow: 'bb_furrow_line',
-  juniper: 'pp_juniper_1', // rival's cost-1 bidder
-  patch: 'pp_patch_1', // rival's cost-0 worker
-  flint: 'pp_flint_1',
-  hazel: 'pp_hazel_1',
-  river: 'rr_river_market',
-  tidy: 'pp_tidy_books',
-  marlow: 'pp_marlow_1',
-  grant: 'mk_festival_grant', // the card the two Mayors fight over
-  kindness: 'st_kindness', // the Statue the lesson ends on
+  peanut: 'mk_peanut_ledger_0', // cost 0 Apprentice, Commerce; puts a Supply by every time they finish a shift
+  daisy: 'mk_daisy_bouquet_weaver_2', // cost 2 Journeyman; on arrival she pairs up with somebody
+  barista: 'mk_peanut_barista_1', // cost 1, upgrades Peanut — and moves them into Food
+  freshBatch: 'mk_fresh_batch', // Event: a Food Character -> gain 3 Supply
+  ledgerDay: 'mk_ledger_day',
+  standingRound: 'mk_peanuts_standing_round',
+  ned: 'mk_ned_page_runner_1',
+  clover: 'mk_clover_market_gardener_2',
+  comet: 'mk_comet_bolt_sorter_0', // the rival's cost-0 worker
+  cometMech: 'mk_comet_rocket_mechanic_1', // the rival's cost-1 bidder
+  moss: 'mk_moss_toolsmith_2',
+  inkwell: 'mk_inkwell_storyteller_2',
+  guildNight: 'mk_guild_night',
+  countdown: 'mk_comets_countdown',
+  boiler: 'mk_mortys_boiler_test',
+  grant: 'mk_mkt_founders_grant', // the card the two Mayors fight over
+  kindness: 'mk_st_kindness', // the Statue the lesson ends on
 };
 
-const HUMAN_HAND = [C.clover, C.sorrel, C.mabel, C.garden, C.cloverUp, C.harvest];
-const HUMAN_NEXT = [C.freshBatch, C.furrow];
-const RIVAL_HAND = [C.juniper, C.patch, C.flint, C.hazel, C.river, C.tidy, C.marlow];
+const HUMAN_HAND = [C.peanut, C.daisy, C.barista, C.freshBatch, C.ledgerDay, C.standingRound];
+const HUMAN_NEXT = [C.ned, C.clover];
+const RIVAL_HAND = [C.comet, C.cometMech, C.moss, C.inkwell, C.guildNight, C.countdown, C.boiler];
 // Display order matters: the Capital City ages from the front, so the Statue goes last and is still
 // on show when the player is ready to bid for it on turn 5.
-const CITY = ['mk_town_bell', 'mk_supply_depot', C.grant, 'mk_public_gardens', C.kindness];
+const CITY = ['mk_mkt_town_bell', 'mk_mkt_penny_jar', C.grant, 'mk_mkt_telescope_hire', C.kindness];
 // The next cards dealt (aging on turns 4 and 6, refills on turns 5 and 7): plain market cards only,
 // so no shared shock lands in the middle of a lesson.
-const CITY_NEXT = ['mk_towpath', 'mk_dew_meadow', 'mk_orchard_share', 'mk_penny_jar', 'mk_courier_network', 'mk_library_annex', 'mk_town_clock'];
+const CITY_NEXT = ['mk_mkt_community_oven', 'mk_mkt_night_market', 'mk_mkt_watermill', 'mk_mkt_owl_post', 'mk_mkt_chit_tin', 'mk_mkt_courier_network', 'mk_mkt_town_clock'];
 
 /** Move the named cards to the top of a player's deck, in order, and deal the hand from there. */
 function arrangeHand(state, pi, handIds, nextIds) {
@@ -82,10 +82,10 @@ function arrangeMarket(state) {
   m.revealQueue = [];
   m.pending = [];
   m.clearing = {};
-  m.deckName = 'First Boroughs, arranged for the lesson';
+  m.deckName = 'The First Workings, arranged for the lesson';
 }
 
-/** Build the tutorial match: a real game between the two starter decks, arranged so the script holds. */
+/** Build the tutorial match: a real game between the two town decks, arranged so the script holds. */
 export function createTutorialGame(rules, set, { names = TUTORIAL_NAMES } = {}) {
   const state = createGame(rules, set, {
     seed: TUTORIAL_SEED,
@@ -166,14 +166,14 @@ export function buildTutorialSteps() {
     note({
       id: 'welcome',
       title: 'Welcome to the First Boroughs',
-      text: 'You are Mayor Bramble, and the town at the bottom of the page is yours. Mayor Sable\'s town is at the top. Between you lies the Capital City, the market you will fight over, and the Town Chronicle keeps the story. In this short match you will learn everything you need to win your first Statue.',
+      text: 'You are Mayor Bramble, and the town at the bottom of the page is yours. Mayor Sable’s town is at the top. Between you lies the Capital City, the market you will fight over, and the Town Chronicle keeps the story. In this short match you will learn everything you need to win your first Statue.',
       when: (req) => req.kind === 'confirm' && req.reason === 'mulligan',
     }),
     {
       kind: 'move', who: 'you', id: 'mulligan',
       title: 'Your opening hand',
       do: 'Click Keep it.',
-      why: 'Every Mayor may shuffle their opening hand back and draw again, once, for free. This hand is a good one: three animals to recruit and an Event to play.',
+      why: 'Every Mayor may shuffle their opening hand back and draw again, once, for free. This hand is a good one: two animals to recruit, a promotion for one of them, and an Event to play.',
       nudge: 'For this lesson, keep the hand. It has everything we need.',
       when: (req) => req.kind === 'confirm' && req.reason === 'mulligan',
       shape: (req) => req,
@@ -187,85 +187,85 @@ export function buildTutorialSteps() {
       why: 'Every turn opens with a choice: draw a card, or gain 2 Supply. Supply pays for everything, from recruiting to bidding. You already have cards to play, so take the Supply.',
     }),
     actionStep({
-      id: 'recruit-clover', turn: 1,
+      id: 'recruit-peanut', turn: 1,
       title: 'Recruit an Apprentice',
-      do: 'Click Clover in your hand, then Recruit.',
-      why: 'Clover costs 0. Apprentices (cost 0 to 1) arrive upright and can act at once. Cheap animals get to work now; dear ones make you wait.',
-      pick: (o) => o.type === 'recruit' && o.cardId === C.clover && !o.targetUid,
+      do: 'Click Peanut, Ledger Apprentice in your hand, then Recruit.',
+      why: 'Peanut costs 0. Apprentices (cost 0 to 1) arrive upright and can act at once. Cheap animals get to work now; dear ones make you wait.',
+      pick: (o) => o.type === 'recruit' && o.cardId === C.peanut && !o.targetUid,
+    }),
+    actionStep({
+      id: 'work-peanut', turn: 1,
+      title: 'Work a shift',
+      do: 'Click Peanut in your town, then Work a shift.',
+      why: 'A shift turns an upright animal Busy for its listed delay, then pays out Supply at the end of the turn that finishes it. Peanut’s shift takes 1 turn and pays 1 — and their talent puts another Supply by in the tin behind the desk, where an Accountant can call it back in later.',
+      pick: (o, state) => o.type === 'work' && o.charUid === uidOf(state, 0, C.peanut),
+    }),
+    actionStep({
+      id: 'recruit-daisy', turn: 1,
+      title: 'Recruit a Journeyman',
+      do: 'Click Daisy, Bouquet Weaver in your hand, then Recruit (cost 2).',
+      why: 'Journeymen (cost 2 to 3) arrive Busy and are ready next turn. Masters (cost 4 to 5) arrive upside down and take two turns. Recruit now and Daisy is ready when you need her.',
+      pick: (o) => o.type === 'recruit' && o.cardId === C.daisy && !o.targetUid,
     }),
     {
-      kind: 'move', who: 'you', id: 'clover-talent',
+      kind: 'move', who: 'you', id: 'daisy-talent',
       title: 'A talent fires',
-      do: 'Choose Sorrel.',
-      why: 'Many animals have a talent that fires when they arrive. Clover\'s lets you recruit a friend from your hand for free. The friend arrives Busy, turned sideways, and cannot act until your next turn.',
-      nudge: 'Bring Sorrel along. A free animal is a free animal.',
-      when: (req) => req.kind === 'pick' && req.reason === 'recruitFree',
-      shape: (req) => ({ ...req, options: req.options.filter((o) => o.cardId === C.sorrel) }),
-      valid: (a, req) => Array.isArray(a) && a.length === 1 && req.options.some((o) => o.uid === a[0] && o.cardId === C.sorrel),
-      auto: (req) => [req.options.find((o) => o.cardId === C.sorrel).uid],
+      do: 'Choose Peanut.',
+      why: 'Many animals have a talent that fires when they arrive. Daisy’s pairs her up with somebody already in your town: while both of them are standing here, each of their shifts pays 1 more. Peanut is the only animal you have, so Peanut it is.',
+      nudge: 'Pair her with Peanut — there is nobody else in town yet.',
+      when: (req) => req.kind === 'pick' && req.reason === 'pair',
+      shape: (req) => req,
+      valid: (a, req) => Array.isArray(a) && a.length === 1 && req.options.some((o) => o.uid === a[0]),
+      auto: (req) => [req.options[0].uid],
     },
-    actionStep({
-      id: 'work-clover', turn: 1,
-      title: 'Work a shift',
-      do: 'Click Clover in your town, then Work a shift.',
-      why: 'A shift turns an upright animal Busy for its listed delay, then pays out Supply at the end of the turn that finishes it. Clover\'s shift takes 1 turn and pays 1: small, but it is income.',
-      pick: (o, state) => o.type === 'work' && o.charUid === uidOf(state, 0, C.clover),
-    }),
-    actionStep({
-      id: 'recruit-mabel', turn: 1,
-      title: 'Recruit a Journeyman',
-      do: 'Click Mabel, Seed Bank Clerk in your hand, then Recruit (cost 2).',
-      why: 'Journeymen (cost 2 to 3) arrive Busy and are ready next turn. Masters (cost 4 to 5) arrive upside down and take two turns. Recruit now and Mabel is ready when you need her.',
-      pick: (o) => o.type === 'recruit' && o.cardId === C.mabel && !o.targetUid,
-    }),
     actionStep({
       id: 'end-1', turn: 1,
       title: 'End your turn',
       do: 'Click End Turn.',
-      why: 'At the End phase shifts tick down: Clover finishes and pays 1 Supply. Then it is Mayor Sable\'s turn.',
+      why: 'At the End phase shifts tick down: Peanut finishes and pays 2 — 1 for the shift and 1 more because Daisy is working alongside them. Then it is Mayor Sable’s turn.',
       pick: isEndTurn,
     }),
     note({
       id: 'rival-2', who: 'rival',
-      title: 'Mayor Sable\'s turn',
-      text: 'Watch the Chronicle. Your rival will recruit, put an animal to work, and announce a purchase in the Capital City: an opening bid on Festival Grant. A purchase does not settle at once. You get a turn to answer it.',
+      title: 'Mayor Sable’s turn',
+      text: 'Watch the Chronicle. Your rival will recruit, put an animal to work, and announce a purchase in the Capital City: an opening bid on the Founder’s Grant. A purchase does not settle at once. You get a turn to answer it.',
       when: (req, state) => state.turnNumber === 2,
     }),
     note({
       id: 'ready-3',
       title: 'Ready!',
-      text: (state) => `At the start of your turn, Busy animals turn back toward upright: Sorrel and Mabel are ready to act, and Clover's shift has paid. You hold ${you(state).supply} Supply. In the Capital City, Mayor Sable leads the bidding on Festival Grant.`,
+      text: (state) => `At the start of your turn, Busy animals turn back toward upright: Peanut and Daisy are both ready to act, and Peanut's shift has paid. You hold ${you(state).supply} Supply. In the Capital City, Mayor Sable leads the bidding on the Founder's Grant.`,
       when: (req, state) => req.kind === 'resources' && state.turnNumber === 3,
     }),
     resourcesStep({
       id: 'resources-3', turn: 3, want: 'draw',
       title: 'Resources: the other choice',
       do: 'Choose Draw 1 card.',
-      why: 'Your hand is running low. Drawing keeps the next turns interesting; Supply keeps this one moving. With three animals ready to earn, take the card.',
+      why: 'Your hand is running low. Drawing keeps the next turns interesting; Supply keeps this one moving. You have enough Supply for what this turn needs, so take the card.',
     }),
     actionStep({
-      id: 'play-garden', turn: 3,
+      id: 'upgrade-peanut', turn: 3,
+      title: 'Promote an animal',
+      do: 'Click Peanut, Barista in your hand, then Upgrade.',
+      why: 'A better version of an animal you already have replaces it for the difference in cost — 1 here — keeps its orientation, and takes no new place in your town. A town holds ten animals, so improving one beats adding one. It also moves Peanut into Food, which is about to matter.',
+      pick: (o, state) => o.type === 'recruit' && o.cardId === C.barista && o.targetUid === uidOf(state, 0, C.peanut) && !o.fromUnemployment,
+    }),
+    actionStep({
+      id: 'play-fresh-batch', turn: 3,
       title: 'Play an Event',
-      do: 'Click Community Garden in your hand, then Play (using Clover).',
-      why: 'Events need upright animals of the right species or study, and those animals turn Busy to pay for it. Community Garden needs an Agriculture animal. Clover is your cheapest worker, so spend Clover and keep Sorrel and Mabel free. Mabel\'s talent draws you a card for the first Event each turn.',
-      nudge: 'Use Clover for this one. Sorrel and Mabel have work to do.',
-      pick: (o, state) => o.type === 'playEvent' && o.cardId === C.garden
-        && (!o.characters || (o.characters.length === 1 && o.characters[0] === uidOf(state, 0, C.clover))),
+      do: 'Click Fresh Batch in your hand, then Play (using Peanut).',
+      why: 'Events need upright animals of the right species or study, and those animals turn Busy to pay for it. Fresh Batch needs a Food animal, and Peanut is one now that they are behind the counter. Spend Peanut and keep Daisy free — she has somewhere to be.',
+      nudge: 'Use Peanut for this one. Daisy has work to do.',
+      pick: (o, state) => o.type === 'playEvent' && o.cardId === C.freshBatch
+        && (!o.characters || (o.characters.length === 1 && o.characters[0] === uidOf(state, 0, C.barista))),
     }),
     actionStep({
       id: 'outbid-grant', turn: 3, lockBid: true,
       title: 'Outbid your rival',
-      do: 'Click Sorrel, choose Outbid an auction, click Festival Grant in the Capital City, then confirm the bid.',
-      why: 'A raise only has to beat the standing bid. Sorrel walks to the Capital City and stands under the card until the auction ends; pledged animals do not come back at Ready. The pledge ladder: your first pledge needs an animal costing 1 or more (cost-0 Clover could never bid), your second needs cost 2, and so on. If you lose, every Supply you bid comes back.',
-      nudge: 'Pledge Sorrel, and bid the minimum. A raise only needs to beat the standing bid.',
-      pick: (o, state) => o.type === 'raise' && o.cardId === C.grant && o.charUid === uidOf(state, 0, C.sorrel),
-    }),
-    actionStep({
-      id: 'work-mabel', turn: 3,
-      title: 'Keep earning',
-      do: 'Click Mabel in your town, then Work a shift.',
-      why: 'Never leave an upright animal idle at the end of your turn. Mabel\'s shift pays 2 Supply at the End phase.',
-      pick: (o, state) => o.type === 'work' && o.charUid === uidOf(state, 0, C.mabel),
+      do: 'Click Daisy, choose Outbid an auction, click the Founder’s Grant in the Capital City, then confirm the bid.',
+      why: 'A raise only has to beat the standing bid. Daisy walks to the Capital City and stands under the card until the auction ends; pledged animals do not come back at Ready. The pledge ladder: your first pledge needs an animal costing 1 or more (a cost-0 animal could never bid), your second needs cost 2, and so on. If you lose, every Supply you bid comes back.',
+      nudge: 'Pledge Daisy, and bid the minimum. A raise only needs to beat the standing bid.',
+      pick: (o, state) => o.type === 'raise' && o.cardId === C.grant && o.charUid === uidOf(state, 0, C.daisy),
     }),
     actionStep({
       id: 'end-3', turn: 3,
@@ -277,13 +277,13 @@ export function buildTutorialSteps() {
     note({
       id: 'rival-4', who: 'rival',
       title: 'Can they answer?',
-      text: 'Mayor Sable\'s Juniper is already pledged, and Patch costs 0. Nobody on their side can make a second pledge, which needs an animal costing 2 or more. The ladder, not the price, is what ends a bidding war.',
+      text: 'Mayor Sable’s Comet, Rocket Mechanic is already pledged, and the Bolt Sorter costs 0. Nobody on their side can make a second pledge, which needs an animal costing 2 or more. The ladder, not the price, is what ends a bidding war.',
       when: (req, state) => state.turnNumber === 4,
     }),
     note({
       id: 'won-grant',
       title: 'You won the auction!',
-      text: (state) => `At the start of your turn, any auction you still lead settles. Festival Grant is yours for the ${pendingOn(state, C.grant) ? 'standing' : 'winning'} bid, and it paid 4 Supply straight back: you hold ${you(state).supply}. Mayor Sable was refunded in full; only the animals were at stake. Notice the Capital City refilled, and Town Bell, which nobody bid on, aged out on your rival's turn. The display turns over once a round.`,
+      text: (state) => `At the start of your turn, any auction you still lead settles. The Founder's Grant is yours for the ${pendingOn(state, C.grant) ? 'standing' : 'winning'} bid, and it paid 5 Supply and a Building chit straight back: you hold ${you(state).supply}. Mayor Sable was refunded in full; only the animals were at stake. Notice the Capital City refilled, and Town Bell, which nobody bid on, aged out on your rival's turn. The display turns over once a round.`,
       when: (req, state) => req.kind === 'resources' && state.turnNumber === 5,
     }),
     resourcesStep({
@@ -295,17 +295,17 @@ export function buildTutorialSteps() {
     actionStep({
       id: 'announce-statue', turn: 5, lockBid: true,
       title: 'Bid for a Statue',
-      do: 'Click Mabel or Sorrel, choose Announce a purchase, click the Statue of Kindness, then confirm the bid of 10.',
+      do: 'Click Peanut, choose Announce a purchase, click the Statue of Kindness, then confirm the bid of 10.',
       why: 'Statues are how you win: control 5 of the 9. A Statue costs 10 while you hold fewer than two, 20 while you hold two or three, and 30 for the one that wins the game. Each brings a boon and a burden. Bid the minimum: a higher opening bid only spends Supply your rival may never contest.',
       nudge: 'Open the bid on the Statue of Kindness at the minimum, 10 Supply.',
-      pick: (o) => o.type === 'announce' && o.cardId === C.kindness,
+      pick: (o, state) => o.type === 'announce' && o.cardId === C.kindness && o.charUid === uidOf(state, 0, C.barista),
     }),
     actionStep({
-      id: 'upgrade-clover', turn: 5,
-      title: 'Upgrade an animal',
-      do: 'Click Clover, Community Gardener in your hand, then Upgrade.',
-      why: 'A better version of an animal you already have replaces it for the difference in cost, 3 here, keeps its orientation, and takes no new place in your town. A town holds ten animals, so improving one beats adding one.',
-      pick: (o, state) => o.type === 'recruit' && o.cardId === C.cloverUp && o.targetUid === uidOf(state, 0, C.clover) && !o.fromUnemployment,
+      id: 'work-daisy', turn: 5,
+      title: 'Keep earning',
+      do: 'Click Daisy in your town, then Work a shift.',
+      why: 'Daisy is back from the Capital City with the auction behind her. Never leave an upright animal idle at the end of your turn: her shift pays 2 at the End phase, and 3 while Peanut is still standing beside her.',
+      pick: (o, state) => o.type === 'work' && o.charUid === uidOf(state, 0, C.daisy),
     }),
     actionStep({
       id: 'end-5', turn: 5,
@@ -317,13 +317,13 @@ export function buildTutorialSteps() {
     note({
       id: 'rival-6', who: 'rival',
       title: 'Their move',
-      text: (state) => `Mayor Sable holds ${rival(state).supply} Supply and Juniper is upright, so they could raise to 11. But then you could answer with Clover, who now costs 3, and their next pledge would need a cost-2 animal. They let it go.`,
+      text: (state) => `Mayor Sable holds ${rival(state).supply} Supply, and a pledge needs an upright animal as well as the price. They are putting both of theirs on shift instead — the Grant went to you, and a town that stops earning to lose an auction has lost twice.`,
       when: (req, state) => state.turnNumber === 6,
     }),
     note({
       id: 'first-statue', final: true,
       title: 'Your first Statue!',
-      text: 'The Statue of Kindness stands in your Victory Row. Its boon pays you 1 Supply at the start of each turn while your town has no more animals out of work than your rival\'s; its burden lets your rival rehire for 1 less. Four more Statues win the game, each dearer than the last. You know everything you need: earn, recruit, work, play Events, and fight for the Capital City.',
+      text: 'The Statue of Kindness stands in your Victory Row. Its boon pays you 1 Supply at the start of each turn while your town has no more animals out of work than your rival’s; its burden lets your rival rehire for 1 less. Four more Statues win the game, each dearer than the last. You know everything you need: earn, recruit, work, play Events, and fight for the Capital City.',
       when: (req, state) => req.kind === 'resources' && state.turnNumber === TUTORIAL_LAST_TURN,
     }),
   ];
@@ -353,13 +353,15 @@ export function createTutorialScript() {
 // ---------- the rival's plan ----------
 const RIVAL_PLAN = {
   2: [
-    { type: 'recruit', cardId: C.juniper },
-    { type: 'recruit', cardId: C.patch },
-    { type: 'work', cardId: C.patch },
-    { type: 'announce', cardId: C.grant, withCardId: C.juniper },
+    { type: 'recruit', cardId: C.comet },
+    { type: 'recruit', cardId: C.cometMech },
+    { type: 'work', cardId: C.comet },
+    { type: 'announce', cardId: C.grant, withCardId: C.cometMech },
   ],
-  4: [{ type: 'work', cardId: C.patch }],
-  6: [{ type: 'work', cardId: C.patch }],
+  4: [{ type: 'work', cardId: C.comet }],
+  // Both animals go on shift, which is also why the Statue auction is never answered: a pledge
+  // needs somebody upright, and after this turn Mayor Sable has nobody.
+  6: [{ type: 'work', cardId: C.comet }, { type: 'work', cardId: C.cometMech }],
 };
 
 function matchesIntent(state, pi, intent, o) {

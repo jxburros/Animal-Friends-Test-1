@@ -13,8 +13,7 @@ import { FULL_ART_CARDS, fullArtFor } from '../src/ui/full-art.js';
 import { paintedArtSVG } from '../src/ui/painted-art.js';
 import { SET } from './helpers.mjs';
 
-const MAKER = JSON.parse(readFileSync(new URL('../spec/maker_card_set.json', import.meta.url), 'utf8'));
-const allCards = [...SET.cards, ...MAKER.cards];
+const allCards = SET.cards;
 
 test('the six printings are named, distinct and in collection order', () => {
   assert.deepEqual(VERSION_KEYS, [
@@ -34,8 +33,7 @@ test('the six printings are named, distinct and in collection order', () => {
 test('every card exists in the regular printing, and in Full Card Art only if it was painted', () => {
   for (const card of allCards) {
     assert.ok(hasVersion(card, 'regular'), card.id);
-    // A Maker card that inherited the painting of the printed card it remade has this printing too,
-    // which is why the question is "is there a painting for it" and not "is it a registry key".
+    // The question is "is there a painting for it", not "is it a registry key".
     assert.equal(hasVersion(card, 'fullCardArt'), !!fullArtFor(card), card.id);
     assert.equal(versionsOf(card)[0].key, 'regular');
   }
@@ -52,7 +50,7 @@ test('the printings with no art yet are offered nowhere', () => {
       assert.equal(versionArtUrl(card, key), null, `${card.id} ${key}`);
     }
   }
-  assert.ok(versionAssetUrl('bb_clover_3', 'alternateArt').endsWith('/assets/art/versions/bb_clover_3/alternateArt.png'));
+  assert.ok(versionAssetUrl('mk_clover_master_botanist_5', 'alternateArt').endsWith('/assets/art/versions/mk_clover_master_botanist_5/alternateArt.png'));
 });
 
 test('a card is shown in its Full Card Art when it has one, and its regular printing otherwise', () => {
@@ -67,8 +65,9 @@ test('a card is shown in its Full Card Art when it has one, and its regular prin
 });
 
 test('asking for a printing changes the art, and asking for none changes nothing', () => {
-  const card = SET.cardsById ? SET.cardsById.bb_clover_3 : SET.cards.find((c) => c.id === 'bb_clover_3');
-  const url = FULL_ART_CARDS.bb_clover_3.url;
+  const id = 'mk_clover_master_botanist_5';
+  const card = SET.cards.find((c) => c.id === id);
+  const url = FULL_ART_CARDS[id].url;
   assert.equal(paintedArtSVG(card, '<svg/>'), paintedArtSVG(card, '<svg/>', 'fullCardArt'));
   assert.ok(paintedArtSVG(card, '<svg/>').includes(url));
   // The regular printing of a painted card is the atlas tile, with no painting over it.

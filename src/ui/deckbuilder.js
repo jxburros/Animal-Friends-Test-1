@@ -4,28 +4,16 @@
 // `{ id, name, list: { cardId: count } }` deck back through onSave, which is exactly what
 // createGame accepts in place of a deck id (see engine/state.js resolveDeck).
 //
-// The Workshop builds out of one collection: whichever one the mode being played uses. In Classic
-// that is the printed book (spec/starter_card_set.json) and nothing else; in Maker Mode it is the
-// Maker collection (spec/maker_card_set.json). The two collections are never mixed in a deck, and
-// the shelf that used to show the other one for comparison now lives in the Book, where both
-// collections are read side by side and the rebuild is ticked off card by card.
+// The Workshop builds out of the collection (spec/maker_card_set.json) and nothing else. Reading a
+// card rather than building with it is the Book's job.
 import { deckRules, deckProblems, deckWarnings, maxCopiesOf, DECK_TYPES } from '../engine/deckbuilding.js';
 import { RARITIES, powerRating } from '../engine/power.js';
 import { groupByCharacter, characterOf } from '../engine/characters.js';
 import { buildCardFace, setPreviewContext, raritySlug } from './render.js';
 import { iconSVG } from './art.js';
 
-// Saved decks are kept per collection: a Classic deck and a Maker deck are built from different
-// cards and can never be played against each other's set, so they are stored apart. Classic keeps
-// the original key, so decks saved before Maker Mode existed are still there.
-const STORE_KEYS = { classic: 'af-custom-decks', maker: 'af-custom-decks-maker' };
-let storeKey = STORE_KEYS.classic;
-
-/** Point the saved-deck store at one collection's shelf. */
-export function useDeckStore(modeId) {
-  storeKey = STORE_KEYS[modeId] || `af-custom-decks-${modeId}`;
-  return storeKey;
-}
+// Saved decks live in this browser, under the key the Workshop has always used for this collection.
+const storeKey = 'af-custom-decks-maker';
 
 function h(tag, attrs = {}, children = []) {
   const el = document.createElement(tag);
@@ -362,8 +350,7 @@ function render() {
 /**
  * Open the builder in `hostEl`.
  * @param opts { rules, set, deck?, onSave(deck), onCancel() }
- *   `set` is the collection this mode plays: the printed book in Classic, the Maker collection in
- *   Maker Mode. A deck is built out of that one collection and no other.
+ *   `set` is the collection: a deck is built out of it and nothing else.
  */
 export function openDeckBuilder(hostEl, opts) {
   host = hostEl;

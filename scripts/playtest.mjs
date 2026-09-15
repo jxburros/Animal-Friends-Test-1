@@ -16,7 +16,7 @@ import { makeRandomAgent } from '../src/ai/random.js';
 import { makeHeuristicAgent } from '../src/ai/heuristic.js';
 
 const rules = JSON.parse(fs.readFileSync(new URL('../spec/game.json', import.meta.url)));
-const set = JSON.parse(fs.readFileSync(new URL('../spec/starter_card_set.json', import.meta.url)));
+const set = JSON.parse(fs.readFileSync(new URL('../spec/maker_card_set.json', import.meta.url)));
 
 const DECK_IDS = set.decks.map((d) => d.id);
 const SHORT_ALIAS = {

@@ -1,5 +1,5 @@
 // The power/cost model and the rarity it assigns. These tests pin two things: that the rarity
-// printed on every card is the one src/engine/power.js computes from the card's own data (so the
+// stamped on every card is the one src/engine/power.js computes from the card's own data (so the
 // set file and the model can never drift apart), and that rarity actually governs deck building.
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -59,7 +59,7 @@ test('power model', async (t) => {
   });
 });
 
-test('the printed set matches the model', async (t) => {
+test('the card set matches the model', async (t) => {
   await t.test('every card carries a rarity the model agrees with', () => {
     for (const c of SET.cards) {
       assert.ok(RARITIES.includes(c.rarity), `${c.id}: rarity ${c.rarity}`);
@@ -78,10 +78,12 @@ test('the printed set matches the model', async (t) => {
     assert.ok(!SET.cards.some((c) => c.rarity === 'Legendary'), 'the fifth tier is retired');
   });
 
-  await t.test('the set file is ordered by rating, strongest for its cost first', () => {
-    const scores = SET.cards.map((c) => c.power.score);
-    for (let i = 1; i < scores.length; i++) assert.ok(scores[i] <= scores[i - 1], `card ${i} (${SET.cards[i].id}) is out of order`);
-    assert.equal(rateSet(SET, RULES)[0].id, SET.cards[0].id, 'the first card is the highest rated');
+  // The file is read a character at a time, so it is kept in writing order rather than sorted by
+  // rating; rateSet is what puts the whole set in order when something needs it that way.
+  await t.test('rateSet ranks the whole set, strongest for its cost first', () => {
+    const ranked = rateSet(SET, RULES);
+    assert.equal(ranked.length, SET.cards.length);
+    for (let i = 1; i < ranked.length; i++) assert.ok(ranked[i].score <= ranked[i - 1].score, `${ranked[i].id} is out of order`);
   });
 });
 
@@ -115,7 +117,7 @@ test('rarity governs deck building', async (t) => {
     assert.ok(copyProblem.includes('Super Rare'), `the message should explain why: ${copyProblem}`);
   });
 
-  await t.test('every printed deck respects the rarity limits', () => {
+  await t.test('every deck respects the rarity limits', () => {
     for (const deck of SET.decks) {
       for (const [id, n] of Object.entries(deck.list)) {
         assert.ok(n <= maxCopiesOf(RULES, byId[id]), `${deck.id}: ${n} copies of ${id} (${byId[id].rarity})`);
@@ -124,7 +126,7 @@ test('rarity governs deck building', async (t) => {
     }
   });
 
-  await t.test('the printed decks lean on Commons and are sparing with the rest', () => {
+  await t.test('the decks lean on Commons and are sparing with the rest', () => {
     for (const deck of SET.decks) {
       const copies = (r) => Object.entries(deck.list).reduce((a, [id, n]) => a + (byId[id].rarity === r ? n : 0), 0);
       const top = copies('Super Rare');

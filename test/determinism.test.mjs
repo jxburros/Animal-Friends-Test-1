@@ -33,7 +33,7 @@ describe('serialisation', () => {
 describe('determinism', () => {
   test('the same seed and agents produce identical logs across two runs', async () => {
     async function run(seed) {
-      const state = createGame(RULES, SET, { seed, decks: ['burrow-bloom', 'paws-papers'], names: ['You', 'Rival'] });
+      const state = createGame(RULES, SET, { seed, decks: ['mk-ledger-larder', 'mk-bench-bandstand'], names: ['You', 'Rival'] });
       await playGame(state, [makeRandomAgent(seed * 7), makeRandomAgent(seed * 13)], { maxTurnsPerPlayer: 15 });
       return state;
     }
@@ -47,7 +47,7 @@ describe('determinism', () => {
 
   test('a different seed generally produces a different log', async () => {
     async function run(seed) {
-      const state = createGame(RULES, SET, { seed, decks: ['burrow-bloom', 'paws-papers'] });
+      const state = createGame(RULES, SET, { seed, decks: ['mk-ledger-larder', 'mk-bench-bandstand'] });
       await playGame(state, [makeRandomAgent(seed * 7), makeRandomAgent(seed * 13)], { maxTurnsPerPlayer: 15 });
       return state;
     }
@@ -100,7 +100,7 @@ describe('whole game', () => {
     for (let seed = 1; seed <= 8; seed++) {
       const state = createGame(RULES, SET, {
         seed,
-        decks: seed % 2 ? ['burrow-bloom', 'paws-papers'] : ['paws-papers', 'burrow-bloom'],
+        decks: seed % 2 ? ['mk-ledger-larder', 'mk-bench-bandstand'] : ['mk-bench-bandstand', 'mk-ledger-larder'],
         names: ['You', 'Rival'],
       });
       state.agents = [makeRandomAgent(seed * 7), makeRandomAgent(seed * 13)];
@@ -119,7 +119,7 @@ describe('whole game', () => {
   });
 
   test('playGame itself reaches a decided winner/draw and sets state.result', async () => {
-    const state = createGame(RULES, SET, { seed: 99, decks: ['burrow-bloom', 'paws-papers'] });
+    const state = createGame(RULES, SET, { seed: 99, decks: ['mk-ledger-larder', 'mk-bench-bandstand'] });
     const marketSize = state.market.deck.length + state.market.city.length + state.market.cityDump.length;
     await playGame(state, [makeRandomAgent(99), makeRandomAgent(100)]);
     assert.ok(state.winner === 0 || state.winner === 1 || state.winner === null);

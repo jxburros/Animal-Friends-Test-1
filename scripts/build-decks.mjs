@@ -1,14 +1,10 @@
 #!/usr/bin/env node
-// Build the printed starter decks from the current card set.
+// Build the town decks from the current card set.
 //
-//   node scripts/build-decks.mjs [--maker] [--check] [--only <deck-id>,<deck-id>]
+//   node scripts/build-decks.mjs [--check] [--only <deck-id>,<deck-id>]
 //
-// `--maker` builds the Maker shelf's own decks into spec/maker_card_set.json instead. The Maker
-// cards are a whole second collection with their own species and studies, so Maker Mode needs decks
-// built out of them rather than out of the printed book.
-//
-// `--only` rebuilds just the named decks and leaves every other printed list exactly as it is, which
-// is how an expansion adds its own decks without retuning the ones already playtested.
+// `--only` rebuilds just the named decks and leaves every other list exactly as it is, which is how
+// an expansion adds its own decks without retuning the ones already playtested.
 //
 // Decks are not hand-listed any more: each one is a stated identity (two species, two studies) and
 // this script fills it from the rated card set, strongest-for-its-cost first, inside the deck rules
@@ -21,12 +17,11 @@
 import fs from 'node:fs';
 import { deckProblems, deckRules, maxCopiesOf } from '../src/engine/deckbuilding.js';
 
-const MAKER = process.argv.includes('--maker');
-const setUrl = new URL(MAKER ? '../spec/maker_card_set.json' : '../spec/starter_card_set.json', import.meta.url);
+const setUrl = new URL('../spec/maker_card_set.json', import.meta.url);
 const set = JSON.parse(fs.readFileSync(setUrl, 'utf8'));
 const rules = JSON.parse(fs.readFileSync(new URL('../spec/game.json', import.meta.url), 'utf8'));
 const dr = deckRules(rules);
-// A printed deck is built at the smallest legal size: it is a starting point, and the extra ten
+// A deck is built at the smallest legal size: it is a starting point, and the extra ten
 // cards the Workshop now allows are a choice a Mayor makes for themselves.
 const DECK_SIZE = dr.minDeckSize;
 
@@ -36,39 +31,17 @@ const CHARACTER_TARGET = Object.values(CURVE).reduce((a, b) => a + b, 0);
 const EVENT_TARGET = DECK_SIZE - CHARACTER_TARGET;
 /** Cards in a deck that must produce Supply or draw. Below this a deck simply cannot function. */
 const ECONOMY_FLOOR = 22;
-/** Super Rare copies a printed deck may hold: a deck has a marquee card, not a marquee. */
+/** Super Rare copies a deck may hold: a deck has a marquee card, not a marquee. */
 const TOP_RARITY_CAP = 3;
 
-const PRINTED_IDENTITIES = [
-  { id: 'burrow-bloom', name: 'Burrow & Bloom', species: ['Rabbit', 'Mouse'], studies: ['Agriculture', 'Lore'],
-    blurb: 'Rabbits and Mice of Agriculture and Lore: a warren that arrives in crowds and a records office that plays the Events nobody else can afford.' },
-  { id: 'paws-papers', name: 'Paws & Papers', species: ['Raccoon', 'Fox'], studies: ['Commerce', 'Civics'],
-    blurb: 'Raccoons and Foxes of Commerce and Civics: the City Dump is a second hand, and no auction closes without a Fox having read it first.' },
-  { id: 'bramble-bastion', name: 'Bramble & Bastion', species: ['Hedgehog', 'Badger'], studies: ['Crafts', 'Agriculture'],
-    blurb: 'Hedgehogs and Badgers of Crafts and Agriculture: nothing moves them, nothing reaches them, and the shared shocks pass the town by.' },
-  { id: 'ripple-rune', name: 'Ripple & Rune', species: ['Otter', 'Squirrel'], studies: ['Lore', 'Commerce'],
-    blurb: 'Otters and Squirrels of Lore and Commerce: work slides from paw to paw while the Supply quietly piles up somewhere safe.' },
-  { id: 'whisker-willow', name: 'Whisker & Willow', species: ['Cat', 'Mouse'], studies: ['Lore', 'Crafts'],
-    blurb: 'Cats and Mice of Lore and Crafts: the Cats act when they should not be able to, and the Mice have the paperwork ready either way.' },
-  { id: 'root-rampart', name: 'Root & Rampart', species: ['Badger', 'Rabbit'], studies: ['Civics', 'Crafts'],
-    blurb: 'Badgers and Rabbits of Civics and Crafts: a town meeting that never runs out of bodies and a wall that never comes down.' },
-  // Night Shift (v0.7.0)
-  { id: 'moon-mocha', name: 'Moon & Mocha', species: ['Owl', 'Cat'], studies: ['Science', 'Commerce'],
-    blurb: 'Owls and Cats of Science and Commerce: the café never closes, the observatory never sleeps, and somebody has just been launched into space.' },
-  { id: 'steam-starlight', name: 'Steam & Starlight', species: ['Badger', 'Owl'], studies: ['Crafts', 'Science'],
-    blurb: 'Badgers and Owls of Crafts and Science: the boiler holds, the telescope is pointed the right way, and the whole works is up and running before dawn.' },
-];
-
-// The Maker shelf's own decks. Two to begin with — the third way to play Maker Mode is to build
-// your own in the Workshop, which is why there is no attempt here to cover the whole cast.
-const MAKER_IDENTITIES = [
+// The town decks. Two to begin with — the third way to play is to build your own in the Workshop,
+// which is why there is no attempt here to cover the whole cast.
+const IDENTITIES = [
   { id: 'mk-ledger-larder', name: 'Ledger & Larder', species: ['Squirrel', 'Mouse'], studies: ['Commerce', 'Food'],
     blurb: 'Squirrels and Mice of Commerce and Food: the books balance, the counter never closes, and everything the town eats has been costed twice.' },
   { id: 'mk-bench-bandstand', name: 'Bench & Bandstand', species: ['Badger', 'Cat'], studies: ['Crafts', 'Entertainment'],
     blurb: 'Badgers and Cats of Crafts and Entertainment: the bench turns out the work, the hall turns out the town, and neither of them stops for weather.' },
 ];
-
-const IDENTITIES = MAKER ? MAKER_IDENTITIES : PRINTED_IDENTITIES;
 
 const score = (c) => (c.power && c.power.score) || 0;
 const cards = set.cards;
@@ -249,7 +222,7 @@ if (process.argv.includes('--check')) {
     set.decks = built;
   }
   fs.writeFileSync(setUrl, `${JSON.stringify(set, null, 1)}\n`);
-  console.log(`\nWrote ${built.length} deck${built.length === 1 ? '' : 's'} to ${MAKER ? 'spec/maker_card_set.json' : 'spec/starter_card_set.json'}.`);
+  console.log(`\nWrote ${built.length} deck${built.length === 1 ? '' : 's'} to spec/maker_card_set.json.`);
 } else {
   console.error('\nNot written: some decks are illegal.');
   process.exit(1);

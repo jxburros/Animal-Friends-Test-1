@@ -15,7 +15,7 @@
 // To bring another printing into the game:
 //
 //   1. drop the painting at  assets/art/versions/<cardId>/<slot>.png   (slot: alternateArt | creativeFoil)
-//   2. add one line to PRINTINGS below:  bb_clover_3: { alternateArt: true, foil: true },
+//   2. add one line to PRINTINGS below:  mk_clover_master_botanist_5: { alternateArt: true, foil: true },
 //
 // `true` means "this printing exists, at the conventional path"; a string is an explicit URL for art
 // that lives somewhere else. A printing with no art of its own (plain `foil`) only ever needs `true`.
@@ -66,18 +66,18 @@ const BY_KEY = Object.freeze(Object.fromEntries(VERSIONS.map((v) => [v.key, v]))
  */
 export const PRINTINGS = Object.freeze({
   mk_beck_bylaw_reader_1: Object.freeze({ foil: true }),
-  bb_clover_1: Object.freeze({ foil: true }),
+  mk_clover_seedling_helper_0: Object.freeze({ foil: true }),
   mk_earl_tea_trader_2: Object.freeze({ foil: true }),
   mk_benjamin_lantern_maker_2: Object.freeze({ foil: true }),
   mk_velvet_counter_clerk_1: Object.freeze({ foil: true }),
-  br_toolbox_trade: Object.freeze({ foil: true }),
+  mk_moss_rehiring_day: Object.freeze({ foil: true }),
   mk_comet_astronaut_5: Object.freeze({ foil: true }),
-  ns_flint_0: Object.freeze({ foil: true }),
+  mk_finn_auctioneers_boy_0: Object.freeze({ foil: true }),
   mk_earl_tea_house_keeper_4: Object.freeze({ foil: true }),
-  ns_hoot_and_holler: Object.freeze({ foil: true }),
+  mk_night_round: Object.freeze({ foil: true }),
   mk_willow_ferry_trader_1: Object.freeze({ foil: true }),
   mk_faustus_costumier_2: Object.freeze({ foil: true }),
-  mkt_dabble: Object.freeze({ foil: true }),
+  mk_dylan_river_otter_4: Object.freeze({ foil: true }),
   mk_willow_tide_reckoner_3: Object.freeze({ foil: true }),
   mk_rosabeth_herb_gatherer_0: Object.freeze({ foil: true }),
 });
@@ -133,10 +133,10 @@ export function resolveVersionKey(def, key) {
   return defaultVersionKey(def);
 }
 
-/** How many cards exist in a given printing — what the Book counts on its shelf tabs. */
+/** How many cards exist in a given printing — what the Book counts on its printing chips. */
 export function countInVersion(cards, key) {
-  // Counted by the painting rather than by the registry key: a Maker card that inherited the
-  // painting of the printed card it remade is a card in this printing, on its own shelf.
+  // Counted by the painting rather than by the registry key: a card is in the Full Card Art
+  // printing when there is a painting for it, whatever the registry says about other printings.
   if (key === 'fullCardArt') return cards.filter((c) => !!fullArtFor(c)).length;
   return cards.filter((c) => hasVersion(c, key)).length;
 }

@@ -14,7 +14,7 @@
 
 import fs from 'node:fs';
 
-const set = JSON.parse(fs.readFileSync(new URL('../spec/starter_card_set.json', import.meta.url)));
+const set = JSON.parse(fs.readFileSync(new URL('../spec/maker_card_set.json', import.meta.url)));
 const charters = JSON.parse(fs.readFileSync(new URL('../spec/species.json', import.meta.url)));
 
 const args = process.argv.slice(2);

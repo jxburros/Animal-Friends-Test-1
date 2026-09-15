@@ -4,7 +4,7 @@
 //
 // Adding a name here is not enough to make it work: the engine must interpret it too
 // (src/engine/effects.js, game.js, actions.js). A card remake never adds one — see
-// docs/REMAKING_A_CHARACTER.md, which logs the wish in `wantedVerbs` instead.
+// docs/WRITING_A_CHARACTER.md, which logs the wish in `wantedVerbs` instead.
 export const EFFECTS = new Set([
   'seq', 'gainSupply', 'opponentGainSupply', 'giveSupplyToOpponent', 'draw', 'discard', 'addMod',
   'readyCharacter', 'readyNextTurn', 'rehire', 'recruitFromHand', 'reorderDeckTop',

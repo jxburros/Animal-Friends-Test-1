@@ -1,6 +1,6 @@
 // The fourth round of wishes: the eight `wantedVerbs` the third round left unbuilt.
 //
-// Each one is here because a remade character's story wanted it and the engine could not say it
+// Each one is here because a character's story wanted it and the engine could not say it
 // (their `wantedVerbs` entry in spec/maker_card_set.json names the wish and now names what was
 // built). Pinned here by what each actually does, and by the manners it has to keep: a standing
 // rate is never spent, a rule written against the rival never touches the Mayor who owns it, and
@@ -39,7 +39,7 @@ function agentTakesFirst(state) {
 
 test('peekMarketDeck with reorder puts the Capital City deck back the way the watcher wants it', async () => {
   const state = stage();
-  setCity(state, ['mk_town_bell'], { deck: ['bld_hiring_hall', 'bld_grain_exchange', 'st_joy'] });
+  setCity(state, ['mk_mkt_town_bell'], { deck: ['mk_bld_hiring_hall', 'mk_bld_weighbridge', 'mk_st_joy'] });
   // Reversed: the sky watch decides what the Capital City meets first.
   state.agents = [makeScriptedAgent([(s, pi, req) => {
     assert.equal(req.kind, 'order');
@@ -47,22 +47,22 @@ test('peekMarketDeck with reorder puts the Capital City deck back the way the wa
     return req.options.map((o) => o.uid).reverse();
   }]), {}];
   await runEffect(state, 0, { do: 'peekMarketDeck', count: 3, reorder: true }, {});
-  assert.deepEqual(state.market.deck.slice(0, 3), ['st_joy', 'bld_grain_exchange', 'bld_hiring_hall']);
-  assert.deepEqual(state.players[0].knownMarketTop, ['st_joy', 'bld_grain_exchange', 'bld_hiring_hall']);
+  assert.deepEqual(state.market.deck.slice(0, 3), ['mk_st_joy', 'mk_bld_weighbridge', 'mk_bld_hiring_hall']);
+  assert.deepEqual(state.players[0].knownMarketTop, ['mk_st_joy', 'mk_bld_weighbridge', 'mk_bld_hiring_hall']);
 });
 
 test('peekMarketDeck without reorder still only looks, and a reorder of one card moves nothing', async () => {
   const state = stage();
-  setCity(state, ['mk_town_bell'], { deck: ['bld_hiring_hall', 'bld_grain_exchange'] });
+  setCity(state, ['mk_mkt_town_bell'], { deck: ['mk_bld_hiring_hall', 'mk_bld_weighbridge'] });
   state.agents = [makeScriptedAgent([() => { throw new Error('nothing should be asked'); }]), {}];
   await runEffect(state, 0, { do: 'peekMarketDeck', count: 2 }, {});
-  assert.deepEqual(state.market.deck.slice(0, 2), ['bld_hiring_hall', 'bld_grain_exchange'], 'looking is looking');
+  assert.deepEqual(state.market.deck.slice(0, 2), ['mk_bld_hiring_hall', 'mk_bld_weighbridge'], 'looking is looking');
 
   const one = stage();
-  setCity(one, ['mk_town_bell'], { deck: ['bld_hiring_hall'] });
+  setCity(one, ['mk_mkt_town_bell'], { deck: ['mk_bld_hiring_hall'] });
   one.agents = [makeScriptedAgent([() => { throw new Error('one card is already in order'); }]), {}];
   await runEffect(one, 0, { do: 'peekMarketDeck', count: 3, reorder: true }, {});
-  assert.deepEqual(one.players[0].knownMarketTop, ['bld_hiring_hall']);
+  assert.deepEqual(one.players[0].knownMarketTop, ['mk_bld_hiring_hall']);
 });
 
 // -------------------------------------------------- Eric: a rate, not a discount
@@ -103,8 +103,8 @@ test('townRecruitDiscount is a rate: every recruit pays it, and no recruit spend
 
 test('cardFromDumpToHand reaches any card of yours in the Town Dump, and a filter narrows it', async () => {
   const state = stage();
-  const character = addToDump(state, 0, 'bb_clover_1');
-  const event = addToDump(state, 0, 'bb_founders_orchard');
+  const character = addToDump(state, 0, 'mk_clover_seedling_helper_0');
+  const event = addToDump(state, 0, 'mk_glut_of_squash');
   state.agents = [makeScriptedAgent([(s, pi, req) => {
     assert.equal(req.reason, 'cardFromDumpToHand');
     assert.equal(req.options.length, 2, 'the whole bin is on offer');
@@ -116,8 +116,8 @@ test('cardFromDumpToHand reaches any card of yours in the Town Dump, and a filte
 
   // A filter is what keeps a narrow card narrow: the Events only, even with a Character in there.
   const narrow = stage();
-  addToDump(narrow, 0, 'bb_clover_1');
-  const onlyEvent = addToDump(narrow, 0, 'bb_founders_orchard');
+  addToDump(narrow, 0, 'mk_clover_seedling_helper_0');
+  const onlyEvent = addToDump(narrow, 0, 'mk_glut_of_squash');
   narrow.agents = [makeScriptedAgent([(s, pi, req) => {
     assert.deepEqual(req.options.map((o) => o.uid), [onlyEvent.uid]);
     return [onlyEvent.uid];
@@ -134,7 +134,7 @@ test('cardFromDumpToHand asks nothing of an empty bin, and may be declined', asy
   assert.equal(empty.players[0].hand.length, 0);
 
   const declined = stage();
-  addToDump(declined, 0, 'bb_clover_1');
+  addToDump(declined, 0, 'mk_clover_seedling_helper_0');
   declined.agents = [makeScriptedAgent([[]]), {}];
   await runEffect(declined, 0, { do: 'cardFromDumpToHand', optional: true }, {});
   assert.equal(declined.players[0].hand.length, 0, 'optional means it can be left there');
@@ -209,19 +209,19 @@ test('addMod valuePer scales the rate by the Buildings this town has raised, up 
   await runEffect(state, 0, rate, {});
   assert.equal(state.players[0].mods.length, 0, 'a town that has raised nothing gets no rate at all');
 
-  giveBuilding(state, 0, 'bld_hiring_hall');
-  giveBuilding(state, 0, 'bld_grain_exchange');
+  giveBuilding(state, 0, 'mk_bld_hiring_hall');
+  giveBuilding(state, 0, 'mk_bld_weighbridge');
   await runEffect(state, 0, rate, {});
   assert.equal(state.players[0].mods.at(-1).value, 2, 'two up, two off the next consent');
 
-  giveBuilding(state, 0, 'bld_counting_house');
-  giveBuilding(state, 0, 'bld_town_workshop');
+  giveBuilding(state, 0, 'mk_bld_counting_house');
+  giveBuilding(state, 0, 'mk_bld_town_workshop');
   state.players[0].mods = [];
   await runEffect(state, 0, rate, {});
   assert.equal(state.players[0].mods.at(-1).value, 3, 'and the printed ceiling holds');
 
   // The Statues are bought, not built, so they are not what the office has stamped.
-  state.players[0].victoryRow.push('st_joy', 'st_kindness');
+  state.players[0].victoryRow.push('mk_st_joy', 'mk_st_kindness');
   state.players[0].mods = [];
   await runEffect(state, 0, { ...rate, max: 9 }, {});
   assert.equal(state.players[0].mods.at(-1).value, 4);
@@ -298,7 +298,7 @@ test('opponentLosesSupply takes what is there, tells the rival, and never takes 
 test('opponentChoice hands the decision across the table, and the branch they pick is the one that runs', async () => {
   const state = stage();
   state.players[1].supply = 6;
-  addToHand(state, 1, 'bb_clover_1');
+  addToHand(state, 1, 'mk_clover_seedling_helper_0');
   const both = {
     do: 'opponentChoice',
     options: [
@@ -321,7 +321,7 @@ test('opponentChoice hands the decision across the table, and the branch they pi
   // And when they pick the other way, the other way happens.
   const other = stage();
   other.players[1].supply = 6;
-  addToHand(other, 1, 'bb_clover_1');
+  addToHand(other, 1, 'mk_clover_seedling_helper_0');
   other.agents = [{}, makeScriptedAgent([(s, pi, req) => [req.options[0].uid]])];
   await runEffect(other, 0, both, {});
   assert.equal(other.players[1].supply, 3);

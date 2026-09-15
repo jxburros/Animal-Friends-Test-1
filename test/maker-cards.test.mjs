@@ -1,31 +1,16 @@
-// The remade collection: the Maker card set and the Character index the Deck Workshop sorts by.
-//
-// Two promises are tested here. The Maker set stays a well-formed, separate shelf that the game
-// never draws from, and a Maker card's `remakes` link keeps pointing at a printed card's id — the
-// tie that survives a rename.
+// The collection as a body of writing: every card stays inside the vocabulary the engine
+// interprets, every named character has an entry behind them, and the Character index the Deck
+// Workshop and the Book sort by gathers every version of a name into one run.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import fs from 'node:fs';
-import { SET } from './helpers.mjs';
+import { RULES, SET } from './helpers.mjs';
+import { createGame, playGame, deckProblems } from '../src/engine/index.js';
+import { makeRandomAgent } from '../src/ai/random.js';
 import { characterIndex, groupByCharacter, characterOf, isCharacterCard } from '../src/engine/characters.js';
 import { EFFECTS, TRIGGERS, MOD_KEYS, MOD_FILTER_KEYS, CONDITIONS, PASSIVE_KEYS, CITY_RULE_KEYS } from './card-vocabulary.mjs';
 
-const MAKER = JSON.parse(fs.readFileSync(new URL('../spec/maker_card_set.json', import.meta.url), 'utf8'));
-const printedById = Object.fromEntries(SET.cards.map((c) => [c.id, c]));
-
-/** Every study and species a maker card may declare: the printed ones, plus any the maker set adds. */
-const STUDIES = new Set([...SET.studies, ...(MAKER.studies || [])]);
-const SPECIES = new Set([...SET.species, ...(MAKER.species || [])]);
-
-/**
- * The printed versions of a remade character. A rename is the point of `renamedFrom`: Peanut's
- * printed versions are Acorn's, and without following that link the checks below would silently
- * pass on a character whose whole batch is unaccounted for.
- */
-function printedVersionsOf(entry) {
-  const printedName = entry.renamedFrom || entry.name;
-  return SET.cards.filter((c) => c.name === printedName && (c.type === 'character' || c.type === 'marketCharacter'));
-}
+const STUDIES = new Set(SET.studies);
+const SPECIES = new Set(SET.species);
 
 function walkEffect(eff, where) {
   assert.ok(eff && eff.do, `${where}: effect with no "do"`);
@@ -46,56 +31,30 @@ function walkEffect(eff, where) {
   if (eff.then) walkEffect(eff.then, `${where}.then`);
 }
 
-test('the maker set is its own playable collection, never mixed with the printed one', () => {
-  assert.equal(MAKER.setId, 'AF-MAKER-01');
-  assert.equal(MAKER.playable, true, 'Maker Mode plays this shelf');
-  assert.ok(Array.isArray(MAKER.cards), 'maker cards must be a list');
-  assert.ok(MAKER.decks.length >= 2, 'Maker Mode offers at least two decks of its own');
-  assert.ok(MAKER.marketDecks.length >= 1, 'Maker Mode needs a Capital City of its own');
-  // No maker card may share an id with a printed one: ids are how a remake points at its original.
-  for (const card of MAKER.cards) {
-    assert.ok(!printedById[card.id], `maker card ${card.id} collides with a printed card id`);
-  }
-  // Every deck is built out of maker cards alone. A printed card in a maker deck would mean the two
-  // collections have quietly merged, which is the one thing Maker Mode must not do.
-  const makerIds = new Set(MAKER.cards.map((c) => c.id));
-  for (const deck of MAKER.decks) {
-    for (const id of Object.keys(deck.list)) {
-      assert.ok(makerIds.has(id), `${deck.id} holds ${id}, which is not a maker card`);
-    }
+test('the collection is complete enough to be played', () => {
+  assert.equal(SET.setId, 'AF-MAKER-01');
+  assert.ok(SET.cards.length, 'cards to play with');
+  assert.ok(SET.decks.length >= 2, 'at least two decks to play against each other');
+  assert.ok(SET.marketDecks.length >= 1, 'a Capital City to fight over');
+  const ids = new Set(SET.cards.map((c) => c.id));
+  for (const deck of SET.decks) {
+    assert.deepEqual(deckProblems(RULES, SET, deck.list), [], deck.id);
+    for (const id of Object.keys(deck.list)) assert.ok(ids.has(id), `${deck.id} holds ${id}, which is not a card in this set`);
   }
 });
 
-test('every maker card either remakes a printed card or says why it is new', () => {
-  for (const card of MAKER.cards) {
-    assert.ok(card.id && card.name && card.type, `maker card needs id, name and type: ${JSON.stringify(card)}`);
-    const claims = [].concat(card.remakes || []);
-    // A maker card is one of two things, and it has to say which. Most replace a printed card, and
-    // `remakes` is that link. The rest are additions — a Town Building has no printed original,
-    // because the type did not exist when the set was printed — and an addition carries
-    // `addition: true` with an `addedBecause` line. Silence is the one thing not allowed: an
-    // unlabelled card is indistinguishable from a remake whose link was forgotten.
-    if (card.addition) {
-      assert.equal(claims.length, 0, `${card.id} is an addition but claims printed card(s) ${claims.join(', ')}`);
-      assert.ok(card.addedBecause, `${card.id} is an addition and needs addedBecause: why a new card, not a remake`);
-    } else {
-      assert.ok(claims.length, `${card.id} neither remakes a printed card nor declares addition: true with addedBecause`);
-    }
-    for (const id of claims) {
-      assert.ok(printedById[id], `maker card ${card.id} remakes unknown printed card ${id}`);
-    }
-    // One printed card is remade once: two maker cards claiming the same original would make
-    // the tick list ambiguous.
-    const others = MAKER.cards.filter((c) => c !== card);
-    for (const id of claims) {
-      const clash = others.find((c) => [].concat(c.remakes || []).includes(id));
-      assert.ok(!clash, `${card.id} and ${clash && clash.id} both remake ${id}`);
-    }
+test('a game plays through to a Statue victory', async () => {
+  for (const seed of [3, 11]) {
+    const state = createGame(RULES, SET, { seed, decks: SET.decks.slice(0, 2).map((d) => d.id) });
+    await playGame(state, [makeRandomAgent(seed), makeRandomAgent(seed + 1)]);
+    assert.notEqual(state.winner, null, `seed ${seed} ended with no winner`);
+    assert.equal(state.result, 'statues', `seed ${seed} did not end on Statues`);
   }
 });
 
-test('maker cards stay inside the vocabulary the engine interprets', () => {
-  for (const card of MAKER.cards) {
+test('every card stays inside the vocabulary the engine interprets', () => {
+  for (const card of SET.cards) {
+    assert.ok(card.id && card.name && card.type, `a card needs id, name and type: ${JSON.stringify(card)}`);
     if (card.species) assert.ok(SPECIES.has(card.species), `${card.id}: undeclared species ${card.species}`);
     if (card.study) assert.ok(STUDIES.has(card.study), `${card.id}: undeclared study ${card.study}`);
     if (card.type === 'character') {
@@ -125,65 +84,28 @@ test('maker cards stay inside the vocabulary the engine interprets', () => {
       walkEffect(ab.effect, `${card.id}.abilities`);
     }
     if (card.effect) walkEffect(card.effect, `${card.id}.effect`);
-    assert.ok(card.flavor, `${card.id}: every remade card carries flavor that references the backstory`);
+    assert.ok(card.flavor, `${card.id}: every card carries flavor that references the backstory`);
   }
 });
 
-test('every remade character is well formed and accounts for its printed versions', () => {
-  const entries = MAKER.characters || [];
-  assert.ok(Array.isArray(entries), 'the maker set needs a characters list');
+test('every named character has an entry, and every entry has cards', () => {
+  const entries = SET.characters || [];
+  assert.ok(Array.isArray(entries) && entries.length, 'the set needs a characters list');
   const names = entries.map((c) => c.name);
-  assert.equal(new Set(names).size, names.length, 'a character is remade once');
+  assert.equal(new Set(names).size, names.length, 'a character is written once');
   for (const entry of entries) {
-    for (const field of ['name', 'species', 'backstory']) {
+    for (const field of ['name', 'species', 'pronouns', 'backstory', 'voice', 'arc']) {
       assert.ok(entry[field], `character entry ${entry.name || '?'} needs ${field}`);
     }
-    // An addition is a character the maker put on the shelf who has no printed original: the whole
-    // point is that they replace nothing, so the printed-version checks below do not apply to them.
-    // They must therefore claim nothing, and must not pretend to be a rename.
-    const printed = entry.addition ? [] : printedVersionsOf(entry);
-    if (entry.addition) {
-      assert.ok(!entry.renamedFrom, `${entry.name} is an addition and cannot also be renamedFrom ${entry.renamedFrom}`);
-      assert.ok(entry.addedBecause, `${entry.name} is an addition and needs addedBecause: why a new character, not a remake`);
-      const claim = MAKER.cards.find((c) => c.name === entry.name && (c.remakes || []).length);
-      assert.ok(!claim, `${entry.name} is an addition, but ${claim && claim.id} claims a printed card`);
-    } else {
-      assert.ok(printed.length, `${entry.name}: no printed versions found${entry.renamedFrom ? ` under renamedFrom "${entry.renamedFrom}"` : ' — a renamed character needs renamedFrom'}`);
-    }
-    // Species is fixed: a remade character keeps the species its printed versions had.
-    if (printed.length) {
-      assert.equal(entry.species, printed[0].species, `${entry.name} changed species`);
-    }
-    const retired = (entry.retires || []).map((r) => (typeof r === 'string' ? r : r.id));
-    for (const r of entry.retires || []) {
-      if (typeof r !== 'string') assert.ok(r.why, `${entry.name} retires ${r.id} with no reason`);
-    }
-    for (const id of retired) {
-      assert.ok(printedById[id], `${entry.name} retires unknown printed card ${id}`);
-      const claim = MAKER.cards.find((c) => [].concat(c.remakes || []).includes(id));
-      assert.ok(!claim, `${entry.name} retires ${id}, but ${claim && claim.id} also remakes it`);
-    }
-    // Cards carry the new name; the printed versions carry the old one.
-    for (const card of MAKER.cards.filter((c) => c.type === 'character')) {
-      if ([].concat(card.remakes || []).some((id) => printed.some((d) => d.id === id))) {
-        assert.equal(card.name, entry.name, `${card.id} remakes one of ${entry.name}'s versions but is named ${card.name}`);
-      }
-    }
-    // The promise of the process: once a character is remade, no printed version is left silent.
-    const claimed = new Set(MAKER.cards.flatMap((c) => [].concat(c.remakes || [])));
-    for (const def of printed) {
-      assert.ok(
-        claimed.has(def.id) || retired.includes(def.id),
-        `${entry.name} is remade but printed version ${def.id} is neither remade nor retired`,
-      );
-    }
+    const cards = SET.cards.filter((c) => isCharacterCard(c) && c.name === entry.name);
+    assert.ok(cards.length, `${entry.name} has an entry but no cards`);
+    // Species is fixed: every version of a character is the same animal.
+    for (const def of cards) assert.equal(def.species, entry.species, `${def.id} is a ${def.species}, ${entry.name} is a ${entry.species}`);
   }
-});
-
-test('the printed set is unaffected by the maker shelf', () => {
-  // The game's own decks still resolve entirely out of the printed set.
-  for (const deck of SET.decks) {
-    for (const id of Object.keys(deck.list)) assert.ok(printedById[id], `deck ${deck.id} names ${id}`);
+  // And the other way round: a Character card with nobody behind it has no story to read in the Book.
+  const written = new Set(names);
+  for (const def of SET.cards.filter(isCharacterCard)) {
+    assert.ok(written.has(def.name), `${def.id} is a card for ${def.name}, who has no character entry`);
   }
 });
 
@@ -191,9 +113,9 @@ test('characterIndex gathers every version of a named Character', () => {
   const index = characterIndex(SET);
   assert.ok(index.length > 0);
   const byName = Object.fromEntries(index.map((c) => [c.name, c]));
-  const printedCharacters = SET.cards.filter(isCharacterCard);
+  const characters = SET.cards.filter(isCharacterCard);
   const counted = index.reduce((a, c) => a + c.versions.length, 0);
-  assert.equal(counted, printedCharacters.length, 'every Character card belongs to exactly one Character');
+  assert.equal(counted, characters.length, 'every Character card belongs to exactly one Character');
   for (const entry of index) {
     // Versions read cheapest first, and all share the Character's name.
     const costs = entry.versions.map((v) => v.cost || 0);

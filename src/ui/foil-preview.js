@@ -9,14 +9,14 @@ const size = document.querySelector('#size');
 const mask = document.querySelector('#mask');
 const status = document.querySelector('#status');
 try {
-  const [rules, printed, maker] = await Promise.all(['game', 'starter_card_set', 'maker_card_set'].map(async (file) => {
+  const [rules, set] = await Promise.all(['game', 'maker_card_set'].map(async (file) => {
     const response = await fetch(`../../spec/${file}.json`);
     if (!response.ok) throw new Error(`Cannot load ${file}`);
     return response.json();
   }));
-  const cards = [...printed.cards, ...maker.cards];
+  const cards = set.cards;
   const cardsById = Object.fromEntries(cards.map((card) => [card.id, card]));
-  setPreviewContext(rules, { ...printed, cards, cardsById });
+  setPreviewContext(rules, { ...set, cardsById });
   for (const card of cards) select.add(new Option(`${card.name}${card.title ? ` · ${card.title}` : ''} (${card.id})`, card.id));
   function render() {
     const def = cardsById[select.value];

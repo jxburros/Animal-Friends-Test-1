@@ -1,7 +1,14 @@
 # Animal Friends TCG — Current Design Reference
 
 **Status:** living design reference and playable-prototype guide  
-**Current prototype set:** *Animal Friends: First Boroughs* (`AF-STARTER-01`)  
+**Current prototype set:** *Animal Friends: First Boroughs* (`AF-MAKER-01`, `spec/maker_card_set.json`)  
+
+> **On the card content below.** The rules, principles and vocabulary in this document are current.
+> The card lists and deck tables are the printed collection the game shipped through v0.9.0, kept as
+> worked examples of the card shapes; the collection the game plays now is
+> `spec/maker_card_set.json`, and [WRITING_A_CHARACTER.md](WRITING_A_CHARACTER.md) is how cards are
+> added to it.
+
 **v0.6.0 — the town has a size, and Unemployment has something to do.** A town holds **ten animals**,
 counting those at work, those pledged into an auction and those face down in Unemployment, which is
 what gives the **upgrade path** a reason to exist. Statues carry a **three-tier price** (10 / 20 / 30), charged at the moment an auction **resolves**.
@@ -18,7 +25,7 @@ Current totals are 461 cards (186 Characters, 106 Events, 9 Statues,
 96 Market cards, 14 Buildings, 12 hired animals, 8 Ordinances
 and 30 on-reveal cards), ten species, six studies, eight printed decks and seven Market Decks.
 See [WHISKERWOOD.md](WHISKERWOOD.md), [MANY_HATS.md](MANY_HATS.md) and [NIGHT_SHIFT.md](NIGHT_SHIFT.md) for the expansion content.  
-**Authoritative implementation sources:** `spec/game.json`, `spec/species.json` and `spec/starter_card_set.json`  
+**Authoritative implementation sources:** `spec/game.json`, `spec/species.json` and `spec/maker_card_set.json`  
 **Last consolidated:** September 13, 2026 (Night Shift: the Owl, the Science study, the wake-up call, the deck scry, and the Cat's self-ready used from the wrong side of upright)
 
 This document gathers the decisions, rules, design principles, and current prototype content for **Animal Friends TCG**. It distinguishes between rules implemented in the playtest, agreed design direction, and items still to be designed. It is not yet a final, player-facing rulebook.
@@ -444,8 +451,8 @@ The set holds **375 cards**: 136 Characters, 88 Events, 9 Statues, an 86-card on
 
 Six printed decks are provided: **Burrow & Bloom** (Rabbit/Mouse, Agriculture/Lore), **Paws & Papers** (Raccoon/Fox, Commerce/Civics), **Bramble & Bastion** (Hedgehog/Badger, Crafts/Agriculture), **Ripple & Rune** (Otter/Squirrel, Lore/Commerce), **Whisker & Willow** (Cat/Mouse, Lore/Crafts) and **Root & Rampart** (Badger/Rabbit, Civics/Crafts). They are not hand-listed: `npm run decks` builds each from its stated identity out of the rated card set, so they track the set as it changes.
 
-The tables below are the two founding decks, kept as worked examples of the card shapes; every other card
-lives in `spec/starter_card_set.json`, which is the contract. Most Characters now have a third version — a
+The tables below are the two founding decks of the printed collection, kept as worked examples of the
+card shapes; the cards the game actually deals live in `spec/maker_card_set.json`, which is the contract. Most Characters now have a third version — a
 further promotion or a sideways retraining into another study — so an upgrade line can branch.
 
 ### Burrow & Bloom

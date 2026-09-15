@@ -1,16 +1,16 @@
 // Bootstraps the menu, builds the game, and drives the turn loop. All rules logic lives in
 // src/engine/*; this file only wires the menu, builds agents, and re-renders the screen.
 import {
-  createGame, playTurn, mulliganPhase, log, indexSet, MODES, MODE_IDS, composeMakerSet, isPlayableSet,
+  createGame, playTurn, mulliganPhase, log, indexSet,
 } from '../engine/index.js';
 import { makeHumanAgent } from './humanAgent.js';
 import {
   setGame, stopGame, isGameActive, scheduleRender, renderIfChanged, settle,
 } from './render.js';
 import { openFullArtGallery } from './full-art-gallery.js';
-import { FULL_ART_CARDS } from './full-art.js';
+import { fullArtCount } from './full-art.js';
 import { VERSIONS } from './versions.js';
-import { openDeckBuilder, loadSavedDecks, saveDeck, deleteSavedDeck, useDeckStore } from './deckbuilder.js';
+import { openDeckBuilder, loadSavedDecks, saveDeck, deleteSavedDeck } from './deckbuilder.js';
 import { openBook } from './book.js';
 import { buildHelp, openHelp, openWelcome, hasBeenWelcomed } from './help.js';
 import { createTutorialSession, stopTutorial } from './tutorial.js';
@@ -18,22 +18,15 @@ import { TUTORIAL_SEED } from '../tutorial/scenario.js';
 import * as fx from './fx.js';
 
 const RULES_URL = new URL('../../spec/game.json', import.meta.url);
-const SET_URL = new URL('../../spec/starter_card_set.json', import.meta.url);
-const MAKER_SET_URL = new URL('../../spec/maker_card_set.json', import.meta.url);
+const SET_URL = new URL('../../spec/maker_card_set.json', import.meta.url);
 const PACKAGE_URL = new URL('../../package.json', import.meta.url);
 
 let rules = null;
-// The printed book: the Classic collection, and the one the game has always been played with.
-let printedSet = null;
-// The remade collection, as read off the shelf. Kept raw for the Book — the backstories and the
-// remake links live on it — beside the playable version built by composeMakerSet.
-let makerShelf = { setId: 'AF-MAKER-01', name: 'Maker Cards', cards: [] };
-// The two playable collections, by mode id. Maker is null until the shelf is complete enough to
-// play: cards, decks and a Capital City.
-const collections = { classic: null, maker: null };
-// Which of the three doors the reader came through: 'classic' or 'maker' while a mode's cover is
-// open, null on the home screen and in the Book.
-let mode = null;
+// The collection, as read off the shelf. Kept raw — the character backstories live on it, and the
+// Book reads them — beside the indexed copy the game is built from.
+let shelf = { setId: 'AF-MAKER-01', name: 'Maker Cards', cards: [] };
+// The same collection, indexed by card id: what createGame and the Deck Workshop are handed.
+let collection = null;
 let chosenDeckId = null;
 let chosenMarketId = null;
 let customDecks = [];
@@ -49,9 +42,9 @@ function showScreen(name) {
   $(SCREENS[name] || SCREENS.game).classList.add('active');
 }
 
-/** The collection the mode being played uses. */
+/** The one collection the game is played with. */
 function cardSet() {
-  return collections[mode] || collections.classic;
+  return collection;
 }
 
 /** Every deck a player can pick: the collection's own decks, then their own. */
@@ -75,71 +68,49 @@ function customBlurb(deck) {
   return `Your own deck: ${chars} Characters and ${total - chars} Events. ${[...species].join(', ') || 'No species'} · ${[...studies].join(', ') || 'No studies'}.`;
 }
 
-// ---------- the three doors ----------
-/** The home screen: Classic, Maker and the Book. */
+// ---------- the two doors ----------
+/** The home screen: Play and the Book. */
 function renderHome() {
   const el = $('modeChoice');
   if (!el) return;
   el.innerHTML = '';
-  for (const id of MODE_IDS) {
-    const info = MODES[id];
-    const set = collections[id];
-    const card = document.createElement('button');
-    card.type = 'button';
-    card.className = `mode-card${set ? '' : ' locked'}`;
-    card.disabled = !set;
-    card.innerHTML = `<span class="mode-tagline">${info.tagline}</span><span class="mode-name">${info.name}</span><span class="mode-blurb">${info.blurb}</span>`;
-    const stat = document.createElement('span');
-    stat.className = 'mode-stat';
-    stat.textContent = set
-      ? `${set.cards.length} cards · ${set.decks.length} deck${set.decks.length === 1 ? '' : 's'} · ${set.marketDecks.length} Capital Cit${set.marketDecks.length === 1 ? 'y' : 'ies'}`
-      : 'Not ready to play yet — this collection has no decks or no Capital City.';
-    card.appendChild(stat);
-    if (set) card.addEventListener('click', () => enterMode(id));
-    el.appendChild(card);
-  }
+
+  const play = document.createElement('button');
+  play.type = 'button';
+  play.className = 'mode-card';
+  play.innerHTML = '<span class="mode-tagline">The game</span><span class="mode-name">Play</span>'
+    + `<span class="mode-blurb">${collection.blurb || 'Build your town, work your animals, and fight the Capital City for the Statues.'}</span>`
+    + `<span class="mode-stat">${collection.cards.length} cards · ${collection.decks.length} deck${collection.decks.length === 1 ? '' : 's'} · ${collection.marketDecks.length} Capital Cit${collection.marketDecks.length === 1 ? 'y' : 'ies'}</span>`;
+  play.addEventListener('click', enterPlay);
+  el.appendChild(play);
+
   const book = document.createElement('button');
   book.type = 'button';
   book.className = 'mode-card';
-  const shelves = bookShelves();
-  const total = new Set(shelves.flatMap((sh) => sh.set.cards.map((c) => c.id))).size;
   book.innerHTML = '<span class="mode-tagline">The gallery</span><span class="mode-name">Book</span>'
-    + '<span class="mode-blurb">Every card in the game, Classic and Maker alike, in every printing it exists in. Nothing to play — everything to read.</span>'
-    + `<span class="mode-stat">${total} cards · ${VERSIONS.length} printings</span>`;
+    + '<span class="mode-blurb">Every card in the game, in every printing it exists in, with the story each character came out of. Nothing to play — everything to read.</span>'
+    + `<span class="mode-stat">${collection.cards.length} cards · ${VERSIONS.length} printings</span>`;
   book.addEventListener('click', openTheBook);
   el.appendChild(book);
 }
 
-/** The shelves the Book reads: the printed book first, then the Maker shelf as it will be played. */
-function bookShelves() {
-  const shelves = [{ id: 'classic', name: 'Classic', set: printedSet }];
-  const maker = collections.maker || (makerShelf.cards.length ? composeMakerSet(makerShelf, printedSet) : null);
-  if (maker) shelves.push({ id: 'maker', name: 'Maker', set: maker });
-  return shelves;
-}
-
 function openTheBook() {
-  mode = null;
   showScreen('book');
   openBook($('bookHost'), {
     rules,
-    shelves: bookShelves(),
-    makerSet: makerShelf,
+    set: collection,
+    shelf,
     onClose: goHome,
   });
 }
 
 function goHome() {
-  mode = null;
   renderHome();
   showScreen('home');
 }
 
-/** Open one collection's cover: its decks, its Capital Cities, its saved decks. */
-function enterMode(id) {
-  if (!collections[id]) return;
-  mode = id;
-  useDeckStore(id);
+/** Open the cover: the decks, the Capital Cities, the decks you built yourself. */
+function enterPlay() {
   const set = cardSet();
   customDecks = loadSavedDecks().filter((d) => Object.keys(d.list).every((cardId) => set.cardsById[cardId]));
   chosenDeckId = set.decks[0].id;
@@ -151,12 +122,11 @@ function enterMode(id) {
 // ---------- menu ----------
 function buildMenu() {
   const set = cardSet();
-  $('modeWhich').textContent = `${MODES[mode].name} · ${MODES[mode].tagline}`;
   const note = $('expansionNote');
-  if (note) note.textContent = set.blurb || MODES[mode].blurb;
+  if (note) note.textContent = set.blurb || '';
   $('edition').textContent = editionLine(set);
-  $('fullArtGalleryBtn').textContent = `Explore the ${Object.keys(FULL_ART_CARDS).length} Full Art cards`;
-  $('fullArtGalleryBtn').onclick = () => openFullArtGallery(rules, printedSet, makerShelf);
+  $('fullArtGalleryBtn').textContent = `Explore the ${fullArtCount(set)} Full Art cards`;
+  $('fullArtGalleryBtn').onclick = () => openFullArtGallery(rules, set);
   renderDeckChoice();
   renderMarketChoice();
 }
@@ -339,11 +309,12 @@ function launch(state, agents) {
  * src/ui/tutorial.js. Once the lesson is over the rival plays on with its usual brain.
  */
 async function startTutorial() {
-  if (mode !== 'classic') enterMode('classic');
+  // The lesson can be started from the welcome, before the cover has ever been opened. Build the
+  // cover first, so closing the book afterwards lands on a screen that has been filled in.
+  if (!chosenDeckId) enterPlay();
   const brain = await loadRivalBrain(TUTORIAL_SEED + 1);
-  // The tutorial is a scripted Classic match: its arranged hands name printed cards by id.
   const { state, agents } = createTutorialSession({
-    rules, cardSet: printedSet, fallbackRival: brain, thinkDelay: getDelay, onLeave: leaveGame,
+    rules, cardSet: cardSet(), fallbackRival: brain, thinkDelay: getDelay, onLeave: leaveGame,
   });
   launch(state, agents);
 }
@@ -355,7 +326,7 @@ function leaveGame() {
   stopTutorial();
   if (renderTicker) clearInterval(renderTicker);
   $('winOverlay').classList.remove('active');
-  if (mode) showScreen('menu'); else goHome();
+  showScreen('menu');
 }
 
 // ---------- wiring ----------
@@ -405,7 +376,7 @@ function wireMenu() {
  * Load one spec file.
  *
  * `cache: 'no-cache'` makes the browser revalidate with the server on every load instead of serving
- * a heuristically cached copy: edit spec/starter_card_set.json and the next reload always sees it,
+ * a heuristically cached copy: edit spec/maker_card_set.json and the next reload always sees it,
  * while an unchanged file still costs only a 304. Without this an old spec can sit in the cache and
  * the game quietly plays yesterday's card set — new cards, decks and Market Decks simply missing.
  */
@@ -421,23 +392,6 @@ async function loadSpec(url, label) {
     return await resp.json();
   } catch (e) {
     throw new Error(`${label} (${url}) is not valid JSON: ${e.message}`);
-  }
-}
-
-/**
- * The Maker card set: the remade collection. It is optional — Classic plays without it — so a
- * missing or unreadable file leaves an empty shelf and a Maker door that cannot be opened, rather
- * than failing to start.
- */
-async function loadMakerSet() {
-  const empty = { setId: 'AF-MAKER-01', name: 'Maker Cards', playable: false, cards: [] };
-  try {
-    const set = await loadSpec(MAKER_SET_URL, 'the maker card set (spec/maker_card_set.json)');
-    return { ...empty, ...set, cards: Array.isArray(set.cards) ? set.cards : [] };
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.warn(`Maker cards not loaded: ${e.message}`);
-    return empty;
   }
 }
 
@@ -465,19 +419,17 @@ function editionLine(set) {
 }
 
 /**
- * Stamp the home screen with exactly what is loaded: the game version and both collections. If the
+ * Stamp the home screen with exactly what is loaded: the game version and the collection. If the
  * line does not match the package.json of the folder being served, the browser is still showing an
  * old copy — hard-reload (Ctrl+Shift+R / Cmd+Shift+R) or check which server is on the port.
  */
 function stampEdition() {
-  const parts = [
+  const line = [
     version ? `v${version}` : 'unknown version',
-    `Classic: ${printedSet.cards.length} cards, ${printedSet.decks.length} decks`,
-    collections.maker
-      ? `Maker: ${collections.maker.cards.length} cards, ${collections.maker.decks.length} decks`
-      : `Maker: ${makerShelf.cards.length} cards, not playable yet`,
-  ];
-  const line = parts.join(' · ');
+    `${collection.cards.length} cards`,
+    `${collection.decks.length} decks`,
+    `${collection.marketDecks.length} Capital Cit${collection.marketDecks.length === 1 ? 'y' : 'ies'}`,
+  ].join(' · ');
   const el = $('homeEdition');
   if (el) el.textContent = line;
   // The same line in the console, so a stale load is obvious there too.
@@ -488,23 +440,20 @@ function stampEdition() {
 let version = null;
 
 async function main() {
-  const [loadedRules, loadedSet, loadedMaker, loadedVersion] = await Promise.all([
+  const [loadedRules, loadedSet, loadedVersion] = await Promise.all([
     loadSpec(RULES_URL, 'the rules (spec/game.json)'),
-    loadSpec(SET_URL, 'the card set (spec/starter_card_set.json)'),
-    loadMakerSet(),
+    loadSpec(SET_URL, 'the card set (spec/maker_card_set.json)'),
     loadVersion(),
   ]);
   rules = loadedRules;
   version = loadedVersion;
+  // One collection, and the game cannot start without all of it: cards to play, town decks to play
+  // them out of, and a Capital City to fight over.
   if (!Array.isArray(loadedSet.cards) || !loadedSet.cards.length) throw new Error('The card set has no cards.');
   if (!Array.isArray(loadedSet.decks) || !loadedSet.decks.length) throw new Error('The card set has no town decks.');
-  printedSet = indexSet(loadedSet);
-  collections.classic = printedSet;
-  makerShelf = loadedMaker;
-  // Maker Mode needs a complete collection: cards, decks of its own, and a Capital City. Until the
-  // shelf has all three the door is shown locked rather than hidden, so it is obvious what is missing.
-  const makerPlayable = makerShelf.cards.length ? composeMakerSet(makerShelf, printedSet) : null;
-  collections.maker = makerPlayable && isPlayableSet(makerPlayable) ? indexSet(makerPlayable) : null;
+  if (!Array.isArray(loadedSet.marketDecks) || !loadedSet.marketDecks.length) throw new Error('The card set has no Capital City.');
+  shelf = loadedSet;
+  collection = indexSet(loadedSet);
   stampEdition();
   wireMenu();
   loadPace();
