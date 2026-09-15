@@ -188,6 +188,15 @@ export async function readyStack(state, pi, stack, why = '') {
 /** Send a stack to Unemployment following the knock-down rule. Returns false if prevented. */
 export async function unemployStack(state, ownerPi, stack, { byEffect = true, sourcePi = null } = {}) {
   const p = state.players[ownerPi];
+  // Yellow's wish (docs/ENGINE_API.md, sixth round): a printed animal who simply never goes to
+  // Unemployment, full stop, rather than one who is shielded from it until some turn boundary.
+  // `immuneToUnemployment` is a fact about the card, not a mod that can lapse or a shelter that can
+  // expire mid-turn, so it is checked before anything that can — nothing in the collection currently
+  // sends a Mayor's own Character to Unemployment by choice, so there is no case this should let through.
+  if (byEffect && topCard(state, stack).immuneToUnemployment) {
+    log(state, ownerPi, `${topCard(state, stack).name} does not go to Unemployment. Ever.`, { kind: 'shield', player: ownerPi, uid: stack.uid });
+    return false;
+  }
   // A sheltered animal is not merely untargetable: nothing takes them out of the town while the
   // cover holds — not a rival's removal, and not weather that falls on both towns. Their own Mayor
   // may still let them go, because a shelter is not a contract.

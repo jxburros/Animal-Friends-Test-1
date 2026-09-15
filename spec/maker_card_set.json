@@ -131,8 +131,8 @@
     "mk_sage_astronomer_3": 2,
     "mk_mandee_moonlight_trader_3": 2,
     "mk_liz_the_docket_3": 2,
-    "mk_sage_the_watch_list_4": 2,
-    "mk_finn_trade_broker_4": 1,
+    "mk_winter_head_science_producer_4": 2,
+    "mk_sage_the_watch_list_4": 1,
     "mk_sage_royal_astronomer_5": 2,
     "mk_tb_observatory_steps": 2,
     "mk_tb_chit_press": 1,
@@ -140,8 +140,8 @@
     "mk_sages_star_party": 2,
     "mk_hall_lecture": 2,
     "mk_ledger_day": 2,
-    "mk_mandees_forecast": 2,
     "mk_night_round": 2,
+    "mk_mandees_forecast": 2,
     "mk_quill_harvest_steward_5": 1,
     "mk_kevin_counter_hand_2": 2
    }
@@ -180,10 +180,10 @@
     "mk_hedge_apothecary": 2,
     "mk_guild_night": 2,
     "mk_tool_lending_day": 2,
+    "mk_tabitha_camerawoman_5": 1,
     "mk_quinn_keeper_of_the_record_5": 1,
     "mk_rosabeth_herbalist_physician_5": 1,
-    "mk_betty_powder_chemist_4": 1,
-    "mk_maribel_seed_bank_director_5": 1
+    "mk_betty_powder_chemist_4": 1
    }
   },
   {
@@ -222,7 +222,7 @@
     "mk_ev_the_hat_goes_round": 2,
     "mk_velvets_petition": 2,
     "mk_quill_harvest_steward_5": 1,
-    "mk_kevin_counter_hand_2": 2
+    "mk_abigail_five_minutes_2": 2
    }
   },
   {
@@ -260,7 +260,7 @@
     "mk_hazels_night_market": 2,
     "mk_patchs_second_opinion": 2,
     "mk_quill_harvest_steward_5": 1,
-    "mk_kevin_counter_hand_2": 2,
+    "mk_abigail_five_minutes_2": 2,
     "mk_moss_guild_architect_3": 1
    }
   },
@@ -338,7 +338,7 @@
     "mk_mortys_boiler_test": 2,
     "mk_oatmeals_benefit_night": 2,
     "mk_quill_harvest_steward_5": 1,
-    "mk_kevin_counter_hand_2": 2
+    "mk_abigail_five_minutes_2": 2
    }
   },
   {
@@ -406,7 +406,7 @@
     "mk_willow_tide_reckoner_3": 2,
     "mk_benjamin_town_historian_3": 1,
     "mk_brooke_balloonist_4": 2,
-    "mk_sage_the_watch_list_4": 2,
+    "mk_winter_head_science_producer_4": 2,
     "mk_pebble_harbour_warden_5": 1,
     "mk_willow_harbour_admiral_5": 2,
     "mk_tb_rosabeths_gate": 2,
@@ -417,8 +417,8 @@
     "mk_fair_hearing": 2,
     "mk_the_harbour_office": 2,
     "mk_hall_lecture": 2,
-    "mk_sage_royal_astronomer_5": 1,
-    "mk_sage_astronomer_3": 1
+    "mk_winter_turned_down_applicant_1": 1,
+    "mk_sage_royal_astronomer_5": 1
    }
   },
   {
@@ -535,7 +535,7 @@
     "mk_oatmeals_awning": 2,
     "mk_biffs_beat": 2,
     "mk_quill_harvest_steward_5": 1,
-    "mk_kevin_counter_hand_2": 1,
+    "mk_abigail_five_minutes_2": 1,
     "mk_cassadee_hall_manager_3": 1,
     "mk_morty_watermill_mechanic_3": 1,
     "mk_moss_guild_architect_3": 1,
@@ -562,7 +562,7 @@
     "mk_sage_night_assistant_0": 1,
     "mk_clover_plot_sharer_1": 1,
     "mk_eric_smallholder_1": 2,
-    "mk_bean_espresso_1": 1,
+    "mk_winter_turned_down_applicant_1": 1,
     "mk_sage_frost_watch_2": 2,
     "mk_peter_the_winters_length_2": 2,
     "mk_clover_market_gardener_2": 1,
@@ -570,7 +570,7 @@
     "mk_sage_astronomer_3": 2,
     "mk_eric_row_farmer_3": 2,
     "mk_clover_rocket_botanist_4": 2,
-    "mk_sage_the_watch_list_4": 2,
+    "mk_winter_head_science_producer_4": 2,
     "mk_sage_royal_astronomer_5": 2,
     "mk_tb_rosabeths_gate": 2,
     "mk_tb_coppers_cellar": 1,
@@ -579,10 +579,10 @@
     "mk_warren_muster": 2,
     "mk_clovers_seed_drive": 2,
     "mk_glut_of_squash": 2,
-    "mk_night_round": 2,
+    "mk_hall_lecture": 2,
     "mk_eric_best_farmer_5": 1,
     "mk_clover_master_botanist_5": 1,
-    "mk_eric_row_boss_4": 1
+    "mk_sage_the_watch_list_4": 1
    }
   },
   {
@@ -600,10 +600,10 @@
    "list": {
     "mk_gabe_corner_show_0": 2,
     "mk_patch_compost_yard_1": 2,
-    "mk_taco_cart_cook_1": 2,
+    "mk_abigail_counter_girl_1": 2,
     "mk_unlisted_grower_2": 2,
     "mk_mysterious_raccoon_beds_hand_2": 2,
-    "mk_brooke_ferry_hand_2": 1,
+    "mk_abigail_five_minutes_2": 2,
     "mk_brooke_regatta_caller_3": 2,
     "mk_taco_quayside_cook_3": 2,
     "mk_benjamin_town_historian_3": 1,
@@ -620,8 +620,8 @@
     "mk_the_root_cellar": 2,
     "mk_fresh_batch": 2,
     "mk_quill_harvest_steward_5": 1,
-    "mk_kevin_counter_hand_2": 2,
-    "mk_pebble_ferry_master_3": 1
+    "mk_pebble_ferry_master_3": 1,
+    "mk_hazel_guildmaster_3": 1
    }
   }
  ],
@@ -2466,6 +2466,136 @@
       "mk_gabe_whole_cast_5"
      ],
      "why": "No painted tile shows a puppet booth. The Scrap Yard scene stands under the Puppet Maker and is exactly right there; the three show cards want a booth, a raccoon behind it, and a floor of kittens."
+    }
+   ]
+  },
+  {
+   "name": "Tabitha",
+   "species": "Hedgehog",
+   "studies": [
+    "Entertainment",
+    "Science"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Tabitha turned up at the Festival Green with a borrowed camera and stayed long after everyone else's memory of the day had gone soft, because hers hadn't: the borough started asking her for prints before it occurred to her to charge for them. She shoots the regatta, the festival, whatever Cassadee has running on a given night, and increasingly the open mic room itself, from a stool at the back where Thistle also stands.\n\nWhat sets her apart from every other animal with a camera in the First Boroughs is that she does not merely point it. Sota's bench at the Observatory took her in for two winters running, grinding glass and arguing about focal length, and Tabitha came out the other side able to say exactly why a lens does what it does — which means she can also tell you exactly why it is about to fail her mid-shoot, and fix it before it does. She still turns up to every hall in town camera first, but she is the only entertainer in the borough who could, if pressed, build the instrument from the bench up.\n\nHer actual ambition outgrew the still frame years ago. She wants to make films — real ones, with a story and a running length — and the borough is not quite big enough yet to give her one, so she practices on everything: Oatmeal's band, Gabe's puppet shows, the regatta's called starts. She is wicked smart about it in a way that unsettles the animals who think a camera operator just points and shoots; ask her why a shot works and she will actually tell you, at length, whether you wanted the answer or not.",
+   "voice": "Fast, technical, and only occasionally aware she has lost the room. Narrates her own camera settings out loud, to nobody.",
+   "arc": "The cheap Tabithas are hired hands with the camera doing what somebody else asked; the dear ones have learned exactly how the instrument works and use that to call an opponent's animal back onto the clock before it's ready — a director shouting 'action' on somebody else's set.",
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_tabitha_festival_photographer_0",
+      "mk_tabitha_lens_apprentice_1",
+      "mk_tabitha_videographer_2",
+      "mk_tabitha_optics_scientist_4",
+      "mk_tabitha_camerawoman_5"
+     ],
+     "why": "No painted tile shows a hedgehog behind a camera or at an optics bench. All five borrow the plain Hedgehog scene until one is commissioned."
+    }
+   ]
+  },
+  {
+   "name": "Abigail",
+   "species": "Otter",
+   "studies": [
+    "Entertainment",
+    "Food"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Abigail works the counter at Gwen's, on the corner opposite Bean's, and has since the week she turned up needing a fortnight's work between things and simply never left. She remembers an order without writing it down, she is on a first-name basis with everyone who has ever sat at that counter, and the jar by the register has her name on it more often than the register does — the borough tips her the way it argues about the second post, which is to say constantly and without much heat, because everyone already agrees.\n\nWhat nobody at the diner knows unless they have also been in the Open Mic Room on a Tuesday is that Abigail taps. Cassadee gave her five minutes on a slow night two years ago on the strength of nothing at all, and Abigail has had a standing slot ever since, between the acts that actually rehearse. She is not, by her own flat assessment, going to be the thing the room remembers about that night. She goes anyway, on her feet after a full shift, because the counter pays the rent and the five minutes is the only thing on her list that is entirely hers.\n\nShe is loved out of all proportion to how much she asks for, which is the thing about Abigail that the diner and the open mic room have in common: she shows up, she does the small job in front of her exactly right, and everyone leaves a little more than they meant to.",
+   "voice": "Warm, quick, unbothered. Talks about the tap classes the way other animals talk about the weather — pleasant, minor, entirely her own business.",
+   "arc": "No ability at any cost — Abigail's whole trick is doing the ordinary job better than it is asked for, so every version of her simply gathers more Supply than the shift printed for its cost would normally pay.",
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_abigail_counter_girl_1",
+      "mk_abigail_five_minutes_2",
+      "mk_abigail_best_waitress_4",
+      "mk_abigail_standing_slot_5"
+     ],
+     "why": "No painted tile shows a diner counter or a tap floor. All four borrow the plain Otter scene until one is commissioned."
+    }
+   ]
+  },
+  {
+   "name": "Winter",
+   "species": "Owl",
+   "studies": [
+    "Entertainment",
+    "Science"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Before he was the borough's TV scientist, Winter sat the Observatory's selection board twice, same as Comet, and came away both times with a courteous letter and no seat. He took the rejection the way an Owl takes most things: awake, at four in the morning, turning it over until it stopped looking like a loss and started looking like a different job. What the board never gave him was a launch. What it did give him, over two applications and a great deal of reading he was not required to do, was an actual working knowledge of how the sky gets studied — the manifests, the order book, the instruments Sota grinds — and that turned out to be worth more to the borough than the seat would have been.\n\nNow he has the whole town's children believing science is the best thing that happens on a given evening, because he has never once faked understanding something for the sake of a segment. He plans every show himself — the experiment, the running order, the follow-up question a kitten is about to ask — and he plans it because he has actually done the science, not merely reported on animals who have.\n\nHe tapes in whatever hall Cassadee will give him, and treats the Capital City's own market days the way Orien treats a set of figures: something to be read closely and rearranged to his advantage before anyone else notices there was an advantage to be had.",
+   "voice": "Warm on camera, exacting off it. Explains everything twice: once for the room, once correctly.",
+   "arc": "The cheap Winters are still finding the format; the middle ones have learned to read the Capital City's own market the way they once read the Observatory's manifests; the top one gets the thing he actually wanted, and opens a sixth stall in the display for as long as he's standing at the desk.",
+   "wantedVerbs": [
+    {
+     "verb": "a card that opens a sixth stall in the Capital City display",
+     "why": "Winter wanted a top card that puts a sixth animal, Building or Ordinance up for bid alongside the usual five, so his show always has one more thing to point at.",
+     "workaround": "capitalCitySize is a fixed rule, not a thing any Character can move, so he cannot add a sixth booth. His top card instead goes as far as the vocabulary allows on the same idea: look at the top three cards of the Market Deck, put them back in whichever order he likes, then send the one he does not want to the bottom — reading and rearranging the market rather than widening it.",
+     "resolved": "Built as capitalCityExtraStalls, a passive read by both Mayors' abilitySources and summed in state.js's capitalCitySize() — the Capital City's refill target is the printed floor plus whatever either town is carrying. mk_winter_tv_scientist_5 now carries it: while he is upright, the display deals a sixth stall, shared exactly like the other five."
+    }
+   ],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_winter_segment_runner_0",
+      "mk_winter_turned_down_applicant_1",
+      "mk_winter_science_show_host_2",
+      "mk_winter_head_science_producer_4",
+      "mk_winter_tv_scientist_5"
+     ],
+     "why": "No painted tile shows a studio floor or a science segment being taped. All five borrow the Night Skies scene until one is commissioned."
+    }
+   ]
+  },
+  {
+   "name": "Fred",
+   "species": "Owl",
+   "studies": [
+    "Entertainment",
+    "Crafts"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Fred is a mess, and the borough long ago stopped being surprised by it. He has been in Faustus's front window as an unbooked mannequin, up a ladder for Benjamin on a job nobody remembers hiring him for, and once, memorably, near the Bandstand on the Festival Green during a speech nobody has ever actually given from it — he says he was looking for the toilets, and the borough has decided to believe him, mostly because the alternatives are worse.\n\nHe is an Owl, so none of this happens by daylight, which is the only reason it has not cost him more than it has: whatever he has broken, wandered into, or been handed by an animal who barely knows his name gets sorted out well before the square wakes up to see it. He has held tools for Moss, held a ladder wrong for Benjamin, and been backstage crew for exactly one show he was never told the name of.\n\nNobody has worked out whether Fred is unlucky or whether he simply says yes to things, and Fred has never been asked in a way he could actually answer. What the whole borough agrees on is that when Fred is involved, something is going to happen, and it could go either way — which is why Roger, who chairs everything and decides nothing, has twice asked Fred to be the one who calls the ha'penny in the air, and been refused both times on the grounds that even that felt like too much responsibility.",
+   "voice": "Apologetic, easily distracted, and weirdly calm about disaster. Narrates his own bad luck like weather.",
+   "arc": "Every Fred carries the same shrug at a different price: toss a coin, and something changes for somebody — it is never fixed which side of the table it lands on.",
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_fred_wandered_onto_stage_0",
+      "mk_fred_held_the_ladder_wrong_2",
+      "mk_fred_backstage_crew_3",
+      "mk_fred_crew_doesnt_ask_5"
+     ],
+     "why": "No painted tile shows an animal roped into somebody else's job. All four borrow the Night Workers scene until one is commissioned."
+    }
+   ]
+  },
+  {
+   "name": "Yellow",
+   "species": "Squirrel",
+   "studies": [
+    "Entertainment"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Yellow came up from the suburbs at the edge of the Capital City telling anyone who'd listen exactly how fresh his rhymes were, and arrived in the First Boroughs to find a town with an open mic list, a booker who does not care where you're from, and absolutely no street to speak of. He has not let either fact slow him down. His whole catalogue is built out of what the borough actually has to offer — a verse about the seed bank's open day, four bars about Marmalade's ovens, an entire closing number about peanut butter and pecan pie that has nothing to do with anything and that Cassadee has stopped trying to cut from his set.\n\nNobody in the First Boroughs is going to mistake him for where he says he's from, and he knows it, and it has never once cost him a booking. Cassadee keeps him on the list because the room likes him, which is the whole of her job description and the only part of it Yellow has ever cared about. He shows up, he raps about pecan pie like it's a grudge, and somehow it works.\n\nWhat the Hiring Hall has actually noticed about Yellow, over several seasons of watching him, is that he is never between jobs. He has never once turned up in Unemployment, not for a day, not for an hour — whatever else is true about his rhymes, the borough has never had cause to wonder where he is.",
+   "voice": "Loud, proud, entirely unbothered by the gap between the persona and the postcode. Works 'suburbs' and 'pecan pie' into everything, unironically.",
+   "arc": "Priced differently for what they actually promise: the cheap one shelters him the week he arrives, the way any protected animal is sheltered, until your next turn. The dear one doesn't need the shelter renewed, because he simply does not go to Unemployment, full stop.",
+   "wantedVerbs": [
+    {
+     "verb": "permanent, unconditional immunity to Unemployment",
+     "why": "Yellow's story says he simply never goes to Unemployment, full stop, not 'until your next turn'.",
+     "workaround": "protectCharacter, run once on recruit and then again every onTurnStart, keeps him out of reach of an opponent's effects and of the shared shocks that send both towns to Unemployment — the nearest the vocabulary gets to 'never', short of a card that reads the Unemployment phase itself.",
+     "resolved": "Built as immuneToUnemployment, a fact printed on the card and checked once, at the top of unemployStack() in effects.js, before anything that can lapse — not a mod, not a shelter with a turn number on it. mk_yellow_freshest_thing_4 now carries it and is exactly as permanent as the story says."
+    }
+   ],
+   "wantedArt": [
+    {
+     "cards": [
+      "mk_yellow_open_mic_regular_1",
+      "mk_yellow_freshest_thing_4"
+     ],
+     "why": "No painted tile shows a rapper at the open mic. Both borrow the plain Squirrel scene until one is commissioned."
     }
    ]
   }
@@ -20489,6 +20619,648 @@
     "atlas": "boroughs",
     "tile": 11
    }
+  },
+  {
+   "id": "mk_tabitha_festival_photographer_0",
+   "type": "character",
+   "name": "Tabitha",
+   "title": "Festival Photographer",
+   "job": "Festival Photographer",
+   "species": "Hedgehog",
+   "study": "Entertainment",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "She borrowed the camera for one afternoon at the Festival Green. Nobody has seen it go back.",
+   "abilities": null,
+   "rarity": "Common",
+   "power": {
+    "score": 2.22,
+    "power": 3.7,
+    "opportunityCost": 3.6
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 4
+   }
+  },
+  {
+   "id": "mk_tabitha_lens_apprentice_1",
+   "type": "character",
+   "name": "Tabitha",
+   "title": "Lens Apprentice",
+   "job": "Lens Apprentice",
+   "species": "Hedgehog",
+   "study": "Science",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "A short shift: 1 turn, 2 Supply.",
+   "flavor": "Sota showed her the bench, not the sky. She has never once looked through an eyepiece the right way round on the first try, and never the second time either.",
+   "abilities": null,
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.29,
+    "power": 7.9,
+    "opportunityCost": 4.6
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 4
+   }
+  },
+  {
+   "id": "mk_tabitha_videographer_2",
+   "type": "character",
+   "name": "Tabitha",
+   "title": "Videographer",
+   "job": "Videographer",
+   "species": "Hedgehog",
+   "study": "Entertainment",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Tabitha. When Tabitha becomes upright, put one of your opponent's Characters back to work.",
+   "flavor": "She calls it getting the reaction shot. Nobody in the other town remembers agreeing to be in the scene.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "makeBusy"
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.16,
+    "power": 11.11,
+    "opportunityCost": 6.8
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 4
+   }
+  },
+  {
+   "id": "mk_tabitha_optics_scientist_4",
+   "type": "character",
+   "name": "Tabitha",
+   "title": "Optics Scientist",
+   "job": "Optics Scientist",
+   "species": "Hedgehog",
+   "study": "Science",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Tabitha. When Tabitha becomes upright, put one of your opponent's Characters back to work, then gain 1 Supply.",
+   "flavor": "She finally knows exactly how the thing in her hands works, which means she also knows precisely which of the other town's cameras is about to jam.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "makeBusy"
+       },
+       {
+        "do": "gainSupply",
+        "amount": 1
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.82,
+    "power": 14.61,
+    "opportunityCost": 10
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 4
+   }
+  },
+  {
+   "id": "mk_tabitha_camerawoman_5",
+   "type": "character",
+   "name": "Tabitha",
+   "title": "Camerawoman",
+   "job": "Camerawoman",
+   "species": "Hedgehog",
+   "study": "Entertainment",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Tabitha. When Tabitha becomes upright, put up to 2 of your opponent's Characters back to work.",
+   "flavor": "The dream was never the photograph. It was the moment before it, when everyone in frame does exactly what she needs them to.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "makeBusy",
+      "count": 2
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 5.99,
+    "power": 15.62,
+    "opportunityCost": 11
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 4
+   }
+  },
+  {
+   "id": "mk_abigail_counter_girl_1",
+   "type": "character",
+   "name": "Abigail",
+   "title": "Counter Girl",
+   "job": "Counter Girl",
+   "species": "Otter",
+   "study": "Food",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "A short shift: 1 turn, 2 Supply.",
+   "flavor": "She has the whole counter's order in her head before the first plate goes down.",
+   "abilities": null,
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.29,
+    "power": 7.9,
+    "opportunityCost": 4.6
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 6
+   }
+  },
+  {
+   "id": "mk_abigail_five_minutes_2",
+   "type": "character",
+   "name": "Abigail",
+   "title": "Five Minutes on a Slow Night",
+   "job": "Open Mic Regular",
+   "species": "Otter",
+   "study": "Entertainment",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 3
+   },
+   "text": "A shift: 1 turn, 3 Supply.",
+   "flavor": "Cassadee gave her the slot on nothing at all. Abigail has never once given her a reason to take it back.",
+   "abilities": null,
+   "rarity": "Rare",
+   "power": {
+    "score": 5.13,
+    "power": 11.05,
+    "opportunityCost": 6.8
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 6
+   }
+  },
+  {
+   "id": "mk_abigail_best_waitress_4",
+   "type": "character",
+   "name": "Abigail",
+   "title": "Gwen's Best Waitress",
+   "job": "Waitress",
+   "species": "Otter",
+   "study": "Food",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "A shift: 2 turns, 5 Supply.",
+   "flavor": "The jar by the register has her name on it more often than the register does.",
+   "abilities": null,
+   "rarity": "Common",
+   "power": {
+    "score": 4.42,
+    "power": 11.1,
+    "opportunityCost": 10
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 6
+   }
+  },
+  {
+   "id": "mk_abigail_standing_slot_5",
+   "type": "character",
+   "name": "Abigail",
+   "title": "The Standing Slot",
+   "job": "Tap Dancer",
+   "species": "Otter",
+   "study": "Entertainment",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 6
+   },
+   "text": "A shift: 2 turns, 6 Supply.",
+   "flavor": "She is never going to be the thing the room remembers about that night. She goes anyway, on her feet after a full shift.",
+   "abilities": null,
+   "rarity": "Common",
+   "power": {
+    "score": 4.98,
+    "power": 13,
+    "opportunityCost": 11
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 6
+   }
+  },
+  {
+   "id": "mk_winter_segment_runner_0",
+   "type": "character",
+   "name": "Winter",
+   "title": "Segment Runner",
+   "job": "Segment Runner",
+   "species": "Owl",
+   "study": "Entertainment",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "He plans the running order the night before, then again in the morning, then once more on the walk over.",
+   "abilities": null,
+   "rarity": "Common",
+   "power": {
+    "score": 2.22,
+    "power": 3.7,
+    "opportunityCost": 3.6
+   },
+   "art": {
+    "atlas": "nightskies",
+    "tile": 0
+   }
+  },
+  {
+   "id": "mk_winter_turned_down_applicant_1",
+   "type": "character",
+   "name": "Winter",
+   "title": "Turned-Down Applicant",
+   "job": "Observatory Applicant",
+   "species": "Owl",
+   "study": "Science",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "Two courteous letters, no seat. He kept the letters and everything he read for the second one.",
+   "abilities": null,
+   "rarity": "Common",
+   "power": {
+    "score": 2.77,
+    "power": 5.1,
+    "opportunityCost": 4.6
+   },
+   "art": {
+    "atlas": "nightskies",
+    "tile": 0
+   }
+  },
+  {
+   "id": "mk_winter_science_show_host_2",
+   "type": "character",
+   "name": "Winter",
+   "title": "Science Show Host",
+   "job": "Science Show Host",
+   "species": "Owl",
+   "study": "Entertainment",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Winter. Busy: look at the top 2 cards of the Market Deck.",
+   "flavor": "He reads the Capital City's stalls the way he reads a running order: what's coming up, and in what order it should arrive.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 2
+     }
+    }
+   ],
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.58,
+    "power": 9.85,
+    "opportunityCost": 6.8
+   },
+   "art": {
+    "atlas": "nightskies",
+    "tile": 0
+   }
+  },
+  {
+   "id": "mk_winter_head_science_producer_4",
+   "type": "character",
+   "name": "Winter",
+   "title": "Head Science Producer",
+   "job": "Head Science Producer",
+   "species": "Owl",
+   "study": "Science",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Winter. When Winter becomes upright, look at the top 2 cards of the Market Deck and put them back in whichever order you choose.",
+   "flavor": "The manifests, the order book, the launch windows — none of it was wasted. It just found a different desk.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 2,
+      "reorder": true
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 5.2,
+    "power": 13.07,
+    "opportunityCost": 10
+   },
+   "art": {
+    "atlas": "nightskies",
+    "tile": 0
+   }
+  },
+  {
+   "id": "mk_winter_tv_scientist_5",
+   "type": "character",
+   "name": "Winter",
+   "title": "Everyone's Favorite TV Scientist",
+   "job": "TV Scientist",
+   "species": "Owl",
+   "study": "Entertainment",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Winter. While Winter is upright, the Capital City deals one extra stall.",
+   "flavor": "He wanted a sixth stall in the Capital City so the show would always have one more thing to point at. Now there is one, and it is his.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "capitalCityExtraStalls",
+     "value": 1,
+     "requiresUpright": true
+    }
+   ],
+   "rarity": "Common",
+   "power": {
+    "score": 5,
+    "power": 13.05,
+    "opportunityCost": 11
+   },
+   "art": {
+    "atlas": "nightskies",
+    "tile": 0
+   }
+  },
+  {
+   "id": "mk_fred_wandered_onto_stage_0",
+   "type": "character",
+   "name": "Fred",
+   "title": "Wandered Onto the Stage",
+   "job": "Stagehand",
+   "species": "Owl",
+   "study": "Entertainment",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "A short shift: 1 turn, 1 Supply.",
+   "flavor": "He says he was looking for the toilets. The borough has decided to believe him.",
+   "abilities": null,
+   "rarity": "Common",
+   "power": {
+    "score": 2.22,
+    "power": 3.7,
+    "opportunityCost": 3.6
+   },
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 0
+   }
+  },
+  {
+   "id": "mk_fred_held_the_ladder_wrong_2",
+   "type": "character",
+   "name": "Fred",
+   "title": "Held the Ladder Wrong",
+   "job": "Handyman's Helper",
+   "species": "Owl",
+   "study": "Crafts",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Fred. Busy: toss a coin. Heads, gain 2 Supply. Tails, your opponent gains 2 Supply.",
+   "flavor": "Benjamin has never worked out whose side he was on. Neither has Fred.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "coinFlip",
+      "heads": {
+       "do": "gainSupply",
+       "amount": 2
+      },
+      "tails": {
+       "do": "opponentGainSupply",
+       "amount": 2
+      }
+     }
+    }
+   ],
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.2,
+    "power": 9.05,
+    "opportunityCost": 6.8
+   },
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 0
+   }
+  },
+  {
+   "id": "mk_fred_backstage_crew_3",
+   "type": "character",
+   "name": "Fred",
+   "title": "Backstage Crew (Nobody Asked)",
+   "job": "Backstage Crew",
+   "species": "Owl",
+   "study": "Entertainment",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "A shift: 2 turns, 3 Supply.",
+   "flavor": "He was never told the name of the show. He still hasn't asked.",
+   "abilities": null,
+   "rarity": "Common",
+   "power": {
+    "score": 3.36,
+    "power": 7.65,
+    "opportunityCost": 7.8
+   },
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 0
+   }
+  },
+  {
+   "id": "mk_fred_crew_doesnt_ask_5",
+   "type": "character",
+   "name": "Fred",
+   "title": "The Crew Doesn't Ask Anymore",
+   "job": "Odd-Job Carpenter",
+   "species": "Owl",
+   "study": "Crafts",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Fred. When Fred becomes upright, toss a coin. Heads, gain 2 Supply and draw a card. Tails, your opponent gains 2 Supply.",
+   "flavor": "Roger has twice asked him to be the one who calls the ha'penny in the air. Fred has twice said that even that felt like too much responsibility.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "coinFlip",
+      "heads": {
+       "do": "seq",
+       "steps": [
+        {
+         "do": "gainSupply",
+         "amount": 2
+        },
+        {
+         "do": "draw",
+         "count": 1
+        }
+       ]
+      },
+      "tails": {
+       "do": "opponentGainSupply",
+       "amount": 2
+      }
+     }
+    }
+   ],
+   "rarity": "Common",
+   "power": {
+    "score": 4.76,
+    "power": 12.43,
+    "opportunityCost": 11
+   },
+   "art": {
+    "atlas": "nightworkers",
+    "tile": 0
+   }
+  },
+  {
+   "id": "mk_yellow_open_mic_regular_1",
+   "type": "character",
+   "name": "Yellow",
+   "title": "Open Mic Regular",
+   "job": "Open Mic Regular",
+   "species": "Squirrel",
+   "study": "Entertainment",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "When Yellow is recruited, Yellow cannot be targeted by an opponent's effect until your next turn.",
+   "flavor": "He rolled into town telling everyone how fresh his rhymes were. Nobody has managed to argue him out of a slot since.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "protectCharacter"
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.7,
+    "power": 10.5,
+    "opportunityCost": 4.6
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 7
+   }
+  },
+  {
+   "id": "mk_yellow_freshest_thing_4",
+   "type": "character",
+   "name": "Yellow",
+   "title": "Freshest Thing in a Small Town",
+   "job": "Headliner",
+   "species": "Squirrel",
+   "study": "Entertainment",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Yellow. Yellow cannot be sent to Unemployment.",
+   "flavor": "Whatever else is true about the rhymes, the Hiring Hall has never once had cause to wonder where he is. Now it never will.",
+   "abilities": null,
+   "rarity": "Common",
+   "power": {
+    "score": 4.44,
+    "power": 11.15,
+    "opportunityCost": 10
+   },
+   "art": {
+    "atlas": "boroughs",
+    "tile": 7
+   },
+   "immuneToUnemployment": true
   }
  ],
  "newStudies": [

@@ -59,6 +59,9 @@ export const PASSIVE_KEYS = new Set([
   'townRecruitDiscount',
   // the tailor's rule: the pledge ladder is a rung heavier for the OTHER Mayor, and not for you
   'opponentPledgeLadderPlus1',
+  // the producer's rule: the Capital City deals `value` more stalls than it is printed for, read for
+  // both Mayors because the display is shared (state.js's capitalCitySize)
+  'capitalCityExtraStalls',
   // Statue burdens
   'opponentRehireDiscount', 'opponentFirstBidPlus1', 'apprenticeEntersBusy', 'eventCostPlus1',
   'resourceSupplyMinus1', 'losingBidsPayFull', 'pledgeLadderPlus1',
