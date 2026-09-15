@@ -3,7 +3,7 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  RULES, SET, newGame, addStack, addToHand, setSupply, setCity, addBidder, giveStatue, UPRIGHT, BUSY,
+  RULES, SET, newGame, addStack, addToHand, setSupply, setCity, addBidder, giveStatue, defineTestOrdinances, UPRIGHT, BUSY,
 } from './helpers.mjs';
 import {
   applyAction, legalActions, startPhase, mulliganPhase, ageCity, cityRule, cardCostFor,
@@ -25,7 +25,7 @@ describe('the pledge ladder', () => {
   test('a cost-0 Character cannot bid at all', () => {
     const state = newGame();
     setSupply(state, 0, 20);
-    setCity(state, ['mk_festival_grant']);
+    setCity(state, ['mk_mkt_community_oven']);
     const free = addStack(state, 0, cheapest(0).id, UPRIGHT);
     begin(state, 0);
     assert.equal(canPledge(state, 0, null, free), false);
@@ -37,10 +37,10 @@ describe('the pledge ladder', () => {
     const state = newGame();
     setSupply(state, 0, 60);
     setSupply(state, 1, 60);
-    setCity(state, ['mk_festival_grant']);
+    setCity(state, ['mk_mkt_community_oven']);
     const a1 = addBidder(state, 0, 1);
     begin(state, 0);
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: a1.uid, bid: 2, minBid: 2, maxBid: 60 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: a1.uid, bid: 2, minBid: 2, maxBid: 60 });
     const pd = state.market.pending[0];
 
     // Player 1 has plenty of Supply but only a cost-1 animal: enough to answer once, never twice.
@@ -63,49 +63,49 @@ describe('three-tier Statue pricing', () => {
   test('the price steps up at each break in the buyer\'s own Victory Row', () => {
     const state = newGame();
     const [low, mid, top] = RULES.victory.statueCostTiers;
-    assert.equal(cardCostFor(state, 0, 'st_kindness'), low, 'a Mayor with no Statues pays the low tier');
-    giveStatue(state, 0, 'st_joy');
-    assert.equal(cardCostFor(state, 0, 'st_kindness'), low, 'one Statue still pays the low tier');
-    giveStatue(state, 0, 'st_curiosity');
-    assert.equal(cardCostFor(state, 0, 'st_kindness'), mid, 'two Statues pays the middle tier');
-    giveStatue(state, 0, 'st_courage');
-    assert.equal(cardCostFor(state, 0, 'st_kindness'), mid, 'three Statues still pays the middle tier');
-    giveStatue(state, 0, 'st_patience');
-    assert.equal(cardCostFor(state, 0, 'st_kindness'), top, 'four Statues pays the top tier');
-    assert.equal(cardCostFor(state, 1, 'st_kindness'), low, 'and the rival still pays their own price');
+    assert.equal(cardCostFor(state, 0, 'mk_st_kindness'), low, 'a Mayor with no Statues pays the low tier');
+    giveStatue(state, 0, 'mk_st_joy');
+    assert.equal(cardCostFor(state, 0, 'mk_st_kindness'), low, 'one Statue still pays the low tier');
+    giveStatue(state, 0, 'mk_st_curiosity');
+    assert.equal(cardCostFor(state, 0, 'mk_st_kindness'), mid, 'two Statues pays the middle tier');
+    giveStatue(state, 0, 'mk_st_courage');
+    assert.equal(cardCostFor(state, 0, 'mk_st_kindness'), mid, 'three Statues still pays the middle tier');
+    giveStatue(state, 0, 'mk_st_patience');
+    assert.equal(cardCostFor(state, 0, 'mk_st_kindness'), top, 'four Statues pays the top tier');
+    assert.equal(cardCostFor(state, 1, 'mk_st_kindness'), low, 'and the rival still pays their own price');
   });
 
   test('the winning fifth Statue is always bought at the dearest tier', () => {
     const state = newGame();
-    for (const id of ['st_joy', 'st_curiosity', 'st_courage', 'st_patience']) giveStatue(state, 0, id);
+    for (const id of ['mk_st_joy', 'mk_st_curiosity', 'mk_st_courage', 'mk_st_patience']) giveStatue(state, 0, id);
     const tiers = RULES.victory.statueCostTiers;
-    assert.equal(cardCostFor(state, 0, 'st_kindness'), tiers[tiers.length - 1]);
+    assert.equal(cardCostFor(state, 0, 'mk_st_kindness'), tiers[tiers.length - 1]);
   });
 });
 
 describe('the Capital City ages', () => {
   test('the oldest card leaves and is replaced, and a Statue goes back into the deck', () => {
     const state = newGame();
-    setCity(state, ['mk_festival_grant', 'mk_town_bell', 'st_kindness']);
-    state.market.deck = ['mk_supply_depot', 'mk_library_annex', 'mk_towpath'];
+    setCity(state, ['mk_mkt_community_oven', 'mk_mkt_town_bell', 'mk_st_kindness']);
+    state.market.deck = ['mk_mkt_chit_tin', 'mk_mkt_ledger_audit', 'mk_mkt_penny_jar'];
     const before = state.market.city.length;
     const aged = ageCity(state);
     assert.equal(aged, 1);
-    assert.ok(!state.market.city.includes('mk_festival_grant'), 'the oldest card moved on');
-    assert.ok(state.market.cityDump.includes('mk_festival_grant'));
+    assert.ok(!state.market.city.includes('mk_mkt_community_oven'), 'the oldest card moved on');
+    assert.ok(state.market.cityDump.includes('mk_mkt_community_oven'));
     assert.ok(state.market.city.length >= before, 'the display was topped back up');
   });
 
   test('a card under auction is never aged out from under its bidders', async () => {
     const state = newGame();
     setSupply(state, 0, 20);
-    setCity(state, ['mk_festival_grant', 'mk_town_bell']);
-    state.market.deck = ['mk_supply_depot', 'mk_library_annex'];
+    setCity(state, ['mk_mkt_community_oven', 'mk_mkt_town_bell']);
+    state.market.deck = ['mk_mkt_chit_tin', 'mk_mkt_ledger_audit'];
     const s = addBidder(state, 0, 1);
     begin(state, 0);
-    await applyAction(state, 0, { type: 'announce', cardId: 'mk_festival_grant', charUid: s.uid, bid: 2, minBid: 2, maxBid: 20 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_mkt_community_oven', charUid: s.uid, bid: 2, minBid: 2, maxBid: 20 });
     ageCity(state);
-    assert.ok(state.market.city.includes('mk_festival_grant'), 'the contested card stays');
+    assert.ok(state.market.city.includes('mk_mkt_community_oven'), 'the contested card stays');
   });
 });
 
@@ -140,7 +140,8 @@ describe('Buildings', () => {
   test("a Building's ability works from the town", async () => {
     const state = newGame();
     const payer = SET.cards.find((c) => c.type === 'building'
-      && (c.abilities || []).some((a) => a.trigger === 'onTurnStart' && JSON.stringify(a.effect || {}).includes('"gainSupply"')));
+      && (c.abilities || []).some((a) => a.trigger === 'onTurnStart' && !a.condition
+        && JSON.stringify(a.effect || {}).includes('"gainSupply"')));
     assert.ok(payer, 'the set prints a Building that pays at turn start');
     state.players[0].buildings.push({ uid: 9001, cardId: payer.id, source: 'market' });
     setSupply(state, 0, 0);
@@ -167,14 +168,14 @@ describe('hired Market animals', () => {
 
 describe('Ordinances', () => {
   test('they change every auction while displayed, and are never bought', () => {
-    const ord = SET.cards.find((c) => c.type === 'ordinance'
-      && (c.abilities || []).some((a) => a.key === 'pledgeLadderDelta'));
-    assert.ok(ord, 'the set prints an Ordinance that moves the ladder');
     const state = newGame();
+    // No Ordinance is written for the shelf yet; the rule under test is what the display does with
+    // one, so the test builds the card it needs.
+    const ord = defineTestOrdinances(state).shortLadder;
     setSupply(state, 0, 20);
     setCity(state, []); // clear the opening display so `plain` is the unmodified ladder
     const plain = pledgeMinCost(state, null, 0);
-    setCity(state, [ord.id, 'mk_festival_grant']);
+    setCity(state, [ord.id, 'mk_mkt_community_oven']);
     const delta = ord.abilities.find((a) => a.key === 'pledgeLadderDelta').value;
     assert.equal(cityRule(state, 'pledgeLadderDelta'), delta);
     assert.equal(pledgeMinCost(state, null, 0), Math.max(0, plain + delta), 'the ladder moved');

@@ -24,19 +24,19 @@ async function playLesson({ humanFallback = null } = {}) {
 }
 
 describe('the tutorial match', () => {
-  test('is built from the printed starter decks, arranged rather than replaced', () => {
+  test('is built from the two town decks, arranged rather than replaced', () => {
     const state = createTutorialGame(RULES, SET);
     const [me, them] = state.players;
     assert.equal(me.deckId, TUTORIAL_HUMAN_DECK);
     assert.equal(them.deckId, TUTORIAL_RIVAL_DECK);
     for (const p of state.players) {
-      const printed = SET.decks.find((d) => d.id === p.deckId).list;
+      const list = SET.decks.find((d) => d.id === p.deckId).list;
       const held = {};
       for (const c of [...p.hand, ...p.deck]) held[c.cardId] = (held[c.cardId] || 0) + 1;
-      assert.deepEqual(held, printed, `${p.name}'s cards are exactly the printed ${p.deckId} deck`);
+      assert.deepEqual(held, list, `${p.name}'s cards are exactly the ${p.deckId} deck`);
       assert.equal(p.hand.length, RULES.setup.startingHand + (p.index === 1 ? RULES.setup.secondPlayerBonusCards : 0));
     }
-    assert.deepEqual(me.hand.map((c) => c.cardId), [C.clover, C.sorrel, C.mabel, C.garden, C.cloverUp, C.harvest]);
+    assert.deepEqual(me.hand.map((c) => c.cardId), [C.peanut, C.daisy, C.barista, C.freshBatch, C.ledgerDay, C.standingRound]);
     assert.equal(state.market.city.length, RULES.setup.capitalCitySize);
     assert.equal(state.market.city[state.market.city.length - 1], C.kindness, 'the Statue is the newest card, so it survives the aging');
     assert.ok(state.market.city.includes(C.grant));
@@ -56,18 +56,18 @@ describe('the tutorial match', () => {
     assert.equal(them.victoryRow.length, 0);
     assert.equal(state.winner, null);
     // The lesson's claims about the board hold.
-    const clover = me.town.find((s) => s.cards[0].cardId === C.cloverUp);
-    assert.ok(clover, 'Clover was upgraded to Community Gardener');
-    assert.equal(clover.cards.length, 2, 'the upgrade sits on top of the original');
-    assert.ok(me.town.some((s) => s.cards[0].cardId === C.sorrel), 'Sorrel came free with Clover');
-    assert.ok(me.town.some((s) => s.cards[0].cardId === C.mabel));
+    const peanut = me.town.find((s) => s.cards[0].cardId === C.barista);
+    assert.ok(peanut, 'Peanut was promoted to Barista');
+    assert.equal(peanut.cards.length, 2, 'the promotion sits on top of the original');
+    assert.ok(me.town.some((s) => s.cards[0].cardId === C.daisy), 'Daisy is still in town');
+    assert.equal(me.town.length, 2, 'two animals, one of them promoted rather than replaced');
     assert.equal(me.unemployment.length, 0);
     assert.equal(me.escrow, 0, 'nothing is left in escrow once the Statue settles');
-    assert.equal(them.escrow, 0, 'the rival was refunded in full for the Festival Grant');
+    assert.equal(them.escrow, 0, "the rival was refunded in full for the Founder's Grant");
     assert.equal(state.market.pending.length, 0);
     const text = state.log.map((l) => l.text).join('\n');
-    assert.match(text, /outbids Mayor Sable for Festival Grant with Sorrel/);
-    assert.match(text, /Mayor Bramble gains Festival Grant/);
+    assert.match(text, /outbids Mayor Sable for Founder's Grant with Daisy/);
+    assert.match(text, /Mayor Bramble gains Founder's Grant/);
     assert.match(text, /Purchase of Statue of Kindness resolves unopposed for 10 Supply/);
     assert.match(text, /Town Bell has stood in the Capital City long enough/);
     assert.doesNotMatch(text, /Illegal action/);
@@ -103,11 +103,12 @@ describe('the tutorial match', () => {
     state.agents = [human, makeRivalPlanAgent(null, { script })];
     await mulliganPhase(state);
     while (!script.finished() && state.turnNumber < TUTORIAL_LAST_TURN + 2) await playTurn(state);
-    assert.ok(seen.includes('outbid-grant') && seen.includes('announce-statue') && seen.includes('upgrade-clover'));
+    assert.ok(seen.includes('outbid-grant') && seen.includes('announce-statue') && seen.includes('upgrade-peanut'));
     // A bid step pins the slider to the minimum and rejects a dearer bid.
     const bidStep = script.steps.find((st) => st.id === 'announce-statue');
     const req = { kind: 'action', options: [{ type: 'announce', cardId: C.kindness, charUid: 5, bid: 10, minBid: 10, maxBid: 16 }] };
-    const fake = { turnNumber: 5, active: 0, players: [{ town: [] }, {}] };
+    // The step names the animal it wants pledged, so the stand-in board has to hold them.
+    const fake = { turnNumber: 5, active: 0, players: [{ town: [{ uid: 5, cards: [{ cardId: C.barista }] }] }, {}] };
     assert.equal(bidStep.shape(req, fake).options[0].maxBid, 10);
     assert.equal(bidStep.valid({ type: 'announce', cardId: C.kindness, charUid: 5, bid: 12 }, req, fake), false);
     assert.equal(bidStep.valid({ type: 'announce', cardId: C.kindness, charUid: 5, bid: 10 }, req, fake), true);

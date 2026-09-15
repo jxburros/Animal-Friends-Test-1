@@ -2,7 +2,7 @@
 
 The engine is a headless, deterministic, data-driven ES-module implementation of the rules in
 `ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md`. It runs unchanged in Node 22 and in browsers.
-Rules constants come from `spec/game.json`; cards from `spec/starter_card_set.json`.
+Rules constants come from `spec/game.json`; cards from `spec/maker_card_set.json`.
 
 ```js
 import { createGame, playGame, playTurn, mulliganPhase, legalActions, applyAction, cardDef, topCard, cloneState } from './src/engine/index.js';
@@ -218,7 +218,7 @@ Disruption effect ops (global, both players): `allCharactersToUnemployment`, `en
 ## Card data: the remade collection's verbs (v0.7.1)
 
 Six additions, each written because a character in `spec/maker_card_set.json` needed something the
-engine could not say (`docs/REMAKING_A_CHARACTER.md`; the wish that produced each one is kept in that
+engine could not say (`docs/WRITING_A_CHARACTER.md`; the wish that produced each one is kept in that
 character's `wantedVerbs`). Nothing in the printed set uses them, so every printed rating is unchanged.
 
 - **`makeBusy`** — the mirror of `advanceCharacter`, pointed across the table: an opponent's Character

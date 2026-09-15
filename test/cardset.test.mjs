@@ -1,6 +1,6 @@
 // Content tests: every card in the set is well formed, every deck is legal, and every effect,
 // trigger, condition and mod key a card uses is one the engine actually interprets. These catch
-// a typo in spec/starter_card_set.json long before it shows up as a silent no-op in a game.
+// a typo in spec/maker_card_set.json long before it shows up as a silent no-op in a game.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { RULES, SET, newGame } from './helpers.mjs';
@@ -28,7 +28,7 @@ test('card set', async (t) => {
     for (const c of SET.cards) {
       assert.ok(!seen.has(c.id), `duplicate card id ${c.id}`);
       seen.add(c.id);
-      assert.ok(['character', 'event', 'statue', 'market', 'disruption', 'building', 'marketCharacter', 'ordinance'].includes(c.type), `${c.id}: bad type ${c.type}`);
+      assert.ok(['character', 'event', 'statue', 'market', 'disruption', 'building', 'townBuilding', 'marketCharacter', 'ordinance', 'token'].includes(c.type), `${c.id}: bad type ${c.type}`);
       assert.ok(c.name, `${c.id}: no name`);
       assert.ok(c.text, `${c.id}: no rules text`);
     }
@@ -51,7 +51,8 @@ test('card set', async (t) => {
       for (const r of c.requires || []) {
         if (r.species) assert.ok(SET.species.includes(r.species), `${c.id}: undeclared species ${r.species}`);
         if (r.study) assert.ok(SET.studies.includes(r.study), `${c.id}: undeclared study ${r.study}`);
-        if (r.name) assert.ok(byType('character').some((ch) => ch.name === r.name), `${c.id}: requires unknown Character ${r.name}`);
+        // A named requirement may name a hired animal as readily as one out of a town deck.
+        if (r.name) assert.ok(SET.cards.some((ch) => (ch.type === 'character' || ch.type === 'marketCharacter') && ch.name === r.name), `${c.id}: requires unknown Character ${r.name}`);
         assert.ok(r.species || r.study || r.name, `${c.id}: requirement with neither species, study nor Character name`);
       }
       assert.ok(c.effect || c.abilities, `${c.id}: Event does nothing`);
@@ -89,7 +90,7 @@ test('card set', async (t) => {
   await t.test('every Market Deck holds all nine Statues and a pool of its printed size', () => {
     const ids = new Set(SET.cards.map((c) => c.id));
     const statues = byType('statue').map((c) => c.id);
-    assert.ok(SET.marketDecks.length >= 3, 'three Market Decks to choose from');
+    assert.ok(SET.marketDecks.length >= 1, 'at least one Market Deck to play');
     for (const spec of SET.marketDecks) {
       for (const id of [...spec.always, ...spec.pool]) assert.ok(ids.has(id), `${spec.id} references unknown card ${id}`);
       assert.equal(new Set(spec.pool).size, spec.pool.length, `${spec.id}: a card appears twice in the pool`);
@@ -127,7 +128,7 @@ test('card set', async (t) => {
 });
 
 test('decks', async (t) => {
-  await t.test('every printed deck is a legal size, with legal copy counts', () => {
+  await t.test('every town deck is a legal size, with legal copy counts', () => {
     const db = RULES.deckbuilding;
     for (const deck of SET.decks) {
       const entries = Object.entries(deck.list);
@@ -139,8 +140,9 @@ test('decks', async (t) => {
         assert.ok(DECK_TYPES.has(def.type), `${deck.id}: ${cardId} is a ${def.type}`);
         assert.ok(n <= maxCopiesOf(RULES, def), `${deck.id}: ${n} copies of ${cardId} (${def.rarity})`);
       }
-      // There is no Character floor any more — a thin deck is the Mayor's to build — but a printed
-      // deck is a starting point, so it should still be a town rather than a pile of paperwork.
+      // There is no Character floor any more — a thin deck is the Mayor's to build — but a deck
+      // that ships with the game is a starting point, so it should still be a town rather than a
+      // pile of paperwork.
       const chars = entries.reduce((a, [id, n]) => a + (SET.cards.find((c) => c.id === id).type === 'character' ? n : 0), 0);
       assert.ok(chars > RULES.deckbuilding.warnMinCharacters, `${deck.id}: only ${chars} Characters`);
     }
@@ -175,13 +177,13 @@ test('custom decks', async (t) => {
   });
 
   await t.test('a custom deck built from several boroughs plays a full game', async () => {
-    // A town built out of several boroughs at once: take from two printed decks until the deck is
-    // the printed size, respecting the rarity copy caps. Built from the set rather than hand-listed,
-    // so it keeps working as the card pool changes.
+    // A town built out of several boroughs at once: take from every deck in turn until it is the
+    // smallest legal size, respecting the rarity copy caps. Built from the set rather than
+    // hand-listed, so it keeps working as the card pool changes.
     const dr = deckRules(RULES);
     const list = {};
     let total = 0;
-    for (const src of [SET.decks[0], SET.decks[2], SET.decks[4]]) {
+    for (const src of SET.decks) {
       for (const [id, n] of Object.entries(src.list)) {
         if (total >= dr.minDeckSize) break;
         const card = SET.cards.find((c) => c.id === id);
@@ -191,7 +193,7 @@ test('custom decks', async (t) => {
     }
     assert.deepEqual(deckProblems(RULES, SET, list), [], 'the mixed deck is legal');
     assert.equal(Object.values(list).reduce((a, n) => a + n, 0), dr.minDeckSize);
-    const state = createGame(RULES, SET, { seed: 3, decks: [{ id: 'custom-test', name: 'Six Boroughs', list }, 'paws-papers'] });
+    const state = createGame(RULES, SET, { seed: 3, decks: [{ id: 'custom-test', name: 'Six Boroughs', list }, SET.decks[1].id] });
     assert.equal(state.players[0].deckName, 'Six Boroughs');
     assert.equal(state.players[0].deck.length + state.players[0].hand.length, dr.minDeckSize);
     await playGame(state, [makeRandomAgent(21), makeRandomAgent(23)]);
@@ -202,7 +204,7 @@ test('custom decks', async (t) => {
 test('deck legality', async (t) => {
   const legal = { ...SET.decks[0].list };
 
-  await t.test('a printed deck has no problems', () => {
+  await t.test('a deck that ships with the game has no problems', () => {
     assert.deepEqual(deckProblems(RULES, SET, legal), []);
   });
 
@@ -220,7 +222,7 @@ test('deck legality', async (t) => {
     const common = SET.cards.find((c) => c.type === 'character' && c.rarity === 'Common');
     assert.ok(deckProblems(RULES, SET, { ...legal, [common.id]: 5 }).some((p) => p.includes('5 copies')));
 
-    const withStatue = { ...legal, st_kindness: 1 };
+    const withStatue = { ...legal, mk_st_kindness: 1 };
     assert.ok(deckProblems(RULES, SET, withStatue).some((p) => p.includes('cannot go in a town deck')));
 
     assert.ok(deckProblems(RULES, SET, { not_a_card: 30 }).some((p) => p.includes('Unknown card')));
@@ -253,7 +255,7 @@ test('deck legality', async (t) => {
 
   await t.test('a deck the builder calls legal is one createGame accepts', async () => {
     assert.deepEqual(deckProblems(RULES, SET, legal), []);
-    const state = createGame(RULES, SET, { seed: 9, decks: [{ id: 'ok', name: 'Legal Town', list: legal }, 'ripple-rune'] });
+    const state = createGame(RULES, SET, { seed: 9, decks: [{ id: 'ok', name: 'Legal Town', list: legal }, SET.decks[1].id] });
     await playGame(state, [makeRandomAgent(2), makeRandomAgent(4)]);
     assert.ok(state.result);
   });

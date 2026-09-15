@@ -1,6 +1,6 @@
 // The third round of wishes: the verbs the maker shelf asked for and the engine could not say.
 //
-// Each one exists because a remade character's story wanted it (their `wantedVerbs` entry in
+// Each one exists because a character's story wanted it (their `wantedVerbs` entry in
 // spec/maker_card_set.json says which), and each is pinned here by what it actually does — including
 // the manners it inherits: nothing touches a Character pledged into an auction, a price that cannot
 // be paid is not paid at all, and a pairing lapses on its own when one half of it stops standing.
@@ -60,7 +60,7 @@ test('coinFlip with only one branch printed does nothing on the other side', asy
 test('giveToUnemployed brings an animal back for nothing, and brings it back Busy', async () => {
   const state = stage();
   agentTakesFirst(state);
-  addToUnemployment(state, 0, 'bb_clover_1');
+  addToUnemployment(state, 0, 'mk_clover_seedling_helper_0');
   state.players[0].supply = 0;
   await runEffect(state, 0, { do: 'giveToUnemployed' }, {});
   assert.equal(state.players[0].unemployment.length, 0, 'the animal leaves Unemployment');
@@ -72,7 +72,7 @@ test('giveToUnemployed brings an animal back for nothing, and brings it back Bus
 test('giveToUnemployed reads its filter, and does nothing with nobody out of work', async () => {
   const state = stage();
   agentTakesFirst(state);
-  addToUnemployment(state, 0, 'bb_fern_1'); // cost 2
+  addToUnemployment(state, 0, 'mk_lynnette_press_feeder_2'); // cost 2
   await runEffect(state, 0, { do: 'giveToUnemployed', filter: { maxCost: 1 } }, {});
   assert.equal(state.players[0].unemployment.length, 1, 'too dear for this card to reach');
   const empty = stage();
@@ -86,8 +86,8 @@ test('giveToUnemployed reads its filter, and does nothing with nobody out of wor
 test('pairCharacters pairs the source with another animal, and each of their shifts pays more', async () => {
   const state = stage();
   agentTakesFirst(state);
-  const daisy = addStack(state, 0, 'bb_clover_1', UPRIGHT);
-  const other = addStack(state, 0, 'bb_fern_1', UPRIGHT);
+  const daisy = addStack(state, 0, 'mk_clover_seedling_helper_0', UPRIGHT);
+  const other = addStack(state, 0, 'mk_lynnette_press_feeder_2', UPRIGHT);
   await runEffect(state, 0, { do: 'pairCharacters', bonus: 1 }, { sourceStackUid: daisy.uid });
   assert.equal(daisy.pairedWith, other.uid);
   assert.equal(other.pairedWith, daisy.uid);
@@ -101,8 +101,8 @@ test('pairCharacters pairs the source with another animal, and each of their shi
 test('a pairing lapses on its own when one half stops standing in the town', async () => {
   const state = stage();
   agentTakesFirst(state);
-  const a = addStack(state, 0, 'bb_clover_1', UPRIGHT);
-  const b = addStack(state, 0, 'bb_fern_1', UPRIGHT);
+  const a = addStack(state, 0, 'mk_clover_seedling_helper_0', UPRIGHT);
+  const b = addStack(state, 0, 'mk_lynnette_press_feeder_2', UPRIGHT);
   await runEffect(state, 0, { do: 'pairCharacters', bonus: 2 }, { sourceStackUid: a.uid });
   state.players[0].town = state.players[0].town.filter((s) => s !== b); // b is unemployed, upgraded, sent home
   state.players[0].supply = 0;
@@ -121,7 +121,7 @@ test('the townShiftBonus passive pays every shift the town finishes, and stops w
     abilities: [{ trigger: 'passive', key: 'townShiftBonus', value: 1, requiresUpright: true }],
   });
   const actuary = addStack(state, 0, 'test_actuary', UPRIGHT);
-  const worker = addStack(state, 0, 'bb_fern_1', BUSY);
+  const worker = addStack(state, 0, 'mk_lynnette_press_feeder_2', BUSY);
   state.players[0].supply = 0;
   worker.shift = { remaining: 0, output: 2 };
   await completeShift(state, 0, worker);
@@ -139,28 +139,28 @@ test('the townShiftBonus passive pays every shift the town finishes, and stops w
 test('swapBuilding pulls one Building down and puts a thrown-away one up in its place', async () => {
   const state = stage();
   agentTakesFirst(state);
-  giveBuilding(state, 0, 'bld_hiring_hall', 'market');
-  state.market.cityDump.push('bld_winter_stores');
+  giveBuilding(state, 0, 'mk_bld_hiring_hall', 'market');
+  state.market.cityDump.push('mk_bld_winter_stores');
   await runEffect(state, 0, { do: 'swapBuilding' }, {});
-  assert.deepEqual(state.players[0].buildings.map((b) => b.cardId), ['bld_winter_stores']);
-  assert.ok(state.market.cityDump.includes('bld_hiring_hall'), 'the old one goes to the City Dump');
-  assert.ok(!state.market.cityDump.includes('bld_winter_stores'));
+  assert.deepEqual(state.players[0].buildings.map((b) => b.cardId), ['mk_bld_winter_stores']);
+  assert.ok(state.market.cityDump.includes('mk_bld_hiring_hall'), 'the old one goes to the City Dump');
+  assert.ok(!state.market.cityDump.includes('mk_bld_winter_stores'));
 });
 
 test('swapBuilding needs both halves: nothing standing, or nothing to trade for, and it does not happen', async () => {
   const nothingUp = stage();
   agentTakesFirst(nothingUp);
-  nothingUp.market.cityDump.push('bld_winter_stores');
+  nothingUp.market.cityDump.push('mk_bld_winter_stores');
   await runEffect(nothingUp, 0, { do: 'swapBuilding' }, {});
   assert.equal(nothingUp.players[0].buildings.length, 0);
-  assert.ok(nothingUp.market.cityDump.includes('bld_winter_stores'), 'the Dump is untouched');
+  assert.ok(nothingUp.market.cityDump.includes('mk_bld_winter_stores'), 'the Dump is untouched');
 
   const emptyDump = stage();
   agentTakesFirst(emptyDump);
-  giveBuilding(emptyDump, 0, 'bld_hiring_hall', 'market');
-  emptyDump.market.cityDump.push('mk_penny_jar'); // a Market card is not a Building
+  giveBuilding(emptyDump, 0, 'mk_bld_hiring_hall', 'market');
+  emptyDump.market.cityDump.push('mk_mkt_penny_jar'); // a Market card is not a Building
   await runEffect(emptyDump, 0, { do: 'swapBuilding' }, {});
-  assert.deepEqual(emptyDump.players[0].buildings.map((b) => b.cardId), ['bld_hiring_hall']);
+  assert.deepEqual(emptyDump.players[0].buildings.map((b) => b.cardId), ['mk_bld_hiring_hall']);
 });
 
 // ---------------------------------------------------------------- the other town's Dump
@@ -168,8 +168,8 @@ test('swapBuilding needs both halves: nothing standing, or nothing to trade for,
 test('eventFromOpponentDump takes an Event out of the rival Town Dump and into your hand', async () => {
   const state = stage();
   agentTakesFirst(state);
-  const ev = addToDump(state, 1, 'bb_founders_orchard');
-  addToDump(state, 1, 'bb_clover_1'); // a Character in the Dump is not an Event
+  const ev = addToDump(state, 1, 'mk_glut_of_squash');
+  addToDump(state, 1, 'mk_clover_seedling_helper_0'); // a Character in the Dump is not an Event
   const before = state.players[0].hand.length;
   await runEffect(state, 0, { do: 'eventFromOpponentDump' }, {});
   assert.equal(state.players[0].hand.length, before + 1);
@@ -180,7 +180,7 @@ test('eventFromOpponentDump takes an Event out of the rival Town Dump and into y
 test('eventFromOpponentDump does nothing when the rival has binned no Events', async () => {
   const state = stage();
   agentTakesFirst(state);
-  addToDump(state, 1, 'bb_clover_1');
+  addToDump(state, 1, 'mk_clover_seedling_helper_0');
   const before = state.players[0].hand.length;
   await runEffect(state, 0, { do: 'eventFromOpponentDump' }, {});
   assert.equal(state.players[0].hand.length, before);
@@ -190,9 +190,9 @@ test('eventFromOpponentDump does nothing when the rival has binned no Events', a
 
 test('gainToken per charactersReadied pays by the animal, and pays nothing on a quiet turn', async () => {
   const state = stage();
-  const a = addStack(state, 0, 'bb_clover_1', BUSY);
-  const b = addStack(state, 0, 'bb_fern_1', BUSY);
-  addStack(state, 0, 'bb_clover_1', UPRIGHT); // already standing; nobody crossed on their account
+  const a = addStack(state, 0, 'mk_clover_seedling_helper_0', BUSY);
+  const b = addStack(state, 0, 'mk_lynnette_press_feeder_2', BUSY);
+  addStack(state, 0, 'mk_clover_seedling_helper_0', UPRIGHT); // already standing; nobody crossed on their account
   await readyPhase(state, 0);
   assert.equal(a.orientation, UPRIGHT);
   assert.equal(b.orientation, UPRIGHT);
@@ -200,14 +200,14 @@ test('gainToken per charactersReadied pays by the animal, and pays nothing on a 
   assert.equal(state.players[0].tokens['species:Otter'], 2, 'a chit for each animal who crossed');
 
   const quiet = stage();
-  addStack(quiet, 0, 'bb_clover_1', UPRIGHT);
+  addStack(quiet, 0, 'mk_clover_seedling_helper_0', UPRIGHT);
   await runEffect(quiet, 0, { do: 'gainToken', of: 'species', species: 'Otter', per: 'charactersReadied' }, {});
   assert.equal(quiet.players[0].tokens['species:Otter'] ?? 0, 0, 'an empty boat takes no fares');
 });
 
 test('an effect that readies an animal counts it as a crossing too', async () => {
   const state = stage();
-  const busy = addStack(state, 0, 'bb_clover_1', BUSY);
+  const busy = addStack(state, 0, 'mk_clover_seedling_helper_0', BUSY);
   await readyStack(state, 0, busy, 'test');
   await runEffect(state, 0, { do: 'gainToken', of: 'species', species: 'Otter', per: 'charactersReadied' }, {});
   assert.equal(state.players[0].tokens['species:Otter'], 1);

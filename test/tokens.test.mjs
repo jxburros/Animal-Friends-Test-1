@@ -1,8 +1,8 @@
 // Tokens: the small change of the town. One kind per species, one per study, one for Buildings,
 // declared as `token` cards in a card set and counted in `player.tokens`.
 //
-// Nothing on either shelf spends a token yet, which is exactly why these tests exist: the counter
-// was built before the cards that will use it, so the only thing holding it honest is this file.
+// The counter was built before the cards that spend it, so the only thing holding it honest is
+// this file and the market cards in test/maker-market.test.mjs that pay a price in chits.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -100,11 +100,13 @@ test('tokensAtLeast asks what the town is holding', async () => {
 
 test('every Mayor starts with the tokens the rules give them', () => {
   assert.deepEqual(newGame().players[0].tokens, {}, 'and by default that is none at all');
-  // A set that declares one kind, and rules that hand two of everything out at setup.
-  const set = { ...SET, cards: SET.cards.concat([{ id: 'tst_tok', type: 'token', name: 'Tester Token', token: { of: 'building' } }]) };
+  // A set that declares one kind only, and rules that hand two of everything out at setup.
+  const cards = SET.cards.filter((c) => c.type !== 'token')
+    .concat([{ id: 'tst_tok', type: 'token', name: 'Tester Token', token: { of: 'building' } }]);
+  const set = { ...SET, cards };
   assert.deepEqual(tokenKinds(set).map((k) => k.key), ['building']);
   const generous = { ...RULES, tokens: { ...RULES.tokens, startingTokens: 2 } };
-  const state = createGame(generous, set, { seed: 42, decks: ['burrow-bloom', 'paws-papers'] });
+  const state = createGame(generous, set, { seed: 42, decks: SET.decks.slice(0, 2).map((d) => d.id) });
   for (const p of state.players) assert.equal(tokenCount(p, 'building'), 2);
 });
 
@@ -116,7 +118,7 @@ test('a token is not a card anybody can play with', () => {
   assert.ok(problems.some((s) => s.includes('cannot go in a town deck')), problems.join(' | '));
 });
 
-test('the maker shelf declares one token for every species, every study and Buildings', () => {
+test('the shelf declares one token for every species, every study and Buildings', () => {
   const kinds = tokenKinds(MAKER);
   const keys = kinds.map((k) => k.key);
   assert.equal(new Set(keys).size, keys.length, 'a kind is declared once');
@@ -127,7 +129,6 @@ test('the maker shelf declares one token for every species, every study and Buil
   for (const { def } of kinds) {
     assert.equal(tokenKeyOf(def), tokenKey(def.token));
     assert.ok(def.flavor, `${def.id} carries no flavor`);
-    assert.ok(def.addition && def.addedBecause, `${def.id} must say why it is new`);
     assert.ok(!(def.abilities || []).length, `${def.id}: a token is a marker, not an ability`);
   }
 });

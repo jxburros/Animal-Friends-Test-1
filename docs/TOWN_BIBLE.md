@@ -2,7 +2,7 @@
 
 The shared, cumulative record of what is **true** in the First Boroughs. Every character remake reads
 this before writing a backstory and appends what it establishes (see
-[REMAKING_A_CHARACTER.md](REMAKING_A_CHARACTER.md) §7).
+[WRITING_A_CHARACTER.md](WRITING_A_CHARACTER.md) §7).
 
 Two rules:
 

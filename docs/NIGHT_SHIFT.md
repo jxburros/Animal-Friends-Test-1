@@ -1,5 +1,10 @@
 # Night Shift — v0.7.0
 
+> **Archive.** This describes the printed collection, which the game no longer ships. It is kept
+> for the design history — the species, studies and rules it introduced are all still in play,
+> and the characters it names live on in `spec/maker_card_set.json`. Nothing here is a card list
+> you can look up in the game any more.
+
 Night Shift adds **86 cards** for **461 cards** in all, and it is the town after dark. It brings the **Owl**
 as the tenth species and **Science** as the sixth study; it gives every one of the **38 named Characters** a
 night-shift version; and it adds four new names — Sage the astronomer, Bean the barista, Tawny of the night
@@ -153,7 +158,7 @@ node scripts/playtest.mjs --games 200 --decks mm,ss --market night-market --seed
 
 ## New card catalogue
 
-The following list is a snapshot of the authoritative `spec/starter_card_set.json`.
+The following list is a snapshot of the printed set as it stood.
 
 ### New Characters
 

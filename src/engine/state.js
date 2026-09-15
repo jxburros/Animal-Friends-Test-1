@@ -165,7 +165,7 @@ export function freshTurnCounters() {
 /**
  * Create a new game.
  * @param rules  parsed spec/game.json
- * @param set    parsed spec/starter_card_set.json (indexed or raw)
+ * @param set    parsed spec/maker_card_set.json (indexed or raw)
  * @param opts   { seed, decks:[deckRef, deckRef], names:[..], market } — a deckRef is a deck id from the set
  *               or a `{ id?, name?, list }` object (see resolveDeck), so a player can bring a custom deck;
  *               `market` selects the shared Market Deck from `set.marketDecks` (default: the first one).

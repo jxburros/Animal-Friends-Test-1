@@ -189,19 +189,19 @@ describe('the Statue tier is charged at resolution, not at announcement', () => 
     const eng = await import('../src/engine/index.js');
     const state = ng();
     h.setSupply(state, 0, 100);
-    h.setCity(state, ['st_kindness', 'st_curiosity']);
-    for (const id of ['st_joy', 'st_courage', 'st_patience']) h.giveStatue(state, 0, id);
+    h.setCity(state, ['mk_st_kindness', 'mk_st_curiosity']);
+    for (const id of ['mk_st_joy', 'mk_st_courage', 'mk_st_patience']) h.giveStatue(state, 0, id);
     const tiers = RULES.victory.statueCostTiers;
     const mid = tiers[1];
     const top = tiers[tiers.length - 1];
 
     // Holding three, both Statues are announced at the middle tier.
-    assert.equal(eng.cardCostFor(state, 0, 'st_kindness'), mid);
+    assert.equal(eng.cardCostFor(state, 0, 'mk_st_kindness'), mid);
     const a = addStack(state, 0, SET.cards.find((c) => c.type === 'character' && c.cost === 1).id, UPRIGHT);
     const b = addStack(state, 0, SET.cards.find((c) => c.type === 'character' && c.cost === 2).id, UPRIGHT);
     state.phase = 'actions'; state.active = 0;
-    await applyAction(state, 0, { type: 'announce', cardId: 'st_kindness', charUid: a.uid, bid: mid, minBid: mid, maxBid: 100 });
-    await applyAction(state, 0, { type: 'announce', cardId: 'st_curiosity', charUid: b.uid, bid: mid, minBid: mid, maxBid: 100 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_st_kindness', charUid: a.uid, bid: mid, minBid: mid, maxBid: 100 });
+    await applyAction(state, 0, { type: 'announce', cardId: 'mk_st_curiosity', charUid: b.uid, bid: mid, minBid: mid, maxBid: 100 });
 
     state.agents = [{ choose: async () => 'supply' }, { choose: async () => 'supply' }];
     const before = state.players[0].supply;

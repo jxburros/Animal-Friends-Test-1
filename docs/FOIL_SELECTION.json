@@ -1,6 +1,6 @@
 {
+  "$comment": "The fifteen ordinary Foil printings, three of each finish. The finishes were drawn at random with the seed below; where the draw landed on a card the collection has since replaced, the foil stayed with the card that took its place, so the masks and the finish counts are unchanged.",
   "seed": 3461026837,
-  "poolSize": 827,
   "selection": [
     {
       "id": "mk_beck_bylaw_reader_1",
@@ -10,7 +10,7 @@
       "mode": "full"
     },
     {
-      "id": "bb_clover_1",
+      "id": "mk_clover_seedling_helper_0",
       "name": "Clover",
       "title": "Seedling Helper",
       "type": "character",
@@ -38,8 +38,8 @@
       "mode": "artwork"
     },
     {
-      "id": "br_toolbox_trade",
-      "name": "Toolbox Trade",
+      "id": "mk_moss_rehiring_day",
+      "name": "Moss's Rehiring Day",
       "title": "",
       "type": "event",
       "mode": "artwork"
@@ -52,9 +52,9 @@
       "mode": "details"
     },
     {
-      "id": "ns_flint_0",
-      "name": "Flint",
-      "title": "Auctioneer’s Boy",
+      "id": "mk_finn_auctioneers_boy_0",
+      "name": "Finn",
+      "title": "Auctioneer's Boy",
       "type": "character",
       "mode": "details"
     },
@@ -66,8 +66,8 @@
       "mode": "details"
     },
     {
-      "id": "ns_hoot_and_holler",
-      "name": "Hoot and Holler",
+      "id": "mk_night_round",
+      "name": "The Night Round",
       "title": "",
       "type": "event",
       "mode": "reverse"
@@ -87,9 +87,9 @@
       "mode": "reverse"
     },
     {
-      "id": "mkt_dabble",
-      "name": "Dabble",
-      "title": "River Pilot",
+      "id": "mk_dylan_river_otter_4",
+      "name": "Dylan",
+      "title": "River Otter",
       "type": "marketCharacter",
       "mode": "hexagon"
     },

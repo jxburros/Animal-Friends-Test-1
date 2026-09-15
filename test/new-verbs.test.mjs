@@ -1,5 +1,5 @@
-// The verbs added for the remade collection: each one exists because a character's story asked for
-// something the engine could not say. These tests pin what each actually does — including the
+// The verbs the collection asked for: each one exists because a character's story wanted something
+// the engine could not say. These tests pin what each actually does — including the
 // manners they inherit (never a Character mid-shift, never one pledged, never one behind quills).
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -29,7 +29,7 @@ function agentTakesAll(state) {
 test('makeBusy turns an opponent Character one step back toward Busy', async () => {
   const state = stage();
   agentTakesAll(state);
-  const theirs = addStack(state, 1, 'bb_clover_1', UPRIGHT);
+  const theirs = addStack(state, 1, 'mk_clover_seedling_helper_0', UPRIGHT);
   await runEffect(state, 0, { do: 'makeBusy' }, {});
   assert.equal(theirs.orientation, BUSY, 'an upright Character is put back to work');
   await runEffect(state, 0, { do: 'makeBusy' }, {});
@@ -41,11 +41,11 @@ test('makeBusy turns an opponent Character one step back toward Busy', async () 
 test('makeBusy leaves work, pledges and quills alone', async () => {
   const state = stage();
   agentTakesAll(state);
-  const working = addStack(state, 1, 'bb_clover_1', UPRIGHT);
+  const working = addStack(state, 1, 'mk_clover_seedling_helper_0', UPRIGHT);
   working.shift = { delay: 1, output: 2, remaining: 1 };
-  const pledged = addStack(state, 1, 'bb_sorrel_1', UPRIGHT);
+  const pledged = addStack(state, 1, 'mk_eric_smallholder_1', UPRIGHT);
   pledged.lockedBid = 1;
-  const quilled = addStack(state, 1, 'bb_mabel_1', UPRIGHT);
+  const quilled = addStack(state, 1, 'mk_maribel_seed_keeper_1', UPRIGHT);
   quilled.protectedUntil = state.turnNumber + 2;
   assert.ok(isProtected(state, quilled));
   await runEffect(state, 0, { do: 'makeBusy', count: 3 }, {});
@@ -57,8 +57,8 @@ test('makeBusy leaves work, pledges and quills alone', async () => {
 test('makeBusy respects a cost filter', async () => {
   const state = stage();
   agentTakesAll(state);
-  const cheap = addStack(state, 1, 'bb_clover_1', UPRIGHT); // cost 0
-  const dear = addStack(state, 1, 'rr_pip_3', UPRIGHT); // cost 5
+  const cheap = addStack(state, 1, 'mk_clover_seedling_helper_0', UPRIGHT); // cost 0
+  const dear = addStack(state, 1, 'mk_scott_author_of_the_boroughs_5', UPRIGHT); // cost 5
   await runEffect(state, 0, { do: 'makeBusy', count: 2, filter: { maxCost: 1 } }, {});
   assert.equal(cheap.orientation, BUSY);
   assert.equal(dear.orientation, UPRIGHT, 'a filter keeps the dear ones out of reach');
@@ -91,8 +91,8 @@ test('scryDeck without `to` still only bottoms the cards', async () => {
 test('protectCharacter with notSelf puts the quills around somebody else', async () => {
   const state = stage();
   agentTakesAll(state);
-  const berry = addStack(state, 0, 'br_bramble_1', UPRIGHT);
-  const other = addStack(state, 0, 'bb_clover_1', UPRIGHT);
+  const berry = addStack(state, 0, 'mk_berry_tinker_0', UPRIGHT);
+  const other = addStack(state, 0, 'mk_clover_seedling_helper_0', UPRIGHT);
   await runEffect(state, 0, { do: 'protectCharacter', filter: { notSelf: true } }, { sourceStackUid: berry.uid });
   assert.ok(isProtected(state, other), 'the other Character is protected');
   assert.ok(!isProtected(state, berry), 'and the source is not');
@@ -101,8 +101,8 @@ test('protectCharacter with notSelf puts the quills around somebody else', async
 test('protectCharacter without a filter still protects the source, as it always did', async () => {
   const state = stage();
   agentTakesAll(state);
-  const self = addStack(state, 0, 'br_bramble_1', UPRIGHT);
-  addStack(state, 0, 'bb_clover_1', UPRIGHT);
+  const self = addStack(state, 0, 'mk_berry_tinker_0', UPRIGHT);
+  addStack(state, 0, 'mk_clover_seedling_helper_0', UPRIGHT);
   await runEffect(state, 0, { do: 'protectCharacter' }, { sourceStackUid: self.uid });
   assert.ok(isProtected(state, self));
 });
@@ -111,16 +111,16 @@ test('a recruit discount can be typed to a study', async () => {
   const state = stage();
   const p = state.players[0];
   await runEffect(state, 0, { do: 'addMod', key: 'recruitDiscount', value: 1, filter: { study: 'Lore' } }, {});
-  // rr_pip_3 is Lore; bb_clover_1 is Agriculture.
-  assert.equal(recruitCost(state, 0, 'rr_pip_3'), 4, 'the Lore animal is a Supply cheaper');
-  assert.equal(recruitCost(state, 0, 'bb_clover_1'), 0, 'and an Agriculture animal is unaffected');
+  // Scott, Author of the Boroughs is Lore; Clover, Seedling Helper is Agriculture.
+  assert.equal(recruitCost(state, 0, 'mk_scott_author_of_the_boroughs_5'), 4, 'the Lore animal is a Supply cheaper');
+  assert.equal(recruitCost(state, 0, 'mk_clover_seedling_helper_0'), 0, 'and an Agriculture animal is unaffected');
   assert.equal(p.mods.length, 1);
 });
 
 test('an untyped recruit discount still applies to everybody', async () => {
   const state = stage();
   await runEffect(state, 0, { do: 'addMod', key: 'recruitDiscount', value: 1 }, {});
-  assert.equal(recruitCost(state, 0, 'rr_pip_3'), 4);
+  assert.equal(recruitCost(state, 0, 'mk_scott_author_of_the_boroughs_5'), 4);
 });
 
 test('a buildingDiscount makes Buildings cheaper and nothing else', async () => {
@@ -137,7 +137,7 @@ test('a buildingDiscount makes Buildings cheaper and nothing else', async () => 
 
 test('a retained hire goes back to the Capital City when the term runs out', async () => {
   const state = stage();
-  const hire = addStack(state, 0, 'mkt_barrow', BUSY);
+  const hire = addStack(state, 0, 'mk_barrow_stonecutter_5', BUSY);
   hire.termRemaining = 2;
   const p = state.players[0];
   await endPhase(state, 0);
@@ -145,12 +145,12 @@ test('a retained hire goes back to the Capital City when the term runs out', asy
   assert.ok(p.town.includes(hire), 'and the hire is still in town');
   await endPhase(state, 0);
   assert.ok(!p.town.includes(hire), 'when it runs out they leave town');
-  assert.ok(state.market.cityDump.includes('mkt_barrow'), 'and go back to the Capital City');
+  assert.ok(state.market.cityDump.includes('mk_barrow_stonecutter_5'), 'and go back to the Capital City');
 });
 
 test('a retained hire pledged into an auction stays until it resolves', async () => {
   const state = stage();
-  const hire = addStack(state, 0, 'mkt_barrow', UPRIGHT);
+  const hire = addStack(state, 0, 'mk_barrow_stonecutter_5', UPRIGHT);
   hire.termRemaining = 1;
   hire.lockedBid = 1;
   await endPhase(state, 0);
@@ -159,7 +159,7 @@ test('a retained hire pledged into an auction stays until it resolves', async ()
 });
 
 // ---------------------------------------------------------------- the second round of wishes
-// Four more verbs, each one a gap a remade character walked into: the gate animal who should work
+// Four more verbs, each one a gap a character walked into: the gate animal who should work
 // the door while he is still on display, the friend who should arrive with something, the cellar
 // that should notice a loss, and the herbalist who takes whoever came to the gate.
 
@@ -186,7 +186,7 @@ test('only a displayed card with the rule carries it: a Building in town is not 
 test('recruitFromHand runs its `then` rider only when somebody actually comes out of hand', async () => {
   const state = stage();
   state.players[0].hand = [];
-  const friend = addToHand(state, 0, 'ns_copper_0'); // cost 0, and brings nobody else with it
+  const friend = addToHand(state, 0, 'mk_copper_penny_counter_0'); // cost 0, and brings nobody else with it
   state.agents = [{ choose: async (_s, _pi, req) => (req.kind === 'pick' ? [friend.uid] : true) }];
   setSupply(state, 0, 0);
   await runEffect(state, 0, { do: 'recruitFromHand', filter: { maxCost: 1 }, orientation: BUSY, then: { do: 'gainSupply', amount: 2 } }, {});
@@ -208,10 +208,13 @@ test('onSupplyLost fires for the Mayor who lost something, and not for a loss of
   const state = stage();
   setSupply(state, 0, 5);
   setSupply(state, 1, 0);
-  const watcher = addStack(state, 0, 'bb_clover_1', UPRIGHT);
-  state.set.cardsById.bb_clover_1 = { ...state.set.cardsById.bb_clover_1, abilities: [{ trigger: 'onSupplyLost', effect: { do: 'gainSupply', amount: 1 } }] };
-  const other = addStack(state, 1, 'bb_mabel_1', UPRIGHT);
-  state.set.cardsById.bb_mabel_1 = { ...state.set.cardsById.bb_mabel_1, abilities: [{ trigger: 'onSupplyLost', effect: { do: 'gainSupply', amount: 1 } }] };
+  // Both watchers are built here rather than borrowed from the collection: the rule under test is
+  // the trigger, and a card of our own keeps it away from whatever the real cards happen to do.
+  const cellar = { id: 'tst_cellar', type: 'character', name: 'Cellar', title: 'Watcher', species: 'Mouse', study: 'Commerce', cost: 0, shift: { delay: 1, output: 1 }, abilities: [{ trigger: 'onSupplyLost', effect: { do: 'gainSupply', amount: 1 } }] };
+  defineCard(state, cellar);
+  defineCard(state, { ...cellar, id: 'tst_cellar_two' });
+  const watcher = addStack(state, 0, 'tst_cellar', UPRIGHT);
+  const other = addStack(state, 1, 'tst_cellar_two', UPRIGHT);
   assert.ok(watcher && other);
   await runEffect(state, 0, { do: 'everyoneLosesSupply', amount: 3 }, {});
   assert.equal(state.players[0].supply, 3, '5 - 3 lost, +1 back from the cellar');
@@ -221,8 +224,8 @@ test('onSupplyLost fires for the Mayor who lost something, and not for a loss of
 test('a cellar that reacts to a loss by causing one does not cascade', async () => {
   const state = stage();
   setSupply(state, 0, 10);
-  addStack(state, 0, 'bb_clover_1', UPRIGHT);
-  state.set.cardsById.bb_clover_1 = { ...state.set.cardsById.bb_clover_1, abilities: [{ trigger: 'onSupplyLost', effect: { do: 'everyoneLosesSupply', amount: 1 } }] };
+  defineCard(state, { id: 'tst_greedy_cellar', type: 'character', name: 'Cellar', title: 'Watcher', species: 'Mouse', study: 'Commerce', cost: 0, shift: { delay: 1, output: 1 }, abilities: [{ trigger: 'onSupplyLost', effect: { do: 'everyoneLosesSupply', amount: 1 } }] });
+  addStack(state, 0, 'tst_greedy_cellar', UPRIGHT);
   await runEffect(state, 0, { do: 'everyoneLosesSupply', amount: 2 }, {});
   assert.equal(state.players[0].supply, 7, '2 lost, then the reaction takes 1 more, and there it stops');
 });
@@ -230,11 +233,11 @@ test('a cellar that reacts to a loss by causing one does not cascade', async () 
 test('rehire can be filtered by study and by species, not only by cost', async () => {
   const state = stage();
   setSupply(state, 0, 0);
-  addToUnemployment(state, 0, 'bb_clover_1'); // Rabbit, Agriculture
-  addToUnemployment(state, 0, 'rr_pip_1'); // Squirrel, Lore
+  addToUnemployment(state, 0, 'mk_clover_seedling_helper_0'); // Rabbit, Agriculture
+  addToUnemployment(state, 0, 'mk_scott_story_collector_0'); // Squirrel, Lore
   state.agents = [{ choose: async (_s, _pi, req) => (req.kind === 'pick' ? [req.options[0].uid] : true) }];
   await runEffect(state, 0, { do: 'rehire', free: true, filter: { study: 'Lore' }, optional: true }, {});
-  assert.deepEqual(state.players[0].town.map((s) => s.cards[0].cardId), ['rr_pip_1'], 'only the Lore animal was on offer');
+  assert.deepEqual(state.players[0].town.map((s) => s.cards[0].cardId), ['mk_scott_story_collector_0'], 'only the Lore animal was on offer');
   await runEffect(state, 0, { do: 'rehire', free: true, filter: { species: 'Squirrel' }, optional: true }, {});
   assert.equal(state.players[0].town.length, 1, 'no Squirrel left in Unemployment, so nothing happens');
   await runEffect(state, 0, { do: 'rehire', free: true, filter: { species: 'Rabbit' }, optional: true }, {});
@@ -294,8 +297,8 @@ test('buildingsAtLeast is the same dial pointed the other way', async () => {
 
 test('peekOpponentHand reads the rival’s hand, moves nothing, and says so out loud', async () => {
   const state = stage();
-  const a = addToHand(state, 1, 'bb_clover_1');
-  const b = addToHand(state, 1, 'bb_clover_2');
+  const a = addToHand(state, 1, 'mk_clover_seedling_helper_0');
+  const b = addToHand(state, 1, 'mk_clover_community_gardener_3');
   const before = state.players[1].hand.length;
   await runEffect(state, 0, { do: 'peekOpponentHand' }, {});
   assert.deepEqual(state.players[0].knownOpponentHand.slice(-2), [a.cardId, b.cardId]);
@@ -336,8 +339,8 @@ test('a shift printed with decay pays less every time it is worked', async () =>
 
 test('a shift with no decay is the printed output for ever', async () => {
   const state = stage();
-  const s = addStack(state, 0, 'bb_clover_1', UPRIGHT);
-  const def = state.set.cardsById.bb_clover_1;
+  const s = addStack(state, 0, 'mk_clover_seedling_helper_0', UPRIGHT);
+  const def = state.set.cardsById.mk_clover_seedling_helper_0;
   s.shiftsWorked = 5;
   state.phase = 'actions';
   const work = legalActionsFor(state, 0).find((a) => a.type === 'work' && a.charUid === s.uid);

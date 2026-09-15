@@ -1,24 +1,28 @@
 // "Works in the Square": an Ordinance that blocks Statue purchases until animals clear it.
 //
+// The collection prints no Ordinances yet, so the card is built by defineTestOrdinances: what is
+// under test is the engine's clearing machinery, not any particular card.
+//
 // The design constraint this file exists to defend is that it can never deadlock. Blocking Statues
 // hurts whoever is closest to winning most, so a rule requiring *both* Mayors to pay would let the
 // trailing Mayor refuse forever and stall the game. One Mayor can always finish the job alone.
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { SET, newGame, addStack, setSupply, setCity, UPRIGHT, BUSY } from './helpers.mjs';
+import { SET, newGame, addStack, setSupply, setCity, defineTestOrdinances, UPRIGHT, BUSY } from './helpers.mjs';
 import {
   applyAction, legalActions, clearingNeeded, clearableOrdinances, cityRule, topCard,
 } from '../src/engine/index.js';
 
 const begin = (state, pi) => { state.phase = 'actions'; state.active = pi; };
-const WORKS = 'ord_works_in_the_square';
+const WORKS = 'tst_ord_works';
 const bidder = (state, pi, cost) => addStack(state, pi, SET.cards.find((c) => c.type === 'character' && c.cost === cost).id, UPRIGHT);
 
 function withWorks() {
   const state = newGame();
+  defineTestOrdinances(state);
   setSupply(state, 0, 40);
   setSupply(state, 1, 40);
-  setCity(state, [WORKS, 'st_kindness', 'mk_festival_grant']);
+  setCity(state, [WORKS, 'mk_st_kindness', 'mk_mkt_community_oven']);
   return state;
 }
 
@@ -29,9 +33,9 @@ describe('Works in the Square', () => {
     begin(state, 0);
     assert.equal(cityRule(state, 'blockStatuePurchase'), 1);
     const acts = legalActions(state, 0);
-    assert.equal(acts.some((a) => a.type === 'announce' && a.cardId === 'st_kindness'), false,
+    assert.equal(acts.some((a) => a.type === 'announce' && a.cardId === 'mk_st_kindness'), false,
       'the Statue yard is behind the hole');
-    assert.ok(acts.some((a) => a.type === 'announce' && a.cardId === 'mk_festival_grant'),
+    assert.ok(acts.some((a) => a.type === 'announce' && a.cardId === 'mk_mkt_community_oven'),
       'the rest of the market is open as usual');
   });
 
@@ -40,7 +44,7 @@ describe('Works in the Square', () => {
     const s = bidder(state, 0, 2);
     begin(state, 0);
     await assert.rejects(
-      () => applyAction(state, 0, { type: 'announce', cardId: 'st_kindness', charUid: s.uid, bid: 10 }),
+      () => applyAction(state, 0, { type: 'announce', cardId: 'mk_st_kindness', charUid: s.uid, bid: 10 }),
       /No Statue may be bought/);
   });
 
@@ -106,8 +110,9 @@ describe('Works in the Square', () => {
 
   test('an ordinary Ordinance has no works to clear', () => {
     const state = newGame();
-    setCity(state, ['ord_monument_tax']);
-    assert.equal(clearingNeeded(state, 'ord_monument_tax'), 0);
+    defineTestOrdinances(state);
+    setCity(state, ['tst_ord_monument_tax']);
+    assert.equal(clearingNeeded(state, 'tst_ord_monument_tax'), 0);
     assert.equal(clearableOrdinances(state).length, 0);
   });
 });

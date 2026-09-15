@@ -1,5 +1,10 @@
 # Whiskerwood — v0.3.0
 
+> **Archive.** This describes the printed collection, which the game no longer ships. It is kept
+> for the design history — the species, studies and rules it introduced are all still in play,
+> and the characters it names live on in `spec/maker_card_set.json`. Nothing here is a card list
+> you can look up in the game any more.
+
 Whiskerwood adds **52 cards**, exactly 25% of the previous 208-card catalogue, for **260 cards**.
 It adds **Cat** as the ninth species and uses the existing six studies and rules vocabulary.
 The original 208 definitions, six starter decks, four Market Decks and nine Statues are preserved.
@@ -81,7 +86,7 @@ node scripts/playtest.mjs --games 560 --decks all --market all
 
 ## New card catalogue
 
-The following list is a snapshot of the authoritative `spec/starter_card_set.json`.
+The following list is a snapshot of the printed set as it stood.
 
 ### Character cards
 

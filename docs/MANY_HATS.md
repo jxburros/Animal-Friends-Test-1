@@ -1,5 +1,10 @@
 # Many Hats — v0.4.0
 
+> **Archive.** This describes the printed collection, which the game no longer ships. It is kept
+> for the design history — the species, studies and rules it introduced are all still in play,
+> and the characters it names live on in `spec/maker_card_set.json`. Nothing here is a card list
+> you can look up in the game any more.
+
 Many Hats adds **72 cards** for **332 cards** in all, and every one of them is about a Character the book
 already knew. Nobody new moves to town: instead all **38 named Characters** take up a new trade or a new
 level, cards arrive that ask for a particular friend by name, and neighbors who have shared a deck for
@@ -106,7 +111,7 @@ node scripts/playtest.mjs --games 200 --decks hh,tt --market many-hats-fair
 
 ## New card catalogue
 
-The following list is a snapshot of the authoritative `spec/starter_card_set.json`. ✦ marks a Many Hats card
+The following list is a snapshot of the printed set as it stood. ✦ marks a Many Hats card
 in the deck lists.
 
 ### Character cards

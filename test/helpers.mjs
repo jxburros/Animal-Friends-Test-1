@@ -6,7 +6,7 @@ import {
 } from '../src/engine/index.js';
 
 const rulesUrl = new URL('../spec/game.json', import.meta.url);
-const setUrl = new URL('../spec/starter_card_set.json', import.meta.url);
+const setUrl = new URL('../spec/maker_card_set.json', import.meta.url);
 
 export function loadSpecs() {
   const rules = JSON.parse(fs.readFileSync(rulesUrl, 'utf8'));
@@ -20,11 +20,11 @@ const specs = loadSpecs();
 export const RULES = specs.rules;
 export const SET = specs.set;
 
-/** Create a fresh game. Defaults to a fixed seed and the two starter decks for determinism. */
+/** Create a fresh game. Defaults to a fixed seed and the two town decks for determinism. */
 export function newGame(opts = {}) {
   return createGame(RULES, SET, {
     seed: 42,
-    decks: ['burrow-bloom', 'paws-papers'],
+    decks: ['mk-ledger-larder', 'mk-bench-bandstand'],
     names: ['You', 'Rival'],
     ...opts,
   });
@@ -99,7 +99,7 @@ export function addLimitedEvent(state, pi, cardId, remaining) {
  * will have the rest dealt from the Market Deck the moment anything refills it, and if that deal turns
  * up an on-reveal card or an Ordinance it lands in the middle of whatever the test was measuring.
  */
-const BENIGN_FILLER = ['mk_town_bell', 'mk_supply_depot', 'mk_public_gardens', 'mk_courier_network', 'mk_library_annex', 'mk_town_clock'];
+const BENIGN_FILLER = ['mk_mkt_town_bell', 'mk_mkt_penny_jar', 'mk_mkt_telescope_hire', 'mk_mkt_owl_post', 'mk_mkt_chit_tin', 'mk_mkt_night_market'];
 
 /**
  * Pin the Capital City to exactly these cards.
@@ -132,13 +132,37 @@ export function giveStatue(state, pi, statueCardId) {
 }
 
 /**
- * Add a card definition to the loaded set for the duration of a test. The printed set carries no
- * Town Buildings and no held Capital City Events yet — the rules and the engine came first — so the
- * tests that cover them build the card they need. Returns the definition.
+ * Add a card definition to the loaded set for the duration of a test. Where the rules and the
+ * engine run ahead of the collection, the tests that cover them build the card they need. Returns
+ * the definition.
  */
 export function defineCard(state, def) {
   state.set.cardsById[def.id] = def;
   return def;
+}
+
+/**
+ * The Ordinances the tests need, added to this game only.
+ *
+ * A Capital City Ordinance is a rule the display applies to both towns rather than a lot anybody
+ * buys, and the collection prints none yet — the engine reads the type, the shelf has not written
+ * for it. The rules that read Ordinances are therefore tested against cards built here.
+ */
+export function defineTestOrdinances(state) {
+  const ordinance = (id, name, text, ability, extra = {}) => defineCard(state, {
+    id, type: 'ordinance', name, title: 'Capital City Ordinance', cost: 0, text,
+    abilities: [{ trigger: 'displayed', ...ability }], ...extra,
+  });
+  return {
+    works: ordinance('tst_ord_works', 'Works in the Square',
+      'While this is displayed, no Statue may be bought. Either Mayor may put an upright Character to work clearing the square; when two have been put to work, between them or by one Mayor alone, the works finish and this leaves the Capital City.',
+      { key: 'blockStatuePurchase', value: 1 }, { clearing: { animals: 2 } }),
+    monumentTax: ordinance('tst_ord_monument_tax', 'Monument Tax',
+      'While this is displayed, Statues cost 4 more.', { key: 'statueCostDelta', value: 4 }),
+    shortLadder: ordinance('tst_ord_short_ladder', 'A Word With the Steward',
+      'While this is displayed, every pledge may be made with an animal one cheaper.',
+      { key: 'pledgeLadderDelta', value: -1 }),
+  };
 }
 
 /** Stand a Building in a town directly, market- or deck-sourced, without paying for it. */

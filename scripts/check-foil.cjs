@@ -17,7 +17,7 @@ const baseURL = process.argv[2] || 'http://localhost:8080';
     await page.setViewportSize({width,height:1000});
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`overflow ${width}`);
   }
-  await page.selectOption('#card','bb_clover_3');
+  await page.selectOption('#card','mk_clover_master_botanist_5');
   await page.selectOption('#printing','fullCardArt');
   await page.locator('.foil-details .inspect-card').click();
   assert.equal(await page.locator('.card-reader .card-face').getAttribute('data-foil'),'details');
@@ -45,8 +45,8 @@ const baseURL = process.argv[2] || 'http://localhost:8080';
   // subpixel positioning or different background patches on the preview page.
   await page.evaluate(async()=>{
     const {buildCardFace}=await import('/src/ui/render.js');
-    const cards=await (await fetch('/spec/starter_card_set.json')).json();
-    const def=cards.cards.find(c=>c.id==='bb_clover_3');
+    const cards=await (await fetch('/spec/maker_card_set.json')).json();
+    const def=cards.cards.find(c=>c.id==='mk_clover_master_botanist_5');
     const host=document.createElement('div');host.id='test-host';host.style.cssText='position:fixed;inset:0;z-index:1000;background:#ddd;padding:20px;';document.body.append(host);
     const style=document.createElement('style');style.textContent='.foil-tag{display:none!important}';document.head.append(style);
     window.renderFinish=(mode,version='regular')=>{host.replaceChildren(buildCardFace(def,{large:true,interactive:false,version,foil:mode==='details'?{mode,mask:'assets/art/foil/sample-details.svg'}:mode}));};
@@ -73,8 +73,8 @@ const baseURL = process.argv[2] || 'http://localhost:8080';
   }
   await page.evaluate(async()=>{
     const {buildCardFace}=await import('/src/ui/render.js');
-    const set=await (await fetch('/spec/starter_card_set.json')).json();
-    const def=set.cards.find(c=>c.id==='bb_clover_3');
+    const set=await (await fetch('/spec/maker_card_set.json')).json();
+    const def=set.cards.find(c=>c.id==='mk_clover_master_botanist_5');
     document.querySelector('#test-host').replaceChildren(buildCardFace(def,{large:true,interactive:false,version:'regular',foil:{mode:'details',mask:'assets/art/foil/does-not-exist.svg'}}));
   });
   const missingMask=PNG.sync.read(await page.locator('#test-host .card-face').screenshot());
@@ -99,8 +99,8 @@ const baseURL = process.argv[2] || 'http://localhost:8080';
       for (const foil of [false, undefined]) {
         await page.evaluate(async ({ id, large, foil }) => {
           const { buildCardFace } = await import('/src/ui/render.js');
-          const sets = await Promise.all(['starter_card_set', 'maker_card_set'].map(async name => (await (await fetch(`/spec/${name}.json`)).json()).cards));
-          const card = buildCardFace(sets.flat().find(def => def.id === id), { large, interactive: false, version: 'foil', foil });
+          const set = await (await fetch('/spec/maker_card_set.json')).json();
+          const card = buildCardFace(set.cards.find(def => def.id === id), { large, interactive: false, version: 'foil', foil });
           document.querySelector('#test-host').replaceChildren(card);
           await Promise.all([...new Set([...card.querySelectorAll('image')].map(image => image.getAttribute('href')))].map(async url => {
             const image = new Image(); image.src = url; await image.decode();
