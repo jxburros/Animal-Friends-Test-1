@@ -4,9 +4,11 @@
 // `{ id, name, list: { cardId: count } }` deck back through onSave, which is exactly what
 // createGame accepts in place of a deck id (see engine/state.js resolveDeck).
 //
-// The Workshop builds out of the collection (spec/maker_card_set.json) and nothing else. Reading a
-// card rather than building with it is the Book's job.
+// The Workshop builds out of one Mayor's collection: the cards they actually own, at the copy
+// counts they actually hold, capped as ever by the rarity limits in spec/game.json. Reading a card
+// rather than building with it is the Book's job.
 import { deckRules, deckProblems, deckWarnings, maxCopiesOf, DECK_TYPES } from '../engine/deckbuilding.js';
+import { ownedCopies, collectionProblems } from '../engine/profile.js';
 import { RARITIES, powerRating } from '../engine/power.js';
 import { groupByCharacter, characterOf } from '../engine/characters.js';
 import { buildCardFace, setPreviewContext, raritySlug } from './render.js';
@@ -89,9 +91,22 @@ function counts() {
 function copiesOf(cardId) {
   return ctx.list[cardId] || 0;
 }
-/** The copy limit for one card: its rarity's, never above the set-wide cap. */
-function limitFor(def) {
+/** The copy limit printed on a card: its rarity's, never above the set-wide cap. */
+function rarityLimitFor(def) {
   return maxCopiesOf(ctx.rules, def);
+}
+/**
+ * How many copies of a card this deck may actually hold: the rarity limit, capped by how many the
+ * Mayor owns. The Sandbox Mayor owns every card, so for them this is the rarity limit alone.
+ */
+function limitFor(def) {
+  const printed = rarityLimitFor(def);
+  if (!ctx.profile) return printed;
+  return Math.min(printed, ownedCopies(ctx.profile, def.id));
+}
+/** How many copies of a card the Mayor holds, across every printing. */
+function heldCopies(def) {
+  return ctx.profile ? ownedCopies(ctx.profile, def.id) : Infinity;
 }
 function addCopy(cardId) {
   const dr = deckRules(ctx.rules);
@@ -108,9 +123,13 @@ function removeCopy(cardId) {
   render();
 }
 
-/** Every card a deck may hold, before filtering. */
+/**
+ * Every card this Mayor could put in a deck, before filtering: the deck-legal types, and of those
+ * only the ones in their collection. A card they have never pulled is not offered here at all —
+ * the Book is where the rest of the set is looked at.
+ */
 function shelfCards() {
-  return ctx.set.cards.filter((c) => DECK_TYPES.has(c.type));
+  return ctx.set.cards.filter((c) => DECK_TYPES.has(c.type) && heldCopies(c) > 0);
 }
 
 function matchesFilters(c) {
@@ -207,9 +226,16 @@ function buildSlot(def) {
   slot.appendChild(face);
   face.classList.add('clickable');
   const limit = limitFor(def);
+  const held = heldCopies(def);
+  const printed = rarityLimitFor(def);
+  // When the collection is what bites rather than the rarity, say so: "you have two" is a different
+  // sentence from "a Rare is a two-of", and a Mayor should know which wall they are at.
+  const why = limit < printed
+    ? `You have ${held} — a ${def.rarity || 'Common'} may go in ${printed} at a time`
+    : `${def.rarity || 'Common'}: at most ${printed} in a deck${Number.isFinite(held) ? ` · you have ${held}` : ''}`;
   slot.appendChild(h('div', { class: 'db-slot-controls' }, [
     h('button', { class: 'small', type: 'button', title: 'Remove a copy', disabled: !n, onclick: (e) => { e.stopPropagation(); removeCopy(def.id); } }, '−'),
-    h('span', { class: 'db-count', title: `${def.rarity || 'Common'}: at most ${limit} in a deck` }, `${n}/${limit}`),
+    h('span', { class: 'db-count', title: why }, `${n}/${limit}`),
     h('button', { class: 'small', type: 'button', title: 'Add a copy', disabled: n >= limit, onclick: (e) => { e.stopPropagation(); addCopy(def.id); } }, '+'),
   ]));
   slot.addEventListener('click', () => addCopy(def.id));
@@ -243,7 +269,12 @@ function buildPool() {
 }
 
 function emptyNote() {
-  return h('p', { class: 'db-empty' }, 'No cards match these filters.');
+  // Nothing at all, rather than nothing matching, means the filters are not the problem: the
+  // collection is. Say which, and say where more cards come from.
+  const anyOwned = shelfCards().length > 0;
+  return h('p', { class: 'db-empty' }, anyOwned
+    ? 'No cards match these filters.'
+    : 'Your collection has nothing that can go in a deck yet. Open a booster pack in the Post Office.');
 }
 
 function buildDeckList() {
@@ -272,7 +303,7 @@ function buildDeckList() {
         h('span', { class: 'db-row-cost', title: `Cost ${def.cost}` }, String(def.cost || 0)),
         h('span', { class: 'db-row-name' }, def.type === 'character' ? `${def.name}, ${def.title}` : def.name),
         h('span', { class: 'db-row-tags' }, def.type === 'character' ? [icon(def.species), icon(def.study)] : [icon(def.kind === 'limited' ? 'limited' : 'instant')]),
-        h('span', { class: `rarity-tag rar-${raritySlug(def)}`, title: `${def.rarity || 'Common'}: at most ${limitFor(def)} in a deck` }, def.rarity || 'Common'),
+        h('span', { class: `rarity-tag rar-${raritySlug(def)}`, title: `${def.rarity || 'Common'}: at most ${rarityLimitFor(def)} in a deck` }, def.rarity || 'Common'),
         h('button', { class: 'small', type: 'button', title: 'Remove a copy', onclick: () => removeCopy(id) }, '−'),
       ]));
     }
@@ -300,7 +331,12 @@ function suggestFrom(deckId) {
 function render() {
   const dr = deckRules(ctx.rules);
   const { total, chars, events, buildings } = counts();
-  const problems = deckProblems(ctx.rules, ctx.set, ctx.list);
+  // Two gates, in the order a Mayor meets them: the deck has to be legal, and it has to be built
+  // out of cards they own. A deck brought across from an older build can fail only the second.
+  const problems = [
+    ...deckProblems(ctx.rules, ctx.set, ctx.list),
+    ...(ctx.profile ? collectionProblems(ctx.rules, ctx.set, ctx.list, ctx.profile) : []),
+  ];
   // Advice sits beside the rules, not among them: a thin deck is legal, and the Workshop says so
   // plainly rather than refusing to build it.
   const warnings = deckWarnings(ctx.rules, ctx.set, ctx.list);
@@ -337,7 +373,7 @@ function render() {
 
   const actions = h('div', { class: 'db-actions' }, [
     h('button', { type: 'button', onclick: () => ctx.onCancel() }, 'Back to the cover'),
-    h('button', { class: 'primary', type: 'button', disabled: problems.length > 0, onclick: () => ctx.onSave({ id: ctx.id, name: ctx.name.trim() || 'My Town', list: { ...ctx.list } }) }, 'Save & play this deck'),
+    h('button', { class: 'primary', type: 'button', disabled: problems.length > 0, onclick: () => ctx.onSave({ id: ctx.id, name: ctx.name.trim() || 'My Town', list: { ...ctx.list }, printings: { ...ctx.printings } }) }, 'Save & play this deck'),
   ]);
 
   host.appendChild(head);
@@ -361,6 +397,8 @@ export function openDeckBuilder(hostEl, opts) {
     id: (opts.deck && opts.deck.id) || `custom-${Date.now().toString(36)}`,
     name: (opts.deck && opts.deck.name) || 'My Town',
     list: { ...((opts.deck && opts.deck.list) || {}) },
+    printings: { ...((opts.deck && opts.deck.printings) || {}) },
+    profile: opts.profile || null,
     onSave: opts.onSave,
     onCancel: opts.onCancel,
   };

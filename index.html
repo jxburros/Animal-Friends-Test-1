@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="src/ui/versions.css">
 <link rel="stylesheet" href="src/ui/foil.css">
 <link rel="stylesheet" href="src/ui/book.css">
+<link rel="stylesheet" href="src/ui/profiles.css">
 </head>
 <body>
 <div id="app">
@@ -32,6 +33,7 @@
         <div class="logo-sub">A Storybook of the First Boroughs</div>
         <p class="tagline">Build your town. Win the Capital City. Collect the Statues.</p>
         <p class="edition" id="homeEdition" title="Which version of the game is loaded">Loading…</p>
+        <div class="mayor-strip" id="homeMayorStrip" hidden></div>
         <div class="mode-choice" id="modeChoice"></div>
         <div class="cover-links">
           <button type="button" id="homeHowToPlayBtn">How to play</button>
@@ -59,6 +61,13 @@
           <button type="button" id="backToHomeBtn">← Back to the cover</button>
         </div>
         <button type="button" class="full-art-gallery-link" id="fullArtGalleryBtn">Explore the Full Art cards</button>
+
+        <div class="mayor-strip" id="menuMayorStrip" hidden></div>
+
+        <div class="menu-field" id="resumeField" hidden>
+          <div class="menu-label">Pick a game back up</div>
+          <div class="resume-shelf" id="resumeShelf"></div>
+        </div>
 
         <div class="menu-field">
           <div class="menu-label">Choose your deck</div>
@@ -102,6 +111,16 @@
   </section>
 
   <!-- ============ DECK WORKSHOP ============ -->
+  <!-- ============ MAYORS (who is playing) ============ -->
+  <section id="screen-profiles" class="screen">
+    <div class="page cover" id="profilesHost"></div>
+  </section>
+
+  <!-- ============ THE POST OFFICE (packs, coins, decks) ============ -->
+  <section id="screen-shop" class="screen">
+    <div class="page cover" id="shopHost"></div>
+  </section>
+
   <section id="screen-deck" class="screen">
     <div class="deckbuilder" id="deckBuilder"></div>
   </section>
@@ -194,6 +213,7 @@
       <div class="cover-orn">❦</div>
       <h2 id="winTitle">Game Over</h2>
       <p id="winBody"></p>
+      <p id="winReward" class="unlock-note" hidden></p>
       <div id="winNaming" hidden>
         <label for="winTownName">The two boroughs are one now, and the name is yours to give.</label>
         <input id="winTownName" type="text" maxlength="40" placeholder="Name the new town" autocomplete="off">

@@ -1,0 +1,86 @@
+/* The shelf of Mayors, the Post Office, and the games waiting to be finished. Everything here
+   borrows the paper, ink and gold of styles.css rather than inventing a second look. */
+
+.hint{margin:4px 0 10px;color:var(--ink2);font-size:13.5px;line-height:1.5;max-width:64ch}
+.section-head{margin:18px 0 6px;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- the shelf ---------- */
+.mayors{max-width:960px;margin:0 auto;padding:18px 16px 28px}
+.mayors-head h2{margin:0 0 4px;font-size:26px}
+.mayors-foot{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.mayor-shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:10px}
+.mayor-slot{position:relative}
+.mayor-card{display:flex;gap:12px;align-items:center;width:100%;text-align:left;padding:12px;border:2px solid var(--line2);border-radius:12px;background:#fffaf0;box-shadow:var(--shadow2)}
+.mayor-card:hover{border-color:var(--gold)}
+.mayor-card.new{border-style:dashed;background:#fffaf0aa}
+.mayor-text{min-width:0}
+.mayor-text h4{margin:0 0 2px;font-size:18px}
+.mayor-record{margin:0;font-size:12.5px;color:var(--ink2)}
+.mayor-purse{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 0;font-size:12px;color:var(--muted)}
+.purse-coin{display:inline-flex;align-items:center;gap:3px;font-weight:bold;color:var(--ink)}
+.mayor-forget{position:absolute;top:-8px;right:-8px;width:26px;height:26px;padding:0;border-radius:50%;line-height:1;font-size:16px;background:linear-gradient(#ffd0d0,#f6a7a7);box-shadow:0 2px 0 var(--ink)}
+.sandbox-link{background:linear-gradient(#e6eefa,#c9dcf5)}
+
+/* A Mayor's portrait: their card, shrunk to a badge. */
+.mayor-portrait{width:64px;height:92px;flex:none;border-radius:8px;overflow:hidden;position:relative;box-shadow:var(--shadow2)}
+.mayor-portrait .portrait-scale{transform:scale(.615);transform-origin:top left;pointer-events:none}
+.mayor-portrait.empty{display:flex;align-items:center;justify-content:center;border:2px dashed var(--line2);background:var(--paper3)}
+.mayor-portrait .monogram{font-size:30px;color:var(--muted);font-family:var(--serif)}
+.mayor-name{max-width:260px}
+.menu-row{display:flex;gap:10px;align-items:center;margin:8px 0}
+
+/* Choosing the card you are known by. */
+.avatar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px;max-height:60vh;overflow:auto;padding:6px;border:1px solid var(--line);border-radius:10px;background:#fffaf055}
+.avatar-pick{padding:3px;border:2px solid transparent;border-radius:12px;background:none;box-shadow:none}
+.avatar-pick:hover{border-color:var(--gold)}
+.avatar-pick.selected{border-color:var(--ink);box-shadow:0 0 0 3px var(--gold3)}
+
+/* ---------- the Post Office ---------- */
+.shop{max-width:960px;margin:0 auto;padding:18px 16px 28px}
+.purse-bar{display:flex;gap:16px;flex-wrap:wrap;align-items:center;padding:10px 14px;border:2px solid var(--line2);border-radius:10px;background:var(--paper);font-size:14px}
+.big-coin{font-size:18px}
+.shop-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.shop-decks{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.shop-deck{display:flex;flex-direction:column;gap:6px;cursor:default}
+.shop-deck.owned{background:var(--char2)}
+.shop-deck button{align-self:flex-start;margin-top:4px}
+.owned-flag{color:var(--green);font-weight:bold}
+.deck-stat{margin:0;font-size:12px;color:var(--muted)}
+.coverage{height:8px;border-radius:4px;background:var(--paper3);border:1px solid var(--line);overflow:hidden}
+.coverage-fill{height:100%;background:linear-gradient(90deg,var(--gold3),var(--gold))}
+
+/* ---------- opening a pack ---------- */
+.pack-open{max-width:960px;margin:0 auto;padding:18px 16px 28px}
+.pack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-top:8px}
+.pack-slot{position:relative;padding:3px;border:2px solid transparent;border-radius:12px;background:none;box-shadow:none}
+.pack-slot .pack-back{width:var(--card-w);height:var(--card-h);border-radius:10px;border:2px solid var(--ink);background:linear-gradient(140deg,#7a5636,#5d3f27);color:var(--gold3);display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:var(--shadow2)}
+.pack-slot.turned{cursor:default}
+.pack-slot.hit .pack-back{background:linear-gradient(140deg,#6f4a8a,#4a2f5f)}
+.pack-slot.is-new.turned{border-color:var(--gold)}
+.new-flag{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#fff;border:1.5px solid var(--ink);border-radius:6px;font-size:10px;padding:1px 5px;letter-spacing:.04em;text-transform:uppercase}
+.unlock-note{margin:14px 0 0;padding:10px 12px;border:2px solid var(--green);border-radius:8px;background:var(--green2);font-size:13.5px}
+
+/* ---------- games left unfinished ---------- */
+.resume-shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-bottom:6px}
+.resume-card{text-align:left;padding:10px 12px;border:2px solid var(--plum);border-radius:12px;background:var(--plum2);box-shadow:var(--shadow2)}
+.resume-card h4{margin:0 0 2px;font-size:15px}
+.resume-card p{margin:0;font-size:12px;color:var(--ink2)}
+.resume-slot{position:relative}
+.resume-forget{position:absolute;top:-8px;right:-8px;width:24px;height:24px;padding:0;border-radius:50%;line-height:1;font-size:14px;background:linear-gradient(#ffd0d0,#f6a7a7);box-shadow:0 2px 0 var(--ink)}
+
+/* ---------- the Mayor strip on the cover ---------- */
+.mayor-strip{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 12px;border:2px solid var(--line2);border-radius:10px;background:var(--paper);margin-bottom:10px}
+.mayor-strip .mayor-portrait{width:44px;height:63px}
+.mayor-strip .mayor-portrait .portrait-scale{transform:scale(.423)}
+.mayor-strip .who{font-weight:bold}
+.mayor-strip .spacer{flex:1}
+.mayor-strip button{padding:5px 10px;font-size:13px}
+
+/* ---------- cards you do not own ---------- */
+.card-slot.locked .card-face{filter:grayscale(1) brightness(.72) contrast(.9);opacity:.5}
+.locked-flag{position:absolute;top:6px;left:6px;z-index:9;background:var(--ink);color:var(--paper2);border-radius:5px;font-size:9.5px;padding:1px 5px;letter-spacing:.05em;text-transform:uppercase}
+.owned-count{position:absolute;bottom:4px;right:4px;z-index:9;background:var(--paper2);border:1.5px solid var(--ink);border-radius:5px;font-size:10px;padding:0 4px;font-weight:bold}
+
+/* A card in the Book that has not been earned: greyed, rarity still showing, story still shut. */
+.book-card.locked figcaption{opacity:.75}
+.book-card .card-slot{position:relative;display:inline-block}
