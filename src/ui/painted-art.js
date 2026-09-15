@@ -530,7 +530,16 @@ export function paintedArtSVG(def, fallback, versionKey) {
   const url = versionArtUrl(def, key);
   if (!url) return standard;
   const shape = versionOf(key).shape === 'full' ? { w: 100, h: 160, cls: ' full-art-painting' } : { w: 100, h: 100, cls: ' alt-art-painting' };
-  return `<svg class="painted-art${shape.cls}" viewBox="0 0 ${shape.w} ${shape.h}" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><svg width="${shape.w}" height="${shape.h}">${standard}</svg><image href="${url}" width="${shape.w}" height="${shape.h}" preserveAspectRatio="xMidYMid slice"/></svg>`;
+  const source = new URL(url);
+  const tile = Number.parseInt(new URLSearchParams(source.hash.slice(1)).get('tile'), 10);
+  source.hash = '';
+  const tiled = Number.isInteger(tile) && tile >= 0 && tile < 16;
+  const x = tiled ? -(tile % 4) * shape.w : 0;
+  const y = tiled ? -Math.floor(tile / 4) * shape.h : 0;
+  const width = tiled ? shape.w * 4 : shape.w;
+  const height = tiled ? shape.h * 4 : shape.h;
+  const aspect = tiled ? 'none' : 'xMidYMid slice';
+  return `<svg class="painted-art${shape.cls}" viewBox="0 0 ${shape.w} ${shape.h}" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><svg width="${shape.w}" height="${shape.h}">${standard}</svg><image href="${source.href}" x="${x}" y="${y}" width="${width}" height="${height}" preserveAspectRatio="${aspect}"/></svg>`;
 }
 
 function atlasArtSVG(def, fallback) {

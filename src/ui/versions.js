@@ -18,7 +18,8 @@
 //   2. add one line to PRINTINGS below:  mk_clover_master_botanist_5: { alternateArt: true, foil: true },
 //
 // `true` means "this printing exists, at the conventional path"; a string is an explicit URL for art
-// that lives somewhere else. A printing with no art of its own (plain `foil`) only ever needs `true`.
+// that lives somewhere else. A `#tile=0..15` fragment selects a row-major tile from a 4 × 4 atlas.
+// A printing with no art of its own (plain `foil`) only ever needs `true`.
 import { fullArtFor } from './full-art.js';
 
 /**
@@ -58,6 +59,15 @@ export const VERSIONS = Object.freeze([
 export const VERSION_KEYS = Object.freeze(VERSIONS.map((v) => v.key));
 const BY_KEY = Object.freeze(Object.fromEntries(VERSIONS.map((v) => [v.key, v])));
 
+const INK_ALT_ATLASES = Object.freeze({
+  ambitions: new URL('../../assets/art/alternate-ink-ambitions-atlas.png', import.meta.url).href,
+  kindness: new URL('../../assets/art/alternate-ink-kindness-atlas.png', import.meta.url).href,
+});
+
+function inkAlternate(atlas, tile, other = {}) {
+  return Object.freeze({ alternateArt: `${INK_ALT_ATLASES[atlas]}#tile=${tile}`, ...other });
+}
+
 /**
  * Which printings each card exists in, beyond the regular one and the Full Card Art collection.
  * The first random draw has 15 ordinary Foil printings. See docs/FIRST_FOILS.md.
@@ -65,13 +75,44 @@ const BY_KEY = Object.freeze(Object.fromEntries(VERSIONS.map((v) => [v.key, v]))
  *   mk_peanut_barista_1: { alternateArt: true, foil: true, alternateArtFoil: true },
  */
 export const PRINTINGS = Object.freeze({
+  // Ink & Watercolor alternate-art collection. The two source atlases and their row-major map live
+  // in docs/ALTERNATE_INK_WATERCOLOR.md; cards use conventional per-printing crops at runtime.
+  mk_brooke_balloonist_4: inkAlternate('ambitions', 0),
+  mk_clover_rocket_botanist_4: inkAlternate('ambitions', 1),
+  mk_comet_bolt_sorter_0: inkAlternate('ambitions', 2),
+  mk_inkwell_storyteller_2: inkAlternate('ambitions', 4),
+  mk_inkwells_star_chart: inkAlternate('ambitions', 5),
+  mk_lindsay_moon_gardener_5: inkAlternate('ambitions', 6),
+  mk_betty_stump_blaster_2: inkAlternate('ambitions', 8),
+  mk_betty_powder_chemist_4: inkAlternate('ambitions', 9),
+  mk_berry_tinker_0: inkAlternate('ambitions', 10),
+  mk_mortys_boiler_test: inkAlternate('ambitions', 11),
+  mk_sota_lens_grinder_1: inkAlternate('ambitions', 12),
+  mk_moss_bridgewright_5: inkAlternate('ambitions', 13),
+  mk_hazels_night_market: inkAlternate('ambitions', 14),
+  mk_one_small_step: inkAlternate('ambitions', 15),
+  mk_rosabeth_garden_hand_1: inkAlternate('kindness', 0),
+  mk_rosabeth_apothecary_3: inkAlternate('kindness', 1),
+  mk_marmalade_neighborhood_baker_3: inkAlternate('kindness', 3),
+  mk_peanuts_standing_round: inkAlternate('kindness', 4),
+  mk_oatmeal_jazz_singer_3: inkAlternate('kindness', 5),
+  mk_scotts_reading_hour: inkAlternate('kindness', 6),
+  mk_biff_chief_constable_4: inkAlternate('kindness', 7),
+  mk_bella_science_hall_fellow_4: inkAlternate('kindness', 9),
+  mk_peanut_comptroller_5: inkAlternate('kindness', 10),
+  mk_andrew_keeper_of_the_late_desk_2: inkAlternate('kindness', 11),
+  mk_annabelle_salvage_archivist_3: inkAlternate('kindness', 12),
+  mk_pebble_ferry_master_3: inkAlternate('kindness', 13),
+  mk_hibiscus_round_walker_3: inkAlternate('kindness', 14),
+  mk_daisy_night_bloom_florist_3: inkAlternate('kindness', 15),
+
   mk_beck_bylaw_reader_1: Object.freeze({ foil: true }),
-  mk_clover_seedling_helper_0: Object.freeze({ foil: true }),
+  mk_clover_seedling_helper_0: inkAlternate('kindness', 2, { foil: true }),
   mk_earl_tea_trader_2: Object.freeze({ foil: true }),
   mk_benjamin_lantern_maker_2: Object.freeze({ foil: true }),
   mk_velvet_counter_clerk_1: Object.freeze({ foil: true }),
-  mk_moss_rehiring_day: Object.freeze({ foil: true }),
-  mk_comet_astronaut_5: Object.freeze({ foil: true }),
+  mk_moss_rehiring_day: inkAlternate('kindness', 8, { foil: true }),
+  mk_comet_astronaut_5: inkAlternate('ambitions', 3, { foil: true }),
   mk_finn_auctioneers_boy_0: Object.freeze({ foil: true }),
   mk_earl_tea_house_keeper_4: Object.freeze({ foil: true }),
   mk_night_round: Object.freeze({ foil: true }),
@@ -90,7 +131,7 @@ export const PRINTINGS = Object.freeze({
   mk_cassadee_hall_manager_3: Object.freeze({ foil: true }),
   mk_cookie_winter_stores_cook_3: Object.freeze({ foil: true }),
   mk_copper_cellar_keeper_4: Object.freeze({ foil: true }),
-  mk_daniel_star_charter_3: Object.freeze({ foil: true }),
+  mk_daniel_star_charter_3: inkAlternate('ambitions', 7, { foil: true }),
   mk_faustus_bolt_boy_0: Object.freeze({ foil: true }),
   mk_finn_peddler_1: Object.freeze({ foil: true }),
   mk_harrison_piano_boy_0: Object.freeze({ foil: true }),
