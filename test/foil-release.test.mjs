@@ -13,14 +13,14 @@ const cards = [...new Map([...SET.cards, ...maker.cards].map(card => [card.id, c
 test('the recorded random draw has fifteen distinct ordinary Foils and three of every finish', () => {
   const selected = new Set(release.selection.map(card => card.id));
   assert.equal(selected.size, 15);
-  assert.deepEqual(new Set(Object.keys(PRINTINGS)), selected);
   for (const id of selected) assert.ok(Object.hasOwn(FOIL_ASSIGNMENTS, id), id);
+  for (const id of selected) assert.ok(Object.hasOwn(PRINTINGS, id), id);
   const counts = Object.fromEntries(FOIL_MODES.map(mode => [mode, 0]));
   for (const entry of release.selection) {
     const def = cards.find(card => card.id === entry.id);
     assert.ok(def, entry.id);
     assert.deepEqual(PRINTINGS[def.id], { foil: true });
-    assert.deepEqual(Object.keys(FOIL_ASSIGNMENTS[def.id]).filter(key => key !== 'regular'), ['foil']);
+    assert.deepEqual(Object.keys(FOIL_ASSIGNMENTS[def.id]), ['foil']);
     assert.equal(hasVersion(def, 'foil'), true);
     assert.equal(hasVersion(def, 'creativeFoil'), false);
     assert.equal(hasVersion(def, 'alternateArtFoil'), false);
@@ -29,9 +29,8 @@ test('the recorded random draw has fifteen distinct ordinary Foils and three of 
     counts[finish.mode]++;
     assert.equal(versionArtUrl(def, 'foil'), null, 'foil uses ordinary art');
     assert.equal(paintedArtSVG(def, '<svg/>', 'foil'), paintedArtSVG(def, '<svg/>', 'regular'));
-    assert.deepEqual(resolveFoil(def, version('fullCardArt')), resolveFoil(def, version('fullCardArt'), undefined, {}));
-    if (!Object.hasOwn(FOIL_ASSIGNMENTS[def.id], 'regular')) {
-      assert.deepEqual(resolveFoil(def, version('regular')), resolveFoil(def, version('regular'), undefined, {}));
+    for (const key of ['regular', 'fullCardArt']) {
+      assert.deepEqual(resolveFoil(def, version(key)), resolveFoil(def, version(key), undefined, {}));
     }
     if (finish.mode === 'details') {
       assert.ok(!finish.mask.includes('sample-details'));
@@ -41,22 +40,35 @@ test('the recorded random draw has fifteen distinct ordinary Foils and three of 
     }
   }
   assert.deepEqual(Object.values(counts), [3, 3, 3, 3, 3]);
-  assert.equal(countInVersion(cards, 'foil'), 15);
   assert.equal(countInVersion(cards, 'creativeFoil'), 0);
-  for (const card of cards.filter(card => !selected.has(card.id))) assert.equal(hasVersion(card, 'foil'), false);
 });
 
-test('hexagon foil on ordinary printings decorates existing cards without adding printings', () => {
-  const hexagons = Object.entries(FOIL_ASSIGNMENTS).filter(([, entry]) => Object.hasOwn(entry, 'regular'));
-  assert.equal(hexagons.length, 14);
-  for (const [id, entry] of hexagons) {
+test('hexagon Foil printings added after the first release use the ordinary artwork', () => {
+  const drawn = new Set(release.selection.map(card => card.id));
+  const added = Object.keys(PRINTINGS).filter(id => !drawn.has(id));
+  assert.equal(added.length, 14);
+  for (const id of added) {
     const def = cards.find(card => card.id === id);
     assert.ok(def, id);
-    assert.equal(entry.regular, 'hexagon');
-    assert.equal(resolveFoil(def, version('regular')).mode, 'hexagon');
-    // A finish decorates the ordinary printing; it never adds one to the Book.
-    assert.equal(hasVersion(def, 'alternateArt'), false);
+    assert.deepEqual(PRINTINGS[id], { foil: true });
+    assert.deepEqual(Object.keys(FOIL_ASSIGNMENTS[id]), ['foil']);
+    assert.equal(resolveFoil(def, version('foil')).mode, 'hexagon');
+    assert.equal(hasVersion(def, 'foil'), true);
     assert.equal(hasVersion(def, 'creativeFoil'), false);
-    assert.equal(versionArtUrl(def, 'regular'), null);
+    assert.equal(hasVersion(def, 'alternateArtFoil'), false);
+    // A new Foil printing needs no new painting, and leaves the other printings matte.
+    assert.equal(versionArtUrl(def, 'foil'), null, 'foil uses ordinary art');
+    assert.equal(paintedArtSVG(def, '<svg/>', 'foil'), paintedArtSVG(def, '<svg/>', 'regular'));
+    for (const key of ['regular', 'fullCardArt']) {
+      assert.deepEqual(resolveFoil(def, version(key)), resolveFoil(def, version(key), undefined, {}));
+    }
+  }
+});
+
+test('every Foil printing is either drawn or a later hexagon, and no card is foil by accident', () => {
+  assert.equal(countInVersion(cards, 'foil'), 29);
+  assert.deepEqual(new Set(Object.keys(FOIL_ASSIGNMENTS)), new Set(Object.keys(PRINTINGS)));
+  for (const card of cards.filter(card => !Object.hasOwn(PRINTINGS, card.id))) {
+    assert.equal(hasVersion(card, 'foil'), false);
   }
 });

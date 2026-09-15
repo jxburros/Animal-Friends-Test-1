@@ -10,10 +10,10 @@ export const FOIL_LABELS = Object.freeze({
 // Detail finish: { mode: 'details', mask: 'assets/art/foil-masks/<id>-regular.svg' }
 // Mask paths are relative to the site root, including on GitHub Pages.
 export const FOIL_ASSIGNMENTS = Object.freeze({
-  mk_beck_bylaw_reader_1: Object.freeze({ regular: 'hexagon', foil: 'full' }),
+  mk_beck_bylaw_reader_1: Object.freeze({ foil: 'full' }),
   mk_clover_seedling_helper_0: Object.freeze({ foil: 'full' }),
   mk_earl_tea_trader_2: Object.freeze({ foil: 'full' }),
-  mk_benjamin_lantern_maker_2: Object.freeze({ regular: 'hexagon', foil: 'artwork' }),
+  mk_benjamin_lantern_maker_2: Object.freeze({ foil: 'artwork' }),
   mk_velvet_counter_clerk_1: Object.freeze({ foil: 'artwork' }),
   mk_moss_rehiring_day: Object.freeze({ foil: 'artwork' }),
   mk_comet_astronaut_5: Object.freeze({ foil: Object.freeze({ mode: 'details', mask: 'assets/art/foil-masks/mk_comet_astronaut_5-foil.svg' }) }),
@@ -26,19 +26,21 @@ export const FOIL_ASSIGNMENTS = Object.freeze({
   mk_willow_tide_reckoner_3: Object.freeze({ foil: 'hexagon' }),
   mk_rosabeth_herb_gatherer_0: Object.freeze({ foil: 'hexagon' }),
 
-  // Hexagon foil on the ordinary printing; these cards need no separate Foil printing.
-  mk_adam_road_mender_1: Object.freeze({ regular: 'hexagon' }),
-  mk_bean_the_early_shift_4: Object.freeze({ regular: 'hexagon' }),
-  mk_berry_clockmaker_1: Object.freeze({ regular: 'hexagon' }),
-  mk_cassadee_hall_manager_3: Object.freeze({ regular: 'hexagon' }),
-  mk_cookie_winter_stores_cook_3: Object.freeze({ regular: 'hexagon' }),
-  mk_copper_cellar_keeper_4: Object.freeze({ regular: 'hexagon' }),
-  mk_daniel_star_charter_3: Object.freeze({ regular: 'hexagon' }),
-  mk_faustus_bolt_boy_0: Object.freeze({ regular: 'hexagon' }),
-  mk_finn_peddler_1: Object.freeze({ regular: 'hexagon' }),
-  mk_harrison_piano_boy_0: Object.freeze({ regular: 'hexagon' }),
-  mk_hazel_guildmaster_3: Object.freeze({ regular: 'hexagon' }),
-  mk_lindsay_potting_helper_0: Object.freeze({ regular: 'hexagon' }),
+  // Hexagon Foil printings added after the first release. Each is opted into PRINTINGS too.
+  mk_adam_road_mender_1: Object.freeze({ foil: 'hexagon' }),
+  mk_bean_the_early_shift_4: Object.freeze({ foil: 'hexagon' }),
+  mk_beck_ward_clerk_2: Object.freeze({ foil: 'hexagon' }),
+  mk_benjamin_master_lantern_maker_4: Object.freeze({ foil: 'hexagon' }),
+  mk_berry_clockmaker_1: Object.freeze({ foil: 'hexagon' }),
+  mk_cassadee_hall_manager_3: Object.freeze({ foil: 'hexagon' }),
+  mk_cookie_winter_stores_cook_3: Object.freeze({ foil: 'hexagon' }),
+  mk_copper_cellar_keeper_4: Object.freeze({ foil: 'hexagon' }),
+  mk_daniel_star_charter_3: Object.freeze({ foil: 'hexagon' }),
+  mk_faustus_bolt_boy_0: Object.freeze({ foil: 'hexagon' }),
+  mk_finn_peddler_1: Object.freeze({ foil: 'hexagon' }),
+  mk_harrison_piano_boy_0: Object.freeze({ foil: 'hexagon' }),
+  mk_hazel_guildmaster_3: Object.freeze({ foil: 'hexagon' }),
+  mk_lindsay_potting_helper_0: Object.freeze({ foil: 'hexagon' }),
 });
 
 /** Invalid/unfinished detail configurations fail closed, never flashing the entire artwork. */
