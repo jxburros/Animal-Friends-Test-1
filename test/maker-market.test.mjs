@@ -23,10 +23,14 @@ function makerGame(seed = 5) {
 
 test('the shelf quarries more virtues than a game raises, and deals its Capital City from its own cards', () => {
   const statues = MAKER.cards.filter((c) => c.type === 'statue');
-  const spec = MAKER.marketDecks[0];
-  // Nine Statues stand in any one game; the quarry holds more, so which nine is the shuffle's call.
-  assert.equal(spec.statueCount, RULES.victory.statueTotal);
-  assert.ok(statues.length > RULES.victory.statueTotal, 'the quarry is deeper than one game needs');
+  // Nine Statues stand in any one game; each market's quarry holds more, so which nine is the
+  // shuffle's call — and the two markets quarry different virtues, which is half of what makes them
+  // different places to play. Between them they raise every virtue the collection carves.
+  for (const spec of MAKER.marketDecks) {
+    assert.equal(spec.statueCount, RULES.victory.statueTotal, `${spec.id} raises nine`);
+    assert.ok(spec.statuePool.length > RULES.victory.statueTotal, `${spec.id}'s quarry is deeper than one game needs`);
+  }
+  assert.ok(statues.length > RULES.victory.statueTotal, 'the collection carves more than one game raises');
   const virtues = statues.map((c) => c.virtue);
   assert.equal(new Set(virtues).size, virtues.length, 'a virtue is carved once');
   for (const v of ['Community', 'Courage', 'Curiosity', 'Generosity', 'Harmony', 'Ingenuity', 'Joy', 'Kindness', 'Patience']) {
@@ -39,8 +43,29 @@ test('the shelf quarries more virtues than a game raises, and deals its Capital 
     assert.ok(c.onGain || (c.abilities || []).some((a) => !a.burden), `${c.id} has no boon`);
   }
   const own = new Set(MAKER.cards.map((c) => c.id));
-  for (const id of [...(spec.always || []), ...spec.statuePool, ...spec.pool]) assert.ok(own.has(id), `${id} is not a card in this set`);
-  assert.deepEqual([...spec.statuePool].sort(), statues.map((c) => c.id).sort(), 'every Statue is in the quarry');
+  const quarried = new Set();
+  for (const spec of MAKER.marketDecks) {
+    for (const id of [...(spec.always || []), ...spec.statuePool, ...spec.pool]) assert.ok(own.has(id), `${id} is not a card in this set`);
+    for (const id of spec.statuePool) quarried.add(id);
+  }
+  assert.deepEqual([...quarried].sort(), statues.map((c) => c.id).sort(), 'every Statue is quarried by some market');
+  const [a, b] = MAKER.marketDecks.map((spec) => new Set(spec.statuePool));
+  assert.ok([...a].some((id) => !b.has(id)) && [...b].some((id) => !a.has(id)), 'the two markets quarry different virtues');
+});
+
+test('the two Capital Cities are two different places', () => {
+  const [fair, winter] = MAKER.marketDecks;
+  assert.equal(MAKER.marketDecks.length, 2, 'two markets to choose between');
+  const shared = fair.pool.filter((id) => winter.pool.includes(id));
+  assert.deepEqual(shared, [], 'a market card belongs to one market or the other, never both');
+  const isShock = (id) => MAKER.cards.find((c) => c.id === id)?.type === 'disruption';
+  const weather = (spec) => spec.pool.filter(isShock).length;
+  // The Fair is a good year and the Winter is a bad one: the weather is most of the difference.
+  assert.ok(winter.minDisruptions > fair.minDisruptions, 'the Winter deals more shared weather than the Fair');
+  for (const spec of MAKER.marketDecks) {
+    assert.ok(weather(spec) >= spec.minDisruptions, `${spec.id} cannot meet its own weather floor`);
+    assert.ok(spec.pool.length >= spec.poolSize, `${spec.id} cannot fill its own market`);
+  }
 });
 
 test('a game raises exactly nine Statues, and a different nine from game to game', () => {

@@ -7,7 +7,7 @@ import { RULES, SET } from './helpers.mjs';
 import { mulliganPhase, playTurn, cardDef } from '../src/engine/index.js';
 import {
   createTutorialGame, createTutorialScript, makeAutoHumanAgent, makeRivalPlanAgent, TUTORIAL_LAST_TURN,
-  TUTORIAL_HUMAN_DECK, TUTORIAL_RIVAL_DECK, TUTORIAL_CARDS as C,
+  TUTORIAL_HUMAN_DECK, TUTORIAL_RIVAL_DECK, TUTORIAL_CARDS as C, TUTORIAL_HANDS, lessonDeck,
 } from '../src/tutorial/scenario.js';
 
 /** Play the lesson through to its final note, recording every request the script did not expect. */
@@ -24,13 +24,21 @@ async function playLesson({ humanFallback = null } = {}) {
 }
 
 describe('the tutorial match', () => {
-  test('is built from the two town decks, arranged rather than replaced', () => {
+  test('is built from two town decks, arranged rather than replaced', () => {
     const state = createTutorialGame(RULES, SET);
     const [me, them] = state.players;
     assert.equal(me.deckId, TUTORIAL_HUMAN_DECK);
     assert.equal(them.deckId, TUTORIAL_RIVAL_DECK);
     for (const p of state.players) {
-      const list = SET.decks.find((d) => d.id === p.deckId).list;
+      // The town deck as the lesson arranges it: the printed forty with the scripted cards swapped
+      // in over the deck's deepest stacks, because the printed decks are built from the ratings and
+      // none of them is written around a tutorial.
+      const printed = SET.decks.find((d) => d.id === p.deckId).list;
+      const list = lessonDeck(SET, p.deckId, TUTORIAL_HANDS[p.index]).list;
+      // Nothing is swapped in but a card the script deals, and the deck is still the printed size.
+      const swappedIn = Object.keys(list).filter((id) => !printed[id]);
+      for (const id of swappedIn) assert.ok(TUTORIAL_HANDS[p.index].includes(id), `${id} is not a card the lesson deals`);
+      assert.equal(Object.values(list).reduce((a, n) => a + n, 0), Object.values(printed).reduce((a, n) => a + n, 0));
       const held = {};
       for (const c of [...p.hand, ...p.deck]) held[c.cardId] = (held[c.cardId] || 0) + 1;
       assert.deepEqual(held, list, `${p.name}'s cards are exactly the ${p.deckId} deck`);

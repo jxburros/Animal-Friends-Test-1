@@ -34,13 +34,25 @@ const ECONOMY_FLOOR = 22;
 /** Super Rare copies a deck may hold: a deck has a marquee card, not a marquee. */
 const TOP_RARITY_CAP = 3;
 
-// The town decks. Two to begin with — the third way to play is to build your own in the Workshop,
-// which is why there is no attempt here to cover the whole cast.
+// The six town decks. Each one is a stated identity — two species, two studies — and between them
+// they field all ten species and all eight studies. The identities are not arbitrary: the builder
+// fills each of them strongest-first out of the same catalogue, so which two species and which two
+// studies a deck is written for is the whole of its power level. These six were settled by playtest,
+// where they win between 46% and 56% of their games against each other. The seventh way to play is
+// still to build your own in the Workshop, which is why there is no attempt here to cover the cast.
 const IDENTITIES = [
-  { id: 'mk-ledger-larder', name: 'Ledger & Larder', species: ['Squirrel', 'Mouse'], studies: ['Commerce', 'Food'],
-    blurb: 'Squirrels and Mice of Commerce and Food: the books balance, the counter never closes, and everything the town eats has been costed twice.' },
-  { id: 'mk-bench-bandstand', name: 'Bench & Bandstand', species: ['Badger', 'Cat'], studies: ['Crafts', 'Entertainment'],
-    blurb: 'Badgers and Cats of Crafts and Entertainment: the bench turns out the work, the hall turns out the town, and neither of them stops for weather.' },
+  { id: 'mk-tin-tally', name: 'Tin & Tally', species: ['Squirrel', 'Otter'], studies: ['Commerce', 'Agriculture'],
+    blurb: 'Squirrels and Otters of Commerce and Agriculture: the long shift is the whole plan. Every animal works, every shift is costed twice, and the tin behind the desk is fuller than the ledger admits.' },
+  { id: 'mk-gavel-ribbon', name: 'Gavel & Ribbon', species: ['Fox', 'Raccoon'], studies: ['Civics', 'Crafts'],
+    blurb: 'Foxes and Raccoons of Civics and Crafts: the town that turns up at the Auction House with something it made this morning. It pledges high, works the City Dump, and dares the other Mayor to keep raising.' },
+  { id: 'mk-lamp-lens', name: 'Lamp & Lens', species: ['Owl', 'Fox'], studies: ['Science', 'Commerce'],
+    blurb: 'Owls and Foxes of Science and Commerce: instruments, night work and a price for everything. It knows what the Capital City is about to put up before the other Mayor has looked at the board.' },
+  { id: 'mk-larder-long-table', name: 'Larder & Long Table', species: ['Hedgehog', 'Mouse'], studies: ['Food', 'Crafts'],
+    blurb: 'Hedgehogs and Mice of Food and Crafts: the kitchen and the bench, and a table long enough for everybody. Whatever the weather takes off the board is fed, mended and back at work by morning.' },
+  { id: 'mk-bandstand-bell', name: 'Bandstand & Bell', species: ['Rabbit', 'Cat'], studies: ['Entertainment', 'Civics'],
+    blurb: 'Rabbits and Cats of Entertainment and Civics: a town played at double time. Animals stand back up the turn they sat down, and the hall is open again before the rival has finished their Ready.' },
+  { id: 'mk-ledger-legend', name: 'Ledger & Legend', species: ['Badger', 'Raccoon'], studies: ['Commerce', 'Lore'],
+    blurb: 'Badgers and Raccoons of Commerce and Lore: the counting house and the long room in one town. It keeps the books, keeps the stories, and knows which of the two the borough will actually pay for.' },
 ];
 
 const score = (c) => (c.power && c.power.score) || 0;

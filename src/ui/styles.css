@@ -75,6 +75,8 @@ input[type=range]{width:100%;accent-color:var(--gold)}
 .deck-card:nth-child(2)::before{background:var(--plum)}
 .deck-card:nth-child(3)::before{background:var(--green)}
 .deck-card:nth-child(4)::before{background:var(--red)}
+.deck-card:nth-child(5)::before{background:var(--blue)}
+.deck-card:nth-child(6)::before{background:var(--ink2)}
 .deck-card:hover{border-color:var(--gold)}
 .deck-card.selected{border-color:var(--ink);background:var(--paper);box-shadow:0 0 0 3px var(--gold3),var(--shadow2)}
 .deck-card h4{margin:0 0 4px 8px;font-size:16px}

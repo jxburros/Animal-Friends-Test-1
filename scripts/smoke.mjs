@@ -4,7 +4,7 @@ import { makeRandomAgent } from '../src/ai/random.js';
 const rules = JSON.parse(fs.readFileSync(new URL('../spec/game.json', import.meta.url)));
 const set = JSON.parse(fs.readFileSync(new URL('../spec/maker_card_set.json', import.meta.url)));
 const seed = Number(process.argv[2] || 1);
-const state = createGame(rules, set, { seed, decks: ['mk-ledger-larder', 'mk-bench-bandstand'] });
+const state = createGame(rules, set, { seed, decks: ['mk-tin-tally', 'mk-gavel-ribbon'] });
 await playGame(state, [makeRandomAgent(seed), makeRandomAgent(seed + 1)]);
 console.log(state.log.map((l) => `[${l.turn}] ${l.text}`).join('\n'));
 console.log('winner', state.winner, state.result, 'turns', state.turnNumber, 'actions', state.actionCount);
