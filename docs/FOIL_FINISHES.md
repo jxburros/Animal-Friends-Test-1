@@ -28,9 +28,18 @@ export const FOIL_ASSIGNMENTS = Object.freeze({
 ```
 
 These are examples, not assigned finishes. An entry decorates an existing printing; it does not
-create an alternate painting or add a new printing to the Book. To introduce a separately listed
-foil printing, also opt it into `PRINTINGS` in `versions.js` (e.g. `card_id: { foil: true }`) and
-assign its finish under the `foil` key. It can use the existing ordinary artwork.
+create an alternate painting or add a new printing to the Book.
+
+Fourteen cards carry hexagon foil on their **ordinary** printing, under the `regular` key: Adam
+Road Mender, Bean The Early Shift, Beck Bylaw Reader, Benjamin Lantern Maker, Berry Clockmaker,
+Cassadee Hall Manager, Cookie Winter Stores Cook, Copper Cellar Keeper, Daniel Star Charter,
+Faustus Bolt Boy, Finn Peddler, Harrison Piano Boy, Hazel Guildmaster and Lindsay Potting Helper.
+These are ordinary printings with a finish, not new printings, so they add nothing to the Book and
+leave the fifteen-card [first foil release](FIRST_FOILS.md) untouched — Beck and Benjamin appear in
+both, keeping their own separate Foil printing finishes.
+
+To introduce a separately listed foil printing, also opt it into `PRINTINGS` in `versions.js`
+(e.g. `card_id: { foil: true }`) and assign its finish under the `foil` key. It can use the existing ordinary artwork.
 
 | Value | Coverage |
 | --- | --- |
