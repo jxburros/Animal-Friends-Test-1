@@ -14,19 +14,18 @@ Capital City banner, welcome screen and deck workshop, with locally bundled artw
 **New in v0.12.0 — six towns and two weathers.** The two decks that shipped with the game have been
 replaced by six, and the one Capital City by two markets that are not the same place twice.
 
-- **Six decks, each about something different.** Tin & Tally works the long shift and the stored tin;
-  Gavel & Ribbon is built to win auctions; Lamp & Long Room reads the top of both decks before anyone
-  else does; Larder & Long Table feeds whoever the weather turned out and puts them back to work;
-  Bandstand & Bell plays at double time; Chit & Cornerstone turns the ward's small change into
-  permanent places. Between them they field all ten species and all eight studies.
-- **Four times as much of the collection on the table.** The old pair of decks showed 48 distinct
-  cards. The six show **144**, because a deck is now built as singletons with a second copy of the
-  card that leads each cost band, and each deck is filled out of what the decks before it left —
-  Town Buildings included, which no printed deck used to hold at all.
-- **Evenly matched, and measured.** `npm run decks` holds every deck to one curve, one economy floor,
-  a floor on Supply in particular, and a per-deck Supply budget that playtesting set. Over every
-  ordered pairing on both markets the six now win between 45% and 53% of their games, where the first
-  six-deck build ran from 31% to 81%.
+- **Six decks, each about something different.** Tin & Tally works the long shift and the tin behind
+  the desk; Gavel & Ribbon turns up at the Auction House with something it made this morning; Lamp &
+  Lens prices what the Capital City is about to put up; Larder & Long Table feeds and mends whoever
+  the weather turned out; Bandstand & Bell plays at double time; Ledger & Legend keeps the books and
+  the stories. Between them they field all ten species and all eight studies.
+- **Two and a half times as much of the collection on the table.** The old pair of decks showed 48
+  distinct cards; the six show **123**, because six identities pull on six different corners of the
+  catalogue.
+- **Evenly matched, and measured.** The deck builder is unchanged — the identity is the whole input,
+  so a deck's two species and two studies are also its power level. These six pairings were settled
+  by playtest: over every ordered pairing on both markets they win between 46% and 56% of their
+  games, where the first six identities tried ran from 29% to 78%.
 - **Two Capital Cities.** The First Workings has been retired for **The Founders' Fair** and **The
   Lean Winter**, which share no market card at all: the Fair deals grants, hiring fairs and Buildings
   out of forty-three lots with barely any weather, the Winter deals salvage, second chances and
@@ -248,7 +247,7 @@ A hired Character is **retained labour, not a citizen**: they may be hired for a
 
 **Species and study** — species is what a card *is*, study is what it *does*. Species is a design space, not a keyword: each of the ten owns a centre of gravity, a hole and a signature effect (Rabbits arrive in crowds; Badgers shrug off shocks; Raccoons work the City Dump; Squirrels put Supply by; Cats act when they should not be able to; Owls wake the town before dawn). The charters live in `spec/species.json` and `npm run identity` fails the build if two species stop playing differently. Studies — Agriculture, Civics, Commerce, Crafts, Lore, Science — are the horizontal axis that cuts across species.
 
-**Decks** — six 40-card decks ship with the game — **Tin & Tally** (Squirrels and Otters of Commerce and Agriculture: the long shift and the tin behind the desk), **Gavel & Ribbon** (Foxes and Cats of Civics and Crafts: a deck that goes to the Capital City to win auctions), **Lamp & Long Room** (Owls and Mice of Lore and Science: the town that reads ahead), **Larder & Long Table** (Hedgehogs and Raccoons of Food and Civics: nobody here stays out of work for long), **Bandstand & Bell** (Rabbits and Cats of Entertainment and Civics: animals back on their feet the turn they sat down) and **Chit & Cornerstone** (Badgers and Raccoons of Crafts and Commerce: chits in the tin and Buildings on the ground). They are built by `npm run decks` rather than hand-listed, they hold 144 distinct cards between them, and heuristic-vs-heuristic playtests over every ordered pairing put all six between 45% and 53%. You can also build your own in the **Deck Workshop**: 40 to 50 cards of Characters, Events and Town Buildings, with copies capped by rarity. There is no Character floor and no Event ceiling — the deck is yours to get wrong, and the Workshop warns rather than refuses when a full-size deck holds six animals or fewer. Each Mayor may **mulligan once, free**. Custom decks are saved in the browser.
+**Decks** — six 40-card decks ship with the game: **Tin & Tally** (Squirrels and Otters of Commerce and Agriculture), **Gavel & Ribbon** (Foxes and Raccoons of Civics and Crafts), **Lamp & Lens** (Owls and Foxes of Science and Commerce), **Larder & Long Table** (Hedgehogs and Mice of Food and Crafts), **Bandstand & Bell** (Rabbits and Cats of Entertainment and Civics) and **Ledger & Legend** (Badgers and Raccoons of Commerce and Lore). Between them they field all ten species and all eight studies, and they hold 123 distinct cards. They are built by `npm run decks` rather than hand-listed — the identity is the whole input, so which two species and which two studies a deck is written for is also its power level, and these six were settled by playtest: over every ordered pairing on both markets they win between 46% and 56% of their games. You can also build your own in the **Deck Workshop**: 40 to 50 cards of Characters, Events and Town Buildings, with copies capped by rarity. There is no Character floor and no Event ceiling — the deck is yours to get wrong, and the Workshop warns rather than refuses when a full-size deck holds six animals or fewer. Each Mayor may **mulligan once, free**. Custom decks are saved in the browser.
 
 ## Play it online
 

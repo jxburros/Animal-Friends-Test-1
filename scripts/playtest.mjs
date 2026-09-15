@@ -4,7 +4,7 @@
 //   node scripts/playtest.mjs [--games N] [--seed S] [--p0 heuristic|random] [--p1 heuristic|random]
 //                             [--decks <a>,<b>|alternate|all] [--market <id>|all] [--verbose] [--aggression A]
 //
-// Deck names may be full ids (mk-tin-tally) or short aliases (tt, gr, ll, lt, bb, cc). `alternate` swaps the
+// Deck names may be full ids (mk-tin-tally) or short aliases (tt, gr, ll, lt, bb, ln). `alternate` swaps the
 // first two decks between seats; `all` rotates through every ordered pair of decks in the set.
 // `--market` picks the shared Market Deck (mk-founders-fair, mk-lean-winter) or rotates through all.
 //
@@ -20,8 +20,8 @@ const set = JSON.parse(fs.readFileSync(new URL('../spec/maker_card_set.json', im
 
 const DECK_IDS = set.decks.map((d) => d.id);
 const SHORT_ALIAS = {
-  tt: 'mk-tin-tally', gr: 'mk-gavel-ribbon', ll: 'mk-lamp-long-room',
-  lt: 'mk-larder-long-table', bb: 'mk-bandstand-bell', cc: 'mk-chit-cornerstone',
+  tt: 'mk-tin-tally', gr: 'mk-gavel-ribbon', ll: 'mk-lamp-lens',
+  lt: 'mk-larder-long-table', bb: 'mk-bandstand-bell', ln: 'mk-ledger-legend',
   ff: 'mk-founders-fair', lw: 'mk-lean-winter',
 };
 const DECK_ALIAS = { ...SHORT_ALIAS, ...Object.fromEntries(DECK_IDS.map((id) => [id, id])) };
