@@ -43,6 +43,9 @@ export const MAKER_COMMUNITY_EVENTS_ATLAS_URL = new URL('../../assets/art/maker-
 export const MAKER_TOWN_WORKS_ATLAS_URL = new URL('../../assets/art/maker-town-works-atlas.png', import.meta.url).href;
 export const MAKER_CIVIC_TRADES_ATLAS_URL = new URL('../../assets/art/maker-civic-trades-atlas.png', import.meta.url).href;
 export const MAKER_NEIGHBORHOOD_SERVICES_ATLAS_URL = new URL('../../assets/art/maker-neighborhood-services-atlas.png', import.meta.url).href;
+export const MAKER_STATUES_ATLAS_URL = new URL('../../assets/art/maker-statues-atlas.png', import.meta.url).href;
+export const MAKER_CIVIC_ORDINANCES_ATLAS_URL = new URL('../../assets/art/maker-civic-ordinances-atlas.png', import.meta.url).href;
+export const MAKER_EVENTS_DISRUPTIONS_ATLAS_URL = new URL('../../assets/art/maker-events-disruptions-atlas.png', import.meta.url).href;
 const SPECIES_TILE = { Rabbit: 0, Mouse: 1, Fox: 2, Raccoon: 3, Hedgehog: 4, Badger: 5, Otter: 6, Squirrel: 7 };
 const ATLASES = {
   boroughs: () => PAINTED_ATLAS_URL,
@@ -83,6 +86,9 @@ const ATLASES = {
   makertownworks: () => MAKER_TOWN_WORKS_ATLAS_URL,
   makercivictrades: () => MAKER_CIVIC_TRADES_ATLAS_URL,
   makerneighborhoodservices: () => MAKER_NEIGHBORHOOD_SERVICES_ATLAS_URL,
+  makerstatues: () => MAKER_STATUES_ATLAS_URL,
+  makercivicordinances: () => MAKER_CIVIC_ORDINANCES_ATLAS_URL,
+  makereventsdisruptions: () => MAKER_EVENTS_DISRUPTIONS_ATLAS_URL,
 };
 
 // Presentation-only corrections for Maker shelf cards. Keeping these assignments here lets the
@@ -598,6 +604,22 @@ export const MAKER_ART_TILES = Object.freeze({
   mk_tb_the_long_awning: { atlas: 'makerneighborhoodservices', tile: 13 },
   mk_tb_the_builders_rest: { atlas: 'makerneighborhoodservices', tile: 14 },
   mk_tb_the_muster_bell: { atlas: 'makerneighborhoodservices', tile: 15 },
+
+  mk_st_kindness: { atlas: 'makerstatues', tile: 0 }, mk_st_curiosity: { atlas: 'makerstatues', tile: 1 }, mk_st_courage: { atlas: 'makerstatues', tile: 2 }, mk_st_patience: { atlas: 'makerstatues', tile: 3 },
+  mk_st_generosity: { atlas: 'makerstatues', tile: 4 }, mk_st_ingenuity: { atlas: 'makerstatues', tile: 5 }, mk_st_community: { atlas: 'makerstatues', tile: 6 }, mk_st_harmony: { atlas: 'makerstatues', tile: 7 },
+  mk_st_joy: { atlas: 'makerstatues', tile: 8 }, mk_st_diligence: { atlas: 'makerstatues', tile: 9 }, mk_st_hospitality: { atlas: 'makerstatues', tile: 10 }, mk_st_vigilance: { atlas: 'makerstatues', tile: 11 },
+  mk_st_wonder: { atlas: 'makerstatues', tile: 12 }, mk_st_thrift: { atlas: 'makerstatues', tile: 13 }, mk_st_mercy: { atlas: 'makerstatues', tile: 14 }, mk_mkt_double_shift_horn: { atlas: 'makerstatues', tile: 15 },
+
+  mk_bld_hiring_hall: { atlas: 'makercivicordinances', tile: 0 }, mk_bld_winter_stores: { atlas: 'makercivicordinances', tile: 1 }, mk_bld_physic_garden: { atlas: 'makercivicordinances', tile: 2 }, mk_bld_weighbridge: { atlas: 'makercivicordinances', tile: 3 },
+  mk_bld_counting_house: { atlas: 'makercivicordinances', tile: 4 }, mk_bld_town_workshop: { atlas: 'makercivicordinances', tile: 5 }, mk_ord_works_in_the_square: { atlas: 'makercivicordinances', tile: 6 }, mk_ord_the_quarry_road: { atlas: 'makercivicordinances', tile: 7 },
+  mk_ord_monument_tax: { atlas: 'makercivicordinances', tile: 8 }, mk_ord_the_masons_rate: { atlas: 'makercivicordinances', tile: 9 }, mk_ord_the_timber_levy: { atlas: 'makercivicordinances', tile: 10 }, mk_ord_the_building_grant: { atlas: 'makercivicordinances', tile: 11 },
+  mk_ord_the_sealed_bid: { atlas: 'makercivicordinances', tile: 12 }, mk_ord_a_word_with_the_steward: { atlas: 'makercivicordinances', tile: 13 }, mk_oatmeals_awning: { atlas: 'makercivicordinances', tile: 14 }, mk_a_word_beforehand: { atlas: 'makercivicordinances', tile: 15 },
+
+  mk_inkwells_star_chart: { atlas: 'makereventsdisruptions', tile: 0 }, mk_ev_the_marks_are_struck: { atlas: 'makereventsdisruptions', tile: 1 }, mk_ev_never_handed_back: { atlas: 'makereventsdisruptions', tile: 2 }, mk_ev_the_hat_goes_round: { atlas: 'makereventsdisruptions', tile: 3 },
+  mk_the_long_night_at_earls: { atlas: 'makereventsdisruptions', tile: 4 }, mk_dx_six_weeks_shut: { atlas: 'makereventsdisruptions', tile: 5 }, mk_dx_the_hiring_freeze: { atlas: 'makereventsdisruptions', tile: 6 }, mk_dx_the_great_frost: { atlas: 'makereventsdisruptions', tile: 7 },
+  mk_dx_the_short_week: { atlas: 'makereventsdisruptions', tile: 8 }, mk_dx_the_year_it_stopped: { atlas: 'makereventsdisruptions', tile: 9 }, mk_dx_solar_eclipse: { atlas: 'makereventsdisruptions', tile: 10 }, mk_dx_meteor_shower: { atlas: 'makereventsdisruptions', tile: 11 },
+  mk_dx_full_moon: { atlas: 'makereventsdisruptions', tile: 12 }, mk_dx_landslide: { atlas: 'makereventsdisruptions', tile: 13 }, mk_dx_midges: { atlas: 'makereventsdisruptions', tile: 14 }, mk_dx_lean_season: { atlas: 'makereventsdisruptions', tile: 15 },
+  mk_mkt_bandstand: { atlas: 'makertownworks', tile: 10 }, mk_mkt_emergency_reserve: { atlas: 'makertownworks', tile: 11 }, mk_mkt_warren_muster: { atlas: 'makertownworks', tile: 12 }, mk_dx_the_yards_go_quiet: { atlas: 'makertownworks', tile: 13 },
 });
 
 function explicitArt(def) {
