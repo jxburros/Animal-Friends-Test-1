@@ -619,6 +619,7 @@ export const MAKER_ART_TILES = Object.freeze({
   mk_the_long_night_at_earls: { atlas: 'makereventsdisruptions', tile: 4 }, mk_dx_six_weeks_shut: { atlas: 'makereventsdisruptions', tile: 5 }, mk_dx_the_hiring_freeze: { atlas: 'makereventsdisruptions', tile: 6 }, mk_dx_the_great_frost: { atlas: 'makereventsdisruptions', tile: 7 },
   mk_dx_the_short_week: { atlas: 'makereventsdisruptions', tile: 8 }, mk_dx_the_year_it_stopped: { atlas: 'makereventsdisruptions', tile: 9 }, mk_dx_solar_eclipse: { atlas: 'makereventsdisruptions', tile: 10 }, mk_dx_meteor_shower: { atlas: 'makereventsdisruptions', tile: 11 },
   mk_dx_full_moon: { atlas: 'makereventsdisruptions', tile: 12 }, mk_dx_landslide: { atlas: 'makereventsdisruptions', tile: 13 }, mk_dx_midges: { atlas: 'makereventsdisruptions', tile: 14 }, mk_dx_lean_season: { atlas: 'makereventsdisruptions', tile: 15 },
+  mk_mkt_bandstand: { atlas: 'makertownworks', tile: 10 }, mk_mkt_emergency_reserve: { atlas: 'makertownworks', tile: 11 }, mk_mkt_warren_muster: { atlas: 'makertownworks', tile: 12 }, mk_dx_the_yards_go_quiet: { atlas: 'makertownworks', tile: 13 },
 });
 
 function explicitArt(def) {
