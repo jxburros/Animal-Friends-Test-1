@@ -249,6 +249,8 @@ export function pledgeMinCost(state, pending, pi) {
 
 /** Can this Character be pledged as the player's next bid in this auction? */
 export function canPledge(state, pi, pending, stack) {
+  const cap = state.rules.market.auction?.bidCapPerPlayer;
+  if (cap && pending && pending.chars[pi].length >= cap) return false;
   return topCard(state, stack).cost >= pledgeMinCost(state, pending, pi);
 }
 
@@ -275,7 +277,8 @@ export function raiseIncrement(state, pending) {
 }
 export function raiseMinBid(state, pi, pending) {
   const standing = pending.bid + pending.bonus;
-  const winsTies = hasPassive(state, pi, 'winTiesAsChallenger');
+  const noMatch = state.rules.market.auction?.noMatchingBids;
+  const winsTies = !noMatch && hasPassive(state, pi, 'winTiesAsChallenger');
   return Math.max(0, (winsTies ? standing : standing + raiseIncrement(state, pending)) - bidBonus(state, pi));
 }
 

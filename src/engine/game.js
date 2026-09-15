@@ -2,7 +2,7 @@
 import { cardDef, topCard, log, opponentOf, expireMods, consumeMod, hasMod, hasPassive, refillCity, ageCity, cityRule, freshTurnCounters, buildingCap, UPRIGHT, BUSY, findStack } from './state.js';
 import { ask, draw, gainSupply, completeShift, readyStack, gainMarketCard, makeStatueRoom, fireHook, checkVictory, flushReveals } from './effects.js';
 import { shuffle } from './rng.js';
-import { legalActions, applyAction, forfeitOf, statueTierFor } from './actions.js';
+import { legalActions, applyAction, forfeitOf, statueTierFor, cardCostFor } from './actions.js';
 
 const MAX_ACTIONS_PER_TURN = 60;
 
@@ -153,6 +153,51 @@ export async function resolvePurchase(state, pd) {
   await gainMarketCard(state, winner, pd.cardId, contested ? 'won the auction' : 'unopposed');
 }
 
+/**
+ * PROTOTYPE (rules.market.auction.bidCapPerPlayer): neither Mayor may pledge a further Character once
+ * they have bid this many times in one auction (canPledge enforces the cap). If both sides reach it,
+ * the auction is a stalemate: nobody wins, both are refunded their escrow in full, and both additionally
+ * pay their own printed starting bid for the card as a loss — a Statue's is tiered off that Mayor's own
+ * Victory Row, same as ever. The card is shuffled back into the Market Deck rather than staying spent.
+ */
+export async function resolveStalemate(state, pd) {
+  const m = state.market;
+  m.pending.splice(m.pending.indexOf(pd), 1);
+  releaseBidders(state, pd);
+  const def = cardDef(state, pd.cardId);
+  const paid = [0, 0];
+  for (let pi = 0; pi < 2; pi++) {
+    const pl = state.players[pi];
+    const escrowed = pd.committed[pi];
+    pl.escrow -= escrowed;
+    pl.supply += escrowed;
+    const starting = cardCostFor(state, pi, pd.cardId);
+    paid[pi] = Math.min(pl.supply, starting);
+    pl.supply -= paid[pi];
+  }
+  log(
+    state, null,
+    `The bidding for ${def.name} stalls after ${pd.rounds.length} bids with neither Mayor able to out-pledge the other; `
+      + `it is shuffled back into the Market Deck. ${state.players[0].name} loses ${paid[0]} Supply and ${state.players[1].name} loses ${paid[1]} Supply.`,
+    { kind: 'stalemate', cardId: pd.cardId, rounds: pd.rounds.length, paid },
+  );
+  if (m.city.includes(pd.cardId)) {
+    m.city.splice(m.city.indexOf(pd.cardId), 1);
+    m.deck.push(pd.cardId);
+    shuffle(state, m.deck);
+    refillCity(state);
+  }
+}
+
+/** After every action, settle any auction where both Mayors have hit the bid cap. */
+export async function checkStalemates(state) {
+  const cap = state.rules.market.auction?.bidCapPerPlayer;
+  if (!cap) return;
+  for (const pd of state.market.pending.slice()) {
+    if (pd.chars[0].length >= cap && pd.chars[1].length >= cap) await resolveStalemate(state, pd);
+  }
+}
+
 export async function resourcesPhase(state, pi) {
   const p = state.players[pi];
   state.phase = 'resources';
@@ -205,6 +250,7 @@ export async function actionsPhase(state, pi) {
     let done;
     try {
       done = await applyAction(state, pi, a);
+      await checkStalemates(state);
     } catch (e) {
       log(state, pi, `Illegal action ${a.type} (${e.message}); turn ends.`);
       done = true;
