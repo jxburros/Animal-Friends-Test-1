@@ -1,9 +1,11 @@
 # First foil printings
 
-Fifteen distinct cards carry a foil printing. Each of the five finishes appears exactly three times.
-Every selection is an
+The first release drew fifteen distinct cards, each of the five finishes appearing exactly three
+times. Every selection is an
 ordinary **Foil** printing (`foil`), including hexagons and masked details; none is Creative Foil
 or Alternate Art Foil. Regular and Full Card Art printings keep their existing appearance.
+Fourteen hexagon Foil printings were [added afterwards](#hexagon-foil-printings-added-later), for
+29 foils in all.
 
 | Card | Card ID | Foil finish |
 | --- | --- | --- |
@@ -41,8 +43,33 @@ Each mask is traced to the ordinary printing's square artwork, not its full-art 
 The transparent SVG masks live in `assets/art/foil-masks/`. The original paintings are unchanged.
 If one of these ordinary paintings is replaced later, retrace its mask to the new details.
 
-Open **The Book** and select the **Foil** printing to see all 15.
+## Hexagon Foil printings added later
+
+Fourteen more cards were given an ordinary **Foil** printing with the hexagon finish, outside the
+recorded draw. Each uses its existing ordinary artwork, so no new painting or mask was needed, and
+the draw above is unchanged. Where a character's requested card already held a drawn foil, the
+hexagon went to another card of theirs that had none: Beck — Ward Clerk stands in for Bylaw Reader,
+and Benjamin — Master Lantern Maker for Lantern Maker.
+
+| Card | Card ID |
+| --- | --- |
+| Adam — Road Mender | `mk_adam_road_mender_1` |
+| Bean — The Early Shift | `mk_bean_the_early_shift_4` |
+| Beck — Ward Clerk | `mk_beck_ward_clerk_2` |
+| Benjamin — Master Lantern Maker | `mk_benjamin_master_lantern_maker_4` |
+| Berry — Clockmaker | `mk_berry_clockmaker_1` |
+| Cassadee — Hall Manager | `mk_cassadee_hall_manager_3` |
+| Cookie — Winter Stores Cook | `mk_cookie_winter_stores_cook_3` |
+| Copper — Cellar Keeper | `mk_copper_cellar_keeper_4` |
+| Daniel — Star Charter | `mk_daniel_star_charter_3` |
+| Faustus — Bolt Boy | `mk_faustus_bolt_boy_0` |
+| Finn — Peddler | `mk_finn_peddler_1` |
+| Harrison — Piano Boy | `mk_harrison_piano_boy_0` |
+| Hazel — Guildmaster | `mk_hazel_guildmaster_3` |
+| Lindsay — Potting Helper | `mk_lindsay_potting_helper_0` |
+
+Open **The Book** and select the **Foil** printing to see all 29.
 Every card also retains its Regular printing. The [finish preview](../src/ui/foil-preview.html)
 can compare effects, while the Book shows the actual assigned finish.
 
-![All fifteen ordinary Foil printings in the Book](screenshots/first-foils.png)
+![The fifteen drawn ordinary Foil printings in the Book](screenshots/first-foils.png)

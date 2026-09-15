@@ -80,6 +80,22 @@ export const PRINTINGS = Object.freeze({
   mk_dylan_river_otter_4: Object.freeze({ foil: true }),
   mk_willow_tide_reckoner_3: Object.freeze({ foil: true }),
   mk_rosabeth_herb_gatherer_0: Object.freeze({ foil: true }),
+
+  // Hexagon Foil printings added after the first release; all use the ordinary artwork.
+  mk_adam_road_mender_1: Object.freeze({ foil: true }),
+  mk_bean_the_early_shift_4: Object.freeze({ foil: true }),
+  mk_beck_ward_clerk_2: Object.freeze({ foil: true }),
+  mk_benjamin_master_lantern_maker_4: Object.freeze({ foil: true }),
+  mk_berry_clockmaker_1: Object.freeze({ foil: true }),
+  mk_cassadee_hall_manager_3: Object.freeze({ foil: true }),
+  mk_cookie_winter_stores_cook_3: Object.freeze({ foil: true }),
+  mk_copper_cellar_keeper_4: Object.freeze({ foil: true }),
+  mk_daniel_star_charter_3: Object.freeze({ foil: true }),
+  mk_faustus_bolt_boy_0: Object.freeze({ foil: true }),
+  mk_finn_peddler_1: Object.freeze({ foil: true }),
+  mk_harrison_piano_boy_0: Object.freeze({ foil: true }),
+  mk_hazel_guildmaster_3: Object.freeze({ foil: true }),
+  mk_lindsay_potting_helper_0: Object.freeze({ foil: true }),
 });
 
 /** The conventional home of a printing's painting: assets/art/versions/<cardId>/<slot>.png */
