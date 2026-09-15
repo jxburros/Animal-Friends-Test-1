@@ -134,9 +134,9 @@ masks and all.
 
 **Card printings.** Every card can now exist in six printings — **Regular, Alternate Art, Foil,
 Alternate Art Foil, Creative Foil** and **Full Card Art** — and the Book turns a card over to any of
-them with the chips beneath it. Only two have art today: Regular, which needs none, and the twenty-four
-Full Card Art paintings. The other four are wired and deliberately empty; a greyed chip is a printing
-that has not been painted yet. Adding one is two steps, documented at the top of
+them with the chips beneath it. Alternate Art now includes sixty-four story-led paintings across the
+Ink & Watercolor and Soft Retro Pop collections, alongside twenty-four Full Card Art paintings. A
+greyed chip is a printing that has not been painted yet. Adding one is two steps, documented at the top of
 `src/ui/versions.js`: drop the painting at `assets/art/versions/<cardId>/<slot>.png`, and add one
 line to `PRINTINGS`. Nothing about rules, rarity, cost or deck limits changes with a printing.
 
