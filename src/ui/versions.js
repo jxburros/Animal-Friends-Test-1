@@ -64,8 +64,17 @@ const INK_ALT_ATLASES = Object.freeze({
   kindness: new URL('../../assets/art/alternate-ink-kindness-atlas.png', import.meta.url).href,
 });
 
+const RETRO_ALT_ATLASES = Object.freeze({
+  afterHours: new URL('../../assets/art/alternate-retro-after-hours-atlas.png', import.meta.url).href,
+  quietTriumphs: new URL('../../assets/art/alternate-retro-quiet-triumphs-atlas.png', import.meta.url).href,
+});
+
 function inkAlternate(atlas, tile, other = {}) {
   return Object.freeze({ alternateArt: `${INK_ALT_ATLASES[atlas]}#tile=${tile}`, ...other });
+}
+
+function retroAlternate(atlas, tile, other = {}) {
+  return Object.freeze({ alternateArt: `${RETRO_ALT_ATLASES[atlas]}#tile=${tile}`, ...other });
 }
 
 /**
@@ -106,6 +115,42 @@ export const PRINTINGS = Object.freeze({
   mk_hibiscus_round_walker_3: inkAlternate('kindness', 14),
   mk_daisy_night_bloom_florist_3: inkAlternate('kindness', 15),
 
+  // Soft Retro Pop alternate-art collection. These scenes follow the cards' flavor and character
+  // stories in a mid-century gouache-and-silkscreen idiom. See docs/ALTERNATE_RETRO_POP.md.
+  mk_liza_floor_singer_0: retroAlternate('afterHours', 0),
+  mk_harrison_piano_boy_0: retroAlternate('afterHours', 1, { foil: true }),
+  mk_gabe_corner_show_0: retroAlternate('afterHours', 2),
+  mk_cassadee_stage_hand_0: retroAlternate('afterHours', 3),
+  mk_tabitha_festival_photographer_0: retroAlternate('afterHours', 4),
+  mk_yellow_open_mic_regular_1: retroAlternate('afterHours', 5),
+  mk_fred_wandered_onto_stage_0: retroAlternate('afterHours', 6),
+  mk_oatmeal_sunday_table_0: retroAlternate('afterHours', 7),
+  mk_bean_the_early_shift_4: retroAlternate('afterHours', 8, { foil: true }),
+  mk_barnaby_night_auditor_4: retroAlternate('afterHours', 9),
+  mk_inkwell_night_librarian_3: retroAlternate('afterHours', 10),
+  mk_benjamin_keeper_of_the_light_5: retroAlternate('afterHours', 11),
+  mk_willow_harbour_admiral_5: retroAlternate('afterHours', 12),
+  mk_unknown_cook_0: retroAlternate('afterHours', 13),
+  mk_shadowed_squirrel_hall_hand_1: retroAlternate('afterHours', 14),
+  mk_unsigned_mouse_shelves_hand_1: retroAlternate('afterHours', 15),
+
+  mk_berry_clockmaker_1: retroAlternate('quietTriumphs', 0, { foil: true }),
+  mk_clover_community_gardener_3: retroAlternate('quietTriumphs', 1),
+  mk_comet_rocket_mechanic_1: retroAlternate('quietTriumphs', 2),
+  mk_betty_firework_maker_3: retroAlternate('quietTriumphs', 3),
+  mk_brooke_riverwright_5: retroAlternate('quietTriumphs', 4),
+  mk_copper_cellar_keeper_4: retroAlternate('quietTriumphs', 5, { foil: true }),
+  mk_gwen_apron_on_the_hook_4: retroAlternate('quietTriumphs', 6),
+  mk_gabe_puppet_maker_2: retroAlternate('quietTriumphs', 7),
+  mk_tabitha_camerawoman_5: retroAlternate('quietTriumphs', 8),
+  mk_winter_turned_down_applicant_1: retroAlternate('quietTriumphs', 9),
+  mk_oatmeal_alderman_5: retroAlternate('quietTriumphs', 10),
+  mk_bean_two_pairs_of_paws_2: retroAlternate('quietTriumphs', 11),
+  mk_barrows_measure: retroAlternate('quietTriumphs', 12),
+  mk_unlisted_grower_2: retroAlternate('quietTriumphs', 13),
+  mk_veiled_wright_0: retroAlternate('quietTriumphs', 14),
+  mk_shrouded_badger_bench_hand_2: retroAlternate('quietTriumphs', 15),
+
   mk_beck_bylaw_reader_1: Object.freeze({ foil: true }),
   mk_clover_seedling_helper_0: inkAlternate('kindness', 2, { foil: true }),
   mk_earl_tea_trader_2: Object.freeze({ foil: true }),
@@ -124,17 +169,13 @@ export const PRINTINGS = Object.freeze({
 
   // Hexagon Foil printings added after the first release; all use the ordinary artwork.
   mk_adam_road_mender_1: Object.freeze({ foil: true }),
-  mk_bean_the_early_shift_4: Object.freeze({ foil: true }),
   mk_beck_ward_clerk_2: Object.freeze({ foil: true }),
   mk_benjamin_master_lantern_maker_4: Object.freeze({ foil: true }),
-  mk_berry_clockmaker_1: Object.freeze({ foil: true }),
   mk_cassadee_hall_manager_3: Object.freeze({ foil: true }),
   mk_cookie_winter_stores_cook_3: Object.freeze({ foil: true }),
-  mk_copper_cellar_keeper_4: Object.freeze({ foil: true }),
   mk_daniel_star_charter_3: inkAlternate('ambitions', 7, { foil: true }),
   mk_faustus_bolt_boy_0: Object.freeze({ foil: true }),
   mk_finn_peddler_1: Object.freeze({ foil: true }),
-  mk_harrison_piano_boy_0: Object.freeze({ foil: true }),
   mk_hazel_guildmaster_3: Object.freeze({ foil: true }),
   mk_lindsay_potting_helper_0: Object.freeze({ foil: true }),
 });
