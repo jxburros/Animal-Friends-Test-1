@@ -1,0 +1,355 @@
+/* Premium surroundings pass. Card faces intentionally remain owned by storybook.css. */
+:root {
+  --ui-forest-950: #10261e;
+  --ui-forest-900: #173328;
+  --ui-forest-700: #315c43;
+  --ui-parchment: #f8edcf;
+  --ui-gold: #d8b66a;
+  --ui-gold-bright: #f5d98a;
+  --ui-walnut: #392417;
+  --ui-lift: 0 18px 42px rgba(8, 20, 15, .24);
+  --ui-edge: inset 0 0 0 1px rgba(255, 247, 218, .72), inset 0 0 0 3px rgba(102, 76, 34, .18);
+}
+
+body {
+  background:
+    radial-gradient(circle at 50% -20%, rgba(211, 178, 105, .22), transparent 44rem),
+    linear-gradient(rgba(13, 33, 25, .74), rgba(7, 22, 17, .88)),
+    url('../../assets/ui/borough-daylight.webp') 50% 15% / cover fixed;
+}
+
+#screen-menu.ui-entering .book-cover,
+#screen-deck.ui-entering .deckbuilder {
+  animation: screen-settle calc(480ms * max(var(--fx-scale), .01)) cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes screen-settle { from { opacity: 0; transform: translateY(12px) scale(.992); } }
+
+/* Tactile controls with one visual language across every screen. */
+button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 38px;
+  border: 1px solid #8c7241;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #fff9e8, #ead7ad 92%);
+  box-shadow: inset 0 1px rgba(255,255,255,.9), inset 0 -2px rgba(91,62,25,.16), 0 3px 8px rgba(40,28,12,.18);
+  color: #352c1d;
+  text-shadow: 0 1px rgba(255,255,255,.7);
+  transition: transform calc(150ms * max(var(--fx-scale), .01)) ease,
+    filter calc(150ms * max(var(--fx-scale), .01)) ease,
+    box-shadow calc(150ms * max(var(--fx-scale), .01)) ease;
+}
+button::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 28%, rgba(255,255,255,.7) 47%, transparent 66%);
+  transform: translateX(-130%);
+  transition: transform calc(520ms * max(var(--fx-scale), .01)) ease;
+}
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: saturate(1.08) brightness(1.025);
+  box-shadow: inset 0 1px rgba(255,255,255,.95), inset 0 -2px rgba(91,62,25,.16), 0 7px 15px rgba(40,28,12,.22);
+}
+button:hover:not(:disabled)::before { transform: translateX(130%); }
+button:active:not(:disabled) { transform: translateY(1px) scale(.99); }
+button.primary {
+  border-color: #183a29;
+  background: linear-gradient(180deg, #4f7a58, #244632 90%);
+  box-shadow: inset 0 1px rgba(255,255,255,.22), inset 0 -3px rgba(7,24,15,.26), 0 4px 12px rgba(8,31,19,.28);
+  color: #fff5d7;
+  text-shadow: 0 1px 1px #14271b;
+}
+button.danger { border-color: #773e35; background: linear-gradient(#f5c2ad, #c97868); color: #542319; }
+.ui-spark {
+  position: absolute;
+  z-index: 3;
+  width: 12px;
+  height: 12px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: .35;
+  transform: translate(-50%, -50%) scale(0);
+  animation: ui-spark calc(520ms * max(var(--fx-scale), .01)) ease-out forwards;
+}
+@keyframes ui-spark { to { opacity: 0; transform: translate(-50%, -50%) scale(8); } }
+
+/* The play surface now reads as one physical game table instead of unrelated panels. */
+#screen-game.active {
+  position: relative;
+  max-width: 1600px;
+  padding: 20px;
+  animation: table-arrive calc(650ms * max(var(--fx-scale), .01)) cubic-bezier(.2,.8,.2,1) both;
+}
+#screen-game::before {
+  content: '';
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(90,133,100,.35), transparent 65%),
+    repeating-linear-gradient(93deg, transparent 0 120px, rgba(255,255,255,.012) 121px 122px),
+    #132f25;
+}
+@keyframes table-arrive { from { opacity: 0; transform: translateY(18px) scale(.992); } }
+.table {
+  position: relative;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid #92713f;
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at 50% 45%, rgba(77,123,90,.34), transparent 70%),
+    linear-gradient(135deg, #18392c, #10291f);
+  box-shadow: 0 0 0 5px #2f2418, 0 0 0 7px #b48d4d, 0 24px 50px rgba(4,14,9,.48), inset 0 0 70px rgba(0,0,0,.26);
+}
+.board-rows { gap: 14px; }
+.page {
+  border: 1px solid #b79a61;
+  border-radius: 10px;
+  background:
+    radial-gradient(ellipse at 40% 0, rgba(255,255,255,.55), transparent 55%),
+    var(--noise), #f0e2c3;
+  box-shadow: var(--ui-edge), 0 9px 22px rgba(2,19,12,.24);
+}
+.town-row-panel,
+.hand-rail,
+.middle-row { transition: transform calc(260ms * max(var(--fx-scale), .01)) ease, box-shadow calc(260ms * max(var(--fx-scale), .01)) ease; }
+.town-row-panel.active-turn {
+  transform: translateY(-2px);
+  box-shadow: var(--ui-edge), 0 0 0 3px rgba(224,190,106,.72), 0 14px 32px rgba(4,24,14,.28);
+  animation: active-town calc(3.5s * max(var(--fx-scale), .01)) ease-in-out infinite;
+}
+.town-row-panel.you.active-turn { box-shadow: var(--ui-edge), 0 0 0 3px rgba(129,190,129,.72), 0 14px 32px rgba(4,24,14,.28); }
+@keyframes active-town { 50% { filter: brightness(1.025); } }
+.topbar {
+  position: sticky;
+  z-index: 50;
+  top: 8px;
+  border: 1px solid #b99351;
+  border-radius: 10px;
+  background: linear-gradient(115deg, rgba(17,46,34,.98), rgba(46,83,57,.98));
+  box-shadow: 0 10px 24px rgba(6,20,13,.32), inset 0 1px rgba(255,255,255,.08), inset 0 -3px rgba(0,0,0,.14);
+  backdrop-filter: blur(12px);
+}
+.topbar .tb-phase { border-color: rgba(220,195,138,.38); }
+.topbar .tb-phase.on {
+  box-shadow: 0 0 0 2px rgba(247,217,142,.18), 0 0 14px rgba(247,207,105,.22);
+  animation: phase-warmth calc(2.2s * max(var(--fx-scale), .01)) ease-in-out infinite;
+}
+@keyframes phase-warmth { 50% { box-shadow: 0 0 0 2px rgba(247,217,142,.24), 0 0 22px rgba(247,207,105,.38); } }
+.statchip,
+.pile-chip,
+.badge {
+  border-color: #a98950;
+  background: linear-gradient(#fffaf0, #ead9b6);
+  box-shadow: inset 0 1px rgba(255,255,255,.8), 0 2px 4px rgba(51,35,15,.14);
+}
+.statchip.supply { background: radial-gradient(circle at 30% 22%, #fff6bd, #e3bd59); color: #63420c; }
+.cc-head { overflow: hidden; }
+.cc-head::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -60% -20%;
+  background: linear-gradient(105deg, transparent 38%, rgba(255,221,146,.16) 50%, transparent 62%);
+  animation: city-lanterns calc(9s * max(var(--fx-scale), .01)) ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes city-lanterns { 0%, 22% { transform: translateX(-65%); } 70%, 100% { transform: translateX(65%); } }
+.chronicle-rail,
+.action-rail { background-color: #ebdcc0; }
+.action-rail .action-bar button { text-align: left; padding-inline: 14px; }
+.hand-rail .hand-row { scroll-snap-type: x proximity; }
+.hand-rail .hand-slot { scroll-snap-align: center; }
+.hand-slot:hover { z-index: 12; }
+.hand-slot:hover .card-face { transform: translateY(-8px) scale(1.025); }
+.empty-slot { background: repeating-linear-gradient(135deg, rgba(120,95,53,.04) 0 7px, transparent 7px 14px); }
+
+/* Choreography keeps its meaning, but the pieces now match the physical table. */
+.fx-coin {
+  background: radial-gradient(circle at 32% 28%, #fff2b1, #d6a53b 58%, #795018 100%);
+  border: 2px solid #5b3914;
+  box-shadow: inset 0 0 0 2px rgba(255,236,164,.55), 0 5px 10px rgba(0,0,0,.34);
+}
+.fx-pop {
+  border: 1px solid #8f713e;
+  border-radius: 8px;
+  box-shadow: var(--ui-edge), 0 10px 26px rgba(6,20,13,.28);
+}
+.fx-ribbon-inner {
+  border: 1px solid #c29c57;
+  background: linear-gradient(115deg, #18382b, #31573e);
+  box-shadow: inset 0 0 0 3px rgba(255,245,211,.08), 0 18px 45px rgba(0,0,0,.48);
+}
+.fx-ribbon-title { color: #fff1c8; text-shadow: 0 2px #10241a; }
+.fx-ribbon-sub { color: #ead8ad; }
+.fx-ribbon-inner::before,
+.fx-ribbon-inner::after { border-color: #725523; background: #d6b15d; }
+.fx-spotlight { background: rgba(7,20,14,.76); backdrop-filter: blur(7px); }
+.fx-spot-caption { border: 1px solid #b18e4f; box-shadow: var(--ui-edge), 0 12px 30px rgba(0,0,0,.38); }
+
+/* Workshop panels feel laid out on the same Mayor's desk. */
+#screen-deck.active {
+  min-height: 100vh;
+  padding: 20px;
+  background: radial-gradient(ellipse at top, rgba(69,104,76,.28), transparent 60%);
+}
+.db-head { border-radius: 10px; box-shadow: var(--ui-edge), var(--ui-lift); }
+.db-left,
+.db-right { border-radius: 10px; }
+.db-chip { border-color: #9e824d; box-shadow: inset 0 1px rgba(255,255,255,.7), 0 2px 5px rgba(44,31,13,.13); }
+.db-chip.on { background: linear-gradient(#56795a, #34563f); color: #fff2d3; text-shadow: 0 1px #213b2a; }
+.db-counter { background: linear-gradient(145deg, #fff8e5, #e9d7b3); box-shadow: inset 0 0 0 2px rgba(255,255,255,.5); }
+
+/* The collection screen is the actual open Book: live cards rest across two parchment pages. */
+#screen-book.active {
+  min-height: 100vh;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse at 50% 8%, rgba(224,185,104,.2), transparent 48rem),
+    linear-gradient(rgba(11,28,20,.7), rgba(7,20,14,.9)),
+    url('../../assets/ui/borough-daylight.webp') center / cover fixed;
+}
+.book {
+  position: relative;
+  isolation: isolate;
+  max-width: 1500px;
+  min-height: 900px;
+  padding: clamp(90px, 9vw, 142px) clamp(64px, 9vw, 150px) 90px;
+  border: 0;
+  border-radius: 20px;
+  background:
+    linear-gradient(to bottom, transparent 0 760px, rgba(239,222,184,.94) 920px),
+    url('../../assets/ui/open-storybook-table.png') top center / 100% auto no-repeat,
+    #ead6aa;
+  box-shadow: 0 34px 90px rgba(0,0,0,.62);
+  animation: open-book calc(620ms * max(var(--fx-scale), .01)) cubic-bezier(.18,.85,.25,1) both;
+}
+.book::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 9%;
+  bottom: 3%;
+  left: 50%;
+  width: 3px;
+  background: linear-gradient(transparent, rgba(73,45,20,.22) 10%, rgba(255,255,255,.42) 48%, rgba(73,45,20,.18) 90%, transparent);
+  box-shadow: 8px 0 18px rgba(78,48,20,.08), -8px 0 18px rgba(78,48,20,.08);
+  pointer-events: none;
+}
+.book-head,
+.book-filters,
+.book-count,
+.book-grid,
+.book-more { position: relative; z-index: 1; }
+.book-head {
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(121,86,39,.32);
+}
+.book-grid { column-gap: clamp(22px, 3vw, 46px); row-gap: 32px; }
+
+/* The rules are presented on a literal open book, with live accessible HTML on the pages. */
+#howToPlayOverlay,
+#welcomeOverlay { background: rgba(8, 20, 15, .86); backdrop-filter: blur(8px); }
+#howToPlayOverlay .help-box,
+#welcomeOverlay .welcome-box {
+  position: relative;
+  width: min(1180px, 96vw);
+  max-width: 1180px;
+  min-height: min(760px, 92vh);
+  max-height: 94vh;
+  padding: clamp(74px, 10vw, 128px) clamp(70px, 11vw, 150px) clamp(64px, 8vw, 100px);
+  border: 0;
+  border-radius: 16px;
+  background: #e9d4a9 url('../../assets/ui/open-storybook-table.png') center / 100% 100% no-repeat;
+  box-shadow: 0 32px 90px rgba(0,0,0,.66);
+  animation: open-book calc(620ms * max(var(--fx-scale), .01)) cubic-bezier(.18,.85,.25,1) both;
+}
+@keyframes open-book {
+  from { opacity: 0; transform: perspective(1400px) rotateX(12deg) scale(.88); }
+  to { opacity: 1; transform: perspective(1400px) rotateX(0) scale(1); }
+}
+#howToPlayOverlay .help-box::after,
+#welcomeOverlay .welcome-box::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 10%;
+  bottom: 10%;
+  left: 50%;
+  width: 2px;
+  background: linear-gradient(transparent, rgba(83,51,23,.25) 20%, rgba(255,255,255,.48) 50%, rgba(83,51,23,.2) 80%, transparent);
+  pointer-events: none;
+}
+#howToPlayOverlay .help-box > *,
+#welcomeOverlay .welcome-box > * { position: relative; z-index: 1; }
+#howToPlayOverlay .help-box > h2 { color: #294634; text-align: center; }
+.help-tabs { justify-content: center; border-bottom-color: rgba(116,82,36,.3); }
+.help-tab { border-radius: 999px; }
+.help-tab.on { background: linear-gradient(#5f7d55, #385f43); color: #fff4d8; text-shadow: 0 1px #243b2a; }
+.help[role='tabpanel'] { animation: page-ink calc(280ms * max(var(--fx-scale), .01)) ease-out both; }
+@keyframes page-ink { from { opacity: 0; transform: translateX(8px); } }
+.faq-item,
+.welcome-col { background: rgba(255,249,229,.58); border-color: rgba(143,108,51,.52); box-shadow: 0 2px 7px rgba(75,50,20,.08); }
+
+/* Other dialogs borrow the same premium material treatment without forcing a book layout. */
+.overlay:not(#howToPlayOverlay):not(#welcomeOverlay) { backdrop-filter: blur(8px); }
+.overlay .box:not(.help-box):not(.welcome-box) {
+  border: 1px solid #b99657;
+  background: radial-gradient(ellipse at top, #fff8e7, #e8d6b1), var(--noise);
+  box-shadow: var(--ui-edge), 0 28px 80px rgba(0,0,0,.56);
+  animation: dialog-rise calc(360ms * max(var(--fx-scale), .01)) cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes dialog-rise { from { opacity: 0; transform: translateY(20px) scale(.97); } }
+.popover { border-color: #a98b53; box-shadow: var(--ui-edge), 0 16px 36px rgba(9,25,16,.3); }
+.full-art-gallery::backdrop { background: rgba(8,20,15,.9); backdrop-filter: blur(10px); }
+.full-art-gallery { animation: gallery-reveal calc(520ms * max(var(--fx-scale), .01)) ease-out both; }
+@keyframes gallery-reveal { from { opacity: 0; transform: translateY(18px); } }
+
+@media (max-width: 1080px) {
+  .table { padding: 10px; border-radius: 12px; }
+  .topbar { top: 4px; }
+}
+@media (max-width: 700px) {
+  #screen-game.active { padding: 8px; }
+  .table { padding: 6px; box-shadow: 0 0 0 2px #2f2418, 0 0 0 3px #b48d4d, 0 18px 36px rgba(4,14,9,.45); }
+  #howToPlayOverlay,
+  #welcomeOverlay { padding: 6px; align-items: flex-start; }
+  #howToPlayOverlay .help-box,
+  #welcomeOverlay .welcome-box {
+    width: 100%;
+    min-height: 0;
+    max-height: calc(100dvh - 12px);
+    margin-top: 0;
+    padding: 54px 30px 50px;
+    background-size: auto 100%;
+    background-position: center;
+  }
+  #howToPlayOverlay .help-box::after,
+  #welcomeOverlay .welcome-box::after { display: none; }
+  .welcome-landscape { margin-inline: 0; }
+  #screen-book.active { padding: 8px; }
+  .book {
+    min-height: 0;
+    padding: 64px 20px 48px;
+    border-radius: 12px;
+    background:
+      linear-gradient(rgba(247,234,205,.88), rgba(235,215,174,.94)),
+      url('../../assets/ui/open-storybook-table.png') top center / auto 720px no-repeat,
+      #ead6aa;
+  }
+  .book::after { display: none; }
+  button { min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ui-spark { display: none; }
+  .town-row-panel.active-turn,
+  .topbar .tb-phase.on,
+  .cc-head::after { animation: none !important; }
+}
