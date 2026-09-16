@@ -1,0 +1,14 @@
+; Engine configuration file.
+; This project exists to port the headless engine in src/engine/ (Animal Friends TCG)
+; to Godot 4 / GDScript, starting with a bit-for-bit parity check on the RNG.
+
+config_version=5
+
+[application]
+
+config/name="Animal Friends TCG - Godot Port"
+config/features=PackedStringArray("4.3")
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
