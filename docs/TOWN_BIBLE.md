@@ -484,6 +484,16 @@ add to the list.
   was being read. The borough has stopped trying to tell which of them is in which room, and Ned's
   shelf carries a figurine labelled DIRT that is unmistakably Squirt and has not been corrected in
   four years. [Dirt, Squirt]
+- **The Community Bonfire is one night a year on the far field**, and it is where this town does its
+  remembering: the year's broken pallets go on, and the animals who keep the records do the talking.
+  Ned brings the ward book, Lynnette brings the water-stained novels nobody has wanted since the
+  bridge went, and the other borough walks over the hill for it and is handed a chair. [town cards]
+- **The Car Show is held on market day and nobody has ever moved it.** The Fox on the dealership
+  forecourt opens it, the ledger animals make it add up, and both boroughs turn out — which is
+  exactly why it is held on the day the square is already full. [town cards]
+- **Passing Comets are announced in advance and the whole square goes out to lie on the cobbles.**
+  Somebody with a chart says when. Half the borough's best trades have been agreed flat on their
+  backs on a cold night, which is not an accident: nobody haggles well looking up. [town cards]
 - **Mildred has been at the Counting House counter for forty-one years and has never made an error.**
   Ned has checked, twice, unasked. She says no to a Mayor exactly as she says it to anybody else.
   [Mildred, Ned]
@@ -623,7 +633,7 @@ Characters the maker added to the shelf who replace no printed card. They carry 
 | Reese | The Raccoon pilot, added by the maker: no printed Reese, and no relation to Comet or Brook beyond all three having left the ground. | 2026-09-16 |
 | Mimi | The Rabbit who runs the cabin, added by the maker: no printed Mimi. She has one version in each of five studies and swaps between them freely, which is the point of her. | 2026-09-16 |
 | Mildred | The Badger at the Counting House counter, added by the maker: no printed Mildred. | 2026-09-16 |
-| The ten babies | Bunny, Baby Mouse, Badger Cub, Hoglet, Raccoon Kit, Fox Cub, Otter Pup, Squirrel Kit, Kitten and Owlet — one for every species, added by the maker. Like the obscured figures they carry an `anchor` rather than an ability, and unlike them they have names: they cost nothing, work three turns for one Supply, and count as 1 or 2 when an animal of their species is set over them. | 2026-09-16 |
+| The ten babies | Bunny, Baby Mouse, Badger Cub, Hoglet, Raccoon Kit, Fox Cub, Otter Pup, Squirrel Kit, Kitten and Owlet — one for every species, added by the maker. Like the obscured figures they carry an `anchor` rather than an ability, and unlike them they have names: they cost nothing, work three turns for one Supply, and count as 1 or 2 when an animal of their species is set over them. The ward counts a Baby Mouse, a Badger Cub, a Raccoon Kit, a Fox Cub and an Owlet at **two** — those five are the ones whose first season is held to be half the trade — and the rest at one. | 2026-09-16 |
 
 Cards may be additions too — an extra rung in a remade character's arc, an added character's own
 cards, or a card of a type the printed set never had. All twelve **Town Buildings** and all nineteen

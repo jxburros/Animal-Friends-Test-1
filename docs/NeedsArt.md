@@ -13,7 +13,7 @@ Each entry gives the card, the rules it has to depict, and the character and sto
 The full backstory for every named animal is in the set's `characters` list and shows in the
 Book's **Story** panel (`npm run serve` → Book).
 
-**63 cards waiting.**
+**64 cards waiting.**
 
 ## Baby Mouse
 
@@ -23,11 +23,11 @@ The Lending Library's lower shelves are at Baby Mouse height, which is how the b
 
 **Voice.** Very quiet, and then a fact nobody knew.
 
-**The arc.** The smallest post on the Mouse ladder, and one any Mouse in the borough may be written into afterwards.
+**The arc.** A Baby Mouse counts for two when a Mouse is set over them: a season on the lower shelves is half of what any Mouse in this borough can find.
 
 | Card | Cost | Kind | What it does | The scene |
 | --- | --- | --- | --- | --- |
-| **Baby Mouse**, Pup<br>[`mk_baby_mouse_pup_0`](https://github.com/jxburros/Animal-Friends-Test-1/blob/main/spec/maker_card_set.json#:~:text=mk_baby_mouse_pup_0) | 0 | Mouse · Lore | A very long shift: 3 turns, 1 Supply. Any Mouse costing more than 1 may be played over Baby Mouse as an upgrade, and pays as though Baby Mouse cost 1. | Lynnette found the missing year of Grain Exchange returns behind the atlases. Lynnette did not find them. A Baby Mouse found them and Lynnette carried them. |
+| **Baby Mouse**, Pup<br>[`mk_baby_mouse_pup_0`](https://github.com/jxburros/Animal-Friends-Test-1/blob/main/spec/maker_card_set.json#:~:text=mk_baby_mouse_pup_0) | 0 | Mouse · Lore | A very long shift: 3 turns, 1 Supply. Any Mouse costing more than 2 may be played over Baby Mouse as an upgrade, and pays as though Baby Mouse cost 2. | Lynnette found the missing year of Grain Exchange returns behind the atlases. Lynnette did not find them. A Baby Mouse found them and Lynnette carried them. |
 
 ## Badger Cub
 
@@ -82,11 +82,11 @@ Fox Cubs are not allowed inside the Auction House and every one of them knows wh
 
 **Voice.** Running commentary, pitched just loud enough to be overheard.
 
-**The arc.** The steps outside the room. Any Fox in the borough may be played over a Fox Cub, which is what walking through the door finally looks like.
+**The arc.** A Fox Cub counts for two when a Fox is set over them: the steps outside the room are half of what is ever taught about the room.
 
 | Card | Cost | Kind | What it does | The scene |
 | --- | --- | --- | --- | --- |
-| **Fox Cub**, Cub<br>[`mk_fox_cub_cub_0`](https://github.com/jxburros/Animal-Friends-Test-1/blob/main/spec/maker_card_set.json#:~:text=mk_fox_cub_cub_0) | 0 | Fox · Entertainment | A very long shift: 3 turns, 1 Supply. Any Fox costing more than 1 may be played over Fox Cub as an upgrade, and pays as though Fox Cub cost 1. | A Cub on the steps called the timber lot four rungs before the room did, to nobody, and has been insufferable ever since. |
+| **Fox Cub**, Cub<br>[`mk_fox_cub_cub_0`](https://github.com/jxburros/Animal-Friends-Test-1/blob/main/spec/maker_card_set.json#:~:text=mk_fox_cub_cub_0) | 0 | Fox · Entertainment | A very long shift: 3 turns, 1 Supply. Any Fox costing more than 2 may be played over Fox Cub as an upgrade, and pays as though Fox Cub cost 2. | A Cub on the steps called the timber lot four rungs before the room did, to nobody, and has been insufferable ever since. |
 
 ## Hoglet
 
@@ -96,11 +96,11 @@ Hoglets are put on the gate step, which is the safest place in the borough and a
 
 **Voice.** Polite, unhurried, and entirely unbudgeable.
 
-**The arc.** A Hoglet counts for two when a Hedgehog is set over them: a season on the step is half a warden's training and everybody at the gate knows it.
+**The arc.** A season on the gate step is where a Hedgehog learns the only thing Hedgehogs teach, and any Hedgehog in the borough may be played over a Hoglet afterwards.
 
 | Card | Cost | Kind | What it does | The scene |
 | --- | --- | --- | --- | --- |
-| **Hoglet**<br>[`mk_hoglet_hoglet_0`](https://github.com/jxburros/Animal-Friends-Test-1/blob/main/spec/maker_card_set.json#:~:text=mk_hoglet_hoglet_0) | 0 | Hedgehog · Civics | A very long shift: 3 turns, 1 Supply. Any Hedgehog costing more than 2 may be played over Hoglet as an upgrade, and pays as though Hoglet cost 2. | Bristle let one hold the gate for an afternoon as a joke. Two carters and a Fox turned round and came back with their paperwork. |
+| **Hoglet**<br>[`mk_hoglet_hoglet_0`](https://github.com/jxburros/Animal-Friends-Test-1/blob/main/spec/maker_card_set.json#:~:text=mk_hoglet_hoglet_0) | 0 | Hedgehog · Civics | A very long shift: 3 turns, 1 Supply. Any Hedgehog costing more than 1 may be played over Hoglet as an upgrade, and pays as though Hoglet cost 1. | Bristle let one hold the gate for an afternoon as a joke. Two carters and a Fox turned round and came back with their paperwork. |
 
 ## Hoot
 
@@ -220,11 +220,11 @@ The Salvage Yard has a shelf at knee height that nobody stocks and that is never
 
 **Voice.** Delighted, in detail, about something that was in a bin.
 
-**The arc.** The first rung of every Raccoon's ladder, and a post any Raccoon may be found standing in.
+**The arc.** A Raccoon Kit counts for two when a Raccoon is set over them: a season on the City Dump road is half of what any Raccoon in this borough knows.
 
 | Card | Cost | Kind | What it does | The scene |
 | --- | --- | --- | --- | --- |
-| **Raccoon Kit**, Kit<br>[`mk_raccoon_kit_kit_0`](https://github.com/jxburros/Animal-Friends-Test-1/blob/main/spec/maker_card_set.json#:~:text=mk_raccoon_kit_kit_0) | 0 | Raccoon · Commerce | A very long shift: 3 turns, 1 Supply. Any Raccoon costing more than 1 may be played over Raccoon Kit as an upgrade, and pays as though Raccoon Kit cost 1. | Pockets gave one a ha'penny for a doorknob with no door. It is still on the shelf. It is still, Pockets maintains, worth a ha'penny. |
+| **Raccoon Kit**, Kit<br>[`mk_raccoon_kit_kit_0`](https://github.com/jxburros/Animal-Friends-Test-1/blob/main/spec/maker_card_set.json#:~:text=mk_raccoon_kit_kit_0) | 0 | Raccoon · Commerce | A very long shift: 3 turns, 1 Supply. Any Raccoon costing more than 2 may be played over Raccoon Kit as an upgrade, and pays as though Raccoon Kit cost 2. | Pockets gave one a ha'penny for a doorknob with no door. It is still on the shelf. It is still, Pockets maintains, worth a ha'penny. |
 
 ## Reese
 
@@ -283,11 +283,11 @@ A Squirrel Kit is given a tin. That is the entire ceremony. What goes in the tin
 
 **Voice.** Counting under their breath, and not telling you the number.
 
-**The arc.** A Squirrel Kit counts for two when a Squirrel is set over them: the first winter with the tin is half the trade.
+**The arc.** The tin is the whole of the trade and the trade takes a lifetime, so the ward credits the first winter with nothing at all. Any Squirrel may be played over a Kit.
 
 | Card | Cost | Kind | What it does | The scene |
 | --- | --- | --- | --- | --- |
-| **Squirrel Kit**, Kit<br>[`mk_squirrel_kit_kit_0`](https://github.com/jxburros/Animal-Friends-Test-1/blob/main/spec/maker_card_set.json#:~:text=mk_squirrel_kit_kit_0) | 0 | Squirrel · Science | A very long shift: 3 turns, 1 Supply. Any Squirrel costing more than 2 may be played over Squirrel Kit as an upgrade, and pays as though Squirrel Kit cost 2. | Peanut's first tin is in the café office with the year scratched on the lid. It has four acorns in it. It has had four acorns in it since. |
+| **Squirrel Kit**, Kit<br>[`mk_squirrel_kit_kit_0`](https://github.com/jxburros/Animal-Friends-Test-1/blob/main/spec/maker_card_set.json#:~:text=mk_squirrel_kit_kit_0) | 0 | Squirrel · Science | A very long shift: 3 turns, 1 Supply. Any Squirrel costing more than 1 may be played over Squirrel Kit as an upgrade, and pays as though Squirrel Kit cost 1. | Peanut's first tin is in the café office with the year scratched on the lid. It has four acorns in it. It has had four acorns in it since. |
 
 ## Squirt
 
@@ -344,7 +344,8 @@ Teresa coaches the borough side and Teresa has no inside voice. What confuses an
 
 | Card | Cost | Kind | What it does | The scene |
 | --- | --- | --- | --- | --- |
-| **The Car Show**<br>[`mk_dx_car_show`](https://github.com/jxburros/Animal-Friends-Test-1/blob/main/spec/maker_card_set.json#:~:text=mk_dx_car_show) | 0 | Shared weather | On reveal: each Mayor may recruit up to 3 Characters from their hand for free. Goes to the City Dump. | Bunting across the square, the dealership's brass bell going all afternoon, and both boroughs walking home with something. Nobody remembers agreeing to hold it on the same day as the market and nobody has ever moved it. |
-| **Meteor Shower**<br>[`mk_dx_meteor_shower_watch`](https://github.com/jxburros/Animal-Friends-Test-1/blob/main/spec/maker_card_set.json#:~:text=mk_dx_meteor_shower_watch) | 0 | Shared weather | On reveal: each Mayor searches their deck for up to 2 cards, shows them, takes them into hand and shuffles. Goes to the City Dump. | Everybody is outside and looking up, which means everybody is also, quietly, going and fetching the one card they have been waiting on. Sage counts them aloud. Nobody has ever pretended not to have seen what the other town came back with. |
+| **The Car Show**<br>[`mk_car_show`](https://github.com/jxburros/Animal-Friends-Test-1/blob/main/spec/maker_card_set.json#:~:text=mk_car_show) | 0 | Event | Requires a Fox and a Commerce Character. Each Mayor may recruit up to 2 Characters from their hand for free. | Bunting across the square, the dealership's brass bell going all afternoon, and both boroughs walking home with something. It is the Fox on the forecourt who opens it and the ledger animals who make it add up, and nobody remembers agreeing to hold it on the same day as the market — but the other town turns out in numbers, every year, and that is rather the point of it. |
+| **Passing Comets**<br>[`mk_passing_comets`](https://github.com/jxburros/Animal-Friends-Test-1/blob/main/spec/maker_card_set.json#:~:text=mk_passing_comets) | 0 | Event | Requires a Science Character. Each Mayor searches their deck for up to 2 cards, shows them, takes them into hand and shuffles. | Somebody with a chart says when, and by ten the whole square is out on its back looking up — which means everybody is also, quietly, going and fetching the one card they have been waiting on. Sage counts them aloud. Nobody has ever pretended not to have seen what the other town came back with, and half the borough's best trades have been agreed lying on the cobbles. |
+| **The Community Bonfire**<br>[`mk_community_bonfire`](https://github.com/jxburros/Animal-Friends-Test-1/blob/main/spec/maker_card_set.json#:~:text=mk_community_bonfire) | 0 | Event | Requires a Lore Character. Each Mayor draws 1 card. Then draw 1 more for each Lore Character in your town, up to 3. | One night a year the borough burns the year's broken pallets on the far field and the animals who keep the records do the talking, because a bonfire is where this town has always done its remembering. Ned brings the ward book. Lynnette brings the water-stained novels nobody has wanted since the bridge went. The other town walks over the hill for it and is handed a chair, and everybody goes home knowing something they did not. |
 | **Cheese Festival**<br>[`mk_cheese_festival`](https://github.com/jxburros/Animal-Friends-Test-1/blob/main/spec/maker_card_set.json#:~:text=mk_cheese_festival) | 0 | Event | Requires a Badger and a Mouse. Gain 4 Supply and take an Event from your Town Dump into your hand. | The cold room is emptied onto trestles for one weekend and the two species who actually care about it run the whole thing between them: the Badgers carry and the Mice do the paperwork, and the paperwork is why it has happened every year without fail since anybody can remember. |
 

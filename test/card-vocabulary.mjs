@@ -42,7 +42,8 @@ export const EFFECTS = new Set([
   'everyoneLosesPercentSupply',
   // the seventh round (docs/ENGINE_API.md): the twins' trick, the counter that takes Supply back
   // over it, the animal let go by her own Mayor, the rival's hand burnt rather than reordered, and
-  // the two shared shocks the fair and the falling stars asked for
+  // and the two shared verbs the fair and the falling stars asked for — both on deck Events, not
+  // Disruptions: a card a Mayor chooses to play and that moves both towns is the interactive shape
   'swapWithHand', 'paySupply', 'unemployOwnCharacter', 'opponentDiscards',
   'everyoneRecruitsFree', 'everyoneSearchesDeck',
 ]);

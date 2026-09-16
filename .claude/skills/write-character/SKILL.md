@@ -33,7 +33,9 @@ Then read, in this order:
   `wantedVerbs` and build the nearest thing from verbs that exist.
 - Every Character card needs a `characters` entry behind it, and every entry needs cards. `npm test`
   fails either way round, because the Book's Story panel would have nothing to show.
-- Two versions of one character never share a cost: a shared cost means neither can upgrade the other.
+- A character with more than one version needs at least two different costs, or nothing there
+  upgrades anything. Sharing a cost is **guidance**, not a rule: fill the empty costs first, and
+  do not double up inside one study — across studies a repeated cost is a fork in the career.
 - **Never hand-write `rarity` or `power`** — `npm run stamp` computes them.
 - Every card's `flavor` references the backstory and could not belong to any other character.
 

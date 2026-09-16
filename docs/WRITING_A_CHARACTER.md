@@ -154,9 +154,21 @@ place in the new arc or leaves the file with it. Say in the commit which went an
 dropped is a normal outcome, not a failure, and the commit message is where that is recorded now that
 no card carries a link to what it replaced.
 
-Two rules survive from the schema itself and `npm test` enforces both: an id is never reused, and two
-versions of one character never share a cost, because a shared cost means neither can upgrade the
-other.
+Two rules survive from the schema itself and `npm test` enforces both: an id is never reused, and a
+character with more than one version has at least two different costs on the shelf, because
+otherwise no version of them can ever upgrade another.
+
+**Sharing a cost is guidance, not a rule.** Two versions at the same cost cannot upgrade each other
+— that is simply what `upgradesOver` says — and for most characters that makes a duplicate cost a
+waste of a rung. But a character who works two trades at once is a real shape, and the ward does not
+care that both posts happen to pay the same. So:
+
+- **Fill the empty costs first.** A character with four versions should normally be on four different
+  costs before any cost is used twice.
+- **Do not double up inside one study.** Two cost-2 cards in the same study are two cards doing the
+  same job at the same rung, which is the case where the duplicate really is wasted. Across studies
+  it is a fork in the career, not a repeat: a cost-2 in Civics and a cost-2 in Crafts are a choice.
+- Say in the commit why a cost is doubled, the same way you say what was dropped.
 
 ---
 
@@ -347,7 +359,8 @@ are — and the batch now rates 2.95 / 3.60 / 5.69 / 5.14 / 5.08. No creep, and 
 
 - **Do not change `src/engine/`** in a writing batch. New verbs are separate, approved work.
 - **Do not hand-write `rarity` or `power`.** `npm run stamp` owns them.
-- **Do not reuse a card id**, and do not give two versions of one character the same cost.
+- **Do not reuse a card id**, and do not leave a character whose every version costs the same —
+  nothing there upgrades anything. A cost used twice is guidance (§4), not a do-not.
 - **Do not leave a Character card without a `characters` entry** — the Book has nothing to show for it.
 - **Do not widen the request.** If the maker asks for Peanut, write Peanut; note anything else you
   noticed rather than fixing it.

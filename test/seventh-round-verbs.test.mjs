@@ -146,6 +146,22 @@ test('opponentShiftPenalty takes Supply off the other town’s shifts and never 
 
 // -------------------------------------------------- the rest of the round, briefly
 
+test('draw per counts only the animals the filter names — the bonfire counts the Lore animals', async () => {
+  const state = stage();
+  addStack(state, 0, 'mk_owlet_owlet_0', UPRIGHT);      // Lore
+  addStack(state, 0, 'mk_baby_mouse_pup_0', UPRIGHT);   // Lore
+  addStack(state, 0, 'mk_kitten_kitten_0', UPRIGHT);    // Entertainment
+  const held = state.players[0].hand.length;
+  await runEffect(state, 0, { do: 'draw', per: 'charactersInTown', filter: { study: 'Lore' }, count: 1, max: 3 }, { player: 0 });
+  assert.equal(state.players[0].hand.length, held + 2, 'two record-keepers by the fire, and the Kitten is not one');
+
+  const none = stage();
+  addStack(none, 0, 'mk_kitten_kitten_0', UPRIGHT);
+  const before = none.players[0].hand.length;
+  await runEffect(none, 0, { do: 'draw', per: 'charactersInTown', filter: { study: 'Lore' }, count: 1, max: 3 }, { player: 0 });
+  assert.equal(none.players[0].hand.length, before, 'nobody to do the talking, nothing drawn');
+});
+
 test('gainSupply per counts the town, and honours its printed ceiling', async () => {
   const state = stage();
   addStack(state, 0, 'mk_kitten_kitten_0', UPRIGHT);

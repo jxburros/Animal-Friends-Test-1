@@ -122,6 +122,14 @@ const EXPECTED_CHARACTERS = 3;
 /** And how many of those three are on their feet rather than mid-shift when a card asks. */
 const EXPECTED_UPRIGHT = 2;
 
+/**
+ * What share of a town a `per` count keeps once it is narrowed to one study or one species. Eight
+ * studies and ten species, but a deck is built around one or two of each, so a town is far more
+ * concentrated than an even split would suggest: about a third of it answers to any one name the
+ * deck was built around, and none of it to a name the deck was not.
+ */
+const FILTERED_SHARE = 0.4;
+
 /** What one of a town's finite slots costs, dearer the tighter the cap. Uncapped, a slot is cheap. */
 function townSlotCost(rules) {
   const cap = rules?.town?.maxCharacters;
@@ -323,6 +331,23 @@ function conditionFactor(condition) {
   return named ? Math.max(0.35, factor * 0.55) : factor;
 }
 
+/**
+ * How many heads a `per` effect is rated on.
+ *
+ * Bodies in the town and bodies on their feet are not the same count: a town holds about three
+ * Characters while a game is being decided and has about two of them upright at any moment, because
+ * the rest are working. A `filter` narrows it further — a card that counts only the Lore animals in
+ * a town is counting rather less than one that counts all of them, and how much less is how much of
+ * the shelf that filter actually covers.
+ */
+function perScale(eff, rateKey) {
+  const heads = eff.per === 'uprightCharacters' ? EXPECTED_UPRIGHT : EXPECTED_CHARACTERS;
+  const narrowed = eff.filter && (eff.filter.study || eff.filter.species) ? FILTERED_SHARE : 1;
+  const rate = eff[rateKey] === undefined ? 1 : eff[rateKey];
+  const scaled = rate * heads * narrowed;
+  return eff.max === undefined ? scaled : Math.min(scaled, eff.max);
+}
+
 /** What one effect is worth the single time it resolves. */
 export function effectPower(eff) {
   if (!eff || !eff.do) return 0;
@@ -331,23 +356,16 @@ export function effectPower(eff) {
     case 'seq':
       return (eff.steps || []).reduce((a, s) => a + effectPower(s), 0);
     case 'gainSupply':
-      // `per` counts the town rather than printing a number. A town on the board has about three
-      // Characters standing in it most of the game, which is what a card that pays by the head is
-      // really printing; `max` is a real ceiling and is honoured, so a scaling gain has to print one.
-      if (eff.per) {
-        // Bodies in the town and bodies on their feet are not the same count: a town holds about
-        // three Characters while a game is being decided and has about two of them upright at any
-        // moment, because the rest are working. A stall that pays by who is standing pays less.
-        const heads = eff.per === 'uprightCharacters' ? EXPECTED_UPRIGHT : EXPECTED_CHARACTERS;
-        const scaled = (eff.amount === undefined ? 1 : eff.amount) * heads;
-        return eff.max === undefined ? scaled : Math.min(scaled, eff.max);
-      }
+      // `per` counts the town rather than printing a number, and `max` is a real ceiling, so a
+      // scaling gain has to print one or it cannot be rated.
+      if (eff.per) return perScale(eff, 'amount');
       return n(eff.amount);
     case 'opponentGainSupply':
       return -0.6 * n(eff.amount);
     case 'giveSupplyToOpponent':
       return -1.4 * n(eff.amount);
     case 'draw':
+      if (eff.per) return DRAW * perScale(eff, 'count');
       return DRAW * n(eff.count);
     case 'discard':
       return -0.9 * n(eff.count);
@@ -791,7 +809,15 @@ export function cardPower(card, rules) {
   // difference, so the card buys an upgrade path a cheap body does not normally have: a saved action
   // and a body the town cap never has to find room for twice. A study anchor reaches further than a
   // species one, because a study is what an animal does and half the shelf does each of them.
-  if (card.anchor) power += card.anchor.study ? 1.5 : 1.2;
+  if (card.anchor) {
+    power += card.anchor.study ? 1.5 : 1.2;
+    // `anchor.asCost` is what the ward counts the post as worth, and it is money: an animal played
+    // over a figure counted at 2 pays two Supply less than one played over a figure counted at
+    // nothing. It is only worth it on the turn somebody actually is played over them, which is why
+    // it is rated well under face value — but it is the whole reason a maker sets it to 2 rather
+    // than 1, so the model has to be able to see the difference.
+    if (typeof card.anchor.asCost === 'number') power += 0.6 * card.anchor.asCost;
+  }
   // A held Event waits in hand for the turn that suits it, and asks for no Characters when it comes
   // down. Playing the same effect exactly when you want it is worth more than playing it on reveal.
   if (card.hold) power *= 1.12;

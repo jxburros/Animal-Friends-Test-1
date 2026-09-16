@@ -439,6 +439,25 @@ function conditionHolds(state, pi, src, cond, ctx) {
   return true;
 }
 
+/**
+ * How much a card that counts the town is actually worth this time it fires.
+ *
+ * `per` says what is being counted — `charactersInTown` is every body in the town, working or not,
+ * `uprightCharacters` only who is on their feet — and a `filter` narrows it to the animals the card
+ * is about (the bonfire counts the Lore animals and nobody else). `max` is a real ceiling, and a
+ * scaling effect has to print one or the card cannot be rated. The rate itself is the effect's own
+ * amount (`amount` for Supply, `count` for cards), defaulting to one apiece.
+ */
+export function perAmount(state, pi, eff, rateKey = 'amount') {
+  const p = state.players[pi];
+  const pool = eff.per === 'uprightCharacters' ? p.town.filter((st) => st.orientation === UPRIGHT)
+    : eff.per === 'charactersInTown' ? p.town : [];
+  const heads = pool.filter((st) => matchesFilter(state, st, eff.filter)).length;
+  const rate = eff[rateKey] === undefined ? 1 : eff[rateKey];
+  const total = rate * heads;
+  return eff.max === undefined ? total : Math.min(total, eff.max);
+}
+
 export function matchesFilter(state, stack, f = {}) {
   const def = topCard(state, stack);
   if (f.name && def.name !== f.name) return false; // a specific Character, whichever version is on top
@@ -470,17 +489,7 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       for (const step of eff.steps) await runEffect(state, pi, step, ctx);
       return;
     case 'gainSupply': {
-      // `per` is the market stall's count: the takings are not a flat handful, they are what the
-      // animals standing in the town actually brought in. `charactersInTown` counts every body in
-      // the town, working or not; `uprightCharacters` counts only who is on their feet. `max` is a
-      // real ceiling and a scaling gain has to print one, or the card cannot be rated.
-      let amount = eff.amount;
-      if (eff.per) {
-        const per = eff.per === 'charactersInTown' ? p.town.length
-          : eff.per === 'uprightCharacters' ? p.town.filter((st) => st.orientation === UPRIGHT).length : 0;
-        amount = (eff.amount === undefined ? 1 : eff.amount) * per;
-        if (eff.max !== undefined) amount = Math.min(amount, eff.max);
-      }
+      const amount = eff.per ? perAmount(state, pi, eff) : eff.amount;
       if (!amount) return;
       gainSupply(state, pi, amount, ctx.sourceCardId ? cardDef(state, ctx.sourceCardId).name : '');
       return;
@@ -515,9 +524,12 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       if (eff.then) await runEffect(state, pi, eff.then, ctx);
       return;
     }
-    case 'draw':
-      draw(state, pi, eff.count, ctx.sourceCardId ? cardDef(state, ctx.sourceCardId).name : '');
+    case 'draw': {
+      const count = eff.per ? perAmount(state, pi, eff, 'count') : eff.count;
+      if (!count) return;
+      draw(state, pi, count, ctx.sourceCardId ? cardDef(state, ctx.sourceCardId).name : '');
       return;
+    }
     case 'discard':
       await discard(state, pi, eff.count);
       return;

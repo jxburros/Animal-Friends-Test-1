@@ -540,21 +540,35 @@ in `src/engine/power.js`, and spoken by at least one card in `spec/maker_card_se
   card still chooses who, and it is priced as a cost, because helping the animal across the table is
   help. Shay is the only card in the collection that reaches both ways in one breath.
 
-- **`gainSupply` with `per`** — `charactersInTown` or `uprightCharacters`, with a `max` that a
-  scaling gain must print or the card cannot be rated. The Farmer's Market pays what the borough
-  actually brought.
+- **`per` on `gainSupply` and on `draw`** — `charactersInTown` or `uprightCharacters`, an optional
+  `filter` (the Community Bonfire counts the Lore animals and nobody else), and a `max` that a
+  scaling effect must print or the card cannot be rated. One counter, `perAmount` in `effects.js`,
+  read by both verbs. The Farmer's Market pays what the borough actually brought; the Bonfire draws
+  by who is doing the talking.
 
 - **`opponentShiftPenalty`** — a `passive` key, and the first standing rate in the collection that
   makes a shift pay *less*. Read off the rival's town in `completeShift`, never takes a shift below
   nothing, and stops when whoever carries it sits down. Mildred is the whole of its use.
 
-- **`everyoneRecruitsFree` and `everyoneSearchesDeck`** — two shared shocks in the existing mould,
-  each looping `runEffect` over both Mayors: the Car Show opens both forecourts, the Meteor Shower
-  sends both towns to their own decks and shuffles both afterwards.
+- **`everyoneRecruitsFree` and `everyoneSearchesDeck`** — each loops `runEffect` over both Mayors:
+  the Car Show opens both forecourts, Passing Comets sends both towns to their own decks and
+  shuffles both afterwards. They are the first `everyone*` verbs to sit on **deck Events** rather
+  than Disruptions, which is the point of them: a shared shock is weather nobody chose, and a deck
+  Event that moves both towns is a Mayor choosing to open the afternoon to the other borough. Both
+  name requirements like any other Event, so they are paid for in bodies rather than dealt.
 
-One more thing changed that is not a verb: `matchesFilter` gained `minCost`, the other end of the
+- **`anchor.asCost` is priced.** `power.js` adds `0.6` a point on top of the flat anchor bonus,
+  because a figure counted at 2 makes every upgrade over them two Supply cheaper. It is well under
+  face value — it only pays on the turn somebody is actually played over them — but the difference
+  between a 1 and a 2 is the whole reason a maker sets one, so the model has to see it.
+
+Two more things changed that are not verbs. `matchesFilter` gained `minCost`, the other end of the
 rule `maxCost` was already half of, so an ability can be written for the dear animals rather than the
-cheap ones (JT's juice list is read to a Master).
+cheap ones (JT's juice list is read to a Master). And **two versions of one character may now share
+a cost**: the rule is only that a character with more than one version has at least two different
+costs among them, or nothing there upgrades anything. Sharing a cost is guidance now —
+`docs/WRITING_A_CHARACTER.md` §4 — because a character who works two trades at once is a real shape
+and the ward does not care that both posts pay the same.
 
 The cards these were built for carry no `wantedVerbs`: the maker's instruction for this batch was to
 build what the writing needed rather than log it, so the list is empty and the round is the record.
