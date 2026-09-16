@@ -53,6 +53,19 @@ const ALTERNATE_ART_IDS = Object.freeze([
   'mk_daniel_canal_cartographer_2', 'mk_hibiscus_night_mail_2',
   'mk_benjamin_wick_trimmer_0', 'mk_sage_night_assistant_0',
   'mk_sota_telescope_fitter_3', 'mk_faustus_sailmaker_3', 'mk_bld_festival_green',
+  'mk_peanut_accountant_2', 'mk_berry_engineer_3', 'mk_biff_cadet_constable_0',
+  'mk_brooke_dock_hand_1', 'mk_betty_whittler_1', 'mk_clover_market_gardener_2',
+  'mk_rosabeth_tincture_maker_2', 'mk_bella_field_scientist_1', 'mk_finn_peddler_1',
+  'mk_hazel_market_vendor_2', 'mk_inkwell_bookmark_keeper_1', 'mk_juniper_messenger_1',
+  'mk_lynnette_lending_librarian_3', 'mk_taco_cart_cook_1',
+  'mk_quill_orchard_keeper_2', 'mk_eric_best_farmer_5', 'mk_bean_barista_3',
+  'mk_bean_proprietor_5', 'mk_comet_test_pilot_3', 'mk_copper_scale_polisher_1',
+  'mk_inkwell_astronomer_4', 'mk_juniper_courier_captain_2',
+  'mk_lynnette_night_printer_0', 'mk_andrew_night_copyist_0',
+  'mk_orien_survey_computer_4', 'mk_patch_junkyard_diver_0',
+  'mk_scott_story_collector_0', 'mk_lindsay_glasshouse_hand_2',
+  'mk_hibiscus_mail_coach_driver_4', 'mk_earl_coffee_roaster_3',
+  'mk_jessica_song_leader_0', 'mk_benjamin_lantern_maker_2',
 ]);
 const alternateArtIds = new Set(ALTERNATE_ART_IDS);
 
@@ -99,7 +112,7 @@ test('the commissioned alternate-art cards are offered and point to bundled pain
     assert.equal(hasVersion(card, 'alternateArtFoil'), false, `${card.id} alternateArtFoil`);
     assert.equal(hasVersion(card, 'creativeFoil'), false, `${card.id} creativeFoil`);
   }
-  assert.equal(alternateArtIds.size, 96);
+  assert.equal(alternateArtIds.size, 128);
   assert.ok(versionAssetUrl('mk_clover_master_botanist_5', 'alternateArt').endsWith('/assets/art/versions/mk_clover_master_botanist_5/alternateArt.png'));
 });
 
@@ -144,4 +157,9 @@ test('asking for a printing changes the art, and asking for none changes nothing
   );
   assert.match(impressionistSvg, /alternate-impressionist-light-across-town-atlas\.png/);
   assert.match(impressionistSvg, /x="-300" y="-300" width="400" height="400"/);
+
+  const cutPaper = SET.cards.find((c) => c.id === 'mk_benjamin_lantern_maker_2');
+  const cutPaperSvg = paintedArtSVG(cutPaper, '<svg data-fallback="cut-paper"/>', 'alternateArt');
+  assert.match(cutPaperSvg, /alternate-cut-paper-night-shift-atlas\.png/);
+  assert.match(cutPaperSvg, /x="-300" y="-300" width="400" height="400"/);
 });

@@ -74,6 +74,11 @@ const IMPRESSIONIST_ALT_ATLASES = Object.freeze({
   lightAcrossTown: new URL('../../assets/art/alternate-impressionist-light-across-town-atlas.png', import.meta.url).href,
 });
 
+const CUT_PAPER_ALT_ATLASES = Object.freeze({
+  dayShift: new URL('../../assets/art/alternate-cut-paper-day-shift-atlas.png', import.meta.url).href,
+  nightShift: new URL('../../assets/art/alternate-cut-paper-night-shift-atlas.png', import.meta.url).href,
+});
+
 function inkAlternate(atlas, tile, other = {}) {
   return Object.freeze({ alternateArt: `${INK_ALT_ATLASES[atlas]}#tile=${tile}`, ...other });
 }
@@ -84,6 +89,10 @@ function retroAlternate(atlas, tile, other = {}) {
 
 function impressionistAlternate(atlas, tile, other = {}) {
   return Object.freeze({ alternateArt: `${IMPRESSIONIST_ALT_ATLASES[atlas]}#tile=${tile}`, ...other });
+}
+
+function cutPaperAlternate(atlas, tile, other = {}) {
+  return Object.freeze({ alternateArt: `${CUT_PAPER_ALT_ATLASES[atlas]}#tile=${tile}`, ...other });
 }
 
 /**
@@ -198,10 +207,46 @@ export const PRINTINGS = Object.freeze({
   mk_faustus_sailmaker_3: impressionistAlternate('lightAcrossTown', 14),
   mk_bld_festival_green: impressionistAlternate('lightAcrossTown', 15),
 
+  // 1950s Cut-Paper alternate-art collection. Crisp geometric collage, deliberately offset
+  // screenprint color and small visual jokes interpret the cards' flavor rather than their regular
+  // compositions. See docs/ALTERNATE_CUT_PAPER.md for the row-major atlas maps.
+  mk_peanut_accountant_2: cutPaperAlternate('dayShift', 0),
+  mk_berry_engineer_3: cutPaperAlternate('dayShift', 1),
+  mk_biff_cadet_constable_0: cutPaperAlternate('dayShift', 2),
+  mk_brooke_dock_hand_1: cutPaperAlternate('dayShift', 3),
+  mk_betty_whittler_1: cutPaperAlternate('dayShift', 4),
+  mk_clover_market_gardener_2: cutPaperAlternate('dayShift', 5),
+  mk_rosabeth_tincture_maker_2: cutPaperAlternate('dayShift', 6),
+  mk_bella_field_scientist_1: cutPaperAlternate('dayShift', 7),
+  mk_finn_peddler_1: cutPaperAlternate('dayShift', 8, { foil: true }),
+  mk_hazel_market_vendor_2: cutPaperAlternate('dayShift', 9),
+  mk_inkwell_bookmark_keeper_1: cutPaperAlternate('dayShift', 10),
+  mk_juniper_messenger_1: cutPaperAlternate('dayShift', 11),
+  mk_lynnette_lending_librarian_3: cutPaperAlternate('dayShift', 12),
+  mk_taco_cart_cook_1: cutPaperAlternate('dayShift', 13),
+  mk_quill_orchard_keeper_2: cutPaperAlternate('dayShift', 14),
+  mk_eric_best_farmer_5: cutPaperAlternate('dayShift', 15),
+
+  mk_bean_barista_3: cutPaperAlternate('nightShift', 0),
+  mk_bean_proprietor_5: cutPaperAlternate('nightShift', 1),
+  mk_comet_test_pilot_3: cutPaperAlternate('nightShift', 2),
+  mk_copper_scale_polisher_1: cutPaperAlternate('nightShift', 3, { foil: true }),
+  mk_inkwell_astronomer_4: cutPaperAlternate('nightShift', 4),
+  mk_juniper_courier_captain_2: cutPaperAlternate('nightShift', 5),
+  mk_lynnette_night_printer_0: cutPaperAlternate('nightShift', 6),
+  mk_andrew_night_copyist_0: cutPaperAlternate('nightShift', 7),
+  mk_orien_survey_computer_4: cutPaperAlternate('nightShift', 8),
+  mk_patch_junkyard_diver_0: cutPaperAlternate('nightShift', 9, { foil: true }),
+  mk_scott_story_collector_0: cutPaperAlternate('nightShift', 10),
+  mk_lindsay_glasshouse_hand_2: cutPaperAlternate('nightShift', 11),
+  mk_hibiscus_mail_coach_driver_4: cutPaperAlternate('nightShift', 12),
+  mk_earl_coffee_roaster_3: cutPaperAlternate('nightShift', 13),
+  mk_jessica_song_leader_0: cutPaperAlternate('nightShift', 14, { foil: true }),
+  mk_benjamin_lantern_maker_2: cutPaperAlternate('nightShift', 15, { foil: true }),
+
   mk_beck_bylaw_reader_1: Object.freeze({ foil: true }),
   mk_clover_seedling_helper_0: inkAlternate('kindness', 2, { foil: true }),
   mk_earl_tea_trader_2: Object.freeze({ foil: true }),
-  mk_benjamin_lantern_maker_2: Object.freeze({ foil: true }),
   mk_velvet_counter_clerk_1: Object.freeze({ foil: true }),
   mk_moss_rehiring_day: inkAlternate('kindness', 8, { foil: true }),
   mk_comet_astronaut_5: inkAlternate('ambitions', 3, { foil: true }),
@@ -221,7 +266,6 @@ export const PRINTINGS = Object.freeze({
   mk_cookie_winter_stores_cook_3: Object.freeze({ foil: true }),
   mk_daniel_star_charter_3: inkAlternate('ambitions', 7, { foil: true }),
   mk_faustus_bolt_boy_0: Object.freeze({ foil: true }),
-  mk_finn_peddler_1: Object.freeze({ foil: true }),
   mk_hazel_guildmaster_3: Object.freeze({ foil: true }),
   mk_lindsay_potting_helper_0: Object.freeze({ foil: true }),
 
@@ -230,7 +274,6 @@ export const PRINTINGS = Object.freeze({
   // Ten of the cutest cards, given artwork foil.
   mk_osh_sharpener_s_boy_0: Object.freeze({ foil: true }),
   mk_marmalade_dough_kneader_1: Object.freeze({ foil: true }),
-  mk_jessica_song_leader_0: Object.freeze({ foil: true }),
   mk_quill_orchard_hand_0: Object.freeze({ foil: true }),
   mk_lindsay_herb_grower_3: Object.freeze({ foil: true }),
   mk_cookie_biscuit_maker_0: Object.freeze({ foil: true }),
@@ -240,7 +283,6 @@ export const PRINTINGS = Object.freeze({
   mk_yellow_freshest_thing_4: Object.freeze({ foil: true }),
   mk_dx_solar_eclipse: Object.freeze({ foil: true }),
   mk_moss_rocketwright_4: Object.freeze({ foil: true }),
-  mk_patch_junkyard_diver_0: Object.freeze({ foil: true }),
 
   // Ten of the most underrated cards, given full-card foil.
   mk_cassadee_the_only_one_at_the_back_1: Object.freeze({ foil: true }),
@@ -255,7 +297,6 @@ export const PRINTINGS = Object.freeze({
   // Five cards with a detail worth shining, given a masked detail foil.
   mk_sage_astronomer_3: Object.freeze({ foil: true }),
   mk_liz_weighbridge_keeper_4: Object.freeze({ foil: true }),
-  mk_copper_scale_polisher_1: Object.freeze({ foil: true }),
   mk_mandee_weather_watcher_2: Object.freeze({ foil: true }),
 });
 
