@@ -55,14 +55,14 @@ test('the shelf quarries more virtues than a game raises, and deals its Capital 
 
 test('the Capital Cities are different places, and each can fill its own market', () => {
   const byId = new Map(MAKER.cards.map((c) => [c.id, c]));
-  const fair = MAKER.marketDecks.find((m) => m.id === 'mk-founders-fair');
-  const winter = MAKER.marketDecks.find((m) => m.id === 'mk-lean-winter');
-  assert.ok(fair && winter, 'the Fair and the Winter are both on the shelf');
+  const fair = MAKER.marketDecks.find((m) => m.id === 'mk-grand-exchange');
+  const winter = MAKER.marketDecks.find((m) => m.id === 'mk-hard-frost');
+  assert.ok(fair && winter, 'the Exchange and the Frost are both on the shelf');
   const isShock = (id) => byId.get(id)?.type === 'disruption';
   const weather = (spec) => spec.pool.filter(isShock).length;
-  // The Fair is a good year and the Winter is a bad one: the weather is most of the difference.
-  assert.ok(winter.minDisruptions > fair.minDisruptions, 'the Winter deals more shared weather than the Fair');
-  // The pools are not required to be disjoint. The Founders' Fair quarries the whole catalogue on
+  // The Exchange is a good year and the Frost is a bad one: the weather is most of the difference.
+  assert.ok(winter.minDisruptions > fair.minDisruptions, 'the Frost deals more shared weather than the Exchange');
+  // The pools are not required to be disjoint. The Grand Exchange quarries the whole catalogue on
   // purpose — it is the market to play to meet everything — so what makes a market its own place is
   // that it holds something the others do not and leaves out something they have.
   for (const spec of MAKER.marketDecks) {

@@ -21,13 +21,13 @@ The design answers five questions the game did not previously have answers to:
   avatar: { cardId: 'mk_clover_seedling_helper_0', printing: 'foil' },
   sandbox: false,
   createdAt: 1757900000000,
-  starterDeckId: 'mk-tin-tally',
+  starterDeckId: 'mk-cache-kitchen',
   coins: 240,
   packs: 2,                       // earned, still sealed
   inventory: {                    // cardId -> printing -> how many
     mk_beck_bylaw_reader_1: { regular: 2, foil: 1 },
   },
-  decks: ['mk-tin-tally'],        // printed decks unlocked
+  decks: ['mk-cache-kitchen'],        // printed decks unlocked
   customDecks: [{ id, name, list, printings }],
   stats: { played: 12, won: 7, lost: 5, packsOpened: 9 },
   history: [{ at, won, deckId, deckName, opponentDeckId, marketId, turns, seed }],

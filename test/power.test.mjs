@@ -238,12 +238,20 @@ test('rarity governs deck building', async (t) => {
   await t.test('the decks lean on Commons and are sparing with the rest', () => {
     for (const deck of SET.decks) {
       const copies = (r) => Object.entries(deck.list).reduce((a, [id, n]) => a + (byId[id].rarity === r ? n : 0), 0);
-      // A printed deck holds at most one copy of any Super Rare (the deck rule) and at most five of
-      // them in all. Five rather than the old three because copies and cards are no longer the same
-      // count: a printed deck now takes two of anything at most, so three Super Rare *copies* used
-      // to be as few as one card, and the point of the cap was never to make the deck dull.
-      const top = copies('Super Rare') + copies('Legendary');
-      assert.ok(top <= 5, `${deck.id}: ${top} copies of Super Rare or Legendary cards`);
+      // What a printed deck may repeat: two of a Common or an Uncommon, one of anything rarer. The
+      // deck rules are looser than this (four of a Common, three of an Uncommon, two of a Rare) —
+      // the printed decks are tighter on purpose, so that forty cards are twenty-five-odd different
+      // ones and a game of a deck is not the same four cards in a different order.
+      for (const [id, n] of Object.entries(deck.list)) {
+        const printedCap = ['Common', 'Uncommon'].includes(byId[id].rarity) ? 2 : 1;
+        assert.ok(n <= printedCap, `${deck.id}: ${n} copies of ${id} (${byId[id].rarity})`);
+      }
+      // And two Legendaries to a town, which the one-copy rule above already makes two different
+      // ones. Ten cards in the collection beat everything of their own cost by a clear margin: a
+      // town has a couple of them to build towards rather than being made of them.
+      const legends = Object.entries(deck.list).filter(([id, n]) => n > 0 && byId[id].rarity === 'Legendary');
+      assert.ok(legends.length <= 2, `${deck.id}: ${legends.length} Legendaries`);
+      assert.equal(new Set(legends.map(([id]) => id)).size, legends.length, `${deck.id} repeats a Legendary`);
       assert.ok(copies('Common') + copies('Uncommon') >= 15, `${deck.id} should be built on its commons`);
     }
   });

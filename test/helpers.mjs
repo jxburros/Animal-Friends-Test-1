@@ -24,7 +24,7 @@ export const SET = specs.set;
 export function newGame(opts = {}) {
   return createGame(RULES, SET, {
     seed: 42,
-    decks: ['mk-tin-tally', 'mk-gavel-ribbon'],
+    decks: ['mk-cache-kitchen', 'mk-lens-lathe'],
     names: ['You', 'Rival'],
     ...opts,
   });

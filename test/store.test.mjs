@@ -20,7 +20,7 @@ globalThis.localStorage = fakeStorage();
 const store = await import('../src/ui/store.js');
 const { ownedCopies, hasDeck } = await import('../src/engine/profile.js');
 const PROGRESSION = JSON.parse(fs.readFileSync(new URL('../spec/progression.json', import.meta.url), 'utf8'));
-const STARTER = 'mk-tin-tally';
+const STARTER = 'mk-cache-kitchen';
 
 beforeEach(() => {
   globalThis.localStorage = fakeStorage();
@@ -37,13 +37,13 @@ describe('the shelf of Mayors', () => {
 
   test('several Mayors live side by side, and switching between them changes nothing else', () => {
     const a = store.createMayor({ name: 'Wren', starterDeckId: STARTER }, SET, PROGRESSION);
-    const b = store.createMayor({ name: 'Hazel', starterDeckId: 'mk-lamp-lens' }, SET, PROGRESSION);
+    const b = store.createMayor({ name: 'Hazel', starterDeckId: 'mk-dome-dusk' }, SET, PROGRESSION);
     assert.equal(store.listProfiles().length, 2);
     assert.equal(store.activeProfile().id, b.id);
     store.setActiveProfile(a.id);
     assert.equal(store.activeProfile().name, 'Wren');
-    assert.ok(hasDeck(store.getProfile(b.id), 'mk-lamp-lens'), "and Hazel's deck is still Hazel's");
-    assert.equal(hasDeck(store.getProfile(a.id), 'mk-lamp-lens'), false);
+    assert.ok(hasDeck(store.getProfile(b.id), 'mk-dome-dusk'), "and Hazel's deck is still Hazel's");
+    assert.equal(hasDeck(store.getProfile(a.id), 'mk-dome-dusk'), false);
   });
 
   test('deleting the Mayor in play hands play to another rather than to nobody', () => {

@@ -2,10 +2,54 @@
 
 Method: `npm run playtest -- --games N --decks all --market all`, heuristic AI on both sides, walking
 the full cross product of every ordered deck pairing and every Capital City. The set the harness runs
-over has changed several times, so each section below says what it measured: the v0.12.0 run at the
-top is one run of 1260 games over fifteen decks and three Capital Cities, v0.7.0 was one run of 1120
+over has changed several times, so each section below says what it measured: the v0.13.0 run at the
+top is one run of 1080 games over ten decks and four Capital Cities, the v0.12.0 run is one run of
+1260 games over fifteen decks and three Capital Cities, v0.7.0 was one run of 1120
 over eight decks and seven markets, and the v0.6.0 figures further down are the **mean of three
 independent runs** of 720 games with `origin/main` measured on the identical harness.
+
+## v0.13.0 — a deck per species, and four Capital Cities
+
+One run of `npm run playtest -- --games 1080 --decks all --market all`: the full cross product of the
+90 ordered pairings of the ten printed decks and all four Capital Cities, heuristic AI on both sides.
+A single run, not the mean of three, so read the deck figures as ±3 points.
+
+The roster this measures is a different shelf from the one above. The twenty-five decks of the v0.12
+passes — fifteen two-species towns and ten written around a Legendary — were retired and replaced by
+**ten decks, one for each species**, and the three Capital Cities by four new ones.
+
+**Deck balance: 36.1 points of spread**, Furrow & Warren (Rabbits) at 71.3% and Margin & Pantry (Mice)
+at 35.2%. That is wider than the 19.0 the fifteen mixed towns managed, and it is the species charters
+showing through rather than a builder fault: a printed deck is now one species, so Rabbits arriving in
+crowds and Hedgehogs nobody can touch are no longer averaged against a second species, and the Owl
+hole — "wise, awake and poor" — is the whole of Dome & Dusk's economy. Measured on the same harness
+the retired twenty-five span 34.4% to 73.3%, so the shelf is no less even than the one it replaces.
+
+| Deck | Species | Win rate |
+| --- | --- | --- |
+| Furrow & Warren | Rabbit | 71.3% |
+| Hedge & Holiday | Hedgehog | 69.4% |
+| Cache & Kitchen | Squirrel | 60.2% |
+| Gavel & Greasepaint | Fox | 51.4% |
+| Bin & Barter | Raccoon | 47.7% |
+| Current & Counter | Otter | 46.8% |
+| Lens & Lathe | Cat | 44.4% |
+| Dome & Dusk | Owl | 38.0% |
+| Bench & Bylaw | Badger | 35.6% |
+| Margin & Pantry | Mouse | 35.2% |
+
+**No Capital City decides a game.** Over 270 games each, the first seat wins 41.9% on The Grand
+Exchange, 50.4% on The Hard Frost, 51.9% on The Open Hiring and 49.6% on Guild Row.
+
+**Games finish.** 1077 of 1080 ended on Statues, mean length 36.2 turns (median 34, longest 80). Card
+conservation holds over 200 random-vs-random games across all four Capital Cities (`npm run
+invariants`).
+
+**Throughput still predicts nothing about the spread here.** The ten decks sit between 42.0 and 54.5
+shift throughput and the two strongest are not the two fastest — what separates them is what their
+species does, which is the intended reading of a roster written one species at a time. Raising the
+throughput floor from 42 to 50 was tried and made the spread slightly worse (37.5 points), so the
+floor stands where the fifteen-deck pass left it.
 
 ## v0.12.0 — fifteen decks, three Capital Cities, and a floor that bites
 

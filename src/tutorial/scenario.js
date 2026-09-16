@@ -12,16 +12,16 @@
 import { createGame, log, topCard, cardDef } from '../engine/index.js';
 
 export const TUTORIAL_SEED = 1889;
-export const TUTORIAL_HUMAN_DECK = 'mk-tin-tally';
-export const TUTORIAL_RIVAL_DECK = 'mk-gavel-ribbon';
-export const TUTORIAL_MARKET = 'mk-founders-fair';
+export const TUTORIAL_HUMAN_DECK = 'mk-cache-kitchen';
+export const TUTORIAL_RIVAL_DECK = 'mk-lens-lathe';
+export const TUTORIAL_MARKET = 'mk-grand-exchange';
 export const TUTORIAL_NAMES = ['Mayor Bramble', 'Mayor Sable'];
 /** The turn on which the last scripted step fires; from the next turn on the rival plays for itself. */
 export const TUTORIAL_LAST_TURN = 7;
 
-// Card ids the script depends on. Every one of these is in the deck or the market pool it is taken
-// from, so the arranged match is still played with real decks: the two decks name them in their
-// `must` lists in scripts/build-decks.mjs, which is what keeps them there when the decks are rebuilt.
+// Card ids the script depends on. The arranged match is still played with the real printed decks:
+// whatever the deck does not already hold is swapped into it by `lessonDeck` below, so the lesson
+// holds however scripts/build-decks.mjs rebuilds the roster.
 const C = {
   peanut: 'mk_peanut_ledger_0', // cost 0 Apprentice, Commerce; puts a Supply by every time they finish a shift
   daisy: 'mk_daisy_bouquet_weaver_2', // cost 2 Journeyman; on arrival she pairs up with somebody
@@ -85,12 +85,12 @@ function arrangeMarket(state) {
   m.revealQueue = [];
   m.pending = [];
   m.clearing = {};
-  m.deckName = "The Founders' Fair, arranged for the lesson";
+  m.deckName = 'The Grand Exchange, arranged for the lesson';
 }
 
 /**
  * A town deck arranged for the lesson: the printed list with the cards the script deals guaranteed
- * to be in it. The six decks are built from the ratings (scripts/build-decks.mjs) and none of them is
+ * to be in it. The ten decks are built from the ratings (scripts/build-decks.mjs) and none of them is
  * written around a tutorial, so any scripted card the deck does not hold is swapped in over a copy of
  * whatever the deck holds most of. The deck keeps its id, its name and its forty cards; what changes
  * is a handful of copies, which is the same liberty the lesson already takes with the opening hands

@@ -13,7 +13,7 @@ await playGame(state, [agent0, agent1]);          // runs to completion; state.w
 ## Decks and the Market Deck
 
 `createGame(rules, set, { seed, decks, names, market })` — `market` selects the shared Market Deck from
-`set.marketDecks` (`first-boroughs`, `boom-town`, `hard-times`, `founders-fair`, `whiskerwood-fair`, `many-hats-fair`; default: the first). Each entry of `decks` is either a deck id from the set or a
+`set.marketDecks` (`mk-grand-exchange`, `mk-hard-frost`, `mk-open-hiring`, `mk-guild-row`; default: the first). Each entry of `decks` is either a deck id from the set or a
 deck object `{ id?, name?, list: { cardId: count } }` (`resolveDeck`), which is how the Deck Workshop plays a
 custom deck. `deckProblems(rules, set, list)` returns the deck's legality problems as player-facing sentences
 (empty array = legal); `deckRules(rules)` exposes the limits from `spec/game.json` `deckbuilding`.
