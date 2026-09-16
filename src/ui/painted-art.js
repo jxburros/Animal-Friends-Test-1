@@ -50,6 +50,10 @@ export const MAKER_APPRENTICES_KITCHENS_ATLAS_URL = new URL('../../assets/art/ma
 export const MAKER_CABIN_FLIGHT_ATLAS_URL = new URL('../../assets/art/maker-cabin-flight-atlas.png', import.meta.url).href;
 export const MAKER_COACHES_CLINICS_ATLAS_URL = new URL('../../assets/art/maker-coaches-clinics-atlas.png', import.meta.url).href;
 export const MAKER_CAPITAL_FESTIVALS_ATLAS_URL = new URL('../../assets/art/maker-capital-festivals-atlas.png', import.meta.url).href;
+export const MAKER_ROADS_COURTS_LABS_ATLAS_URL = new URL('../../assets/art/maker-roads-courts-labs-atlas.png', import.meta.url).href;
+export const MAKER_CHEESE_FORTUNES_SERVICES_ATLAS_URL = new URL('../../assets/art/maker-cheese-fortunes-services-atlas.png', import.meta.url).href;
+export const MAKER_GADGETS_NEWS_SHOPS_ATLAS_URL = new URL('../../assets/art/maker-gadgets-news-shops-atlas.png', import.meta.url).href;
+export const MAKER_FUTURETECH_FESTIVALS_ATLAS_URL = new URL('../../assets/art/maker-futuretech-festivals-atlas.png', import.meta.url).href;
 const SPECIES_TILE = { Rabbit: 0, Mouse: 1, Fox: 2, Raccoon: 3, Hedgehog: 4, Badger: 5, Otter: 6, Squirrel: 7 };
 const ATLASES = {
   boroughs: () => PAINTED_ATLAS_URL,
@@ -97,6 +101,10 @@ const ATLASES = {
   makercabinflight: () => MAKER_CABIN_FLIGHT_ATLAS_URL,
   makercoachesclinics: () => MAKER_COACHES_CLINICS_ATLAS_URL,
   makercapitalfestivals: () => MAKER_CAPITAL_FESTIVALS_ATLAS_URL,
+  makerroadscourtslabs: () => MAKER_ROADS_COURTS_LABS_ATLAS_URL,
+  makercheesefortunesservices: () => MAKER_CHEESE_FORTUNES_SERVICES_ATLAS_URL,
+  makergadgetsnewsshops: () => MAKER_GADGETS_NEWS_SHOPS_ATLAS_URL,
+  makerfuturetechfestivals: () => MAKER_FUTURETECH_FESTIVALS_ATLAS_URL,
 };
 
 // Presentation-only corrections for Maker shelf cards. Keeping these assignments here lets the
@@ -695,6 +703,74 @@ export const MAKER_ART_TILES = Object.freeze({
   mk_passing_comets: { atlas: 'makercapitalfestivals', tile: 13 },
   mk_community_bonfire: { atlas: 'makercapitalfestivals', tile: 14 },
   mk_cheese_festival: { atlas: 'makercapitalfestivals', tile: 15 },
+
+  mk_adam_road_construction_5: { atlas: 'makerroadscourtslabs', tile: 0 },
+  mk_balto_bench_owl_0: { atlas: 'makerroadscourtslabs', tile: 1 },
+  mk_balto_cabinetmaker_1: { atlas: 'makerroadscourtslabs', tile: 2 },
+  mk_balto_shopkeeper_2: { atlas: 'makerroadscourtslabs', tile: 3 },
+  mk_balto_furniture_craftsman_3: { atlas: 'makerroadscourtslabs', tile: 4 },
+  mk_balto_guild_furniture_broker_5: { atlas: 'makerroadscourtslabs', tile: 5 },
+  mk_brooke_aeronaut_5: { atlas: 'makerroadscourtslabs', tile: 6 },
+  mk_cindy_court_clerk_1: { atlas: 'makerroadscourtslabs', tile: 7 },
+  mk_cindy_magistrate_2: { atlas: 'makerroadscourtslabs', tile: 8 },
+  mk_cindy_circuit_judge_4: { atlas: 'makerroadscourtslabs', tile: 9 },
+  mk_cindy_justice_of_the_boroughs_5: { atlas: 'makerroadscourtslabs', tile: 10 },
+  mk_cynthia_junior_lab_assistant_0: { atlas: 'makerroadscourtslabs', tile: 11 },
+  mk_cynthia_paint_drying_researcher_1: { atlas: 'makerroadscourtslabs', tile: 12 },
+  mk_cynthia_combustion_theorist_3: { atlas: 'makerroadscourtslabs', tile: 13 },
+  mk_cynthia_head_of_the_absorption_wing_5: { atlas: 'makerroadscourtslabs', tile: 14 },
+  mk_edwina_cheese_counter_girl_0: { atlas: 'makerroadscourtslabs', tile: 15 },
+
+  mk_edwina_cheese_stall_keeper_1: { atlas: 'makercheesefortunesservices', tile: 0 },
+  mk_edwina_cheese_cellar_keeper_2: { atlas: 'makercheesefortunesservices', tile: 1 },
+  mk_edwina_cheese_merchant_3: { atlas: 'makercheesefortunesservices', tile: 2 },
+  mk_elvira_tea_leaf_reader_0: { atlas: 'makercheesefortunesservices', tile: 3 },
+  mk_elvira_fairground_booth_2: { atlas: 'makercheesefortunesservices', tile: 4 },
+  mk_elvira_fortune_teller_3: { atlas: 'makercheesefortunesservices', tile: 5 },
+  mk_elvira_reader_of_long_odds_4: { atlas: 'makercheesefortunesservices', tile: 6 },
+  mk_fingers_rooftop_runner_0: { atlas: 'makercheesefortunesservices', tile: 7 },
+  mk_fingers_chimney_sweep_1: { atlas: 'makercheesefortunesservices', tile: 8 },
+  mk_fingers_root_cellar_diver_2: { atlas: 'makercheesefortunesservices', tile: 9 },
+  mk_fingers_master_locksmith_3: { atlas: 'makercheesefortunesservices', tile: 10 },
+  mk_fingers_the_one_who_gets_in_4: { atlas: 'makercheesefortunesservices', tile: 11 },
+  mk_henrietta_front_desk_clerk_0: { atlas: 'makercheesefortunesservices', tile: 12 },
+  mk_henrietta_placement_officer_2: { atlas: 'makercheesefortunesservices', tile: 13 },
+  mk_henrietta_head_of_rabbit_recruitment_4: { atlas: 'makercheesefortunesservices', tile: 14 },
+  mk_jessica_teacher_of_the_boroughs_5: { atlas: 'makercheesefortunesservices', tile: 15 },
+
+  mk_jim_gadget_blogger_0: { atlas: 'makergadgetsnewsshops', tile: 0 },
+  mk_jim_hobby_programmer_2: { atlas: 'makergadgetsnewsshops', tile: 1 },
+  mk_jim_early_adopter_4: { atlas: 'makergadgetsnewsshops', tile: 2 },
+  mk_jim_futuretech_fanboy_5: { atlas: 'makergadgetsnewsshops', tile: 3 },
+  mk_kevin_construction_4: { atlas: 'makergadgetsnewsshops', tile: 4 },
+  mk_marmalade_guild_baker_5: { atlas: 'makergadgetsnewsshops', tile: 5 },
+  mk_nancy_temp_agency_runner_0: { atlas: 'makergadgetsnewsshops', tile: 6 },
+  mk_nancy_temp_agency_manager_2: { atlas: 'makergadgetsnewsshops', tile: 7 },
+  mk_robbie_cub_reporter_0: { atlas: 'makergadgetsnewsshops', tile: 8 },
+  mk_robbie_columnist_1: { atlas: 'makergadgetsnewsshops', tile: 9 },
+  mk_robbie_features_writer_2: { atlas: 'makergadgetsnewsshops', tile: 10 },
+  mk_robbie_editor_3: { atlas: 'makergadgetsnewsshops', tile: 11 },
+  mk_robbie_editor_in_chief_5: { atlas: 'makergadgetsnewsshops', tile: 12 },
+  mk_yellow_rapper_5: { atlas: 'makergadgetsnewsshops', tile: 13 },
+  mk_tb_grocery_store: { atlas: 'makergadgetsnewsshops', tile: 14 },
+  mk_tb_starfish_coffee: { atlas: 'makergadgetsnewsshops', tile: 15 },
+
+  mk_tb_ice_cream_shop: { atlas: 'makerfuturetechfestivals', tile: 0 },
+  mk_tb_clinic: { atlas: 'makerfuturetechfestivals', tile: 1 },
+  mk_tb_science_lab: { atlas: 'makerfuturetechfestivals', tile: 2 },
+  mk_tb_futuretech_store: { atlas: 'makerfuturetechfestivals', tile: 3 },
+  mk_bld_hospital: { atlas: 'makerfuturetechfestivals', tile: 4 },
+  mk_bld_futuretech_hq: { atlas: 'makerfuturetechfestivals', tile: 5 },
+  mk_tax_day: { atlas: 'makerfuturetechfestivals', tile: 6 },
+  mk_futuretech_release_day: { atlas: 'makerfuturetechfestivals', tile: 7 },
+  mk_otter_time: { atlas: 'makerfuturetechfestivals', tile: 8 },
+  mk_dx_casino_fundraiser: { atlas: 'makerfuturetechfestivals', tile: 9 },
+  mk_raccoon_family_reunion: { atlas: 'makerfuturetechfestivals', tile: 10 },
+  mk_friendship_festival: { atlas: 'makerfuturetechfestivals', tile: 11 },
+  mk_eustaces_ball: { atlas: 'makerfuturetechfestivals', tile: 12 },
+  mk_dx_mayors_conference: { atlas: 'makerfuturetechfestivals', tile: 13 },
+  mk_eustace_socialite_3: { atlas: 'makerfuturetechfestivals', tile: 14 },
+  mk_cornelius_futuretech_ceo_5: { atlas: 'makerfuturetechfestivals', tile: 15 },
   mk_mkt_bandstand: { atlas: 'makertownworks', tile: 10 }, mk_mkt_emergency_reserve: { atlas: 'makertownworks', tile: 11 }, mk_mkt_warren_muster: { atlas: 'makertownworks', tile: 12 }, mk_dx_the_yards_go_quiet: { atlas: 'makertownworks', tile: 13 },
 });
 

@@ -40,6 +40,10 @@ import {
   MAKER_CABIN_FLIGHT_ATLAS_URL,
   MAKER_COACHES_CLINICS_ATLAS_URL,
   MAKER_CAPITAL_FESTIVALS_ATLAS_URL,
+  MAKER_ROADS_COURTS_LABS_ATLAS_URL,
+  MAKER_CHEESE_FORTUNES_SERVICES_ATLAS_URL,
+  MAKER_GADGETS_NEWS_SHOPS_ATLAS_URL,
+  MAKER_FUTURETECH_FESTIVALS_ATLAS_URL,
   paintedArtSVG,
 } from '../src/ui/painted-art.js';
 
@@ -83,11 +87,15 @@ const atlasUrls = {
   makercabinflight: MAKER_CABIN_FLIGHT_ATLAS_URL,
   makercoachesclinics: MAKER_COACHES_CLINICS_ATLAS_URL,
   makercapitalfestivals: MAKER_CAPITAL_FESTIVALS_ATLAS_URL,
+  makerroadscourtslabs: MAKER_ROADS_COURTS_LABS_ATLAS_URL,
+  makercheesefortunesservices: MAKER_CHEESE_FORTUNES_SERVICES_ATLAS_URL,
+  makergadgetsnewsshops: MAKER_GADGETS_NEWS_SHOPS_ATLAS_URL,
+  makerfuturetechfestivals: MAKER_FUTURETECH_FESTIVALS_ATLAS_URL,
 };
 
-test('thirty-seven Maker atlases assign 592 existing cards to every tile exactly once', () => {
+test('forty-one Maker atlases assign 656 existing cards to every tile exactly once', () => {
   const entries = Object.entries(MAKER_ART_TILES);
-  assert.equal(entries.length, 592);
+  assert.equal(entries.length, 656);
 
   for (const [atlas, url] of Object.entries(atlasUrls)) {
     const assignments = entries.filter(([, art]) => art.atlas === atlas);
@@ -167,7 +175,7 @@ test('every newly added character and fair card has a commissioned scene', () =>
   const newCards = MAKER.cards.filter((card) => !waiting.has(card.id)
     && (newCharacterPrefixes.some((prefix) => card.id.startsWith(prefix)) || newFairIds.has(card.id)));
 
-  assert.equal(newCards.length, 26);
+  assert.equal(newCards.length, 27);
   assert.deepEqual(newCards.filter((card) => !MAKER_ART_TILES[card.id]), []);
 });
 
