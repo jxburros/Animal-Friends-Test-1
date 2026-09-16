@@ -2916,6 +2916,117 @@
      "resolved": "Deliberately not built: a Building that appears without an auction or a crew would be the one card in the collection that skips both, and the discounts already make him the cheapest roof in the game."
     }
    ]
+  },
+  {
+   "name": "Henrietta",
+   "species": "Rabbit",
+   "studies": [
+    "Civics"
+   ],
+   "pronouns": "she/her",
+   "addition": true,
+   "backstory": "Henrietta runs the front desk at the Hiring Hall, which means she runs the board, the queue and, by her own account, most of what anybody in the borough knows about anybody else. She took the desk over from nobody in particular — it was simply there, and she was better at it than whoever had it before — and she has not stopped talking since, in the friendliest possible way, to every animal who has ever stood in that queue.\n\nShe is, by universal agreement, the best-informed animal in either borough, and also the least reliable, because Henrietta does not distinguish between a fact and a good story the way the rest of the Hiring Hall would like her to. She will tell you exactly as much about the animal three places ahead of you in the queue as she will about a character in one of Lynnette's water-stained novels, in the same breath, at the same volume, with the same conviction that you needed to know. Nobody has ever caught her being unkind about it. She simply cannot tell where the gossip stops and the town starts, and has decided this is everybody else's problem to sort out, not hers.\n\nWhat she is genuinely good at, underneath all of it, is placing a Rabbit. She knows every warren, every cousin, every animal who owes another animal a favour, and when a good one comes through the door she does not merely post the job — she works the whole room until the hire happens, and the better the job, the harder she works it.",
+   "voice": "Fast, warm, and unable to finish a sentence about the weather without mentioning three animals by name. Never malicious, never quite on topic.",
+   "arc": "The Front Desk Clerk at 0 does what the desk is actually for — a name on the board, a small nudge. The Placement Officer at 2 works a room for an afternoon. The Head of Rabbit Recruitment at 4 has stopped pretending it is only paperwork: she gets on the warren telegraph and does not stop until the best Rabbit in three wards is standing in your town.",
+   "wantedVerbs": [
+    {
+     "verb": "a bonus scaled to the exact cost of the Character just recruited",
+     "why": "The story wants Henrietta's help to keep paying out better the pricier the Rabbit she places — a smooth curve, not three steps of it.",
+     "workaround": "No engine rate reads the cost of the specific card a `recruitFromHand` rider just brought in (`addMod`'s `valuePer` only counts `buildingsBuilt` or heads in town). Built instead as three versions, each opening the door to pricier Rabbits than the last and paying more when one comes through it — the arc does in three rungs what a single scaled card would do in one."
+    }
+   ]
+  },
+  {
+   "name": "Balto",
+   "species": "Owl",
+   "studies": [
+    "Crafts",
+    "Commerce"
+   ],
+   "pronouns": "he/him",
+   "addition": true,
+   "backstory": "Balto has been making furniture longer than most of the Town Workshop's current bench has been standing, and he is still the one animal in it who can be woken at any hour of the night by a knock on the door and a wobbling table leg. He works the way Owls work — through the dark, unhurried, with everybody else's shift asleep around him — and by the time the borough is up he has usually already been round to see what needed doing.\n\nHis hands are enormous for his size and steadier than they have any right to be at his age; ask him and he will tell you it is fifty years of dovetails and nothing more mysterious than that. He built half the benches at Berry's tool-lending day, the long table in the Open Mic Room, and the shelf under the Lending Library's low window that Sage still reads at. None of it was commissioned. He simply noticed a shelf was wanted and turned up with the wood.\n\nLater in life he opened a small shop off the Town Workshop court to sell what he could not give away fast enough, and found, to his mild surprise, that he was good at that too — an Owl who reads a room at four in the morning reads a customer at noon without much trouble. He still does both jobs, in the same order every night: the neighbor first, the counter second.",
+   "voice": "Slow, dry, and kind without ever sounding like it is trying to be. Measures twice, says less.",
+   "arc": "The Bench Owl at 0 is a night visit with a bag of tools. The Cabinetmaker at 1 does the same, better. The Shopkeeper at 2 has started charging for some of it. The Furniture Craftsman at 3 is the name half the borough's good chairs go under. The Guild Furniture Broker at 5 sells what he cannot make fast enough and is generous with the credit either way — Owl and Badger alike leave his counter with something extra, because he has never once, in fifty years, sent a neighbor home short."
+  },
+  {
+   "name": "Fingers",
+   "species": "Raccoon",
+   "studies": [
+    "Civics",
+    "Crafts",
+    "Agriculture"
+   ],
+   "pronouns": "he/him",
+   "addition": true,
+   "backstory": "Nobody in either borough can say for certain how Fingers gets where he gets. He has been seen coming down off the Observatory dome, coming up out of a cellar he had no key to, and standing in a queue that had not existed thirty seconds before — climbing, diving, picking a lock that everyone agrees should not have been pickable, or simply walking in the front door as if that had been an option the whole time. Ask him and he shrugs; the shrug has become, over the years, a kind of local weather report, understood by everybody and explained by nobody.\n\nWhat he actually does for a living changes by the season and sometimes by the afternoon — he has run errands for the ward court, mended locks for the Salvage Yard, and turned up on a root-cellar job for the grange the same week he was seen on the Observatory roof. The one constant is that when something needs fetching, moving, opened or reached, the borough has learned to ask for Fingers before it asks anybody else, because he is already usually most of the way there.\n\nHe is famously loyal to his own family without ever quite explaining what \"his own family\" means — cousins turn up, are vouched for, and vanish again, and Fingers moves between whatever job he is holding and whatever job needs him next with the same shrug. The borough has stopped trying to pin him to one ladder rung and has instead decided he simply occupies all of them, the way no other animal in the First Boroughs is allowed to.",
+   "voice": "Short, amused, and never in a hurry despite always being somewhere else a moment later. Answers \"how did you get in here\" with a different true answer every time.",
+   "arc": "The Rooftop Runner at 0 is already gone before the job is finished being described. The Chimney Sweep at 1 and the Root-Cellar Diver at 2 are the same animal working two different holes into the town. The Master Locksmith at 3 goes looking for his own cousins in the deck. The One Who Gets In at 4 is the exception the whole family is built on: Fingers may swap freely between any of his own cards, cheaper or dearer, because for him alone the ladder runs both ways.",
+   "wantedVerbs": [
+    {
+     "verb": "a `recruitFromHand` filter that reads a card's name, the way `searchDeck`'s already does",
+     "why": "Fingers should only ever be able to swap for another Fingers, up or down, and nothing else — the whole point of the exception is that it is his and nobody else's.",
+     "workaround": "`recruitFromHand`'s filter only reads `maxCost`, `minCost`, `species` and `study` (`test/card-vocabulary.mjs`), with no `name` key, so the free swap on his cost-4 card is filtered to `species: \"Raccoon\"` instead — broader than the story asks for, though the card text names Fingers specifically and no other Raccoon on the shelf currently benefits from being swapped for free this way."
+    },
+    {
+     "verb": "an explicit \"downgrade\" — recruiting a cheaper version over a dearer one already in town",
+     "why": "The whole card is that Fingers can go backward on the ladder as easily as forward, which `upgradesOver` (`src/engine/actions.js`) never allows for an ordinary purchase — a cheaper card can never replace a dearer one of the same name at the counter.",
+     "workaround": "`recruitFromHand` never runs the `upgradesOver` check at all; it simply hands the incoming Character a stack, cheaper or dearer, so the free swap already does both directions mechanically. No engine change was needed — only the card text spelling out, plainly, that this is a Fingers-only exception to how the ladder normally reads."
+    }
+   ]
+  },
+  {
+   "name": "Edwina",
+   "species": "Mouse",
+   "studies": [
+    "Food",
+    "Commerce"
+   ],
+   "pronouns": "she/her",
+   "addition": true,
+   "backstory": "Edwina knows more about cheese than anybody has any right to, and holds forth on it at a length the Cheese Store's customers have learned to plan around. She keeps the cellar under the shop the way Copper keeps his own — stocked, labelled, and rotated on a schedule only she understands — and can identify anything on the counter blind, by smell, from across the room.\n\nShe is also very small, even for a Mouse, and has turned this into a hobby: she hides in the gaps behind the cellar shelving, under the counter, behind the till, and pops out at the worst possible moment for whichever neighbor she has decided has earned it that day. A handful of animals in the borough — Bristle, Cindy, the odd off-duty Owl — have been made to shriek in a public place by Edwina appearing an inch from their elbow, and every one of them has forgiven her within the hour, because she is never once unkind about it and always has a wedge of something good waiting when she does.\n\nThe scaring is a hobby. The cheese is the actual trade, and on it she is entirely serious: she has opinions about the Cheese Store's supplier that she will share whether asked or not, and a memory for who has been shorted a delivery that the Counting House has never once needed to double-check.",
+   "voice": "Delighted with herself, half a second before she pops out from somewhere she should not fit. Turns serious the instant the subject is actually cheese.",
+   "arc": "The Counter Girl at 0 minds the front. The Stall Keeper at 1 works the market day. The Cellar Keeper at 2 knows the whole stock and starts making a rival's day harder for it. The Merchant at 3 is the top of the ladder — the same trick, twice over, for the animal willing to pay for the second fright.",
+   "wantedVerbs": []
+  },
+  {
+   "name": "Eustace",
+   "species": "Squirrel",
+   "studies": [
+    "Commerce"
+   ],
+   "pronouns": "he/him",
+   "addition": true,
+   "backstory": "Eustace came out from the Capital City the way Barrow did, except Barrow came to build something and Eustace came to be seen doing very little. He is a socialite in the oldest sense: he knows everybody, is owed favours by half the Capital City's auction houses, and has never once in his life done a shift of work he could not talk somebody else into finding charming.\n\nWhat he is actually good for — and it is a real thing, not merely a rumour — is time. Eustace has a gift for making an afternoon feel shorter than it is, for everybody in the room, and a Mayor who hires him finds their whole town moving at a slightly quicker clip for a little while, the way a good party makes the evening go faster than the clock says it should.\n\nHe does not stay long in any one town, being fundamentally more interested in the next room than the one he is in, but he is generous with the borough while he is there, and has never once made anybody feel like the second choice.",
+   "voice": "Effortlessly charming and only sometimes listening. Compliments freely and means about half of them.",
+   "arc": "One card, one afternoon: Eustace shows up, the whole town gets a little of his time, and he is gone before anybody thinks to ask for more of it.",
+   "wantedVerbs": []
+  },
+  {
+   "name": "Cynthia",
+   "species": "Otter",
+   "studies": [
+    "Science"
+   ],
+   "pronouns": "she/her",
+   "addition": true,
+   "backstory": "Cynthia is fascinated by science the way some animals are fascinated by a fire — completely, and occasionally at some risk to the furniture. She keeps a bench at the back of the Science hall that the Observatory has quietly stopped asking her to tidy, and she is, by a wide margin, the most easily distracted animal to ever hold a post there.\n\nHer desk caught fire once, genuinely, while she was three feet away — and she did not notice, because she was absorbed in an experiment about how long it took a particular blue paint to dry, and the fire was a much less interesting variable than the paint. The desk was replaced within the week. The story was not, and has been told at every open mic night since with a slightly different ending depending on who is telling it.\n\nWhat keeps her funded, despite all of it, is that she is very good at the actual work when something does catch her attention, and she has developed an odd private habit of keeping a jar of tokens on the bench — one for every experiment that comes to something, whatever it was — which she trades in for Supply when the Science hall's budget runs thin, on the grounds that a good result ought to be worth something even when nobody remembers what it proved.",
+   "voice": "Bright, rapid, and three subjects ahead of whoever she is talking to. Trails off mid-sentence when something more interesting happens nearby, which is often.",
+   "arc": "The Junior Lab Assistant at 0 starts the jar. The Paint-Drying Researcher at 1 — named, honestly, for the experiment that started the whole business with the desk — fills it faster. The Combustion Theorist at 3 has learned, the hard way, what the jar is actually for, and starts spending it. The Head of the Absorption Wing at 5 runs the whole operation, jar and all.",
+   "wantedVerbs": []
+  },
+  {
+   "name": "Nancy",
+   "species": "Raccoon",
+   "studies": [
+    "Civics"
+   ],
+   "pronouns": "she/her",
+   "addition": true,
+   "backstory": "Nancy runs the Hiring Hall's temp board, which is a smaller, louder operation than Henrietta's front desk and entirely Nancy's own: short jobs, fast turnaround, an animal in Unemployment on Monday and back on their feet by Wednesday if Nancy has anything to say about it, which she always does.\n\nShe has enormous nails, kept long and lacquered on principle, hair that takes up more of the doorway than the rest of her, and an attitude the Hiring Hall's longer-serving clerks have learned not to argue with twice. Underneath all of it — and it takes most animals exactly one visit to find this out — is a heart entirely too big for the operation she is running: Nancy has never once left an animal in Unemployment out of spite or forgetting, only out of a temp board that has, for one week, run out of jobs to put them on.\n\nHalf the borough's comeback stories run through her counter at some point, wedged between Rosabeth's garden and Quinn's slip with a name on it — different door, same idea, and Nancy would be the first to say the comparison is flattering and she will take it.",
+   "voice": "Loud, fast, no patience for a sob story that could be a two-sentence job order instead. Softens the instant somebody actually needs the help.",
+   "arc": "The Temp Agency Runner at 0 does the small, fast version. The Temp Agency Manager at 2 runs the whole board and gets the better rate doing it.",
+   "wantedVerbs": []
   }
  ],
  "cards": [
@@ -25069,6 +25180,1207 @@
     "power": 5.71,
     "opportunityCost": 2.7
    }
+  },
+  {
+   "id": "mk_henrietta_front_desk_clerk_0",
+   "type": "character",
+   "name": "Henrietta",
+   "title": "Front Desk Clerk",
+   "job": "Front Desk Clerk",
+   "species": "Rabbit",
+   "study": "Civics",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Henrietta is recruited, you may recruit a Rabbit costing 1 or less from your hand for free; if you do, gain 1 Supply.",
+   "flavor": "She has the board updated before the ink on the posting is dry, and a full account of the posting animal's cousins before anybody has asked for one.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "recruitFromHand",
+      "filter": {
+       "species": "Rabbit",
+       "maxCost": 1
+      },
+      "optional": true,
+      "then": {
+       "do": "gainSupply",
+       "amount": 1
+      }
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 4.47,
+    "power": 7.46,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_henrietta_placement_officer_2",
+   "type": "character",
+   "name": "Henrietta",
+   "title": "Placement Officer",
+   "job": "Placement Officer",
+   "species": "Rabbit",
+   "study": "Civics",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Henrietta. Busy: you may recruit a Rabbit costing 3 or less from your hand for free; if you do, gain 2 Supply.",
+   "flavor": "She works the whole room for a good posting — the warren, the cousins, the animal who is definitely ready to move on from the Gate Hut — and never once mentions that she is working it.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "recruitFromHand",
+      "filter": {
+       "species": "Rabbit",
+       "maxCost": 3
+      },
+      "optional": true,
+      "then": {
+       "do": "gainSupply",
+       "amount": 2
+      }
+     }
+    }
+   ],
+   "rarity": "Legendary",
+   "power": {
+    "score": 8.07,
+    "power": 17.37,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_henrietta_head_of_rabbit_recruitment_4",
+   "type": "character",
+   "name": "Henrietta",
+   "title": "Head of Rabbit Recruitment",
+   "job": "Head of Rabbit Recruitment",
+   "species": "Rabbit",
+   "study": "Civics",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Henrietta. Busy: you may recruit a Rabbit from your hand for free; if you do, gain 3 Supply.",
+   "flavor": "The title is new and she gave it to herself, and nobody has argued, because when the good Rabbits are worth having Henrietta is on the warren telegraph until they are standing in your town, several stories the richer for the trip.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "recruitFromHand",
+      "filter": {
+       "species": "Rabbit"
+      },
+      "optional": true,
+      "then": {
+       "do": "gainSupply",
+       "amount": 3
+      }
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.48,
+    "power": 16.27,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_dx_casino_fundraiser",
+   "type": "disruption",
+   "name": "The Casino Fundraiser",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: both Mayors lose half their Supply, then both Mayors gain 4 Supply. Goes to the City Dump.",
+   "onReveal": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "everyoneLosesPercentSupply",
+      "percent": 50
+     },
+     {
+      "do": "everyoneGainsSupply",
+      "amount": 4
+     }
+    ]
+   },
+   "flavor": "Table games in the Long Hall for one night, run for both boroughs by whoever the Capital City sends out, and the till comes out even by morning whatever went in.",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 14.66,
+    "power": 19.35,
+    "opportunityCost": 2
+   }
+  },
+  {
+   "id": "mk_balto_bench_owl_0",
+   "type": "character",
+   "name": "Balto",
+   "title": "Bench Owl",
+   "job": "Bench Owl",
+   "species": "Owl",
+   "study": "Crafts",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Balto is recruited, your Owl and Badger Characters' next shift each produces 1 extra Supply.",
+   "flavor": "A knock at three in the morning and a wobbling table leg, and Balto is already out the door with the right chisel.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "addMod",
+        "key": "shiftBonus",
+        "value": 1,
+        "filter": {
+         "species": "Owl"
+        },
+        "expires": "nextTurnStart"
+       },
+       {
+        "do": "addMod",
+        "key": "shiftBonus",
+        "value": 1,
+        "filter": {
+         "species": "Badger"
+        },
+        "expires": "nextTurnStart"
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 3.65,
+    "power": 6.1,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_balto_cabinetmaker_1",
+   "type": "character",
+   "name": "Balto",
+   "title": "Cabinetmaker",
+   "job": "Cabinetmaker",
+   "species": "Owl",
+   "study": "Crafts",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Upgrades Balto. Busy: your Owl and Badger Characters' next shift each produces 1 extra Supply.",
+   "flavor": "Fifty years of dovetails, and he still will not say which joint he is proudest of, only that it is somewhere in the Open Mic Room and nobody has noticed it yet.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "addMod",
+        "key": "shiftBonus",
+        "value": 1,
+        "filter": {
+         "species": "Owl"
+        },
+        "expires": "nextTurnStart"
+       },
+       {
+        "do": "addMod",
+        "key": "shiftBonus",
+        "value": 1,
+        "filter": {
+         "species": "Badger"
+        },
+        "expires": "nextTurnStart"
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.38,
+    "power": 9.9,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_balto_shopkeeper_2",
+   "type": "character",
+   "name": "Balto",
+   "title": "Shopkeeper",
+   "job": "Shopkeeper",
+   "species": "Owl",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Balto. When Balto completes a shift, gain 2 Supply.",
+   "flavor": "He found, to his mild surprise, that he could charge for some of it. He still gives half of it away first and charges for what is left.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.17,
+    "power": 11.13,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_balto_furniture_craftsman_3",
+   "type": "character",
+   "name": "Balto",
+   "title": "Furniture Craftsman",
+   "job": "Furniture Craftsman",
+   "species": "Owl",
+   "study": "Crafts",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Balto. Busy: your Owl and Badger Characters' next shift each produces 1 extra Supply.",
+   "flavor": "Half the good chairs in either borough go under his name now, and none of them were ever formally sold — a neighbor mentioned a bad back, and a chair turned up.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "addMod",
+        "key": "shiftBonus",
+        "value": 1,
+        "filter": {
+         "species": "Owl"
+        },
+        "expires": "nextTurnStart"
+       },
+       {
+        "do": "addMod",
+        "key": "shiftBonus",
+        "value": 1,
+        "filter": {
+         "species": "Badger"
+        },
+        "expires": "nextTurnStart"
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.47,
+    "power": 12.45,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_balto_guild_furniture_broker_5",
+   "type": "character",
+   "name": "Balto",
+   "title": "Guild Furniture Broker",
+   "job": "Guild Furniture Broker",
+   "species": "Owl",
+   "study": "Commerce",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Balto. At the start of your turn, your Owl and Badger Characters' next shift each produces 2 extra Supply, and gain 2 Supply.",
+   "flavor": "Fifty years in, and he still does the neighbor first and the counter second, in that order, every single night, whatever the guild's ledger would prefer.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "addMod",
+        "key": "shiftBonus",
+        "value": 2,
+        "filter": {
+         "species": "Owl"
+        },
+        "expires": "nextTurnStart"
+       },
+       {
+        "do": "addMod",
+        "key": "shiftBonus",
+        "value": 2,
+        "filter": {
+         "species": "Badger"
+        },
+        "expires": "nextTurnStart"
+       },
+       {
+        "do": "gainSupply",
+        "amount": 2
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Legendary",
+   "power": {
+    "score": 10.57,
+    "power": 27.58,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_fingers_rooftop_runner_0",
+   "type": "character",
+   "name": "Fingers",
+   "title": "Rooftop Runner",
+   "job": "Rooftop Runner",
+   "species": "Raccoon",
+   "study": "Civics",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Fingers is recruited, draw 1 card.",
+   "flavor": "He was sent for and was already there. Ask how and you get the shrug.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "draw",
+      "count": 1
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 3.12,
+    "power": 5.2,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_fingers_chimney_sweep_1",
+   "type": "character",
+   "name": "Fingers",
+   "title": "Chimney Sweep",
+   "job": "Chimney Sweep",
+   "species": "Raccoon",
+   "study": "Crafts",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Upgrades Fingers. Busy: look at the top card of the Market Deck.",
+   "flavor": "Up one flue and down the next, and he comes out the other end with a fair idea of what the Capital City has coming before it has finished sweeping its own chimney.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 1
+     }
+    }
+   ],
+   "rarity": "Common",
+   "power": {
+    "score": 3.2,
+    "power": 5.9,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_fingers_root_cellar_diver_2",
+   "type": "character",
+   "name": "Fingers",
+   "title": "Root-Cellar Diver",
+   "job": "Root-Cellar Diver",
+   "species": "Raccoon",
+   "study": "Agriculture",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Fingers. Busy: take a card out of the City Dump.",
+   "flavor": "Under the grange, past a door nobody left unlocked, and up again with exactly the thing that was wanted. The grange has stopped asking which door.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "takeFromCityDump"
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.73,
+    "power": 12.33,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_fingers_master_locksmith_3",
+   "type": "character",
+   "name": "Fingers",
+   "title": "Master Locksmith",
+   "job": "Master Locksmith",
+   "species": "Raccoon",
+   "study": "Civics",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Fingers. Busy, pay 3 Supply: search your deck for a Fingers card, take it into your hand, then shuffle.",
+   "flavor": "He picked the ward court's lock for practice once, put everything back exactly as it was, and left a note saying so. The note is still filed under Ned's unsigned column.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "searchDeck",
+      "count": 1,
+      "filter": {
+       "name": "Fingers"
+      }
+     },
+     "cost": {
+      "supply": 3
+     }
+    }
+   ],
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.68,
+    "power": 10.65,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_fingers_the_one_who_gets_in_4",
+   "type": "character",
+   "name": "Fingers",
+   "title": "The One Who Gets In",
+   "job": "The One Who Gets In",
+   "species": "Raccoon",
+   "study": "Crafts",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Fingers. Busy: you may recruit another Fingers card from your hand for free, cheaper or dearer than this one — for Fingers alone, the ladder runs both ways.",
+   "flavor": "Every other animal in the First Boroughs can only ever move up. Fingers has never once seen why that should apply to him.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "recruitFromHand",
+      "filter": {
+       "species": "Raccoon"
+      },
+      "optional": true
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.86,
+    "power": 14.72,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_raccoon_family_reunion",
+   "type": "event",
+   "name": "Raccoon Family Reunion",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "species": "Raccoon"
+    }
+   ],
+   "text": "Requires a Raccoon. Search your deck for any number of Raccoons and recruit any number of Raccoons from your hand and deck, as many as your town has room for, then every animal in your town becomes unemployed.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "searchDeck",
+      "count": 10,
+      "optional": true,
+      "filter": {
+       "species": "Raccoon"
+      }
+     },
+     {
+      "do": "recruitFromHand",
+      "count": 10,
+      "optional": true,
+      "filter": {
+       "species": "Raccoon"
+      }
+     },
+     {
+      "do": "unemployOwnCharacter",
+      "count": 10
+     }
+    ]
+   },
+   "flavor": "Every cousin Fingers ever vouched for, and several nobody can place, in one town on one afternoon. By evening the board is bare, the Hiring Hall has no idea what happened, and nobody minds even slightly.",
+   "rarity": "Common",
+   "power": {
+    "score": 1.25,
+    "power": 1.86,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_edwina_cheese_counter_girl_0",
+   "type": "character",
+   "name": "Edwina",
+   "title": "Cheese Counter Girl",
+   "job": "Cheese Counter Girl",
+   "species": "Mouse",
+   "study": "Food",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Busy: your opponent discards a card.",
+   "flavor": "She pops up from behind the till at exactly the moment a customer has forgotten she is small enough to be behind it.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "opponentDiscards",
+      "count": 1
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 3.53,
+    "power": 5.9,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_edwina_cheese_stall_keeper_1",
+   "type": "character",
+   "name": "Edwina",
+   "title": "Cheese Stall Keeper",
+   "job": "Cheese Stall Keeper",
+   "species": "Mouse",
+   "study": "Commerce",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Upgrades Edwina. When Edwina is recruited, your opponent discards a card.",
+   "flavor": "Market day, a full trestle, and Edwina somewhere underneath it, waiting for the one customer who has been rude about her prices.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "opponentDiscards",
+      "count": 1
+     }
+    }
+   ],
+   "rarity": "Common",
+   "power": {
+    "score": 3.37,
+    "power": 6.2,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_edwina_cheese_cellar_keeper_2",
+   "type": "character",
+   "name": "Edwina",
+   "title": "Cheese Cellar Keeper",
+   "job": "Cheese Cellar Keeper",
+   "species": "Mouse",
+   "study": "Food",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Edwina. Busy: your opponent discards a card; you may then pay 2 Supply to make them discard a second.",
+   "flavor": "She knows the cellar's every shelf and every gap behind it, which is a lot of places for a Mouse who has decided today is your day to be waiting.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "opponentDiscards",
+        "count": 1
+       },
+       {
+        "do": "paySupply",
+        "amount": 2,
+        "optional": true,
+        "then": {
+         "do": "opponentDiscards",
+         "count": 1
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.32,
+    "power": 11.46,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_edwina_cheese_merchant_3",
+   "type": "character",
+   "name": "Edwina",
+   "title": "Cheese Merchant",
+   "job": "Cheese Merchant",
+   "species": "Mouse",
+   "study": "Commerce",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Edwina. Busy: your opponent discards a card; you may then pay 2 Supply to make them discard 2 more.",
+   "flavor": "She has opinions about the supplier and a memory for every short delivery, and the Counting House has learned to simply believe her the first time.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "opponentDiscards",
+        "count": 1
+       },
+       {
+        "do": "paySupply",
+        "amount": 2,
+        "optional": true,
+        "then": {
+         "do": "opponentDiscards",
+         "count": 2
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.74,
+    "power": 13.06,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_friendship_festival",
+   "type": "event",
+   "name": "Friendship Festival",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "species": "Cat"
+    },
+    {
+     "species": "Mouse"
+    }
+   ],
+   "text": "Requires a Cat and a Mouse. Recruit any number of Cats and Mice from your hand for free, matched pair for pair, then pay 2 Supply to search your deck for one Cat and one Mouse, take them into your hand, and shuffle.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "recruitFromHand",
+      "count": 5,
+      "optional": true,
+      "filter": {
+       "species": "Cat"
+      }
+     },
+     {
+      "do": "recruitFromHand",
+      "count": 5,
+      "optional": true,
+      "filter": {
+       "species": "Mouse"
+      }
+     },
+     {
+      "do": "paySupply",
+      "amount": 2,
+      "optional": true,
+      "then": {
+       "do": "seq",
+       "steps": [
+        {
+         "do": "searchDeck",
+         "count": 1,
+         "filter": {
+          "species": "Cat"
+         }
+        },
+        {
+         "do": "searchDeck",
+         "count": 1,
+         "filter": {
+          "species": "Mouse"
+         }
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "flavor": "The borough decided some years ago that a Cat and a Mouse ought to have one day a year they are told to get along, and has been quietly pleased ever since at how often it works.",
+   "rarity": "Legendary",
+   "power": {
+    "score": 7.32,
+    "power": 12.23,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_eustace_socialite_3",
+   "type": "marketCharacter",
+   "name": "Eustace",
+   "title": "Socialite",
+   "job": "Socialite",
+   "species": "Squirrel",
+   "study": "Commerce",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Hired from the Capital City; enters Busy. When Eustace is recruited, your Characters advance an extra step at your next Ready.",
+   "flavor": "He does nothing you could point to and somehow the whole afternoon is over before you meant it to be, and everybody in the room is charmed rather than annoyed about it.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "addMod",
+      "key": "extraAdvance",
+      "value": 1,
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    }
+   ],
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.11,
+    "power": 9.15,
+    "opportunityCost": 7.4
+   }
+  },
+  {
+   "id": "mk_eustaces_ball",
+   "type": "event",
+   "name": "Eustace's Ball",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "name": "Eustace"
+    }
+   ],
+   "text": "Requires Eustace. Your Cats and Badgers advance an extra step at your next Ready.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "addMod",
+      "key": "extraAdvance",
+      "value": 1,
+      "filter": {
+       "species": "Cat"
+      },
+      "expires": "untilUsed",
+      "consumable": true
+     },
+     {
+      "do": "addMod",
+      "key": "extraAdvance",
+      "value": 1,
+      "filter": {
+       "species": "Badger"
+      },
+      "expires": "untilUsed",
+      "consumable": true
+     }
+    ]
+   },
+   "flavor": "Eustace throws one for no occasion anybody can name, the Cats leave early because they please and the Badgers leave early because for once nothing needs finishing, and both are back at work sooner than the evening should have allowed.",
+   "rarity": "Common",
+   "power": {
+    "score": 2.02,
+    "power": 3,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_cynthia_junior_lab_assistant_0",
+   "type": "character",
+   "name": "Cynthia",
+   "title": "Junior Lab Assistant",
+   "job": "Junior Lab Assistant",
+   "species": "Otter",
+   "study": "Science",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Cynthia completes a shift, take a Science token.",
+   "flavor": "She starts the jar on her first day and has never once explained what the tokens are for, mostly because she has not decided yet.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "gainToken",
+      "of": "study",
+      "study": "Science",
+      "count": 1
+     }
+    }
+   ],
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.73,
+    "power": 4.56,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_cynthia_paint_drying_researcher_1",
+   "type": "character",
+   "name": "Cynthia",
+   "title": "Paint-Drying Researcher",
+   "job": "Paint-Drying Researcher",
+   "species": "Otter",
+   "study": "Science",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Upgrades Cynthia. When Cynthia completes a shift, take 2 Science tokens.",
+   "flavor": "The desk caught fire three feet away and she did not notice, because the paint was the more interesting variable. The desk was replaced within the week; the story was not.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "gainToken",
+      "of": "study",
+      "study": "Science",
+      "count": 2
+     }
+    }
+   ],
+   "rarity": "Uncommon",
+   "power": {
+    "score": 3.71,
+    "power": 6.83,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_cynthia_combustion_theorist_3",
+   "type": "character",
+   "name": "Cynthia",
+   "title": "Combustion Theorist",
+   "job": "Combustion Theorist",
+   "species": "Otter",
+   "study": "Science",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Cynthia. Busy: spend 2 Science tokens to gain 3 Supply.",
+   "flavor": "The desk fire taught her something after all, eventually, several open mic nights later: the jar is worth cashing in, not just keeping.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "spendToken",
+      "of": "study",
+      "study": "Science",
+      "count": 2,
+      "then": {
+       "do": "gainSupply",
+       "amount": 3
+      }
+     }
+    }
+   ],
+   "rarity": "Uncommon",
+   "power": {
+    "score": 4.64,
+    "power": 10.55,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_cynthia_head_of_the_absorption_wing_5",
+   "type": "character",
+   "name": "Cynthia",
+   "title": "Head of the Absorption Wing",
+   "job": "Head of the Absorption Wing",
+   "species": "Otter",
+   "study": "Science",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Cynthia. At the start of your turn, take a Science token. Busy: spend 3 Science tokens to gain 6 Supply.",
+   "flavor": "Nobody at the Science hall has ever explained what the Absorption Wing studies. Cynthia has, several times, at length, and nobody has followed any of it.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "gainToken",
+      "of": "study",
+      "study": "Science",
+      "count": 1
+     }
+    },
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "spendToken",
+      "of": "study",
+      "study": "Science",
+      "count": 3,
+      "then": {
+       "do": "gainSupply",
+       "amount": 6
+      }
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.92,
+    "power": 18.06,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_tb_science_lab",
+   "type": "townBuilding",
+   "name": "The Science Lab",
+   "title": "Town Building",
+   "cost": 3,
+   "build": {
+    "animals": 1
+   },
+   "text": "At the start of your turn, you may recruit a Science Character costing 2 or less from your hand for free.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "recruitFromHand",
+      "count": 1,
+      "optional": true,
+      "filter": {
+       "study": "Science",
+       "maxCost": 2
+      }
+     }
+    }
+   ],
+   "flavor": "FutureTech funds it quietly, a floor below the Hospital's books and two above where anybody is allowed to ask questions, and the borough's own Science hall has stopped minding where the money comes from.",
+   "rarity": "Legendary",
+   "power": {
+    "score": 10.96,
+    "power": 24.96,
+    "opportunityCost": 7.82
+   }
+  },
+  {
+   "id": "mk_tb_grocery_store",
+   "type": "townBuilding",
+   "name": "The Grocery Store",
+   "title": "Town Building",
+   "cost": 2,
+   "build": {
+    "animals": 1
+   },
+   "text": "At the start of your turn, gain 2 Supply.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "gainSupply",
+      "amount": 2
+     }
+    }
+   ],
+   "flavor": "Nothing about it is remarkable, which is rather the point: bread, milk, a till that adds up, and a queue that never once talks about the Capital City.",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.57,
+    "power": 12,
+    "opportunityCost": 6.82
+   }
+  },
+  {
+   "id": "mk_nancy_temp_agency_runner_0",
+   "type": "character",
+   "name": "Nancy",
+   "title": "Temp Agency Runner",
+   "job": "Temp Agency Runner",
+   "species": "Raccoon",
+   "study": "Civics",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Nancy is recruited, you may rehire a Character from your Unemployment for 1 less Supply.",
+   "flavor": "She has somebody on their feet again before the ink on the Unemployment slip is dry, nails clicking on the counter the whole time she is doing it.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "effect": {
+      "do": "rehire",
+      "discount": 1,
+      "optional": true
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 3.08,
+    "power": 5.14,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_nancy_temp_agency_manager_2",
+   "type": "character",
+   "name": "Nancy",
+   "title": "Temp Agency Manager",
+   "job": "Temp Agency Manager",
+   "species": "Raccoon",
+   "study": "Civics",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Nancy. Busy: you may rehire a Character from your Unemployment for 2 less Supply.",
+   "flavor": "She runs the whole board herself now, and the Hiring Hall's longer-serving clerks have learned better than to argue with her about the rate twice.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "rehire",
+      "discount": 2,
+      "optional": true
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.59,
+    "power": 12.03,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_dx_mayors_conference",
+   "type": "disruption",
+   "name": "The Mayor's Conference",
+   "cost": 0,
+   "shock": true,
+   "text": "On reveal: both Mayors search their deck for a Character and hire them, entering Busy, and nobody's Characters advance at the next Ready. Goes to the City Dump.",
+   "onReveal": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "everyoneSearchesDeck",
+      "count": 1,
+      "filter": {
+       "type": "character"
+      }
+     },
+     {
+      "do": "everyoneRecruitsFree",
+      "orientation": 270
+     },
+     {
+      "do": "blockNextReady"
+     }
+    ]
+   },
+   "flavor": "Both Mayors are called to the Capital City on the same short notice, and both come home with somebody new and no time yet to put them properly to work.",
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.15,
+    "power": 6.8,
+    "opportunityCost": 2
+   }
   }
  ],
  "newStudies": [
@@ -25335,7 +26647,10 @@
     "mk_mkt_toll_gate",
     "mk_mkt_ironwood_palisade",
     "mk_ord_the_building_grant",
-    "mk_mkt_courier_network"
+    "mk_mkt_courier_network",
+    "mk_dx_casino_fundraiser",
+    "mk_eustace_socialite_3",
+    "mk_dx_mayors_conference"
    ],
    "poolSize": 26,
    "minDisruptions": 3
@@ -25404,7 +26719,10 @@
     "mk_dylan_river_otter_4",
     "mk_barrow_stonecutter_5",
     "mk_bld_owlery",
-    "mk_faustus_threadmaster_5"
+    "mk_faustus_threadmaster_5",
+    "mk_dx_casino_fundraiser",
+    "mk_eustace_socialite_3",
+    "mk_dx_mayors_conference"
    ],
    "poolSize": 26,
    "minDisruptions": 6
@@ -25473,7 +26791,10 @@
     "mk_dx_the_year_it_stopped",
     "mk_dx_the_great_frost",
     "mk_dx_midsummer_fair",
-    "mk_dx_lord_mayors_fair"
+    "mk_dx_lord_mayors_fair",
+    "mk_dx_casino_fundraiser",
+    "mk_eustace_socialite_3",
+    "mk_dx_mayors_conference"
    ],
    "poolSize": 26,
    "minDisruptions": 2
@@ -25541,7 +26862,10 @@
     "mk_dx_the_year_it_stopped",
     "mk_dx_the_great_frost",
     "mk_dx_midsummer_fair",
-    "mk_dx_lord_mayors_fair"
+    "mk_dx_lord_mayors_fair",
+    "mk_dx_casino_fundraiser",
+    "mk_eustace_socialite_3",
+    "mk_dx_mayors_conference"
    ],
    "poolSize": 26,
    "minDisruptions": 3
@@ -25780,6 +27104,223 @@
     "title": null,
     "type": "event",
     "story": "Otter Time! — somebody goes in off the ferry steps, and within the hour there is not an otter in either borough doing the thing they were doing."
+   },
+   {
+    "id": "mk_henrietta_front_desk_clerk_0",
+    "name": "Henrietta",
+    "title": "Front Desk Clerk",
+    "type": "character",
+    "story": "Henrietta — the Rabbit at the Hiring Hall's front desk, board half-covered in her own handwriting, telling the queue about a character in a novel and a cousin's cousin in the same breath."
+   },
+   {
+    "id": "mk_henrietta_placement_officer_2",
+    "name": "Henrietta",
+    "title": "Placement Officer",
+    "type": "character",
+    "story": "Henrietta on the floor of the Hiring Hall rather than behind the desk, working a good posting from three directions at once and calling it a chat."
+   },
+   {
+    "id": "mk_henrietta_head_of_rabbit_recruitment_4",
+    "name": "Henrietta",
+    "title": "Head of Rabbit Recruitment",
+    "type": "character",
+    "story": "Henrietta at the top of her own invented title, on the warren telegraph, landing the best Rabbit in three wards and already halfway into the story of how she found them."
+   },
+   {
+    "id": "mk_dx_casino_fundraiser",
+    "name": "The Casino Fundraiser",
+    "title": "The Casino Fundraiser",
+    "type": "disruption",
+    "story": "The Casino Fundraiser — one raucous night in the Long Hall, a shared tote board, and a till that comes out even for both boroughs by the time the lamps go down."
+   },
+   {
+    "id": "mk_balto_bench_owl_0",
+    "name": "Balto",
+    "title": "Bench Owl",
+    "type": "character",
+    "story": "Balto — the Owl furniture-maker on a night visit, out the door with the right chisel before the neighbor has finished explaining what is wrong."
+   },
+   {
+    "id": "mk_balto_cabinetmaker_1",
+    "name": "Balto",
+    "title": "Cabinetmaker",
+    "type": "character",
+    "story": "Balto at the bench through the small hours, a joint going together that nobody commissioned and nobody will ever be told about."
+   },
+   {
+    "id": "mk_balto_shopkeeper_2",
+    "name": "Balto",
+    "title": "Shopkeeper",
+    "type": "character",
+    "story": "Balto behind his own counter off the Town Workshop court, reading a customer at noon the same unhurried way he reads a dark room at four in the morning."
+   },
+   {
+    "id": "mk_balto_furniture_craftsman_3",
+    "name": "Balto",
+    "title": "Furniture Craftsman",
+    "type": "character",
+    "story": "Balto with half the borough's good chairs under his name, none of them formally commissioned, all of them exactly what somebody needed."
+   },
+   {
+    "id": "mk_balto_guild_furniture_broker_5",
+    "name": "Balto",
+    "title": "Guild Furniture Broker",
+    "type": "character",
+    "story": "Balto, Guild Furniture Broker now in title only, still keeping the same order he always has: the neighbor first, the counter second."
+   },
+   {
+    "id": "mk_fingers_rooftop_runner_0",
+    "name": "Fingers",
+    "title": "Rooftop Runner",
+    "type": "character",
+    "story": "Fingers — the Raccoon who is somehow already there, coming down off a roofline nobody saw him climb."
+   },
+   {
+    "id": "mk_fingers_chimney_sweep_1",
+    "name": "Fingers",
+    "title": "Chimney Sweep",
+    "type": "character",
+    "story": "Fingers up one flue and down the next, coming out the other side of the town with a fair idea of what is coming next."
+   },
+   {
+    "id": "mk_fingers_root_cellar_diver_2",
+    "name": "Fingers",
+    "title": "Root-Cellar Diver",
+    "type": "character",
+    "story": "Fingers coming up out of a root cellar he had no business being under, holding exactly the thing that had been thrown out and was suddenly wanted again."
+   },
+   {
+    "id": "mk_fingers_master_locksmith_3",
+    "name": "Fingers",
+    "title": "Master Locksmith",
+    "type": "character",
+    "story": "Fingers going through his own deck of cousins and near-cousins for the one he actually needs, the way he goes through the rest of the town."
+   },
+   {
+    "id": "mk_fingers_the_one_who_gets_in_4",
+    "name": "Fingers",
+    "title": "The One Who Gets In",
+    "type": "character",
+    "story": "Fingers, however he is standing today — cheaper version or dearer, whichever the family actually needs this week, and gone again by morning."
+   },
+   {
+    "id": "mk_raccoon_family_reunion",
+    "name": "Raccoon Family Reunion",
+    "title": "Raccoon Family Reunion",
+    "type": "event",
+    "story": "Raccoon Family Reunion — every cousin, near-cousin and animal Fingers once vouched for, filling a town for one loud afternoon and emptying the job board by evening."
+   },
+   {
+    "id": "mk_edwina_cheese_counter_girl_0",
+    "name": "Edwina",
+    "title": "Cheese Counter Girl",
+    "type": "character",
+    "story": "Edwina — the Mouse behind the Cheese Store counter, popping up from somewhere she should not fit to startle whoever has earned it that day."
+   },
+   {
+    "id": "mk_edwina_cheese_stall_keeper_1",
+    "name": "Edwina",
+    "title": "Cheese Stall Keeper",
+    "type": "character",
+    "story": "Edwina under the market trestle on a Saturday, ready to pop out at whichever customer has been rude about her prices."
+   },
+   {
+    "id": "mk_edwina_cheese_cellar_keeper_2",
+    "name": "Edwina",
+    "title": "Cheese Cellar Keeper",
+    "type": "character",
+    "story": "Edwina in the cellar under the Cheese Store, catalogue of shelves and gaps in her head, deciding whose day it is today."
+   },
+   {
+    "id": "mk_edwina_cheese_merchant_3",
+    "name": "Edwina",
+    "title": "Cheese Merchant",
+    "type": "character",
+    "story": "Edwina at the top of the ladder, running the whole cheese trade and still finding the time to be exactly where nobody expects her."
+   },
+   {
+    "id": "mk_friendship_festival",
+    "name": "Friendship Festival",
+    "title": "Friendship Festival",
+    "type": "event",
+    "story": "Friendship Festival — the one day of the year a Cat and a Mouse are matched up on purpose, and the borough's quiet pleasure that it usually takes."
+   },
+   {
+    "id": "mk_eustace_socialite_3",
+    "name": "Eustace",
+    "title": "Socialite",
+    "type": "marketCharacter",
+    "story": "Eustace — the Capital City socialite, in the room for exactly as long as it takes to make everybody's afternoon go faster than the clock says it should."
+   },
+   {
+    "id": "mk_eustaces_ball",
+    "name": "Eustace's Ball",
+    "title": "Eustace's Ball",
+    "type": "event",
+    "story": "Eustace's Ball — a party for no occasion, and both the Cats and the Badgers back at work sooner than the evening ought to have allowed."
+   },
+   {
+    "id": "mk_cynthia_junior_lab_assistant_0",
+    "name": "Cynthia",
+    "title": "Junior Lab Assistant",
+    "type": "character",
+    "story": "Cynthia — the Otter scientist, starting a jar of tokens on the Science hall bench with no plan yet for what they are for."
+   },
+   {
+    "id": "mk_cynthia_paint_drying_researcher_1",
+    "name": "Cynthia",
+    "title": "Paint-Drying Researcher",
+    "type": "character",
+    "story": "Cynthia mid-experiment on how long a particular blue paint takes to dry, three feet from a desk that is, at this exact moment, on fire."
+   },
+   {
+    "id": "mk_cynthia_combustion_theorist_3",
+    "name": "Cynthia",
+    "title": "Combustion Theorist",
+    "type": "character",
+    "story": "Cynthia finally working out, several open mic nights and one replaced desk later, that the jar on her bench is worth spending."
+   },
+   {
+    "id": "mk_cynthia_head_of_the_absorption_wing_5",
+    "name": "Cynthia",
+    "title": "Head of the Absorption Wing",
+    "type": "character",
+    "story": "Cynthia running the whole Absorption Wing now, jar and all, explaining what it studies to a room that has never once followed the explanation."
+   },
+   {
+    "id": "mk_tb_science_lab",
+    "name": "The Science Lab",
+    "title": "Town Building",
+    "type": "townBuilding",
+    "story": "The Science Lab — a bench and a bay FutureTech pays for without ever quite explaining why, and Cynthia's jar of tokens is not the strangest thing on the shelf."
+   },
+   {
+    "id": "mk_tb_grocery_store",
+    "name": "The Grocery Store",
+    "title": "Town Building",
+    "type": "townBuilding",
+    "story": "The Grocery Store — the plainest counter in the borough, turning over the same small trade every single morning without fail."
+   },
+   {
+    "id": "mk_nancy_temp_agency_runner_0",
+    "name": "Nancy",
+    "title": "Temp Agency Runner",
+    "type": "character",
+    "story": "Nancy — the Raccoon at the Hiring Hall's temp board, nails clicking on the counter, an animal back on their feet before the Unemployment slip's ink is dry."
+   },
+   {
+    "id": "mk_nancy_temp_agency_manager_2",
+    "name": "Nancy",
+    "title": "Temp Agency Manager",
+    "type": "character",
+    "story": "Nancy running the whole temp board herself, hair filling the doorway, heart entirely too big for the operation she pretends to be running coldly."
+   },
+   {
+    "id": "mk_dx_mayors_conference",
+    "name": "The Mayor's Conference",
+    "title": "The Mayor's Conference",
+    "type": "disruption",
+    "story": "The Mayor's Conference — both Mayors summoned out at once, and both come home with a new hire and no time yet to put them to work."
    }
   ]
  }

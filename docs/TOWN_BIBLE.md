@@ -66,6 +66,10 @@ add to the list.
   has been theirs since the spring, repainted, with every one of its staff kept on. The company posts
   a record quarter every quarter, including the year the bridge went. Nobody has been past the second
   floor and nobody can say where the automatons go when a job is finished. [Cornelius, Jim]
+- **FutureTech also quietly funds a Science Lab in the borough itself**, a bench and a bay separate
+  from the Hospital's books and the Store's till, where the town's own Science-study animals work
+  free of the Capital City's usual terms. Cynthia's desk is in it, and the Science hall has stopped
+  asking where the money comes from. [Cynthia, Cornelius]
 - **The Clinic** — two rooms, a scrubbed floor and a coral tank in the waiting office that the babies
   of both boroughs will watch for an hour. Small, friendly and nobody's but the borough's. [town cards]
 - **The ward court** — one room over the old assize office, a window that does not shut and a bench
@@ -91,6 +95,24 @@ add to the list.
   Airport. The borough has a forecourt, a filling station and an airfield, and has had all three for
   longer than anybody bothers to say; the Capital City put them up and the borough's use of them is
   its own business, exactly as it is with the Physic Garden. [town cards]
+- **The Grocery Store is a plain one**, older than any of the Capital City's newer lots and owned by
+  nobody in particular. Bread, milk, a till that adds up, and a queue that has never once discussed
+  the Capital City. [town cards]
+- **The Hiring Hall runs two desks a Rabbit and a Raccoon have made their own.** Henrietta's front
+  desk posts the board and gossips about all of it, invented characters included; Nancy's temp board,
+  a shorter and louder operation a few feet along the same counter, is how the borough's fast, small
+  jobs get filled inside a day. [Henrietta, Nancy]
+- **Fingers gets in anywhere, and nobody in either borough can explain how.** He has been seen coming
+  down off the Observatory dome, coming up out of a locked cellar, and walking in the front door as
+  if that were an option he simply chose not to use most days. The borough has stopped asking. [Fingers]
+- **The Cheese Store's cellar is Edwina's**, stocked and rotated on a schedule only she understands,
+  and she is small enough to hide in the gaps behind its shelving — which she does, on purpose, to
+  startle whichever neighbor has earned it that day. [Edwina]
+- **Balto's workshop is off the Town Workshop court**, and any bench, chair or shelf in the borough
+  with a neat dovetail joint and no record of ever being commissioned probably came off it. [Balto]
+- **Capital City socialites come out to the borough for a season sometimes**, and leave exactly as
+  suddenly as they arrived; Eustace is the standing example, and the whole town runs a little faster
+  for exactly as long as he stays. [Eustace]
 - **The Farmer's Market is on the square on a Saturday**, trestles up from six and down by one.
   Teresa's peppers are at the far end next to Shay's paintings. It is a Town Building — the borough
   raises it for itself — and it pays what the borough actually brought. [Teresa, Shay]
@@ -197,6 +219,18 @@ add to the list.
 - **The Tax Assessors come out from the Capital City with clipboards**, unannounced, and the borough
   loses Supply when they do. They are the disaster Copper's cellar was stocked against, and he has
   met them four times. [Copper]
+- **The Capital City runs a Casino Fundraiser some seasons** — table games in the Long Hall for one
+  night, open to both boroughs, run by whoever the Capital City sends out. The till comes out roughly
+  even between the two towns by morning whatever went in the night before. [town cards]
+- **The Capital City calls both Mayors to a conference from time to time**, on short and identical
+  notice, and both come home having hired somebody on the spot — with no time yet, either of them, to
+  put the new hire properly to work. [town cards]
+- **Raccoon families in the First Boroughs hold reunions large enough to fill a whole town for an
+  afternoon.** Every cousin, near-cousin and animal ever vouched for by somebody turns up, the job
+  board empties by evening, and nobody minds even slightly. [Fingers]
+- **The borough holds a Friendship Festival**, a fixture nobody remembers the start of, that pairs up
+  Cats and Mice for the day on the grounds that neither species is naturally the other's friend and
+  the festival intends to fix that, one matched pair at a time. [town cards]
 - **The borough's night market is Hazel's**, and it keeps its own hours: the trestles go up when the
   lamps go on and come down around four. It is where the town buys the things it cannot name, and it
   is the reason the night trade has a voice at daylight meetings at all — Hazel has run the guild
@@ -653,6 +687,13 @@ Characters the maker added to the shelf who replace no printed card. They carry 
 | Robbie | The Badger reporter on the borough paper, added by the maker: no printed Robbie. He has asked Cornelius in print four times where the automatons go. | 2026-09-16 |
 | Cornelius | The Mouse who runs FutureTech, added by the maker: no printed Cornelius. He is hired out of the Capital City rather than recruited, like Kevin and Brett, and he does not stay. | 2026-09-16 |
 | The ten babies | Bunny, Baby Mouse, Badger Cub, Hoglet, Raccoon Kit, Fox Cub, Otter Pup, Squirrel Kit, Kitten and Owlet — one for every species, added by the maker. Like the obscured figures they carry an `anchor` rather than an ability, and unlike them they have names: they cost nothing, work three turns for one Supply, and count as 1 or 2 when an animal of their species is set over them. The ward counts a Baby Mouse, a Badger Cub, a Raccoon Kit, a Fox Cub and an Owlet at **two** — those five are the ones whose first season is held to be half the trade — and the rest at one. | 2026-09-16 |
+| Henrietta | The Rabbit at the Hiring Hall's front desk, added by the maker: no printed Henrietta. | 2026-09-16 |
+| Balto | The Owl furniture craftsman, added by the maker: no printed Balto. | 2026-09-16 |
+| Fingers | The Raccoon who gets in anywhere, added by the maker: no printed Fingers, and no relation to Pockets or Patch beyond all three working outside the ordinary front door. | 2026-09-16 |
+| Edwina | The Mouse cheese expert, added by the maker: no printed Edwina. | 2026-09-16 |
+| Cynthia | The Otter scientist, added by the maker: no printed Cynthia. | 2026-09-16 |
+| Eustace | The Squirrel socialite out from the Capital City, added by the maker: no printed Eustace. | 2026-09-16 |
+| Nancy | The Raccoon who runs the Hiring Hall's temp board, added by the maker: no printed Nancy. | 2026-09-16 |
 
 Cards may be additions too — an extra rung in a remade character's arc, an added character's own
 cards, or a card of a type the printed set never had. All twelve **Town Buildings** and all nineteen
@@ -664,7 +705,11 @@ shift (Biff, Comet, Brooke, Moss, Maribel, Daniel, Copper, Lynnette, Rosabeth an
 rest carrying an ability the character's own backstory had already asked for — among them Clover,
 Bella, Ned, Beck, Marmalade and Hazel; Orien's Tally Clerk, both of Pockets' lower rungs and Quinn's
 first and last; and, from the Sage-to-Willow batch, Eric's Best Farmer There Ever Was and Jessica's
-Song and Game Leader.
+Song and Game Leader. A further batch of thirty-one landed after that count was taken: Henrietta (3),
+Balto (5), Fingers (5), Edwina (4), Cynthia (4) and Nancy (2), plus the Science Lab and Grocery Store
+Town Buildings, Eustace's own Market Character, and five events and shared weather with no character
+behind them — the Casino Fundraiser, the Raccoon Family Reunion, the Friendship Festival, Eustace's
+Ball and the Mayor's Conference.
 
 ---
 
