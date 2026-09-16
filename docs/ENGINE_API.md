@@ -573,6 +573,51 @@ and the ward does not care that both posts pay the same.
 The cards these were built for carry no `wantedVerbs`: the maker's instruction for this batch was to
 build what the writing needed rather than log it, so the list is empty and the round is the record.
 
+## Card data: the eighth round (v0.14.0)
+
+The maker's second batch: six Legendary top cards for animals already on the shelf, five new
+characters — Cindy, Elvira, Jim, Robbie and Cornelius — six new places, three Events, and five
+Capital City Buildings moved onto the towns' own shelves. Six things the engine could not do, all
+approved up front. Everything here is in `test/card-vocabulary.mjs` where it is a verb, priced in
+`src/engine/power.js`, and spoken by at least one card.
+
+- **`peekOpponentDeck`** — the top `count` cards of the rival's deck, read and put back. The one
+  window on a deck that is not yours, and the third of the three Elvira's booth reads. Information
+  only: nothing moves, nothing is taken, and the rival is told what was read, the same manners
+  `peekOpponentHand` keeps — a card that reads your deck in silence is one you cannot play around.
+  Priced at half a `peekOpponentHand` per card, because what is on top of a deck is not yet a
+  decision anybody has made.
+
+- **`readyCharacter`'s `all`** — the whole floor stands up, with nobody asked which. Everything that
+  is not already upright and is not pledged into an auction is readied, which is the only honest
+  shape for a building that opens its doors on the hour: FutureTech HQ does not know your names.
+  Rated on how much of a town is usually down at the top of a turn rather than as a single ready.
+
+- **`recruitFromHand`'s `count`** — the open door rather than the one hire, so Otter Time! can take
+  every Otter in the hand at once. The town cap is still read per animal, so a town with two places
+  left takes two however many turned up.
+
+- **`searchDeck`'s `filter.mentions`** — the trade-name search: every card in the deck that says the
+  word, in its name, title, rules text, flavor or the rules it actually runs (`mentionsWord` in
+  `effects.js`). FutureTech Release Day finds the store, the fan and the coffee bar in one go without
+  any of them carrying a keyword a player would have to learn.
+
+- **`gainSupply`'s `per: 'buildingsBuilt'`** — a rate paid over the roofs rather than the animals,
+  which is the one `per` in the collection that is not about a body. The FutureTech Store pays out
+  over every Building the town has raised; `max` is still required, because a rate with no ceiling
+  cannot be rated.
+
+- **An ability's `cooldownTurns`** — the shutter coming down. An ability fires and then may not fire
+  again for that many of the Mayor's own turns (their turns are two apart in `state.turnNumber`, the
+  rival's falling between them). `oncePerTurn` is a limit inside one turn; this is the limit across
+  them, and it is what lets the Ice Cream Shop put one of the rival's animals back to work every
+  other turn rather than every turn or once a game.
+
+One thing the batch asked for and did **not** get: a Building simply raised for nothing, which
+Cornelius's pitch wanted. A roof that appears without an auction or a crew would be the one card in
+the collection that skips both; his standing `buildingDiscount` and his `lotDiscount` on every lot
+with a roof on it are the same bargain paid in instalments. It is logged in his `wantedVerbs`.
+
 ## Tokens (v0.7.2)
 
 Tokens are markers a Mayor holds beside their Supply: one kind per species, one per field of study,

@@ -159,17 +159,22 @@ test('the card set matches the model', async (t) => {
     }
   });
 
-  await t.test('the ten Legendaries are the ten best cards in the catalogue, one at every cost', () => {
+  await t.test('the Legendaries are the best cards in the catalogue, one at every cost', () => {
     const legendary = SET.cards.filter((c) => c.rarity === 'Legendary');
-    assert.equal(legendary.length, 10, 'ten, and the count is the point of the tier');
+    // A short list, and short is the point of the tier: a Legendary is a card the whole collection
+    // is measured against. It was ten while ten was the whole tier; the count is not fixed, because
+    // a maker may write a top card for an animal who deserves one — what is fixed is that the tier
+    // stays a small fraction of a collection of six hundred cards.
+    assert.ok(legendary.length >= 10, 'the tier is a short list, not an empty one');
+    assert.ok(legendary.length <= 0.05 * SET.cards.length, `${legendary.length} Legendaries is no longer a short list`);
     for (const band of COST_BANDS) {
       assert.ok(legendary.some((c) => costBand(c) === band), `no Legendary costs ${band}`);
     }
     // "Most powerful" across cost groups means most powerful *for its cost*: raw score only ever
-    // ranks the Masters. rateSet orders on that, so the Legendaries are simply its first ten.
+    // ranks the Masters. rateSet orders on that, so the Legendaries are simply its first N.
     const ranked = rateSet(SET, RULES).filter((r) => DECK_TYPES.has(r.type));
-    const top10 = new Set(ranked.slice(0, 10).map((r) => r.id));
-    assert.deepEqual(top10, new Set(legendary.map((c) => c.id)), 'the top ten and the Legendaries are not the same ten cards');
+    const top = new Set(ranked.slice(0, legendary.length).map((r) => r.id));
+    assert.deepEqual(top, new Set(legendary.map((c) => c.id)), 'the top of the ranking and the Legendaries are not the same cards');
     // And a step clear of the best Super Rare at the same cost, rather than a rounding of it.
     for (const band of COST_BANDS) {
       const group = ranked.filter((r) => r.band === band);

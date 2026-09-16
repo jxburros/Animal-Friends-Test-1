@@ -59,6 +59,20 @@ add to the list.
   Mercy. They are the town's stated virtues; a backstory that touches one should mean it. Nine stand in
   the Capital City in any one year and the rest are still in the quarry, which is why two animals can
   remember a different set. [town cards]
+- **FutureTech** — the Capital City's technology company, and the newest thing in the bible. **FutureTech
+  HQ** is glass to the fourth floor, with a lobby anyone may walk through and two floors nobody may;
+  the borough's own **FutureTech Store** sells what came off those floors a month ago; **Starfish
+  Coffee**, the land's coffee chain, is FutureTech's and is run by automatons; and **The Hospital**
+  has been theirs since the spring, repainted, with every one of its staff kept on. The company posts
+  a record quarter every quarter, including the year the bridge went. Nobody has been past the second
+  floor and nobody can say where the automatons go when a job is finished. [Cornelius, Jim]
+- **The Clinic** — two rooms, a scrubbed floor and a coral tank in the waiting office that the babies
+  of both boroughs will watch for an hour. Small, friendly and nobody's but the borough's. [town cards]
+- **The ward court** — one room over the old assize office, a window that does not shut and a bench
+  somebody made too high. Cindy sits in it, and the circuit takes her round the other three wards.
+  Tax Day queues at the same office, with Cindy next door for the grievances. [Cindy]
+- **The fairground booth** — Elvira's, with a roof on it now, open most weeks and with a queue that
+  starts before she does. [Elvira]
 - **The City Dump** and **Unemployment** are where cards and animals go when work runs out. Both are
   ordinary parts of town life, not disgrace.
 - **Bought out of the Capital City by the borough** — the Weighbridge at the Grain Exchange, the
@@ -633,6 +647,11 @@ Characters the maker added to the shelf who replace no printed card. They carry 
 | Reese | The Raccoon pilot, added by the maker: no printed Reese, and no relation to Comet or Brook beyond all three having left the ground. | 2026-09-16 |
 | Mimi | The Rabbit who runs the cabin, added by the maker: no printed Mimi. She has one version in each of five studies and swaps between them freely, which is the point of her. | 2026-09-16 |
 | Mildred | The Badger at the Counting House counter, added by the maker: no printed Mildred. | 2026-09-16 |
+| Cindy | The Fox who sits in the ward court, added by the maker: no printed Cindy, and no relation to Brett beyond both making a living out of other animals' arguments. | 2026-09-16 |
+| Elvira | The fortune-telling Cat of the fairground, added by the maker: no printed Elvira. | 2026-09-16 |
+| Jim | The Raccoon who blogs about FutureTech, added by the maker: no printed Jim. The pale patch on the left of his head is from the automated candle, and is the borough's own evidence in the matter. | 2026-09-16 |
+| Robbie | The Badger reporter on the borough paper, added by the maker: no printed Robbie. He has asked Cornelius in print four times where the automatons go. | 2026-09-16 |
+| Cornelius | The Mouse who runs FutureTech, added by the maker: no printed Cornelius. He is hired out of the Capital City rather than recruited, like Kevin and Brett, and he does not stay. | 2026-09-16 |
 | The ten babies | Bunny, Baby Mouse, Badger Cub, Hoglet, Raccoon Kit, Fox Cub, Otter Pup, Squirrel Kit, Kitten and Owlet — one for every species, added by the maker. Like the obscured figures they carry an `anchor` rather than an ability, and unlike them they have names: they cost nothing, work three turns for one Supply, and count as 1 or 2 when an animal of their species is set over them. The ward counts a Baby Mouse, a Badger Cub, a Raccoon Kit, a Fox Cub and an Owlet at **two** — those five are the ones whose first season is held to be half the trade — and the rest at one. | 2026-09-16 |
 
 Cards may be additions too — an extra rung in a remade character's arc, an added character's own

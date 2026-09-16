@@ -46,6 +46,9 @@ export const EFFECTS = new Set([
   // Disruptions: a card a Mayor chooses to play and that moves both towns is the interactive shape
   'swapWithHand', 'paySupply', 'unemployOwnCharacter', 'opponentDiscards',
   'everyoneRecruitsFree', 'everyoneSearchesDeck',
+  // the eighth round (docs/ENGINE_API.md): the fortune-teller's third window — the top of the
+  // rival's deck, which nothing else in the collection can see
+  'peekOpponentDeck',
 ]);
 export const TRIGGERS = new Set([
   'passive', 'busy', 'onRecruit', 'onTurnStart', 'onTurnEnd', 'onReady', 'onShiftStarted', 'onShiftCompleted',

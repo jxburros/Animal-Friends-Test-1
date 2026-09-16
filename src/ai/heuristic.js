@@ -921,6 +921,17 @@ export function makeHeuristicAgent(options = {}) {
       });
       return statue && p.supply >= 2;
     }
+    if (req.reason === 'paySupply') {
+      // A counter that turns Supply into cards: the Game Store, Jim's launch-day queue, the searches
+      // that charge for themselves. The default on these is yes, and a town that says yes every turn
+      // spends its whole float on card draw and then cannot recruit, work or bid — which is exactly
+      // what happened to the Mouse deck when the Game Store came onto its shelf (a printed deck went
+      // from 35% to 18% over 1080 games on nothing else). So it is bought out of the surplus only:
+      // pay when what is left still covers a Journeyman and a rung of the ladder.
+      const p = state.players[pi];
+      const price = typeof req.amount === 'number' ? req.amount : 1;
+      return p.supply - price >= 5;
+    }
     return !!req.default;
   }
 

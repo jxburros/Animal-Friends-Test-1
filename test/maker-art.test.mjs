@@ -160,8 +160,12 @@ test('every newly added character and fair card has a commissioned scene', () =>
     'mk_dx_midsummer_fair',
     'mk_dx_lord_mayors_fair',
   ]);
-  const newCards = MAKER.cards.filter((card) =>
-    newCharacterPrefixes.some((prefix) => card.id.startsWith(prefix)) || newFairIds.has(card.id));
+  // A card written after this wave and still waiting on a painter is on the set's `needsArt` list
+  // and is excused by the test above; this one is about the wave that was painted, so it reads the
+  // same list rather than pinning a prefix that later cards also match (Yellow's Rapper, v0.13.0).
+  const waiting = new Set((MAKER.needsArt?.cards || []).map((c) => c.id));
+  const newCards = MAKER.cards.filter((card) => !waiting.has(card.id)
+    && (newCharacterPrefixes.some((prefix) => card.id.startsWith(prefix)) || newFairIds.has(card.id)));
 
   assert.equal(newCards.length, 26);
   assert.deepEqual(newCards.filter((card) => !MAKER_ART_TILES[card.id]), []);

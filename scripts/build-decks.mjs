@@ -100,24 +100,34 @@ const LEGENDARY_CAP = 2;
  */
 const TOWNS = [
   { id: 'mk-furrow-warren', name: 'Furrow & Warren', species: ['Rabbit'], studies: ['Agriculture', 'Civics'], support: lean('Rabbit'),
+    seeds: ['mk_tb_starfish_coffee'],
     blurb: 'Rabbits of Agriculture and Civics: the allotment strip, the parish meeting and more of them arriving than leaving. No one Rabbit is much; the sixth one out of your hand is the whole town.' },
   { id: 'mk-margin-pantry', name: 'Margin & Pantry', species: ['Mouse'], studies: ['Lore', 'Food'], support: lean('Mouse'),
+    seeds: ['mk_tb_rosabeths_gate', 'mk_tb_open_mic_room', 'mk_tax_day'],
     blurb: 'Mice of Lore and Food: the reading room over the kitchen. Every Event the borough has ever filed is played once, fished back out of the dump and played again, and there is always something on the stove.' },
   { id: 'mk-bench-bylaw', name: 'Bench & Bylaw', species: ['Badger'], studies: ['Crafts', 'Civics'], support: lean('Badger'),
+    seeds: ['mk_robbie_cub_reporter_0', 'mk_robbie_columnist_1', 'mk_robbie_features_writer_2', 'mk_robbie_editor_in_chief_5', 'mk_tb_futuretech_store'],
     blurb: 'Badgers of Crafts and Civics: the bench and the bylaw, and neither of them moves. Whatever the Capital City posts this morning, the work goes on and somebody is put back on the books by lunch.' },
   { id: 'mk-hedge-holiday', name: 'Hedge & Holiday', species: ['Hedgehog'], studies: ['Agriculture', 'Entertainment'], support: lean('Hedgehog'),
+    seeds: ['mk_tb_clinic'],
     blurb: 'Hedgehogs of Agriculture and Entertainment: a hedge laid to last fifteen years and a bank holiday declared on the strength of it. Nothing the rival does reaches anybody in this town.' },
   { id: 'mk-bin-barter', name: 'Bin & Barter', species: ['Raccoon'], studies: ['Commerce', 'Lore'], support: lean('Raccoon'),
+    seeds: ['mk_community_bonfire', 'mk_reading_lanterns', 'mk_tb_the_warren', 'mk_tb_chit_press'],
     blurb: 'Raccoons of Commerce and Lore: the City Dump is this town\u2019s second hand and its archive. What the other Mayor threw out on Tuesday is on a trestle with a price on it by Thursday.' },
   { id: 'mk-gavel-greasepaint', name: 'Gavel & Greasepaint', species: ['Fox'], studies: ['Commerce', 'Entertainment'], support: lean('Fox'),
+    seeds: ['mk_cindy_court_clerk_1', 'mk_cindy_magistrate_2', 'mk_cindy_circuit_judge_4', 'mk_cindy_justice_of_the_boroughs_5', 'mk_kevin_construction_4'],
     blurb: 'Foxes of Commerce and Entertainment: they know what the Capital City is about to put up, what it is worth, and how to look like they do not want it. The bid changes after the bidding has opened.' },
   { id: 'mk-current-counter', name: 'Current & Counter', species: ['Otter'], studies: ['Food', 'Commerce'], support: lean('Otter'),
+    seeds: ['mk_brooke_aeronaut_5'],
     blurb: 'Otters of Food and Commerce: the counter by the water, open all hours. Work slides from paw to paw, nobody in this town sits down for long, and the round is finished before the rival has finished their Ready.' },
   { id: 'mk-cache-kitchen', name: 'Cache & Kitchen', species: ['Squirrel'], studies: ['Civics', 'Food'], support: lean('Squirrel'),
+    seeds: ['mk_yellow_rapper_5'],
     blurb: 'Squirrels of Civics and Food: a town that is poor all game and rich exactly once, on the turn it has been saving for. Everything is put by, minuted, and spent at the auction nobody expected them at.' },
   { id: 'mk-lens-lathe', name: 'Lens & Lathe', species: ['Cat'], studies: ['Science', 'Crafts'], support: lean('Cat'),
+    seeds: ['mk_elvira_tea_leaf_reader_0', 'mk_elvira_fairground_booth_2', 'mk_elvira_fortune_teller_3', 'mk_tb_ice_cream_shop'],
     blurb: 'Cats of Science and Crafts: a lens ground to a tolerance nobody asked for, by somebody who was not supposed to be up. This town acts on the turn it feels like acting, and the rival\u2019s Ready can wait.' },
   { id: 'mk-dome-dusk', name: 'Dome & Dusk', species: ['Owl'], studies: ['Science', 'Entertainment'], support: lean('Owl'),
+    seeds: ['mk_jessica_teacher_of_the_boroughs_5'],
     blurb: 'Owls of Science and Entertainment: the dome, the late hall and a forecast to the minute. An Owl town is wise, awake and poor — so it reads the deck, wakes the shift up early, and is three turns ahead by dawn.' },
 ];
 
@@ -312,8 +322,21 @@ function build(ident) {
   // list the builder printed — which is the better place for it, because it holds however the decks
   // are rebuilt and costs the builder no freedom at all.
 
-  // Characters, cost band by cost band, best fit then best rated. A Legendary is not seeded: it has
-  // to earn its slot off the same affinity everything else is read on, and at most two of them do.
+  // Seeds: cards this identity is written to hold, taken before anything else the builder chooses.
+  // Affinity is a good way to fill a deck and a poor way to make sure the borough's newest animals
+  // are ever met — a Fox judge whose study is not one of the Fox deck's two studies will never be
+  // reached for, however good her cards are. So each identity may name a handful of cards that are
+  // simply in it, and the passes below build around them. Everything else about them is normal: the
+  // copy caps, the Legendary cap and the curve all read them like any other card in the list.
+  for (const id of ident.seeds || []) {
+    const seed = cards.find((c) => c.id === id);
+    if (!seed) throw new Error(`${ident.id}: no card ${id} to seed`);
+    take(seed, 1);
+  }
+
+  // Characters, cost band by cost band, best fit then best rated. A Legendary is not seeded unless
+  // the identity names it: otherwise it has to earn its slot off the same affinity everything else
+  // is read on, and at most two of them do.
   for (const [cost, want] of Object.entries(CURVE)) {
     const band = cards
       .filter((c) => c.type === 'character' && c.cost === Number(cost) && affinity(c, ident) > 0)
