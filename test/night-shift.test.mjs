@@ -169,7 +169,10 @@ describe('the night cards in play', () => {
 
 describe('the night cards\u2019 art', () => {
   test('every Owl and Science card resolves a bundled painting, and both have their own icons and scene', () => {
-    for (const c of owlsAndScience) {
+    // Cards still on the set's NeedsArt list have no painting yet, by design: they are written and
+    // playable and waiting on an illustrator (docs/NeedsArt.md).
+    const waiting = new Set((SET.needsArt?.cards || []).map((c) => c.id));
+    for (const c of owlsAndScience.filter((c) => !waiting.has(c.id))) {
       const svg = paintedArtSVG(c, '<svg data-fallback="original"/>');
       assert.ok(svg.includes('painted-art') && svg.includes('atlas.png'), `${c.id} names a bundled atlas`);
       assert.ok(svg.includes('data-fallback="original"'), `${c.id} keeps the vector fallback`);

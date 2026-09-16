@@ -1,6 +1,6 @@
 // Turn structure: Start → Resources → Ready → Actions → End, plus the whole-game runner.
 import { cardDef, topCard, log, opponentOf, expireMods, consumeMod, hasMod, hasPassive, refillCity, ageCity, cityRule, freshTurnCounters, buildingCap, UPRIGHT, BUSY, findStack } from './state.js';
-import { ask, draw, gainSupply, completeShift, readyStack, gainMarketCard, makeStatueRoom, fireHook, checkVictory, flushReveals } from './effects.js';
+import { ask, draw, gainSupply, completeShift, readyStack, gainMarketCard, makeStatueRoom, fireHook, checkVictory, flushReveals, unemployStack } from './effects.js';
 import { shuffle } from './rng.js';
 import { legalActions, applyAction, forfeitOf, statueTierFor, cardCostFor, buildingUpkeepFor } from './actions.js';
 
@@ -338,6 +338,14 @@ export async function endPhase(state, pi) {
       else state.market.cityDump.push(c.cardId);
     }
     log(state, pi, `${back.name}'s retainer is up; they ${returning ? 'take to the road, and may come round again' : 'go back to the Capital City'}.`, { kind: 'termEnd', player: pi, uid: s.uid, cardId: s.cards[0].cardId, returned: returning });
+  }
+  // The airfield's hires go home. They came out of hand for nothing and stood upright the moment
+  // they landed; the price is that the town does not keep them, and they are gone before the next
+  // Mayor's turn rather than at the top of this one's. A pledged animal is not sent home mid-auction.
+  for (const s of p.town.slice()) {
+    if (!s.dayLabour || s.lockedBid) continue;
+    log(state, pi, `${topCard(state, s).name}'s day is over.`, { kind: 'dayLabourEnds', player: pi, uid: s.uid, cardId: s.cards[0].cardId });
+    await unemployStack(state, pi, s, { byEffect: false, sourcePi: pi });
   }
   await fireHook(state, 'onTurnEnd', { player: pi });
   expireMods(p, 'turnEnd');

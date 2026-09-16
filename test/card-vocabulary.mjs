@@ -40,6 +40,11 @@ export const EFFECTS = new Set([
   'everyonePaysTollOrBusy',
   // PROTOTYPE: a toll set as a share of what each Mayor is holding, not a flat amount
   'everyoneLosesPercentSupply',
+  // the seventh round (docs/ENGINE_API.md): the twins' trick, the counter that takes Supply back
+  // over it, the animal let go by her own Mayor, the rival's hand burnt rather than reordered, and
+  // the two shared shocks the fair and the falling stars asked for
+  'swapWithHand', 'paySupply', 'unemployOwnCharacter', 'opponentDiscards',
+  'everyoneRecruitsFree', 'everyoneSearchesDeck',
 ]);
 export const TRIGGERS = new Set([
   'passive', 'busy', 'onRecruit', 'onTurnStart', 'onTurnEnd', 'onReady', 'onShiftStarted', 'onShiftCompleted',
@@ -62,6 +67,8 @@ export const PASSIVE_KEYS = new Set([
   // the producer's rule: the Capital City deals `value` more stalls than it is printed for, read for
   // both Mayors because the display is shared (state.js's capitalCitySize)
   'capitalCityExtraStalls',
+  // the banker's standing rate: every shift the OTHER town finishes pays `value` less
+  'opponentShiftPenalty',
   // Statue burdens
   'opponentRehireDiscount', 'opponentFirstBidPlus1', 'apprenticeEntersBusy', 'eventCostPlus1',
   'resourceSupplyMinus1', 'losingBidsPayFull', 'pledgeLadderPlus1',

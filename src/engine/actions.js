@@ -20,7 +20,7 @@ export function recruitCost(state, pi, cardId, targetUid = null) {
     // The target may be a stack in town or an animal face down in Unemployment; either way the
     // upgrade costs the plain printed difference.
     const under = s ? topCard(state, s) : cardDef(state, p.unemployment.find((c) => c.uid === targetUid).cardId);
-    cost = def.cost - under.cost;
+    cost = def.cost - upgradeValue(under);
   }
   // A recruit discount may be typed (the café rate applies to Food animals only, the printer's rate
   // only to a card that upgrades an animal you already have); an untyped one applies to everybody,
@@ -42,8 +42,20 @@ export function recruitCost(state, pi, cardId, targetUid = null) {
  * study takes any Character who does that work. Either way the newcomer still has to cost more, so an
  * anchor is a cheap place to start a career, never a discount on one.
  */
+/**
+ * What a card is worth to the animal standing on top of it. Ordinarily its printed cost — but an
+ * obscured figure may print `anchor.asCost`, and the babies do: a Kitten costs nothing to put out
+ * and still counts as a Journeyman's start when a Cat is played over her, because what is being
+ * bought is the rest of a career and not a discount on one. Read by both halves of the upgrade
+ * rule, so the figure that gates who may be played over her is the figure the Mayor pays against.
+ */
+export function upgradeValue(def) {
+  const asCost = def && def.anchor && def.anchor.asCost;
+  return typeof asCost === 'number' ? asCost : (def ? def.cost : 0);
+}
+
 export function upgradesOver(t, def) {
-  if (!t || t.cost >= def.cost) return false;
+  if (!t || upgradeValue(t) >= def.cost) return false;
   const anchor = t.anchor;
   if (anchor) {
     if (anchor.species && t.species && t.species === def.species) return true;
@@ -251,6 +263,8 @@ export function pledgeMinCost(state, pending, pi) {
 export function canPledge(state, pi, pending, stack) {
   const cap = state.rules.market.auction?.bidCapPerPlayer;
   if (cap && pending && pending.chars[pi].length >= cap) return false;
+  // Nobody pledges a day hire: the animal will not be in the town when the lot is settled.
+  if (stack.dayLabour) return false;
   return topCard(state, stack).cost >= pledgeMinCost(state, pending, pi);
 }
 

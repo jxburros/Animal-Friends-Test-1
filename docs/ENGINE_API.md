@@ -484,6 +484,81 @@ Both are logged as `resolved` in their character's `wantedVerbs` entry in
 `spec/maker_card_set.json`, naming what was built and what the card says now, per
 `docs/WRITING_A_CHARACTER.md`'s convention.
 
+## Card data: the seventh round (v0.13.0)
+
+The first round built to a maker's batch rather than to a backlog of `wantedVerbs`: sixty-three cards
+— ten babies, eight new characters, two characters given new tracks, eleven places and three shared
+cards — asked for eleven things the engine could not do, and the maker approved them up front rather
+than logging them for later. Everything here is new vocabulary in `test/card-vocabulary.mjs`, priced
+in `src/engine/power.js`, and spoken by at least one card in `spec/maker_card_set.json`.
+
+- **`anchor.asCost`** — what an obscured figure's post is *counted* as being worth when somebody is
+  set over them, as against what the card cost to put out. `upgradeValue(def)` in `actions.js` reads
+  it and both halves of the upgrade rule now go through that one function: `upgradesOver` gates who
+  may be played over the figure, and `recruitCost` takes the difference against the same number. The
+  ten babies are the whole of its use — a Kitten costs 0 and counts as 1, an Owlet costs 0 and counts
+  as 2 — so a baby is a free body who is nonetheless a real rung of a career rather than a discount
+  on one. `test/obscured.test.mjs` now separates the two kinds of `anchor`: a figure prints none of
+  this, a baby always does.
+
+- **`swapWithHand`** — the animal standing in the town and a card in hand change places. The stack
+  keeps its `uid`, its orientation, its shift and its place in the town; only `cards[0]` moves, so it
+  is the same post worked by somebody else. No Supply changes hands, which is the point: it is the
+  one way in the collection to change which version of a character is standing without paying an
+  upgrade. `filter.name` / `filter.nameIn` say who may do it — Dirt and Squirt swap with each other,
+  Mimi with her own other versions — and it is always printed on the `busy` trigger, so the animal
+  goes Busy to do it.
+
+- **`paySupply`** — Supply handed over a counter to nobody, with a `then` rider. The first way a card
+  can charge a Mayor outside a Busy ability's `cost.supply` fee, which is what a Building needed. A
+  price that cannot be met is not part-paid and the rider does not run, the same manners `spendToken`
+  keeps. Priced at `SINK_SUPPLY` like a fee, because it is one.
+
+- **`unemployOwnCharacter`** — a Mayor's own animal let go, through `unemployStack` like anything
+  else, so every shelter there still holds. Always a cost in `power.js`; it exists so a card can put
+  a real price on a real advantage, which is the Fast Food Joint's whole design.
+
+- **`opponentDiscards`** — the rival's hand burnt rather than reordered. `opponentTopdeckFromHand`
+  merely postpones a card; this one is gone, and the rival chooses which.
+
+- **`spendToken` with `of: 'any'`** — a counter that does not care what kind of chit is put on it,
+  only that the count is there. It takes from whatever kinds the Mayor holds, in order, and refuses
+  the whole price if the total will not cover it.
+
+- **`recruitFromHand`** gained three things: `filter.species` / `filter.study` / `filter.minCost`
+  (the Owlery takes Owls and nobody else), `for: 'opponent'` (the forecourt hands a body across the
+  table, and the rival chooses which — priced negative, because it is), and `dayLabour: true` (the
+  animal arrives, cannot be pledged, and goes to Unemployment at the end of the turn; read by
+  `canPledge` in `actions.js` and by the new sweep at the top of `endPhase` in `game.js`).
+
+- **`makeBusy` with `side: 'self'`, `onlySelf` and `random`** — the constable's verb turned on the
+  Mayor's own town. Teresa works the other town harder and works herself harder still, which is one
+  ability and not two, and `power.js` reads the bill: a self-facing `makeBusy` is negative. `random`
+  is the same verb with nobody choosing, which is what the Juice Store's coin toss wanted.
+
+- **`advanceCharacter` with `side: 'opponent'`** — the doctor's second round. The Mayor holding the
+  card still chooses who, and it is priced as a cost, because helping the animal across the table is
+  help. Shay is the only card in the collection that reaches both ways in one breath.
+
+- **`gainSupply` with `per`** — `charactersInTown` or `uprightCharacters`, with a `max` that a
+  scaling gain must print or the card cannot be rated. The Farmer's Market pays what the borough
+  actually brought.
+
+- **`opponentShiftPenalty`** — a `passive` key, and the first standing rate in the collection that
+  makes a shift pay *less*. Read off the rival's town in `completeShift`, never takes a shift below
+  nothing, and stops when whoever carries it sits down. Mildred is the whole of its use.
+
+- **`everyoneRecruitsFree` and `everyoneSearchesDeck`** — two shared shocks in the existing mould,
+  each looping `runEffect` over both Mayors: the Car Show opens both forecourts, the Meteor Shower
+  sends both towns to their own decks and shuffles both afterwards.
+
+One more thing changed that is not a verb: `matchesFilter` gained `minCost`, the other end of the
+rule `maxCost` was already half of, so an ability can be written for the dear animals rather than the
+cheap ones (JT's juice list is read to a Master).
+
+The cards these were built for carry no `wantedVerbs`: the maker's instruction for this batch was to
+build what the writing needed rather than log it, so the list is empty and the round is the record.
+
 ## Tokens (v0.7.2)
 
 Tokens are markers a Mayor holds beside their Supply: one kind per species, one per field of study,

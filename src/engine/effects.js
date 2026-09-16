@@ -145,7 +145,7 @@ export async function discard(state, pi, n, { byOpponent = false } = {}) {
 
 export function makeStack(state, pi, cardInst, orientation) {
   const p = state.players[pi];
-  const s = { uid: nextUid(state), cards: [cardInst], orientation, shift: null, enteredTurn: state.turnNumber, hasBeenUpright: orientation === UPRIGHT, readyNextTurn: false, lockedBid: null, stored: 0, protectedUntil: 0, selfReadyUsed: false, shiftsWorked: 0, pairedWith: null, pairBonus: 0 };
+  const s = { uid: nextUid(state), cards: [cardInst], orientation, shift: null, enteredTurn: state.turnNumber, hasBeenUpright: orientation === UPRIGHT, readyNextTurn: false, lockedBid: null, stored: 0, protectedUntil: 0, selfReadyUsed: false, shiftsWorked: 0, pairedWith: null, pairBonus: 0, dayLabour: false };
   p.town.push(s);
   return s;
 }
@@ -161,7 +161,11 @@ export async function completeShift(state, pi, stack) {
   // The pair bonus is the florist's: it pays only the two animals who were put together.
   const standing = passiveTotal(state, pi, 'townShiftBonus');
   const paired = pairBonusFor(state, pi, stack);
-  out += standing + paired;
+  // The banker's standing rate, and the first passive in the collection that reaches across the
+  // table to make a shift pay LESS. It is read off the rival's town, it never takes a shift below
+  // nothing, and it stops the moment whoever is carrying it sits down.
+  const withheld = Math.min(out + standing + paired, passiveTotal(state, opponentOf(pi), 'opponentShiftPenalty'));
+  out += standing + paired - withheld;
   stack.shift = null;
   // A burnt-out animal's next shift pays less than this one did (`shift.decay`), so the count of
   // shifts finished is kept on the stack rather than recomputed from anything.
@@ -170,7 +174,7 @@ export async function completeShift(state, pi, stack) {
   p.turn.shiftsCompleted++;
   log(state, pi, `${def.name}, ${def.title} finishes the shift.`, { kind: 'shiftDone', player: pi, uid: stack.uid, output: out });
   const extra = bonus + standing + paired;
-  gainSupply(state, pi, out, `${def.name}'s shift${extra ? `, +${extra} bonus` : ''}`);
+  gainSupply(state, pi, out, `${def.name}'s shift${extra ? `, +${extra} bonus` : ''}${withheld ? `, ${withheld} withheld` : ''}`);
   await fireHook(state, 'onShiftCompleted', { player: pi, stackUid: stack.uid });
 }
 
@@ -442,6 +446,9 @@ export function matchesFilter(state, stack, f = {}) {
   if (f.species && def.species !== f.species) return false;
   if (f.rank && rankOf(state.rules, def.cost) !== f.rank) return false;
   if (f.maxCost !== undefined && def.cost > f.maxCost) return false;
+  // The other end of the same rule: an ability written for the dear animals rather than the cheap
+  // ones. The juice list is read to a Master, not to an apprentice.
+  if (f.minCost !== undefined && def.cost < f.minCost) return false;
   if (f.cost !== undefined && def.cost !== f.cost) return false;
   return true;
 }
@@ -462,9 +469,22 @@ export async function runEffect(state, pi, eff, ctx = {}) {
     case 'seq':
       for (const step of eff.steps) await runEffect(state, pi, step, ctx);
       return;
-    case 'gainSupply':
-      gainSupply(state, pi, eff.amount, ctx.sourceCardId ? cardDef(state, ctx.sourceCardId).name : '');
+    case 'gainSupply': {
+      // `per` is the market stall's count: the takings are not a flat handful, they are what the
+      // animals standing in the town actually brought in. `charactersInTown` counts every body in
+      // the town, working or not; `uprightCharacters` counts only who is on their feet. `max` is a
+      // real ceiling and a scaling gain has to print one, or the card cannot be rated.
+      let amount = eff.amount;
+      if (eff.per) {
+        const per = eff.per === 'charactersInTown' ? p.town.length
+          : eff.per === 'uprightCharacters' ? p.town.filter((st) => st.orientation === UPRIGHT).length : 0;
+        amount = (eff.amount === undefined ? 1 : eff.amount) * per;
+        if (eff.max !== undefined) amount = Math.min(amount, eff.max);
+      }
+      if (!amount) return;
+      gainSupply(state, pi, amount, ctx.sourceCardId ? cardDef(state, ctx.sourceCardId).name : '');
       return;
+    }
     case 'opponentGainSupply':
       gainSupply(state, oi, eff.amount, ctx.sourceCardId ? cardDef(state, ctx.sourceCardId).name : '');
       return;
@@ -477,6 +497,22 @@ export async function runEffect(state, pi, eff, ctx = {}) {
         try { await fireHook(state, 'onSupplyLost', { player: pi, listeners: [pi], amount: n }); }
         finally { state.notifyingSupplyLoss = false; }
       }
+      return;
+    }
+    case 'paySupply': {
+      // Supply handed back over a counter, to nobody — the Game Store's till, and the first verb in
+      // the collection that lets a card charge a Mayor outside a Busy ability's fee. A price that
+      // cannot be met is not paid at all and the rider does not run, which is the same manners
+      // `spendToken` keeps: a part-paid price is not a price.
+      const owed = eff.amount === undefined ? 1 : eff.amount;
+      if (p.supply < owed) return;
+      if (eff.optional) {
+        const yes = await ask(state, pi, { kind: 'confirm', reason: 'paySupply', default: true, amount: owed, cardId: ctx.sourceCardId || null });
+        if (!yes) return;
+      }
+      p.supply -= owed;
+      log(state, pi, `${p.name} pays ${owed} Supply${ctx.sourceCardId ? ` at ${cardDef(state, ctx.sourceCardId).name}` : ''}.`, { kind: 'supply', player: pi, amount: -owed, why: ctx.sourceCardId ? cardDef(state, ctx.sourceCardId).name : '' });
+      if (eff.then) await runEffect(state, pi, eff.then, ctx);
       return;
     }
     case 'draw':
@@ -619,27 +655,41 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       return;
     }
     case 'recruitFromHand': {
-      if (!hasTownRoom(state, pi)) return; // a full town cannot take another body
-      const opts = p.hand.filter((c) => {
+      // `for: 'opponent'` is the forecourt's sweetener: the Mayor across the table is the one who
+      // takes an animal out of hand, and the one who chooses which. Everything else reads the same.
+      const ri = eff.for === 'opponent' ? oi : pi;
+      const rp = state.players[ri];
+      if (!hasTownRoom(state, ri)) return; // a full town cannot take another body
+      const f = eff.filter || {};
+      const opts = rp.hand.filter((c) => {
         const d = cardDef(state, c.cardId);
-        return d.type === 'character' && (eff.filter?.maxCost === undefined || d.cost <= eff.filter.maxCost);
+        if (d.type !== 'character') return false;
+        if (f.maxCost !== undefined && d.cost > f.maxCost) return false;
+        if (f.minCost !== undefined && d.cost < f.minCost) return false;
+        if (f.species && d.species !== f.species) return false;
+        if (f.study && d.study !== f.study) return false;
+        return true;
       });
       if (!opts.length) return;
-      const chosen = await ask(state, pi, { kind: 'pick', reason: 'recruitFree', from: 'hand', options: opts.map((c) => inst(state, c)), min: eff.optional ? 0 : 1, max: 1 });
+      const chosen = await ask(state, ri, { kind: 'pick', reason: 'recruitFree', from: 'hand', options: opts.map((c) => inst(state, c)), min: eff.optional ? 0 : 1, max: 1 });
       for (const uid of chosen) {
-        const c = p.hand.splice(p.hand.findIndex((x) => x.uid === uid), 1)[0];
+        const c = rp.hand.splice(rp.hand.findIndex((x) => x.uid === uid), 1)[0];
         const d = cardDef(state, c.cardId);
         // A card may say how it arrives (`entersUpright`), and an animal who arrives ready arrives
         // ready however she got here — out of hand for free is still arriving.
         const orientation = eff.orientation ?? (d.entersUpright ? UPRIGHT : entryOrientation(state.rules, d.cost));
-        const s = makeStack(state, pi, c, orientation);
-        p.stats.recruits++;
-        log(state, pi, `${p.name} recruits ${d.name}, ${d.title} for free (${orientation === UPRIGHT ? 'upright' : 'Busy'}).`, { kind: 'recruit', player: pi, uid: s.uid, cardUid: c.uid, cardId: c.cardId, cost: 0, upgrade: false });
-        await fireHook(state, 'onRecruit', { player: pi, stackUid: s.uid, listeners: [pi], selfOnly: s.uid });
+        const s = makeStack(state, ri, c, orientation);
+        // The airfield's hire: out of hand, on their feet, and gone by the end of the turn. They are
+        // no use in an auction either — nobody pledges an animal who will not be there to work the
+        // lot — which is what `dayLabour` says and `canPledge` reads.
+        if (eff.dayLabour) s.dayLabour = true;
+        rp.stats.recruits++;
+        log(state, ri, `${rp.name} recruits ${d.name}, ${d.title} for free (${orientation === UPRIGHT ? 'upright' : 'Busy'})${eff.dayLabour ? ', for the day' : ''}.`, { kind: 'recruit', player: ri, uid: s.uid, cardUid: c.uid, cardId: c.cardId, cost: 0, upgrade: false });
+        await fireHook(state, 'onRecruit', { player: ri, stackUid: s.uid, listeners: [ri], selfOnly: s.uid });
         // `then` is the rider the friend arrives with: it runs only when somebody actually came out
         // of hand, which is what separates it from putting the same step in a `seq`. Declining the
         // recruit declines the rider with it.
-        if (eff.then) await runEffect(state, pi, eff.then, { ...ctx, recruitedStackUid: s.uid });
+        if (eff.then) await runEffect(state, ri, eff.then, { ...ctx, recruitedStackUid: s.uid });
       }
       return;
     }
@@ -833,6 +883,22 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       return;
     }
     case 'spendToken': {
+      // `of: 'any'` is the bank counter: it does not care what kind of chit is put on it, only that
+      // the count is there. Everything else about the price is unchanged — a holding that cannot
+      // cover it is not part-spent, and the rider does not run.
+      if (eff.of === 'any') {
+        const want = eff.count === undefined ? 1 : eff.count;
+        const held = Object.entries(p.tokens || {}).filter(([, v]) => v > 0);
+        if (held.reduce((a, [, v]) => a + v, 0) < want) return;
+        let left = want;
+        for (const [key] of held) {
+          if (left <= 0) break;
+          left -= spendTokens(p, key, Math.min(left, p.tokens[key]));
+        }
+        log(state, pi, `${p.name} puts ${want} token${want === 1 ? '' : 's'} across the counter.`, { kind: 'token', player: pi, token: 'any', delta: -want, total: Object.values(p.tokens || {}).reduce((a, v) => a + v, 0) });
+        if (eff.then) await runEffect(state, pi, eff.then, ctx);
+        return;
+      }
       const key = tokenKey(eff);
       if (!key) return;
       const n = eff.count === undefined ? 1 : eff.count;
@@ -858,22 +924,88 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       // It is the mirror of advanceCharacter and keeps the same manners: never a Character mid-shift
       // (the work is not the animal's fault), never one pledged into an auction, and never one a
       // Hedgehog has quilled.
+      // `side: 'self'` turns it on the Mayor who played it — the coach who works everybody harder
+      // and herself hardest, and the till that pulls whoever is nearest back behind the counter.
+      // `random: true` is the same verb with nobody choosing: the borough picks.
       const order = state.rules.orientation.advanceOrder;
-      const opts = o.town.filter((st) => !st.lockedBid && !isProtected(state, st)
+      const ti = eff.side === 'self' ? pi : oi;
+      const t = state.players[ti];
+      const opts = t.town.filter((st) => !st.lockedBid && !(ti !== pi && isProtected(state, st))
         && !(st.shift && state.rules.shifts.blocksReadyWhileInProgress)
         && order.indexOf(st.orientation) > 0
-        && matchesFilter(state, st, eff.filter));
+        && !(eff.filter && eff.filter.notSelf && st.uid === (ctx.sourceStackUid || ctx.stackUid))
+        // `onlySelf` is the coach's half of the bargain: the animal put back to work is this one,
+        // and the Mayor does not get to nominate somebody else for it.
+        && !(eff.onlySelf && st.uid !== (ctx.sourceStackUid || ctx.stackUid))
+        && matchesFilter(state, st, { ...(eff.filter || {}), notSelf: undefined }));
       if (!opts.length) return;
       const max = Math.min(eff.count || 1, opts.length);
-      const chosen = await ask(state, pi, { kind: 'pick', reason: 'makeBusy', from: 'opponentTown', options: opts.map((st) => stackOpt(state, st)), min: eff.optional ? 0 : Math.min(1, max), max });
+      let chosen;
+      if (eff.random) {
+        const pool = opts.slice();
+        chosen = [];
+        while (chosen.length < max && pool.length) chosen.push(pool.splice(Math.floor(rand(state) * pool.length), 1)[0].uid);
+      } else {
+        chosen = await ask(state, pi, { kind: 'pick', reason: 'makeBusy', from: ti === pi ? 'town' : 'opponentTown', options: opts.map((st) => stackOpt(state, st)), min: eff.optional ? 0 : Math.min(1, max), max });
+      }
       for (const uid of chosen) {
-        const st = findStack(state, oi, uid);
+        const st = findStack(state, ti, uid);
         if (!st || st.lockedBid) continue;
         const at = order.indexOf(st.orientation);
         if (at <= 0) continue;
         st.orientation = order[at - 1];
-        log(state, pi, `${topCard(state, st).name} is put back to work in ${o.name}'s town.`, { kind: 'makeBusy', player: oi, uid: st.uid, orientation: st.orientation });
+        log(state, pi, `${topCard(state, st).name} is put back to work in ${t.name}'s town.`, { kind: 'makeBusy', player: ti, uid: st.uid, orientation: st.orientation });
       }
+      return;
+    }
+    case 'unemployOwnCharacter': {
+      // A Mayor letting one of her own animals go. Everything that takes a Character out of a town
+      // until now has been the weather or the rival; this is the counter closing and the shift being
+      // over, so it goes through unemployStack like anything else and honours every shelter there.
+      const opts = p.town.filter((st) => !st.lockedBid && !st.shift && matchesFilter(state, st, eff.filter));
+      if (!opts.length) return;
+      const max = Math.min(eff.count || 1, opts.length);
+      const chosen = eff.random
+        ? [opts[Math.floor(rand(state) * opts.length)].uid]
+        : await ask(state, pi, { kind: 'pick', reason: 'unemployOwn', from: 'town', options: opts.map((st) => stackOpt(state, st)), min: eff.optional ? 0 : Math.min(1, max), max });
+      for (const uid of chosen) {
+        const st = findStack(state, pi, uid);
+        if (st) await unemployStack(state, pi, st, { byEffect: true, sourcePi: pi });
+      }
+      return;
+    }
+    case 'opponentDiscards': {
+      // The forecourt's verb: cards out of the rival's hand and into their Town Dump, chosen by them.
+      // `opponentTopdeckFromHand` merely postpones a card; this one burns it.
+      const n = Math.min(eff.count === undefined ? 1 : eff.count, o.hand.length);
+      if (n < 1) return;
+      await discard(state, oi, n);
+      return;
+    }
+    case 'swapWithHand': {
+      // The twins' trick, and the flight attendant's: the animal standing in the town and the card
+      // in hand change places. The stack keeps its orientation, its shift and its place in the town
+      // — it is the same post, worked by the other one of them — and no Supply changes hands, which
+      // is why a 0-cost Dirt can come back as a 5-cost Squirt. `filter.nameIn` is who may do it.
+      const names = eff.filter && (eff.filter.nameIn || (eff.filter.name ? [eff.filter.name] : null));
+      const here = ctx.sourceStackUid ? findStack(state, pi, ctx.sourceStackUid) : null;
+      if (!here) return;
+      const opts = p.hand.filter((c) => {
+        const d = cardDef(state, c.cardId);
+        if (d.type !== 'character') return false;
+        if (names && !names.includes(d.name)) return false;
+        return d.id !== here.cards[0].cardId;
+      });
+      if (!opts.length) return;
+      const chosen = await ask(state, pi, { kind: 'pick', reason: 'swapWithHand', from: 'hand', options: opts.map((c) => inst(state, c)), min: eff.optional === false ? 1 : 0, max: 1 });
+      if (!chosen.length) return;
+      const idx = p.hand.findIndex((x) => x.uid === chosen[0]);
+      if (idx < 0) return;
+      const incoming = p.hand.splice(idx, 1)[0];
+      const outgoing = here.cards[0];
+      here.cards[0] = incoming;
+      p.hand.push(outgoing);
+      log(state, pi, `${cardDef(state, outgoing.cardId).name} and ${cardDef(state, incoming.cardId).name} change places.`, { kind: 'swapWithHand', player: pi, uid: here.uid, out: outgoing.cardId, in: incoming.cardId });
       return;
     }
     case 'unemployOpponentCharacter': {
@@ -986,6 +1118,25 @@ export async function runEffect(state, pi, eff, ctx = {}) {
         log(state, pl.index, `${pl.name}'s Characters will not advance at the next Ready.`, { kind: 'mod', player: pl.index, key: 'skipNextAdvance', value: 1 });
       }
       return;
+    case 'everyoneRecruitsFree': {
+      // The Car Show: both forecourts open, and each Mayor drives something home out of hand.
+      const times = Math.max(1, eff.count || 1);
+      for (const pl of state.players) {
+        for (let k = 0; k < times; k++) {
+          await runEffect(state, pl.index, { do: 'recruitFromHand', filter: eff.filter, orientation: eff.orientation, optional: true }, ctx);
+        }
+      }
+      return;
+    }
+    case 'everyoneSearchesDeck': {
+      // The Meteor Shower: everybody is outside looking up, and everybody goes and fetches what they
+      // were hoping for. Both decks are searched and both are shuffled afterwards, so neither Mayor
+      // comes out of it knowing the order of the other's.
+      for (const pl of state.players) {
+        await runEffect(state, pl.index, { do: 'searchDeck', count: eff.count === undefined ? 1 : eff.count, filter: eff.filter, optional: true }, ctx);
+      }
+      return;
+    }
     case 'everyoneRehiresFree': {
       // `count` is how many each Mayor takes back, and it is what makes the total shocks printable.
       // A card that empties both towns and hands back one animal is not a hard winter, it is the end
@@ -1157,24 +1308,29 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       const f = { ...(eff.filter || {}) };
       const notSelf = f.notSelf;
       delete f.notSelf;
-      const opts = p.town.filter((st) => st.orientation !== UPRIGHT && !st.lockedBid
+      // `side: 'opponent'` is the doctor's rounds: the wake-up call is given across the table as
+      // well, because an animal asleep on their feet is an animal asleep on their feet whichever
+      // town they are standing in. The Mayor holding the card still chooses who.
+      const ai = eff.side === 'opponent' ? oi : pi;
+      const a2 = state.players[ai];
+      const opts = a2.town.filter((st) => st.orientation !== UPRIGHT && !st.lockedBid
         && !(st.shift && state.rules.shifts.blocksReadyWhileInProgress)
         && !(notSelf && st.uid === (ctx.sourceStackUid || ctx.stackUid))
         && matchesFilter(state, st, f));
       if (!opts.length) return;
       const max = Math.min(eff.count || 1, opts.length);
-      const chosen = await ask(state, pi, { kind: 'pick', reason: 'advance', from: 'town', options: opts.map((st) => stackOpt(state, st)), min: eff.optional ? 0 : Math.min(1, max), max });
+      const chosen = await ask(state, pi, { kind: 'pick', reason: 'advance', from: ai === pi ? 'town' : 'opponentTown', options: opts.map((st) => stackOpt(state, st)), min: eff.optional ? 0 : Math.min(1, max), max });
       const why = ctx.sourceCardId ? cardDef(state, ctx.sourceCardId).name : '';
       for (const uid of chosen) {
-        const st = findStack(state, pi, uid);
+        const st = findStack(state, ai, uid);
         if (!st || st.orientation === UPRIGHT || st.lockedBid) continue;
         const order = state.rules.orientation.advanceOrder;
         const next = order[Math.min(order.length - 1, order.indexOf(st.orientation) + 1)];
         if (next === UPRIGHT) {
-          await readyStack(state, pi, st, why);
+          await readyStack(state, ai, st, why);
         } else {
           st.orientation = next;
-          log(state, pi, `${topCard(state, st).name} turns one step toward upright${why ? ` (${why})` : ''}.`, { kind: 'ready', player: pi, uids: [], advanced: [st.uid] });
+          log(state, ai, `${topCard(state, st).name} turns one step toward upright${why ? ` (${why})` : ''}.`, { kind: 'ready', player: ai, uids: [], advanced: [st.uid] });
         }
       }
       return;
