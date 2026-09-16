@@ -16,11 +16,19 @@ document.addEventListener('pointerdown', (event) => {
 }, { passive: true });
 
 // Give newly activated screens a fresh entrance even when the same node is reused.
+// Re-arming the entrance means toggling a class on the screen, which is itself a class change this
+// observer is watching for. Without remembering which screens are already active, every re-arm
+// would queue the callback again and the page would spin on its own bookkeeping forever, so only
+// the change that actually makes a screen active re-arms it.
+const activeScreens = new WeakSet();
 const screenObserver = new MutationObserver((records) => {
-  if (reducedMotion.matches) return;
   for (const record of records) {
     const screen = record.target;
-    if (!(screen instanceof HTMLElement) || !screen.classList.contains('active')) continue;
+    if (!(screen instanceof HTMLElement)) continue;
+    if (!screen.classList.contains('active')) { activeScreens.delete(screen); continue; }
+    if (activeScreens.has(screen)) continue;
+    activeScreens.add(screen);
+    if (reducedMotion.matches) continue;
     screen.classList.remove('ui-entering');
     void screen.offsetWidth;
     screen.classList.add('ui-entering');
@@ -28,5 +36,6 @@ const screenObserver = new MutationObserver((records) => {
 });
 
 document.querySelectorAll('.screen').forEach((screen) => {
+  if (screen.classList.contains('active')) activeScreens.add(screen);
   screenObserver.observe(screen, { attributes: true, attributeFilter: ['class'] });
 });
