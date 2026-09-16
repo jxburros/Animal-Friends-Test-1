@@ -46,6 +46,10 @@ export const MAKER_NEIGHBORHOOD_SERVICES_ATLAS_URL = new URL('../../assets/art/m
 export const MAKER_STATUES_ATLAS_URL = new URL('../../assets/art/maker-statues-atlas.png', import.meta.url).href;
 export const MAKER_CIVIC_ORDINANCES_ATLAS_URL = new URL('../../assets/art/maker-civic-ordinances-atlas.png', import.meta.url).href;
 export const MAKER_EVENTS_DISRUPTIONS_ATLAS_URL = new URL('../../assets/art/maker-events-disruptions-atlas.png', import.meta.url).href;
+export const MAKER_APPRENTICES_KITCHENS_ATLAS_URL = new URL('../../assets/art/maker-apprentices-kitchens-atlas.png', import.meta.url).href;
+export const MAKER_CABIN_FLIGHT_ATLAS_URL = new URL('../../assets/art/maker-cabin-flight-atlas.png', import.meta.url).href;
+export const MAKER_COACHES_CLINICS_ATLAS_URL = new URL('../../assets/art/maker-coaches-clinics-atlas.png', import.meta.url).href;
+export const MAKER_CAPITAL_FESTIVALS_ATLAS_URL = new URL('../../assets/art/maker-capital-festivals-atlas.png', import.meta.url).href;
 const SPECIES_TILE = { Rabbit: 0, Mouse: 1, Fox: 2, Raccoon: 3, Hedgehog: 4, Badger: 5, Otter: 6, Squirrel: 7 };
 const ATLASES = {
   boroughs: () => PAINTED_ATLAS_URL,
@@ -89,6 +93,10 @@ const ATLASES = {
   makerstatues: () => MAKER_STATUES_ATLAS_URL,
   makercivicordinances: () => MAKER_CIVIC_ORDINANCES_ATLAS_URL,
   makereventsdisruptions: () => MAKER_EVENTS_DISRUPTIONS_ATLAS_URL,
+  makerapprenticeskitchens: () => MAKER_APPRENTICES_KITCHENS_ATLAS_URL,
+  makercabinflight: () => MAKER_CABIN_FLIGHT_ATLAS_URL,
+  makercoachesclinics: () => MAKER_COACHES_CLINICS_ATLAS_URL,
+  makercapitalfestivals: () => MAKER_CAPITAL_FESTIVALS_ATLAS_URL,
 };
 
 // Presentation-only corrections for Maker shelf cards. Keeping these assignments here lets the
@@ -619,6 +627,74 @@ export const MAKER_ART_TILES = Object.freeze({
   mk_the_long_night_at_earls: { atlas: 'makereventsdisruptions', tile: 4 }, mk_dx_six_weeks_shut: { atlas: 'makereventsdisruptions', tile: 5 }, mk_dx_the_hiring_freeze: { atlas: 'makereventsdisruptions', tile: 6 }, mk_dx_the_great_frost: { atlas: 'makereventsdisruptions', tile: 7 },
   mk_dx_the_short_week: { atlas: 'makereventsdisruptions', tile: 8 }, mk_dx_the_year_it_stopped: { atlas: 'makereventsdisruptions', tile: 9 }, mk_dx_solar_eclipse: { atlas: 'makereventsdisruptions', tile: 10 }, mk_dx_meteor_shower: { atlas: 'makereventsdisruptions', tile: 11 },
   mk_dx_full_moon: { atlas: 'makereventsdisruptions', tile: 12 }, mk_dx_landslide: { atlas: 'makereventsdisruptions', tile: 13 }, mk_dx_midges: { atlas: 'makereventsdisruptions', tile: 14 }, mk_dx_lean_season: { atlas: 'makereventsdisruptions', tile: 15 },
+
+  mk_baby_mouse_pup_0: { atlas: 'makerapprenticeskitchens', tile: 0 },
+  mk_badger_cub_cub_0: { atlas: 'makerapprenticeskitchens', tile: 1 },
+  mk_bunny_kit_0: { atlas: 'makerapprenticeskitchens', tile: 2 },
+  mk_dirt_classroom_assistant_0: { atlas: 'makerapprenticeskitchens', tile: 3 },
+  mk_dirt_schoolteacher_upper_room_2: { atlas: 'makerapprenticeskitchens', tile: 4 },
+  mk_dirt_figurine_painter_3: { atlas: 'makerapprenticeskitchens', tile: 5 },
+  mk_dirt_master_figuremaker_5: { atlas: 'makerapprenticeskitchens', tile: 6 },
+  mk_fox_cub_cub_0: { atlas: 'makerapprenticeskitchens', tile: 7 },
+  mk_hoglet_hoglet_0: { atlas: 'makerapprenticeskitchens', tile: 8 },
+  mk_hoot_night_kitchen_1: { atlas: 'makerapprenticeskitchens', tile: 9 },
+  mk_hoot_breakfast_bell_3: { atlas: 'makerapprenticeskitchens', tile: 10 },
+  mk_hoot_head_of_the_night_kitchen_5: { atlas: 'makerapprenticeskitchens', tile: 11 },
+  mk_jt_ward_nurse_0: { atlas: 'makerapprenticeskitchens', tile: 12 },
+  mk_jt_children_s_ward_nurse_2: { atlas: 'makerapprenticeskitchens', tile: 13 },
+  mk_jt_juice_list_3: { atlas: 'makerapprenticeskitchens', tile: 14 },
+  mk_jt_juice_sommelier_5: { atlas: 'makerapprenticeskitchens', tile: 15 },
+
+  mk_kitten_kitten_0: { atlas: 'makercabinflight', tile: 0 },
+  mk_mildred_counter_clerk_0: { atlas: 'makercabinflight', tile: 1 },
+  mk_mildred_teller_2: { atlas: 'makercabinflight', tile: 2 },
+  mk_mildred_chief_teller_3: { atlas: 'makercabinflight', tile: 3 },
+  mk_mildred_branch_manager_5: { atlas: 'makercabinflight', tile: 4 },
+  mk_mimi_trolley_service_0: { atlas: 'makercabinflight', tile: 5 },
+  mk_mimi_safety_demonstration_1: { atlas: 'makercabinflight', tile: 6 },
+  mk_mimi_cabin_pressure_check_2: { atlas: 'makercabinflight', tile: 7 },
+  mk_mimi_seat_1a_welcome_3: { atlas: 'makercabinflight', tile: 8 },
+  mk_mimi_purser_5: { atlas: 'makercabinflight', tile: 9 },
+  mk_otter_pup_pup_0: { atlas: 'makercabinflight', tile: 10 },
+  mk_owlet_owlet_0: { atlas: 'makercabinflight', tile: 11 },
+  mk_raccoon_kit_kit_0: { atlas: 'makercabinflight', tile: 12 },
+  mk_reese_crop_duster_1: { atlas: 'makercabinflight', tile: 13 },
+  mk_reese_charter_pilot_3: { atlas: 'makercabinflight', tile: 14 },
+  mk_reese_chief_pilot_5: { atlas: 'makercabinflight', tile: 15 },
+
+  mk_shay_sunday_painter_0: { atlas: 'makercoachesclinics', tile: 0 },
+  mk_shay_ward_doctor_1: { atlas: 'makercoachesclinics', tile: 1 },
+  mk_shay_borough_physician_2: { atlas: 'makercoachesclinics', tile: 2 },
+  mk_shay_market_stall_painter_3: { atlas: 'makercoachesclinics', tile: 3 },
+  mk_shay_chief_physician_5: { atlas: 'makercoachesclinics', tile: 4 },
+  mk_sota_touchline_assistant_0: { atlas: 'makercoachesclinics', tile: 5 },
+  mk_sota_assistant_coach_2: { atlas: 'makercoachesclinics', tile: 6 },
+  mk_squirrel_kit_kit_0: { atlas: 'makercoachesclinics', tile: 7 },
+  mk_squirt_playground_monitor_1: { atlas: 'makercoachesclinics', tile: 8 },
+  mk_squirt_schoolteacher_lower_room_2: { atlas: 'makercoachesclinics', tile: 9 },
+  mk_squirt_borough_eleven_left_wing_4: { atlas: 'makercoachesclinics', tile: 10 },
+  mk_squirt_club_captain_5: { atlas: 'makercoachesclinics', tile: 11 },
+  mk_teresa_pepper_grower_0: { atlas: 'makercoachesclinics', tile: 12 },
+  mk_teresa_touchline_coach_1: { atlas: 'makercoachesclinics', tile: 13 },
+  mk_teresa_pepper_stall_2: { atlas: 'makercoachesclinics', tile: 14 },
+  mk_teresa_head_coach_3: { atlas: 'makercoachesclinics', tile: 15 },
+
+  mk_teresa_coach_of_the_borough_eleven_5: { atlas: 'makercapitalfestivals', tile: 0 },
+  mk_tb_farmers_market: { atlas: 'makercapitalfestivals', tile: 1 },
+  mk_bld_bookstore: { atlas: 'makercapitalfestivals', tile: 2 },
+  mk_bld_game_store: { atlas: 'makercapitalfestivals', tile: 3 },
+  mk_bld_juice_store: { atlas: 'makercapitalfestivals', tile: 4 },
+  mk_bld_gas_station: { atlas: 'makercapitalfestivals', tile: 5 },
+  mk_bld_bank: { atlas: 'makercapitalfestivals', tile: 6 },
+  mk_bld_fast_food_joint: { atlas: 'makercapitalfestivals', tile: 7 },
+  mk_bld_car_dealership: { atlas: 'makercapitalfestivals', tile: 8 },
+  mk_bld_owlery: { atlas: 'makercapitalfestivals', tile: 9 },
+  mk_bld_cheese_store: { atlas: 'makercapitalfestivals', tile: 10 },
+  mk_bld_airport: { atlas: 'makercapitalfestivals', tile: 11 },
+  mk_car_show: { atlas: 'makercapitalfestivals', tile: 12 },
+  mk_passing_comets: { atlas: 'makercapitalfestivals', tile: 13 },
+  mk_community_bonfire: { atlas: 'makercapitalfestivals', tile: 14 },
+  mk_cheese_festival: { atlas: 'makercapitalfestivals', tile: 15 },
   mk_mkt_bandstand: { atlas: 'makertownworks', tile: 10 }, mk_mkt_emergency_reserve: { atlas: 'makertownworks', tile: 11 }, mk_mkt_warren_muster: { atlas: 'makertownworks', tile: 12 }, mk_dx_the_yards_go_quiet: { atlas: 'makertownworks', tile: 13 },
 });
 
