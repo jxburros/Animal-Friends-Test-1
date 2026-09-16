@@ -103,8 +103,17 @@ test('thirty-three Maker atlases assign 528 existing cards to every tile exactly
 });
 
 test('every non-token Maker card without authored art now has a commissioned scene', () => {
-  const missing = MAKER.cards.filter((card) => card.type !== 'token' && !card.art && !MAKER_ART_TILES[card.id]);
+  // A card written before its scene exists is on the set's `needsArt` list (docs/NeedsArt.md is
+  // generated from it), and that list is the only thing that excuses an unpainted card. A card that
+  // is neither painted nor on the list has been quietly forgotten, which is what this test is for.
+  const waiting = new Set((MAKER.needsArt?.cards || []).map((c) => c.id));
+  const ids = new Set(MAKER.cards.map((c) => c.id));
+  for (const id of waiting) assert.ok(ids.has(id), `needsArt lists ${id}, which is not a card in this set`);
+  const missing = MAKER.cards.filter((card) => card.type !== 'token' && !card.art && !MAKER_ART_TILES[card.id] && !waiting.has(card.id));
   assert.deepEqual(missing, []);
+  // And the other way round: a card that has been painted has no business still waiting for a painter.
+  const painted = MAKER.cards.filter((card) => waiting.has(card.id) && (card.art || MAKER_ART_TILES[card.id]));
+  assert.deepEqual(painted.map((c) => c.id), [], 'these have art and are still on the NeedsArt list');
 
   assert.equal(MAKER_ART_TILES.mk_bean_proprietor_5.atlas, 'makercivic');
   assert.equal(MAKER_ART_TILES.mk_maribel_horticulturist_4.atlas, 'makerharvest');

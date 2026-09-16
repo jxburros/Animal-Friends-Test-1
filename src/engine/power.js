@@ -112,6 +112,24 @@ const READY = 2.0; // standing a Character back up is most of a shift
  */
 const BODY = 1.8;
 
+/**
+ * How many Characters a town actually has standing in it while a game is being decided. Measured
+ * over the printed decks it sits a little over three; three is what a card that pays by the head
+ * should be rated on, the same way EXPECTED_BUILDINGS rates a mod that counts what has been raised.
+ */
+const EXPECTED_CHARACTERS = 3;
+
+/** And how many of those three are on their feet rather than mid-shift when a card asks. */
+const EXPECTED_UPRIGHT = 2;
+
+/**
+ * What share of a town a `per` count keeps once it is narrowed to one study or one species. Eight
+ * studies and ten species, but a deck is built around one or two of each, so a town is far more
+ * concentrated than an even split would suggest: about a third of it answers to any one name the
+ * deck was built around, and none of it to a name the deck was not.
+ */
+const FILTERED_SHARE = 0.4;
+
 /** What one of a town's finite slots costs, dearer the tighter the cap. Uncapped, a slot is cheap. */
 function townSlotCost(rules) {
   const cap = rules?.town?.maxCharacters;
@@ -227,6 +245,11 @@ const PASSIVE_VALUE = {
   // standing. Priced below a passive that only pays its own Mayor, because the extra stall is a fact
   // about the shared display — the rival gets first look at it exactly as often as she does.
   capitalCityExtraStalls: 1.6,
+  // The banker's standing rate, pointed across the table: every shift the OTHER town finishes pays
+  // a Supply less while she is on her feet. Priced just under townShiftBonus — a town works about
+  // as many shifts as the one across from it, and Supply taken off a rival is worth a shade less
+  // than Supply in your own hand.
+  opponentShiftPenalty: 2.6,
 };
 
 // How many times a trigger is expected to pay out over a game, relative to a one-shot.
@@ -308,6 +331,23 @@ function conditionFactor(condition) {
   return named ? Math.max(0.35, factor * 0.55) : factor;
 }
 
+/**
+ * How many heads a `per` effect is rated on.
+ *
+ * Bodies in the town and bodies on their feet are not the same count: a town holds about three
+ * Characters while a game is being decided and has about two of them upright at any moment, because
+ * the rest are working. A `filter` narrows it further — a card that counts only the Lore animals in
+ * a town is counting rather less than one that counts all of them, and how much less is how much of
+ * the shelf that filter actually covers.
+ */
+function perScale(eff, rateKey) {
+  const heads = eff.per === 'uprightCharacters' ? EXPECTED_UPRIGHT : EXPECTED_CHARACTERS;
+  const narrowed = eff.filter && (eff.filter.study || eff.filter.species) ? FILTERED_SHARE : 1;
+  const rate = eff[rateKey] === undefined ? 1 : eff[rateKey];
+  const scaled = rate * heads * narrowed;
+  return eff.max === undefined ? scaled : Math.min(scaled, eff.max);
+}
+
 /** What one effect is worth the single time it resolves. */
 export function effectPower(eff) {
   if (!eff || !eff.do) return 0;
@@ -316,12 +356,16 @@ export function effectPower(eff) {
     case 'seq':
       return (eff.steps || []).reduce((a, s) => a + effectPower(s), 0);
     case 'gainSupply':
+      // `per` counts the town rather than printing a number, and `max` is a real ceiling, so a
+      // scaling gain has to print one or it cannot be rated.
+      if (eff.per) return perScale(eff, 'amount');
       return n(eff.amount);
     case 'opponentGainSupply':
       return -0.6 * n(eff.amount);
     case 'giveSupplyToOpponent':
       return -1.4 * n(eff.amount);
     case 'draw':
+      if (eff.per) return DRAW * perScale(eff, 'count');
       return DRAW * n(eff.count);
     case 'discard':
       return -0.9 * n(eff.count);
@@ -348,9 +392,15 @@ export function effectPower(eff) {
       // rehire is worth a body on top of the Supply it saves — but only when somebody is actually out
       // of work, which is why it is discounted for availability.
       return AVAILABLE.unemployment * (BODY + (eff.free ? 3.2 : 0.4 + n(eff.discount, 0)) + (eff.filter ? -0.4 : 0));
-    case 'recruitFromHand':
+    case 'recruitFromHand': {
       // An extra body without spending the turn's recruit: the scarce currency, bought directly.
-      return BODY + 2.4 + 0.5 * n(eff.filter && eff.filter.maxCost, 0) + (eff.orientation === 0 ? 0.8 : 0);
+      // A recruit made for the rival is that same body handed across the table; a day hire is the
+      // body for one turn only, which is tempo rather than a town.
+      const base = BODY + 2.4 + 0.5 * n(eff.filter && eff.filter.maxCost, 0) + (eff.orientation === 0 ? 0.8 : 0);
+      const narrowed = eff.filter && (eff.filter.species || eff.filter.study) ? 0.8 : 1;
+      const dayOnly = eff.dayLabour ? 0.45 : 1;
+      return base * narrowed * dayOnly * (eff.for === 'opponent' ? -0.6 : 1);
+    }
     case 'reorderDeckTop':
       return 0.35 * n(eff.count);
     case 'eventFromDumpToHand':
@@ -447,10 +497,15 @@ export function effectPower(eff) {
       return eff.oncePerGame ? 2.2 : READY;
     case 'cancelReveal':
       return 1.0; // on-reveal cards fire about three times a game, and only some are shocks
-    case 'advanceCharacter':
+    case 'advanceCharacter': {
       // One step toward upright, and never for a Character mid-shift: a full ready for a Busy animal
       // that is merely waiting, half of one for a Master still rotating in. Worth most of a ready.
-      return 0.75 * READY * n(eff.count) * (eff.optional ? 0.95 : 1);
+      // Pointed across the table it is a kindness and therefore a cost, priced the way every other
+      // thing this collection hands the rival is priced: the doctor's second round is a real round
+      // and it is real help, and the card is rated as the animal who gives it away.
+      const step = 0.75 * READY * n(eff.count) * (eff.optional ? 0.95 : 1);
+      return eff.side === 'opponent' ? -0.6 * step : step;
+    }
     case 'scryDeck':
       // Seeing the top of your own deck and binning what you do not want: card quality, not cards.
       // Sending them to the Town Dump is worth more than bottoming them — the card is gone until the
@@ -482,11 +537,36 @@ export function effectPower(eff) {
       // The rival's Town Dump has their Events in it, not yours: a card you could not otherwise
       // have, and one they have already shown you is worth playing.
       return AVAILABLE.townDump * 2.2;
-    case 'makeBusy':
+    case 'makeBusy': {
       // The mirror of advanceCharacter, pointed across the table: a turn of the rival's tempo, not a
       // job taken. Worth a little less than waking your own animal, because it never touches a
-      // Character mid-shift and the rival chooses nothing about it.
-      return 0.65 * READY * n(eff.count) * (eff.optional ? 0.95 : 1);
+      // Character mid-shift and the rival chooses nothing about it. Turned on the Mayor's own town
+      // it is the same turn of tempo going the wrong way, and it is a price the card is paying for
+      // whatever else is in the same breath — the coach who works everybody harder and herself
+      // hardest is not two abilities, she is one, and the model has to read the bill.
+      const turn = 0.65 * READY * n(eff.count) * (eff.optional ? 0.95 : 1);
+      return eff.side === 'self' ? -turn : turn;
+    }
+    case 'paySupply':
+      // A sink with a rider on it. The Supply an ability eats is the other kind of Supply — the
+      // pile a Mayor is sitting on with nothing left to buy — so it is charged at the same rate a
+      // Busy ability's fee is, and what it buys is the rider.
+      return effectPower(eff.then) - SINK_SUPPLY * n(eff.amount) * (eff.optional ? 0.85 : 1);
+    case 'unemployOwnCharacter':
+      // The Mayor's own animal let go: a body out of the town and the Supply to bring them back.
+      // Always a cost, and a cost the card is paying for whatever else it does. A filter narrows who
+      // can be taken, and a till that only ever takes the cheapest animal costs less than one that
+      // can take anybody.
+      return -1 * (BODY + 1.4) * n(eff.count) * (eff.optional ? 0.85 : 1) * (eff.filter ? 0.7 : 1);
+    case 'opponentDiscards':
+      // The rival's hand burnt rather than merely reordered, and they choose which goes.
+      return 1.1 * n(eff.count);
+    case 'swapWithHand':
+      // The twins' trick. No body is gained, no Supply changes hands and the post is not lost: what
+      // it is worth is the difference between the version standing there and the best one in hand,
+      // and only on the turns a better one is in hand at all. About a rung of the cost curve,
+      // discounted hard for how often that rung is actually in your paw.
+      return 1.1;
     case 'behindPlayerGains':
       return 0.55 * (n(eff.supply, 0) + DRAW * n(eff.cards, 0));
     case 'behindPlayerReadies':
@@ -521,6 +601,14 @@ export function effectPower(eff) {
       return Math.max(0, 6 - n(eff.count)) * 0.7;
     case 'blockNextReady':
       return 2.4;
+    case 'everyoneRecruitsFree':
+      // Both forecourts open at once. Each Mayor drives one home, so what the card's owner gets out
+      // of it is the tempo of everybody being a body up, not the body itself.
+      return 2.8 * (eff.count === undefined ? 1 : Math.min(3, eff.count));
+    case 'everyoneSearchesDeck':
+      // Both decks searched and both shuffled. The card quality is real and it is shared, so it is
+      // rated like a shared draw with the picking done for you.
+      return 1.6 * (eff.count === undefined ? 1 : Math.min(3, eff.count));
     case 'everyoneRehiresFree':
       // Both Mayors take the same number back, so what it is worth to the card's owner is the tempo
       // of the rebuild rather than the bodies: the rival rebuilds too.
@@ -721,7 +809,15 @@ export function cardPower(card, rules) {
   // difference, so the card buys an upgrade path a cheap body does not normally have: a saved action
   // and a body the town cap never has to find room for twice. A study anchor reaches further than a
   // species one, because a study is what an animal does and half the shelf does each of them.
-  if (card.anchor) power += card.anchor.study ? 1.5 : 1.2;
+  if (card.anchor) {
+    power += card.anchor.study ? 1.5 : 1.2;
+    // `anchor.asCost` is what the ward counts the post as worth, and it is money: an animal played
+    // over a figure counted at 2 pays two Supply less than one played over a figure counted at
+    // nothing. It is only worth it on the turn somebody actually is played over them, which is why
+    // it is rated well under face value — but it is the whole reason a maker sets it to 2 rather
+    // than 1, so the model has to be able to see the difference.
+    if (typeof card.anchor.asCost === 'number') power += 0.6 * card.anchor.asCost;
+  }
   // A held Event waits in hand for the turn that suits it, and asks for no Characters when it comes
   // down. Playing the same effect exactly when you want it is worth more than playing it on reveal.
   if (card.hold) power *= 1.12;

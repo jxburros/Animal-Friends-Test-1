@@ -10,9 +10,13 @@ import {
 import { makeRandomAgent } from '../src/ai/random.js';
 
 /** The game as JSON, with the live agents the app parks on the state left out of the comparison. */
+// The state as data, not as a string: key order is not part of a game. `notifyingSupplyLoss` is set
+// the first time Supply is taken off somebody, so whether it is written before or after `setId`
+// depends on whether that happened before the save was taken — which is a fact about the shuffle
+// and not a difference between the two games.
 function gameOnly(state) {
   const { agents, ...rest } = JSON.parse(serialize(state));
-  return JSON.stringify(rest);
+  return rest;
 }
 
 describe('taking a snapshot', () => {
@@ -86,7 +90,7 @@ describe('restoring', () => {
     assert.deepEqual(resumed.log.map((l) => l.text), original.log.map((l) => l.text));
     assert.equal(resumed.turnNumber, original.turnNumber);
     assert.equal(resumed.winner, original.winner);
-    assert.equal(gameOnly(resumed), gameOnly(original), 'the whole state, not just the log');
+    assert.deepEqual(gameOnly(resumed), gameOnly(original), 'the whole state, not just the log');
   });
 });
 

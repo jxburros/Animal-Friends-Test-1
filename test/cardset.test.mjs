@@ -75,15 +75,21 @@ test('card set', async (t) => {
     }
   });
 
-  await t.test('upgrades cost more than the Character they upgrade', () => {
+  await t.test('every Character has a rung somebody can climb from', () => {
+    // Two versions at one cost used to be an error. It is now guidance — write the empty costs
+    // first, and do not double up inside one study — because a character who works two trades at
+    // once is a real shape and the ward does not care that both posts pay the same. What is still
+    // a rule is that the ladder goes somewhere: a character with more than one version has at
+    // least two different costs on the shelf, or no version of them can ever upgrade another.
     const byName = new Map();
     for (const c of byType('character')) {
       if (!byName.has(c.name)) byName.set(c.name, []);
       byName.get(c.name).push(c);
     }
     for (const [name, versions] of byName) {
-      const costs = versions.map((v) => v.cost);
-      assert.equal(new Set(costs).size, costs.length, `${name}: two versions share a cost, so neither can upgrade the other`);
+      if (versions.length < 2) continue;
+      const costs = new Set(versions.map((v) => v.cost));
+      assert.ok(costs.size >= 2, `${name}: every version costs the same, so none of them upgrades another`);
     }
   });
 

@@ -7,7 +7,12 @@ import assert from 'node:assert/strict';
 import { RULES, SET, newGame, addStack, addToHand, addToUnemployment, setSupply } from './helpers.mjs';
 import { upgradeTargets, unemployedUpgradeTargets, legalActions, applyAction, topCard } from '../src/engine/index.js';
 
-const figures = SET.cards.filter((c) => c.anchor);
+// Two kinds of card carry `anchor`, and they are not the same thing. An **obscured figure** is a
+// post the ward record never got a name for: the masked otter, the cloaked tradesman. A **baby** is
+// an animal who has a name and has simply not grown into a trade yet, and prints `anchor.asCost` —
+// what the ward counts the post as worth when somebody is set over them — which the figures never do.
+const figures = SET.cards.filter((c) => c.anchor && c.anchor.asCost === undefined);
+const babies = SET.cards.filter((c) => c.anchor && c.anchor.asCost !== undefined);
 
 test('there is an obscured figure for every species and every study, spread across 0, 1 and 2', () => {
   assert.equal(figures.length, SET.species.length + SET.studies.length);
@@ -26,6 +31,41 @@ test('there is an obscured figure for every species and every study, spread acro
   for (const c of figures) {
     assert.ok(SET.characters.some((e) => e.name === c.name), `${c.id} has nobody behind it`);
   }
+});
+
+test('there is a baby for every species, and each counts for 1 or 2 when somebody is set over them', () => {
+  assert.deepEqual(babies.map((c) => c.species).sort(), [...SET.species].sort());
+  for (const b of babies) {
+    assert.equal(b.cost, 0, `${b.id}: a baby costs nothing to put out`);
+    assert.equal(b.anchor.species, true, `${b.id}: a baby is anchored on their species`);
+    assert.ok([1, 2].includes(b.anchor.asCost), `${b.id}: counts as ${b.anchor.asCost}, which is neither 1 nor 2`);
+    assert.deepEqual(b.shift, { delay: 3, output: 1 }, `${b.id}: three turns for one Supply`);
+    assert.ok(SET.characters.some((e) => e.name === b.name), `${b.id} has nobody behind it`);
+  }
+  // Each is called by their own baby-animal name, and no two of them share it.
+  const names = babies.map((c) => c.name);
+  assert.equal(new Set(names).size, names.length);
+});
+
+test('a baby costs nothing and still counts for their asCost when a grown animal is played over them', () => {
+  const kitten = babies.find((c) => c.species === 'Cat');
+  assert.equal(kitten.anchor.asCost, 1);
+  const state = newGame();
+  addStack(state, 0, kitten.id);
+  // A Cat at the baby's counted cost is not an upgrade: the ward is not promoting anybody sideways.
+  const level = SET.cards.find((c) => c.type === 'character' && c.species === 'Cat' && c.cost === 1 && !c.anchor);
+  assert.equal(upgradeTargets(state, 0, level.id).length, 0, 'a Cat costing 1 does not take a Kitten counted at 1');
+  const dearer = SET.cards.find((c) => c.type === 'character' && c.species === 'Cat' && c.cost === 3 && !c.anchor);
+  assert.equal(upgradeTargets(state, 0, dearer.id).length, 1, 'a dearer Cat does');
+  // And the upgrade is paid against the counted cost, not against the nothing the Kitten cost.
+  state.phase = 'actions';
+  state.active = 0;
+  state.players[0].hand = [];
+  const card = addToHand(state, 0, dearer.id);
+  setSupply(state, 0, 10);
+  const act = legalActions(state, 0).find((a) => a.type === 'recruit' && a.cardUid === card.uid && a.upgrade);
+  assert.ok(act, 'the upgrade is offered');
+  assert.equal(act.cost, dearer.cost - 1, 'paid against the 1 the Kitten counts for');
 });
 
 test('a species anchor takes any dearer animal of that species, whatever their name', () => {

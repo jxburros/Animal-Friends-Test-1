@@ -72,6 +72,22 @@ add to the list.
   raised by a Mayor's own animals rather than won in the Capital City. Each one already belonged to
   somebody in this file before it was a card.
 
+- **The Capital City's newer lots** — the Bookstore, the Game Store, the Juice Store, the Gas
+  Station, the Cheese Store, the Bank, the Fast Food Joint, the Car Dealership, the Owlery and the
+  Airport. The borough has a forecourt, a filling station and an airfield, and has had all three for
+  longer than anybody bothers to say; the Capital City put them up and the borough's use of them is
+  its own business, exactly as it is with the Physic Garden. [town cards]
+- **The Farmer's Market is on the square on a Saturday**, trestles up from six and down by one.
+  Teresa's peppers are at the far end next to Shay's paintings. It is a Town Building — the borough
+  raises it for itself — and it pays what the borough actually brought. [Teresa, Shay]
+- **The borough school is two rooms**, an upper and a lower, and it is not the night school. Jessica's
+  is at ten at night and has no homework; this one is in the morning and has a bell. [Dirt, Squirt]
+- **The surgery is two doors from the Physic Garden.** Shay keeps it, and Rosabeth's garden and the
+  Science hall are on speaking terms because of her and not before her. [Shay, Rosabeth]
+- **The ward has a night kitchen**, off the night round, with a bell on it and a rota. [Hoot]
+- **The airfield is one strip and a windsock**, up past the far field. Reese flies out of it and Mimi
+  runs everything about it that is not flying. [Reese, Mimi]
+
 ## History
 
 - **The café by the Hiring Hall** is Bean's — their parents ran it for thirty years and left it to
@@ -457,6 +473,41 @@ add to the list.
   whatever the job, which is the other reason the borough has stopped asking where she lives.
   [Mandee]
 
+- **Shay does her rounds twice, and the second round crosses the ward boundary.** An animal asleep on
+  their feet is an animal asleep on their feet whichever Mayor's town they are standing in. It has
+  been raised at three meetings and has never once been stopped. [Shay]
+- **The borough side trains at five and plays on a Saturday.** Teresa coaches it at a volume the
+  allotments can hear, Sota assists without ever raising their voice, and Squirt has played left wing
+  for twenty years. The appeal against the county's ruling on the ferry-day postponement ran to nine
+  pages and was won on the second. [Teresa, Sota, Squirt]
+- **Dirt and Squirt swap.** On Tuesdays, mid-lesson, and twice during a ward meeting while a motion
+  was being read. The borough has stopped trying to tell which of them is in which room, and Ned's
+  shelf carries a figurine labelled DIRT that is unmistakably Squirt and has not been corrected in
+  four years. [Dirt, Squirt]
+- **The Community Bonfire is one night a year on the far field**, and it is where this town does its
+  remembering: the year's broken pallets go on, and the animals who keep the records do the talking.
+  Ned brings the ward book, Lynnette brings the water-stained novels nobody has wanted since the
+  bridge went, and the other borough walks over the hill for it and is handed a chair. [town cards]
+- **The Car Show is held on market day and nobody has ever moved it.** The Fox on the dealership
+  forecourt opens it, the ledger animals make it add up, and both boroughs turn out — which is
+  exactly why it is held on the day the square is already full. [town cards]
+- **Passing Comets are announced in advance and the whole square goes out to lie on the cobbles.**
+  Somebody with a chart says when. Half the borough's best trades have been agreed flat on their
+  backs on a cold night, which is not an accident: nobody haggles well looking up. [town cards]
+- **Mildred has been at the Counting House counter for forty-one years and has never made an error.**
+  Ned has checked, twice, unasked. She says no to a Mayor exactly as she says it to anybody else.
+  [Mildred, Ned]
+- **The restaurant has a juice list and it is taken seriously.** JT runs it three evenings a week, it
+  pairs the Auction House's big lots, and a child at the next table is never served anything less
+  interesting than what the adults are drinking. [JT]
+- **The borough's young are put on light work early and the ward keeps the post open.** A Bunny on a
+  row, a Hoglet on the gate step, a Badger Cub in the corner of the workshop with a block nobody
+  explains: three days of any of them is about one animal's morning, and every one of those posts is
+  written in Ned's records as a place somebody will grow into. That is why a baby of any species may
+  be stood aside for a grown animal of the same species without the ward calling it a promotion —
+  though the record still counts what the post was worth, which for the slower species is two.
+  [the babies]
+
 ## Relationships
 
 - **Bean owns the café; Peanut runs its counter.** Bean inherited it, Peanut keeps the books, and on
@@ -574,6 +625,15 @@ Characters the maker added to the shelf who replace no printed card. They carry 
 | Winter | An Owl TV scientist the maker added: no printed Winter, and no relation to Sage beyond both having sat the Observatory's selection board. | 2026-09-15 |
 | Fred | An Owl who is a mess, added by the maker: no printed Fred, and no relation to Biff beyond both being able to send an opponent's animal back to work. | 2026-09-15 |
 | Yellow | A Squirrel rapper the maker added: no printed Yellow. | 2026-09-15 |
+| Shay | The borough's Owl doctor and Sunday painter, added by the maker: no printed Shay. She is the reason the Science hall and Rosabeth's garden are on speaking terms. | 2026-09-16 |
+| JT | An Otter nurse and juice steward the maker added: no printed JT, and no relation to Dylan beyond both working the ferry-steps end of town. | 2026-09-16 |
+| Dirt | One of the twin Squirrel schoolteachers, added by the maker: no printed Dirt. | 2026-09-16 |
+| Squirt | The other twin, added by the maker: no printed Squirt, and the two of them are one card between them as often as they are two. | 2026-09-16 |
+| Teresa | The Mouse who coaches the borough side and grows the peppers, added by the maker: no printed Teresa. | 2026-09-16 |
+| Reese | The Raccoon pilot, added by the maker: no printed Reese, and no relation to Comet or Brook beyond all three having left the ground. | 2026-09-16 |
+| Mimi | The Rabbit who runs the cabin, added by the maker: no printed Mimi. She has one version in each of five studies and swaps between them freely, which is the point of her. | 2026-09-16 |
+| Mildred | The Badger at the Counting House counter, added by the maker: no printed Mildred. | 2026-09-16 |
+| The ten babies | Bunny, Baby Mouse, Badger Cub, Hoglet, Raccoon Kit, Fox Cub, Otter Pup, Squirrel Kit, Kitten and Owlet — one for every species, added by the maker. Like the obscured figures they carry an `anchor` rather than an ability, and unlike them they have names: they cost nothing, work three turns for one Supply, and count as 1 or 2 when an animal of their species is set over them. The ward counts a Baby Mouse, a Badger Cub, a Raccoon Kit, a Fox Cub and an Owlet at **two** — those five are the ones whose first season is held to be half the trade — and the rest at one. | 2026-09-16 |
 
 Cards may be additions too — an extra rung in a remade character's arc, an added character's own
 cards, or a card of a type the printed set never had. All twelve **Town Buildings** and all nineteen
