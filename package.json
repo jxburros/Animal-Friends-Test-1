@@ -1,6 +1,6 @@
 {
   "name": "animal-friends-tcg",
-  "version": "0.12.2",
+  "version": "0.14.0",
   "private": true,
   "description": "Animal Friends TCG: First Boroughs \u2014 browser game, headless engine and playtest simulator",
   "type": "module",

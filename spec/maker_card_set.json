@@ -29,1003 +29,446 @@
  ],
  "decks": [
   {
-   "id": "mk-tin-tally",
-   "name": "Tin & Tally",
+   "id": "mk-furrow-warren",
+   "name": "Furrow & Warren",
    "species": [
-    "Squirrel",
-    "Otter"
-   ],
-   "studies": [
-    "Commerce",
-    "Agriculture"
-   ],
-   "blurb": "Squirrels and Otters of Commerce and Agriculture: the long shift is the whole plan. Every animal works, every shift is costed twice, and the tin behind the desk is fuller than the ledger admits.",
-   "list": {
-    "mk_daisy_petal_sweeper_0": 2,
-    "mk_tuppence_cart_boy_1": 2,
-    "mk_brooke_dock_hand_1": 2,
-    "mk_peanut_accountant_2": 1,
-    "mk_daisy_bouquet_weaver_2": 2,
-    "mk_scott_pamphleteer_2": 2,
-    "mk_pebble_ferry_master_3": 1,
-    "mk_daisy_night_bloom_florist_3": 2,
-    "mk_benjamin_town_historian_3": 1,
-    "mk_brooke_regatta_caller_3": 1,
-    "mk_daisy_festival_florist_4": 2,
-    "mk_willow_harbourmaster_4": 1,
-    "mk_peanut_comptroller_5": 2,
-    "mk_tb_quill_wall": 1,
-    "mk_tb_the_builders_rest": 1,
-    "mk_tb_rosabeths_gate": 1,
-    "mk_a_word_beforehand": 2,
-    "mk_ledger_day": 2,
-    "mk_slack_water": 2,
-    "mk_ev_never_handed_back": 2,
-    "mk_the_root_cellar": 2,
-    "mk_peanuts_standing_round": 2,
-    "mk_willow_toll_keeper_2": 1,
-    "mk_pebble_towpath_warden_4": 1,
-    "mk_tuppence_sold_before_the_cart_4": 1,
-    "mk_willow_ferry_trader_1": 1
-   }
-  },
-  {
-   "id": "mk-gavel-ribbon",
-   "name": "Gavel & Ribbon",
-   "species": [
-    "Fox",
-    "Raccoon"
-   ],
-   "studies": [
-    "Civics",
-    "Crafts"
-   ],
-   "blurb": "Foxes and Raccoons of Civics and Crafts: the town that turns up at the Auction House with something it made this morning. It pledges high, works the City Dump, and dares the other Mayor to keep raising.",
-   "list": {
-    "mk_beck_the_relief_roll_0": 2,
-    "mk_juniper_messenger_1": 1,
-    "mk_roger_locksmith_1": 2,
-    "mk_finn_peddler_1": 1,
-    "mk_beck_ward_clerk_2": 2,
-    "mk_juniper_courier_captain_2": 2,
-    "mk_gabe_puppet_maker_2": 1,
-    "mk_beck_lamplighters_clerk_3": 1,
-    "mk_hazel_guildmaster_3": 2,
-    "mk_patch_valuer_3": 2,
-    "mk_earl_tea_house_keeper_4": 1,
-    "mk_juniper_diplomat_4": 2,
-    "mk_beck_keeper_of_the_ward_book_5": 2,
-    "mk_tb_coppers_cellar": 2,
-    "mk_tb_allotment_strip": 1,
-    "mk_bins_at_dawn": 2,
-    "mk_fair_hearing": 2,
-    "mk_beck_reads_by_candlelight": 2,
-    "mk_ev_the_marks_are_struck": 2,
-    "mk_hazels_night_market": 2,
-    "mk_patchs_second_opinion": 2,
-    "mk_quill_harvest_steward_5": 1,
-    "mk_kevin_counter_hand_2": 2,
-    "mk_roger_circuit_judge_3": 1
-   }
-  },
-  {
-   "id": "mk-lamp-lens",
-   "name": "Lamp & Lens",
-   "species": [
-    "Owl",
-    "Fox"
-   ],
-   "studies": [
-    "Science",
-    "Commerce"
-   ],
-   "blurb": "Owls and Foxes of Science and Commerce: instruments, night work and a price for everything. It knows what the Capital City is about to put up before the other Mayor has looked at the board.",
-   "list": {
-    "mk_sage_night_assistant_0": 1,
-    "mk_finn_auctioneers_boy_0": 1,
-    "mk_liz_scale_hand_1": 2,
-    "mk_obscured_observer_1": 2,
-    "mk_mandee_weather_watcher_2": 2,
-    "mk_earl_tea_trader_2": 2,
-    "mk_roger_records_clerk_2": 1,
-    "mk_sage_astronomer_3": 2,
-    "mk_mandee_moonlight_trader_3": 2,
-    "mk_liz_the_docket_3": 2,
-    "mk_winter_head_science_producer_4": 2,
-    "mk_sage_the_watch_list_4": 1,
-    "mk_sage_royal_astronomer_5": 2,
-    "mk_tb_observatory_steps": 2,
-    "mk_tb_chit_press": 1,
-    "mk_a_word_beforehand": 2,
-    "mk_sages_star_party": 2,
-    "mk_hall_lecture": 2,
-    "mk_ledger_day": 2,
-    "mk_night_round": 2,
-    "mk_mandees_forecast": 2,
-    "mk_quill_harvest_steward_5": 1,
-    "mk_kevin_counter_hand_2": 2
-   }
-  },
-  {
-   "id": "mk-larder-long-table",
-   "name": "Larder & Long Table",
-   "species": [
-    "Hedgehog",
-    "Mouse"
-   ],
-   "studies": [
-    "Food",
-    "Crafts"
-   ],
-   "blurb": "Hedgehogs and Mice of Food and Crafts: the kitchen and the bench, and a table long enough for everybody. Whatever the weather takes off the board is fed, mended and back at work by morning.",
-   "list": {
-    "mk_berry_tinker_0": 1,
-    "mk_osh_sharpener_s_boy_0": 2,
-    "mk_betty_whittler_1": 1,
-    "mk_osh_round_sharpener_1": 2,
-    "mk_gwen_short_order_cook_1": 2,
-    "mk_gwen_anybodys_counter_2": 2,
-    "mk_osh_edge_grinder_2": 2,
-    "mk_biff_beat_constable_2": 1,
-    "mk_quill_cider_maker_3": 1,
-    "mk_gwen_diner_keeper_3": 2,
-    "mk_betty_firework_maker_3": 2,
-    "mk_gwen_apron_on_the_hook_4": 1,
-    "mk_berry_workshop_elder_4": 2,
-    "mk_gwen_owner_of_the_diner_5": 2,
-    "mk_tb_berrys_bench": 2,
-    "mk_tb_boat_shed": 1,
-    "mk_fresh_batch": 2,
-    "mk_the_long_night_at_earls": 2,
-    "mk_hedge_apothecary": 2,
-    "mk_guild_night": 2,
-    "mk_tool_lending_day": 2,
-    "mk_tabitha_camerawoman_5": 1,
-    "mk_quinn_keeper_of_the_record_5": 1,
-    "mk_rosabeth_herbalist_physician_5": 1,
-    "mk_betty_powder_chemist_4": 1
-   }
-  },
-  {
-   "id": "mk-bandstand-bell",
-   "name": "Bandstand & Bell",
-   "species": [
-    "Rabbit",
-    "Cat"
-   ],
-   "studies": [
-    "Entertainment",
-    "Civics"
-   ],
-   "blurb": "Rabbits and Cats of Entertainment and Civics: a town played at double time. Animals stand back up the turn they sat down, and the hall is open again before the rival has finished their Ready.",
-   "list": {
-    "mk_hibiscus_the_sorting_bench_0": 2,
-    "mk_velvet_counter_clerk_1": 1,
-    "mk_hibiscus_post_runner_1": 2,
-    "mk_clover_plot_sharer_1": 1,
-    "mk_eric_fair_steward_2": 2,
-    "mk_copper_weights_inspector_2": 2,
-    "mk_hibiscus_night_mail_2": 1,
-    "mk_liza_top_of_the_bill_3": 2,
-    "mk_velvet_neighborhood_registrar_3": 2,
-    "mk_hibiscus_round_walker_3": 2,
-    "mk_faustus_wardrobe_master_4": 2,
-    "mk_marmalade_oven_keeper_4": 1,
-    "mk_velvet_clerk_of_the_works_5": 1,
-    "mk_liza_headliner_5": 1,
-    "mk_tb_open_mic_room": 2,
-    "mk_tb_the_warren": 1,
-    "mk_fair_hearing": 2,
-    "mk_warren_muster": 2,
-    "mk_hibiscuss_post_route": 2,
-    "mk_open_mic_night": 2,
-    "mk_ev_the_hat_goes_round": 2,
-    "mk_velvets_petition": 2,
-    "mk_quill_harvest_steward_5": 1,
-    "mk_abigail_five_minutes_2": 2
-   }
-  },
-  {
-   "id": "mk-ledger-legend",
-   "name": "Ledger & Legend",
-   "species": [
-    "Badger",
-    "Raccoon"
-   ],
-   "studies": [
-    "Commerce",
-    "Lore"
-   ],
-   "blurb": "Badgers and Raccoons of Commerce and Lore: the counting house and the long room in one town. It keeps the books, keeps the stories, and knows which of the two the borough will actually pay for.",
-   "list": {
-    "mk_patch_junkyard_diver_0": 2,
-    "mk_pockets_kerbside_dealer_1": 2,
-    "mk_thistle_almanac_keeper_1": 2,
-    "mk_annabelle_last_one_up_2": 1,
-    "mk_hazel_market_vendor_2": 2,
-    "mk_orien_rate_checker_2": 2,
-    "mk_pockets_odd_lot_dealer_3": 2,
-    "mk_annabelle_salvage_archivist_3": 3,
-    "mk_morty_watermill_mechanic_3": 1,
-    "mk_hazel_market_committee_chair_4": 2,
-    "mk_beck_candlelight_reader_4": 1,
-    "mk_patch_reclamation_merchant_5": 1,
-    "mk_hazel_merchant_5": 1,
-    "mk_tb_gate_hut": 1,
-    "mk_tb_barrows_yard": 1,
-    "mk_bins_at_dawn": 2,
-    "mk_a_word_beforehand": 2,
-    "mk_ledger_day": 2,
-    "mk_reading_lanterns": 2,
-    "mk_hazels_night_market": 2,
-    "mk_patchs_second_opinion": 2,
-    "mk_quill_harvest_steward_5": 1,
-    "mk_abigail_five_minutes_2": 2,
-    "mk_moss_guild_architect_3": 1
-   }
-  },
-  {
-   "id": "mk-ledger-larder",
-   "name": "Ledger & Larder",
-   "species": [
-    "Squirrel",
-    "Mouse"
-   ],
-   "studies": [
-    "Commerce",
-    "Food"
-   ],
-   "blurb": "Squirrels and Mice of Commerce and Food: the books balance, the counter never closes, and everything the town eats has been costed twice.",
-   "list": {
-    "mk_peanut_ledger_0": 2,
-    "mk_peanut_barista_1": 2,
-    "mk_cloaked_tradesman_1": 2,
-    "mk_peanut_accountant_2": 1,
-    "mk_gwen_anybodys_counter_2": 2,
-    "mk_scott_pamphleteer_2": 2,
-    "mk_cookie_winter_stores_cook_3": 2,
-    "mk_gwen_diner_keeper_3": 2,
-    "mk_bella_wildlife_warden_3": 1,
-    "mk_peanut_cafe_manager_4": 2,
-    "mk_rosabeth_tincture_counter_4": 1,
-    "mk_gwen_owner_of_the_diner_5": 2,
-    "mk_tb_counting_house": 2,
-    "mk_tb_the_long_awning": 1,
-    "mk_fresh_batch": 2,
-    "mk_the_long_night_at_earls": 2,
-    "mk_a_word_beforehand": 2,
-    "mk_peanuts_standing_round": 2,
-    "mk_ledger_day": 2,
-    "mk_scotts_reading_hour": 2,
-    "mk_quill_harvest_steward_5": 1,
-    "mk_kevin_counter_hand_2": 2,
-    "mk_daniel_star_charter_3": 1
-   }
-  },
-  {
-   "id": "mk-bench-bandstand",
-   "name": "Bench & Bandstand",
-   "species": [
-    "Badger",
-    "Cat"
-   ],
-   "studies": [
-    "Crafts",
-    "Entertainment"
-   ],
-   "blurb": "Badgers and Cats of Crafts and Entertainment: the bench turns out the work, the hall turns out the town, and neither of them stops for weather.",
-   "list": {
-    "mk_thistle_at_the_back_0": 1,
-    "mk_morty_the_boiler_test_0": 1,
-    "mk_comet_rocket_mechanic_1": 2,
-    "mk_marmalade_dough_kneader_1": 1,
-    "mk_copper_scale_polisher_1": 1,
-    "mk_faustus_costumier_2": 2,
-    "mk_moss_toolsmith_2": 2,
-    "mk_curtained_performer_2": 1,
-    "mk_oatmeal_jazz_singer_3": 2,
-    "mk_morty_watermill_mechanic_3": 2,
-    "mk_moss_guild_architect_3": 2,
-    "mk_moss_rocketwright_4": 2,
-    "mk_faustus_wardrobe_master_4": 1,
-    "mk_moss_bridgewright_5": 2,
-    "mk_tb_gwens_counter": 2,
-    "mk_tb_puppet_booth": 1,
-    "mk_moss_rehiring_day": 2,
-    "mk_guild_night": 2,
-    "mk_open_mic_night": 2,
-    "mk_ev_the_hat_goes_round": 2,
-    "mk_mortys_boiler_test": 2,
-    "mk_oatmeals_benefit_night": 2,
-    "mk_quill_harvest_steward_5": 1,
-    "mk_abigail_five_minutes_2": 2
-   }
-  },
-  {
-   "id": "mk-hedgerow-hearth",
-   "name": "Hedgerow & Hearth",
-   "species": [
-    "Rabbit",
-    "Hedgehog"
-   ],
-   "studies": [
-    "Agriculture",
-    "Food"
-   ],
-   "blurb": "Rabbits and Hedgehogs of Agriculture and Food: a hedge takes a winter to lay and fifteen years to judge, and there is always something on for whoever turns up.",
-   "list": {
-    "mk_clover_seedling_helper_0": 1,
-    "mk_quill_orchard_hand_0": 1,
-    "mk_eric_smallholder_1": 2,
-    "mk_peter_washing_up_1": 2,
-    "mk_betty_stump_blaster_2": 2,
-    "mk_quill_orchard_keeper_2": 2,
-    "mk_peter_the_winters_length_2": 1,
-    "mk_clover_community_gardener_3": 1,
-    "mk_eric_row_farmer_3": 2,
-    "mk_peter_hedgelayer_3": 2,
-    "mk_eric_row_boss_4": 2,
-    "mk_biff_chief_constable_4": 1,
-    "mk_betty_land_clearer_5": 1,
-    "mk_eric_best_farmer_5": 2,
-    "mk_tb_the_muster_bell": 2,
-    "mk_tb_rosabeths_gate": 1,
-    "mk_the_root_cellar": 2,
-    "mk_glut_of_squash": 2,
-    "mk_warren_muster": 2,
-    "mk_the_cider_social": 2,
-    "mk_clovers_seed_drive": 2,
-    "mk_clover_master_botanist_5": 1,
-    "mk_liza_counter_singer_1": 1,
-    "mk_betty_barn_sweeper_0": 1,
-    "mk_hooded_rabbit_hatch_hand_0": 1,
-    "mk_peter_hedge_cutter_0": 1
-   }
-  },
-  {
-   "id": "mk-dome-harbour",
-   "name": "Dome & Harbour",
-   "species": [
-    "Owl",
-    "Otter"
-   ],
-   "studies": [
-    "Science",
-    "Civics"
-   ],
-   "blurb": "Owls and Otters of Science and Civics: the watch list is kept to the minute and the river licence is granted out of one office, and both of them are awake at four to say so at the meeting.",
-   "list": {
-    "mk_sage_night_assistant_0": 1,
-    "mk_andrew_night_copyist_0": 1,
-    "mk_jessica_infant_teacher_1": 2,
-    "mk_pebble_bridge_courier_1": 2,
-    "mk_taco_the_four_oclock_cart_2": 1,
-    "mk_bean_two_pairs_of_paws_2": 2,
-    "mk_jessica_night_school_teacher_2": 2,
-    "mk_jessica_the_night_school_3": 2,
-    "mk_willow_tide_reckoner_3": 2,
-    "mk_benjamin_town_historian_3": 1,
-    "mk_brooke_balloonist_4": 2,
-    "mk_winter_head_science_producer_4": 2,
-    "mk_pebble_harbour_warden_5": 1,
-    "mk_willow_harbour_admiral_5": 2,
-    "mk_tb_rosabeths_gate": 2,
-    "mk_tb_coppers_cellar": 1,
-    "mk_ev_never_handed_back": 2,
-    "mk_jessicas_night_class": 2,
-    "mk_night_round": 2,
-    "mk_fair_hearing": 2,
-    "mk_the_harbour_office": 2,
-    "mk_hall_lecture": 2,
-    "mk_winter_turned_down_applicant_1": 1,
-    "mk_sage_royal_astronomer_5": 1
-   }
-  },
-  {
-   "id": "mk-press-parlour",
-   "name": "Press & Parlour",
-   "species": [
-    "Mouse",
-    "Fox"
-   ],
-   "studies": [
-    "Crafts",
-    "Lore"
-   ],
-   "blurb": "Mice and Foxes of Crafts and Lore: the press runs all night and everything that comes off it has been across somebody’s shelves first, because a correction is dearer than a delay.",
-   "list": {
-    "mk_daniel_ink_mixer_0": 2,
-    "mk_daniel_chart_copier_1": 2,
-    "mk_unsigned_mouse_shelves_hand_1": 2,
-    "mk_daniel_canal_cartographer_2": 2,
-    "mk_bella_field_recorder_2": 2,
-    "mk_osh_edge_grinder_2": 1,
-    "mk_rosabeth_apothecary_3": 2,
-    "mk_earl_coffee_roaster_3": 2,
-    "mk_finn_fair_warden_3": 2,
-    "mk_daniel_master_cartographer_4": 1,
-    "mk_mandee_keeper_of_tales_4": 2,
-    "mk_quinn_keeper_of_the_record_5": 2,
-    "mk_tb_quill_wall": 1,
-    "mk_tb_the_builders_rest": 1,
-    "mk_tb_rosabeths_gate": 1,
-    "mk_reading_lanterns": 2,
-    "mk_mandees_forecast": 2,
-    "mk_quill_harvest_steward_5": 1,
-    "mk_kevin_counter_hand_2": 2,
-    "mk_maribel_seed_vault_scientist_3": 1,
-    "mk_osh_fair_fiddler_3": 1,
-    "mk_juniper_ward_councillor_3": 1,
-    "mk_bella_wildlife_warden_3": 1,
-    "mk_daniel_star_charter_3": 1,
-    "mk_gwen_diner_keeper_3": 1,
-    "mk_mandee_moonlight_trader_3": 1,
-    "mk_roger_circuit_judge_3": 1
-   }
-  },
-  {
-   "id": "mk-galley-glass",
-   "name": "Galley & Glass",
-   "species": [
-    "Squirrel",
-    "Cat"
-   ],
-   "studies": [
-    "Food",
-    "Science"
-   ],
-   "blurb": "Squirrels and Cats of Food and Science: a lens ground to a tolerance nobody asked for, a tin of something put by for the year somebody needs it, and a very long night between them.",
-   "list": {
-    "mk_marmalade_night_baker_0": 2,
-    "mk_sota_lens_grinder_1": 2,
-    "mk_faustus_pressure_suit_tailor_1": 2,
-    "mk_comet_hatch_hand_2": 2,
-    "mk_nameless_cat_glass_hand_2": 2,
-    "mk_inkwell_storyteller_2": 1,
-    "mk_comet_test_pilot_3": 2,
-    "mk_marmalade_neighborhood_baker_3": 2,
-    "mk_sota_telescope_fitter_3": 2,
-    "mk_scott_natural_historian_4": 1,
-    "mk_velvet_surveyor_of_works_4": 2,
-    "mk_marmalade_harvest_head_baker_5": 2,
-    "mk_tb_quill_wall": 1,
-    "mk_tb_the_builders_rest": 1,
-    "mk_tb_rosabeths_gate": 1,
-    "mk_fresh_batch": 2,
-    "mk_the_long_night_at_earls": 2,
-    "mk_hall_lecture": 2,
-    "mk_one_small_step": 1,
-    "mk_comets_countdown": 2,
-    "mk_velvets_petition": 2,
-    "mk_quill_harvest_steward_5": 1,
-    "mk_kevin_counter_hand_2": 2,
-    "mk_cookie_winter_stores_cook_3": 1
-   }
-  },
-  {
-   "id": "mk-quill-quarry",
-   "name": "Quill & Quarry",
-   "species": [
-    "Hedgehog",
-    "Badger"
-   ],
-   "studies": [
-    "Civics",
-    "Lore"
-   ],
-   "blurb": "Hedgehogs and Badgers of Civics and Lore: immovable at the meeting, unhurried in the record, and still there at the end of the day when everybody who came to watch has gone home.",
-   "list": {
-    "mk_biff_cadet_constable_0": 2,
-    "mk_oatmeal_ward_clerk_1": 2,
-    "mk_bob_the_morning_they_share_1": 2,
-    "mk_berry_committee_2": 2,
-    "mk_oatmeal_safety_inspector_2": 2,
-    "mk_adam_road_gang_2": 1,
-    "mk_orien_borough_actuary_3": 2,
-    "mk_berry_engineer_3": 2,
-    "mk_thistle_grange_warden_3": 2,
-    "mk_quill_orchard_scribe_4": 1,
-    "mk_oatmeal_town_warden_4": 2,
-    "mk_berry_guild_warden_5": 1,
-    "mk_orien_town_planner_5": 1,
-    "mk_tb_quill_wall": 1,
-    "mk_tb_the_builders_rest": 1,
-    "mk_tb_rosabeths_gate": 1,
-    "mk_fair_hearing": 2,
-    "mk_oatmeals_awning": 2,
-    "mk_biffs_beat": 2,
-    "mk_quill_harvest_steward_5": 1,
-    "mk_abigail_five_minutes_2": 1,
-    "mk_cassadee_hall_manager_3": 1,
-    "mk_morty_watermill_mechanic_3": 1,
-    "mk_moss_guild_architect_3": 1,
-    "mk_oatmeal_jazz_singer_3": 1,
-    "mk_betty_firework_maker_3": 1,
-    "mk_scott_town_chronicler_3": 1,
-    "mk_ned_ward_recorder_3": 1
-   }
-  },
-  {
-   "id": "mk-warren-watch",
-   "name": "Warren & Watch",
-   "species": [
-    "Rabbit",
-    "Owl"
-   ],
-   "studies": [
-    "Agriculture",
-    "Science"
-   ],
-   "blurb": "Rabbits and Owls of Agriculture and Science: a dome above the allotment strip and a forecast to the minute under it, and more of them arriving than leaving.",
-   "list": {
-    "mk_sage_night_assistant_0": 1,
-    "mk_clover_plot_sharer_1": 1,
-    "mk_eric_smallholder_1": 2,
-    "mk_winter_turned_down_applicant_1": 2,
-    "mk_sage_frost_watch_2": 2,
-    "mk_peter_the_winters_length_2": 2,
-    "mk_clover_market_gardener_2": 1,
-    "mk_clover_community_gardener_3": 1,
-    "mk_sage_astronomer_3": 2,
-    "mk_eric_row_farmer_3": 2,
-    "mk_clover_rocket_botanist_4": 2,
-    "mk_winter_head_science_producer_4": 2,
-    "mk_sage_royal_astronomer_5": 2,
-    "mk_tb_rosabeths_gate": 2,
-    "mk_tb_coppers_cellar": 1,
-    "mk_the_root_cellar": 2,
-    "mk_sages_star_party": 2,
-    "mk_warren_muster": 2,
-    "mk_clovers_seed_drive": 2,
-    "mk_glut_of_squash": 2,
-    "mk_hall_lecture": 2,
-    "mk_eric_best_farmer_5": 1,
-    "mk_clover_master_botanist_5": 1,
-    "mk_sage_the_watch_list_4": 1
-   }
-  },
-  {
-   "id": "mk-towpath-bazaar",
-   "name": "Towpath & Bazaar",
-   "species": [
-    "Otter",
-    "Raccoon"
-   ],
-   "studies": [
-    "Agriculture",
-    "Entertainment"
-   ],
-   "blurb": "Otters and Raccoons of Agriculture and Entertainment: everything the borough throws out turns up on a trestle by the allotment gate, and by evening somebody is singing over it.",
-   "list": {
-    "mk_gabe_corner_show_0": 2,
-    "mk_patch_compost_yard_1": 2,
-    "mk_abigail_counter_girl_1": 2,
-    "mk_unlisted_grower_2": 2,
-    "mk_mysterious_raccoon_beds_hand_2": 2,
-    "mk_abigail_five_minutes_2": 2,
-    "mk_brooke_regatta_caller_3": 2,
-    "mk_taco_quayside_cook_3": 2,
-    "mk_benjamin_town_historian_3": 1,
-    "mk_gabe_company_of_one_4": 2,
-    "mk_pebble_towpath_warden_4": 1,
-    "mk_gabe_whole_cast_5": 2,
-    "mk_tb_quill_wall": 1,
-    "mk_tb_the_builders_rest": 1,
-    "mk_tb_rosabeths_gate": 1,
-    "mk_ev_never_handed_back": 2,
-    "mk_bins_at_dawn": 2,
-    "mk_open_mic_night": 2,
-    "mk_ev_the_hat_goes_round": 2,
-    "mk_the_root_cellar": 2,
-    "mk_fresh_batch": 2,
-    "mk_quill_harvest_steward_5": 1,
-    "mk_pebble_ferry_master_3": 1,
-    "mk_hazel_guildmaster_3": 1
-   }
-  },
-  {
-   "id": "mk-warden-bench",
-   "name": "Warden & Bench",
-   "species": [
-    "Hedgehog",
-    "Badger"
-   ],
-   "studies": [
-    "Civics",
-    "Crafts"
-   ],
-   "blurb": "Hedgehogs and Badgers of Civics and Crafts, built around Berry, Guild Warden: the town that hires its own back. Berry stands up, somebody out of work is behind the bench again three Supply cheaper, and whoever the rival was about to reach for is out of reach.",
-   "list": {
-    "mk_berry_guild_warden_5": 1,
-    "mk_moss_timber_hand_0": 2,
-    "mk_adam_road_mender_1": 2,
-    "mk_betty_whittler_1": 1,
-    "mk_oatmeal_ward_clerk_1": 2,
-    "mk_berry_committee_2": 2,
-    "mk_oatmeal_safety_inspector_2": 2,
-    "mk_biff_beat_constable_2": 1,
-    "mk_morty_watermill_mechanic_3": 2,
-    "mk_moss_guild_architect_3": 2,
-    "mk_betty_firework_maker_3": 1,
-    "mk_biff_chief_constable_4": 1,
-    "mk_berry_workshop_elder_4": 2,
-    "mk_oatmeal_alderman_5": 1,
-    "mk_tb_quill_wall": 1,
-    "mk_tb_rosabeths_gate": 2,
-    "mk_ev_the_marks_are_struck": 2,
-    "mk_fair_hearing": 2,
-    "mk_tool_lending_day": 2,
-    "mk_guild_night": 2,
-    "mk_moss_rehiring_day": 2,
-    "mk_oatmeals_awning": 2,
-    "mk_adam_surveyor_of_ways_4": 1,
-    "mk_andrew_hand_copyist_3": 1,
-    "mk_quill_orchard_keeper_2": 1
-   }
-  },
-  {
-   "id": "mk-whistle-lamp",
-   "name": "Whistle & Lamp",
-   "species": [
-    "Hedgehog",
-    "Fox"
-   ],
-   "studies": [
-    "Civics",
-    "Lore"
-   ],
-   "blurb": "Hedgehogs and Foxes of Civics and Lore, built around Biff, Chief Constable: two of theirs put back to work and one of yours found something to do, every time he stands up. A town that wins the turn rather than the card.",
-   "list": {
-    "mk_biff_chief_constable_4": 1,
-    "mk_biff_cadet_constable_0": 2,
-    "mk_juniper_messenger_1": 1,
-    "mk_tabitha_lens_apprentice_1": 2,
-    "mk_mandee_night_courier_1": 1,
-    "mk_biff_beat_constable_2": 1,
-    "mk_berry_committee_2": 2,
-    "mk_tabitha_videographer_2": 1,
-    "mk_juniper_courier_captain_2": 2,
-    "mk_roger_circuit_judge_3": 2,
-    "mk_finn_fair_warden_3": 2,
-    "mk_juniper_ward_councillor_3": 2,
-    "mk_tabitha_optics_scientist_4": 1,
-    "mk_mandee_keeper_of_tales_4": 2,
-    "mk_roger_ombudsman_5": 2,
-    "mk_tb_rosabeths_gate": 2,
-    "mk_tb_gwens_counter": 1,
-    "mk_fair_hearing": 2,
-    "mk_biffs_beat": 2,
-    "mk_mandees_forecast": 2,
-    "mk_liz_weighbridge_keeper_4": 1,
-    "mk_kevin_counter_hand_2": 1,
-    "mk_bob_the_morning_they_share_1": 2,
-    "mk_tabitha_camerawoman_5": 1,
-    "mk_earl_tea_boy_0": 1,
-    "mk_earl_coffee_roaster_3": 1
-   }
-  },
-  {
-   "id": "mk-knife-kindling",
-   "name": "Knife & Kindling",
-   "species": [
-    "Hedgehog",
-    "Mouse"
-   ],
-   "studies": [
-    "Crafts",
-    "Commerce"
-   ],
-   "blurb": "Hedgehogs and Mice of Crafts and Commerce, built around Betty, Whittler: a Supply back on the turn she arrives and nothing the rival can do about her. The cheapest animal in the borough, in the deck that plays four of its friends behind her.",
-   "list": {
-    "mk_betty_whittler_1": 1,
-    "mk_berry_tinker_0": 1,
-    "mk_bella_forager_0": 1,
-    "mk_osh_round_sharpener_1": 2,
-    "mk_copper_scale_polisher_1": 2,
-    "mk_rosabeth_tincture_maker_2": 2,
-    "mk_bob_gate_tolls_2": 2,
-    "mk_daniel_canal_cartographer_2": 1,
-    "mk_betty_firework_maker_3": 2,
-    "mk_pockets_odd_lot_dealer_3": 2,
-    "mk_quill_cider_maker_3": 1,
-    "mk_berry_workshop_elder_4": 2,
-    "mk_rosabeth_tincture_counter_4": 2,
-    "mk_maribel_seed_bank_director_5": 2,
-    "mk_tb_quill_wall": 1,
-    "mk_tb_rosabeths_gate": 2,
-    "mk_hedge_apothecary": 2,
-    "mk_a_word_beforehand": 2,
-    "mk_guild_night": 2,
-    "mk_tool_lending_day": 2,
-    "mk_ledger_day": 2,
-    "mk_andrew_keeper_of_the_late_desk_2": 1,
-    "mk_andrew_hand_copyist_3": 1,
-    "mk_muffled_hedgehog_stall_hand_0": 1,
-    "mk_bella_ecologist_5": 1
-   }
-  },
-  {
-   "id": "mk-hedge-horizon",
-   "name": "Hedge & Horizon",
-   "species": [
-    "Hedgehog",
     "Rabbit"
    ],
    "studies": [
     "Agriculture",
     "Civics"
    ],
-   "blurb": "Hedgehogs and Rabbits of Agriculture and Civics, built around Betty, Land Clearer: four seasons of noise on the far hedgerow and the best ground in the borough at the end of it. The deck exists to get her upright early and then again sooner than she ought to be.",
+   "blurb": "Rabbits of Agriculture and Civics: the allotment strip, the parish meeting and more of them arriving than leaving. No one Rabbit is much; the sixth one out of your hand is the whole town.",
    "list": {
-    "mk_betty_land_clearer_5": 1,
-    "mk_betty_barn_sweeper_0": 2,
+    "mk_tb_starfish_coffee": 1,
+    "mk_clover_seedling_helper_0": 1,
+    "mk_hibiscus_the_sorting_bench_0": 1,
     "mk_clover_plot_sharer_1": 1,
-    "mk_eric_smallholder_1": 2,
-    "mk_betty_whittler_1": 1,
-    "mk_betty_stump_blaster_2": 2,
-    "mk_biff_beat_constable_2": 1,
-    "mk_quill_orchard_keeper_2": 2,
+    "mk_eric_smallholder_1": 1,
+    "mk_peter_washing_up_1": 2,
+    "mk_clover_market_gardener_2": 1,
+    "mk_eric_fair_steward_2": 2,
+    "mk_peter_the_winters_length_2": 2,
     "mk_clover_community_gardener_3": 1,
-    "mk_liza_top_of_the_bill_3": 2,
-    "mk_hibiscus_round_walker_3": 2,
+    "mk_lynnette_lending_librarian_3": 1,
+    "mk_liza_top_of_the_bill_3": 1,
+    "mk_eric_row_farmer_3": 1,
+    "mk_hibiscus_round_walker_3": 1,
+    "mk_clover_rocket_botanist_4": 1,
     "mk_eric_row_boss_4": 2,
-    "mk_maribel_horticulturist_4": 1,
-    "mk_hibiscus_postmaster_5": 1,
-    "mk_tb_berrys_bench": 2,
-    "mk_tb_coppers_cellar": 1,
+    "mk_clover_master_botanist_5": 2,
+    "mk_bld_cheese_store": 1,
+    "mk_tb_gate_hut": 1,
     "mk_the_root_cellar": 2,
-    "mk_glut_of_squash": 2,
-    "mk_warren_muster": 2,
-    "mk_hibiscuss_post_route": 2,
-    "mk_the_cider_social": 2,
+    "mk_warren_muster": 1,
+    "mk_clovers_potato_experiment": 1,
     "mk_clovers_seed_drive": 2,
+    "mk_glut_of_squash": 2,
+    "mk_hibiscuss_post_route": 2,
     "mk_eric_best_farmer_5": 1,
     "mk_sage_frost_watch_2": 1,
-    "mk_peter_hedgelayer_3": 1,
-    "mk_bob_the_morning_they_share_1": 1
+    "mk_andrew_hand_copyist_3": 1,
+    "mk_adam_surveyor_of_ways_4": 1,
+    "mk_mimi_safety_demonstration_1": 1,
+    "mk_bunny_kit_0": 1
    }
   },
   {
-   "id": "mk-can-row",
-   "name": "Can & Row",
+   "id": "mk-margin-pantry",
+   "name": "Margin & Pantry",
    "species": [
-    "Rabbit",
     "Mouse"
    ],
    "studies": [
-    "Agriculture",
-    "Entertainment"
+    "Lore",
+    "Food"
    ],
-   "blurb": "Rabbits and Mice of Agriculture and Entertainment, built around Clover, Seedling Helper: free, and brings somebody smaller still along by the other handle. Every animal in this town is one Clover can pull out of your hand for nothing.",
+   "blurb": "Mice of Lore and Food: the reading room over the kitchen. Every Event the borough has ever filed is played once, fished back out of the dump and played again, and there is always something on the stove.",
    "list": {
-    "mk_clover_seedling_helper_0": 1,
-    "mk_bella_forager_0": 1,
-    "mk_clover_plot_sharer_1": 1,
-    "mk_eric_smallholder_1": 2,
-    "mk_rosabeth_garden_hand_1": 2,
-    "mk_maribel_seed_bank_clerk_2": 2,
-    "mk_daniel_canal_cartographer_2": 2,
-    "mk_rosabeth_tincture_maker_2": 1,
-    "mk_clover_community_gardener_3": 1,
-    "mk_liza_top_of_the_bill_3": 2,
-    "mk_bella_wildlife_warden_3": 2,
-    "mk_maribel_horticulturist_4": 2,
-    "mk_eric_row_boss_4": 2,
-    "mk_clover_master_botanist_5": 2,
+    "mk_tb_rosabeths_gate": 1,
+    "mk_tb_open_mic_room": 1,
+    "mk_tax_day": 1,
+    "mk_daniel_ink_mixer_0": 2,
+    "mk_daniel_chart_copier_1": 2,
+    "mk_marmalade_dough_kneader_1": 1,
+    "mk_bella_field_scientist_1": 1,
+    "mk_daniel_canal_cartographer_2": 1,
+    "mk_bella_field_recorder_2": 1,
+    "mk_maribel_seed_bank_clerk_2": 1,
+    "mk_teresa_pepper_stall_2": 2,
+    "mk_bella_wildlife_warden_3": 1,
+    "mk_daniel_star_charter_3": 1,
+    "mk_rosabeth_apothecary_3": 1,
+    "mk_gwen_diner_keeper_3": 2,
+    "mk_gwen_apron_on_the_hook_4": 1,
+    "mk_daniel_master_cartographer_4": 1,
+    "mk_maribel_horticulturist_4": 1,
+    "mk_gwen_owner_of_the_diner_5": 1,
+    "mk_quinn_keeper_of_the_record_5": 1,
     "mk_tb_quill_wall": 1,
-    "mk_tb_rosabeths_gate": 2,
+    "mk_community_bonfire": 2,
+    "mk_reading_lanterns": 2,
+    "mk_the_long_night_at_earls": 2,
+    "mk_fresh_batch": 2,
     "mk_the_root_cellar": 2,
-    "mk_glut_of_squash": 2,
-    "mk_warren_muster": 2,
-    "mk_clovers_seed_drive": 2,
-    "mk_rosabeths_rounds": 2,
-    "mk_abigail_five_minutes_2": 1,
+    "mk_maribel_seed_bank_director_5": 1,
+    "mk_andrew_keeper_of_the_late_desk_2": 1,
     "mk_andrew_hand_copyist_3": 1,
-    "mk_rosabeth_herb_gatherer_0": 1,
-    "mk_liza_headliner_5": 1
+    "mk_rosabeth_tincture_counter_4": 1,
+    "mk_rosabeth_garden_hand_1": 1
    }
   },
   {
-   "id": "mk-gate-wall",
-   "name": "Gate & Wall",
+   "id": "mk-bench-bylaw",
+   "name": "Bench & Bylaw",
    "species": [
-    "Hedgehog",
-    "Otter"
+    "Badger"
    ],
    "studies": [
     "Crafts",
     "Civics"
    ],
-   "blurb": "Hedgehogs and Otters of Crafts and Civics, built around The Quill Wall: four animals to raise it and, from then on, nobody of yours goes to Unemployment by anybody else’s doing. It is not much of a wall. Nothing has ever got over it.",
+   "blurb": "Badgers of Crafts and Civics: the bench and the bylaw, and neither of them moves. Whatever the Capital City posts this morning, the work goes on and somebody is put back on the books by lunch.",
    "list": {
-    "mk_tb_quill_wall": 1,
-    "mk_berry_tinker_0": 1,
-    "mk_biff_cadet_constable_0": 1,
-    "mk_betty_whittler_1": 1,
-    "mk_taco_cart_cook_1": 2,
-    "mk_bob_the_morning_they_share_1": 2,
-    "mk_benjamin_lantern_maker_2": 2,
-    "mk_biff_beat_constable_2": 1,
-    "mk_berry_committee_2": 2,
-    "mk_betty_firework_maker_3": 2,
-    "mk_benjamin_town_historian_3": 1,
-    "mk_brooke_regatta_caller_3": 2,
-    "mk_berry_workshop_elder_4": 2,
-    "mk_abigail_best_waitress_4": 1,
-    "mk_brooke_riverwright_5": 2,
-    "mk_tb_the_long_awning": 2,
-    "mk_ev_never_handed_back": 2,
-    "mk_ev_the_marks_are_struck": 2,
-    "mk_tool_lending_day": 2,
-    "mk_guild_night": 2,
+    "mk_robbie_cub_reporter_0": 1,
+    "mk_robbie_columnist_1": 1,
+    "mk_robbie_features_writer_2": 1,
+    "mk_robbie_editor_in_chief_5": 1,
+    "mk_tb_futuretech_store": 1,
+    "mk_morty_the_boiler_test_0": 1,
+    "mk_oatmeal_ward_clerk_1": 1,
+    "mk_adam_road_mender_1": 2,
+    "mk_moss_toolsmith_2": 2,
+    "mk_oatmeal_safety_inspector_2": 2,
+    "mk_robbie_editor_3": 1,
+    "mk_morty_watermill_mechanic_3": 1,
+    "mk_moss_guild_architect_3": 1,
+    "mk_orien_borough_actuary_3": 2,
+    "mk_oatmeal_town_warden_4": 2,
+    "mk_moss_rocketwright_4": 1,
+    "mk_adam_road_construction_5": 1,
+    "mk_bld_juice_store": 1,
+    "mk_tb_clinic": 1,
     "mk_fair_hearing": 2,
-    "mk_fresh_batch": 2,
+    "mk_ev_the_marks_are_struck": 2,
+    "mk_oatmeals_awning": 2,
+    "mk_moss_rehiring_day": 2,
+    "mk_guild_night": 2,
+    "mk_community_bonfire": 2,
+    "mk_orien_town_planner_5": 1,
+    "mk_andrew_hand_copyist_3": 1,
     "mk_abigail_five_minutes_2": 1,
-    "mk_andrew_hand_copyist_3": 1,
-    "mk_betty_powder_chemist_4": 1
+    "mk_betty_whittler_1": 1
    }
   },
   {
-   "id": "mk-barrel-bonfire",
-   "name": "Barrel & Bonfire",
+   "id": "mk-hedge-holiday",
+   "name": "Hedge & Holiday",
    "species": [
-    "Hedgehog",
-    "Mouse"
-   ],
-   "studies": [
-    "Food",
-    "Lore"
-   ],
-   "blurb": "Hedgehogs and Mice of Food and Lore, built around Quill, Cider Maker: the social runs in the barn from September to February and the bonfires happen whenever she can invent a reason. A Supply and a shielded neighbour every time she comes upright, so the town is arranged to make that happen twice a round.",
-   "list": {
-    "mk_quill_cider_maker_3": 1,
-    "mk_daniel_ink_mixer_0": 2,
-    "mk_daniel_chart_copier_1": 2,
-    "mk_betty_whittler_1": 1,
-    "mk_rosabeth_garden_hand_1": 2,
-    "mk_daniel_canal_cartographer_2": 2,
-    "mk_bella_field_recorder_2": 2,
-    "mk_biff_beat_constable_2": 1,
-    "mk_bean_barista_3": 2,
-    "mk_gwen_diner_keeper_3": 2,
-    "mk_daniel_master_cartographer_4": 1,
-    "mk_gwen_apron_on_the_hook_4": 1,
-    "mk_bella_science_hall_fellow_4": 1,
-    "mk_quinn_keeper_of_the_record_5": 2,
-    "mk_tb_berrys_bench": 2,
-    "mk_tb_rosabeths_gate": 1,
-    "mk_reading_lanterns": 2,
-    "mk_fresh_batch": 2,
-    "mk_the_long_night_at_earls": 2,
-    "mk_hedge_apothecary": 2,
-    "mk_beans_coffee_break": 2,
-    "mk_bean_proprietor_5": 1,
-    "mk_andrew_keeper_of_the_late_desk_2": 1,
-    "mk_andrew_hand_copyist_3": 1,
-    "mk_betty_powder_chemist_4": 1,
-    "mk_cassadee_stage_hand_0": 1
-   }
-  },
-  {
-   "id": "mk-basket-ladder",
-   "name": "Basket & Ladder",
-   "species": [
-    "Hedgehog",
-    "Badger"
+    "Hedgehog"
    ],
    "studies": [
     "Agriculture",
-    "Commerce"
+    "Entertainment"
    ],
-   "blurb": "Hedgehogs and Badgers of Agriculture and Commerce, built around Quill, Harvest Steward: seven Supply off one shift, a neighbour nobody can touch, and not one animal of yours sent to Unemployment while she is up. The long shifts behind her are the whole point of keeping them safe.",
+   "blurb": "Hedgehogs of Agriculture and Entertainment: a hedge laid to last fifteen years and a bank holiday declared on the strength of it. Nothing the rival does reaches anybody in this town.",
    "list": {
+    "mk_tb_clinic": 1,
     "mk_quill_orchard_hand_0": 1,
     "mk_berry_tinker_0": 1,
     "mk_betty_whittler_1": 1,
-    "mk_moss_ploughwright_1": 4,
-    "mk_oatmeal_ward_clerk_1": 2,
-    "mk_quill_orchard_keeper_2": 2,
-    "mk_morty_grain_miller_2": 2,
+    "mk_yellow_open_mic_regular_1": 1,
+    "mk_tabitha_lens_apprentice_1": 2,
+    "mk_quill_orchard_keeper_2": 1,
+    "mk_tabitha_videographer_2": 1,
     "mk_betty_stump_blaster_2": 1,
+    "mk_biff_beat_constable_2": 1,
+    "mk_berry_committee_2": 1,
     "mk_quill_cider_maker_3": 1,
+    "mk_berry_engineer_3": 2,
     "mk_betty_firework_maker_3": 2,
-    "mk_thistle_grange_warden_3": 2,
+    "mk_quill_orchard_scribe_4": 1,
     "mk_berry_workshop_elder_4": 2,
-    "mk_orien_survey_computer_4": 1,
-    "mk_thistle_grange_elder_5": 1,
+    "mk_tabitha_camerawoman_5": 1,
+    "mk_patch_reclamation_merchant_5": 1,
     "mk_tb_the_long_awning": 2,
-    "mk_tb_rosabeths_gate": 1,
-    "mk_the_root_cellar": 2,
-    "mk_glut_of_squash": 2,
-    "mk_the_cider_social": 2,
-    "mk_thistles_grange_supper": 1,
     "mk_tool_lending_day": 2,
-    "mk_guild_night": 2,
-    "mk_orien_town_planner_5": 1,
-    "mk_sage_frost_watch_2": 1,
-    "mk_andrew_hand_copyist_3": 1
+    "mk_passing_comets": 2,
+    "mk_futuretech_release_day": 2,
+    "mk_the_cider_social": 2,
+    "mk_ev_the_hat_goes_round": 2,
+    "mk_open_mic_night": 2,
+    "mk_winter_tv_scientist_5": 1,
+    "mk_abigail_five_minutes_2": 1,
+    "mk_cassadee_hall_manager_3": 1,
+    "mk_cassadee_the_only_one_at_the_back_1": 1
    }
   },
   {
-   "id": "mk-apron-hook",
-   "name": "Apron & Hook",
+   "id": "mk-bin-barter",
+   "name": "Bin & Barter",
    "species": [
-    "Mouse",
+    "Raccoon"
+   ],
+   "studies": [
+    "Commerce",
+    "Lore"
+   ],
+   "blurb": "Raccoons of Commerce and Lore: the City Dump is this town’s second hand and its archive. What the other Mayor threw out on Tuesday is on a trestle with a price on it by Thursday.",
+   "list": {
+    "mk_community_bonfire": 1,
+    "mk_reading_lanterns": 1,
+    "mk_tb_the_warren": 1,
+    "mk_tb_chit_press": 1,
+    "mk_jim_gadget_blogger_0": 1,
+    "mk_hazel_barrow_hand_0": 1,
+    "mk_pockets_kerbside_dealer_1": 2,
+    "mk_hazel_night_market_vendor_1": 2,
+    "mk_annabelle_last_one_up_2": 1,
+    "mk_jim_hobby_programmer_2": 1,
+    "mk_beck_ward_clerk_2": 1,
+    "mk_hazel_market_vendor_2": 2,
+    "mk_pockets_odd_lot_dealer_3": 1,
+    "mk_beck_lamplighters_clerk_3": 1,
+    "mk_reese_charter_pilot_3": 1,
+    "mk_hazel_guildmaster_3": 1,
+    "mk_patch_valuer_3": 1,
+    "mk_jim_early_adopter_4": 1,
+    "mk_hazel_market_committee_chair_4": 2,
+    "mk_hazel_merchant_5": 2,
+    "mk_bld_game_store": 1,
+    "mk_bins_at_dawn": 2,
+    "mk_a_word_beforehand": 2,
+    "mk_tax_day": 2,
+    "mk_hazels_night_market": 2,
+    "mk_ledger_day": 1,
+    "mk_beck_reads_by_candlelight": 1,
+    "mk_jim_futuretech_fanboy_5": 1,
+    "mk_andrew_keeper_of_the_late_desk_2": 1,
+    "mk_andrew_hand_copyist_3": 1,
+    "mk_copper_cellar_keeper_4": 1
+   }
+  },
+  {
+   "id": "mk-gavel-greasepaint",
+   "name": "Gavel & Greasepaint",
+   "species": [
+    "Fox"
+   ],
+   "studies": [
+    "Commerce",
+    "Entertainment"
+   ],
+   "blurb": "Foxes of Commerce and Entertainment: they know what the Capital City is about to put up, what it is worth, and how to look like they do not want it. The bid changes after the bidding has opened.",
+   "list": {
+    "mk_cindy_court_clerk_1": 1,
+    "mk_cindy_magistrate_2": 1,
+    "mk_cindy_circuit_judge_4": 1,
+    "mk_cindy_justice_of_the_boroughs_5": 1,
+    "mk_kevin_construction_4": 1,
+    "mk_finn_auctioneers_boy_0": 2,
+    "mk_finn_peddler_1": 1,
+    "mk_juniper_messenger_1": 1,
+    "mk_liz_scale_hand_1": 2,
+    "mk_harrison_house_pianist_2": 1,
+    "mk_earl_tea_trader_2": 2,
+    "mk_roger_records_clerk_2": 2,
+    "mk_earl_coffee_roaster_3": 2,
+    "mk_mandee_moonlight_trader_3": 2,
+    "mk_finn_fair_warden_3": 1,
+    "mk_harrison_band_leader_4": 1,
+    "mk_liz_chief_assessor_5": 2,
+    "mk_tb_barrows_yard": 2,
+    "mk_tb_quill_wall": 1,
+    "mk_car_show": 1,
+    "mk_a_word_beforehand": 2,
+    "mk_tax_day": 2,
+    "mk_ledger_day": 1,
+    "mk_fair_hearing": 2,
+    "mk_mandees_forecast": 2,
+    "mk_finn_trade_broker_4": 1,
+    "mk_juniper_ward_councillor_3": 1,
+    "mk_harrison_piano_boy_0": 1
+   }
+  },
+  {
+   "id": "mk-current-counter",
+   "name": "Current & Counter",
+   "species": [
     "Otter"
    ],
    "studies": [
     "Food",
     "Commerce"
    ],
-   "blurb": "Mice and Otters of Food and Commerce, built around Gwen, The Apron on the Hook: she works while she is Busy, and what she does with the hour is put somebody on — out of either town’s Unemployment, or off the floor of the City Dump, two Supply cheaper and upright on arrival. It has never mattered to her whose books you were on.",
+   "blurb": "Otters of Food and Commerce: the counter by the water, open all hours. Work slides from paw to paw, nobody in this town sits down for long, and the round is finished before the rival has finished their Ready.",
    "list": {
-    "mk_gwen_apron_on_the_hook_4": 1,
-    "mk_willow_the_harbour_office_0": 2,
+    "mk_brooke_aeronaut_5": 1,
+    "mk_benjamin_wick_trimmer_0": 1,
+    "mk_pebble_crossing_hand_0": 1,
     "mk_abigail_counter_girl_1": 2,
     "mk_taco_cart_cook_1": 2,
-    "mk_gwen_anybodys_counter_2": 2,
+    "mk_willow_toll_keeper_2": 1,
     "mk_taco_the_four_oclock_cart_2": 1,
-    "mk_willow_toll_keeper_2": 2,
-    "mk_gwen_diner_keeper_3": 2,
+    "mk_brooke_ferry_hand_2": 1,
+    "mk_benjamin_lantern_maker_2": 1,
+    "mk_abigail_five_minutes_2": 1,
     "mk_pebble_ferry_master_3": 1,
+    "mk_jt_juice_list_3": 1,
     "mk_benjamin_town_historian_3": 1,
     "mk_brooke_regatta_caller_3": 1,
+    "mk_willow_tide_reckoner_3": 1,
     "mk_benjamin_master_lantern_maker_4": 1,
-    "mk_willow_harbourmaster_4": 1,
-    "mk_gwen_owner_of_the_diner_5": 2,
-    "mk_tb_rosabeths_gate": 2,
-    "mk_tb_the_long_awning": 1,
+    "mk_willow_harbourmaster_4": 2,
+    "mk_jt_juice_sommelier_5": 2,
+    "mk_tb_the_builders_rest": 1,
+    "mk_tb_coppers_cellar": 1,
+    "mk_tb_farmers_market": 1,
+    "mk_otter_time": 1,
     "mk_ev_never_handed_back": 2,
     "mk_fresh_batch": 2,
     "mk_the_long_night_at_earls": 2,
+    "mk_tax_day": 2,
     "mk_a_word_beforehand": 2,
-    "mk_ledger_day": 2,
     "mk_abigail_best_waitress_4": 1,
-    "mk_abigail_five_minutes_2": 1,
-    "mk_andrew_hand_copyist_3": 1,
-    "mk_marmalade_harvest_head_baker_5": 1,
-    "mk_gwen_short_order_cook_1": 1,
-    "mk_pebble_crossing_hand_0": 1
+    "mk_kevin_counter_hand_2": 1,
+    "mk_taco_quayside_cook_3": 1,
+    "mk_brooke_dock_hand_1": 1
    }
   },
   {
-   "id": "mk-paper-lamplight",
-   "name": "Paper & Lamplight",
+   "id": "mk-cache-kitchen",
+   "name": "Cache & Kitchen",
    "species": [
-    "Owl",
+    "Squirrel"
+   ],
+   "studies": [
+    "Civics",
+    "Food"
+   ],
+   "blurb": "Squirrels of Civics and Food: a town that is poor all game and rich exactly once, on the turn it has been saving for. Everything is put by, minuted, and spent at the auction nobody expected them at.",
+   "list": {
+    "mk_yellow_rapper_5": 1,
+    "mk_scott_story_collector_0": 1,
+    "mk_dirt_classroom_assistant_0": 1,
+    "mk_ned_page_runner_1": 1,
+    "mk_peanut_barista_1": 2,
+    "mk_daisy_garland_cutter_1": 1,
+    "mk_scott_pamphleteer_2": 1,
+    "mk_dirt_schoolteacher_upper_room_2": 1,
+    "mk_squirt_schoolteacher_lower_room_2": 1,
+    "mk_ned_night_archivist_2": 2,
+    "mk_scott_town_chronicler_3": 1,
+    "mk_daisy_night_bloom_florist_3": 2,
+    "mk_ned_ward_recorder_3": 2,
+    "mk_peanut_cafe_manager_4": 1,
+    "mk_scott_natural_historian_4": 1,
+    "mk_ned_reference_librarian_4": 1,
+    "mk_scott_author_of_the_boroughs_5": 1,
+    "mk_tb_allotment_strip": 2,
+    "mk_tb_observatory_steps": 1,
+    "mk_community_bonfire": 2,
+    "mk_reading_lanterns": 2,
+    "mk_scotts_reading_hour": 2,
+    "mk_fresh_batch": 2,
+    "mk_the_long_night_at_earls": 2,
+    "mk_peanut_comptroller_5": 1,
+    "mk_kevin_counter_hand_2": 1,
+    "mk_andrew_hand_copyist_3": 1,
+    "mk_squirt_playground_monitor_1": 1,
+    "mk_squirt_borough_eleven_left_wing_4": 1,
+    "mk_faceless_clerk_0": 1
+   }
+  },
+  {
+   "id": "mk-lens-lathe",
+   "name": "Lens & Lathe",
+   "species": [
     "Cat"
    ],
    "studies": [
-    "Lore",
-    "Science"
+    "Science",
+    "Crafts"
    ],
-   "blurb": "Owls and Cats of Lore and Science, built around Annabelle, Last One Up: two Supply and a card every turn she is the only Raccoon standing — so this is a town with exactly one Raccoon in it, and everybody else is awake at that hour anyway.",
+   "blurb": "Cats of Science and Crafts: a lens ground to a tolerance nobody asked for, by somebody who was not supposed to be up. This town acts on the turn it feels like acting, and the rival’s Ready can wait.",
    "list": {
-    "mk_annabelle_last_one_up_2": 1,
-    "mk_sage_night_assistant_0": 1,
-    "mk_andrew_night_copyist_0": 1,
+    "mk_elvira_tea_leaf_reader_0": 1,
+    "mk_elvira_fairground_booth_2": 1,
+    "mk_elvira_fortune_teller_3": 1,
+    "mk_tb_ice_cream_shop": 1,
+    "mk_marmalade_night_baker_0": 1,
+    "mk_velvet_counter_clerk_1": 1,
+    "mk_copper_scale_polisher_1": 1,
     "mk_sota_lens_grinder_1": 2,
-    "mk_inkwell_bookmark_keeper_1": 2,
-    "mk_inkwell_storyteller_2": 2,
-    "mk_jessica_night_school_teacher_2": 2,
+    "mk_marmalade_market_baker_2": 1,
+    "mk_comet_hatch_hand_2": 1,
+    "mk_sota_assistant_coach_2": 1,
+    "mk_faustus_costumier_2": 1,
+    "mk_comet_test_pilot_3": 1,
     "mk_inkwell_night_librarian_3": 1,
-    "mk_comet_test_pilot_3": 2,
-    "mk_sage_astronomer_3": 2,
-    "mk_jessica_headmistress_4": 2,
+    "mk_velvet_neighborhood_registrar_3": 2,
     "mk_inkwell_astronomer_4": 1,
-    "mk_inkwell_keeper_of_stories_5": 2,
-    "mk_tb_the_builders_rest": 1,
-    "mk_tb_chit_press": 2,
-    "mk_reading_lanterns": 2,
-    "mk_inkwells_late_shift": 2,
-    "mk_inkwells_star_chart": 2,
-    "mk_hall_lecture": 2,
+    "mk_elvira_reader_of_long_odds_4": 1,
+    "mk_velvet_surveyor_of_works_4": 1,
+    "mk_comet_astronaut_5": 1,
+    "mk_marmalade_guild_baker_5": 1,
+    "mk_tb_quill_wall": 1,
+    "mk_tb_gate_hut": 1,
+    "mk_passing_comets": 2,
+    "mk_futuretech_release_day": 2,
+    "mk_a_word_beforehand": 2,
+    "mk_tax_day": 2,
+    "mk_velvets_petition": 2,
+    "mk_one_small_step": 1,
+    "mk_hall_lecture": 1,
+    "mk_marmalade_harvest_head_baker_5": 1,
+    "mk_andrew_hand_copyist_3": 1,
+    "mk_abigail_five_minutes_2": 1,
+    "mk_comet_rocket_mechanic_1": 1
+   }
+  },
+  {
+   "id": "mk-dome-dusk",
+   "name": "Dome & Dusk",
+   "species": [
+    "Owl"
+   ],
+   "studies": [
+    "Science",
+    "Entertainment"
+   ],
+   "blurb": "Owls of Science and Entertainment: the dome, the late hall and a forecast to the minute. An Owl town is wise, awake and poor — so it reads the deck, wakes the shift up early, and is three turns ahead by dawn.",
+   "list": {
+    "mk_jessica_teacher_of_the_boroughs_5": 1,
+    "mk_sage_night_assistant_0": 1,
+    "mk_jessica_song_leader_0": 1,
+    "mk_shay_ward_doctor_1": 1,
+    "mk_jessica_infant_teacher_1": 1,
+    "mk_bean_espresso_1": 1,
+    "mk_hoot_night_kitchen_1": 1,
+    "mk_shay_borough_physician_2": 2,
+    "mk_jessica_night_school_teacher_2": 1,
+    "mk_winter_science_show_host_2": 2,
+    "mk_sage_astronomer_3": 1,
+    "mk_shay_market_stall_painter_3": 1,
+    "mk_hoot_breakfast_bell_3": 1,
+    "mk_bean_barista_3": 2,
+    "mk_winter_head_science_producer_4": 1,
+    "mk_sage_the_watch_list_4": 1,
+    "mk_betty_powder_chemist_4": 1,
+    "mk_sage_royal_astronomer_5": 1,
+    "mk_tb_berrys_bench": 2,
+    "mk_tb_puppet_booth": 1,
     "mk_night_round": 2,
-    "mk_jessicas_night_class": 2,
+    "mk_passing_comets": 2,
+    "mk_futuretech_release_day": 2,
+    "mk_the_long_night_at_earls": 2,
+    "mk_fresh_batch": 2,
+    "mk_hall_lecture": 2,
+    "mk_bean_proprietor_5": 1,
     "mk_andrew_keeper_of_the_late_desk_2": 1,
     "mk_andrew_hand_copyist_3": 1,
-    "mk_copper_cellar_keeper_4": 1,
-    "mk_copper_scale_polisher_1": 1
+    "mk_winter_turned_down_applicant_1": 1
    }
   }
  ],
@@ -2003,7 +1446,8 @@
    "species": "Fox",
    "studies": [
     "Civics",
-    "Food"
+    "Food",
+    "Crafts"
    ],
    "pronouns": "he/him",
    "backstory": "Kevin came out from the Capital City at seventeen because somebody told him there was work, and there was. He is the easiest hire in the First Boroughs: he says yes before you have finished the sentence, he is at the yard before the animal who hired him, and for about a fortnight he is worth two of anybody. Then the fortnight ends. Kevin goes flat all at once, sleeps through a morning, apologises far more than anyone wants him to, and is on to the next thing by the end of the week.\n\nThe borough has worked out how to use him and mostly does not mind. You get Kevin for a short stretch, you get a great deal out of it, and you do not build anything long around him. He is nineteen and has had eleven jobs, and every one of them would have him back.\n\nWhat he does with the flat fortnight is read. Novels, four or five on the go at once, in stacks by the bed and the kettle and the chair and one on the windowsill of whatever room he is renting that month. Lynnette keeps him a shelf at the print shop. He will tell you the plots of all five at once, badly, with enormous enthusiasm, and then he is up and off again.",
@@ -3397,6 +2841,81 @@
      "why": "No painted tile shows a rapper at the open mic. Both borrow the plain Squirrel scene until one is commissioned."
     }
    ]
+  },
+  {
+   "name": "Cindy",
+   "species": "Fox",
+   "studies": [
+    "Civics"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Cindy sits in the ward court, which is one room over the old assize office with a window that does not shut and a bench somebody made too high. She came up through it the long way — usher, clerk, magistrate — and she has heard every version of every story the First Boroughs has to tell, most of them twice, a good many of them from the same animal on two different days.\n\nWhat she is known for is the stare. Cindy asks a question, and then she waits, and the waiting is the whole method: she does not fill the silence, she does not help, and she does not look away. The borough's own view is that nobody has ever got a lie all the way across that bench. She would say it is not a trick and that animals mostly want to tell the truth and only need to be given long enough to get round to it.\n\nWhat she will not have is a smart mouth. An animal who comes in clever gets put straight back to work — she has adjourned a hearing for a fortnight over one remark and made the whole yard wait on it. And she is fair, which in a Fox is the thing the borough finds hardest to credit and the thing she is proudest of: she hears both sides all the way to the end, including the side she stopped believing in the first five minutes.",
+   "voice": "Level, unhurried, and comfortable with a silence other animals are not. Asks short questions. Says 'take your time' and means the opposite of what it sounds like.",
+   "arc": "Four rungs of one career, and the same animal at each of them. The Clerk at 1 only reads the room — the Fox charter's looking, done as a court's paperwork. The Magistrate at 2 does something about what she reads: the clever answer goes back to work. The Circuit Judge at 4 is the fairness printed as a rule — her challenges win ties, and a rival who challenges her pays her for the privilege of being heard. The Justice at 5 is all of it at once, plus the one thing only she does: she puts the ruling to the rival and lets them pick which way they would rather have it, which is what seeing both sides looks like from the other side of the bench."
+  },
+  {
+   "name": "Elvira",
+   "species": "Cat",
+   "studies": [
+    "Lore",
+    "Commerce"
+   ],
+   "pronouns": "she/her",
+   "backstory": "Elvira reads futures. She started at the fairground with a card table and a cloth over it, and she is still at the fairground most weeks, though the booth has a roof now and a queue that starts before she does.\n\nShe is right often enough that the borough has stopped being able to laugh it off, and wrong often enough that nobody can quite call it a trade. The awkward part is how specific she is. She told Pebble there would be water in the cellar on a Thursday and there was, three Thursdays later. She told half the open mic list that something would go wrong with a candle, which everybody ignored until Jim's hair grew back wrong. She also told the ferry office there was danger on the water for a fortnight and there was no danger on the water for a fortnight, and the ferry office has not entirely forgiven her.\n\nWhat she is never wrong about is the mood. Elvira reads for animals who have had a hard season, and whatever the cards say she sends them out of the booth better than they came in — which she will tell you, cheerfully, is the actual job, and the futures are what gets them through the door. She is a Cat about the rest of it: she turns up when she turns up, reads for whom she pleases, and is unbothered that a false warning about danger is not, on the whole, a comfort.",
+   "voice": "Warm, bright, and entirely unembarrassed. Delivers a catastrophe and a compliment in the same breath. 'Oh, that's a bad card, love — you'll be fine.'",
+   "arc": "Four windows and a coin. The Tea-Leaf Reader at 0 reads her own cards; the Fairground Booth at 2 reads the Capital City's, or the rival's, on the toss; the Fortune Teller at 3 is the half of the job she is actually good at — she pays out when the season has gone against you; the Reader of the Long Odds at 4 is all three windows at once and the Cat signature under it, because she gets up when she feels like getting up.",
+   "wantedVerbs": [
+    {
+     "verb": "peekOpponentDeck",
+     "why": "The booth reads three futures — yours, the Capital City's and the rival's — and the engine could see the first two and not the third.",
+     "workaround": "None needed.",
+     "resolved": "Built for this batch (v0.14.0). `peekOpponentDeck` looks at the top cards of the rival's deck; information only, and the rival is told, the same manners `peekOpponentHand` keeps. Elvira's cost-0, cost-2 and cost-4 cards all reach it on the losing side of a coin."
+    }
+   ]
+  },
+  {
+   "name": "Jim",
+   "species": "Raccoon",
+   "studies": [
+    "Science",
+    "Lore",
+    "Commerce"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Jim writes a blog nobody asked for about a company nobody in the First Boroughs had heard of until he started. It is called the same thing it has always been called, it goes out whenever he finishes it, and the borough reads it — partly because he is a genuinely good explainer of how a thing works, and partly to find out what he has bought this week.\n\nHe has bought everything. The self-winding shutters, the pocket abacus that does not work in the damp, the automated candle on launch day, which is why there is a patch on the left side of his head where the fur came back in a different colour and never went back to the first one. Jim shows it to visitors. He is not embarrassed about the candle; he is embarrassed that he waited two days for the second batch.\n\nHe programs, in the way Raccoons program — out of whatever was in the bin behind the works, at four in the morning, extremely well. What he actually is, underneath the queueing and the merchandise, is an animal who believes the future is going to be better than this and wants to be there when it starts. The borough finds this either charming or exhausting, usually depending on how recently he has explained something.",
+   "voice": "Fast, delighted, and forty words past the point. Opens with 'okay so'. Has a strong view on a thing he has owned for four hours.",
+   "arc": "Every rung of Jim turns Supply into cards, because that is what he does with money. The Blogger at 0 and the Programmer at 2 buy a card or two at the counter. The Early Adopter at 4 pays the launch-day price for the privilege of having it first. The Fanboy at 5 queues all night and is not in a fit state to work afterwards — he draws more cards for the price than anything else in the collection, and then he goes to Unemployment, which is the joke the borough has been making about him for years and is finally printed."
+  },
+  {
+   "name": "Robbie",
+   "species": "Badger",
+   "studies": [
+    "Lore",
+    "Civics"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Robbie reports for the borough paper, which is four sheets and a Thursday, and he has never filed a clean headline in his life. The drainage review was DOWN THE PLUGHOLE. The bridge inquiry was A SPAN OF ATTENTION. He laughed at both of them in the office, alone, for some time.\n\nNobody else laughs much, and it has never once slowed him down. He is entirely happy being the only animal in the room who finds it funny, and he has the Badger's gift for simply still being there: he outlasts a meeting, he outlasts a denial, and he is at the back of the ward hall at half past eleven with his notebook out when everybody who came to watch has gone home.\n\nThe suits are the other thing. Robbie wears patterns that should not exist — a check that has an argument in it, something in ochre with a repeating pheasant — and no animal in either borough has ever found out where they come from. He deflects the question with a pun every time, which the borough now believes is the point. What he is actually good at is knowing what is coming into the Capital City before it is put up, and saying so in print, which is a kind of power the auction house has never worked out how to take off him.",
+   "voice": "Cheerful, punning, and unbothered by silence after a joke. Says 'you'll like this one' and is always wrong about that.",
+   "arc": "Five rungs of the same notebook, and the market gets easier to read at each one. The Cub Reporter at 0 only looks at what is coming; the Columnist at 1 puts it back in the order he wants it in; the Features Writer at 2 does it off a Busy shift, which is the paper coming out whether or not he stood up. The Editor at 3 is the Badger signature in print — the shared shock that lands on both towns goes in the spike and does not land on his. The Editor-in-Chief at 5 reads three deep, sinks a lot to the bottom of the Market Deck where nobody bids on it this year, and still spikes the weather."
+  },
+  {
+   "name": "Cornelius",
+   "species": "Mouse",
+   "studies": [
+    "Commerce"
+   ],
+   "pronouns": "he/him",
+   "backstory": "Cornelius runs FutureTech, and the Capital City retains him whenever the books will not balance, which is more often than the Capital City says out loud. He arrives with three automatons and a folder, talks for forty minutes without appearing to breathe, and leaves the ward with a schedule that works, a roof that went up for nothing, and a faint sense of having agreed to something it cannot now find in writing.\n\nHe is, by every account, brilliant. The costings are right. The buildings do go up cheaper. The automatons — a different one most weeks, each better than the last — do the work of four animals and do not complain about the weather, and Cornelius is genuinely, visibly delighted by every one of them.\n\nNobody knows where they go afterwards. A machine that was on the site on Friday is not on the site on Monday and is not in the yard, the store or the scrap. Robbie has asked him about it in print four times. Cornelius answers a different question each time, warmly, at length, and with figures, and the borough comes away having learned a great deal about something else.",
+   "voice": "Loud, fast, relentlessly pleased. Talks in numbers and slogans at once. 'Right — right — so here's the thing, and this is the exciting bit.'",
+   "arc": "One card, hired out of the Capital City for a season, because that is how the borough gets him: a contract, a discount on everything with a roof on it, and a folder of costings left behind when he goes. He does not stay, and the automatons do not stay either.",
+   "wantedVerbs": [
+    {
+     "verb": "raiseBuildingFree",
+     "why": "The pitch is that FutureTech gets the roof up for nothing, and the story wanted a Building simply raised.",
+     "workaround": "A standing `buildingDiscount` of 3 and a `lotDiscount` of 2 on every lot with a roof on it, which is the same bargain paid in instalments.",
+     "resolved": "Deliberately not built: a Building that appears without an auction or a crew would be the one card in the collection that skips both, and the discounts already make him the cheapest roof in the game."
+    }
+   ]
   }
  ],
  "cards": [
@@ -4589,6 +4108,50 @@
     "score": 5.2,
     "power": 13.06,
     "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_brooke_aeronaut_5",
+   "type": "character",
+   "name": "Brooke",
+   "title": "Aeronaut",
+   "job": "Aeronaut",
+   "species": "Otter",
+   "study": "Science",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Brooke. A long shift: 2 turns, 5 Supply. When Brooke becomes upright, look at the top two cards of the Market Deck and put them back in any order, draw 1 card, and move a shift from one of your Characters to another.",
+   "flavor": "Two years off the River Otter licence for the eighth year running, and a basket over the estuary at first light instead. From up there she can see what is coming into the Capital City before the carts are off the bridge — and, she will tell you, exactly how the whole thing works.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "peekMarketDeck",
+        "count": 2,
+        "reorder": true
+       },
+       {
+        "do": "draw",
+        "count": 1
+       },
+       {
+        "do": "moveShift"
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Legendary",
+   "power": {
+    "score": 8.52,
+    "power": 22.23,
+    "opportunityCost": 11
    }
   },
   {
@@ -9619,6 +9182,52 @@
    }
   },
   {
+   "id": "mk_marmalade_guild_baker_5",
+   "type": "character",
+   "name": "Marmalade",
+   "title": "Baker to the Guilds",
+   "job": "Baker to the Guilds",
+   "species": "Cat",
+   "study": "Commerce",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Marmalade. A long shift: 2 turns, 5 Supply. At the start of your turn, one of your Characters turns one step toward upright, your Characters advance an extra step at your next Ready, and gain 1 Supply.",
+   "flavor": "Six counters take his bread now and the guilds settle quarterly, which means Marmalade keeps books — badly, and at four in the morning, in flour, on the back of an order sheet. The whole borough is up earlier than it means to be because of what comes out of that oven.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "advanceCharacter",
+        "count": 1
+       },
+       {
+        "do": "addMod",
+        "key": "extraAdvance",
+        "value": 1,
+        "expires": "nextReady"
+       },
+       {
+        "do": "gainSupply",
+        "amount": 1
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Legendary",
+   "power": {
+    "score": 8.37,
+    "power": 21.85,
+    "opportunityCost": 11
+   }
+  },
+  {
    "id": "mk_marmalade_oven_keeper_4",
    "type": "character",
    "name": "Marmalade",
@@ -10772,6 +10381,56 @@
     "score": 4.42,
     "power": 11.1,
     "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_adam_road_construction_5",
+   "type": "character",
+   "name": "Adam",
+   "title": "Road Construction",
+   "job": "Road Construction",
+   "species": "Badger",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Adam. A long shift: 2 turns, 5 Supply. When Adam finishes a shift, gain 2 Supply and take a Building token. At the start of your turn, Buildings cost you 2 less.",
+   "flavor": "It stopped being mending somewhere around the third winter. Adam has the county road open from the ferry steps to the gate, a gang of eleven, and a line of stakes across ground nobody has ever carted over — and he still starts at one end and does not hurry.",
+   "abilities": [
+    {
+     "trigger": "onShiftCompleted",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 2
+       },
+       {
+        "do": "gainToken",
+        "of": "building",
+        "count": 1
+       }
+      ]
+     }
+    },
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "buildingDiscount",
+      "value": 2,
+      "expires": "endOfTurn"
+     }
+    }
+   ],
+   "rarity": "Legendary",
+   "power": {
+    "score": 8.57,
+    "power": 22.37,
+    "opportunityCost": 11
    }
   },
   {
@@ -15569,6 +15228,55 @@
    }
   },
   {
+   "id": "mk_jessica_teacher_of_the_boroughs_5",
+   "type": "character",
+   "name": "Jessica",
+   "title": "Teacher of the Boroughs",
+   "job": "Teacher of the Boroughs",
+   "species": "Owl",
+   "study": "Lore",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Jessica. A long shift: 2 turns, 5 Supply. At the start of your turn, one of your Characters turns one step toward upright, draw 1 card, and your recruits that upgrade a Character you control cost 1 less this turn.",
+   "flavor": "Both boroughs send their little ones to her now and she has still never set homework. The constellations are a round with actions, the ward bylaws are a round with actions, and there is a generation of this town that can sing the drainage schedule and cannot spell it.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "advanceCharacter",
+        "count": 1
+       },
+       {
+        "do": "draw",
+        "count": 1
+       },
+       {
+        "do": "addMod",
+        "key": "recruitDiscount",
+        "value": 1,
+        "expires": "endOfTurn",
+        "filter": {
+         "upgradesOwn": true
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Legendary",
+   "power": {
+    "score": 8.37,
+    "power": 21.85,
+    "opportunityCost": 11
+   }
+  },
+  {
    "id": "mk_jessicas_night_class",
    "type": "event",
    "name": "Jessica’s Night Class",
@@ -17877,6 +17585,61 @@
     "score": 3.51,
     "power": 7.55,
     "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_kevin_construction_4",
+   "type": "character",
+   "name": "Kevin",
+   "title": "Construction",
+   "job": "Construction",
+   "species": "Fox",
+   "study": "Crafts",
+   "cost": 4,
+   "shift": {
+    "delay": 1,
+    "output": 7,
+    "decay": 1,
+    "minOutput": 1
+   },
+   "text": "Upgrades Kevin. A flat-out shift: 1 turn, 7 Supply, and each shift Kevin works pays 1 less Supply than the last, down to 1. When Kevin is recruited, take 2 Building tokens and Buildings cost you 2 less this turn. Busy: raise one of your open bids by 2.",
+   "flavor": "Twelfth job, and the best fortnight anybody has had out of him: he is up the scaffold before the yard is unlocked and the roof is on by the time the fortnight ends. Then it ends. The borough has learned to plan the whole build around Kevin's first two weeks.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainToken",
+        "of": "building",
+        "count": 2
+       },
+       {
+        "do": "addMod",
+        "key": "buildingDiscount",
+        "value": 2,
+        "expires": "endOfTurn"
+       }
+      ]
+     }
+    },
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "raiseOwnBid",
+      "amount": 2
+     }
+    }
+   ],
+   "rarity": "Legendary",
+   "power": {
+    "score": 9.09,
+    "power": 22.83,
+    "opportunityCost": 10
    }
   },
   {
@@ -22058,6 +21821,60 @@
    "immuneToUnemployment": true
   },
   {
+   "id": "mk_yellow_rapper_5",
+   "type": "character",
+   "name": "Yellow",
+   "title": "Rapper",
+   "job": "Rapper",
+   "species": "Squirrel",
+   "study": "Entertainment",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Yellow. A long shift: 2 turns, 5 Supply. Yellow cannot be sent to Unemployment. When Yellow is recruited, another Character you control cannot be targeted by an opponent until your turn after next. At the start of your turn, draw 1 card and gain 1 Supply.",
+   "flavor": "The suburbs record is finished, it is forty minutes long, and side two is entirely about the seed bank. Cassadee has stopped trying to cut anything from the set and the hall sells out anyway, which Yellow has been saying would happen since the week he arrived.",
+   "immuneToUnemployment": true,
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "protectCharacter",
+      "turns": 2,
+      "filter": {
+       "notSelf": true
+      }
+     }
+    },
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "draw",
+        "count": 1
+       },
+       {
+        "do": "gainSupply",
+        "amount": 1
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Legendary",
+   "power": {
+    "score": 8.73,
+    "power": 22.77,
+    "opportunityCost": 11
+   }
+  },
+  {
    "id": "mk_bunny_kit_0",
    "type": "character",
    "name": "Bunny",
@@ -23797,10 +23614,10 @@
   },
   {
    "id": "mk_bld_bookstore",
-   "type": "building",
+   "type": "townBuilding",
    "name": "The Bookstore",
-   "title": "Capital City Building",
-   "cost": 5,
+   "title": "Town Building",
+   "cost": 2,
    "text": "At the start of your turn, draw 1 card, then discard 1 card.",
    "flavor": "Ned's overflow, priced by somebody else and sold by nobody in particular. You never leave with nothing and you never leave with room in the bag, which is why the shelf by the door is for what you have decided against on the way out.",
    "abilities": [
@@ -23823,9 +23640,12 @@
    ],
    "rarity": "Common",
    "power": {
-    "score": 1.63,
+    "score": 1.67,
     "power": 3.6,
-    "opportunityCost": 7.22
+    "opportunityCost": 6.82
+   },
+   "build": {
+    "animals": 1
    }
   },
   {
@@ -23891,10 +23711,10 @@
   },
   {
    "id": "mk_bld_game_store",
-   "type": "building",
+   "type": "townBuilding",
    "name": "The Game Store",
-   "title": "Capital City Building",
-   "cost": 6,
+   "title": "Town Building",
+   "cost": 3,
    "text": "At the start of your turn, you may pay 3 Supply to draw 2 cards.",
    "flavor": "Dice, boards, painted figures an inch and a half tall that are not Dirt's and are sold as though they were. Supply goes in over the counter and comes back out as something to do on a Tuesday, which the borough has decided is a fair rate.",
    "abilities": [
@@ -23911,11 +23731,14 @@
      }
     }
    ],
-   "rarity": "Uncommon",
+   "rarity": "Super Rare",
    "power": {
-    "score": 5.45,
+    "score": 5.55,
     "power": 12.65,
-    "opportunityCost": 8.22
+    "opportunityCost": 7.82
+   },
+   "build": {
+    "animals": 1
    }
   },
   {
@@ -23970,10 +23793,10 @@
   },
   {
    "id": "mk_bld_cheese_store",
-   "type": "building",
+   "type": "townBuilding",
    "name": "The Cheese Store",
-   "title": "Capital City Building",
-   "cost": 9,
+   "title": "Town Building",
+   "cost": 4,
    "text": "At the start of your turn, if you control a Mouse, gain 2 Supply. At the start of your turn, if you control a Raccoon, draw 1 card.",
    "flavor": "A cold room, a marble slab and a queue of two species. The Mice buy it. The Raccoons are here for the rind bin round the back, which the shop has stopped pretending is not the main trade.",
    "abilities": [
@@ -24002,19 +23825,22 @@
      }
     }
    ],
-   "rarity": "Rare",
+   "rarity": "Super Rare",
    "power": {
-    "score": 6.39,
+    "score": 6.43,
     "power": 16.8,
-    "opportunityCost": 11.22
+    "opportunityCost": 11.02
+   },
+   "build": {
+    "animals": 2
    }
   },
   {
    "id": "mk_bld_juice_store",
-   "type": "building",
+   "type": "townBuilding",
    "name": "The Juice Store",
-   "title": "Capital City Building",
-   "cost": 7,
+   "title": "Town Building",
+   "cost": 3,
    "text": "At the start of your turn, gain 2 Supply, then toss a coin: heads, a Character of your opponent's is put back to work at random; tails, one of yours is.",
    "flavor": "JT drew up the list and then went back to the restaurant, and the counter has been run ever since by whoever is nearest. Somebody is always back behind it. It is not always somebody who meant to be.",
    "abilities": [
@@ -24045,19 +23871,22 @@
      }
     }
    ],
-   "rarity": "Common",
+   "rarity": "Super Rare",
    "power": {
-    "score": 4.94,
+    "score": 5.27,
     "power": 12,
-    "opportunityCost": 9.22
+    "opportunityCost": 7.82
+   },
+   "build": {
+    "animals": 1
    }
   },
   {
    "id": "mk_bld_gas_station",
-   "type": "building",
+   "type": "townBuilding",
    "name": "The Gas Station",
-   "title": "Capital City Building",
-   "cost": 7,
+   "title": "Town Building",
+   "cost": 2,
    "text": "At the start of your turn, your opponent discards 1 card.",
    "flavor": "Two pumps, a bell on the forecourt cable and a bin that is emptied hourly. Whatever the other town came in holding, some of it goes in that bin before they leave, and nobody has ever been able to say quite how.",
    "abilities": [
@@ -24071,9 +23900,12 @@
    ],
    "rarity": "Common",
    "power": {
-    "score": 2.71,
+    "score": 3.06,
     "power": 6.6,
-    "opportunityCost": 9.22
+    "opportunityCost": 6.82
+   },
+   "build": {
+    "animals": 1
    }
   },
   {
@@ -24267,6 +24099,976 @@
     "power": 5.6,
     "opportunityCost": 3.6
    }
+  },
+  {
+   "id": "mk_cindy_court_clerk_1",
+   "type": "character",
+   "name": "Cindy",
+   "title": "Clerk of the Court",
+   "job": "Clerk of the Court",
+   "species": "Fox",
+   "study": "Civics",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "When Cindy is recruited, look at your opponent's hand.",
+   "flavor": "Nobody told her the clerk was allowed to read the papers before the bench did. Nobody has told her since, either.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "peekOpponentHand"
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 4.81,
+    "power": 8.86,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_cindy_magistrate_2",
+   "type": "character",
+   "name": "Cindy",
+   "title": "Magistrate",
+   "job": "Magistrate",
+   "species": "Fox",
+   "study": "Civics",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Cindy. When Cindy becomes upright, one of your opponent's Characters is put back to work.",
+   "flavor": "The remark was made at nine and the yard was still waiting on it at half past. Cindy had not raised her voice once.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "makeBusy",
+      "count": 1
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.16,
+    "power": 11.11,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_cindy_circuit_judge_4",
+   "type": "character",
+   "name": "Cindy",
+   "title": "Circuit Judge",
+   "job": "Circuit Judge",
+   "species": "Fox",
+   "study": "Civics",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Cindy. Your challenge bids win ties. When an opponent challenges one of your purchases, gain 2 Supply and look at their hand.",
+   "flavor": "Four wards, four benches, one window that shuts and three that do not. She hears the side she stopped believing in all the way to the end, every time, in every one of them.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "winTiesAsChallenger"
+    },
+    {
+     "trigger": "onChallengedByOpponent",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 2
+       },
+       {
+        "do": "peekOpponentHand"
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.05,
+    "power": 15.19,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_cindy_justice_of_the_boroughs_5",
+   "type": "character",
+   "name": "Cindy",
+   "title": "Justice of the Boroughs",
+   "job": "Justice of the Boroughs",
+   "species": "Fox",
+   "study": "Civics",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Cindy. Your challenge bids win ties. At the start of your turn, look at your opponent's hand, then your opponent chooses: one of their Characters is put back to work, or they lose 2 Supply.",
+   "flavor": "Both boroughs bring it to her now, which neither of them enjoys. She gives the losing side the choice of how it loses, listens to the answer, and writes that down too.",
+   "abilities": [
+    {
+     "trigger": "passive",
+     "key": "winTiesAsChallenger"
+    },
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "peekOpponentHand"
+       },
+       {
+        "do": "opponentChoice",
+        "options": [
+         {
+          "label": "back to work",
+          "effect": {
+           "do": "makeBusy",
+           "count": 1
+          }
+         },
+         {
+          "label": "pay the costs",
+          "effect": {
+           "do": "opponentLosesSupply",
+           "amount": 2
+          }
+         }
+        ]
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 7.57,
+    "power": 19.75,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_elvira_tea_leaf_reader_0",
+   "type": "character",
+   "name": "Elvira",
+   "title": "Tea-Leaf Reader",
+   "job": "Tea-Leaf Reader",
+   "species": "Cat",
+   "study": "Lore",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Busy: toss a coin. Heads, look at the top two cards of your deck and put any of them on the bottom; tails, look at the top card of your opponent's deck.",
+   "flavor": "A cup, a saucer and whatever is left in the bottom of it. Elvira has never once said she could not see anything.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "coinFlip",
+      "heads": {
+       "do": "scryDeck",
+       "count": 2
+      },
+      "tails": {
+       "do": "peekOpponentDeck",
+       "count": 1
+      }
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 3.06,
+    "power": 5.1,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_elvira_fairground_booth_2",
+   "type": "character",
+   "name": "Elvira",
+   "title": "Fairground Booth",
+   "job": "Fairground Booth",
+   "species": "Cat",
+   "study": "Commerce",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Elvira. When Elvira becomes upright, toss a coin. Heads, look at the top two cards of the Market Deck; tails, look at the top two cards of your opponent's deck.",
+   "flavor": "Sixpence a reading, a shilling if you want it written down, and a queue that starts before she does.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "coinFlip",
+      "heads": {
+       "do": "peekMarketDeck",
+       "count": 2
+      },
+      "tails": {
+       "do": "peekOpponentDeck",
+       "count": 2
+      }
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 4.75,
+    "power": 10.23,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_elvira_fortune_teller_3",
+   "type": "character",
+   "name": "Elvira",
+   "title": "Fortune Teller",
+   "job": "Fortune Teller",
+   "species": "Cat",
+   "study": "Lore",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Elvira. Whenever Supply is taken from you, gain 2 Supply and draw 1 card.",
+   "flavor": "She told the ferry office there was danger on the water for a fortnight. There was no danger on the water for a fortnight. She still sat with the two of them who could not sleep for it.",
+   "abilities": [
+    {
+     "trigger": "onSupplyLost",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "gainSupply",
+        "amount": 2
+       },
+       {
+        "do": "draw",
+        "count": 1
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 4.9,
+    "power": 11.15,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_elvira_reader_of_long_odds_4",
+   "type": "character",
+   "name": "Elvira",
+   "title": "Reader of the Long Odds",
+   "job": "Reader of the Long Odds",
+   "species": "Cat",
+   "study": "Commerce",
+   "cost": 4,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "text": "Upgrades Elvira. At the start of your turn, toss a coin. Heads, look at the top two cards of the Market Deck and put them back in any order; tails, look at the top two cards of your opponent's deck. Busy, once per game: Elvira stands straight back up.",
+   "flavor": "Water in the cellar on a Thursday, she said, and there was — three Thursdays later, which she counts and the cellar does not.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "coinFlip",
+      "heads": {
+       "do": "peekMarketDeck",
+       "count": 2,
+       "reorder": true
+      },
+      "tails": {
+       "do": "peekOpponentDeck",
+       "count": 2
+      }
+     }
+    },
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "selfReady",
+      "oncePerGame": true
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.02,
+    "power": 15.13,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_jim_gadget_blogger_0",
+   "type": "character",
+   "name": "Jim",
+   "title": "Gadget Blogger",
+   "job": "Gadget Blogger",
+   "species": "Raccoon",
+   "study": "Lore",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Busy: pay 1 Supply to draw 1 card.",
+   "flavor": "Eleven hundred words on a shutter mechanism, posted at four in the morning, and the borough read all of it.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "paySupply",
+      "amount": 1,
+      "then": {
+       "do": "draw",
+       "count": 1
+      }
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 3.59,
+    "power": 6,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_jim_hobby_programmer_2",
+   "type": "character",
+   "name": "Jim",
+   "title": "Hobby Programmer",
+   "job": "Hobby Programmer",
+   "species": "Raccoon",
+   "study": "Science",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Jim. Busy: pay 2 Supply to draw 2 cards.",
+   "flavor": "Built out of what was in the bin behind the works, and better than the thing it was copying. He will tell you that too.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "paySupply",
+      "amount": 2,
+      "then": {
+       "do": "draw",
+       "count": 2
+      }
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.97,
+    "power": 12.85,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_jim_early_adopter_4",
+   "type": "character",
+   "name": "Jim",
+   "title": "Early Adopter",
+   "job": "Early Adopter",
+   "species": "Raccoon",
+   "study": "Commerce",
+   "cost": 4,
+   "shift": {
+    "delay": 1,
+    "output": 3
+   },
+   "text": "Upgrades Jim. At the start of your turn, you may pay 4 Supply to draw 2 cards.",
+   "flavor": "Launch day, second in the queue, and the patch of pale fur on the left of his head is from the last one. He is not embarrassed about the candle.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "paySupply",
+      "amount": 4,
+      "optional": true,
+      "then": {
+       "do": "draw",
+       "count": 2
+      }
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.55,
+    "power": 16.46,
+    "opportunityCost": 10
+   }
+  },
+  {
+   "id": "mk_jim_futuretech_fanboy_5",
+   "type": "character",
+   "name": "Jim",
+   "title": "FutureTech Fanboy",
+   "job": "FutureTech Fanboy",
+   "species": "Raccoon",
+   "study": "Science",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 5
+   },
+   "text": "Upgrades Jim. Busy: pay 2 Supply to draw 4 cards, then Jim goes to your Unemployment.",
+   "flavor": "Two nights on the pavement outside the FutureTech store for a thing he already owns a working version of. He is not at the yard on Thursday and everybody knew he would not be.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "paySupply",
+      "amount": 2,
+      "then": {
+       "do": "seq",
+       "steps": [
+        {
+         "do": "draw",
+         "count": 4
+        },
+        {
+         "do": "unemployOwnCharacter",
+         "filter": {
+          "name": "Jim"
+         }
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 6.73,
+    "power": 17.57,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_robbie_cub_reporter_0",
+   "type": "character",
+   "name": "Robbie",
+   "title": "Cub Reporter",
+   "job": "Cub Reporter",
+   "species": "Badger",
+   "study": "Lore",
+   "cost": 0,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "When Robbie is recruited, look at the top two cards of the Market Deck.",
+   "flavor": "DOWN THE PLUGHOLE, on the drainage review. He laughed in the office for some time, alone.",
+   "abilities": [
+    {
+     "trigger": "onRecruit",
+     "condition": {
+      "self": true
+     },
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 2
+     }
+    }
+   ],
+   "rarity": "Uncommon",
+   "power": {
+    "score": 2.6,
+    "power": 4.34,
+    "opportunityCost": 3.6
+   }
+  },
+  {
+   "id": "mk_robbie_columnist_1",
+   "type": "character",
+   "name": "Robbie",
+   "title": "Columnist",
+   "job": "Columnist",
+   "species": "Badger",
+   "study": "Civics",
+   "cost": 1,
+   "shift": {
+    "delay": 1,
+    "output": 1
+   },
+   "text": "Upgrades Robbie. When Robbie becomes upright, look at the top two cards of the Market Deck and put them back in any order.",
+   "flavor": "A SPAN OF ATTENTION, on the bridge inquiry. Four sheets and a Thursday, and the ward hall reads every one of them.",
+   "abilities": [
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 2,
+      "reorder": true
+     }
+    }
+   ],
+   "rarity": "Rare",
+   "power": {
+    "score": 4.68,
+    "power": 8.62,
+    "opportunityCost": 4.6
+   }
+  },
+  {
+   "id": "mk_robbie_features_writer_2",
+   "type": "character",
+   "name": "Robbie",
+   "title": "Features Writer",
+   "job": "Features Writer",
+   "species": "Badger",
+   "study": "Lore",
+   "cost": 2,
+   "shift": {
+    "delay": 1,
+    "output": 2
+   },
+   "text": "Upgrades Robbie. Busy: look at the top two cards of the Market Deck and put them back in any order.",
+   "flavor": "The suit that week had a repeating pheasant on it. Asked where it came from, he said it was off the peg — and then, after a pause nobody filled, off the peg-asant.",
+   "abilities": [
+    {
+     "trigger": "busy",
+     "effect": {
+      "do": "peekMarketDeck",
+      "count": 2,
+      "reorder": true
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.32,
+    "power": 11.45,
+    "opportunityCost": 6.8
+   }
+  },
+  {
+   "id": "mk_robbie_editor_3",
+   "type": "character",
+   "name": "Robbie",
+   "title": "Editor",
+   "job": "Editor",
+   "species": "Badger",
+   "study": "Civics",
+   "cost": 3,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Robbie. At the start of your turn, the next card revealed in the Capital City does not affect you, and look at the top two cards of the Market Deck.",
+   "flavor": "He is at the back of the hall at half past eleven with the notebook out, and the story runs whether or not anybody rang back.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "cancelReveal"
+       },
+       {
+        "do": "peekMarketDeck",
+        "count": 2
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.42,
+    "power": 12.33,
+    "opportunityCost": 7.8
+   }
+  },
+  {
+   "id": "mk_robbie_editor_in_chief_5",
+   "type": "character",
+   "name": "Robbie",
+   "title": "Editor-in-Chief",
+   "job": "Editor-in-Chief",
+   "species": "Badger",
+   "study": "Lore",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 3
+   },
+   "text": "Upgrades Robbie. A patient shift: 2 turns, 3 Supply. At the start of your turn, look at the top two cards of the Market Deck, put one of them to the bottom, and the next card revealed in the Capital City does not affect you.",
+   "flavor": "The paper is six sheets now and still comes out on a Thursday. Whatever the Capital City had lined up for the front of the display, Robbie has seen it, moved it, and made a joke about it that only he enjoyed.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "seq",
+      "steps": [
+       {
+        "do": "peekMarketDeck",
+        "count": 2,
+        "reorder": true,
+        "toBottom": true
+       },
+       {
+        "do": "cancelReveal"
+       }
+      ]
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 7.38,
+    "power": 19.27,
+    "opportunityCost": 11
+   }
+  },
+  {
+   "id": "mk_cornelius_futuretech_ceo_5",
+   "type": "marketCharacter",
+   "name": "Cornelius",
+   "title": "FutureTech CEO",
+   "job": "FutureTech CEO",
+   "species": "Mouse",
+   "study": "Commerce",
+   "cost": 5,
+   "shift": {
+    "delay": 2,
+    "output": 4
+   },
+   "leavesAfter": 3,
+   "returnsToMarket": true,
+   "text": "Hired from the Capital City; enters Busy, and goes back to the city after three of your turns, where he may be hired again. At the start of your turn, Buildings cost you 3 less. When Cornelius becomes upright, every lot in the Capital City with a roof on it costs you 2 less.",
+   "flavor": "Forty minutes, three automatons and a folder. The schedule works, the roof went up for nothing, and the ward cannot now find the bit it agreed to in writing.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "buildingDiscount",
+      "value": 3,
+      "expires": "endOfTurn"
+     }
+    },
+    {
+     "trigger": "onReady",
+     "effect": {
+      "do": "addMod",
+      "key": "lotDiscount",
+      "value": 2,
+      "expires": "endOfTurn",
+      "filter": {
+       "type": "building"
+      }
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 8.41,
+    "power": 20.6,
+    "opportunityCost": 9.4
+   }
+  },
+  {
+   "id": "mk_bld_futuretech_hq",
+   "type": "building",
+   "name": "FutureTech HQ",
+   "title": "Capital City Building",
+   "cost": 10,
+   "text": "At the start of your turn, every one of your Characters who is not upright stands up.",
+   "flavor": "Glass to the fourth floor, a lobby you may walk through and two floors you may not, and a company that posts a record quarter in a year the bridge went. Cornelius will show you everything. He will show you the second floor last, and then the tour will be over.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "readyCharacter",
+      "all": true
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 8.82,
+    "power": 24,
+    "opportunityCost": 12.22
+   }
+  },
+  {
+   "id": "mk_bld_hospital",
+   "type": "building",
+   "name": "The Hospital",
+   "title": "Capital City Building",
+   "cost": 7,
+   "text": "At the start of your turn, you may rehire a Character from your Unemployment for 3 less Supply, and they come back upright.",
+   "flavor": "Pristine, quiet, and owned since the spring by FutureTech, which repainted the wards and kept every one of the staff. An animal who stops getting up goes in through those doors and comes out fit for a shift, which is more than the borough could say a year ago.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "rehire",
+      "discount": 3,
+      "optional": true
+     }
+    }
+   ],
+   "rarity": "Uncommon",
+   "power": {
+    "score": 5.77,
+    "power": 14.04,
+    "opportunityCost": 9.22
+   }
+  },
+  {
+   "id": "mk_tb_futuretech_store",
+   "type": "townBuilding",
+   "name": "The FutureTech Store",
+   "title": "Town Building",
+   "cost": 4,
+   "build": {
+    "animals": 2
+   },
+   "text": "At the start of your turn, gain 1 Supply for each Building you have raised, up to 4.",
+   "flavor": "Everything in the window is a month old and everything behind the counter is a fortnight. Jim is in the queue on launch day whatever it is, and the whole street is richer for the queue.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "gainSupply",
+      "per": "buildingsBuilt",
+      "amount": 1,
+      "max": 4
+     }
+    }
+   ],
+   "rarity": "Common",
+   "power": {
+    "score": 3.45,
+    "power": 9,
+    "opportunityCost": 11.02
+   }
+  },
+  {
+   "id": "mk_tb_starfish_coffee",
+   "type": "townBuilding",
+   "name": "Starfish Coffee",
+   "title": "Town Building",
+   "cost": 3,
+   "build": {
+    "animals": 1
+   },
+   "text": "At the start of your turn, one of your Characters turns one step toward upright.",
+   "flavor": "The land's coffee chain, the borough's branch, and not an animal behind the counter: three automatons, a menu board that changes itself, and a FutureTech name on the receipt in very small print. The queue moves faster than anywhere else in town.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "advanceCharacter",
+      "count": 1
+     }
+    }
+   ],
+   "rarity": "Common",
+   "power": {
+    "score": 3.95,
+    "power": 9,
+    "opportunityCost": 7.82
+   }
+  },
+  {
+   "id": "mk_tb_ice_cream_shop",
+   "type": "townBuilding",
+   "name": "The Ice Cream Shop",
+   "title": "Town Building",
+   "cost": 3,
+   "build": {
+    "animals": 1
+   },
+   "text": "At the start of your turn, one of your opponent's Characters is put back to work. This does not happen again until your turn after next.",
+   "flavor": "Owned by an old Raccoon who retired to the arctic and never quite got round to selling it, and run to the inch by four teenagers who have never met him. Half the other town is in the queue on a warm afternoon and none of them are at work.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "cooldownTurns": 2,
+     "effect": {
+      "do": "makeBusy",
+      "count": 1
+     }
+    }
+   ],
+   "rarity": "Common",
+   "power": {
+    "score": 3.43,
+    "power": 7.8,
+    "opportunityCost": 7.82
+   }
+  },
+  {
+   "id": "mk_tb_clinic",
+   "type": "townBuilding",
+   "name": "The Clinic",
+   "title": "Town Building",
+   "cost": 3,
+   "build": {
+    "animals": 1
+   },
+   "text": "At the start of your turn, your recruits that upgrade a Character you control cost 2 less this turn.",
+   "flavor": "Two rooms, a scrubbed floor and a coral tank in the waiting office that the babies of both boroughs will sit in front of for an hour. Whatever an animal came in unable to do, they generally go out able to do it.",
+   "abilities": [
+    {
+     "trigger": "onTurnStart",
+     "effect": {
+      "do": "addMod",
+      "key": "recruitDiscount",
+      "value": 2,
+      "expires": "endOfTurn",
+      "filter": {
+       "upgradesOwn": true
+      }
+     }
+    }
+   ],
+   "rarity": "Super Rare",
+   "power": {
+    "score": 5.27,
+    "power": 12,
+    "opportunityCost": 7.82
+   }
+  },
+  {
+   "id": "mk_tax_day",
+   "type": "event",
+   "name": "Tax Day",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Commerce"
+    }
+   ],
+   "text": "Requires a Commerce Character. Gain 1 Supply for each Character in your town, up to 8.",
+   "flavor": "One morning a year the whole borough queues at the assize office with a tin and a grievance, and one morning a year the ward is solvent. Peanut has the desk. Cindy has the room next door, for the grievances.",
+   "effect": {
+    "do": "gainSupply",
+    "per": "charactersInTown",
+    "amount": 1,
+    "max": 8
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 2.02,
+    "power": 3,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_futuretech_release_day",
+   "type": "event",
+   "name": "FutureTech Release Day",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "study": "Science"
+    }
+   ],
+   "text": "Requires a Science Character. Pay 2 Supply: search your deck for a card that says FutureTech, take it into your hand, and shuffle.",
+   "flavor": "The line starts at the store and goes past the coffee bar, which is FutureTech's too, and round to the HQ steps, which are FutureTech's as well. Jim is second. Jim is always second, and has never once explained who is first.",
+   "effect": {
+    "do": "paySupply",
+    "amount": 2,
+    "then": {
+     "do": "searchDeck",
+     "count": 1,
+     "filter": {
+      "mentions": "FutureTech"
+     }
+    }
+   },
+   "rarity": "Common",
+   "power": {
+    "score": 1.58,
+    "power": 2.35,
+    "opportunityCost": 2.7
+   }
+  },
+  {
+   "id": "mk_otter_time",
+   "type": "event",
+   "name": "Otter Time!",
+   "kind": "instant",
+   "cost": 0,
+   "requires": [
+    {
+     "species": "Otter"
+    }
+   ],
+   "text": "Requires an Otter. Recruit any number of Otters from your hand for free, then pay 2 Supply to search your deck for an Otter, take it into your hand, and shuffle.",
+   "flavor": "It is not on any calendar and it is not anybody's idea. Somebody goes in off the ferry steps, and within the hour there is no otter in either borough doing the thing they were doing.",
+   "effect": {
+    "do": "seq",
+    "steps": [
+     {
+      "do": "recruitFromHand",
+      "count": 6,
+      "optional": true,
+      "filter": {
+       "species": "Otter"
+      }
+     },
+     {
+      "do": "paySupply",
+      "amount": 2,
+      "then": {
+       "do": "searchDeck",
+       "count": 1,
+       "filter": {
+        "species": "Otter"
+       }
+      }
+     }
+    ]
+   },
+   "rarity": "Super Rare",
+   "power": {
+    "score": 3.84,
+    "power": 5.71,
+    "opportunityCost": 2.7
+   }
   }
  ],
  "newStudies": [
@@ -24413,9 +25215,9 @@
  },
  "marketDecks": [
   {
-   "id": "mk-founders-fair",
-   "name": "The Founders' Fair",
-   "blurb": "The whole catalogue in one quarry: every lot the borough has ever put up, every Ordinance the Capital City can post, and a dozen virtues to raise nine of — so no two games put the same market, or the same monuments, in front of you.",
+   "id": "mk-grand-exchange",
+   "name": "The Grand Exchange",
+   "blurb": "The whole catalogue under one roof: every lot the borough has ever put up, every Ordinance the Capital City can post, every kind of weather, and a dozen virtues to raise nine of. The market to play to meet the collection — no two games deal the same city.",
    "statuePool": [
     "mk_st_kindness",
     "mk_st_curiosity",
@@ -24438,19 +25240,26 @@
     "mk_dx_the_year_it_stopped",
     "mk_dx_the_reckoning",
     "mk_dx_county_fair",
+    "mk_bld_futuretech_hq",
+    "mk_cornelius_futuretech_ceo_5",
     "mk_dylan_river_otter_4",
     "mk_dx_small_fair",
     "mk_barrow_stonecutter_5",
+    "mk_bld_owlery",
     "mk_faustus_threadmaster_5",
     "mk_dx_assessors_round",
     "mk_brett_counsel_5",
+    "mk_bld_hospital",
     "mk_bob_gate_attendant_4",
     "mk_mittens_rooftop_cat_4",
     "mk_bld_festival_green",
     "mk_barnaby_night_auditor_4",
     "mk_quinn_town_scrivener_3",
+    "mk_bld_bank",
     "mk_pockets_salvage_raccoon_4",
+    "mk_bld_airport",
     "mk_tuppence_curio_dealer_3",
+    "mk_bld_fast_food_joint",
     "mk_bld_weighbridge",
     "mk_bld_hiring_hall",
     "mk_jake_warren_runner_3",
@@ -24481,6 +25290,7 @@
     "mk_dx_solar_eclipse",
     "mk_dx_tax_assessors",
     "mk_mkt_the_redundancy_notice",
+    "mk_bld_car_dealership",
     "mk_mkt_ovens_account",
     "mk_mkt_watermill",
     "mk_ord_monument_tax",
@@ -24525,25 +25335,15 @@
     "mk_mkt_toll_gate",
     "mk_mkt_ironwood_palisade",
     "mk_ord_the_building_grant",
-    "mk_mkt_courier_network",
-    "mk_bld_bookstore",
-    "mk_bld_owlery",
-    "mk_bld_bank",
-    "mk_bld_game_store",
-    "mk_bld_fast_food_joint",
-    "mk_bld_cheese_store",
-    "mk_bld_juice_store",
-    "mk_bld_gas_station",
-    "mk_bld_car_dealership",
-    "mk_bld_airport"
+    "mk_mkt_courier_network"
    ],
    "poolSize": 26,
    "minDisruptions": 3
   },
   {
-   "id": "mk-lean-winter",
-   "name": "The Lean Winter",
-   "blurb": "The winter the Grain Exchange shut, the year the bridge went, the assessors at the door and the works in the square: a Capital City that takes animals off your board and then makes the monuments dearer.",
+   "id": "mk-hard-frost",
+   "name": "The Hard Frost",
+   "blurb": "The winter the Grain Exchange shut and the assessors came round anyway: a Capital City that takes animals off your board, posts an Ordinance about it, and then puts the monuments up by a third.",
    "statuePool": [
     "mk_st_patience",
     "mk_st_generosity",
@@ -24590,33 +25390,29 @@
     "mk_ord_the_masons_rate",
     "mk_ord_the_timber_levy",
     "mk_ord_the_building_grant",
+    "mk_bld_fast_food_joint",
     "mk_bld_physic_garden",
     "mk_mkt_the_last_round",
     "mk_mkt_the_redundancy_notice",
+    "mk_bld_car_dealership",
     "mk_mkt_scrap_yard",
     "mk_mkt_long_table",
     "mk_mkt_toll_gate",
     "mk_mkt_ironwood_palisade",
+    "mk_bld_futuretech_hq",
+    "mk_cornelius_futuretech_ceo_5",
     "mk_dylan_river_otter_4",
     "mk_barrow_stonecutter_5",
-    "mk_faustus_threadmaster_5",
-    "mk_brett_counsel_5",
-    "mk_bob_gate_attendant_4",
-    "mk_mittens_rooftop_cat_4",
-    "mk_bld_festival_green",
-    "mk_barnaby_night_auditor_4",
-    "mk_bld_fast_food_joint",
-    "mk_bld_gas_station",
-    "mk_bld_car_dealership",
-    "mk_bld_bank"
+    "mk_bld_owlery",
+    "mk_faustus_threadmaster_5"
    ],
    "poolSize": 26,
    "minDisruptions": 6
   },
   {
-   "id": "mk-hiring-fair",
-   "name": "The Hiring Fair",
-   "blurb": "The board is full, the hall is open and everything is for hire: a Capital City of animals to take on and roofs to put up, where the bidding is over labour rather than weather.",
+   "id": "mk-open-hiring",
+   "name": "The Open Hiring",
+   "blurb": "The board is full, the hall is open and everything on it is somebody looking for work or a roof looking for a crew. The bidding here is over labour rather than weather, and a town that can pay leaves with a bigger town.",
    "statuePool": [
     "mk_st_curiosity",
     "mk_st_courage",
@@ -24633,28 +25429,36 @@
    ],
    "statueCount": 9,
    "pool": [
-    "mk_brett_counsel_5",
-    "mk_jake_warren_runner_3",
-    "mk_kevin_hired_hand_3",
     "mk_hoot_night_porter_2",
-    "mk_bld_festival_green",
-    "mk_bld_weighbridge",
+    "mk_bld_futuretech_hq",
+    "mk_bld_owlery",
+    "mk_bld_hospital",
+    "mk_bld_airport",
+    "mk_bld_fast_food_joint",
     "mk_bld_hiring_hall",
     "mk_bld_all_night_cafe",
     "mk_bld_guild_hall",
-    "mk_bld_long_room",
-    "mk_bld_town_workshop",
-    "mk_bld_counting_house",
+    "mk_bld_car_dealership",
+    "mk_cornelius_futuretech_ceo_5",
     "mk_dylan_river_otter_4",
     "mk_barrow_stonecutter_5",
     "mk_faustus_threadmaster_5",
+    "mk_brett_counsel_5",
     "mk_bob_gate_attendant_4",
     "mk_mittens_rooftop_cat_4",
     "mk_barnaby_night_auditor_4",
     "mk_quinn_town_scrivener_3",
     "mk_pockets_salvage_raccoon_4",
     "mk_tuppence_curio_dealer_3",
+    "mk_jake_warren_runner_3",
+    "mk_kevin_hired_hand_3",
+    "mk_bld_festival_green",
+    "mk_bld_bank",
+    "mk_bld_weighbridge",
+    "mk_bld_long_room",
+    "mk_bld_town_workshop",
     "mk_bld_physic_garden",
+    "mk_bld_counting_house",
     "mk_bld_winter_stores",
     "mk_mkt_second_founding",
     "mk_mkt_seed_bank_open_day",
@@ -24662,16 +25466,8 @@
     "mk_mkt_community_oven",
     "mk_mkt_bandstand",
     "mk_mkt_guild_intake",
-    "mk_mkt_founders_grant",
     "mk_mkt_ovens_account",
-    "mk_mkt_watermill",
-    "mk_mkt_harvest_fair",
     "mk_mkt_warren_muster",
-    "mk_mkt_hapenny",
-    "mk_mkt_second_chances",
-    "mk_mkt_the_fitting",
-    "mk_mkt_night_market",
-    "mk_mkt_penny_jar",
     "mk_dx_county_fair",
     "mk_dx_the_reckoning",
     "mk_dx_the_year_it_stopped",
@@ -24681,10 +25477,310 @@
    ],
    "poolSize": 26,
    "minDisruptions": 2
+  },
+  {
+   "id": "mk-guild-row",
+   "name": "Guild Row",
+   "blurb": "A street of counters, tins and subscriptions: chits handed out by the guild, Supply put by for the year you need it, and a discount for anyone who turns up early. The slow, rich Capital City — nothing here hits you, and everything here compounds.",
+   "statuePool": [
+    "mk_st_kindness",
+    "mk_st_curiosity",
+    "mk_st_patience",
+    "mk_st_generosity",
+    "mk_st_ingenuity",
+    "mk_st_harmony",
+    "mk_st_joy",
+    "mk_st_diligence",
+    "mk_st_vigilance",
+    "mk_st_wonder",
+    "mk_st_thrift"
+   ],
+   "statueCount": 9,
+   "pool": [
+    "mk_mkt_second_founding",
+    "mk_mkt_seed_bank_open_day",
+    "mk_mkt_community_oven",
+    "mk_mkt_bandstand",
+    "mk_mkt_founders_grant",
+    "mk_mkt_ovens_account",
+    "mk_mkt_watermill",
+    "mk_mkt_spare_room",
+    "mk_mkt_harvest_fair",
+    "mk_mkt_warren_muster",
+    "mk_mkt_hapenny",
+    "mk_mkt_ledger_audit",
+    "mk_mkt_town_clock",
+    "mk_mkt_surveyors_table",
+    "mk_mkt_the_fitting",
+    "mk_mkt_bin_round",
+    "mk_mkt_night_market",
+    "mk_mkt_penny_jar",
+    "mk_mkt_market_committee",
+    "mk_mkt_old_friends_reunion",
+    "mk_mkt_chit_tin",
+    "mk_mkt_telescope_hire",
+    "mk_mkt_late_ferry",
+    "mk_mkt_emergency_reserve",
+    "mk_mkt_understudys_shelf",
+    "mk_mkt_lucky_horseshoe",
+    "mk_mkt_town_archives",
+    "mk_mkt_toll_gate",
+    "mk_mkt_apprentice_fair",
+    "mk_mkt_the_last_round",
+    "mk_mkt_guild_intake",
+    "mk_mkt_the_redundancy_notice",
+    "mk_mkt_second_chances",
+    "mk_mkt_scrap_yard",
+    "mk_mkt_double_shift_horn",
+    "mk_mkt_long_table",
+    "mk_dx_landslide",
+    "mk_dx_assessors_round",
+    "mk_dx_small_fair",
+    "mk_dx_county_fair",
+    "mk_dx_the_reckoning",
+    "mk_dx_the_year_it_stopped",
+    "mk_dx_the_great_frost",
+    "mk_dx_midsummer_fair",
+    "mk_dx_lord_mayors_fair"
+   ],
+   "poolSize": 26,
+   "minDisruptions": 3
   }
  ],
  "needsArt": {
   "note": "Cards that are written, playable and not yet painted. A card lands here the moment it is written without `art`, and leaves it the moment a scene is commissioned — src/ui/painted-art.js for a bundled painting, or an `art` block on the card for an atlas tile. docs/NeedsArt.md is generated from this list and is the version an illustrator reads: it carries the card, the character behind it and the story the scene has to tell. The art tests read this list and let a card through unpainted only while it is on it, so nothing is quietly forgotten.",
-  "cards": []
+  "cards": [
+   {
+    "id": "mk_adam_road_construction_5",
+    "name": "Adam",
+    "title": "Road Construction",
+    "type": "character",
+    "story": "Adam — the Badger who mends roads, now building them: a line of stakes across ground nobody has ever carted over, a gang of eleven, and the county road open behind him from the ferry steps to the gate."
+   },
+   {
+    "id": "mk_brooke_aeronaut_5",
+    "name": "Brooke",
+    "title": "Aeronaut",
+    "type": "character",
+    "story": "Brooke — the Otter who cannot hear about a thing without finding out how it is done, in a balloon basket over the estuary at first light, reading the carts coming into the Capital City before they are off the bridge."
+   },
+   {
+    "id": "mk_yellow_rapper_5",
+    "name": "Yellow",
+    "title": "Rapper",
+    "type": "character",
+    "story": "Yellow — the Squirrel from the suburbs, the borough's own rapper, mid-verse in a sold-out hall on the forty-minute record whose second side is entirely about the seed bank."
+   },
+   {
+    "id": "mk_marmalade_guild_baker_5",
+    "name": "Marmalade",
+    "title": "Baker to the Guilds",
+    "type": "character",
+    "story": "Marmalade — the Cat who was a horrible kitten and found the dough, now baking for six counters and keeping the guild books badly, at four in the morning, in flour, on the back of an order sheet."
+   },
+   {
+    "id": "mk_jessica_teacher_of_the_boroughs_5",
+    "name": "Jessica",
+    "title": "Teacher of the Boroughs",
+    "type": "character",
+    "story": "Jessica — the Owl who has never set homework, teaching both boroughs' little ones the ward bylaws as a round with actions."
+   },
+   {
+    "id": "mk_kevin_construction_4",
+    "name": "Kevin",
+    "title": "Construction",
+    "type": "character",
+    "story": "Kevin — the Fox who says yes before you have finished the sentence, twelfth job, up the scaffold before the yard is unlocked, in the fortnight where he is worth two of anybody."
+   },
+   {
+    "id": "mk_cindy_court_clerk_1",
+    "name": "Cindy",
+    "title": "Clerk of the Court",
+    "type": "character",
+    "story": "Cindy — the Fox judge, here as the clerk who has read the papers before the bench has."
+   },
+   {
+    "id": "mk_cindy_magistrate_2",
+    "name": "Cindy",
+    "title": "Magistrate",
+    "type": "character",
+    "story": "Cindy on the magistrate's bench, adjourning over one clever remark while the whole yard waits on it."
+   },
+   {
+    "id": "mk_cindy_circuit_judge_4",
+    "name": "Cindy",
+    "title": "Circuit Judge",
+    "type": "character",
+    "story": "Cindy riding the four wards, hearing the side she stopped believing in all the way to the end."
+   },
+   {
+    "id": "mk_cindy_justice_of_the_boroughs_5",
+    "name": "Cindy",
+    "title": "Justice of the Boroughs",
+    "type": "character",
+    "story": "Cindy as Justice of the Boroughs: the long stare across the too-high bench, and the losing side being offered the choice of how it loses."
+   },
+   {
+    "id": "mk_elvira_tea_leaf_reader_0",
+    "name": "Elvira",
+    "title": "Tea-Leaf Reader",
+    "type": "character",
+    "story": "Elvira — the fortune-telling Cat, over a cup and saucer, never once admitting she cannot see anything."
+   },
+   {
+    "id": "mk_elvira_fairground_booth_2",
+    "name": "Elvira",
+    "title": "Fairground Booth",
+    "type": "character",
+    "story": "Elvira's fairground booth, roof on, cloth over the table, a queue that starts before she does."
+   },
+   {
+    "id": "mk_elvira_fortune_teller_3",
+    "name": "Elvira",
+    "title": "Fortune Teller",
+    "type": "character",
+    "story": "Elvira reading for an animal who has had a hard season, and sending them out better than they came in whatever the cards said."
+   },
+   {
+    "id": "mk_elvira_reader_of_long_odds_4",
+    "name": "Elvira",
+    "title": "Reader of the Long Odds",
+    "type": "character",
+    "story": "Elvira at the top of her trade: three windows on the future, a ha'penny in the air, and a Cat who gets up when she feels like getting up."
+   },
+   {
+    "id": "mk_jim_gadget_blogger_0",
+    "name": "Jim",
+    "title": "Gadget Blogger",
+    "type": "character",
+    "story": "Jim — the Raccoon FutureTech fanboy, posting eleven hundred words on a shutter mechanism at four in the morning."
+   },
+   {
+    "id": "mk_jim_hobby_programmer_2",
+    "name": "Jim",
+    "title": "Hobby Programmer",
+    "type": "character",
+    "story": "Jim programming out of what was in the bin behind the works, and beating the thing he was copying."
+   },
+   {
+    "id": "mk_jim_early_adopter_4",
+    "name": "Jim",
+    "title": "Early Adopter",
+    "type": "character",
+    "story": "Jim second in the launch-day queue, pale patch on the left of his head where the automated candle got him."
+   },
+   {
+    "id": "mk_jim_futuretech_fanboy_5",
+    "name": "Jim",
+    "title": "FutureTech Fanboy",
+    "type": "character",
+    "story": "Jim after two nights on the pavement outside the FutureTech store, holding the box and in no fit state for Thursday's shift."
+   },
+   {
+    "id": "mk_robbie_cub_reporter_0",
+    "name": "Robbie",
+    "title": "Cub Reporter",
+    "type": "character",
+    "story": "Robbie — the Badger reporter in a suit that should not exist, laughing alone in the office at his own headline."
+   },
+   {
+    "id": "mk_robbie_columnist_1",
+    "name": "Robbie",
+    "title": "Columnist",
+    "type": "character",
+    "story": "Robbie filing the column: four sheets, a Thursday, and a pun the ward hall will not enjoy."
+   },
+   {
+    "id": "mk_robbie_features_writer_2",
+    "name": "Robbie",
+    "title": "Features Writer",
+    "type": "character",
+    "story": "Robbie in the repeating-pheasant suit, deflecting the question about where the suits come from with the joke he has been saving."
+   },
+   {
+    "id": "mk_robbie_editor_3",
+    "name": "Robbie",
+    "title": "Editor",
+    "type": "character",
+    "story": "Robbie at the back of the ward hall at half past eleven with the notebook out, when everybody who came to watch has gone home."
+   },
+   {
+    "id": "mk_robbie_editor_in_chief_5",
+    "name": "Robbie",
+    "title": "Editor-in-Chief",
+    "type": "character",
+    "story": "Robbie as editor-in-chief: the Capital City's front page moved before anybody else has seen it, and the paper out on Thursday regardless."
+   },
+   {
+    "id": "mk_cornelius_futuretech_ceo_5",
+    "name": "Cornelius",
+    "title": "FutureTech CEO",
+    "type": "marketCharacter",
+    "story": "Cornelius — the Mouse who runs FutureTech, mid-pitch with three automatons and a folder, forty minutes in and not appearing to breathe."
+   },
+   {
+    "id": "mk_bld_futuretech_hq",
+    "name": "FutureTech HQ",
+    "title": "Capital City Building",
+    "type": "building",
+    "story": "The Capital City's glass tower: a lobby anyone may walk through, two floors nobody may, and a company that posts a record quarter in the year the bridge went."
+   },
+   {
+    "id": "mk_bld_hospital",
+    "name": "The Hospital",
+    "title": "Capital City Building",
+    "type": "building",
+    "story": "The Capital City's hospital, pristine and quiet, repainted since FutureTech bought it and staffed by every animal who was there before."
+   },
+   {
+    "id": "mk_tb_futuretech_store",
+    "name": "The FutureTech Store",
+    "title": "Town Building",
+    "type": "townBuilding",
+    "story": "The borough's FutureTech store: a window of month-old wonders, a counter of fortnight-old ones, and a queue down the street on launch day."
+   },
+   {
+    "id": "mk_tb_starfish_coffee",
+    "name": "Starfish Coffee",
+    "title": "Town Building",
+    "type": "townBuilding",
+    "story": "Starfish Coffee, the borough branch: three automatons behind the counter, a menu board that changes itself, and the fastest queue in town."
+   },
+   {
+    "id": "mk_tb_ice_cream_shop",
+    "name": "The Ice Cream Shop",
+    "title": "Town Building",
+    "type": "townBuilding",
+    "story": "The ice cream shop an old Raccoon still technically owns from the arctic, kept in tip-top shape by four teenagers, with half the other town queueing outside on a warm afternoon."
+   },
+   {
+    "id": "mk_tb_clinic",
+    "name": "The Clinic",
+    "title": "Town Building",
+    "type": "townBuilding",
+    "story": "The clinic: two rooms, a scrubbed floor, and the coral tank in the waiting office that the babies of both boroughs will watch for an hour."
+   },
+   {
+    "id": "mk_tax_day",
+    "name": "Tax Day",
+    "title": null,
+    "type": "event",
+    "story": "Tax Day — the whole borough queueing at the assize office with a tin and a grievance, one morning a year, and the ward solvent by the afternoon."
+   },
+   {
+    "id": "mk_futuretech_release_day",
+    "name": "FutureTech Release Day",
+    "title": null,
+    "type": "event",
+    "story": "Release day: the line from the store, past the coffee bar, round to the HQ steps — all three of them FutureTech's — with Jim second in it."
+   },
+   {
+    "id": "mk_otter_time",
+    "name": "Otter Time!",
+    "title": null,
+    "type": "event",
+    "story": "Otter Time! — somebody goes in off the ferry steps, and within the hour there is not an otter in either borough doing the thing they were doing."
+   }
+  ]
  }
 }

@@ -4,11 +4,11 @@
 //   node scripts/playtest.mjs [--games N] [--seed S] [--p0 heuristic|random] [--p1 heuristic|random]
 //                             [--decks <a>,<b>|alternate|all] [--market <id>|all] [--verbose] [--aggression A]
 //
-// Deck names are the ids in the set (mk-tin-tally, mk-wall-window, …) or the initials of one
+// Deck names are the ids in the set (mk-cache-kitchen, mk-lens-lathe, …) or the initials of one
 // (tt, ww). `alternate` swaps the first two decks between seats; `all` rotates through every ordered
-// pair of decks in the set — with fifteen decks that is 210 ordered pairs, so `--games` wants to be
-// a multiple of it to stay balanced. `--market` picks one Capital City (mk-founders-fair,
-// mk-lean-winter, mk-hiring-fair) or rotates through all of them.
+// pair of decks in the set — with ten decks that is 90 ordered pairs, so `--games` wants to be
+// a multiple of it to stay balanced. `--market` picks one Capital City (mk-grand-exchange,
+// mk-hard-frost, mk-open-hiring, mk-guild-row) or rotates through all of them.
 //
 // Also exports runPlaytest(opts) -> stats object, for use from tests.
 

@@ -395,6 +395,17 @@ export async function fireHook(state, trigger, ctx) {
         if (p.turn.usedOnce.includes(src.key)) continue;
         p.turn.usedOnce.push(src.key);
       }
+      // `cooldownTurns` is the shutter coming down: an ability fires, and then may not fire again
+      // for that many of this Mayor's own turns. `oncePerTurn` is a limit inside one turn and this
+      // is the limit across them — the shape a card wants when what it does would be too much every
+      // turn and too little once a game.
+      if (ab.cooldownTurns) {
+        p.cooldowns = p.cooldowns || {};
+        const last = p.cooldowns[src.key];
+        // A Mayor's own turns are two apart in the turn count, the rival's falling between them.
+        if (last !== undefined && state.turnNumber - last < ab.cooldownTurns * 2) continue;
+        p.cooldowns[src.key] = state.turnNumber;
+      }
       log(state, pi, `${src.def.name}${src.def.title ? `, ${src.def.title}` : ''} triggers.`, { kind: 'trigger', player: pi, cardId: src.def.id, uid: src.stack ? src.stack.uid : null, source: src.kind });
       await runEffect(state, pi, ab.effect, { ...ctx, sourceCardId: src.def.id, sourceStackUid: src.stack ? src.stack.uid : null });
     }
@@ -452,7 +463,10 @@ export function perAmount(state, pi, eff, rateKey = 'amount') {
   const p = state.players[pi];
   const pool = eff.per === 'uprightCharacters' ? p.town.filter((st) => st.orientation === UPRIGHT)
     : eff.per === 'charactersInTown' ? p.town : [];
-  const heads = pool.filter((st) => matchesFilter(state, st, eff.filter)).length;
+  // `buildingsBuilt` counts the roofs rather than the animals: the shop that pays out over every
+  // counter the town has raised, which is the one rate in the collection that is not about a body.
+  const heads = eff.per === 'buildingsBuilt' ? buildingsBuilt(state, pi)
+    : pool.filter((st) => matchesFilter(state, st, eff.filter)).length;
   const rate = eff[rateKey] === undefined ? 1 : eff[rateKey];
   const total = rate * heads;
   return eff.max === undefined ? total : Math.min(total, eff.max);
@@ -477,6 +491,18 @@ export function matchesFilter(state, stack, f = {}) {
 /** A Character a Hedgehog has quilled: an opponent's effect cannot choose it until its owner's next turn. */
 export function isProtected(state, stack) {
   return !!stack.protectedUntil && state.turnNumber < stack.protectedUntil;
+}
+
+/**
+ * Whether a card says a word — in its name, its title, its rules text, its flavor or anywhere in the
+ * rules it actually runs. `searchDeck`'s `mentions` filter is read off this, so a search for
+ * "FutureTech" finds the shop that is named for the company, the fan who blogs about it and the
+ * coffee bar it owns, without any of them carrying a keyword invented for the search.
+ */
+export function mentionsWord(def, word) {
+  if (!def || !word) return false;
+  const blob = JSON.stringify([def.name, def.title, def.text, def.flavor, def.abilities || [], def.effect || null]);
+  return blob.toLowerCase().includes(String(word).toLowerCase());
 }
 
 export async function runEffect(state, pi, eff, ctx = {}) {
@@ -555,6 +581,14 @@ export async function runEffect(state, pi, eff, ctx = {}) {
     case 'readyCharacter': {
       const opts = p.town.filter((s) => s.orientation !== UPRIGHT && !s.lockedBid && matchesFilter(state, s, eff.filter));
       if (!opts.length) return;
+      // `all: true` is the whole floor at once, with nobody asked which — the shift bell rather than
+      // a favour done to one animal. Everything that is not upright and is not pledged into an
+      // auction stands up, which is the only shape a building that opens the doors on the hour can
+      // honestly have: it does not know your names.
+      if (eff.all) {
+        for (const st of opts.slice()) await readyStack(state, pi, st, cardDef(state, ctx.sourceCardId).name);
+        return;
+      }
       const max = Math.min(eff.count || 1, opts.length);
       const chosen = await ask(state, pi, { kind: 'pick', reason: 'ready', from: 'town', options: opts.map((s) => stackOpt(state, s)), min: eff.optional ? 0 : Math.min(1, max), max });
       for (const uid of chosen) await readyStack(state, pi, findStack(state, pi, uid), cardDef(state, ctx.sourceCardId).name);
@@ -683,8 +717,13 @@ export async function runEffect(state, pi, eff, ctx = {}) {
         return true;
       });
       if (!opts.length) return;
-      const chosen = await ask(state, ri, { kind: 'pick', reason: 'recruitFree', from: 'hand', options: opts.map((c) => inst(state, c)), min: eff.optional ? 0 : 1, max: 1 });
+      // `count` is the open door rather than the one hire: a card that takes every Otter in the
+      // hand asks for all of them at once, and the town cap is still read per animal below, because
+      // a town with two places left takes two however many turned up.
+      const want = Math.min(eff.count === undefined ? 1 : eff.count, opts.length);
+      const chosen = await ask(state, ri, { kind: 'pick', reason: 'recruitFree', from: 'hand', options: opts.map((c) => inst(state, c)), min: eff.optional ? 0 : Math.min(1, want), max: want });
       for (const uid of chosen) {
+        if (!hasTownRoom(state, ri)) break;
         const c = rp.hand.splice(rp.hand.findIndex((x) => x.uid === uid), 1)[0];
         const d = cardDef(state, c.cardId);
         // A card may say how it arrives (`entersUpright`), and an animal who arrives ready arrives
@@ -731,6 +770,10 @@ export async function runEffect(state, pi, eff, ctx = {}) {
         if (f.study && d.study !== f.study) return false;
         if (f.species && d.species !== f.species) return false;
         if (f.name && d.name !== f.name) return false;
+        // `mentions` is the trade-name search: everything in the deck that says the word, on its
+        // face or in its rules. It is how a release day finds the shop, the fan and the coffee bar
+        // in one go without any of them carrying a keyword the players would have to learn.
+        if (f.mentions && !mentionsWord(d, f.mentions)) return false;
         return true;
       });
       const max = Math.min(eff.count || 1, legal.length);
@@ -874,6 +917,21 @@ export async function runEffect(state, pi, eff, ctx = {}) {
       p.knownOpponentHand = o.hand.map((c) => c.cardId);
       const names = p.knownOpponentHand.map((id) => cardDef(state, id).name);
       log(state, pi, `${p.name} looks at ${o.name}'s hand: ${names.join(', ')}.`, { kind: 'peekHand', player: pi, opponent: oi, cardIds: p.knownOpponentHand.slice() });
+      return;
+    }
+    case 'peekOpponentDeck': {
+      // The fortune-teller's third window: the top of the rival's deck, which nobody else in the
+      // collection can see. Information only — nothing is moved or taken — and the rival is told
+      // what was read, the same manners `peekOpponentHand` keeps, because a card that reads your
+      // deck in silence is a card you cannot play around.
+      const n = Math.min(eff.count || 1, o.deck.length);
+      if (!n) {
+        log(state, pi, `${p.name} reads for ${o.name} and finds their deck empty.`, { kind: 'peekOpponentDeck', player: pi, opponent: oi, cardIds: [] });
+        return;
+      }
+      const ids = o.deck.slice(0, n).map((c) => c.cardId);
+      p.knownOpponentDeckTop = ids.slice();
+      log(state, pi, `${p.name} reads the top of ${o.name}'s deck: ${ids.map((id) => cardDef(state, id).name).join(', ')}.`, { kind: 'peekOpponentDeck', player: pi, opponent: oi, cardIds: ids.slice() });
       return;
     }
     case 'gainToken': {

@@ -15,7 +15,7 @@ import {
 } from '../src/engine/profile.js';
 
 const PROGRESSION = JSON.parse(fs.readFileSync(new URL('../spec/progression.json', import.meta.url), 'utf8'));
-const STARTER = 'mk-tin-tally';
+const STARTER = 'mk-cache-kitchen';
 const starterList = () => SET.decks.find((d) => d.id === STARTER).list;
 const aStarterCard = () => Object.keys(starterList())[0];
 
@@ -138,7 +138,7 @@ describe('building a deck out of what you own', () => {
 describe('opening more decks', () => {
   test('unlocking a deck grants its list, so a deck you own is a deck you can play', () => {
     const p = mayor();
-    const other = 'mk-lamp-lens';
+    const other = 'mk-dome-dusk';
     unlockDeck(p, SET, other);
     assert.ok(hasDeck(p, other));
     assert.deepEqual(collectionProblems(RULES, SET, SET.decks.find((d) => d.id === other).list, p), []);
@@ -155,7 +155,7 @@ describe('opening more decks', () => {
 
   test('coverage from packs opens a deck and grants the remainder', () => {
     const p = mayor();
-    const other = SET.decks.find((d) => d.id === 'mk-quill-quarry');
+    const other = SET.decks.find((d) => d.id === 'mk-bin-barter');
     assert.equal(hasDeck(p, other.id), false);
     // Open enough of the deck's list to cross the threshold, one card at a time.
     for (const [cardId, count] of Object.entries(other.list)) {
@@ -175,12 +175,12 @@ describe('opening more decks', () => {
   test('a deck can be bought outright, and not without the coins', () => {
     const p = mayor();
     const pr = progressionRules(PROGRESSION);
-    assert.equal(buyDeck(p, SET, 'mk-lamp-lens', PROGRESSION), false, 'a Mayor with no coins buys nothing');
+    assert.equal(buyDeck(p, SET, 'mk-dome-dusk', PROGRESSION), false, 'a Mayor with no coins buys nothing');
     addCoins(p, pr.deckPrice);
-    assert.equal(buyDeck(p, SET, 'mk-lamp-lens', PROGRESSION), true);
+    assert.equal(buyDeck(p, SET, 'mk-dome-dusk', PROGRESSION), true);
     assert.equal(p.coins, 0);
-    assert.ok(hasDeck(p, 'mk-lamp-lens'));
-    assert.equal(buyDeck(p, SET, 'mk-lamp-lens', PROGRESSION), false, 'and cannot buy it twice');
+    assert.ok(hasDeck(p, 'mk-dome-dusk'));
+    assert.equal(buyDeck(p, SET, 'mk-dome-dusk', PROGRESSION), false, 'and cannot buy it twice');
   });
 });
 
@@ -239,7 +239,7 @@ describe('what a finished game pays', () => {
 
   test('every finished game is written into the history, newest first', () => {
     const p = mayor();
-    recordResult(p, { won: true, deckId: STARTER, deckName: 'Tin & Tally', turns: 12, seed: 5 }, PROGRESSION);
+    recordResult(p, { won: true, deckId: STARTER, deckName: 'Cache & Kitchen', turns: 12, seed: 5 }, PROGRESSION);
     recordResult(p, { won: false, deckId: STARTER }, PROGRESSION);
     assert.equal(p.history.length, 2);
     assert.equal(p.history[0].won, false, 'the newest game is the one at the front');
@@ -353,6 +353,6 @@ describe('the Sandbox Mayor', () => {
     spendCoins(s, 1e9);
     assert.equal(s.coins, Infinity);
     assert.ok(canAfford(s, 1e9));
-    assert.equal(buyDeck(s, SET, 'mk-lamp-lens', PROGRESSION), false, 'it has the deck already');
+    assert.equal(buyDeck(s, SET, 'mk-dome-dusk', PROGRESSION), false, 'it has the deck already');
   });
 });

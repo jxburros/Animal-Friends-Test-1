@@ -1,5 +1,11 @@
 # A deck for every Legendary
 
+> **Retired in v0.13.0.** The ten decks described here, and the fifteen town decks they were built
+> alongside, were taken off the shelf when the roster was rebuilt as one deck per species. The pass is
+> kept on the record for the builder work it settled — the anchor-and-support scheme, the `--only`
+> workflow, and the three builder bugs it found. The shelf the game actually ships is described in the
+> README and in [the playtest notes](PLAYTEST_NOTES.md).
+
 The collection carves ten Legendary cards. Until this pass none of them had a deck written around it:
 a Legendary is a one-copy card, it turns up in about a third of games, and when it did it arrived in
 a town arranged for two species and two studies rather than for what the card actually does.

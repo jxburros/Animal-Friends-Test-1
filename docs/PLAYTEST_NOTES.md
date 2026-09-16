@@ -2,10 +2,97 @@
 
 Method: `npm run playtest -- --games N --decks all --market all`, heuristic AI on both sides, walking
 the full cross product of every ordered deck pairing and every Capital City. The set the harness runs
-over has changed several times, so each section below says what it measured: the v0.12.0 run at the
-top is one run of 1260 games over fifteen decks and three Capital Cities, v0.7.0 was one run of 1120
+over has changed several times, so each section below says what it measured: the v0.14.0 run at the
+top is one run of 1080 games over ten decks and four Capital Cities with the maker's second batch on
+the shelf, v0.13.0 is the same harness on the roster before that batch, the v0.12.0 run is one run of
+1260 games over fifteen decks and three Capital Cities, v0.7.0 was one run of 1120
 over eight decks and seven markets, and the v0.6.0 figures further down are the **mean of three
 independent runs** of 720 games with `origin/main` measured on the identical harness.
+
+## v0.14.0 — the maker's second batch on the ten-deck shelf
+
+One run of `npm run playtest -- --games 1080 --decks all --market all`, same harness as the v0.13.0
+run below and the same ten identities, with 33 new cards on the shelf and five Capital City Buildings
+moved into the towns' decks.
+
+**Deck balance: 37.5 points of spread**, Lens & Lathe (Cats) at 64.4% and Bin & Barter (Raccoons) at
+26.9% — the same width as the 36.1 below, with both ends a few points lower. What moved and why:
+
+| Deck | Before | After | What changed on its shelf |
+| --- | --- | --- | --- |
+| Lens & Lathe | 44.4% | 64.4% | Elvira's four cards, the Ice Cream Shop, Marmalade's top card |
+| Bench & Bylaw | 35.6% | 56.0% | Robbie's five, Adam's top card, the FutureTech Store |
+| Gavel & Greasepaint | 51.4% | 61.1% | Cindy's four, Kevin's Construction |
+| Dome & Dusk | 38.0% | 48.1% | Jessica's top card |
+| Bin & Barter | 47.7% | 26.9% | Jim's four, Tax Day — the worst trade on the shelf |
+| Margin & Pantry | 35.2% | 32.4% | nothing of its own: no Mouse card was added that a deck may hold |
+
+**Bin & Barter is the find.** The builder gives four of forty slots to Jim because he rates well and
+is a Raccoon, and Jim's cards buy cards with Supply rather than earning it — the deck's throughput
+went *up* and it lost twenty points. Seeding its old engine back (the Bonfire, the Lanterns, the
+Warren, the Chit Press) recovered about six of them; the rest is the cost of a deck built around an
+animal whose whole trade is spending. It is the weakest printed town and it is printed anyway,
+because that is what Jim is.
+
+**Two things were fixed rather than tuned around.**
+
+- **The heuristic agent said yes to every counter.** `paySupply` asks a confirm whose default is yes,
+  so the AI paid 3 Supply for two cards every turn whatever its float, and then could not recruit,
+  work or bid. That alone was worth seventeen points to the Mouse deck when the Game Store landed on
+  its shelf. It now pays only out of surplus — when what is left still covers a Journeyman and a rung
+  of the ladder.
+- **The random-play smoke test was pinned to six seeds.** Whether two random agents reach a Statue
+  victory is genuinely probabilistic, and the rate moves by a couple of games in twenty whenever the
+  decks are rebuilt, with or without a card change: measured over twenty seeds this roster reaches a
+  Statue victory 14 times, the roster before it 16, and a build with the five moved shops reverted
+  11. The test now measures twenty seeds against a floor, which is what the property actually is.
+
+**No Capital City decides a game**: the first seat wins 48.1% on The Grand Exchange, 44.4% on The
+Hard Frost, 50.4% on The Open Hiring and 43.3% on Guild Row. Games finish: 1079 of 1080 on Statues,
+mean length 36.7 turns.
+
+## v0.13.0 — a deck per species, and four Capital Cities
+
+One run of `npm run playtest -- --games 1080 --decks all --market all`: the full cross product of the
+90 ordered pairings of the ten printed decks and all four Capital Cities, heuristic AI on both sides.
+A single run, not the mean of three, so read the deck figures as ±3 points.
+
+The roster this measures is a different shelf from the one above. The twenty-five decks of the v0.12
+passes — fifteen two-species towns and ten written around a Legendary — were retired and replaced by
+**ten decks, one for each species**, and the three Capital Cities by four new ones.
+
+**Deck balance: 36.1 points of spread**, Furrow & Warren (Rabbits) at 71.3% and Margin & Pantry (Mice)
+at 35.2%. That is wider than the 19.0 the fifteen mixed towns managed, and it is the species charters
+showing through rather than a builder fault: a printed deck is now one species, so Rabbits arriving in
+crowds and Hedgehogs nobody can touch are no longer averaged against a second species, and the Owl
+hole — "wise, awake and poor" — is the whole of Dome & Dusk's economy. Measured on the same harness
+the retired twenty-five span 34.4% to 73.3%, so the shelf is no less even than the one it replaces.
+
+| Deck | Species | Win rate |
+| --- | --- | --- |
+| Furrow & Warren | Rabbit | 71.3% |
+| Hedge & Holiday | Hedgehog | 69.4% |
+| Cache & Kitchen | Squirrel | 60.2% |
+| Gavel & Greasepaint | Fox | 51.4% |
+| Bin & Barter | Raccoon | 47.7% |
+| Current & Counter | Otter | 46.8% |
+| Lens & Lathe | Cat | 44.4% |
+| Dome & Dusk | Owl | 38.0% |
+| Bench & Bylaw | Badger | 35.6% |
+| Margin & Pantry | Mouse | 35.2% |
+
+**No Capital City decides a game.** Over 270 games each, the first seat wins 41.9% on The Grand
+Exchange, 50.4% on The Hard Frost, 51.9% on The Open Hiring and 49.6% on Guild Row.
+
+**Games finish.** 1077 of 1080 ended on Statues, mean length 36.2 turns (median 34, longest 80). Card
+conservation holds over 200 random-vs-random games across all four Capital Cities (`npm run
+invariants`).
+
+**Throughput still predicts nothing about the spread here.** The ten decks sit between 42.0 and 54.5
+shift throughput and the two strongest are not the two fastest — what separates them is what their
+species does, which is the intended reading of a roster written one species at a time. Raising the
+throughput floor from 42 to 50 was tried and made the spread slightly worse (37.5 points), so the
+floor stands where the fifteen-deck pass left it.
 
 ## v0.12.0 — fifteen decks, three Capital Cities, and a floor that bites
 

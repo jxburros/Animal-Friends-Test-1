@@ -341,7 +341,8 @@ function conditionFactor(condition) {
  * the shelf that filter actually covers.
  */
 function perScale(eff, rateKey) {
-  const heads = eff.per === 'uprightCharacters' ? EXPECTED_UPRIGHT : EXPECTED_CHARACTERS;
+  const heads = eff.per === 'uprightCharacters' ? EXPECTED_UPRIGHT
+    : eff.per === 'buildingsBuilt' ? EXPECTED_BUILDINGS : EXPECTED_CHARACTERS;
   const narrowed = eff.filter && (eff.filter.study || eff.filter.species) ? FILTERED_SHARE : 1;
   const rate = eff[rateKey] === undefined ? 1 : eff[rateKey];
   const scaled = rate * heads * narrowed;
@@ -384,7 +385,9 @@ export function effectPower(eff) {
       return unit * amount;
     }
     case 'readyCharacter':
-      return READY * n(eff.count) * (eff.optional ? 0.95 : 1);
+      // `all` stands the whole floor up rather than one named animal, so it is rated on how many of
+      // a town are usually down at the top of a turn — everybody who is not already upright.
+      return READY * (eff.all ? EXPECTED_CHARACTERS - EXPECTED_UPRIGHT + 1 : n(eff.count)) * (eff.optional ? 0.95 : 1);
     case 'readyNextTurn':
       return 1.4;
     case 'rehire':
@@ -434,6 +437,10 @@ export function effectPower(eff) {
       // Knowing what is coming, once: worth about a card's worth of not guessing, and worth it
       // whether the hand is full or nearly empty, which is why it is not counted per card.
       return 1.2;
+    case 'peekOpponentDeck':
+      // The rival's next draw rather than what they are already holding: worth less than reading
+      // the hand, because what is on top of a deck is not yet a decision anybody has made.
+      return 0.5 * n(eff.count);
     case 'gainToken':
       // A token is stored potential: worth less than the Supply it will one day buy, because
       // something else has to come along and spend it. `per` pays by the animal — a busy town ferries

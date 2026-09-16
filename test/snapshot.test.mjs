@@ -43,14 +43,14 @@ describe('taking a snapshot', () => {
 
   test('the meta line says enough to show the game on a shelf without restoring it', () => {
     const entry = snapshot(newGame());
-    assert.equal(entry.meta.you, 'Tin & Tally');
-    assert.equal(entry.meta.rival, 'Gavel & Ribbon');
+    assert.equal(entry.meta.you, 'Cache & Kitchen');
+    assert.equal(entry.meta.rival, 'Lens & Lathe');
     assert.ok(entry.meta.market, 'and which market it is being played in');
     assert.equal(typeof entry.meta.turnNumber, 'number');
   });
 
   test('the decks the game was built from are recorded alongside it', () => {
-    const decks = [{ id: 'custom-1', name: 'My deck', list: { a: 1 } }, 'mk-gavel-ribbon'];
+    const decks = [{ id: 'custom-1', name: 'My deck', list: { a: 1 } }, 'mk-lens-lathe'];
     assert.deepEqual(snapshot(newGame(), { decks }).decks, decks);
   });
 });
