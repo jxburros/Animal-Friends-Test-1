@@ -66,6 +66,17 @@ const ALTERNATE_ART_IDS = Object.freeze([
   'mk_scott_story_collector_0', 'mk_lindsay_glasshouse_hand_2',
   'mk_hibiscus_mail_coach_driver_4', 'mk_earl_coffee_roaster_3',
   'mk_jessica_song_leader_0', 'mk_benjamin_lantern_maker_2',
+  'mk_peanut_barista_1', 'mk_barrow_stonecutter_5', 'mk_berry_guild_warden_5',
+  'mk_brooke_mooring_hand_0', 'mk_betty_barn_sweeper_0', 'mk_rosabeth_herb_gatherer_0',
+  'mk_finn_auctioneers_boy_0', 'mk_hazel_barrow_hand_0', 'mk_hoot_night_porter_2',
+  'mk_lynnette_press_feeder_2', 'mk_copper_penny_counter_0', 'mk_bella_wildlife_warden_3',
+  'mk_dylan_river_otter_4', 'mk_biff_beat_constable_2', 'mk_mildred_counter_clerk_0',
+  'mk_mimi_trolley_service_0', 'mk_beans_coffee_break', 'mk_clovers_potato_experiment',
+  'mk_comets_countdown', 'mk_inkwells_late_shift', 'mk_open_mic_night',
+  'mk_hedge_apothecary', 'mk_fair_hearing', 'mk_dx_open_hiring',
+  'mk_oatmeals_benefit_night', 'mk_warren_muster', 'mk_night_round', 'mk_guild_night',
+  'mk_sages_star_party', 'mk_the_cider_social', 'mk_reading_lanterns',
+  'mk_community_bonfire',
 ]);
 const alternateArtIds = new Set(ALTERNATE_ART_IDS);
 
@@ -112,7 +123,7 @@ test('the commissioned alternate-art cards are offered and point to bundled pain
     assert.equal(hasVersion(card, 'alternateArtFoil'), false, `${card.id} alternateArtFoil`);
     assert.equal(hasVersion(card, 'creativeFoil'), false, `${card.id} creativeFoil`);
   }
-  assert.equal(alternateArtIds.size, 128);
+  assert.equal(alternateArtIds.size, 160);
   assert.ok(versionAssetUrl('mk_clover_master_botanist_5', 'alternateArt').endsWith('/assets/art/versions/mk_clover_master_botanist_5/alternateArt.png'));
 });
 
@@ -162,4 +173,9 @@ test('asking for a printing changes the art, and asking for none changes nothing
   const cutPaperSvg = paintedArtSVG(cutPaper, '<svg data-fallback="cut-paper"/>', 'alternateArt');
   assert.match(cutPaperSvg, /alternate-cut-paper-night-shift-atlas\.png/);
   assert.match(cutPaperSvg, /x="-300" y="-300" width="400" height="400"/);
+
+  const linocut = SET.cards.find((c) => c.id === 'mk_community_bonfire');
+  const linocutSvg = paintedArtSVG(linocut, '<svg data-fallback="linocut"/>', 'alternateArt');
+  assert.match(linocutSvg, /alternate-linocut-borough-rituals-atlas\.png/);
+  assert.match(linocutSvg, /x="-300" y="-300" width="400" height="400"/);
 });

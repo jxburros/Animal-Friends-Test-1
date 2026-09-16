@@ -79,6 +79,11 @@ const CUT_PAPER_ALT_ATLASES = Object.freeze({
   nightShift: new URL('../../assets/art/alternate-cut-paper-night-shift-atlas.png', import.meta.url).href,
 });
 
+const LINOCUT_ALT_ATLASES = Object.freeze({
+  workingPaws: new URL('../../assets/art/alternate-linocut-working-paws-atlas.png', import.meta.url).href,
+  boroughRituals: new URL('../../assets/art/alternate-linocut-borough-rituals-atlas.png', import.meta.url).href,
+});
+
 function inkAlternate(atlas, tile, other = {}) {
   return Object.freeze({ alternateArt: `${INK_ALT_ATLASES[atlas]}#tile=${tile}`, ...other });
 }
@@ -93,6 +98,10 @@ function impressionistAlternate(atlas, tile, other = {}) {
 
 function cutPaperAlternate(atlas, tile, other = {}) {
   return Object.freeze({ alternateArt: `${CUT_PAPER_ALT_ATLASES[atlas]}#tile=${tile}`, ...other });
+}
+
+function linocutAlternate(atlas, tile, other = {}) {
+  return Object.freeze({ alternateArt: `${LINOCUT_ALT_ATLASES[atlas]}#tile=${tile}`, ...other });
 }
 
 /**
@@ -244,19 +253,52 @@ export const PRINTINGS = Object.freeze({
   mk_jessica_song_leader_0: cutPaperAlternate('nightShift', 14, { foil: true }),
   mk_benjamin_lantern_maker_2: cutPaperAlternate('nightShift', 15, { foil: true }),
 
+  // Folk-art Linocut alternate-art collection. Chunky carved contours, rough paper grain and a
+  // five-ink palette turn the cards' working lives and communal rituals into small block prints.
+  // See docs/ALTERNATE_LINOCUT.md for the two row-major atlas maps.
+  mk_peanut_barista_1: linocutAlternate('workingPaws', 0),
+  mk_barrow_stonecutter_5: linocutAlternate('workingPaws', 1),
+  mk_berry_guild_warden_5: linocutAlternate('workingPaws', 2),
+  mk_brooke_mooring_hand_0: linocutAlternate('workingPaws', 3),
+  mk_betty_barn_sweeper_0: linocutAlternate('workingPaws', 4),
+  mk_rosabeth_herb_gatherer_0: linocutAlternate('workingPaws', 5, { foil: true }),
+  mk_finn_auctioneers_boy_0: linocutAlternate('workingPaws', 6, { foil: true }),
+  mk_hazel_barrow_hand_0: linocutAlternate('workingPaws', 7),
+  mk_hoot_night_porter_2: linocutAlternate('workingPaws', 8),
+  mk_lynnette_press_feeder_2: linocutAlternate('workingPaws', 9),
+  mk_copper_penny_counter_0: linocutAlternate('workingPaws', 10),
+  mk_bella_wildlife_warden_3: linocutAlternate('workingPaws', 11),
+  mk_dylan_river_otter_4: linocutAlternate('workingPaws', 12, { foil: true }),
+  mk_biff_beat_constable_2: linocutAlternate('workingPaws', 13),
+  mk_mildred_counter_clerk_0: linocutAlternate('workingPaws', 14),
+  mk_mimi_trolley_service_0: linocutAlternate('workingPaws', 15),
+
+  mk_beans_coffee_break: linocutAlternate('boroughRituals', 0),
+  mk_clovers_potato_experiment: linocutAlternate('boroughRituals', 1),
+  mk_comets_countdown: linocutAlternate('boroughRituals', 2),
+  mk_inkwells_late_shift: linocutAlternate('boroughRituals', 3),
+  mk_open_mic_night: linocutAlternate('boroughRituals', 4),
+  mk_hedge_apothecary: linocutAlternate('boroughRituals', 5),
+  mk_fair_hearing: linocutAlternate('boroughRituals', 6),
+  mk_dx_open_hiring: linocutAlternate('boroughRituals', 7),
+  mk_oatmeals_benefit_night: linocutAlternate('boroughRituals', 8),
+  mk_warren_muster: linocutAlternate('boroughRituals', 9),
+  mk_night_round: linocutAlternate('boroughRituals', 10, { foil: true }),
+  mk_guild_night: linocutAlternate('boroughRituals', 11),
+  mk_sages_star_party: linocutAlternate('boroughRituals', 12),
+  mk_the_cider_social: linocutAlternate('boroughRituals', 13),
+  mk_reading_lanterns: linocutAlternate('boroughRituals', 14),
+  mk_community_bonfire: linocutAlternate('boroughRituals', 15),
+
   mk_beck_bylaw_reader_1: Object.freeze({ foil: true }),
   mk_clover_seedling_helper_0: inkAlternate('kindness', 2, { foil: true }),
   mk_earl_tea_trader_2: Object.freeze({ foil: true }),
   mk_velvet_counter_clerk_1: Object.freeze({ foil: true }),
   mk_moss_rehiring_day: inkAlternate('kindness', 8, { foil: true }),
   mk_comet_astronaut_5: inkAlternate('ambitions', 3, { foil: true }),
-  mk_finn_auctioneers_boy_0: Object.freeze({ foil: true }),
-  mk_night_round: Object.freeze({ foil: true }),
   mk_willow_ferry_trader_1: Object.freeze({ foil: true }),
   mk_faustus_costumier_2: Object.freeze({ foil: true }),
-  mk_dylan_river_otter_4: Object.freeze({ foil: true }),
   mk_willow_tide_reckoner_3: Object.freeze({ foil: true }),
-  mk_rosabeth_herb_gatherer_0: Object.freeze({ foil: true }),
 
   // Hexagon Foil printings added after the first release; all use the ordinary artwork.
   mk_adam_road_mender_1: Object.freeze({ foil: true }),
