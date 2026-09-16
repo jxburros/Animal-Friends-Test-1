@@ -21,20 +21,314 @@
 .mode-banner .mode-which { font: 700 13px/1.2 var(--sans, system-ui), sans-serif; letter-spacing: .1em; text-transform: uppercase; }
 .mode-banner button { font-size: 12px; }
 
-/* ---------- the Book ---------- */
-#screen-book.active { display: block; overflow: auto; padding: 12px; }
-/* The Book is a page of the book like any other: paper, not the dark table behind it. */
-.book {
-  max-width: 1500px; margin: 0 auto; padding: 18px clamp(12px, 3vw, 28px) 40px;
-  color: var(--ink); background: var(--paper) var(--noise);
-  border: 2px solid var(--line2); border-radius: 14px;
-  box-shadow: var(--shadow), inset 0 0 0 3px var(--paper), inset 0 0 0 4px var(--line);
+/* ==========================================================================
+   The Book
+   --------------------------------------------------------------------------
+   The Book used to be laid over a photograph of an open storybook: the paper
+   in the picture is a fixed rectangle, the shelf is however tall the set is,
+   and the two could never line up — the cards ran off the page and over the
+   table. So the page is drawn here instead, in leather and gilt that grow with
+   the content, and the photograph stays where it belongs: behind the glass, as
+   the desk the Book is resting on.
+   ========================================================================== */
+
+#screen-book { --book-gutter: clamp(14px, 2.4vw, 34px); }
+/* One card's footprint on the shelf. The card face is a fixed size laid out for reading; rather
+   than squeeze its insides on a small screen, the whole face is scaled and the slot is told how
+   much room that takes, so the grid still lines up to the pixel. */
+.book { --book-scale: 1; --slot-w: var(--card-lw, 184px); --slot-h: var(--card-lh, 282px); }
+#screen-book.active {
+  display: block; overflow: auto; min-height: 100vh;
+  padding: clamp(10px, 2.4vw, 30px);
 }
-.book-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
-.book-head h2 { margin: 0; }
-.book-search { max-width: 260px; }
-.book-count { font: 500 12px/1.4 var(--sans, system-ui), sans-serif; color: var(--muted); margin: 10px 2px; }
-.book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--card-lw, 184px), 1fr)); gap: 22px 16px; align-items: start; }
-.book-card { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-.book-card figcaption { color: var(--ink2); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center; font: 500 11px/1.3 var(--sans, system-ui), sans-serif; }
-.book-more { display: flex; justify-content: center; margin: 24px 0 8px; }
+
+.book {
+  position: relative;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 0 clamp(26px, 3vw, 44px);
+  color: var(--ink);
+  border-radius: 18px;
+  /* leather board, gilt rule, then the parchment the cards sit on */
+  background:
+    linear-gradient(180deg, rgba(255, 252, 242, .5), transparent 220px),
+    var(--noise),
+    linear-gradient(168deg, #f8efda 0%, #f2e5c8 46%, #f6ecd6 100%);
+  box-shadow:
+    0 0 0 1px #8d6f3d,
+    0 0 0 7px #2b4534,
+    0 0 0 8px #b8964f,
+    0 30px 70px rgba(0, 0, 0, .5);
+  animation: book-open calc(460ms * max(var(--fx-scale, 1), .01)) cubic-bezier(.2, .85, .25, 1) both;
+}
+@keyframes book-open { from { opacity: 0; transform: translateY(14px) scale(.985); } }
+@media (prefers-reduced-motion: reduce) { .book { animation: none; } }
+
+/* A gilt rule just inside the leather, drawn rather than photographed so it follows the page at
+   whatever height the shelf turns out to be. */
+.book::before {
+  content: ''; position: absolute; inset: 7px; pointer-events: none; z-index: 0;
+  border: 1px solid rgba(168, 133, 62, .42); border-radius: 12px;
+}
+.book > * { position: relative; z-index: 1; }
+
+/* ---------- the head ---------- */
+.book-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: clamp(10px, 2vw, 22px);
+  padding: clamp(18px, 2.4vw, 28px) var(--book-gutter) clamp(14px, 1.8vw, 20px);
+  border-bottom: 1px solid rgba(138, 106, 48, .28);
+  background: linear-gradient(180deg, rgba(255, 250, 235, .82), rgba(255, 250, 235, 0));
+}
+.book-head h2 { font: 700 clamp(26px, 3.4vw, 40px)/1.05 var(--serif, Georgia), serif; letter-spacing: .01em; }
+.book-sub { margin: 6px 0 0; max-width: 62ch; font: 400 13px/1.5 var(--sans, system-ui), sans-serif; color: var(--ink2); }
+.book-tally {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-width: 96px; padding: 8px 14px; border-radius: 12px;
+  border: 1px solid rgba(138, 106, 48, .35);
+  background: linear-gradient(#fffaea, #f2e5c6);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .8), 0 2px 5px rgba(60, 40, 10, .1);
+}
+.book-tally-n { font: 700 20px/1 var(--serif, Georgia), serif; color: var(--ink); }
+.book-tally-l { margin-top: 3px; font: 600 9.5px/1 var(--sans, system-ui), sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- icon buttons: the Book speaks in pictures ---------- */
+.book-icon-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  width: 38px; height: 38px; min-height: 0; padding: 0; flex: none;
+  border: 1px solid rgba(138, 106, 48, .45); border-radius: 10px;
+  background: linear-gradient(#fffdf4, #f4e8cd);
+  color: var(--ink2);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .85), 0 1px 2px rgba(60, 40, 10, .14);
+  transition: background .14s ease, color .14s ease, border-color .14s ease, transform .14s ease;
+}
+.book-icon-btn .ico { width: 19px; height: 19px; }
+.book-icon-btn:hover:not(:disabled) { transform: translateY(-1px); color: #2f4b37; border-color: #7f9a74; background: linear-gradient(#fffef8, #eef0dc); }
+.book-icon-btn:active:not(:disabled) { transform: translateY(0); box-shadow: inset 0 2px 4px rgba(60, 40, 10, .18); }
+.book-icon-btn:disabled { opacity: .3; box-shadow: none; transform: none; cursor: default; }
+.book-icon-btn.close { color: #7a4a3c; }
+.book-icon-btn.close:hover { color: #fff3e2; border-color: #7d3b2c; background: linear-gradient(#a45744, #7d3b2c); }
+.book-icon-btn.wide { width: auto; padding: 0 12px; }
+.book-icon-btn .lbl { font: 600 12px/1 var(--sans, system-ui), sans-serif; letter-spacing: .04em; }
+
+/* ---------- the filter drawer ---------- */
+.book-filters { padding: clamp(12px, 1.6vw, 18px) var(--book-gutter) 4px; }
+.book-searchline { display: flex; align-items: center; gap: 10px; }
+.book-search { position: relative; display: flex; align-items: center; flex: 1 1 320px; max-width: 420px; }
+.book-search .ico { position: absolute; left: 12px; width: 17px; height: 17px; color: var(--muted); pointer-events: none; }
+.book-search-input {
+  width: 100%; height: 38px; padding: 0 12px 0 36px;
+  font: 400 14px/1 var(--sans, system-ui), sans-serif; color: var(--ink);
+  border: 1px solid rgba(138, 106, 48, .45); border-radius: 10px;
+  background: #fffdf5;
+  box-shadow: inset 0 1px 3px rgba(60, 40, 10, .1);
+}
+.book-search-input::placeholder { color: #a99277; }
+.book-search-input:focus { outline: 2px solid #6e8d63; outline-offset: 1px; }
+.filter-toggle { display: none; }
+.filter-toggle .ico:last-child { width: 14px; height: 14px; transition: transform .16s ease; }
+.filter-toggle.on .ico:last-child { transform: rotate(180deg); }
+
+.book-filter-rows { display: flex; flex-direction: column; gap: 7px; margin-top: 12px; }
+.book-chiprow { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.book-chiplabel {
+  flex: none; width: 58px; text-align: right;
+  font: 600 9.5px/1.2 var(--sans, system-ui), sans-serif; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted);
+}
+.book-chipscroll {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap; min-width: 0;
+}
+
+.book-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  min-height: 30px; padding: 0 11px;
+  font: 500 12.5px/1 var(--sans, system-ui), sans-serif; color: var(--ink2);
+  border: 1px solid rgba(138, 106, 48, .38); border-radius: 999px;
+  background: rgba(255, 253, 244, .92);
+  box-shadow: none;
+  transition: background .14s ease, color .14s ease, border-color .14s ease;
+}
+.book-chip .ico { width: 14px; height: 14px; color: var(--muted); }
+.book-chip:hover:not(:disabled) { transform: none; border-color: #7f9a74; background: #fffef8; color: var(--ink); }
+.book-chip:active { transform: none; box-shadow: none; }
+.book-chip.on {
+  color: #f6f1de; border-color: #2c4a35;
+  background: linear-gradient(#4b6e51, #2f5039);
+  box-shadow: 0 1px 3px rgba(32, 56, 38, .35);
+}
+.book-chip.on .ico { color: #dfe8c9; }
+.book-chip .tally {
+  font: 600 10.5px/1 var(--sans, system-ui), sans-serif;
+  padding: 2px 5px; border-radius: 6px;
+  background: rgba(138, 106, 48, .14); color: var(--muted);
+}
+.book-chip.on .tally { background: rgba(255, 255, 255, .2); color: #f2edda; }
+
+.book-count {
+  padding: 14px var(--book-gutter) 0;
+  font: 500 11.5px/1.4 var(--sans, system-ui), sans-serif; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted);
+}
+.book-empty { padding: 30px var(--book-gutter); text-align: center; color: var(--ink2); }
+.book-empty p { margin: 0 0 12px; font-style: italic; }
+
+/* ---------- the shelf ---------- */
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--slot-w));
+  justify-content: center;
+  column-gap: clamp(10px, 1.3vw, 20px);
+  row-gap: clamp(18px, 2.2vw, 28px);
+  align-items: start;
+  padding: 16px var(--book-gutter) 0;
+}
+.book-card {
+  margin: 0; width: var(--slot-w);
+  display: flex; flex-direction: column; align-items: stretch; gap: 8px;
+}
+.book-card .card-slot {
+  position: relative; align-self: center; display: block;
+  width: var(--slot-w); height: var(--slot-h); border-radius: 14px;
+  transition: transform .16s ease;
+}
+.book-card .card-slot > .card-face.large { transform: scale(var(--book-scale)); transform-origin: top left; }
+.book-card:hover .card-slot { transform: translateY(-3px); }
+.book-card.locked:hover .card-slot { transform: none; }
+
+.book-card figcaption {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  color: var(--ink2); font: 500 11px/1.3 var(--sans, system-ui), sans-serif;
+}
+.book-card figcaption .book-icon-btn { width: 30px; height: 30px; min-height: 0; }
+.book-card figcaption .book-icon-btn .ico { width: 16px; height: 16px; }
+
+/* The printings this card has, and only those. */
+.version-row {
+  display: flex; align-self: center; align-items: center; justify-content: center; flex-wrap: wrap; gap: 5px;
+  padding: 5px 6px;
+  border: 1px solid rgba(138, 106, 48, .28); border-radius: 999px;
+  background: rgba(255, 252, 242, .76);
+}
+.version-chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; min-height: 0; padding: 0; flex: none;
+  border: 1px solid transparent; border-radius: 50%;
+  background: transparent; color: var(--muted);
+  box-shadow: none;
+  transition: background .14s ease, color .14s ease, border-color .14s ease;
+}
+.version-chip .ico { width: 17px; height: 17px; }
+.version-chip:hover:not(:disabled) { transform: none; color: #2f4b37; background: #eef1dd; border-color: #a6b899; }
+.version-chip:active { transform: none; box-shadow: none; }
+.version-chip.on {
+  color: #f6f1de; border-color: #27412f;
+  background: linear-gradient(#4b6e51, #2f5039);
+  box-shadow: 0 1px 3px rgba(32, 56, 38, .4);
+}
+.version-chip:disabled { opacity: .34; box-shadow: none; }
+.version-chip.unheld:not(:disabled) { opacity: .5; }
+
+.book-card .locked-flag {
+  /* the foot of the card, where a locked card has no Read button and nothing to cover */
+  top: auto; bottom: 7px; right: 7px; left: auto; z-index: 9;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; padding: 0; border-radius: 50%;
+  background: rgba(40, 30, 18, .82); color: var(--paper2);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .35);
+}
+.book-card .locked-flag .ico { width: 13px; height: 13px; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+
+.book-more { display: flex; justify-content: center; margin-top: clamp(22px, 3vw, 34px); }
+.book-more-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 42px; padding: 0 22px;
+  font: 600 13px/1 var(--sans, system-ui), sans-serif; letter-spacing: .04em;
+  color: #f6f1de; border: 1px solid #27412f; border-radius: 999px;
+  background: linear-gradient(#4b6e51, #2f5039);
+  box-shadow: 0 2px 6px rgba(32, 56, 38, .32);
+}
+.book-more-btn:hover { transform: translateY(-1px); }
+.book-more-btn:active { transform: translateY(0); box-shadow: 0 1px 3px rgba(32, 56, 38, .4); }
+.book-more-btn .ico { width: 15px; height: 15px; }
+
+/* ---------- the Book in the hand ----------
+   Narrow screens get the same shelf, not a lesser one: a head that stays put while the shelf
+   scrolls under it, filters folded behind one button, and two cards to a row. */
+@media (max-width: 860px) {
+  .book-head { grid-template-columns: minmax(0, 1fr) auto; row-gap: 10px; }
+  .book-tally { order: 3; grid-column: 1; min-width: 0; flex-direction: row; gap: 7px; align-items: baseline; padding: 6px 12px; }
+  .book-icon-btn.close { grid-column: 2; grid-row: 1; }
+}
+@media (max-width: 760px) {
+  #screen-book { --book-gutter: 10px; }
+  .book {
+    --book-scale: .74; --slot-w: calc(var(--card-lw) * .74); --slot-h: calc(var(--card-lh) * .74);
+    border-radius: 12px;
+    box-shadow: 0 0 0 1px #8d6f3d, 0 0 0 5px #2b4534, 0 0 0 6px #b8964f, 0 16px 40px rgba(0, 0, 0, .45);
+  }
+
+  /* The head and the search line ride along at the top of the screen, so a Mayor thumbing through
+     600 cards is never more than one reach from the search box or the way out. */
+  .book-head {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    position: sticky; top: 0; z-index: 6;
+    padding: 12px var(--book-gutter) 10px;
+    background: linear-gradient(#fbf3e0, #f7ecd6);
+    box-shadow: 0 6px 14px rgba(60, 40, 10, .12);
+  }
+  .book-head h2 { font-size: 23px; }
+  .book-sub { display: none; }
+  .book-tally { order: 0; grid-column: 2; grid-row: 1; flex-direction: row; gap: 5px; align-items: baseline; min-width: 0; border: 0; background: none; box-shadow: none; padding: 0; }
+  .book-icon-btn.close { grid-column: 3; grid-row: 1; }
+  .book-tally-n { font-size: 16px; }
+  .book-tally-l { margin: 0; font-size: 8.5px; letter-spacing: .1em; }
+
+  .book-filters { position: sticky; top: 58px; z-index: 5; padding-top: 10px; padding-bottom: 8px; background: linear-gradient(#f7ecd6, rgba(247, 236, 214, .96)); }
+  .book-search { max-width: none; }
+  .filter-toggle { display: inline-flex; }
+  .book-filter-rows { display: none; }
+  .book-filters.open .book-filter-rows {
+    display: flex; gap: 10px;
+    margin-top: 12px; padding: 12px 12px 14px;
+    border: 1px solid rgba(138, 106, 48, .3); border-radius: 12px;
+    background: rgba(255, 252, 242, .96);
+    box-shadow: 0 8px 18px rgba(60, 40, 10, .14);
+    animation: book-drawer calc(200ms * max(var(--fx-scale, 1), .01)) ease-out both;
+  }
+  @keyframes book-drawer { from { opacity: 0; transform: translateY(-6px); } }
+
+  /* Chip rows scroll sideways rather than wrapping into a wall of pills. */
+  .book-chiprow { flex-direction: column; align-items: stretch; gap: 4px; }
+  .book-chiplabel { width: auto; text-align: left; }
+  .book-chipscroll {
+    flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x proximity;
+    margin: 0 -12px; padding: 2px 12px 6px;
+    scrollbar-width: none;
+  }
+  .book-chipscroll::-webkit-scrollbar { display: none; }
+  .book-chipscroll { -webkit-mask-image: linear-gradient(90deg, #000 0 88%, transparent); mask-image: linear-gradient(90deg, #000 0 88%, transparent); }
+  .book-chipscroll > * { scroll-snap-align: start; flex: none; }
+  .book-chip { min-height: 34px; }
+  .book-chip.printing .lbl { display: none; }
+
+  .book-grid { column-gap: 8px; row-gap: 16px; padding-top: 10px; }
+  .book-card figcaption { width: 100%; font-size: 10px; }
+  .version-row { gap: 2px; padding: 4px 5px; }
+  .version-chip { width: 26px; height: 26px; min-height: 0; }
+  .book-count { padding-top: 10px; font-size: 10.5px; }
+}
+@media (max-width: 360px) {
+  .book { --book-scale: .66; --slot-w: calc(var(--card-lw) * .66); --slot-h: calc(var(--card-lh) * .66); }
+}
+
+/* ---------- the story panel ---------- */
+.db-story { position: relative; }
+.db-story-head { position: relative; padding-right: 46px; }
+.book-icon-btn.db-story-close { position: absolute; top: -2px; right: 0; width: 34px; height: 34px; }

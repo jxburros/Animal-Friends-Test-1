@@ -87,6 +87,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .card-face.large .burden { font-size: 10px; }
 .card-face.large .flavor { display: none; }
 .card-face.large .card-footer { font-size: 9px; min-height: 24px; padding: 3px 9px 0; }
+/* "Character · Alternate Art" is longer than the foot of a card: it used to wrap and spill out
+   under the frame. One line, cut short if it has to be. */
+.card-footer > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .card-face.large .inspect-card { font-size: 11px; padding: 3px 10px; min-height: 24px; }
 
 /* Full rules are available without hover, even when the compact table face is crowded. */
