@@ -23,9 +23,15 @@ static func _imul32(x: int, y: int) -> int:
 	return (x * y) & MASK
 
 ## Mutates state["rng"] and returns the next float in [0, 1).
+##
+## JS stores state.rng as a *signed* 32-bit int (`a | 0`), so it goes negative
+## once the high bit is set — matched here by storing the signed conversion,
+## even though every intermediate computation below works on the unsigned
+## bit pattern (& 0xFFFFFFFF) to keep shifts/XOR correct regardless of how
+## the previous call's value was stored.
 static func rand(state: Dictionary) -> float:
 	var a: int = (int(state.get("rng", 0)) + 0x6d2b79f5) & MASK
-	state["rng"] = a
+	state["rng"] = a - 0x100000000 if a >= 0x80000000 else a
 	var t := _imul32(a ^ (a >> 15), 1 | a)
 	var sum := (t + _imul32(t ^ (t >> 7), 61 | t)) & MASK
 	t = sum ^ t
