@@ -61,8 +61,16 @@ const ECONOMY_FLOOR = 22;
  * written — "an Owl town is wise, awake and poor" — and a species hole is a thing to build around,
  * not a thing to print a losing deck about. So a deck short of the floor hires earners, from outside
  * its two species if that is what it takes.
+ *
+ * Raising this floor for every deck was tried and made the spread worse (v0.13.0 notes): a floor high
+ * enough to help the poorest earners also strips events from decks that did not need the help. Raccoon
+ * and Mouse both carry a written charter hole of "poor at shifts" / "weak shifts", so those two towns
+ * read a higher floor of their own below (`throughputFloor` on the identity) rather than moving the
+ * shared one.
  */
 const THROUGHPUT_FLOOR = 42;
+/** A deck short of the floor stops here rather than looping through the whole catalogue. */
+const floorFor = (ident) => ident.throughputFloor ?? THROUGHPUT_FLOOR;
 /** Events a deck may hold. A deck that is half Events is a deck that cannot pay for them. */
 const EVENT_CAP = 12;
 /**
@@ -102,20 +110,20 @@ const TOWNS = [
   { id: 'mk-furrow-warren', name: 'Furrow & Warren', species: ['Rabbit'], studies: ['Agriculture', 'Civics'], support: lean('Rabbit'),
     seeds: ['mk_tb_starfish_coffee'],
     blurb: 'Rabbits of Agriculture and Civics: the allotment strip, the parish meeting and more of them arriving than leaving. No one Rabbit is much; the sixth one out of your hand is the whole town.' },
-  { id: 'mk-margin-pantry', name: 'Margin & Pantry', species: ['Mouse'], studies: ['Lore', 'Food'], support: lean('Mouse'),
+  { id: 'mk-margin-pantry', name: 'Margin & Pantry', species: ['Mouse'], studies: ['Lore', 'Food'], support: lean('Mouse'), throughputFloor: 47,
     seeds: ['mk_tb_rosabeths_gate', 'mk_tb_open_mic_room', 'mk_tax_day'],
     blurb: 'Mice of Lore and Food: the reading room over the kitchen. Every Event the borough has ever filed is played once, fished back out of the dump and played again, and there is always something on the stove.' },
   { id: 'mk-bench-bylaw', name: 'Bench & Bylaw', species: ['Badger'], studies: ['Crafts', 'Civics'], support: lean('Badger'),
-    seeds: ['mk_robbie_cub_reporter_0', 'mk_robbie_columnist_1', 'mk_robbie_features_writer_2', 'mk_robbie_editor_in_chief_5', 'mk_tb_futuretech_store'],
+    seeds: ['mk_robbie_cub_reporter_0', 'mk_robbie_columnist_1', 'mk_tb_futuretech_store'],
     blurb: 'Badgers of Crafts and Civics: the bench and the bylaw, and neither of them moves. Whatever the Capital City posts this morning, the work goes on and somebody is put back on the books by lunch.' },
   { id: 'mk-hedge-holiday', name: 'Hedge & Holiday', species: ['Hedgehog'], studies: ['Agriculture', 'Entertainment'], support: lean('Hedgehog'),
     seeds: ['mk_tb_clinic'],
     blurb: 'Hedgehogs of Agriculture and Entertainment: a hedge laid to last fifteen years and a bank holiday declared on the strength of it. Nothing the rival does reaches anybody in this town.' },
-  { id: 'mk-bin-barter', name: 'Bin & Barter', species: ['Raccoon'], studies: ['Commerce', 'Lore'], support: lean('Raccoon'),
+  { id: 'mk-bin-barter', name: 'Bin & Barter', species: ['Raccoon'], studies: ['Commerce', 'Lore'], support: lean('Raccoon'), throughputFloor: 54,
     seeds: ['mk_community_bonfire', 'mk_reading_lanterns', 'mk_tb_the_warren', 'mk_tb_chit_press'],
     blurb: 'Raccoons of Commerce and Lore: the City Dump is this town\u2019s second hand and its archive. What the other Mayor threw out on Tuesday is on a trestle with a price on it by Thursday.' },
   { id: 'mk-gavel-greasepaint', name: 'Gavel & Greasepaint', species: ['Fox'], studies: ['Commerce', 'Entertainment'], support: lean('Fox'),
-    seeds: ['mk_cindy_court_clerk_1', 'mk_cindy_magistrate_2', 'mk_cindy_circuit_judge_4', 'mk_cindy_justice_of_the_boroughs_5', 'mk_kevin_construction_4'],
+    seeds: ['mk_cindy_court_clerk_1', 'mk_cindy_magistrate_2'],
     blurb: 'Foxes of Commerce and Entertainment: they know what the Capital City is about to put up, what it is worth, and how to look like they do not want it. The bid changes after the bidding has opened.' },
   { id: 'mk-current-counter', name: 'Current & Counter', species: ['Otter'], studies: ['Food', 'Commerce'], support: lean('Otter'),
     seeds: ['mk_brooke_aeronaut_5'],
@@ -124,7 +132,7 @@ const TOWNS = [
     seeds: ['mk_yellow_rapper_5'],
     blurb: 'Squirrels of Civics and Food: a town that is poor all game and rich exactly once, on the turn it has been saving for. Everything is put by, minuted, and spent at the auction nobody expected them at.' },
   { id: 'mk-lens-lathe', name: 'Lens & Lathe', species: ['Cat'], studies: ['Science', 'Crafts'], support: lean('Cat'),
-    seeds: ['mk_elvira_tea_leaf_reader_0', 'mk_elvira_fairground_booth_2', 'mk_elvira_fortune_teller_3', 'mk_tb_ice_cream_shop'],
+    seeds: ['mk_elvira_tea_leaf_reader_0', 'mk_tb_ice_cream_shop'],
     blurb: 'Cats of Science and Crafts: a lens ground to a tolerance nobody asked for, by somebody who was not supposed to be up. This town acts on the turn it feels like acting, and the rival\u2019s Ready can wait.' },
   { id: 'mk-dome-dusk', name: 'Dome & Dusk', species: ['Owl'], studies: ['Science', 'Entertainment'], support: lean('Owl'),
     seeds: ['mk_jessica_teacher_of_the_boroughs_5'],
@@ -450,13 +458,14 @@ function build(ident) {
   // to keep the lamps on is an Owl deck that gets to play its Owls.
   const rateOf = (c) => (c.type === 'character' && c.shift && c.shift.delay ? c.shift.output / c.shift.delay : 0);
   const throughput = () => Object.entries(list).reduce((a, [id, n]) => a + rateOf(cards.find((c) => c.id === id)) * n, 0);
-  if (throughput() < THROUGHPUT_FLOOR) {
+  const floor = floorFor(ident);
+  if (throughput() < floor) {
     const spare = () => Object.keys(list)
       .map((id) => cards.find((c) => c.id === id))
       .filter((c) => c.type === 'event')
       .sort((a, b) => pick(ident)(b, a))[0];
     let guard = 0;
-    while (throughput() < THROUGHPUT_FLOOR && guard++ < DECK_SIZE) {
+    while (throughput() < floor && guard++ < DECK_SIZE) {
       // A card the deck has no room left for is not a candidate: it used to be picked as the best
       // earner, `take` would refuse it, and the loop broke with the deck still under the floor.
       // Legendaries are not hired here at all. The best-rated animal in the borough is a Legendary by

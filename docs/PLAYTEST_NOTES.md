@@ -2,12 +2,69 @@
 
 Method: `npm run playtest -- --games N --decks all --market all`, heuristic AI on both sides, walking
 the full cross product of every ordered deck pairing and every Capital City. The set the harness runs
-over has changed several times, so each section below says what it measured: the v0.14.0 run at the
-top is one run of 1080 games over ten decks and four Capital Cities with the maker's second batch on
-the shelf, v0.13.0 is the same harness on the roster before that batch, the v0.12.0 run is one run of
-1260 games over fifteen decks and three Capital Cities, v0.7.0 was one run of 1120
-over eight decks and seven markets, and the v0.6.0 figures further down are the **mean of three
-independent runs** of 720 games with `origin/main` measured on the identical harness.
+over has changed several times, so each section below says what it measured: the v0.15.0 section at
+the top is one run of 1080 games over the same ten decks and four Capital Cities as v0.14.0 with the
+builder retuned rather than the card set changed, v0.14.0 below it is one run of 1080 games with the
+maker's second batch on the shelf, v0.13.0 is the same harness on the roster before that batch, the
+v0.12.0 run is one run of 1260 games over fifteen decks and three Capital Cities, v0.7.0 was one run
+of 1120 over eight decks and seven markets, and the v0.6.0 figures further down are the **mean of
+three independent runs** of 720 games with `origin/main` measured on the identical harness.
+
+## v0.15.0 — rebalancing the ten-deck builder, no new cards
+
+One run of `npm run playtest -- --games 1080 --decks all --market all`, same harness, same 656-card
+shelf and same ten identities as v0.14.0 — only `scripts/build-decks.mjs` changed, then every deck was
+rebuilt with `npm run decks`. Deterministic: re-running the harness against the same rebuilt lists
+reproduces the same win rates to the digit (`baseSeed` is fixed at 1 and nothing else in the harness
+rolls unseeded), so the figures below and in v0.14.0 are read directly against each other rather than
+through the ±3-point single-run caveat that applies when the *card set* changes between runs.
+
+**Deck balance: 27.8 points of spread**, down from 46.3 measured on this same harness before this
+pass (v0.14.0's own harness run, redone here for a same-day comparison, read wider than the 37.5
+recorded in that section — the AI and Statue-pricing changes since then move the whole roster, not
+just the two ends).
+
+| Deck | Species | Before | After | What changed |
+| --- | --- | ---: | ---: | --- |
+| Bin & Barter | Raccoon | 19.4% | 37.0% | own `throughputFloor` raised 42 → 54 |
+| Gavel & Greasepaint | Fox | 63.0% | 49.1% | Cindy's seeded chain cut from four cards to two |
+| Bench & Bylaw | Badger | 58.8% | 60.2% | Robbie's seeded chain cut from four cards to two |
+| Lens & Lathe | Cat | 65.7% | 61.6% | Elvira's seeded chain cut from three cards to one |
+| Margin & Pantry | Mouse | 30.1% | 33.8% | own `throughputFloor` raised 42 → 47 |
+| Furrow & Warren, Hedge & Holiday, Current & Counter, Cache & Kitchen, Dome & Dusk | — | — | — | unchanged identities; moved a few points either way as the roster around them shifted |
+
+**Two levers, not one.** The four decks seeded with a named character's whole progression (Cindy,
+Robbie, Elvira, and Jim before this pass) had all been given that treatment for the same reason —
+"Bench & Bylaw" and "Gavel & Greasepaint" and "Lens & Lathe" 's own v0.14.0 entries record it lifting
+each of them into the top half — but seeding four or five stages of one character's card pins a
+disproportionate share of a forty-card deck to whatever that one card rates at, and three of the four
+decks built that way now sit in the 60–66% band while the fourth (Bin & Barter, seeded with Jim's
+cards) collapsed the other way because Jim's own trade spends Supply rather than earns it. Trimming
+the strong three seeded chains to their first two stages — keeping the archetype recognisable without
+handing it the whole curve — brought each down several points without touching a single card rating.
+Bin & Barter's problem was different (an earning floor, not a seeded snowball), so it got the other
+lever: `THROUGHPUT_FLOOR` is now a per-identity override (`floorFor` in `build-decks.mjs`) rather than
+one constant for all ten decks, and Raccoon's own floor was raised to 54, which is what actually
+doubled its win rate — raising the shared floor for every deck was tried at v0.13.0 and made the
+spread worse, and nothing here contradicts that finding.
+
+**Margin & Pantry barely moved, and that is the honest result of trying the same lever on it.**
+Raising its own floor to 54 (Bin & Barter's number) *dropped* it further, to 25–28% across two runs,
+because the floor is paid for in Events and the Mouse charter's whole engine — replaying and
+discounting Events out of the dump — lives in the Events it was trading away. A softer floor of 47
+recovered the deck's shelf of Events (11, unchanged from before this pass) while still nudging its
+throughput up, and it is printed at that number, but the deck's own cards remain the weakest in the
+set: every replay-engine Mouse card the collection currently has (`mk_rosabeth_apothecary_3`,
+`mk_bella_field_recorder_2`, `mk_bella_wildlife_warden_3`, `mk_maribel_seed_bank_clerk_2`,
+`mk_teresa_pepper_stall_2`) is already printed in this deck at its cap. What v0.14.0 called "nothing
+of its own: no Mouse card was added that a deck may hold" is still true here — a deck-builder pass
+cannot buy Margin & Pantry the card it is actually missing, and the honest next step is on the writing
+side, not the generator.
+
+**All ten decks stayed legal.** `npm run decks -- --check` passes with the printed roster (40 cards,
+curve filled, economy and throughput floors met) and `npm test` (447 tests) and `npm run invariants`
+(200 games) both pass unchanged — this pass touched no card and no rule, only which of the existing
+656 cards each of the ten identities picks.
 
 ## v0.14.0 — the maker's second batch on the ten-deck shelf
 
