@@ -253,6 +253,11 @@ input[type=range]{width:100%;accent-color:var(--gold)}
 .card-face .gem.rar-super-rare{background:#a874d2}
 .card-face .gem.rar-legendary{background:linear-gradient(135deg,#ffd766,#e68a2e 55%,#ffe9a8)}
 .card-face.large .gem{width:13px;height:13px}
+.card-face .card-marks{display:flex;align-items:center;gap:5px;margin-left:auto}
+.card-face .vmark{width:11px;height:11px;flex:none;opacity:.9}
+.card-face .vmark svg{width:100%;height:100%;display:block}
+.card-face.large .vmark{width:15px;height:15px}
+.card-face .ticon.rank{color:var(--gold2,#f3d98b)}
 .card-face.rar-super-rare .frame{box-shadow:inset 0 0 0 1px rgba(168,116,210,.55)}
 .card-face.rar-legendary .frame{box-shadow:inset 0 0 0 1px rgba(230,138,46,.65)}
 .rarity-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--ink-soft,#6b5a45)}

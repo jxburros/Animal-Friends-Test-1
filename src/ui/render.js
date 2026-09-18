@@ -229,6 +229,34 @@ export function rankLabel(def) {
   return r.charAt(0).toUpperCase() + r.slice(1);
 }
 
+/** What the rank icon in the header says when you rest on it. */
+function rankTitle(def, rank) {
+  const when = rank === 'apprentice' ? 'starts work at once'
+    : rank === 'journeyman' ? 'starts work next turn' : 'starts work in two turns';
+  return `${rankLabel(def)} — ${when}`;
+}
+
+/**
+ * The effect box as it is printed. A Character's stored text opens with `Upgrades <Name>.` by the
+ * collection's writing convention (docs/WRITING_A_CHARACTER.md), but every Character upgrades a
+ * cheaper printing of the same name, so the card does not spend a line saying so — nor does it
+ * repeat the shift's timing or payout, which the shift pill above it already prints. A Character
+ * with nothing left to say prints an empty effect box.
+ */
+export function effectText(def) {
+  const text = (def && def.text) || '';
+  if (!def || def.type !== 'character') return text;
+  return text
+    .replace(/^\s*Upgrades\s+[^.]+\.\s*/, '')
+    // "A short shift: 1 turn, 1 Supply." and its kin only repeat the pill, and four of them
+    // disagree with the shift the engine actually runs. A shift sentence that goes on past the
+    // payout — Kevin's "…, and each shift pays 1 less than the last" — is an effect, so the
+    // sentence must end at the Supply to be dropped.
+    .replace(/\s*An?\s+(?:[a-z-]+\s+){0,3}shift:\s*\d+\s+turns?,\s*(?:then\s+)?\d+\s+Supply\./gi, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 /**
  * Build a card face. `large` is the hand/spotlight size; `interactive` faces get the hover peek and foil
  * pointer tracking (turned off for animation clones).
@@ -296,17 +324,11 @@ export function buildCardFace(def, { large = false, interactive = true, foilInte
     banner.appendChild(h('div', { class: `cost${tiers ? ` tiered tiers-${tiers.length}` : ''}`, title }, label));
   }
   banner.appendChild(h('div', { class: 'cname', title: def.name }, def.name));
-  banner.appendChild(h('div', { class: 'ticon', html: iconSVG(typeIconName(def)) }));
-  if (def.rarity) {
-    const p = def.power || {};
-    // The rating is only half the story now that rarity is read against the card's own cost group:
-    // 5.3 is the best cost-0 card in the collection and a filler Master. So the tooltip says which
-    // group the card was judged in.
-    const title = p.score !== undefined
-      ? `${def.rarity} for its cost — rated ${p.score} against the other cost-${costBand(def)} cards (power ${p.power} against an opportunity cost of ${p.opportunityCost})`
-      : def.rarity;
-    banner.appendChild(h('div', { class: `gem rar-${raritySlug(def)}`, title }));
-  }
+  // Cost, name, and — on a Character — the rank they were hired at: the three things you read off
+  // the top edge. Rarity and printing are marks for the collector, so they sit in the footer.
+  banner.appendChild(rank
+    ? h('div', { class: `ticon rank rank-${rank}`, title: rankTitle(def, rank), html: iconSVG(rank) })
+    : h('div', { class: 'ticon', html: iconSVG(typeIconName(def)) }));
   face.appendChild(banner);
   const subtitle = def.type === 'character' ? def.title : def.type === 'event'
     ? (def.kind === 'limited' ? `Limited Event · ${def.duration} turns` : 'Instant Event')
@@ -320,13 +342,13 @@ export function buildCardFace(def, { large = false, interactive = true, foilInte
   const body = h('div', { class: 'body' });
   const traits = h('div', { class: 'traits' });
   if (def.type === 'character') {
-    body.appendChild(h('div', { class: 'title' }, def.title || ''));
+    // The job is printed in the banner under the header, so the body opens with who they are —
+    // species and study — and then the shift they work.
     traits.appendChild(h('span', { class: 'trait' }, [icon(def.species), def.species]));
     traits.appendChild(h('span', { class: 'trait' }, [icon(def.study), def.study]));
-    traits.appendChild(h('span', { class: `trait rank rank-${rank}`, title: `${rankLabel(def)}: ${rank === 'apprentice' ? 'acts at once' : rank === 'journeyman' ? 'ready next turn' : 'ready in two turns'}` }, [icon(rank), rankLabel(def)]));
     body.appendChild(traits);
     if (def.shift) {
-      body.appendChild(h('div', { class: 'shiftpill', title: `Shift: Busy for ${def.shift.delay} turn${def.shift.delay === 1 ? '' : 's'}, then produces ${def.shift.output} Supply` }, [
+      body.appendChild(h('div', { class: 'shiftpill', title: `Shift: Busy for ${def.shift.delay} turn${def.shift.delay === 1 ? '' : 's'}, then earns ${def.shift.output} Supply on becoming upright` }, [
         icon('shift'), `${def.shift.delay}`, h('span', { class: 'arrow' }, '→'), icon('supply'), `${def.shift.output}`,
       ]));
     }
@@ -371,21 +393,33 @@ export function buildCardFace(def, { large = false, interactive = true, foilInte
     traits.appendChild(h('span', { class: 'trait' }, [icon(def.disposal === 'outOfPlay' ? 'dump' : 'market'), def.disposal === 'outOfPlay' ? 'Goes Out of Play' : 'Returns to the City Dump']));
     body.appendChild(traits);
   }
-  body.appendChild(h('div', { class: 'rules' }, def.text || ''));
+  body.appendChild(h('div', { class: 'rules' }, effectText(def)));
   if (def.burden) body.appendChild(h('div', { class: 'burden' }, def.burden));
   if (def.flavor) body.appendChild(h('div', { class: 'flavor' }, def.flavor));
   face.appendChild(body);
   if (foil && !fullArt) face.appendChild(h('div', { class: 'foil-tag', title: FOIL_LABELS[foil.mode], 'aria-label': FOIL_LABELS[foil.mode], html: iconSVG('foil') }));
-  // The footer names the printing whenever it is not the ordinary one: that, and the frame, are how
-  // an Alternate Art or a Creative Foil is told apart from the regular card at a glance.
-  const footerText = fullArt ? `Full Art · ${fullArt.number}/${Object.keys(FULL_ART_CARDS).length}`
-    : ver.key === 'regular' ? typeLabel(def) : `${typeLabel(def)} · ${ver.name}`;
-  const footer = h('div', { class: 'card-footer' }, [h('span', {}, footerText)]);
-  if (interactive) footer.appendChild(h('button', {
+  // The footer is the collector's line: what kind of card this is on the left, and on the right the
+  // two marks that say which copy you are holding — the rarity gem and the printing.
+  const footerText = fullArt ? `${typeLabel(def)} · ${fullArt.number}/${Object.keys(FULL_ART_CARDS).length}` : typeLabel(def);
+  const footer = h('div', { class: 'card-footer' }, [h('span', { class: 'card-kind' }, footerText)]);
+  const marks = h('div', { class: 'card-marks' });
+  if (def.rarity) {
+    const p = def.power || {};
+    // The rating is only half the story now that rarity is read against the card's own cost group:
+    // 5.3 is the best cost-0 card in the collection and a filler Master. So the tooltip says which
+    // group the card was judged in.
+    const title = p.score !== undefined
+      ? `${def.rarity} for its cost — rated ${p.score} against the other cost-${costBand(def)} cards (power ${p.power} against an opportunity cost of ${p.opportunityCost})`
+      : def.rarity;
+    marks.appendChild(h('div', { class: `gem rar-${raritySlug(def)}`, title, 'aria-label': def.rarity }));
+  }
+  marks.appendChild(h('div', { class: `vmark ver-${ver.key}`, title: ver.name, 'aria-label': ver.name, html: iconSVG(ver.key) }));
+  if (interactive) marks.appendChild(h('button', {
     class: 'inspect-card', type: 'button', 'aria-label': `Read ${def.name}`,
     onclick: (event) => { event.stopPropagation(); inspectCard(def, ver.key, foil); },
     onpointerdown: (event) => event.stopPropagation(),
   }, 'Read'));
+  footer.appendChild(marks);
   face.appendChild(footer);
   face.appendChild(h('div', { class: 'frame', html: fullArt ? fullArtFrameSVG() : ornamentalFrameSVG() }));
   applyFoil(face, foil, { fullArt: !!fullArt });

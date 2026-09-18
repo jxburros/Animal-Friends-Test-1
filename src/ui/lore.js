@@ -21,7 +21,7 @@
 //   closeLore()                                      close whatever the Directory has open
 //   isLoreUnlocked(entry, profile) / loreProgress(profile) / loreCounts() / emptyLore()
 import {
-  buildCardFace, setPreviewContext, raritySlug, openCardReader,
+  buildCardFace, setPreviewContext, raritySlug, openCardReader, effectText,
 } from './render.js';
 import { iconSVG } from './art.js';
 import { characterOf, sortVersions, isCharacterCard } from '../engine/characters.js';
@@ -336,7 +336,7 @@ function cardBlock(def, { withText = false } = {}) {
     : [h('span', { class: `rarity-tag rar-${raritySlug(def)}` }, def.rarity || 'Common')]);
   text.appendChild(cap);
   if (withText && owned) {
-    if (def.text) text.appendChild(h('p', { class: 'db-story-rules' }, def.text));
+    if (effectText(def)) text.appendChild(h('p', { class: 'db-story-rules' }, effectText(def)));
     if (def.flavor) text.appendChild(h('p', { class: 'db-story-flavor' }, def.flavor));
   }
   fig.appendChild(text);

@@ -191,7 +191,15 @@ has to be worth waiting two turns for. Costs run 0–5; there is no 6.
 open its rules text with `Upgrades <Name>.` — the convention the whole collection uses.
 Cheap versions do one small thing; expensive ones pay off the arc.
 
-**Shift** is `{ delay, output }`: how many turns the character is busy, and the Supply it produces.
+The printed face does not show that opening sentence: every Character upgrades a cheaper printing of
+the same name, so the card would only be saying what the rules already say. It is kept in `text` as
+the collection's written record, and `effectText()` in `src/ui/render.js` drops it (along with a
+sentence that only restates the shift, e.g. `A short shift: 1 turn, 1 Supply.`) before the card is
+drawn. A Character with nothing else to say prints an empty effect box, which is correct.
+
+**Shift** is `{ delay, output }`: how many turns the character is busy, and the Supply it produces
+when it comes back upright. The card prints this as the shift pill, so rules text never repeats it —
+write a shift sentence only where an effect *changes* the timing or the payout.
 Printed practice is roughly `delay 1 → output 1–2`, `delay 2 → output 4–5`. A character whose story
 is about patience can sit at the slow end; one whose story is about hustle should not.
 

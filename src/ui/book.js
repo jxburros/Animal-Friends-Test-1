@@ -17,7 +17,7 @@
 // what is still out there — without giving away a card that has not been earned yet. Under a card
 // that is owned sit only the printings that card actually exists in; a printing that was never
 // painted for it is simply not drawn, so the row reads as "these are the ways this card comes".
-import { buildCardFace, setPreviewContext, raritySlug } from './render.js';
+import { buildCardFace, setPreviewContext, raritySlug, effectText } from './render.js';
 import { iconSVG } from './art.js';
 import { VERSIONS, versionsOf, hasVersion, defaultVersionKey } from './versions.js';
 import { openCharacterModal } from './lore.js';
@@ -192,7 +192,7 @@ function openTownStory(def) {
     h('p', { class: 'db-story-sub' }, def.title || 'A town card'),
   ]);
   const body = h('div', { class: 'db-story-body' });
-  if (def.text) body.appendChild(h('p', { class: 'db-story-rules' }, def.text));
+  if (effectText(def)) body.appendChild(h('p', { class: 'db-story-rules' }, effectText(def)));
   if (def.flavor) body.appendChild(h('p', { class: 'db-story-flavor' }, def.flavor));
   body.appendChild(h('p', { class: 'db-story-note' }, [
     h('strong', {}, 'A town card. '),
