@@ -161,15 +161,28 @@
   background: url('../../assets/ui/open-storybook-table.png') 0 0 / 1536px 1024px no-repeat;
 }
 
-/* The two painted pages, measured off the painting itself. Nothing in the Book sits outside these. */
+/* The two painted pages, measured off the painting itself. Nothing in the Book sits outside these.
+ *
+ * The measurements are published as custom properties because three screens are laid out on this
+ * same painting — the Book, the Lore Directory and the Welcome and How-to-play spreads — and they
+ * have to agree about where the paper is. Anything that sits on the painted page reads these; the
+ * numbers are never copied a second time.
+ */
+:root {
+  --page-l-x: 8.5%; --page-l-y: 10.5%; --page-l-w: 40%; --page-l-h: 70.5%;
+  --page-r-x: 50.5%; --page-r-y: 10%; --page-r-w: 38.5%; --page-r-h: 71%;
+  /* The same rectangle read as insets: what is left of the sheet outside each page. */
+  --page-l-right: 51.5%; --page-l-bottom: 19%;
+  --page-r-left: 50.5%; --page-r-right: 11%; --page-r-bottom: 19%;
+}
 .book-page {
   position: absolute;
   padding: 18px;
   --card-w: 104px;
   --card-h: 150px;
 }
-.book-page.left { left: 8.5%; top: 10.5%; width: 40%; height: 70.5%; }
-.book-page.right { left: 50.5%; top: 10%; width: 38.5%; height: 71%; }
+.book-page.left { left: var(--page-l-x); top: var(--page-l-y); width: var(--page-l-w); height: var(--page-l-h); }
+.book-page.right { left: var(--page-r-x); top: var(--page-r-y); width: var(--page-r-w); height: var(--page-r-h); }
 .book-page-grid {
   display: grid;
   grid-template-columns: repeat(var(--book-cols, 4), minmax(0, 1fr));
@@ -270,9 +283,15 @@
 .book-card-dialog {
   width: min(960px, 94vw); max-width: 960px; max-height: 92vh; overflow: auto;
   grid-template-columns: auto minmax(0, 1fr); gap: clamp(20px, 4vw, 42px); align-items: start;
-  padding: clamp(20px, 4vw, 38px); border: 3px double #9d7d46; border-radius: 18px 12px 18px 12px;
-  color: var(--ink); background: radial-gradient(ellipse at top, #fff8e7, #e8d6b1);
-  box-shadow: inset 0 0 0 3px rgba(255,250,229,.64), 0 28px 80px rgba(0,0,0,.58);
+  padding: clamp(20px, 4vw, 38px);
+  /* The entry is itself a card, blown up: the card's edge, the card's ivory frame inside it, the
+     card's paper and the card's corners — one round, one clipped. */
+  border: 3px double var(--ui-card-edge, #9d7d46); border-radius: 20px 12px 20px 12px;
+  color: var(--ink);
+  background: radial-gradient(ellipse at 42% -8%, rgba(255,255,255,.7), transparent 58%), var(--noise), linear-gradient(170deg, #fff8e7, #e8d6b1);
+  box-shadow:
+    inset 0 0 0 3px rgba(255,250,229,.8), inset 0 0 0 4px rgba(157,125,70,.3),
+    0 28px 80px rgba(0,0,0,.58);
 }
 .book-card-dialog[open] { display: grid; }
 .book-card-dialog::backdrop { background: rgba(8,20,15,.86); backdrop-filter: blur(8px); }
@@ -289,7 +308,11 @@
 .book-card-flavor { color: #5d4b35; font-style: italic; line-height: 1.55; }
 .book-card-links { display: flex; flex-wrap: wrap; gap: 7px; }
 .book-card-links button { min-height: 34px; padding: 6px 10px; font-size: 12px; text-align: left; }
-.book-card-links.related-cards button { border-color: #657f68; background: linear-gradient(#f7f1dd, #dbe4cf); }
+.book-card-links.related-cards button { border-color: #4c7356; background: var(--noise), linear-gradient(#f7f1dd, #dbe4cf); }
+/* The printings row is the same chip strip the page prints under every card. */
+.book-card-printings { justify-content: flex-start; gap: 5px; margin: 2px 0 4px; }
+.book-card-printings .book-ib.version-chip { width: 26px; height: 26px; border-radius: 7px 5px 7px 5px; }
+.book-card-printings .book-ib.version-chip .ico { width: 15px; height: 15px; }
 .book-card-dialog-close { margin-top: 22px; width: 100%; }
 
 @media (max-width: 620px) {

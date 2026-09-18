@@ -9,6 +9,22 @@
   --ui-walnut: #392417;
   --ui-lift: 0 18px 42px rgba(8, 20, 15, .24);
   --ui-edge: inset 0 0 0 1px rgba(255, 247, 218, .72), inset 0 0 0 3px rgba(102, 76, 34, .18);
+
+  /* The card's own material, named once so every panel and every button is cut from it.
+   * A card face (storybook.css) is a coloured edge, an ivory frame inside it, printed paper and
+   * corners that are round on one diagonal and clipped on the other. Anything in the game a Mayor
+   * can pick up or press is made of the same four things. */
+  --ui-card-edge: #9d7d46;
+  --ui-card-trim: #d8bb76;
+  --ui-card-radius: 12px 8px 12px 8px;
+  --ui-card-radius-sm: 10px 7px 10px 7px;
+  --ui-card-frame: inset 0 0 0 2px rgba(255, 251, 235, .8), inset 0 0 0 3px rgba(157, 125, 70, .26);
+  --ui-card-paper:
+    radial-gradient(ellipse at 42% -10%, rgba(255, 255, 255, .62), transparent 58%),
+    var(--noise),
+    linear-gradient(170deg, #fffaf0, #eddfbd);
+  --ui-card-rest: 0 6px 14px rgba(57, 38, 15, .18);
+  --ui-card-held: 0 16px 28px rgba(44, 29, 12, .26);
 }
 
 body {
@@ -24,16 +40,18 @@ body {
 }
 @keyframes screen-settle { from { opacity: 0; transform: translateY(12px) scale(.992); } }
 
-/* Tactile controls with one visual language across every screen. */
+/* Tactile controls with one visual language across every screen: a button is a small card, and it
+ * is picked up and put down like one — it lifts and turns a hair under the hand, and settles flat
+ * when it is pressed. */
 button {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   min-height: 38px;
-  border: 2px solid #8c7241;
-  border-radius: 10px 7px 10px 7px;
-  background: linear-gradient(180deg, #fff9e8, #ead7ad 92%);
-  box-shadow: inset 0 0 0 2px rgba(255,250,231,.72), inset 0 -3px rgba(91,62,25,.16), 0 3px 8px rgba(40,28,12,.18);
+  border: 2px solid var(--ui-card-edge);
+  border-radius: var(--ui-card-radius-sm);
+  background: var(--ui-card-paper);
+  box-shadow: var(--ui-card-frame), inset 0 -3px rgba(91,62,25,.14), 0 3px 8px rgba(40,28,12,.2);
   color: #352c1d;
   text-shadow: 0 1px rgba(255,255,255,.7);
   transition: transform calc(150ms * max(var(--fx-scale), .01)) ease,
@@ -50,20 +68,36 @@ button::before {
   transition: transform calc(520ms * max(var(--fx-scale), .01)) ease;
 }
 button:hover:not(:disabled) {
-  transform: translateY(-3px) rotate(-.35deg);
+  transform: translateY(-3px) rotate(-.5deg) scale(1.012);
   filter: saturate(1.08) brightness(1.025);
-  box-shadow: inset 0 1px rgba(255,255,255,.95), inset 0 -2px rgba(91,62,25,.16), 0 7px 15px rgba(40,28,12,.22);
+  box-shadow: var(--ui-card-frame), inset 0 -2px rgba(91,62,25,.14), 0 9px 18px rgba(40,28,12,.26);
 }
 button:hover:not(:disabled)::before { transform: translateX(130%); }
-button:active:not(:disabled) { transform: translateY(1px) scale(.99); }
+button:active:not(:disabled) {
+  transform: translateY(1px) rotate(0deg) scale(.992);
+  box-shadow: var(--ui-card-frame), 0 2px 5px rgba(40,28,12,.22);
+}
+/* A Character card's green edge, a Disruption's plum-red: the two colours the deck already uses
+ * for "go on" and "careful". */
 button.primary {
   border-color: #183a29;
-  background: linear-gradient(180deg, #4f7a58, #244632 90%);
-  box-shadow: inset 0 1px rgba(255,255,255,.22), inset 0 -3px rgba(7,24,15,.26), 0 4px 12px rgba(8,31,19,.28);
+  background: var(--noise), linear-gradient(180deg, #4f7a58, #244632 90%);
+  box-shadow: inset 0 0 0 2px rgba(226,243,219,.22), inset 0 0 0 3px rgba(7,24,15,.3), inset 0 -3px rgba(7,24,15,.26), 0 4px 12px rgba(8,31,19,.28);
   color: #fff5d7;
   text-shadow: 0 1px 1px #14271b;
 }
-button.danger { border-color: #773e35; background: linear-gradient(#f5c2ad, #c97868); color: #542319; }
+button.primary:hover:not(:disabled) {
+  box-shadow: inset 0 0 0 2px rgba(226,243,219,.28), inset 0 0 0 3px rgba(7,24,15,.3), 0 10px 20px rgba(8,31,19,.34);
+}
+button.danger {
+  border-color: #773e35;
+  background: var(--noise), linear-gradient(#f5c2ad, #c97868);
+  box-shadow: inset 0 0 0 2px rgba(255,238,228,.55), inset 0 0 0 3px rgba(119,62,53,.28), 0 3px 8px rgba(70,28,20,.22);
+  color: #542319;
+}
+/* An icon button is a card's own corner gem, not a card: it keeps its circle and only lifts. */
+button.lore-icon-btn:hover:not(:disabled),
+button.book-ib:hover:not(:disabled) { transform: translateY(-2px); }
 .ui-spark {
   position: absolute;
   z-index: 3;
@@ -116,22 +150,77 @@ button.danger { border-color: #773e35; background: linear-gradient(#f5c2ad, #c97
     var(--noise), #f0e2c3;
   box-shadow: inset 0 0 0 3px rgba(255,250,228,.42), 0 9px 22px rgba(2,19,12,.24);
 }
+/* Every box in the game is a card laid face up: the same doubled gold edge, the same ivory frame
+ * inside it, the same printed paper, the same one-round-one-clipped corners. */
 .mode-card,
 .menu-field,
 .box,
 .lore-row,
 .lore-tile,
-.lore-setting {
+.lore-setting,
+.lore-contents .lore-rows .lore-row,
+.deck-card,
+.mayor-card,
+.mayor-strip,
+.resume-card,
+.purse-bar,
+.unlock-note,
+.welcome-col,
+.faq-item,
+.avatar-grid,
+.db-head,
+.db-left,
+.db-right,
+.popover,
+.card-reader .reader-close {
   border-style: double;
   border-width: 3px;
-  border-radius: 12px 8px 12px 8px;
-  box-shadow: inset 0 0 0 2px rgba(255,250,231,.5), 0 6px 14px rgba(57,38,15,.14);
+  border-color: var(--ui-card-edge);
+  border-radius: var(--ui-card-radius);
+  background-image: var(--ui-card-paper);
+  box-shadow: var(--ui-card-frame), var(--ui-card-rest);
+}
+/* The ones a Mayor can pick up move like a card picked up: a lift, a half-degree turn, a shadow
+ * that opens under it — and they settle flat again when they are pressed. */
+.mode-card,
+.lore-tile,
+.lore-row,
+.deck-card,
+.mayor-card,
+.resume-card,
+.shop-deck {
+  transition: transform calc(160ms * max(var(--fx-scale), .01)) ease,
+    box-shadow calc(160ms * max(var(--fx-scale), .01)) ease,
+    filter calc(160ms * max(var(--fx-scale), .01)) ease;
 }
 .mode-card:hover,
+.mode-card:focus-visible,
 .lore-tile:hover,
-.lore-row:hover {
-  transform: translateY(-4px) rotate(-.25deg);
-  box-shadow: inset 0 0 0 2px rgba(255,250,231,.68), 0 12px 24px rgba(44,29,12,.22);
+.lore-tile:focus-visible,
+.lore-row:hover,
+.lore-row:focus-visible,
+.deck-card:hover,
+.mayor-card:hover,
+.resume-card:hover {
+  transform: translateY(-4px) rotate(-.4deg);
+  filter: brightness(1.02);
+  box-shadow: var(--ui-card-frame), var(--ui-card-held);
+}
+.mode-card:active,
+.lore-tile:active,
+.lore-row:active,
+.deck-card:active,
+.mayor-card:active,
+.resume-card:active { transform: translateY(0) rotate(0deg) scale(.995); }
+.mode-card.locked:hover,
+.lore-tile.locked,
+.lore-row.locked { transform: none; box-shadow: var(--ui-card-frame), var(--ui-card-rest); }
+/* A chosen deck or Mayor is the card turned face up on the table: the trim brightens, it does not
+ * grow a second kind of outline. */
+.deck-card.selected,
+.avatar-pick.selected {
+  border-color: #6d5121;
+  box-shadow: inset 0 0 0 2px rgba(255,251,235,.85), inset 0 0 0 4px rgba(216,187,118,.9), var(--ui-card-held);
 }
 .town-row-panel,
 .hand-rail,
@@ -210,6 +299,42 @@ button.danger { border-color: #773e35; background: linear-gradient(#f5c2ad, #c97
 .fx-spotlight { background: rgba(7,20,14,.76); backdrop-filter: blur(7px); }
 .fx-spot-caption { border: 1px solid #b18e4f; box-shadow: var(--ui-edge), 0 12px 30px rgba(0,0,0,.38); }
 
+/* The Mayors' shelf and the Post Office are dealt onto the same table as the Book and the Lore
+ * Directory, on a sheet of the card's own stock, rather than filling the window with bare paper. */
+#screen-profiles.active,
+#screen-shop.active {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: clamp(14px, 3vw, 34px) 16px 32px;
+  background:
+    radial-gradient(ellipse at 50% 6%, rgba(224, 185, 104, .18), transparent 46rem),
+    linear-gradient(rgba(11, 28, 20, .76), rgba(7, 20, 14, .92)),
+    url('../../assets/ui/borough-daylight.webp') center / cover fixed;
+}
+#profilesHost,
+#shopHost {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0;
+  padding: clamp(14px, 2.4vw, 26px) clamp(14px, 2.4vw, 28px) clamp(18px, 3vw, 32px);
+  box-shadow: var(--ui-card-frame), 0 26px 60px rgba(4, 16, 10, .5);
+}
+#profilesHost .mayors,
+#shopHost .shop,
+#shopHost .pack-open { padding-inline: 0; }
+/* The sandbox door keeps its cooler ink, but it is cut from the same stock as every other card. */
+.sandbox-link {
+  border-color: #4d648c;
+  background: var(--noise), linear-gradient(170deg, #f4f7fd, #cfdcf2);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.75), inset 0 0 0 3px rgba(77,100,140,.24), var(--ui-card-rest);
+  color: #24324a;
+}
+.mayor-card.new { border-style: dashed; }
+/* A deck already on the shelf keeps its green wash under the new paper. */
+.shop-deck.owned { background-color: #e6eede; }
+
 /* Workshop panels feel laid out on the same Mayor's desk. */
 #screen-deck.active {
   min-height: 100vh;
@@ -245,22 +370,52 @@ button.danger { border-color: #773e35; background: linear-gradient(#f5c2ad, #c97
   animation: open-book calc(620ms * max(var(--fx-scale), .01)) cubic-bezier(.18,.85,.25,1) both;
 }
 
-/* Welcome is pinned to the painted pages instead of flowing across the book's gutter. */
+/* The rules are read across both pages at once, so How to play keeps its flowing column — but the
+ * sheet is aspect-locked like the Book's and padded to the paper's own edges, so the text starts
+ * and stops where the paper does. Side padding is a share of the width; the top and foot are a
+ * share of the height, which on a 3:2 sheet is two thirds of the same percentage.
+ */
+#howToPlayOverlay .help-box {
+  width: min(1180px, calc((100dvh - 24px) * 1.5), 96vw);
+  min-height: 0;
+  aspect-ratio: 3 / 2;
+  max-height: calc(100dvh - 24px);
+  display: flex;
+  flex-direction: column;
+  padding:
+    calc(var(--page-l-y) * 2 / 3) var(--page-r-right)
+    calc(var(--page-l-bottom) * 2 / 3) var(--page-l-x);
+  overflow: hidden;
+}
+#howToPlayOverlay .help-box > h2 { flex: none; margin: 0 0 6px; }
+#howToPlayOverlay .help-tabs { flex: none; }
+#howToPlayOverlay .help[role='tabpanel'] { flex: 1 1 auto; min-height: 0; overflow: auto; padding-right: 6px; }
+#howToPlayOverlay .help-actions { flex: none; margin-top: 10px; }
+
+/* Welcome is pinned to the painted pages instead of flowing across the book's gutter.
+ *
+ * The grid's outer tracks are the painting itself — the margin, the left page, the gutter, the
+ * right page, the margin — measured from the same --page-* properties the Book lays its cards on
+ * (book.css). The picture is mounted on the left page and the text is set on the right one, so
+ * neither can print on the spine, the gilt corners or the table, at any window size. */
 #welcomeOverlay .welcome-box {
   width: min(1180px, calc((100dvh - 24px) * 1.5), 96vw);
   min-height: 0;
   aspect-ratio: 3 / 2;
   max-height: calc(100dvh - 24px);
-  padding: 10.5% 9% 13%;
+  padding: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
-  column-gap: 10%;
+  grid-template-columns:
+    var(--page-l-x) var(--page-l-w)
+    calc(var(--page-r-x) - var(--page-l-x) - var(--page-l-w))
+    var(--page-r-w) var(--page-r-right);
+  grid-template-rows: var(--page-l-y) auto auto minmax(0, 1fr) auto var(--page-l-bottom);
+  column-gap: 0;
   overflow: hidden;
 }
 #welcomeOverlay .welcome-landscape {
-  grid-column: 1;
-  grid-row: 1 / -1;
+  grid-column: 2;
+  grid-row: 2 / 6;
   align-self: stretch;
   height: auto;
   min-height: 0;
@@ -269,10 +424,10 @@ button.danger { border-color: #773e35; background: linear-gradient(#f5c2ad, #c97
   border-radius: 12px 8px 12px 8px;
   box-shadow: inset 0 0 0 3px rgba(255,248,220,.48), 0 10px 24px rgba(69,42,16,.2);
 }
-#welcomeOverlay .cover-orn { grid-column: 2; grid-row: 1; margin: 0; line-height: 1; }
-#welcomeOverlay .welcome-box > h2 { grid-column: 2; grid-row: 2; margin: 0 0 4px; color: #294634; }
-#welcomeOverlay .welcome { grid-column: 2; grid-row: 3; min-height: 0; overflow: auto; padding: 0 8px 4px 0; }
-#welcomeOverlay .welcome-actions { grid-column: 2; grid-row: 4; margin-top: 8px; gap: 7px; }
+#welcomeOverlay .cover-orn { grid-column: 4; grid-row: 2; margin: 0; line-height: 1; }
+#welcomeOverlay .welcome-box > h2 { grid-column: 4; grid-row: 3; margin: 0 0 4px; color: #294634; }
+#welcomeOverlay .welcome { grid-column: 4; grid-row: 4; min-height: 0; overflow: auto; padding: 0 8px 4px 0; }
+#welcomeOverlay .welcome-actions { grid-column: 4; grid-row: 5; margin-top: 8px; gap: 7px; }
 #welcomeOverlay .welcome-actions button { flex: 1 1 120px; min-height: 34px; padding: 6px 9px; }
 #welcomeOverlay .welcome-lead { margin-top: 0 !important; font-size: 14px !important; }
 #welcomeOverlay .welcome-cols { grid-template-columns: 1fr; gap: 8px; }
@@ -339,6 +494,13 @@ button.danger { border-color: #773e35; background: linear-gradient(#f5c2ad, #c97
     background-size: auto 100%;
     background-position: 25% center;
   }
+  /* A phone reads the spread as one column, so the page rectangles are given up here. */
+  #howToPlayOverlay .help-box {
+    display: block;
+    aspect-ratio: auto;
+    overflow: auto;
+  }
+  #howToPlayOverlay .help[role='tabpanel'] { overflow: visible; padding-right: 0; }
   #welcomeOverlay .welcome-box {
     display: flex;
     flex-direction: column;
@@ -363,9 +525,20 @@ button.danger { border-color: #773e35; background: linear-gradient(#f5c2ad, #c97
   button,
   .mode-card,
   .lore-row,
-  .lore-tile { transition: none !important; }
+  .lore-tile,
+  .deck-card,
+  .mayor-card,
+  .resume-card,
+  .shop-deck { transition: none !important; }
   button:hover:not(:disabled),
+  button:active:not(:disabled),
   .mode-card:hover,
+  .mode-card:focus-visible,
   .lore-row:hover,
-  .lore-tile:hover { transform: none; }
+  .lore-row:focus-visible,
+  .lore-tile:hover,
+  .lore-tile:focus-visible,
+  .deck-card:hover,
+  .mayor-card:hover,
+  .resume-card:hover { transform: none; }
 }

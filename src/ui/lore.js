@@ -567,13 +567,20 @@ function matchesSearch(hay) {
   return String(hay).toLowerCase().includes(search);
 }
 
+/**
+ * The Story tab, split across the two painted pages: the chapter the Directory opens on is read on
+ * the right-hand page, and the table of contents — every other chapter — stands on the left one
+ * beside the tabs, which is how a book of this kind is laid out.
+ * Every area returns `{ index, main }`: `index` goes on the left page, `main` on the right.
+ */
 function storyArea() {
   const L = lore();
-  const wrap = h('div', { class: 'lore-area' });
+  const index = [];
+  const main = h('div', { class: 'lore-area' });
   const sections = L.story.sections;
   if (!sections.length) {
-    wrap.appendChild(h('p', { class: 'db-empty' }, 'The story is not written yet.'));
-    return wrap;
+    main.appendChild(h('p', { class: 'db-empty' }, 'The story is not written yet.'));
+    return { index, main };
   }
   const [first, ...rest] = sections;
   const intro = h('section', { class: 'lore-intro' });
@@ -589,11 +596,12 @@ function storyArea() {
   } else {
     intro.appendChild(lockedBlock('A chapter of the story'));
   }
-  wrap.appendChild(intro);
+  main.appendChild(intro);
 
-  // The first chapter is already read in full above, so a one-chapter story needs no list at all.
-  if (!rest.length) return wrap;
-  wrap.appendChild(h('h3', { class: 'lore-h3' }, 'The rest of the tale'));
+  // The first chapter is already read in full on the right page, so a one-chapter story needs no
+  // table of contents at all.
+  if (!rest.length) return { index, main };
+  index.push(h('h3', { class: 'lore-h3' }, 'The rest of the tale'));
   const list = h('div', { class: 'lore-rows' });
   for (const s of rest) {
     if (!isLoreUnlocked(s)) { list.appendChild(lockedRow('A chapter of the story')); continue; }
@@ -608,24 +616,25 @@ function storyArea() {
       ]),
     ]));
   }
-  wrap.appendChild(list);
-  return wrap;
+  index.push(list);
+  return { index, main };
 }
 
 function charactersArea() {
-  const wrap = h('div', { class: 'lore-area' });
+  const index = [];
+  const main = h('div', { class: 'lore-area' });
   const everyone = cast();
   const species = [...new Set(everyone.map((e) => traitsOf(e).species).filter(Boolean))].sort();
   const studies = [...new Set(everyone.flatMap((e) => traitsOf(e).studies))].sort();
 
-  wrap.appendChild(h('div', { class: 'db-chiprow lore-chiprow' }, [
+  index.push(h('div', { class: 'db-chiprow lore-chiprow' }, [
     chip('Any species', !speciesFilter, () => { speciesFilter = null; render(); }, 'any',
       { title: 'Every species', 'aria-label': 'Every species' }),
     ...species.map((sp) => chip(sp, speciesFilter === sp, () => {
       speciesFilter = speciesFilter === sp ? null : sp; render();
     }, sp, { title: sp, 'aria-label': sp })),
   ]));
-  wrap.appendChild(h('div', { class: 'db-chiprow lore-chiprow' }, [
+  index.push(h('div', { class: 'db-chiprow lore-chiprow' }, [
     chip('Any study', !studyFilter, () => { studyFilter = null; render(); }, 'any',
       { title: 'Every study', 'aria-label': 'Every study' }),
     ...studies.map((st) => chip(st, studyFilter === st, () => {
@@ -639,7 +648,7 @@ function charactersArea() {
     if (studyFilter && !sts.includes(studyFilter)) return false;
     return matchesSearch(`${e.name} ${sp || ''} ${sts.join(' ')} ${e.backstory || ''} ${e.voice || ''}`);
   });
-  wrap.appendChild(h('p', { class: 'lore-count' }, found.length
+  index.push(h('p', { class: 'lore-count' }, found.length
     ? `${found.length} of ${everyone.length} character${everyone.length === 1 ? '' : 's'}`
     : 'Nobody here goes by that.'));
 
@@ -672,8 +681,8 @@ function charactersArea() {
     tile.appendChild(h('span', { class: 'lore-tile-stat' }, `${mine.length} card${mine.length === 1 ? '' : 's'}`));
     grid.appendChild(tile);
   }
-  wrap.appendChild(grid);
-  return wrap;
+  main.appendChild(grid);
+  return { index, main };
 }
 
 /** What a place tile says about itself under its name: its cards, or who is there, or nothing. */
@@ -686,7 +695,7 @@ function placeStat(place, linked) {
 
 function settingSection(sideKey) {
   const side = lore().settings[sideKey];
-  const box = h('section', { class: `lore-setting ${sideKey}` });
+  const box = h('section', { class: `lore-setting ${sideKey}`, id: `lore-setting-${sideKey}` });
   box.appendChild(h('div', { class: 'lore-setting-head' }, [
     h('span', { class: 'lore-setting-icon', html: iconSVG(sideKey === 'capital' ? 'capital' : 'borough') }),
     h('div', {}, [
@@ -735,9 +744,28 @@ function settingSection(sideKey) {
 }
 
 function settingsArea() {
-  const wrap = h('div', { class: 'lore-area' });
-  for (const key of SIDE_KEYS) wrap.appendChild(settingSection(key));
-  return wrap;
+  const index = [h('h3', { class: 'lore-h3' }, 'The two settings')];
+  const main = h('div', { class: 'lore-area' });
+  for (const key of SIDE_KEYS) {
+    const side = lore().settings[key];
+    main.appendChild(settingSection(key));
+    // The left page is the contents: a row per setting that walks the reading page to it.
+    index.push(h('button', {
+      type: 'button', class: 'lore-row', title: `Turn to ${side.name}`,
+      onclick: () => {
+        const box = host && host.querySelector(`#lore-setting-${key}`);
+        if (box) box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      },
+    }, [
+      h('span', { class: 'lore-row-icon', html: iconSVG(key === 'capital' ? 'capital' : 'borough') }),
+      h('span', { class: 'lore-row-text' }, [
+        h('span', { class: 'lore-row-head' }, side.name),
+        h('span', { class: 'lore-row-sub' }, side.tagline
+          || `${side.places.length} place${side.places.length === 1 ? '' : 's'}`),
+      ]),
+    ]));
+  }
+  return { index, main };
 }
 
 function render({ keepFocus = false } = {}) {
@@ -788,8 +816,13 @@ function render({ keepFocus = false } = {}) {
     leftPage.appendChild(box);
   }
 
+  // Each area hands back the two halves of a spread: an index for the left page, beside the tabs,
+  // and the reading matter for the right one. Neither page ever holds the other's.
+  const { index, main } = tab === 'story' ? storyArea() : tab === 'characters' ? charactersArea() : settingsArea();
+  const contents = h('div', { class: 'lore-contents' }, index);
+  leftPage.appendChild(contents);
   const body = h('div', { class: 'lore-body', id: 'loreBody', role: 'tabpanel' });
-  body.appendChild(tab === 'story' ? storyArea() : tab === 'characters' ? charactersArea() : settingsArea());
+  body.appendChild(main);
   rightPage.appendChild(body);
   spread.append(leftPage, rightPage);
   host.appendChild(spread);
