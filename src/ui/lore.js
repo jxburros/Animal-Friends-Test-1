@@ -185,6 +185,18 @@ export function isLoreUnlocked(entry, profile = ctx ? ctx.profile : null) {
   if (allOf) return allOf.length === 0 || allOf.every((id) => ownedCopies(profile, id) > 0);
   return true;
 }
+/**
+ * Is this character's story revealed to this Mayor? Backstories live on the card set rather than in
+ * lore.json, so they are gated by one rule for all of them: `unlockRules.characters` is 'open' (the
+ * default — every backstory can be read) or 'anyCard' (a character's story opens with the first of
+ * their cards the Mayor owns, which is what the Book used to do). No Mayor, or the sandbox, sees all.
+ */
+export function isCharacterUnlocked(name, profile = ctx ? ctx.profile : null) {
+  if (!profile || profile.sandbox) return true;
+  const rule = (lore().unlockRules || {}).characters || 'open';
+  if (rule !== 'anyCard') return true;
+  return cardsOf(name).some((c) => ownedCopies(profile, c.id) > 0);
+}
 /** Is this entry gated at all? An entry with no `unlock` is not counted as progress. */
 function isGated(entry) {
   const unlock = entry && typeof entry === 'object' ? entry.unlock : null;
@@ -494,6 +506,17 @@ export function openCharacterModal(name) {
   const sub = [species, studies.join(' · '), entry && entry.pronouns].filter(Boolean).join(' — ');
   const body = openModal({ kicker: 'Characters', title: name, sub, aria: `The story of ${name}` });
 
+  // A story still shut keeps everything but the name and the cards' outlines: that is the thing
+  // still worth opening a pack for.
+  if (!isCharacterUnlocked(name)) {
+    body.appendChild(lockedRow(`${name}'s story · not yet found — own one of their cards to read it`));
+    if (mine.length) {
+      body.appendChild(h('h3', { class: 'db-story-h3' }, 'The cards'));
+      body.appendChild(cardRow(mine, { withText: false }));
+    }
+    return;
+  }
+
   if (entry && entry.backstory) for (const p of paragraphs(entry.backstory)) body.appendChild(p);
   else body.appendChild(h('p', { class: 'db-empty' }, 'No backstory written for this character yet.'));
   if (entry && entry.voice) body.appendChild(h('p', { class: 'db-story-note' }, [h('strong', {}, 'Voice. '), entry.voice]));
@@ -626,15 +649,20 @@ function charactersArea() {
     const mine = cardsOf(e.name);
     // A portrait is one of their own printings where there is one — a City Hire counts, an Event
     // that merely names them does not, because that card is not a picture of them.
-    const portrait = mine.find(isCharacterCard) || mine[0] || null;
+    // ...and it is drawn only from cards the Mayor owns: the Book hides an unearned card behind a
+    // question mark, and the cast list must not hand its rules out through the back door.
+    const owned = mine.filter((c) => ownsCard(c.id));
+    const portrait = owned.find(isCharacterCard) || owned[0] || null;
+    const unlocked = isCharacterUnlocked(e.name);
     const tile = h('button', {
       type: 'button', class: 'lore-tile character', title: `Read about ${e.name}`,
       'aria-label': `Read about ${e.name}`,
       onclick: () => openCharacterModal(e.name),
     });
-    const frame = h('div', { class: 'lore-portrait' });
-    if (portrait) frame.appendChild(buildCardFace(portrait, { large: false, interactive: false }));
+    const frame = h('div', { class: `lore-portrait${portrait && unlocked ? '' : ' locked'}` });
+    if (portrait && unlocked) frame.appendChild(buildCardFace(portrait, { large: false, interactive: false }));
     else frame.appendChild(h('span', { class: 'lore-q', 'aria-hidden': 'true' }, '?'));
+    if (!unlocked) tile.classList.add('story-locked');
     tile.appendChild(frame);
     tile.appendChild(h('span', { class: 'lore-tile-name' }, e.name));
     const tags = h('span', { class: 'lore-tile-tags db-row-tags' });

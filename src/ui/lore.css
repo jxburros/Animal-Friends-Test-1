@@ -243,3 +243,8 @@
   .lore-tile, .lore-row, .lore-card-btn { transition: none; }
   .lore-tile:hover, .lore-tile:focus-visible, .lore-card-btn:hover { transform: none; }
 }
+
+/* A portrait the Mayor has not earned: the same dark slot the Book uses, with the name still under it. */
+.lore-portrait.locked { background: radial-gradient(ellipse at 50% 35%, #4a3d2c, #2c2318 70%); box-shadow: inset 0 0 0 1px rgba(0,0,0,.45), inset 0 3px 10px rgba(0,0,0,.5); }
+.lore-portrait.locked .lore-q { color: rgba(236, 216, 176, .55); font: 700 clamp(34px, 6vw, 56px)/1 var(--serif, Georgia), serif; }
+.lore-tile.character.story-locked .lore-tile-stat { opacity: .7; }

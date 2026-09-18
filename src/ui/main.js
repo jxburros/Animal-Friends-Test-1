@@ -11,7 +11,7 @@ import { openFullArtGallery } from './full-art-gallery.js';
 import { fullArtCount } from './full-art.js';
 import { VERSIONS } from './versions.js';
 import { openDeckBuilder } from './deckbuilder.js';
-import { openBook } from './book.js';
+import { openBook, closeBook } from './book.js';
 import { initLore, openLore, loreCounts, emptyLore } from './lore.js';
 import { buildHelp, openHelp, openWelcome, hasBeenWelcomed } from './help.js';
 import { createTutorialSession, stopTutorial } from './tutorial.js';
@@ -140,8 +140,8 @@ function openTheBook() {
     set: collection,
     shelf,
     profile,
-    onClose: goHome,
-    onLore: openTheLore,
+    onClose: () => { closeBook(); goHome(); },
+    onLore: () => { closeBook(); openTheLore(); },
   });
 }
 
