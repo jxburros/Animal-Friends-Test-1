@@ -1491,6 +1491,37 @@ const ICONS = {
   limited: () => `${line('M4 4.5h12v12H4ZM7 2.7v3.5M13 2.7v3.5M4 8h12M7 11h2M11 11h2M7 14h2', 1.45)}`,
   event: () => `${line('M4 5.2c2.5-1.5 5-1.5 6 0 1-1.5 3.5-1.5 6 0v10.3c-2.5-1.5-5-1.5-6 0-1-1.5-3.5-1.5-6 0Z')} ${line('M10 5.2v10.3M6.2 8.3h2M11.8 8.3h2', 1.2)}`,
   market: () => `${line('M3 8h14v8.5H3ZM4.2 8l1.4-4h8.8l1.4 4M3.2 8c.1 2.1 2.4 2.1 3.1 0 .9 2.1 3.5 2.1 4.4 0 .9 2.1 3.5 2.1 4.4 0 .8 2.1 3 2.1 3.1 0M6.5 16.5v-4h3v4', 1.35)}`,
+
+  // Book and Lore Directory controls: every button in the Book is an icon, so each control the Book
+  // has needs a mark of its own. Printings first, in the same order as versions.js.
+  regular: () => `${line('M5 3.5h10a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1Z')} ${line('M6.5 6.5h7M6.5 9h4', 1.3)}`,
+  alternateArt: () => `${line('M4.5 4.5h11v11h-11Z')} ${line('m4.8 13.2 3.2-3.6 2.4 2.5 1.8-1.9 3.2 3.2')} ${dot(12.4, 7.6, 1.2)} ${line('M13.6 2.4 17.6 6.4', 1.5)}`,
+  alternateArtFoil: () => `${line('M4.5 5.5h9v10h-9Z')} ${line('m4.8 13.2 2.8-3.2 2.2 2.3 1.6-1.7 2.1 2.1')} ${line('M15.4 2.2c.3 1.9 1.2 2.8 3 3.1-1.8.3-2.7 1.2-3 3.1-.3-1.9-1.2-2.8-3-3.1 1.8-.3 2.7-1.2 3-3.1Z', 1.3)}`,
+  creativeFoil: () => `${line('M10 3 15.6 6.3v6.6L10 16.2 4.4 12.9V6.3Z')} ${line('M10 6.4 13 8.2v3.6L10 13.6 7 11.8V8.2Z', 1.2)} ${dot(10, 10, 1)}`,
+  fullCardArt: () => `${line('M4 3.5h12v13H4Z')} ${line('m4.2 13.6 3.6-4.4 2.6 2.9 2-2.2 3.4 3.7')} ${dot(13.2, 6.8, 1.4)} ${line('M4 3.5 7 6.5M16 3.5 13 6.5M4 16.5l3-3M16 16.5l-3-3', 1.1)}`,
+  // The Book's own controls.
+  story: () => `${line('M3 4.8c2.7-1.4 5.2-1.1 7 1.1 1.8-2.2 4.3-2.5 7-1.1v10.6c-2.7-1.4-5.2-1.1-7 1.1-1.8-2.2-4.3-2.5-7-1.1Z')} ${line('M10 5.9v10.6M5.5 8h2.6M5.5 10.6h2.6M11.9 8h2.6M11.9 10.6h2.6', 1.2)}`,
+  close: () => `${line('m5 5 10 10M15 5 5 15', 2)}`,
+  prevPage: () => `${line('M12.5 4 6.5 10l6 6', 2.1)}`,
+  nextPage: () => `${line('m7.5 4 6 6-6 6', 2.1)}`,
+  firstPage: () => `${line('M14 4 8 10l6 6M6 4v12', 2)}`,
+  lastPage: () => `${line('m6 4 6 6-6 6M14 4v12', 2)}`,
+  search: () => `${line('M12.8 12.8 17 17', 2)} <circle cx="8.6" cy="8.6" r="5" fill="none" stroke="currentColor" stroke-width="1.8"/>`,
+  sortType: () => `${line('M4 4.5h5v5H4ZM11 4.5h5v5h-5ZM4 11.5h5v5H4ZM11 11.5h5v5h-5Z', 1.4)}`,
+  sortRarity: () => `${line('M10 3 16 10l-6 7-6-7Z')} ${line('M7 10h6M10 3v14', 1.1)}`,
+  sortName: () => `${line('M4 15.5 7.2 5h.6L11 15.5M5.2 12h4.6M13 15.5V5M13 5l3 3M13 5l-3 3', 1.6)}`,
+  sortCost: () => `<circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/> ${line('M8.2 12.2c.4.8 1.1 1.2 1.9 1.2 1.2 0 1.9-.6 1.9-1.5 0-1-.8-1.4-1.9-1.7-1.1-.3-1.9-.7-1.9-1.7 0-.9.7-1.5 1.9-1.5.8 0 1.5.4 1.9 1.1M10 5.6v1.2M10 13.4v1.2', 1.3)}`,
+  any: () => `<circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/> ${line('M6.2 10h7.6M10 6.2v7.6', 1.3)}`,
+  locked: () => `${line('M5 9h10v8H5Z')} ${line('M7 9V6.8a3 3 0 0 1 6 0V9', 1.7)} ${dot(10, 13, 1)}`,
+  unknown: () => `<circle cx="10" cy="10" r="7.2" fill="none" stroke="currentColor" stroke-width="1.5"/> ${line('M7.8 8.1c.2-1.3 1.1-2.1 2.3-2.1 1.3 0 2.2.8 2.2 1.9 0 1.6-2.3 1.7-2.3 3.5', 1.5)} ${dot(10, 14, 1)}`,
+  // The Lore Directory's sections.
+  character: () => `<circle cx="10" cy="7" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6"/> ${line('M4.2 17c.6-3.4 2.9-5.2 5.8-5.2s5.2 1.8 5.8 5.2', 1.6)}`,
+  place: () => `${line('M10 17.5s-5.2-5-5.2-9.2A5.2 5.2 0 0 1 15.2 8.3c0 4.2-5.2 9.2-5.2 9.2Z')} ${dot(10, 8.3, 1.8)}`,
+  capital: () => `${line('M3.5 17h13M5 17V9l5-4.5L15 9v8M8 17v-4h4v4M10 4.5V2.2', 1.5)} ${line('M7.4 10.6h1.4M11.2 10.6h1.4', 1.2)}`,
+  borough: () => `${line('M3 17h14M4.5 17v-5.5l3-2.5 3 2.5V17M10.5 17v-7l3-2.5 3 2.5V17', 1.5)} ${line('M6.4 13.8h1.2M12.4 12.4h1.2', 1.2)}`,
+  history: () => `${line('M5.4 3.5h9.2a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H5.4a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1Z')} ${line('M7 7h6M7 9.6h6M7 12.2h4', 1.2)} ${line('M8.5 3.5v13', 1)}`,
+  link: () => `${line('M8.5 11.5 11.5 8.5M7 13a3 3 0 0 1 0-4.2l1.8-1.8a3 3 0 0 1 4.2 0M13 7a3 3 0 0 1 0 4.2l-1.8 1.8a3 3 0 0 1-4.2 0', 1.6)}`,
+  lore: () => `${line('M4 3.5h8.5l3.5 3.5v9.5H4Z')} ${line('M12.5 3.5V7H16M6.5 10h7M6.5 12.6h7M6.5 15.2h4', 1.2)}`,
 };
 
 export function iconSVG(name) {

@@ -394,6 +394,8 @@ export function buildCardFace(def, { large = false, interactive = true, foilInte
 }
 
 // Separate from decision dialogs so inspecting art cannot answer or cancel an engine choice.
+/** Open a card at reading size in its own dialog. The Book and the Lore Directory use it too. */
+export function openCardReader(def, version = null, foil) { inspectCard(def, version, foil); }
 function inspectCard(def, version = null, foil) {
   hidePeek();
   const previous = document.activeElement;
