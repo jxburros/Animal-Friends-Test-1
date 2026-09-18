@@ -142,14 +142,13 @@
     <header class="topbar">
       <div class="turn-banner" id="turnBanner">—</div>
       <div class="topbar-controls">
-        <label class="pace-label" for="paceSelect">Pace</label>
-        <select id="paceSelect" class="pace-select small">
+        <select id="paceSelect" class="pace-select small" aria-label="Pace" title="Pace — how long the animations take">
           <option value="storybook">Storybook</option>
           <option value="brisk">Brisk</option>
           <option value="instant">Instant</option>
         </select>
-        <button id="howToPlayBtn2" aria-label="How to play" title="How to play">?</button>
-        <button id="quitBtn" class="danger">Close the book</button>
+        <button id="howToPlayBtn2" class="icon-btn" aria-label="How to play" title="How to play">?</button>
+        <button id="quitBtn" class="icon-btn danger" aria-label="Close the book" title="Close the book">✕</button>
       </div>
     </header>
 
@@ -157,28 +156,44 @@
     <aside id="coach" class="coach" hidden></aside>
 
     <!--
-      The table, seen from your chair. Your rival's town is laid out at the top and mirrored: their
-      back row (deck, dump, the eight Building places) furthest away, their animals nearer. Between
-      the two towns is the middle of the table — the Market Deck, the Capital City display and the
-      City Dump — with each Mayor's Events at their own right hand. The Chronicle rails down the
-      left and folds away; what you can do sits down the right, beside the hand you do it with.
+      The table, seen from your chair, and laid out as the two of you would really sit at it.
+      Your rival's half is mirrored above the middle: their name plate furthest away, then the hand
+      they hold, their back row, and their animals nearest the middle. Yours reads back out again —
+      animals, back row, hand, name plate — and your half spans the whole table, edge to edge.
+      Down the left of their half runs the Chronicle; down the right, Your Move and the card you
+      last played or last looked at. Under those, either side of the Capital City, is what each
+      Mayor has in play and has just done.
     -->
     <div class="table" id="board">
+      <div class="name-plate rival page" id="oppNamePlate" data-side="opponent"></div>
+
       <aside class="chronicle-rail page" id="chronicleRail">
         <button type="button" class="rail-fold" id="logToggle" aria-expanded="true" aria-controls="gameLog" title="Fold the Chronicle away">❦ <span class="rail-fold-text">The Town Chronicle</span></button>
         <div class="log-scroll" id="gameLog"></div>
       </aside>
 
-      <div class="board-rows">
+      <div class="opp-rows" id="oppRows">
+        <div class="town-row-panel page rival hand" id="oppHandRow" data-side="opponent"></div>
         <div class="town-row-panel page rival back" id="oppBackRow" data-side="opponent"></div>
         <div class="town-row-panel page rival front" id="oppFrontRow" data-side="opponent"></div>
-        <div class="middle-row page" id="middleRow"></div>
+      </div>
+
+      <div class="right-rail" id="rightRail">
+        <aside class="action-rail page" id="actionRail"></aside>
+        <aside class="preview-rail page" id="previewRail"></aside>
+      </div>
+
+      <aside class="acts-rail page rival" id="oppActs" data-side="opponent"></aside>
+      <div class="middle-row page" id="middleRow"></div>
+      <aside class="acts-rail page you" id="yourActs" data-side="you"></aside>
+
+      <div class="your-rows" id="yourRows">
         <div class="town-row-panel page you front" id="yourFrontRow" data-side="you"></div>
         <div class="town-row-panel page you back" id="yourBackRow" data-side="you"></div>
         <div class="hand-rail page" id="handRow"></div>
       </div>
 
-      <aside class="action-rail page" id="actionRail"></aside>
+      <div class="name-plate you page" id="yourNamePlate" data-side="you"></div>
     </div>
   </section>
 

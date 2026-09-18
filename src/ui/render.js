@@ -65,6 +65,8 @@ export function setGame(s, hIdx) {
   lastLogLen = -1;
   lastStagedLog = 0;
   lastSignature = null;
+  cardPreview = null;
+  previewLogMark = 0;
   fx.clear();
   hidePopoverUI();
   hidePeek();
@@ -305,7 +307,7 @@ export function buildCardFace(def, { large = false, interactive = true, foilInte
     'data-version': ver.key,
     'data-foil': foil?.mode || 'none',
     'data-foil-interactive': foilInteractive ? '1' : null,
-    'data-peek': interactive && !large ? '1' : null,
+    'data-peek': interactive ? '1' : null,
   });
   const banner = h('div', { class: 'banner' });
   if (def.cost !== undefined) {
@@ -415,10 +417,10 @@ export function buildCardFace(def, { large = false, interactive = true, foilInte
   }
   marks.appendChild(h('div', { class: `vmark ver-${ver.key}`, title: ver.name, 'aria-label': ver.name, html: iconSVG(ver.key) }));
   if (interactive) marks.appendChild(h('button', {
-    class: 'inspect-card', type: 'button', 'aria-label': `Read ${def.name}`,
+    class: 'inspect-card', type: 'button', 'aria-label': `Read ${def.name}`, title: `Read ${def.name}`,
     onclick: (event) => { event.stopPropagation(); inspectCard(def, ver.key, foil); },
     onpointerdown: (event) => event.stopPropagation(),
-  }, 'Read'));
+  }, h('span', { class: 'ico', html: iconSVG('search') })));
   footer.appendChild(marks);
   face.appendChild(footer);
   face.appendChild(h('div', { class: 'frame', html: fullArt ? fullArtFrameSVG() : ornamentalFrameSVG() }));
@@ -453,15 +455,17 @@ function buildStackEl(stack, { clickable = false, selected = false, onClick = nu
   flip.appendChild(buildCardFace(def));
   if (stack.cards.length > 1) flip.appendChild(h('div', { class: 'stack-under' }));
   wrap.appendChild(flip);
+  // What is true of this animal, told in marks rather than labels: the table is read at a glance,
+  // and every mark names itself when you point at it.
   const badges = h('div', { class: 'stack-badges' });
-  if (stack.stored) badges.appendChild(h('div', { class: 'badge stored' }, [icon('supply'), `${stack.stored} put by`]));
-  if (stack.protectedUntil && state.turnNumber < stack.protectedUntil) badges.appendChild(h('div', { class: 'badge protected' }, 'Cannot be targeted'));
-  if (stack.lockedBid) badges.appendChild(h('div', { class: 'badge bidding' }, [icon('market'), 'Standing in the Capital City']));
-  else if (stack.shift) badges.appendChild(h('div', { class: 'badge shift' }, [icon('shift'), `${stack.shift.remaining} → `, icon('supply'), `${stack.shift.output}`]));
-  else if (stack.orientation === 270) badges.appendChild(h('div', { class: 'badge busy' }, 'Busy'));
-  else if (stack.orientation === 180) badges.appendChild(h('div', { class: 'badge busy' }, 'Arriving'));
-  if (stack.readyNextTurn) badges.appendChild(h('div', { class: 'badge ready' }, 'ready next turn'));
-  if (clickable) badges.appendChild(h('div', { class: 'badge can-act' }, 'can act'));
+  if (stack.stored) badges.appendChild(h('div', { class: 'badge stored', title: `${stack.stored} Supply put by` }, [icon('supply'), String(stack.stored)]));
+  if (stack.protectedUntil && state.turnNumber < stack.protectedUntil) badges.appendChild(h('div', { class: 'badge protected mark', title: 'Cannot be targeted' }, icon('locked')));
+  if (stack.lockedBid) badges.appendChild(h('div', { class: 'badge bidding mark', title: 'Standing in the Capital City' }, icon('market')));
+  else if (stack.shift) badges.appendChild(h('div', { class: 'badge shift', title: `Working a shift: ${stack.shift.remaining} turn${stack.shift.remaining === 1 ? '' : 's'} to go, then ${stack.shift.output} Supply` }, [icon('shift'), String(stack.shift.remaining), h('span', { class: 'arrow' }, '→'), icon('supply'), String(stack.shift.output)]));
+  else if (stack.orientation === 270) badges.appendChild(h('div', { class: 'badge busy mark', title: 'Busy' }, icon('busy')));
+  else if (stack.orientation === 180) badges.appendChild(h('div', { class: 'badge busy mark', title: 'Arriving' }, icon('busy')));
+  if (stack.readyNextTurn) badges.appendChild(h('div', { class: 'badge ready mark', title: 'Ready next turn' }, icon('upright')));
+  if (clickable) badges.appendChild(h('div', { class: 'badge can-act mark', title: 'This one can act' }, icon('upright')));
   wrap.appendChild(badges);
   if (clickable && onClick) wrap.addEventListener('click', onClick);
   return wrap;
@@ -547,20 +551,39 @@ function showPeek(faceEl) {
   if (!def) return;
   const el = document.getElementById('cardPeek');
   el.innerHTML = '';
+  // A shelf-sized card is already enlarged by being drawn large; a hand card is large to begin with,
+  // so it is scaled up again. The scale is applied to the face, so the wrapper's own box stays
+  // unscaled and the placement below has to account for it.
+  const scale = faceEl.classList.contains('large') ? 1.4 : 1;
+  el.style.setProperty('--peek-scale', String(scale));
   el.appendChild(buildCardFace(def, { large: true, interactive: false, version: faceEl.dataset.version, foil: faceFinishes.get(faceEl) }));
   el.hidden = false;
   const r = faceEl.getBoundingClientRect();
   const pr = el.getBoundingClientRect();
+  const w = pr.width * scale;
+  const ph = pr.height * scale;
   const m = 10;
   let left = r.right + m;
-  if (left + pr.width > window.innerWidth - m) left = r.left - pr.width - m;
-  if (left < m) left = Math.max(m, Math.min(window.innerWidth - pr.width - m, r.left));
-  let top = r.top + r.height / 2 - pr.height / 2;
-  top = Math.max(m, Math.min(window.innerHeight - pr.height - m, top));
+  if (left + w > window.innerWidth - m) left = r.left - w - m;
+  if (left < m) left = Math.max(m, Math.min(window.innerWidth - w - m, r.left));
+  let top = r.top + r.height / 2 - ph / 2;
+  top = Math.max(m, Math.min(window.innerHeight - ph - m, top));
   el.style.left = `${left}px`;
   el.style.top = `${top}px`;
 }
 function wirePeek() {
+  // Capture, not bubble: a card that answers a decision stops its own click from travelling, and the
+  // preview should still be filled by it. Anything with nothing to do opens at reading size instead.
+  document.addEventListener('click', (e) => {
+    const face = e.target.closest && e.target.closest('.card-face[data-card]');
+    if (!face || !gameActive) return;
+    if (face.closest('.card-peek, .card-reader, .preview-rail, .modal-box, .popover')) return;
+    setPreviewFromFace(face);
+    if (e.target.closest('button')) return; // the Read mark and the action buttons speak for themselves
+    if (face.classList.contains('clickable') || face.closest('.clickable')) return; // it has a move to make
+    const def = cardsById()[face.dataset.card];
+    if (def) inspectCard(def, face.dataset.version, faceFinishes.get(face));
+  }, true);
   document.addEventListener('mouseover', (e) => {
     const face = e.target.closest && e.target.closest('.card-face[data-peek]');
     if (!face || face === peekFor) return;
@@ -877,10 +900,16 @@ function renderTurnBanner() {
     h('span', { class: `tb-who ${mine ? 'you' : 'rival'}` }, mine ? 'Your turn' : `${active.name}'s turn`),
     status ? h('span', { class: 'tb-status' }, status) : null,
   ]));
-  const phases = h('div', { class: 'tb-phases' });
+  // The five phases are read as a row of marks rather than five little labels: the one you are in
+  // is named in words beside them, and the rest are dots you can point at.
+  const phases = h('div', { class: 'tb-phases', 'aria-label': `Phase: ${PHASE_LABEL[state.phase]}` });
   for (const ph of PHASES) {
-    phases.appendChild(h('span', { class: `tb-phase${ph === state.phase ? ' on' : ''}${PHASES.indexOf(ph) < PHASES.indexOf(state.phase) ? ' done' : ''}` }, PHASE_LABEL[ph]));
+    phases.appendChild(h('span', {
+      class: `tb-phase${ph === state.phase ? ' on' : ''}${PHASES.indexOf(ph) < PHASES.indexOf(state.phase) ? ' done' : ''}`,
+      title: PHASE_LABEL[ph],
+    }));
   }
+  phases.appendChild(h('span', { class: 'tb-phase-name' }, PHASE_LABEL[state.phase]));
   el.appendChild(phases);
 }
 
@@ -944,17 +973,19 @@ function renderPledges(pd) {
 }
 
 /**
- * The middle of the table, which both Mayors reach into. Reading from your rival's right hand to
- * yours: their Events, the City Dump and the Market Deck, the Capital City display with the animals
- * pledged beneath each card, and your own Events at your right, beside the deck they came out of.
- * Events live here rather than in a town because most of them are aimed across the table.
+ * The middle of the table, which both Mayors reach into: the City Dump and the Market Deck, and the
+ * Capital City display with the animals pledged beneath each card. What each Mayor has in play, and
+ * what they have just done, sits in the rail at their own hand on either side of it.
  */
 function renderCapitalCity() {
   const el = document.getElementById('middleRow');
   el.innerHTML = '';
   const head = h('div', { class: 'cc-head' });
   head.appendChild(h('div', { class: 'cc-title' }, [icon('market'), 'The Capital City']));
-  head.appendChild(h('div', { class: 'cc-sub' }, `A contested market (${state.market.deckName}): announce with an upright Character, then outbid each other until one Mayor lets it go. Each bid sends another animal to stand beneath the card, and every one must cost more than the last — so a bidding war is won with your town, not your purse.`));
+  head.appendChild(h('div', {
+    class: 'cc-sub',
+    title: 'Announce with an upright Character, then outbid each other until one Mayor lets it go. Each bid sends another animal to stand beneath the card, and every one must cost more than the last — so a bidding war is won with your town, not your purse.',
+  }, state.market.deckName));
   // The piles the display is dealt from and discarded to ride in the header, so the five cards
   // themselves get the width: they are the thing both Mayors are reading.
   const piles = h('div', { class: 'cc-piles' });
@@ -965,8 +996,6 @@ function renderCapitalCity() {
   el.appendChild(head);
 
   const body = h('div', { class: 'middle-body' });
-  body.appendChild(renderEventCorner(aiIndex));
-
   const slots = h('div', { class: 'cc-slots' });
   if (!state.market.city.length) slots.appendChild(h('div', { class: 'empty-note' }, 'The market square is empty.'));
   for (const cardId of state.market.city) {
@@ -1020,7 +1049,6 @@ function renderCapitalCity() {
     slots.appendChild(slot);
   }
   body.appendChild(slots);
-  body.appendChild(renderEventCorner(humanIndex));
   el.appendChild(body);
 }
 
@@ -1068,7 +1096,10 @@ function renderActionBar(actionGroups) {
     return bar;
   }
   if (actionGroups) {
-    bar.appendChild(h('div', { class: 'ab-text' }, 'Click a glowing card to act: recruit from your hand, work a shift, play an Event, raise a Building, bid in the Capital City.'));
+    bar.appendChild(h('div', {
+      class: 'ab-text',
+      title: 'Recruit from your hand, work a shift, play an Event, raise a Building, or bid in the Capital City.',
+    }, 'Click a glowing card to act.'));
     bar.appendChild(h('button', { class: 'primary end-turn-btn', onclick: () => resolvePending(actionGroups.endTurn || { type: 'endTurn' }) }, 'End Turn'));
   } else if (pending && pending.pi === humanIndex) {
     bar.appendChild(h('div', { class: 'ab-text' }, 'Make your choice above…'));
@@ -1078,6 +1109,62 @@ function renderActionBar(actionGroups) {
     bar.appendChild(h('div', { class: 'ab-text quiet' }, `${state.players[aiIndex].name} is taking their turn…`));
   }
   return bar;
+}
+
+// ---------- the card preview, under Your Move ----------
+/**
+ * One card, big enough to read without leaning in: whichever is the more recent of the card last
+ * put into play and the card you last clicked. Clicking anything on the table fills it, so it also
+ * doubles as the answer to "what was that card again?" without opening a dialog.
+ */
+let cardPreview = null; // { cardId, version, foil, note }
+let previewLogMark = 0; // how far down the log the preview has already read
+
+/** Pick up anything new the engine has played since the last render. */
+function previewFromLog() {
+  for (let i = state.log.length - 1; i >= previewLogMark; i--) {
+    const entry = state.log[i];
+    if (!entry.fx || !entry.fx.cardId || !state.set.cardsById[entry.fx.cardId]) continue;
+    const who = entry.player === humanIndex ? 'You' : (state.players[entry.player] ? state.players[entry.player].name : 'Somebody');
+    cardPreview = { cardId: entry.fx.cardId, version: null, foil: undefined, note: `${who} just played this` };
+    break;
+  }
+  previewLogMark = state.log.length;
+}
+
+/** A card the player pointed at. Clicks beat the log, and the log beats older clicks. */
+function setPreviewFromFace(faceEl) {
+  const def = cardsById()[faceEl.dataset.card];
+  if (!def) return;
+  cardPreview = { cardId: def.id, version: faceEl.dataset.version || null, foil: faceFinishes.get(faceEl), note: 'The card you last looked at' };
+  if (state) previewLogMark = state.log.length;
+  if (gameActive) renderPreviewRail();
+}
+
+function renderPreviewRail() {
+  const el = document.getElementById('previewRail');
+  if (!el) return;
+  el.innerHTML = '';
+  el.appendChild(h('div', { class: 'town-sub-title' }, [icon('search'), 'The Card in Hand']));
+  const def = cardPreview && cardsById()[cardPreview.cardId];
+  if (!def) {
+    el.appendChild(h('div', { class: 'empty-note' }, 'Click a card — on the table or in your hand — and it is read out here.'));
+    return;
+  }
+  const body = h('div', { class: 'preview-body' });
+  const face = buildCardFace(def, {
+    large: true, interactive: false, version: cardPreview.version, foil: cardPreview.foil,
+  });
+  // The card itself is the button: a separate one cost a row the rail does not have to spare.
+  face.title = `Read ${def.name} in full`;
+  face.setAttribute('role', 'button');
+  face.tabIndex = 0;
+  const open = () => inspectCard(def, cardPreview.version, cardPreview.foil);
+  face.addEventListener('click', open);
+  face.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+  body.appendChild(face);
+  el.appendChild(body);
+  el.appendChild(h('div', { class: 'preview-note' }, cardPreview.note || ''));
 }
 
 // ---------- hand ----------
@@ -1099,8 +1186,8 @@ function renderHandPanel(actionGroups) {
     const def = cardDef(state, c.cardId);
     const slot = h('div', { class: 'hand-slot', 'data-key': `hand:${c.uid}` });
     const spread = n > 1 ? (i - (n - 1) / 2) : 0;
-    slot.style.setProperty('--fan-rot', `${spread * 2.2}deg`);
-    slot.style.setProperty('--fan-y', `${Math.abs(spread) * 3}px`);
+    slot.style.setProperty('--fan-rot', `${spread * 1.3}deg`);
+    slot.style.setProperty('--fan-y', `${Math.abs(spread) * 1.6}px`);
     const face = buildCardFace(def, { large: true });
     if (!wizard && actionGroups) {
       if (def.type === 'character' && actionGroups.byHandRecruit.has(c.uid)) {
@@ -1135,22 +1222,87 @@ function statChip(key, iconName, text, cls = '', title = '') {
  * in front of it where the work happens. Your rival's rows are stacked in mirror image above the
  * middle, so the two towns face each other across the Capital City.
  */
-function renderTownHead(pi) {
+function renderNamePlate(pi, elId) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  el.innerHTML = '';
   const p = state.players[pi];
   const isHuman = pi === humanIndex;
-  const head = h('div', { class: 'town-head' });
+  el.classList.toggle('active-turn', state.active === pi);
+  el.dataset.key = `nameplate:${pi}`;
   const deckName = state.set.decksById[p.deckId] ? state.set.decksById[p.deckId].name : '';
-  head.appendChild(h('div', { class: 'pname', 'data-key': `pname:${pi}` }, [
+  el.appendChild(h('div', { class: 'np-mark', 'aria-hidden': 'true' }, '❦'));
+  el.appendChild(h('div', { class: 'pname', 'data-key': `pname:${pi}` }, [
     h('span', { class: 'pname-main' }, isHuman ? `You · ${p.name}` : p.name),
-    h('span', { class: 'pname-deck' }, deckName),
+    deckName ? h('span', { class: 'pname-deck' }, deckName) : null,
   ]));
   const stats = h('div', { class: 'statbar' });
-  stats.appendChild(statChip(`supply:${pi}`, 'supply', `${p.supply} Supply`, 'supply', 'Supply in the wallet'));
-  if (p.escrow) stats.appendChild(statChip(`escrow:${pi}`, 'escrow', `${p.escrow} in escrow`, 'escrow', 'Supply committed to open bids'));
-  stats.appendChild(statChip(`statues:${pi}`, 'statue', `${p.victoryRow.length} / ${state.rules.victory.statuesToWin} Statues`, 'statues', 'Statues held; control a majority to win'));
-  if (!isHuman) stats.appendChild(statChip(`hand:${pi}`, 'hand', `${p.hand.length} in hand`, '', 'Cards in hand'));
-  head.appendChild(stats);
-  return head;
+  stats.appendChild(statChip(`supply:${pi}`, 'supply', String(p.supply), 'supply', 'Supply in the wallet'));
+  if (p.escrow) stats.appendChild(statChip(`escrow:${pi}`, 'escrow', String(p.escrow), 'escrow', 'Supply committed to open bids'));
+  stats.appendChild(statChip(`statues:${pi}`, 'statue', `${p.victoryRow.length}/${state.rules.victory.statuesToWin}`, 'statues', 'Statues held; control a majority to win'));
+  // The choreography flies a drawn card to whatever stands for that Mayor's hand: your own hand
+  // rail carries `hand:you`, so your rival's tally has to be the one that carries theirs.
+  stats.appendChild(statChip(isHuman ? `handcount:${pi}` : `hand:${pi}`, 'hand', String(p.hand.length), '', 'Cards in hand'));
+  stats.appendChild(statChip(`deckcount:${pi}`, 'deck', String(p.deck.length), '', 'Cards left in the deck'));
+  stats.appendChild(statChip(`dumpcount:${pi}`, 'dump', String(p.dump.length), '', 'Cards in the Town Dump'));
+  el.appendChild(stats);
+  if (state.active === pi) el.appendChild(h('div', { class: 'np-turn' }, isHuman ? 'Your turn' : 'Their turn'));
+}
+
+/** Your rival's hand, face down, at the far edge of their half — the mirror of your own hand rail. */
+function renderOppHandRow(pi, elId) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  el.innerHTML = '';
+  const p = state.players[pi];
+  el.classList.toggle('active-turn', state.active === pi);
+  el.dataset.key = `opphand:${pi}`;
+  el.appendChild(h('div', { class: 'town-sub-title' }, [icon('hand'), `${p.name}'s Hand · ${p.hand.length}`]));
+  const backs = h('div', { class: 'hand-backs', 'data-key': `handbacks:${pi}` });
+  if (!p.hand.length) backs.appendChild(h('div', { class: 'empty-note' }, 'Empty-handed.'));
+  for (let i = 0; i < p.hand.length; i++) backs.appendChild(buildCardBack({ mini: true }));
+  el.appendChild(backs);
+}
+
+/**
+ * What one Mayor has in play and has just done: their Limited Events, which sit beside the market
+ * they are usually aimed across, and the last few lines of the Chronicle that are theirs. The two
+ * rails face each other on either side of the Capital City.
+ */
+const ACT_KINDS = new Set([
+  'recruit', 'shiftStart', 'ability', 'playEvent', 'buildTown', 'playHeld', 'announce', 'raise',
+  'rehire', 'demolish', 'layOff', 'clearWork', 'buy', 'statue',
+]);
+function renderActsRail(pi, elId) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  el.innerHTML = '';
+  const p = state.players[pi];
+  const mine = pi === humanIndex;
+  el.classList.toggle('active-turn', state.active === pi);
+  el.appendChild(h('div', { class: 'town-sub-title' }, [icon('limited'), mine ? 'Your Actions' : `${p.name}'s Actions`]));
+
+  const evRow = h('div', { class: 'acts-events' });
+  if (!p.events.length) evRow.appendChild(h('div', { class: 'empty-note' }, 'No Events in play.'));
+  for (const e of p.events) {
+    const def = cardDef(state, e.cardId);
+    const box = h('div', { class: 'mini-card', 'data-key': `event:${e.uid}`, 'data-card': def.id });
+    box.appendChild(buildCardFace(def));
+    box.appendChild(h('div', { class: 'badge turns', title: `${e.remaining} turn${e.remaining === 1 ? '' : 's'} left` }, [icon('busy'), String(e.remaining)]));
+    evRow.appendChild(box);
+  }
+  el.appendChild(evRow);
+
+  const recent = [];
+  for (let i = state.log.length - 1; i >= 0 && recent.length < 4; i--) {
+    const entry = state.log[i];
+    if (entry.player !== pi || !entry.fx || !ACT_KINDS.has(entry.fx.kind)) continue;
+    recent.push(entry);
+  }
+  const feed = h('div', { class: 'acts-feed' });
+  if (!recent.length) feed.appendChild(h('div', { class: 'empty-note' }, 'Nothing done yet.'));
+  for (const entry of recent) feed.appendChild(h('p', { class: `acts-line ${mine ? 'you' : 'rival'}` }, entry.text));
+  el.appendChild(feed);
 }
 
 /**
@@ -1165,8 +1317,6 @@ function renderBackRow(pi, elId) {
   const isHuman = pi === humanIndex;
   el.classList.toggle('active-turn', state.active === pi);
   el.dataset.key = `backrow:${pi}`;
-
-  el.appendChild(renderTownHead(pi));
 
   const row = h('div', { class: 'town-row' });
 
@@ -1275,33 +1425,6 @@ function renderFrontRow(pi, elId, actionGroups) {
   }
   el.appendChild(townSub);
 
-  if (!isHuman) {
-    const handWrap = h('div', { class: 'town-sub opp-hand' });
-    handWrap.appendChild(h('div', { class: 'town-sub-title' }, [icon('hand'), `Hand · ${p.hand.length} card${p.hand.length === 1 ? '' : 's'}`]));
-    const backs = h('div', { class: 'hand-backs', 'data-key': `handbacks:${pi}` });
-    for (let i = 0; i < p.hand.length; i++) backs.appendChild(buildCardBack({ mini: true }));
-    handWrap.appendChild(backs);
-    el.appendChild(handWrap);
-  }
-}
-
-/** One Mayor's Limited Events, which sit in the middle of the table at their own right hand. */
-function renderEventCorner(pi) {
-  const p = state.players[pi];
-  const mine = pi === humanIndex;
-  const wrap = h('div', { class: `event-corner ${mine ? 'you' : 'rival'}` });
-  wrap.appendChild(h('div', { class: 'town-sub-title' }, [icon('limited'), mine ? 'Your Events' : `${p.name}'s Events`]));
-  const evRow = h('div', { class: 'mini-row' });
-  if (!p.events.length) evRow.appendChild(h('div', { class: 'empty-note' }, 'None active.'));
-  for (const e of p.events) {
-    const def = cardDef(state, e.cardId);
-    const box = h('div', { class: 'mini-card', 'data-key': `event:${e.uid}`, 'data-card': def.id });
-    box.appendChild(buildCardFace(def));
-    box.appendChild(h('div', { class: 'badge' }, `${e.remaining} turn${e.remaining === 1 ? '' : 's'} left`));
-    evRow.appendChild(box);
-  }
-  wrap.appendChild(evRow);
-  return wrap;
 }
 
 // ---------- pick / order / confirm modal ----------
@@ -1519,13 +1642,22 @@ export function renderGame() {
   try {
     renderTurnBanner();
     const actionGroups = currentActionGroups();
+    // Your rival's half is the mirror of yours: name plate, hand, back row, animals — then the
+    // middle of the table, and yours reading back out again.
+    renderNamePlate(aiIndex, 'oppNamePlate');
+    renderOppHandRow(aiIndex, 'oppHandRow');
     renderBackRow(aiIndex, 'oppBackRow');
     renderFrontRow(aiIndex, 'oppFrontRow', null);
+    renderActsRail(aiIndex, 'oppActs');
     renderCapitalCity();
+    renderActsRail(humanIndex, 'yourActs');
     renderFrontRow(humanIndex, 'yourFrontRow', actionGroups);
     renderBackRow(humanIndex, 'yourBackRow');
     renderHand(actionGroups);
+    renderNamePlate(humanIndex, 'yourNamePlate');
     renderActionRail(actionGroups);
+    previewFromLog();
+    renderPreviewRail();
     renderLog();
     renderModal();
   } catch (e) {
