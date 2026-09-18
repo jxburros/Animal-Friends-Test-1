@@ -12,6 +12,7 @@ import { fullArtCount } from './full-art.js';
 import { VERSIONS } from './versions.js';
 import { openDeckBuilder } from './deckbuilder.js';
 import { openBook } from './book.js';
+import { initLore, openLore, loreCounts, emptyLore } from './lore.js';
 import { buildHelp, openHelp, openWelcome, hasBeenWelcomed } from './help.js';
 import { createTutorialSession, stopTutorial } from './tutorial.js';
 import { openProfiles, chooseAvatar, avatarNode } from './profiles.js';
@@ -29,6 +30,7 @@ const RULES_URL = new URL('../../spec/game.json', import.meta.url);
 const SET_URL = new URL('../../spec/maker_card_set.json', import.meta.url);
 const PACKAGE_URL = new URL('../../package.json', import.meta.url);
 const PROGRESSION_URL = new URL('../../spec/progression.json', import.meta.url);
+const LORE_URL = new URL('../../spec/lore.json', import.meta.url);
 
 let rules = null;
 // The collection, as read off the shelf. Kept raw — the character backstories live on it, and the
@@ -43,6 +45,9 @@ let renderTicker = null;
 // The Mayor playing, and what winning pays them. Everything a Mayor owns is read through these.
 let profile = null;
 let progression = {};
+// The town's own writing: the story, the places and the cross-links the Lore Directory reads.
+// It is text, not rules — a missing file costs the Directory its contents, not the game its start.
+let loreText = null;
 // The game on the table: its id on the Mayor's shelf, the decks it was built from, and whether it
 // is the tutorial — which is a lesson, not a game, so it is neither saved nor paid for.
 let currentGameId = null;
@@ -55,7 +60,7 @@ function $(id) { return document.getElementById(id); }
 
 const SCREENS = {
   profiles: 'screen-profiles', home: 'screen-home', menu: 'screen-menu', deck: 'screen-deck',
-  book: 'screen-book', shop: 'screen-shop', game: 'screen-game',
+  book: 'screen-book', shop: 'screen-shop', game: 'screen-game', lore: 'screen-lore',
 };
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach((s) => s.classList.remove('active'));
@@ -115,6 +120,17 @@ function renderHome() {
     + `<span class="mode-stat">${collection.cards.length} cards · ${VERSIONS.length} printings</span>`;
   book.addEventListener('click', openTheBook);
   el.appendChild(book);
+
+  // The third door: the writing the cards came out of — the tale, the cast and the places.
+  const counts = loreCounts();
+  const lore = document.createElement('button');
+  lore.type = 'button';
+  lore.className = 'mode-card';
+  lore.innerHTML = '<span class="mode-tagline">The story</span><span class="mode-name">Lore</span>'
+    + '<span class="mode-blurb">The tale of the First Boroughs, everyone who lives in them, and the places they are argued over in \u2014 each of them linked to the cards it is printed on.</span>'
+    + `<span class="mode-stat">${counts.characters} character${counts.characters === 1 ? '' : 's'} \u00b7 ${counts.places} place${counts.places === 1 ? '' : 's'} \u00b7 ${counts.chapters} chapter${counts.chapters === 1 ? '' : 's'}</span>`;
+  lore.addEventListener('click', openTheLore);
+  el.appendChild(lore);
 }
 
 function openTheBook() {
@@ -125,7 +141,15 @@ function openTheBook() {
     shelf,
     profile,
     onClose: goHome,
+    onLore: openTheLore,
   });
+}
+
+/** The Lore Directory: the story, the cast and the places, and the cards each of them prints on. */
+function openTheLore() {
+  showScreen('lore');
+  initLore({ rules, set: collection, shelf, profile, lore: loreText });
+  openLore($('loreHost'), { onClose: goHome, onBook: openTheBook });
 }
 
 function goHome() {
@@ -151,6 +175,7 @@ function openMayors() {
 function playAs(chosen) {
   profile = chosen;
   setActiveProfile(chosen.id);
+  initLore({ profile });
   customDecks = ownDecks();
   chosenDeckId = null;
   goHome();
@@ -707,17 +732,25 @@ function stampEdition() {
 let version = null;
 
 async function main() {
-  const [loadedRules, loadedSet, loadedVersion, loadedProgression] = await Promise.all([
+  const [loadedRules, loadedSet, loadedVersion, loadedProgression, loadedLore] = await Promise.all([
     loadSpec(RULES_URL, 'the rules (spec/game.json)'),
     loadSpec(SET_URL, 'the card set (spec/maker_card_set.json)'),
     loadVersion(),
     // What winning pays is tuning, not rules: a missing file falls back to the defaults in
     // engine/profile.js rather than stopping the game from opening.
     loadSpec(PROGRESSION_URL, 'the progression (spec/progression.json)').catch(() => ({})),
+    // The town's writing is text, not rules: if it cannot be read the Directory opens empty and
+    // says so, rather than the game refusing to start over a missing story.
+    loadSpec(LORE_URL, 'the lore (spec/lore.json)').catch((e) => {
+      // eslint-disable-next-line no-console
+      console.warn(`The Lore Directory has nothing to read: ${e.message}`);
+      return emptyLore();
+    }),
   ]);
   rules = loadedRules;
   version = loadedVersion;
   progression = loadedProgression || {};
+  loreText = loadedLore || emptyLore();
   // One collection, and the game cannot start without all of it: cards to play, town decks to play
   // them out of, and a Capital City to fight over.
   if (!Array.isArray(loadedSet.cards) || !loadedSet.cards.length) throw new Error('The card set has no cards.');
@@ -725,6 +758,9 @@ async function main() {
   if (!Array.isArray(loadedSet.marketDecks) || !loadedSet.marketDecks.length) throw new Error('The card set has no Capital City.');
   shelf = loadedSet;
   collection = indexSet(loadedSet);
+  // The Directory is wired up before any screen opens: the Book links characters straight into it,
+  // so openCharacterModal has to work without the Directory itself ever having been visited.
+  initLore({ rules, set: collection, shelf, profile, lore: loreText });
   stampEdition();
   wireMenu();
   loadPace();

@@ -1,0 +1,47 @@
+{
+  "$comment": "SCHEMA PLACEHOLDER — the Lore Directory's text. Reorganised from docs/TOWN_BIBLE.md and the cards' own flavor and backstories in spec/maker_card_set.json; it invents nothing. Structure: story.sections[] (the game's tale, both places together); settings.capital and settings.boroughs (each place on its own: history[] then places[]); relationships[] (pairs and groups of characters, from the bible's Relationships); characterNotes{} (optional per-character cross-links). Any `cards` array holds card ids from maker_card_set.json; any `characters` array holds character names from its `characters` list; any `places` array holds refs of the form 'capital:<placeId>' or 'boroughs:<placeId>'.",
+  "story": {
+    "title": "The First Boroughs",
+    "tagline": "Two towns, one Capital City, and the name that whoever prospers gets to give.",
+    "sections": [
+      {
+        "id": "the-premise",
+        "heading": "Two towns and a Capital City",
+        "paragraphs": ["PLACEHOLDER — the real text comes from docs/TOWN_BIBLE.md."],
+        "cards": [],
+        "characters": [],
+        "places": []
+      }
+    ]
+  },
+  "settings": {
+    "capital": {
+      "id": "capital",
+      "name": "Capital City",
+      "tagline": "PLACEHOLDER",
+      "history": [
+        { "id": "founding", "heading": "PLACEHOLDER", "paragraphs": ["PLACEHOLDER"], "cards": [], "characters": [], "places": [] }
+      ],
+      "places": [
+        { "id": "the-observatory", "name": "The Observatory", "summary": "PLACEHOLDER one line", "paragraphs": ["PLACEHOLDER"], "cards": [], "characters": [], "places": [] }
+      ]
+    },
+    "boroughs": {
+      "id": "boroughs",
+      "name": "The Boroughs",
+      "tagline": "PLACEHOLDER",
+      "history": [
+        { "id": "the-bridge", "heading": "PLACEHOLDER", "paragraphs": ["PLACEHOLDER"], "cards": [], "characters": [], "places": [] }
+      ],
+      "places": [
+        { "id": "beans-cafe", "name": "Bean's Café", "summary": "PLACEHOLDER one line", "paragraphs": ["PLACEHOLDER"], "cards": [], "characters": ["Bean", "Peanut"], "places": [] }
+      ]
+    }
+  },
+  "relationships": [
+    { "id": "bean-peanut", "characters": ["Bean", "Peanut"], "text": "PLACEHOLDER" }
+  ],
+  "characterNotes": {
+    "Barrow": { "places": ["capital:the-observatory"], "story": ["the-premise"] }
+  }
+}
