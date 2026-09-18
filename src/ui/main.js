@@ -139,6 +139,7 @@ function openTheBook() {
     rules,
     set: collection,
     shelf,
+    lore: loreText,
     profile,
     onClose: () => { closeBook(); goHome(); },
     onLore: () => { closeBook(); openTheLore(); },
