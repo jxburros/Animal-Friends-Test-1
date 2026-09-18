@@ -283,14 +283,48 @@ function openBookCardModal(card, version = printingFor(card)) {
     h('p', { class: 'book-card-kicker' }, `${card.type || 'Card'} · ${card.rarity || 'Common'}`),
     h('h2', {}, card.type === 'character' && card.title ? `${card.name}, ${card.title}` : card.name),
   ]);
+  let shown = version;
+  const printingName = (key) => (VERSIONS.find((entry) => entry.key === key) || {}).name || key;
+  const printingCell = h('dd', {}, printingName(shown));
   const facts = [
     ['Cost', card.cost], ['Species', card.species], ['Study', card.study],
-    ['Rarity', card.rarity || 'Common'], ['Printing', (VERSIONS.find((entry) => entry.key === version) || {}).name || version],
+    ['Rarity', card.rarity || 'Common'],
   ].filter(([, value]) => value !== undefined && value !== null && value !== '');
-  if (facts.length) {
-    const list = h('dl', { class: 'book-card-facts' });
-    for (const [label, value] of facts) list.append(h('div', {}, [h('dt', {}, label), h('dd', {}, String(value))]));
-    details.appendChild(list);
+  const list = h('dl', { class: 'book-card-facts' });
+  for (const [label, value] of facts) list.append(h('div', {}, [h('dt', {}, label), h('dd', {}, String(value))]));
+  list.append(h('div', {}, [h('dt', {}, 'Printing'), printingCell]));
+  details.appendChild(list);
+
+  // Every printing this card was painted in, turned over in the reader's hand: the face on the left
+  // is swapped where it stands, so the entry never has to be closed and opened to compare two.
+  const printings = versionsOf(card);
+  if (printings.length > 1) {
+    const row = h('div', { class: 'version-row book-card-printings' });
+    const chips = new Map();
+    const show = (key) => {
+      shown = key;
+      chosenVersion.set(card.id, key);
+      printingCell.textContent = printingName(key);
+      visual.replaceChildren(buildCardFace(card, { large: true, interactive: false, foilInteractive: true, version: key }));
+      for (const [chipKey, chip] of chips) {
+        chip.classList.toggle('on', chipKey === key);
+        chip.setAttribute('aria-pressed', chipKey === key ? 'true' : 'false');
+      }
+    };
+    for (const v of printings) {
+      const held = ownsThisPrinting(card.id, v.key);
+      const chip = iconButton(v.key, held ? `${v.name} — ${v.blurb}` : `${v.name}: printed, but not in your collection`,
+        () => show(v.key), {
+          cls: `version-chip${held ? '' : ' dim'}`,
+          pressed: shown === v.key,
+          disabled: !held,
+          extra: held ? null : h('i', { class: 'ico ib-lock', html: iconSVG('locked') }),
+        });
+      chips.set(v.key, chip);
+      row.appendChild(chip);
+    }
+    details.appendChild(h('h3', {}, 'Printings'));
+    details.appendChild(row);
   }
   if (effectText(card)) details.appendChild(h('p', { class: 'book-card-rules' }, effectText(card)));
   if (card.flavor) details.appendChild(h('p', { class: 'book-card-flavor' }, card.flavor));
@@ -316,7 +350,12 @@ function openBookCardModal(card, version = printingFor(card)) {
   }
   details.appendChild(h('button', { class: 'primary book-card-dialog-close', type: 'button', onclick: () => dialog.close() }, 'Return to the Book'));
   dialog.append(visual, details);
-  dialog.addEventListener('close', () => { dialog.remove(); if (previous && previous.isConnected) previous.focus(); });
+  dialog.addEventListener('close', () => {
+    dialog.remove();
+    // A printing turned over in the entry is the printing the page shows afterwards.
+    if (shown !== version) { render(); return; }
+    if (previous && previous.isConnected) previous.focus();
+  });
   dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
   document.body.appendChild(dialog);
   dialog.showModal();

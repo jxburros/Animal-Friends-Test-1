@@ -24,6 +24,43 @@ Use case: stylized-concept. Asset type: reusable game UI background for an open-
 
 `src/ui/polish.css` adds the unified felt tabletop, tactile controls, literal open-book collection and dialogs, improved panel depth, responsive layouts and reduced-motion fallbacks. `src/ui/polish.js` supplies the lightweight pointer ripple used by controls; gameplay choreography remains in `fx.js` and `choreo.js`.
 
+## One material: the card
+
+Everything the interface is built out of is cut from the card's own stock, so a panel, a button and a
+card read as the same object at three sizes. `src/ui/polish.css` names the material once, as custom
+properties — `--ui-card-edge`, `--ui-card-trim`, `--ui-card-radius`, `--ui-card-frame`,
+`--ui-card-paper` — and every box in the game (menu fields, mode cards, deck cards, dialogs, the
+Mayors' shelf, the Post Office, the Lore Directory's rows and tiles) is drawn with them: a doubled
+gold edge, an ivory frame inside it, printed paper, and corners that are round on one diagonal and
+clipped on the other, exactly as `storybook.css` cuts a card face.
+
+A button is a small card and behaves like one: it lifts, turns half a degree and opens a shadow
+under itself when a hand comes near, and settles flat when it is pressed. Anything a Mayor can pick
+up — a deck, a Mayor, an unfinished game, a character tile, a chapter — is picked up the same way.
+`prefers-reduced-motion` drops every one of those transforms.
+
+## The painted page rectangles
+
+Three screens are laid out on the same painting, `assets/ui/open-storybook-table.png`: the Book, the
+Lore Directory, and the Welcome and How-to-play spreads. `src/ui/book.css` publishes where the paper
+actually is — `--page-l-x/y/w/h` and `--page-r-x/y/w/h`, measured off the painting — and the other
+three read them instead of guessing a margin, so nothing ever prints on the spine, the gilt corners
+or the table.
+
+The Lore Directory is a real spread because of it: the left page carries the title, the tabs, the
+search and the contents (the chapter list, the species and study filters, or the two settings), and
+the right page is the reading page. Each scrolls inside its own paper and fades at the foot. Below
+760px the two fold back into one column.
+
+## The Book's card entry
+
+Clicking a card in the Book opens it as a catalogue entry rather than an enlarged picture: the card
+at reading size, its cost, species, study, rarity and printing, its rules text and its flavour, every
+printing it was painted in (turning one over swaps the face where it stands, and the page agrees
+afterwards), and doors into everything it is tied to — the character's entry in the Lore Directory,
+every chapter or place that prints this card, and the other cards those name. Each door opens the
+next entry in the same reader, so a Mayor can walk the collection without going back to the shelf.
+
 ## Validation
 - 423 existing tests passed.
 - Full-game smoke run completed: winner at turn 67.
