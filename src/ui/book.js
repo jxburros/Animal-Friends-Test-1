@@ -20,7 +20,7 @@
 import { buildCardFace, setPreviewContext, raritySlug, effectText } from './render.js';
 import { iconSVG } from './art.js';
 import { VERSIONS, versionsOf, hasVersion, defaultVersionKey } from './versions.js';
-import { openCharacterModal } from './lore.js';
+import { openCharacterModal, openPlaceModal, openStoryModal } from './lore.js';
 import { characterOf } from '../engine/characters.js';
 import { ownedCopies, ownsPrinting, collectionSize } from '../engine/profile.js';
 import { RARITIES } from '../engine/power.js';
@@ -145,6 +145,11 @@ function iconButton(iconName, label, onClick, { pressed = null, disabled = false
 function allCards() {
   return ctx.cards;
 }
+function cardById(id) {
+  if (!id || !ctx) return null;
+  if (ctx.set && ctx.set.cardsById && ctx.set.cardsById[id]) return ctx.set.cardsById[id];
+  return allCards().find((card) => card.id === id) || null;
+}
 
 function matches(card) {
   if (filter.type !== 'all' && card.type !== filter.type) return false;
@@ -215,6 +220,109 @@ function openCardStory(card) {
   else openTownStory(card);
 }
 
+/** Lore pages that print this card by id. These are real links into the Directory, not search hints. */
+function loreRefsForCard(card) {
+  const L = ctx && ctx.lore;
+  if (!L) return [];
+  const found = [];
+  const carries = (entry) => Array.isArray(entry && entry.cards) && entry.cards.includes(card.id);
+  for (const entry of (L.story && L.story.sections) || []) {
+    if (carries(entry)) found.push({ kind: 'story', id: entry.id, label: entry.heading || 'A chapter of the story' });
+  }
+  for (const sideKey of ['capital', 'boroughs']) {
+    const side = L.settings && L.settings[sideKey];
+    if (!side) continue;
+    for (const entry of side.history || []) {
+      if (carries(entry)) found.push({ kind: 'story', id: entry.id, label: entry.heading || `${side.name} history` });
+    }
+    for (const place of side.places || []) {
+      if (!carries(place)) continue;
+      const slug = String(place.id || '').replace(/^.*\.place\./, '');
+      found.push({ kind: 'place', id: `${sideKey}:${slug}`, label: place.name || slug });
+    }
+  }
+  return found;
+}
+
+/** Cards tied to this one by character or by a shared, explicitly-authored lore entry. */
+function relatedCardsFor(card, loreRefs) {
+  const ids = new Set();
+  const who = characterOf(card);
+  if (who) for (const candidate of allCards()) if (candidate.id !== card.id && characterOf(candidate) === who) ids.add(candidate.id);
+  const refIds = new Set(loreRefs.map((ref) => ref.id));
+  const L = ctx && ctx.lore;
+  const consider = (entry) => {
+    if (!entry || !refIds.has(entry.id)) return;
+    for (const id of entry.cards || []) if (id !== card.id) ids.add(id);
+  };
+  if (L) {
+    for (const entry of (L.story && L.story.sections) || []) consider(entry);
+    for (const sideKey of ['capital', 'boroughs']) {
+      const side = L.settings && L.settings[sideKey];
+      for (const entry of (side && side.history) || []) consider(entry);
+      for (const place of (side && side.places) || []) {
+        const slug = String(place.id || '').replace(/^.*\.place\./, '');
+        if (refIds.has(`${sideKey}:${slug}`)) for (const id of place.cards || []) if (id !== card.id) ids.add(id);
+      }
+    }
+  }
+  return [...ids].map(cardById).filter(Boolean).slice(0, 12);
+}
+
+/** The Book's reader: card, complete printed details, and doors into every known connection. */
+function openBookCardModal(card, version = printingFor(card)) {
+  const previous = document.activeElement;
+  const loreRefs = loreRefsForCard(card);
+  const related = relatedCardsFor(card, loreRefs);
+  const who = characterOf(card);
+  const dialog = h('dialog', { class: 'book-card-dialog', tabindex: '-1', 'aria-label': `Read ${card.name}` });
+  const visual = h('div', { class: 'book-card-dialog-visual' }, [
+    buildCardFace(card, { large: true, interactive: false, foilInteractive: true, version }),
+  ]);
+  const details = h('div', { class: 'book-card-dialog-details' }, [
+    h('p', { class: 'book-card-kicker' }, `${card.type || 'Card'} · ${card.rarity || 'Common'}`),
+    h('h2', {}, card.type === 'character' && card.title ? `${card.name}, ${card.title}` : card.name),
+  ]);
+  const facts = [
+    ['Cost', card.cost], ['Species', card.species], ['Study', card.study],
+    ['Rarity', card.rarity || 'Common'], ['Printing', (VERSIONS.find((entry) => entry.key === version) || {}).name || version],
+  ].filter(([, value]) => value !== undefined && value !== null && value !== '');
+  if (facts.length) {
+    const list = h('dl', { class: 'book-card-facts' });
+    for (const [label, value] of facts) list.append(h('div', {}, [h('dt', {}, label), h('dd', {}, String(value))]));
+    details.appendChild(list);
+  }
+  if (effectText(card)) details.appendChild(h('p', { class: 'book-card-rules' }, effectText(card)));
+  if (card.flavor) details.appendChild(h('p', { class: 'book-card-flavor' }, card.flavor));
+
+  const openLinkedLore = (ref) => {
+    dialog.close();
+    queueMicrotask(() => ref.kind === 'place' ? openPlaceModal(ref.id) : openStoryModal(ref.id));
+  };
+  if (who || loreRefs.length) {
+    details.appendChild(h('h3', {}, 'Related lore'));
+    const links = h('div', { class: 'book-card-links' });
+    if (who) links.appendChild(h('button', { type: 'button', onclick: () => {
+      dialog.close(); queueMicrotask(() => openCharacterModal(who));
+    } }, `Read about ${who}`));
+    for (const ref of loreRefs) links.appendChild(h('button', { type: 'button', onclick: () => openLinkedLore(ref) }, ref.label));
+    details.appendChild(links);
+  }
+  if (related.length) {
+    details.appendChild(h('h3', {}, 'Related cards'));
+    details.appendChild(h('div', { class: 'book-card-links related-cards' }, related.map((next) => h('button', {
+      type: 'button', onclick: () => { dialog.close(); queueMicrotask(() => openBookCardModal(next)); },
+    }, next.type === 'character' && next.title ? `${next.name}, ${next.title}` : next.name))));
+  }
+  details.appendChild(h('button', { class: 'primary book-card-dialog-close', type: 'button', onclick: () => dialog.close() }, 'Return to the Book'));
+  dialog.append(visual, details);
+  dialog.addEventListener('close', () => { dialog.remove(); if (previous && previous.isConnected) previous.focus(); });
+  dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+  document.body.appendChild(dialog);
+  dialog.showModal();
+  dialog.focus({ preventScroll: true });
+}
+
 // ---------- one card on the page ----------
 
 /** The printing a card opens on: the reader's own choice, then the filter, then one they hold. */
@@ -234,8 +342,19 @@ function buildEntry(card) {
   const slot = h('div', { class: `card-slot${owned ? '' : ' locked'}` });
 
   if (owned) {
+    const version = printingFor(card);
+    slot.classList.add('openable');
+    slot.setAttribute('role', 'button');
+    slot.setAttribute('tabindex', '0');
+    slot.setAttribute('aria-label', `Open ${card.name} card details`);
+    slot.addEventListener('click', () => openBookCardModal(card, version));
+    slot.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      openBookCardModal(card, version);
+    });
     slot.appendChild(h('div', { class: 'bc-face' }, [
-      buildCardFace(card, { large: false, interactive: true, version: printingFor(card) }),
+      buildCardFace(card, { large: false, interactive: false, foilInteractive: true, version }),
     ]));
     const held = heldCount(card.id);
     if (held) slot.appendChild(h('span', { class: 'owned-count', title: `You have ${held}` }, `×${held}`));

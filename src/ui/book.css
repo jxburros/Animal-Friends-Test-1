@@ -205,6 +205,15 @@
   height: calc(var(--card-h) * var(--face-scale, 1));
 }
 .bc-face { position: absolute; top: 0; left: 0; transform: scale(var(--face-scale, 1)); transform-origin: top left; }
+.book-card .card-slot.openable { cursor: pointer; border-radius: calc(10px * var(--face-scale, 1)); }
+.book-card .card-slot.openable .card-face { transition: transform .16s ease, filter .16s ease, box-shadow .16s ease; }
+.book-card .card-slot.openable:hover .card-face,
+.book-card .card-slot.openable:focus-visible .card-face {
+  transform: translateY(-3px) rotate(-.7deg);
+  filter: brightness(1.045) saturate(1.04);
+  box-shadow: 0 12px 22px rgba(54, 35, 14, .3);
+}
+.book-card .card-slot.openable:focus-visible { outline: 3px solid #795b26; outline-offset: 4px; }
 
 /* A card that has not been earned: a darkened space with a question mark, rarity still showing. */
 .book-card .card-slot.locked {
@@ -256,6 +265,45 @@
   box-shadow: inset 0 1px rgba(255, 255, 255, .7), 0 1px 3px rgba(60, 42, 18, .3);
 }
 .book-ib.story-btn .ico { width: 14px; height: 14px; }
+
+/* A clicked Book card opens as a readable card-catalogue entry, not just an enlarged picture. */
+.book-card-dialog {
+  width: min(960px, 94vw); max-width: 960px; max-height: 92vh; overflow: auto;
+  grid-template-columns: auto minmax(0, 1fr); gap: clamp(20px, 4vw, 42px); align-items: start;
+  padding: clamp(20px, 4vw, 38px); border: 3px double #9d7d46; border-radius: 18px 12px 18px 12px;
+  color: var(--ink); background: radial-gradient(ellipse at top, #fff8e7, #e8d6b1);
+  box-shadow: inset 0 0 0 3px rgba(255,250,229,.64), 0 28px 80px rgba(0,0,0,.58);
+}
+.book-card-dialog[open] { display: grid; }
+.book-card-dialog::backdrop { background: rgba(8,20,15,.86); backdrop-filter: blur(8px); }
+.book-card-dialog-visual { position: sticky; top: 0; padding: 8px; }
+.book-card-dialog-details { min-width: 0; }
+.book-card-kicker { margin: 2px 0 3px; color: #876827; font: 700 11px/1.2 var(--sans); letter-spacing: .12em; text-transform: uppercase; }
+.book-card-dialog h2 { margin: 0 0 12px; color: #294634; font-size: clamp(24px, 4vw, 38px); }
+.book-card-dialog h3 { margin: 18px 0 8px; padding-bottom: 4px; border-bottom: 1px solid rgba(122,89,39,.35); font-size: 15px; font-variant: small-caps; letter-spacing: .08em; }
+.book-card-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 7px; margin: 0 0 14px; }
+.book-card-facts div { padding: 8px 9px; border: 1px solid rgba(132,97,43,.38); border-radius: 8px 5px 8px 5px; background: rgba(255,250,232,.55); }
+.book-card-facts dt { color: #786547; font: 700 10px/1.2 var(--sans); letter-spacing: .08em; text-transform: uppercase; }
+.book-card-facts dd { margin: 2px 0 0; font: 600 13px/1.25 var(--sans); }
+.book-card-rules { padding: 12px 14px; border-left: 4px solid #4f7556; background: rgba(255,250,232,.58); font: 500 14px/1.5 var(--sans); }
+.book-card-flavor { color: #5d4b35; font-style: italic; line-height: 1.55; }
+.book-card-links { display: flex; flex-wrap: wrap; gap: 7px; }
+.book-card-links button { min-height: 34px; padding: 6px 10px; font-size: 12px; text-align: left; }
+.book-card-links.related-cards button { border-color: #657f68; background: linear-gradient(#f7f1dd, #dbe4cf); }
+.book-card-dialog-close { margin-top: 22px; width: 100%; }
+
+@media (max-width: 620px) {
+  .book-card-dialog[open] { display: flex; flex-direction: column; align-items: center; }
+  .book-card-dialog { width: 96vw; max-height: 96dvh; padding: 16px; }
+  .book-card-dialog-visual { position: static; }
+  .book-card-dialog-details { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book-card .card-slot.openable .card-face { transition: none; }
+  .book-card .card-slot.openable:hover .card-face,
+  .book-card .card-slot.openable:focus-visible .card-face { transform: none; }
+}
 
 /* ---------- the foot: which pages are open ---------- */
 .book-foot { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 32px; }

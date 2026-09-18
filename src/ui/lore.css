@@ -8,7 +8,7 @@
 
 /* The same table the Book lies on, so the two doors open onto one room. */
 #screen-lore.active {
-  display: block; overflow: auto; padding: 14px 16px 22px; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 14px 16px; min-height: 100vh;
   background:
     radial-gradient(ellipse at 50% 6%, rgba(224, 185, 104, .18), transparent 46rem),
     linear-gradient(rgba(11, 28, 20, .76), rgba(7, 20, 14, .92)),
@@ -16,18 +16,37 @@
 }
 
 .lore {
-  max-width: 1400px; margin: 0 auto; padding: 18px clamp(12px, 3vw, 28px) 44px;
-  color: var(--ink); background: var(--paper) var(--noise);
-  border: 2px solid var(--line2); border-radius: 14px;
-  box-shadow: var(--shadow), inset 0 0 0 3px var(--paper), inset 0 0 0 4px var(--line);
+  position: relative;
+  width: min(1536px, calc((100dvh - 28px) * 1.5), calc(100vw - 32px));
+  aspect-ratio: 3 / 2;
+  margin: 0 auto;
+  padding: 0;
+  color: var(--ink);
+  background: #e9d4a9 url('../../assets/ui/open-storybook-table.png') center / 100% 100% no-repeat;
+  border: 0;
+  border-radius: 16px;
+  box-shadow: 0 32px 90px rgba(0,0,0,.62);
+  overflow: hidden;
+}
+.lore-spread {
+  position: absolute;
+  inset: 10.5% 9% 17.5%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10%;
+  min-height: 0;
+}
+.lore-page { min-width: 0; min-height: 0; }
+.lore-page-left { display: flex; flex-direction: column; overflow: hidden; }
+.lore-page-right { overflow: auto; padding: 2px 8px 12px 2px; scrollbar-color: #a9884f transparent; }
 }
 
 /* ---------- head ---------- */
 .lore-head {
-  display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; flex-wrap: wrap;
   padding-bottom: 12px; border-bottom: 1px solid var(--line);
 }
-.lore-head h2 { font-size: clamp(24px, 4vw, 34px); font-variant: small-caps; letter-spacing: .8px; }
+.lore-head h2 { font-size: clamp(21px, 2.2vw, 32px); font-variant: small-caps; letter-spacing: .8px; }
 .lore-head-text { min-width: 0; flex: 1 1 260px; }
 .lore-head-tools { display: flex; align-items: center; gap: 8px; }
 .lore-progress {
@@ -41,7 +60,7 @@
 .lore-icon-btn svg { width: 19px; height: 19px; display: block; }
 
 /* ---------- tabs ---------- */
-.lore-tabs { margin: 10px 0 2px; }
+.lore-tabs { margin: 12px 0 4px; }
 .lore-tab { display: inline-flex; align-items: center; gap: 6px; }
 .lore-tab .ico { width: 15px; height: 15px; }
 
@@ -51,7 +70,7 @@
 .lore-search-icon svg { width: 100%; height: 100%; }
 .lore-search { flex: 1 1 auto; max-width: 340px; }
 
-.lore-body { padding-top: 8px; }
+.lore-body { padding-top: 0; }
 .lore-area { display: block; }
 .lore-count { font: 500 12px/1.4 var(--sans); color: var(--muted); margin: 10px 2px; }
 .lore-h2 { font-size: 22px; font-variant: small-caps; letter-spacing: .6px; margin: 0; }
@@ -65,7 +84,7 @@
 /* ---------- Story ---------- */
 .lore-intro {
   border-left: 3px solid var(--line2); padding: 2px 0 2px 14px; margin: 14px 0 4px;
-  max-width: 68ch;
+  max-width: none;
 }
 .lore-intro p { font-size: 15px; line-height: 1.6; margin: 0 0 10px; }
 .lore-intro .lore-h3 { border: 0; margin: 0 0 8px; padding: 0; font-size: 15px; color: var(--ink); }
@@ -87,8 +106,8 @@
 
 /* ---------- grids and tiles ---------- */
 .lore-grid { display: grid; gap: 16px 12px; align-items: start; }
-.lore-grid.characters { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-.lore-grid.places { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.lore-grid.characters { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
+.lore-grid.places { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
 
 .lore-tile {
   display: flex; flex-direction: column; align-items: center; gap: 5px; height: 100%;
@@ -219,8 +238,14 @@
 
 /* ---------- small screens ---------- */
 @media (max-width: 760px) {
-  #screen-lore.active { padding: 6px; }
-  .lore { padding: 14px 12px 32px; border-radius: 12px; }
+  #screen-lore.active { padding: 6px; align-items: flex-start; overflow: auto; }
+  .lore {
+    width: 100%; height: calc(100dvh - 12px); aspect-ratio: auto; border-radius: 12px;
+    background-size: auto 100%; background-position: 25% center;
+  }
+  .lore-spread { inset: 12% 8% 10%; display: block; overflow: auto; }
+  .lore-page-left { overflow: visible; }
+  .lore-page-right { overflow: visible; padding: 8px 0 24px; }
   .lore-head h2 { font-size: 24px; }
   .lore-search { max-width: none; }
   .lore-grid.characters { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }

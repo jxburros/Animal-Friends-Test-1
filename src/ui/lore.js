@@ -745,6 +745,10 @@ function render({ keepFocus = false } = {}) {
   const L = lore();
   host.innerHTML = '';
 
+  const spread = h('div', { class: 'lore-spread' });
+  const leftPage = h('section', { class: 'lore-page lore-page-left', 'aria-label': 'Lore directory navigation' });
+  const rightPage = h('section', { class: 'lore-page lore-page-right' });
+
   const progress = loreProgress();
   const head = h('header', { class: 'lore-head' }, [
     h('div', { class: 'lore-head-text' }, [
@@ -759,7 +763,7 @@ function render({ keepFocus = false } = {}) {
       iconButton('close', 'Close the Lore Directory', () => { closeLore(); if (onCloseFn) onCloseFn(); }, 'lore-close'),
     ]),
   ]);
-  host.appendChild(head);
+  leftPage.appendChild(head);
 
   const strip = h('div', { class: 'lore-tabs help-tabs', role: 'tablist', 'aria-label': 'The Lore Directory' });
   for (const [key, label, iconName] of TABS) {
@@ -769,7 +773,7 @@ function render({ keepFocus = false } = {}) {
       onclick: () => { tab = key; render(); },
     }, [icon(iconName), label]));
   }
-  host.appendChild(strip);
+  leftPage.appendChild(strip);
 
   if (tab !== 'story') {
     const box = h('div', { class: 'lore-searchrow' });
@@ -781,12 +785,14 @@ function render({ keepFocus = false } = {}) {
     input.addEventListener('input', () => { search = input.value.trim().toLowerCase(); render({ keepFocus: true }); });
     box.appendChild(h('span', { class: 'lore-search-icon', html: iconSVG('search'), 'aria-hidden': 'true' }));
     box.appendChild(input);
-    host.appendChild(box);
+    leftPage.appendChild(box);
   }
 
   const body = h('div', { class: 'lore-body', id: 'loreBody', role: 'tabpanel' });
   body.appendChild(tab === 'story' ? storyArea() : tab === 'characters' ? charactersArea() : settingsArea());
-  host.appendChild(body);
+  rightPage.appendChild(body);
+  spread.append(leftPage, rightPage);
+  host.appendChild(spread);
 
   if (keepFocus) {
     const el = host.querySelector('.lore-search');
