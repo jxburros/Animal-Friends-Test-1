@@ -213,12 +213,20 @@ card, every backstory, every painting. The eleven full-art portraits that were c
 cards now hang under the cards that took their places, and so do the five foil printings drawn for them,
 masks and all.
 
-- **Two doors, not three.** The cover opens on **Play** and **Book**. Play is the game: the printed
+- **Three doors.** The cover opens on **Play**, **Book** and **Lore**. Play is the game: the printed
   decks (two at the time; fifteen now), the Capital City (three of those now), and a Deck Workshop that
-  builds out of the collection. Book is the gallery: every card at reading size (528 of them today),
-  filters for type,
-  species, study and printing, a search over names and rules text, and the **Story** panel with each
-  character's backstory beside the flavor of every version of them.
+  builds out of the collection. Book is the gallery, and it is literally an open book: the cards are
+  set down on the two painted pages of `assets/ui/open-storybook-table.png`, a spread at a time, and
+  the brass buttons in the margins (or the arrow keys) turn the page. Every control on it is an icon
+  with its words in the tooltip; under an owned card sit only the printings it actually exists in; a
+  card not yet earned is a dark slot with a question mark and its rarity, nothing more. Lore is the
+  **Lore Directory**: the story of the game, every character with their backstory and the cards that
+  came out of it, and the two settings — Capital City and The Boroughs — each with its history and
+  its notable places. Characters, places and chapters open as popout dialogs that link to one another
+  and to the cards. The text lives in `spec/lore.json`, reorganised from the town bible and the cards'
+  own flavor; every entry is a separate unit with an `unlock` field (all open today) so pieces of lore
+  can later be revealed as a Mayor collects cards — `test/lore.test.mjs` keeps every cross-reference
+  honest. The Book's per-card **Story** button opens the same character dialog.
 - **The tutorial is played on the Maker cards.** The seven-turn lesson is rewritten around Peanut, the
   Ledger Apprentice, and Daisy, the Bouquet Weaver: the Resources choice, recruiting at two ranks, an
   arrival talent that asks you to choose, a shift, a promotion, an Event, the pledge ladder and the
@@ -454,11 +462,12 @@ If you test by downloading the ZIP from GitHub and unzipping it:
 - `docs/ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md` - design reference and source of truth
 - `spec/game.json` - rules constants and prototype decisions
 - `spec/progression.json` - what winning pays and what things cost: pack and deck prices, the coverage that opens a deck by itself, how many unfinished games a Mayor keeps. Tuning, not rules; the defaults in `src/engine/profile.js` stand in if the file is missing
+- `spec/lore.json` - the Lore Directory's text: the story, Capital City and The Boroughs (history and notable places), relationships, and per-character cross-links. Reorganised from `docs/TOWN_BIBLE.md` and the cards; it invents nothing. Every entry has an `unlock` (null today) and `suggestedUnlocks` names the natural card for each, for when lore is earned rather than read
 - `spec/species.json` - the ten species charters (centre of gravity, hole, signature); the contract `npm run identity` checks
 - `spec/maker_card_set.json` - the collection, and the only card set the game reads: 625 cards, 10 40-card town decks — one per species — and 4 Capital Cities, each with a quarry of twelve virtues to raise nine from. The decks and the Capital Cities are built by `npm run decks` from stated identities rather than hand-listed. It holds each character's backstory alongside their cards, the card types the game grew into — Town Buildings, and the nineteen Tokens — and each character's `wantedVerbs`, the effects their story wanted, with a `resolved` line once the engine can say it. A Market Deck is dealt as 9 Statues raised from its `statuePool` plus a 26-card sample of its own pool — 35 cards — topped up from that pool until at least three on-reveal cards are in it, so the market keeps one size while the display varies from game to game. Writing for it is documented in two files: [WRITING_A_CHARACTER.md](docs/WRITING_A_CHARACTER.md) (the process an agent follows to write one character's cards) and [TOWN_BIBLE.md](docs/TOWN_BIBLE.md) (the shared world every backstory must agree with)
 - `src/engine/` - headless deterministic rules engine (ES modules); documented in `docs/ENGINE_API.md`. `power.js` is the power/cost model that rates every card and assigns its rarity. `profile.js` is a Mayor - their collection, decks, coins and record - and `snapshot.js` saves a game in progress and puts it back together; both are pure, so all of it is tested headlessly
 - `src/ai/` - agents: `random.js` (baseline), `heuristic.js` (opponent)
-- `src/ui/` - browser interface: `main.js` (the two doors, and the cover), `humanAgent.js`, `render.js`, `book.js` (the Book: every card, its printings and the Story panel), `versions.js` (the six printings and which cards have been painted in them), `deckbuilder.js` (the Deck Workshop), `help.js` (the welcome, quick start, rules and FAQ), `tutorial.js` (the coach chips), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations). The account layer is `profiles.js` (the shelf of Mayors and the portrait chooser), `shop.js` (the Post Office: packs, coins and the decks still to open) and `store.js` (the only file that writes progress to `localStorage`)
+- `src/ui/` - browser interface: `main.js` (the two doors, and the cover), `humanAgent.js`, `render.js`, `book.js` (the Book: every card on the pages of an open storybook, a spread at a time), `lore.js` and `lore.css` (the Lore Directory and its popout dialogs; `spec/lore.json` is its text), `versions.js` (the six printings and which cards have been painted in them), `deckbuilder.js` (the Deck Workshop), `help.js` (the welcome, quick start, rules and FAQ), `tutorial.js` (the coach chips), `styles.css`, plus `art.js` (per-card illustrations), `fx.js` (animation queue/primitives), and `choreo.js` (maps engine events to animations). The account layer is `profiles.js` (the shelf of Mayors and the portrait chooser), `shop.js` (the Post Office: packs, coins and the decks still to open) and `store.js` (the only file that writes progress to `localStorage`)
 - `src/tutorial/scenario.js` - the tutorial mini-match: the arranged decks and market, the step script (what to do and why, and which moves are allowed), and the rival's plan; DOM-free so the tests can play it
 - `index.html` - playable game
 - `scripts/` - test utilities: `smoke.mjs` (one game log), `invariants.mjs` (card conservation), `playtest.mjs` (AI vs AI), `power.mjs` (the card set sorted by power/cost), `stamp.mjs` (restamp every card's rarity and rating after editing the set), `identity.mjs` (species/study identity and power-creep gate), `build-decks.mjs` (rebuild the town decks from the ratings, or just the ones named with `--only`), `characters.mjs` (the character spreadsheet: every Character and every version they have), `characters_xlsx.py` (binds those CSVs into one workbook)

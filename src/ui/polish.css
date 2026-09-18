@@ -206,53 +206,9 @@ button.danger { border-color: #773e35; background: linear-gradient(#f5c2ad, #c97
 .db-chip.on { background: linear-gradient(#56795a, #34563f); color: #fff2d3; text-shadow: 0 1px #213b2a; }
 .db-counter { background: linear-gradient(145deg, #fff8e5, #e9d7b3); box-shadow: inset 0 0 0 2px rgba(255,255,255,.5); }
 
-/* The collection screen is the actual open Book: live cards rest across two parchment pages. */
-#screen-book.active {
-  min-height: 100vh;
-  padding: 24px;
-  background:
-    radial-gradient(ellipse at 50% 8%, rgba(224,185,104,.2), transparent 48rem),
-    linear-gradient(rgba(11,28,20,.7), rgba(7,20,14,.9)),
-    url('../../assets/ui/borough-daylight.webp') center / cover fixed;
-}
-.book {
-  position: relative;
-  isolation: isolate;
-  max-width: 1500px;
-  min-height: 900px;
-  padding: clamp(90px, 9vw, 142px) clamp(64px, 9vw, 150px) 90px;
-  border: 0;
-  border-radius: 20px;
-  background:
-    linear-gradient(to bottom, transparent 0 760px, rgba(239,222,184,.94) 920px),
-    url('../../assets/ui/open-storybook-table.png') top center / 100% auto no-repeat,
-    #ead6aa;
-  box-shadow: 0 34px 90px rgba(0,0,0,.62);
-  animation: open-book calc(620ms * max(var(--fx-scale), .01)) cubic-bezier(.18,.85,.25,1) both;
-}
-.book::after {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  top: 9%;
-  bottom: 3%;
-  left: 50%;
-  width: 3px;
-  background: linear-gradient(transparent, rgba(73,45,20,.22) 10%, rgba(255,255,255,.42) 48%, rgba(73,45,20,.18) 90%, transparent);
-  box-shadow: 8px 0 18px rgba(78,48,20,.08), -8px 0 18px rgba(78,48,20,.08);
-  pointer-events: none;
-}
-.book-head,
-.book-filters,
-.book-count,
-.book-grid,
-.book-more { position: relative; z-index: 1; }
-.book-head {
-  margin-bottom: 18px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(121,86,39,.32);
-}
-.book-grid { column-gap: clamp(22px, 3vw, 46px); row-gap: 32px; }
+/* The Book screen — the felt table, the open book and everything on its pages — lives entirely in
+ * book.css, because the cards are laid out against the painting's own coordinates and the fit only
+ * makes sense read in one place. Nothing about it belongs here. */
 
 /* The rules are presented on a literal open book, with live accessible HTML on the pages. */
 #howToPlayOverlay,
@@ -334,17 +290,6 @@ button.danger { border-color: #773e35; background: linear-gradient(#f5c2ad, #c97
   #howToPlayOverlay .help-box::after,
   #welcomeOverlay .welcome-box::after { display: none; }
   .welcome-landscape { margin-inline: 0; }
-  #screen-book.active { padding: 8px; }
-  .book {
-    min-height: 0;
-    padding: 64px 20px 48px;
-    border-radius: 12px;
-    background:
-      linear-gradient(rgba(247,234,205,.88), rgba(235,215,174,.94)),
-      url('../../assets/ui/open-storybook-table.png') top center / auto 720px no-repeat,
-      #ead6aa;
-  }
-  .book::after { display: none; }
   button { min-height: 44px; }
 }
 @media (prefers-reduced-motion: reduce) {

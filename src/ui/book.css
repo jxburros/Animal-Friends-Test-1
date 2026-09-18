@@ -1,4 +1,14 @@
-/* The cover's three doors, and the Book screen behind one of them. */
+/* The cover's three doors, and the Book screen behind one of them.
+ *
+ * The Book is an actual open book. `assets/ui/open-storybook-table.png` is a 1536 x 1024 painting of
+ * one, so the whole screen is laid out against a sheet of exactly that size — background, page boxes
+ * and the cards on them — and the sheet is then scaled once to fit the window. That is the only way
+ * a card can be guaranteed to sit on the paper rather than run off the bottom of it: the paper and
+ * the grid share one coordinate system, and scaling moves them together.
+ *
+ * Everything the Book needs lives in this file, including the screen's felt background and the
+ * mobile rules, so there is one place to look when the book does not fit.
+ */
 
 /* ---------- the three modes ---------- */
 .mode-choice { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 18px 0 6px; }
@@ -21,20 +31,251 @@
 .mode-banner .mode-which { font: 700 13px/1.2 var(--sans, system-ui), sans-serif; letter-spacing: .1em; text-transform: uppercase; }
 .mode-banner button { font-size: 12px; }
 
-/* ---------- the Book ---------- */
-#screen-book.active { display: block; overflow: auto; padding: 12px; }
-/* The Book is a page of the book like any other: paper, not the dark table behind it. */
-.book {
-  max-width: 1500px; margin: 0 auto; padding: 18px clamp(12px, 3vw, 28px) 40px;
-  color: var(--ink); background: var(--paper) var(--noise);
-  border: 2px solid var(--line2); border-radius: 14px;
-  box-shadow: var(--shadow), inset 0 0 0 3px var(--paper), inset 0 0 0 4px var(--line);
+/* ---------- the Book: the table the book lies on ---------- */
+#screen-book.active {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 14px 16px 18px;
+  overflow: auto;
+  background:
+    radial-gradient(ellipse at 50% 6%, rgba(224, 185, 104, .18), transparent 46rem),
+    linear-gradient(rgba(11, 28, 20, .76), rgba(7, 20, 14, .92)),
+    url('../../assets/ui/borough-daylight.webp') center / cover fixed;
 }
-.book-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
-.book-head h2 { margin: 0; }
-.book-search { max-width: 260px; }
-.book-count { font: 500 12px/1.4 var(--sans, system-ui), sans-serif; color: var(--muted); margin: 10px 2px; }
-.book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--card-lw, 184px), 1fr)); gap: 22px 16px; align-items: start; }
-.book-card { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-.book-card figcaption { color: var(--ink2); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center; font: 500 11px/1.3 var(--sans, system-ui), sans-serif; }
-.book-more { display: flex; justify-content: center; margin: 24px 0 8px; }
+
+/* The Book host itself is only a column: toolbar, book, page number. The paper is the sheet below. */
+.book {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--ink);
+}
+
+/* ---------- the toolbar, dark on the felt so it does not fight the parchment ---------- */
+.book-bar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(197, 158, 86, .45);
+  background: linear-gradient(rgba(19, 36, 26, .94), rgba(9, 21, 15, .96));
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .42), inset 0 1px rgba(255, 236, 190, .12);
+  color: #f2e3c2;
+}
+.book-bar-main { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.book-bar-main h2 { margin: 0; font: 700 21px/1.1 var(--serif, Georgia), serif; color: #f7e8c4; letter-spacing: .5px; }
+.book-count { font: 500 12px/1.3 var(--sans, system-ui), sans-serif; color: rgba(242, 227, 194, .68); }
+.book-spacer { flex: 1 1 auto; }
+.book-bar-row { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; }
+.book-bar-sep { width: 1px; height: 22px; background: rgba(197, 158, 86, .38); margin: 0 4px; }
+.book-bar-more { display: flex; flex-direction: column; gap: 5px; padding-top: 5px; border-top: 1px solid rgba(197, 158, 86, .25); }
+
+.book-searchbox {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px; border-radius: 999px;
+  border: 1px solid rgba(197, 158, 86, .45);
+  background: rgba(255, 246, 222, .08);
+}
+.book-searchbox .ico { width: 15px; height: 15px; margin: 0; color: rgba(242, 227, 194, .75); }
+.book-bar .book-search {
+  width: clamp(120px, 20vw, 220px); min-height: 0; padding: 2px 0;
+  border: 0; background: none; outline: none; box-shadow: none;
+  color: #f7e8c4; font: 500 12.5px/1.4 var(--sans, system-ui), sans-serif;
+}
+.book-bar .book-search::placeholder { color: rgba(242, 227, 194, .45); }
+
+/* ---------- every button in the Book is an icon ---------- */
+.book-ib {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; min-height: 0; padding: 0; flex: none;
+  border-radius: 8px; border: 1px solid rgba(197, 158, 86, .5);
+  background: linear-gradient(rgba(62, 50, 31, .88), rgba(33, 26, 16, .92));
+  color: #efdcb2; cursor: pointer;
+  box-shadow: inset 0 1px rgba(255, 236, 190, .16), 0 2px 5px rgba(0, 0, 0, .34);
+  transition: border-color .12s ease, color .12s ease, transform .12s ease;
+}
+.book-ib .ico { width: 17px; height: 17px; margin: 0; vertical-align: baseline; }
+.book-ib:hover:not(:disabled) { border-color: #e2c07c; color: #fff3d4; transform: translateY(-1px); }
+.book-ib.on {
+  background: linear-gradient(#d0aa5e, #9b7631);
+  border-color: #f2d494; color: #2c2010;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .45), 0 2px 6px rgba(0, 0, 0, .4);
+}
+.book-ib:disabled { opacity: .3; cursor: default; }
+.book-ib:focus-visible { outline: 2px solid #ffd98a; outline-offset: 2px; }
+.book-ib.book-close { border-color: rgba(214, 138, 108, .6); color: #f3cdbb; }
+.book-ib.book-close:hover:not(:disabled) { border-color: #eda88c; color: #fff0e6; }
+
+/* A tiny superscript: the printing tally, and the badge that tells the two market chips apart. */
+.ib-badge {
+  position: absolute; top: -5px; right: -5px;
+  min-width: 14px; height: 14px; padding: 0 3px;
+  border-radius: 7px; border: 1px solid rgba(0, 0, 0, .4);
+  background: #e9c98c; color: #2c2010;
+  font: 700 9px/12px var(--sans, system-ui), sans-serif;
+}
+.book-ib.on .ib-badge { background: #2c2010; color: #f2d494; border-color: rgba(255, 236, 190, .5); }
+
+/* Rarity keeps the coloured diamond it wears everywhere else rather than a second vocabulary. */
+.book-ib.rarity-chip .rarity-tag { gap: 0; font-size: 0; }
+.book-ib.rarity-chip .rarity-tag::before { width: 13px; height: 13px; }
+
+/* ---------- the open book ---------- */
+.book-stage { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; }
+.book-turnside { flex: 0 0 54px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.book-ib.book-turn { width: 38px; height: 38px; border-radius: 10px; }
+.book-ib.book-turn .ico { width: 20px; height: 20px; }
+.book-ib.book-turn.big {
+  width: 46px; height: 46px;
+  background: linear-gradient(#5a4726, #2e2413);
+  box-shadow: inset 0 1px rgba(255, 236, 190, .22), 0 4px 10px rgba(0, 0, 0, .45);
+}
+.book-ib.book-turn.big .ico { width: 26px; height: 26px; }
+
+/* The viewport is the hole the painting is seen through; JS sizes it to the scaled sheet. */
+.book-viewport {
+  position: relative;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 26px 70px rgba(0, 0, 0, .58);
+}
+.book-sheet {
+  position: absolute; top: 0; left: 0;
+  width: 1536px; height: 1024px;
+  transform-origin: top left;
+  transform: scale(var(--book-scale, 1)) translateX(calc(var(--page-shift, 0) * -1px));
+  background: url('../../assets/ui/open-storybook-table.png') 0 0 / 1536px 1024px no-repeat;
+}
+
+/* The two painted pages, measured off the painting itself. Nothing in the Book sits outside these. */
+.book-page {
+  position: absolute;
+  padding: 18px;
+  --card-w: 104px;
+  --card-h: 150px;
+}
+.book-page.left { left: 8.5%; top: 10.5%; width: 40%; height: 70.5%; }
+.book-page.right { left: 50.5%; top: 10%; width: 38.5%; height: 71%; }
+.book-page-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--book-cols, 4), minmax(0, 1fr));
+  /* Rows hug their cards and the block of them is spread down the page: every card on a row then
+     starts at the same height, whether or not it has a printing row under it. */
+  grid-template-rows: repeat(var(--book-rows, 2), min-content);
+  column-gap: 8px;
+  align-content: space-evenly;
+  align-items: start;
+  justify-items: center;
+  width: 100%; height: 100%;
+}
+
+/* A page turn: the fresh page settles in from the direction it was turned. */
+.book-page.turn-next { animation: book-page-in-next calc(320ms * max(var(--fx-scale, 1), .01)) ease-out both; }
+.book-page.turn-prev { animation: book-page-in-prev calc(320ms * max(var(--fx-scale, 1), .01)) ease-out both; }
+@keyframes book-page-in-next { from { opacity: 0; transform: translateX(34px); } to { opacity: 1; transform: none; } }
+@keyframes book-page-in-prev { from { opacity: 0; transform: translateX(-34px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .book-page.turn-next, .book-page.turn-prev { animation: none; }
+}
+
+/* ---------- one card on a page ---------- */
+.book-card {
+  margin: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  gap: 4px; min-width: 0;
+}
+.book-card .card-slot {
+  position: relative;
+  flex: none;
+  width: calc(var(--card-w) * var(--face-scale, 1));
+  height: calc(var(--card-h) * var(--face-scale, 1));
+}
+.bc-face { position: absolute; top: 0; left: 0; transform: scale(var(--face-scale, 1)); transform-origin: top left; }
+
+/* A card that has not been earned: a darkened space with a question mark, rarity still showing. */
+.book-card .card-slot.locked {
+  display: flex; align-items: center; justify-content: center;
+  border-radius: calc(10px * var(--face-scale, 1));
+  background: linear-gradient(162deg, rgba(64, 47, 27, .9), rgba(28, 20, 11, .94));
+  box-shadow:
+    inset 0 3px 14px rgba(0, 0, 0, .65),
+    inset 0 0 0 2px rgba(150, 116, 62, .42),
+    0 2px 6px rgba(40, 27, 12, .4);
+}
+.book-unknown {
+  font: 700 calc(var(--card-h) * var(--face-scale, 1) * .42)/1 var(--serif, Georgia), serif;
+  color: rgba(240, 220, 178, .5);
+  text-shadow: 0 2px 0 rgba(0, 0, 0, .5);
+  user-select: none;
+}
+
+/* Only the printings this card actually exists in are drawn. */
+.version-row { display: flex; align-items: center; justify-content: center; gap: 2px; flex-wrap: nowrap; }
+.book-ib.version-chip {
+  width: 18px; height: 18px; border-radius: 5px;
+  border-color: rgba(121, 86, 39, .5);
+  background: linear-gradient(rgba(255, 249, 232, .9), rgba(232, 214, 176, .92));
+  color: #4b3717;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .7), 0 1px 3px rgba(60, 42, 18, .3);
+}
+.book-ib.version-chip .ico { width: 12px; height: 12px; }
+.book-ib.version-chip.on {
+  background: linear-gradient(#d0aa5e, #9b7631);
+  border-color: #6d4f1d; color: #2c2010;
+}
+.book-ib.version-chip.dim { opacity: .45; filter: grayscale(.7); }
+.book-ib.version-chip:disabled { opacity: .45; }
+.ib-lock { position: absolute; right: -3px; bottom: -3px; width: 10px; height: 10px; margin: 0; color: #2e2413; }
+
+.book-card figcaption {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  font: 500 11px/1.3 var(--sans, system-ui), sans-serif;
+  color: var(--ink2);
+}
+.book-card figcaption .rarity-tag { gap: 0; font-size: 0; }
+.book-card figcaption .rarity-tag::before { width: 11px; height: 11px; }
+.book-ib.story-btn {
+  width: 22px; height: 22px; border-radius: 6px;
+  border-color: rgba(121, 86, 39, .5);
+  background: linear-gradient(rgba(255, 249, 232, .9), rgba(232, 214, 176, .92));
+  color: #4b3717;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .7), 0 1px 3px rgba(60, 42, 18, .3);
+}
+.book-ib.story-btn .ico { width: 14px; height: 14px; }
+
+/* ---------- the foot: which pages are open ---------- */
+.book-foot { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 32px; }
+.book-turnrow { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.book-pageno {
+  font: 600 13px/1.2 var(--sans, system-ui), sans-serif;
+  letter-spacing: .05em;
+  color: rgba(244, 228, 194, .88);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .55);
+}
+
+/* ---------- a phone reads one page at a time ---------- */
+@media (max-width: 700px) {
+  #screen-book.active { padding: 8px 8px 14px; }
+  .book { gap: 8px; }
+  .book-bar { padding: 7px 9px; border-radius: 10px; }
+  .book-bar-main h2 { font-size: 18px; }
+  .book-ib { width: 36px; height: 36px; }
+  .book-ib .ico { width: 19px; height: 19px; }
+  .book-ib.version-chip { width: 22px; height: 22px; }
+  .book-ib.story-btn { width: 24px; height: 24px; }
+  .book-bar .book-search { width: clamp(90px, 38vw, 200px); }
+}
