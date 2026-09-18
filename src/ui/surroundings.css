@@ -30,7 +30,7 @@ body {
 .market-choice .deck-card h4 { color: #72532b; }
 .deck-tools button, .cover-links button { min-height: 44px; }
 #startGameBtn { min-height: 54px; border: 3px double #bda467; border-radius: 7px; letter-spacing: .05em; box-shadow: 0 4px 0 #1c3526, 0 8px 16px #243b2426; }
-.topbar { background: var(--noise), linear-gradient(110deg, #223d30, #365741); color: #fff1d0; border: 1px solid #b69a5e; padding: 12px 16px; }
+.topbar { background: var(--noise), linear-gradient(110deg, #223d30, #365741); color: #fff1d0; border: 1px solid #b69a5e; padding: 5px 14px; }
 .topbar .turn-banner, .topbar .pace-label { color: #fff1d0; }
 .topbar .tb-chapter, .topbar .tb-status { color: #eadaba; }
 .topbar .tb-who.you { color: #c5e9b6; }
@@ -38,21 +38,22 @@ body {
 .topbar .tb-phase { color: #554832; background: #f5e8cd; }
 .topbar .tb-phase.on { color: #342b19; background: #f6d27a; }
 .page { box-shadow: 0 8px 24px #081b2333, inset 0 0 0 3px #fff5dd, inset 0 0 0 4px #cbbb98; }
-.town-head { margin: -2px 0 14px; padding: 12px; border-bottom: 3px double #b5a176; border-radius: 5px; background: var(--noise), linear-gradient(110deg, #dde5d1, #f3e9d5); }
-.town-head::before { content: '❦'; display: grid; place-items: center; flex: 0 0 38px; height: 38px; border: 3px double #a58b4c; border-radius: 50%; color: #45613e; background: #fff2ce; font-size: 25px; }
-.rival .town-head { background: var(--noise), linear-gradient(110deg, #dce1e5, #f3e9d5); }
+.name-plate { padding: 2px 12px; background: var(--noise), linear-gradient(110deg, #dde5d1, #f3e9d5); }
+.name-plate .np-mark { display: grid; place-items: center; flex: 0 0 22px; height: 22px; border: 2px double #a58b4c; border-radius: 50%; color: #45613e; background: #fff2ce; font-size: 15px; }
+.name-plate.rival { background: var(--noise), linear-gradient(110deg, #dce1e5, #f3e9d5); }
+/* The Capital City keeps its twilight, but reads as a signboard over the market rather than a
+ * poster: the five cards under it are what both Mayors are actually looking at. */
 .cc-head {
-  position: relative; isolation: isolate; min-height: 190px; align-content: flex-end;
-  margin: -14px -14px 14px; padding: 24px 18px 16px; border-radius: 6px 6px 0 0;
+  position: relative; isolation: isolate; min-height: 0; align-items: center;
+  margin: -12px -10px 8px; padding: 7px 12px; border-radius: 6px 6px 0 0;
   border-bottom: 3px double #b99b5d; background: #213b40; color: #fff4d9;
 }
 .cc-head::before { content: ''; position: absolute; z-index: -1; inset: 0; border-radius: inherit; background: linear-gradient(0deg, #11292af5, #11292ab8 45%, #11292a15), url('../../assets/ui/capital-twilight.webp') center 46% / cover; }
-.cc-title { color: #fff3d1; background: #203b32ed; border: 3px double #b99b5d; border-radius: 5px; padding: 7px 12px; box-shadow: none; font-size: 22px; }
+.cc-title { color: #fff3d1; background: none; border: 0; border-radius: 0; padding: 0; box-shadow: none; font-size: 18px; text-shadow: 0 1px 3px rgba(0,0,0,.65); }
 .cc-title .ico { color: #e0c181; }
-.cc-head .cc-sub { color: #fff4df; background: #11292ae6; padding: 8px 12px; line-height: 1.5; }
-.cc-head .pile-chip { color: #3b3929; background: #fff2d8; }
-.log-panel { border-color: #aa915c; }
-.log-title { color: #3e583e; letter-spacing: .1em; }
+.cc-head .cc-sub { color: #fff4df; background: none; padding: 0; line-height: 1.4; text-shadow: 0 1px 3px rgba(0,0,0,.65); }
+.cc-head .pile-chip { color: #fff4df; background: none; }
+.cc-head .pile-label { color: #e4d3ae; }
 .db-head { border: 3px double #ad915c; padding: 24px; background: linear-gradient(90deg, #fff3dcfa 35%, #fff3dce8 70%, #fff3dc9c), url('../../assets/ui/borough-daylight.webp') center 55% / cover; }
 .welcome-landscape { height: 160px; margin: -6px -6px 20px; border-radius: 8px; border: 1px solid #b99b5d; background: #708268 url('../../assets/ui/borough-daylight.webp') center 60% / cover; }
 .win-box { border: 3px double #b99b5d; background: linear-gradient(#fff4dce8, #fff4dcfa), url('../../assets/ui/capital-twilight.webp') center / cover; }
@@ -64,9 +65,9 @@ body {
   .cover-landscape img { object-position: 65% 65%; }
   .cover-caption { font-size: 9px; letter-spacing: .14em; }
   .deck-card { padding: 12px; }
-  .town-head { padding: 8px; gap: 8px; }
-  .cc-head { margin: -8px -4px 12px; padding: 22px 12px 12px; min-height: 200px; }
-  .cc-title { font-size: 19px; }
+  .name-plate { padding: 6px 8px; gap: 8px; }
+  .cc-head { margin: -6px -4px 8px; padding: 8px 10px; }
+  .cc-title { font-size: 16px; }
   .db-head { padding: 16px; }
   .welcome-landscape { height: 120px; }
 }

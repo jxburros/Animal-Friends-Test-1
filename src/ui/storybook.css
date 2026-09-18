@@ -32,9 +32,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .topbar { border-radius: 8px; }
 .capital-city-panel { background: var(--noise), linear-gradient(135deg,#f7eddb,#e8d8ba); }
 .cc-slots { gap: 20px; padding: 12px 0; }
-.town-panel.you.active-turn { box-shadow: 0 0 0 2px #4b7350,var(--shadow); }
 .stack-row { gap: 50px; padding: 10px 44px; }
-.hand-row { gap: 12px; padding-top: 18px; }
+.hand-row { gap: 8px; padding-top: 8px; }
 .log-scroll { max-height: 100px; }
 
 /* The frame is independent of rarity: type always owns the border color. */
@@ -66,37 +65,41 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .card-face .body > .title { display: none; }
 .card-face .traits { font-size: 6.5px; gap: 2px 4px; color: #514934; }
 .card-face .trait .ico { width: 8px; height: 8px; }
-.card-face .shiftpill { background: #fff8e3; border: 1px solid #a8915d; border-radius: 12px; color: #304f33; align-self: center; font-size: 8px; padding: 0 8px; }
+.card-face .shiftpill { background: none; border: 0; border-radius: 0; color: #304f33; align-self: center; font-size: 8px; padding: 0; }
 .card-face .rules { font-family: var(--serif); font-size: 8.5px; line-height: 1.18; text-align: center; }
 .card-face .burden { font-family: var(--serif); font-size: 7.5px; line-height: 1.2; color: #823e30; }
 .card-footer { display: flex; align-items: center; justify-content: space-between; min-height: 16px; flex: none; color: #fff1ca; padding: 2px 5px 0; text-transform: uppercase; letter-spacing: .12em; font-size: 7px; }
-.inspect-card { position: relative; z-index: 8; background: #fff4d6; color: #304a36; font: bold 9px var(--sans); padding: 2px 7px; min-height: 18px; border-radius: 10px; box-shadow: none; }
+/* The Read mark is a disc with a glass on it, not a little word on a tablet. */
+.inspect-card { position: relative; z-index: 8; display: grid; place-items: center; background: #fff4d6; color: #304a36; padding: 0; width: 15px; height: 15px; min-height: 0; border: 1px solid #8d7742; border-radius: 50%; box-shadow: none; }
+.inspect-card .ico { width: 10px; height: 10px; }
 .card-face .frame, .card-face.large .frame, .card-face.foil .frame { border: 1px solid #645134; border-radius: inherit; box-shadow: inset 0 0 0 2px #d7bd7633; }
 .card-face .frame::before, .card-face .frame::after { display: none; }
 .frame > svg { width: 100%; height: 100%; }
-.card-face.large { padding: 10px; border-radius: 13px; }
-.card-face.large .banner { height: 45px; padding: 2px 4px; gap: 5px; }
-.card-face.large .cost { width: 37px; height: 37px; font-size: 32px; border-width: 3px; }
-.card-face.large .cname { font-size: 18px; }
-.card-face.large .ticon { width: 29px; height: 29px; padding: 4px; }
-.card-face.large .gem { width: 11px; height: 11px; }
-.card-face.large .vmark { width: 15px; height: 15px; }
-.card-face.large .card-subtitle { font-size: 10px; height: 19px; line-height: 17px; }
-.card-face.large .art { height: 152px; border-width: 1px; margin-top: 3px; }
-.card-face.large .body { padding: 7px 9px 6px; gap: 4px; }
-.card-face.large .traits { font-size: 8px; gap: 3px 7px; }
-.card-face.large .trait .ico { width: 10px; height: 10px; }
-.card-face.large .shiftpill { font-size: 11px; padding: 1px 12px; }
-.card-face.large .rules { font-size: 12px; line-height: 1.22; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; }
-.card-face.large .burden { font-size: 10px; }
-.card-face.large .flavor { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-family: var(--serif); font-size: 9px; line-height: 1.2; text-align: center; color: #6d6047; border-top: 1px dotted #c8b98e; padding-top: 3px; }
-.card-face.large .card-footer { font-size: 9px; min-height: 24px; padding: 3px 9px 0; }
-.card-face.large .inspect-card { font-size: 11px; padding: 3px 10px; min-height: 24px; }
+.card-face.large { padding: calc(10 * var(--lu)); border-radius: calc(13 * var(--lu)); }
+.card-face.large .banner { height: calc(45 * var(--lu)); padding: 2px calc(4 * var(--lu)); gap: calc(5 * var(--lu)); }
+.card-face.large .cost { width: calc(37 * var(--lu)); height: calc(37 * var(--lu)); font-size: calc(32 * var(--lu)); border-width: 3px; }
+.card-face.large .cname { font-size: calc(18 * var(--lu)); }
+.card-face.large .ticon { width: calc(29 * var(--lu)); height: calc(29 * var(--lu)); padding: calc(4 * var(--lu)); }
+.card-face.large .gem { width: calc(11 * var(--lu)); height: calc(11 * var(--lu)); }
+.card-face.large .vmark { width: calc(15 * var(--lu)); height: calc(15 * var(--lu)); }
+.card-face.large .card-subtitle { font-size: calc(10 * var(--lu)); height: calc(19 * var(--lu)); line-height: calc(17 * var(--lu)); }
+.card-face.large .art { height: calc(152 * var(--lu)); border-width: 1px; margin-top: 3px; }
+.card-face.large .body { padding: calc(7 * var(--lu)) calc(9 * var(--lu)) calc(6 * var(--lu)); gap: calc(4 * var(--lu)); }
+.card-face.large .traits { font-size: calc(8 * var(--lu)); gap: 3px calc(7 * var(--lu)); }
+.card-face.large .trait .ico { width: calc(10 * var(--lu)); height: calc(10 * var(--lu)); }
+.card-face.large .shiftpill { font-size: calc(11 * var(--lu)); padding: 0; }
+.card-face.large .rules { font-size: calc(12 * var(--lu)); line-height: 1.22; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; }
+.card-face.large .burden { font-size: calc(10 * var(--lu)); }
+.card-face.large .flavor { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-family: var(--serif); font-size: calc(9 * var(--lu)); line-height: 1.2; text-align: center; color: #6d6047; border-top: 1px dotted #c8b98e; padding-top: 3px; }
+.card-face.large .card-footer { font-size: calc(9 * var(--lu)); min-height: calc(24 * var(--lu)); padding: 3px calc(9 * var(--lu)) 0; }
+.card-face.large .inspect-card { width: calc(22 * var(--lu)); height: calc(22 * var(--lu)); }
+.card-face.large .inspect-card .ico { width: calc(14 * var(--lu)); height: calc(14 * var(--lu)); }
 
 /* Full rules are available without hover, even when the compact table face is crowded. */
-.card-reader { padding: 12px; background: transparent; border: 0; max-width: calc(100vw - 16px); max-height: calc(100dvh - 24px); overflow: auto; }
+/* The reader is the card at its printed size, so its insides are drawn at their printed size too. */
+.card-reader { --lu: 1px; padding: 12px; background: transparent; border: 0; max-width: calc(100vw - 16px); max-height: calc(100dvh - 24px); overflow: auto; }
 .card-reader::backdrop { background: #19251cce; backdrop-filter: blur(4px); }
-.card-reader .card-face.large { width: min(360px,calc(100vw - 64px)); height: auto; min-height: 560px; }
+.card-reader .card-face.large { width: min(360px,calc(100vw - 64px)); height: auto; min-height: 0; }
 .card-reader .card-face.large .art { height: 255px; }
 .card-reader .card-face.large .cname { font-size: 24px; display: block; }
 .card-reader .card-face.large .card-subtitle { height: auto; white-space: normal; }
@@ -112,15 +115,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
 @media (max-width: 700px) {
   :root { --card-w: 132px; --card-h: 242px; --card-lw: 208px; --card-lh: 388px; }
-  #screen-game.active { padding: 8px; }
+  /* A phone reads one column of big cards and scrolls; the window-fitting sizes above are for a
+     screen that can hold the whole table at once. */
+  #screen-game.active {
+    padding: 8px;
+    --shelf-w: 112px; --card-w: 112px; --card-h: 162px; --card-lw: 176px; --card-lh: 270px;
+  }
   .card-face .art { height: 92px; }
-  .card-face.large .art { height: 150px; }
-  .card-face.large .cname { font-size: 16px; }
-  .card-face.large .card-subtitle { font-size: 9px; }
+  .card-face.large .art { height: calc(150 * var(--lu)); }
+  .card-face.large .cname { font-size: calc(16 * var(--lu)); }
+  .card-face.large .card-subtitle { font-size: calc(9 * var(--lu)); }
   .card-face .inspect-card { min-height: 26px; }
   .card-face .card-footer { min-height: 28px; }
   .card-face .body { padding: 3px; }
-  .card-face.large .body { padding: 6px; }
+  .card-face.large .body { padding: calc(6 * var(--lu)); }
   .page { padding: 12px 8px; }
   .town-sub.town-main { min-width: 0; flex-basis: 100%; }
   .town-sub { min-width: 0; }
