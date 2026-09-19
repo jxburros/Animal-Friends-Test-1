@@ -374,27 +374,85 @@ button.book-ib:hover:not(:disabled) { transform: translateY(-2px); }
   animation: open-book calc(620ms * max(var(--fx-scale), .01)) cubic-bezier(.18,.85,.25,1) both;
 }
 
-/* The rules are read across both pages at once, so How to play keeps its flowing column — but the
- * sheet is aspect-locked like the Book's and padded to the paper's own edges, so the text starts
- * and stops where the paper does. Side padding is a share of the width; the top and foot are a
- * share of the height, which on a 3:2 sheet is two thirds of the same percentage.
- */
+/* How to play is a spread like the Welcome: the contents page on the left — the title, the three
+ * chapters and the door to the tutorial — and the chapter being read on the right, scrolling inside
+ * its own paper. The grid's tracks are the painting's page rectangles (book.css), so nothing prints
+ * on the spine, the gilt corners or the table, at any window size. */
 #howToPlayOverlay .help-box {
   width: min(1180px, calc((100dvh - 24px) * 1.5), 96vw);
   min-height: 0;
   aspect-ratio: 3 / 2;
   max-height: calc(100dvh - 24px);
-  display: flex;
-  flex-direction: column;
-  padding:
-    calc(var(--page-l-y) * 2 / 3) var(--page-r-right)
-    calc(var(--page-l-bottom) * 2 / 3) var(--page-l-x);
+  padding: 0;
+  display: grid;
+  grid-template-columns:
+    var(--page-l-x) var(--page-l-w)
+    calc(var(--page-r-x) - var(--page-l-x) - var(--page-l-w))
+    var(--page-r-w) var(--page-r-right);
+  grid-template-rows: var(--page-l-y) minmax(0, 1fr) var(--page-l-bottom);
   overflow: hidden;
 }
-#howToPlayOverlay .help-box > h2 { flex: none; margin: 0 0 6px; }
-#howToPlayOverlay .help-tabs { flex: none; }
-#howToPlayOverlay .help[role='tabpanel'] { flex: 1 1 auto; min-height: 0; overflow: auto; padding-right: 6px; }
-#howToPlayOverlay .help-actions { flex: none; margin-top: 10px; }
+#howToPlayOverlay .help-contents {
+  grid-column: 2; grid-row: 2;
+  display: flex; flex-direction: column; gap: 6px; min-height: 0;
+  padding: 1.5% 3% 0 3%;
+}
+#howToPlayOverlay .help-page {
+  grid-column: 4; grid-row: 2;
+  display: flex; flex-direction: column; min-height: 0;
+  /* The painted page curls away at its top corners and its outer edge: this is the margin a printer
+   * would leave, so the first line and the line ends stay on the flat of the paper. */
+  padding: 4% 3.5% 0 1.5%;
+}
+#howToPlayOverlay .help-contents .cover-orn { margin: 0; line-height: 1; text-align: center; font-size: 22px; }
+#howToPlayOverlay .help-box > .help-contents > h2 { margin: 0; text-align: center; font-size: clamp(22px, 2.6vw, 30px); }
+.help-lead { margin: 0 0 2px; text-align: center; font-style: italic; color: var(--muted); font-size: 13px; line-height: 1.4; }
+/* The chapters are a contents list: a numeral, a title, a line about it, and a rule under each. The
+ * open chapter carries a gold ribbon down its left edge. */
+#howToPlayOverlay .help-tabs {
+  flex-direction: column; gap: 0; margin: 4px 0 0; padding: 0;
+  border: 0; border-top: 1px solid rgba(116, 82, 36, .3);
+  counter-reset: chapter;
+}
+#howToPlayOverlay .help-tab {
+  counter-increment: chapter;
+  display: grid; grid-template-columns: 24px minmax(0, 1fr); column-gap: 8px; align-items: baseline;
+  width: 100%; min-height: 0; padding: 9px 6px 9px 4px; text-align: left;
+  border: 0; border-bottom: 1px solid rgba(116, 82, 36, .3); border-radius: 0;
+  background: none; box-shadow: none; overflow: visible;
+  color: var(--ink); font-variant: normal; letter-spacing: 0; font-weight: normal; text-shadow: none;
+  transition: padding-left calc(160ms * max(var(--fx-scale), .01)) ease, box-shadow calc(160ms * max(var(--fx-scale), .01)) ease;
+}
+#howToPlayOverlay .help-tab::before {
+  content: counter(chapter, upper-roman);
+  position: static; inset: auto; z-index: auto; transform: none; transition: none; background: none;
+  grid-row: 1 / 3; align-self: start;
+  font: 700 15px/1.25 var(--serif); color: var(--gold);
+}
+#howToPlayOverlay .help-tab:hover:not(:disabled) { transform: none; filter: none; box-shadow: inset 3px 0 0 rgba(185, 141, 60, .45); padding-left: 8px; color: #294634; }
+#howToPlayOverlay .help-tab:hover:not(:disabled)::before { transform: none; }
+#howToPlayOverlay .help-tab:active:not(:disabled) { transform: none; box-shadow: inset 3px 0 0 rgba(185, 141, 60, .45); }
+#howToPlayOverlay .help-tab.on { background: none; color: #294634; font-weight: normal; box-shadow: inset 3px 0 0 #b98d3c; padding-left: 8px; }
+#howToPlayOverlay .help-tab.on::before { color: #294634; }
+.help-tab-name { display: block; font: 700 16px/1.2 var(--serif); }
+.help-tab-sub { display: block; grid-column: 2; margin-top: 2px; font: 400 11.5px/1.35 var(--sans); color: var(--muted); }
+#howToPlayOverlay .help-tab.on .help-tab-name { color: #294634; }
+#howToPlayOverlay .help-contents-foot { flex: none; margin-top: 10px; }
+#howToPlayOverlay .help-contents-foot button { width: 100%; min-height: 38px; }
+/* The foot of the contents page: the Capital City at blue hour, in the frame the Welcome's landscape
+ * wears, filling whatever paper the chapters leave. */
+#howToPlayOverlay .help-vignette {
+  flex: 1 1 auto; min-height: 0; margin-top: 12px;
+  border: 3px double #9e7b43; border-radius: 12px 8px 12px 8px;
+  background: #213b40 url('../../assets/ui/capital-twilight.webp') center 46% / cover;
+  box-shadow: inset 0 0 0 3px rgba(255, 248, 220, .48), 0 8px 20px rgba(69, 42, 16, .2);
+}
+#howToPlayOverlay .help[role='tabpanel'] { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 0 10px 8px 0; scrollbar-width: thin; }
+#howToPlayOverlay .help > h3:first-child, #howToPlayOverlay .help > .help-intro:first-child { margin-top: 0; }
+#howToPlayOverlay .help-actions { flex: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(116, 82, 36, .3); justify-content: flex-end; }
+@media (max-width: 1000px), (max-height: 680px) {
+  #howToPlayOverlay .help-vignette { display: none; }
+}
 
 /* Welcome is pinned to the painted pages instead of flowing across the book's gutter.
  *
@@ -456,11 +514,7 @@ button.book-ib:hover:not(:disabled) { transform: translateY(-2px); }
 }
 #howToPlayOverlay .help-box > *,
 #welcomeOverlay .welcome-box > * { position: relative; z-index: 1; }
-#howToPlayOverlay .help-box > h2 { color: #294634; text-align: center; }
-.help-tabs { justify-content: center; border-bottom-color: rgba(116,82,36,.3); }
-/* Tabs are read off the rule under them, not off a capsule round them. */
-.help-tab { border-radius: 0; border: 0; border-bottom: 2px solid transparent; background: none; box-shadow: none; }
-.help-tab.on { background: none; color: #294634; font-weight: bold; border-bottom-color: #385f43; text-shadow: none; }
+#howToPlayOverlay .help-box h2 { color: #294634; }
 .help[role='tabpanel'] { animation: page-ink calc(280ms * max(var(--fx-scale), .01)) ease-out both; }
 @keyframes page-ink { from { opacity: 0; transform: translateX(8px); } }
 .faq-item,
@@ -488,40 +542,176 @@ button.book-ib:hover:not(:disabled) { transform: translateY(-2px); }
   #screen-game.active { padding: 8px; }
   .table { padding: 6px; box-shadow: 0 0 0 2px #2f2418, 0 0 0 3px #b48d4d, 0 18px 36px rgba(4,14,9,.45); }
   #howToPlayOverlay,
-  #welcomeOverlay { padding: 6px; align-items: flex-start; }
+  #welcomeOverlay { padding: 8px; align-items: flex-start; }
+  /* A phone cannot hold the painted book, so the reading matter is dealt on a sheet of the card's
+   * own stock instead — paper, a doubled gold edge, the card's corners — with the chapter list
+   * pinned at the head, the text scrolling inside, and the buttons pinned at the foot. */
   #howToPlayOverlay .help-box,
-  #welcomeOverlay .welcome-box {
-    width: 100%;
-    min-height: 0;
-    max-height: calc(100dvh - 12px);
-    margin-top: 0;
-    padding: 54px 30px 50px;
-    background-size: auto 100%;
-    background-position: 25% center;
-  }
-  /* A phone reads the spread as one column, so the page rectangles are given up here. */
-  #howToPlayOverlay .help-box {
-    display: block;
-    aspect-ratio: auto;
-    overflow: auto;
-  }
-  #howToPlayOverlay .help[role='tabpanel'] { overflow: visible; padding-right: 0; }
   #welcomeOverlay .welcome-box {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    min-height: 0;
+    max-height: calc(100dvh - 16px);
     aspect-ratio: auto;
-    box-sizing: border-box;
-    padding: 54px 30px 50px;
-    overflow: auto;
+    margin-top: 0;
+    padding: 14px 14px 12px;
+    border: 3px double var(--ui-card-edge);
+    border-radius: var(--ui-card-radius);
+    background: var(--ui-card-paper);
+    box-shadow: var(--ui-card-frame), 0 24px 60px rgba(0, 0, 0, .55);
+    overflow: hidden;
   }
-  #welcomeOverlay .welcome-landscape { flex: 0 0 128px; min-height: 128px; }
-  #welcomeOverlay .welcome { flex: none; overflow: visible; }
-  #welcomeOverlay .welcome-actions { flex: none; }
   #howToPlayOverlay .help-box::after,
   #welcomeOverlay .welcome-box::after { display: none; }
+  #howToPlayOverlay .help-contents { flex: none; padding: 0; gap: 4px; }
+  #howToPlayOverlay .help-contents .cover-orn { font-size: 18px; }
+  #howToPlayOverlay .help-box > .help-contents > h2 { font-size: 24px; }
+  #howToPlayOverlay .help-lead,
+  #howToPlayOverlay .help-vignette,
+  #howToPlayOverlay .help-tab-sub,
+  #howToPlayOverlay .help-tab::before { display: none; }
+  #howToPlayOverlay .help-tabs { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 5px; margin: 6px 0 0; border: 0; }
+  #howToPlayOverlay .help-tab {
+    display: inline-flex; width: auto; min-height: 34px; padding: 5px 10px;
+    border: 1px solid rgba(116, 82, 36, .4); border-radius: 8px 5px 8px 5px;
+  }
+  #howToPlayOverlay .help-tab .help-tab-name { font-size: 14px; }
+  #howToPlayOverlay .help-tab:hover:not(:disabled),
+  #howToPlayOverlay .help-tab.on { padding-left: 10px; box-shadow: none; }
+  #howToPlayOverlay .help-tab.on { border-color: #385f43; background: rgba(56, 95, 67, .12); }
+  #howToPlayOverlay .help-contents-foot { margin-top: 8px; }
+  #howToPlayOverlay .help-contents-foot button { min-height: 40px; }
+  #howToPlayOverlay .help-page { flex: 1 1 auto; min-height: 0; padding: 8px 0 0; }
+  #howToPlayOverlay .help[role='tabpanel'] { padding-right: 4px; }
+  #howToPlayOverlay .help-actions { margin-top: 8px; padding-top: 8px; }
+  #welcomeOverlay .welcome-landscape { flex: 0 0 118px; min-height: 118px; margin: 0 0 8px; }
+  #welcomeOverlay .cover-orn { text-align: center; font-size: 20px; }
+  #welcomeOverlay .welcome-box > h2 { text-align: center; font-size: 26px; margin-bottom: 2px; }
+  #welcomeOverlay .welcome { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 0 4px 4px 0; }
+  #welcomeOverlay .welcome-actions { flex: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(116, 82, 36, .3); }
   .welcome-landscape { margin-inline: 0; }
   button { min-height: 44px; }
 }
+/* ==========================================================================
+   The finishing pass: the table under a full town, the dialogs that choose, and the details a hand
+   notices — what a control is cut from, what a selection is inked in, what an empty shelf says.
+   ========================================================================== */
+
+/* ---- the table under a full town ---- */
+/* A pick dialog draws its cards at the collection's own size, so the boxes they sit in are cut to
+ * that size rather than to a number of their own: the cards used to spill over one another. */
+.modal-choice { width: calc(var(--card-w) + 14px); min-width: 0; }
+.modal-choice .card-face { flex: none; }
+.modal-choice .mc-name { width: 100%; }
+/* The note that a town is full is a line under its shelf, not a column squeezed in beside it. */
+.table .town-sub > .town-full-note { grid-column: 1 / -1; margin: 0 0 3px; padding: 3px 9px; font-size: 11px; line-height: 1.3; }
+/* Your Move and the card it is about fill the height of your rival's half between them, the card
+ * taking whatever the buttons leave, rather than the pair being cut off at a share of the window
+ * with the card's feet missing. */
+@media (min-width: 1181px) {
+  .right-rail { max-height: none; overflow: visible; }
+  .table .preview-rail { flex: 1 1 auto; min-height: 0; overflow: hidden; }
+}
+/* A short window sets Your Move's buttons small enough to read on one line — "Gain 2 Supply" used
+ * to fold onto two — and gives the pair of rails a generous cap, so the card underneath still has
+ * its feet while the rail stops dictating the height of your rival's half. */
+@media (max-height: 900px) and (min-width: 1181px) {
+  .right-rail { max-height: 38vh; overflow: hidden; }
+  .table .action-rail .action-bar { padding: 4px 6px; gap: 4px; }
+  .table .action-rail .action-bar .ab-text { font-size: 12px; line-height: 1.3; }
+  .table .action-rail .action-bar button { min-height: 30px; padding: 4px 10px; font-size: 13px; white-space: nowrap; }
+}
+/* An empty shelf says so in the middle of itself, on a faint dashed outline, not in one corner. */
+.table .stack-row > .empty-note:only-child,
+.table .cc-slots > .empty-note:only-child,
+.table .hand-row > .empty-note:only-child {
+  flex: 1 1 auto; display: flex; align-items: center; justify-content: center;
+  min-height: calc(var(--card-h) * .6); padding: 8px 12px; text-align: center;
+  border: 1px dashed rgba(157, 125, 70, .42); border-radius: 8px 5px 8px 5px;
+  background: rgba(255, 250, 232, .28);
+}
+
+/* ---- the phone's topbar: one line, not three ---- */
+@media (max-width: 700px) {
+  .topbar { top: 4px; padding: 4px 8px; gap: 6px; }
+  .topbar .tb-status, .topbar .tb-phase-name { display: none; }
+  .topbar .tb-main { font-size: 13px; gap: 6px; }
+  .topbar-controls { gap: 6px; margin-left: auto; }
+  .pace-select.small { min-height: 34px; padding: 3px 6px; font-size: 12px; }
+  .icon-btn { width: 36px; height: 36px; min-height: 36px; font-size: 14px; }
+}
+
+/* ---- controls cut from the card stock ---- */
+/* A field to type in and a list to pick from are the same paper as the button beside them, with the
+ * same doubled edge and the same corners, and a little shadow inside where the pen goes. */
+input[type=text],
+input[type=number],
+select {
+  min-height: 38px;
+  padding: 6px 12px;
+  border: 2px solid var(--ui-card-edge);
+  border-radius: var(--ui-card-radius-sm);
+  background: var(--ui-card-paper);
+  color: #352c1d;
+  box-shadow: var(--ui-card-frame), inset 0 2px 4px rgba(57, 38, 15, .09);
+  transition: border-color calc(150ms * max(var(--fx-scale), .01)) ease, box-shadow calc(150ms * max(var(--fx-scale), .01)) ease;
+}
+input[type=text]:hover, input[type=number]:hover, select:hover { border-color: #7f6333; }
+input[type=text]:focus-visible, input[type=number]:focus-visible, select:focus-visible { border-color: #6d5121; outline-offset: 1px; }
+input::placeholder { color: rgba(112, 96, 71, .65); font-style: italic; }
+select { cursor: pointer; }
+.pace-select.small { min-height: 32px; padding: 3px 8px; }
+#winTownName { min-height: 42px; }
+
+/* ---- selection and scrollbars in the book's own ink ---- */
+::selection { background: rgba(199, 138, 47, .34); }
+html { scrollbar-color: rgba(216, 187, 118, .6) rgba(10, 26, 19, .55); }
+.page, .log-scroll, .acts-feed, .stack-row, .hand-row, .right-rail,
+.db-left, .db-right, .avatar-grid, .modal-box, .overlay .box,
+.lore-page, .lore-spread, .help[role='tabpanel'], .welcome,
+.book-card-dialog, .card-reader, .db-story, .lore-modal {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(157, 125, 70, .78) transparent;
+}
+
+/* ---- the cover: gold hairlines either side of the edition line ---- */
+.edition { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.edition::before, .edition::after { content: ''; flex: 0 1 110px; height: 1px; background: linear-gradient(90deg, transparent, #b59a61); }
+.edition::after { background: linear-gradient(90deg, #b59a61, transparent); }
+
+/* ---- the three doors carry their marks in the corner, where a card carries its gem ---- */
+.mode-card { position: relative; }
+.mode-card .mode-ico {
+  position: absolute; top: 13px; right: 13px;
+  display: inline-grid; place-items: center; width: 30px; height: 30px;
+  border: 1px solid rgba(157, 125, 70, .55); border-radius: 50%;
+  color: #8d6a2a; background: rgba(255, 250, 232, .7);
+}
+.mode-card .mode-ico svg { width: 18px; height: 18px; }
+.mode-card .mode-tagline { padding-right: 36px; }
+
+/* ---- the Mayors' shelf and the Post Office open under the Workshop's painted band ---- */
+#profilesHost .mayors-head,
+#shopHost .mayors-head {
+  margin: 0 0 16px; padding: 18px 22px 16px;
+  border: 3px double var(--ui-card-edge); border-radius: var(--ui-card-radius);
+  background:
+    linear-gradient(90deg, rgba(255, 245, 224, .97) 40%, rgba(255, 245, 224, .9) 66%, rgba(255, 245, 224, .58)),
+    url('../../assets/ui/borough-daylight.webp') center 55% / cover;
+  box-shadow: var(--ui-card-frame), var(--ui-card-rest);
+}
+#profilesHost .mayors-head h2,
+#shopHost .mayors-head h2 { font-size: 28px; font-variant: small-caps; letter-spacing: .5px; color: #294634; }
+#profilesHost .mayors-head .hint,
+#shopHost .mayors-head .hint { margin-bottom: 0; }
+@media (max-width: 700px) {
+  #profilesHost .mayors-head,
+  #shopHost .mayors-head { padding: 14px 14px 12px; }
+  #profilesHost .mayors-head h2,
+  #shopHost .mayors-head h2 { font-size: 24px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ui-spark { display: none; }
   .town-row-panel.active-turn,

@@ -25,6 +25,7 @@ import {
 } from '../engine/profile.js';
 import { TUTORIAL_SEED } from '../tutorial/scenario.js';
 import * as fx from './fx.js';
+import { iconSVG } from './art.js';
 
 const RULES_URL = new URL('../../spec/game.json', import.meta.url);
 const SET_URL = new URL('../../spec/maker_card_set.json', import.meta.url);
@@ -106,7 +107,7 @@ function renderHome() {
   const play = document.createElement('button');
   play.type = 'button';
   play.className = 'mode-card';
-  play.innerHTML = '<span class="mode-tagline">The game</span><span class="mode-name">Play</span>'
+  play.innerHTML = `<i class="ico mode-ico" aria-hidden="true">${iconSVG('hand')}</i>` + '<span class="mode-tagline">The game</span><span class="mode-name">Play</span>'
     + `<span class="mode-blurb">${collection.blurb || 'Build your town, work your animals, and fight the Capital City for the Statues.'}</span>`
     + `<span class="mode-stat">${collection.cards.length} cards · ${collection.decks.length} deck${collection.decks.length === 1 ? '' : 's'} · ${collection.marketDecks.length} Capital Cit${collection.marketDecks.length === 1 ? 'y' : 'ies'}</span>`;
   play.addEventListener('click', enterPlay);
@@ -115,7 +116,7 @@ function renderHome() {
   const book = document.createElement('button');
   book.type = 'button';
   book.className = 'mode-card';
-  book.innerHTML = '<span class="mode-tagline">The gallery</span><span class="mode-name">Book</span>'
+  book.innerHTML = `<i class="ico mode-ico" aria-hidden="true">${iconSVG('deck')}</i>` + '<span class="mode-tagline">The gallery</span><span class="mode-name">Book</span>'
     + '<span class="mode-blurb">Every card in the game, in every printing it exists in, with the story each character came out of. Nothing to play — everything to read.</span>'
     + `<span class="mode-stat">${collection.cards.length} cards · ${VERSIONS.length} printings</span>`;
   book.addEventListener('click', openTheBook);
@@ -126,7 +127,7 @@ function renderHome() {
   const lore = document.createElement('button');
   lore.type = 'button';
   lore.className = 'mode-card';
-  lore.innerHTML = '<span class="mode-tagline">The story</span><span class="mode-name">Lore</span>'
+  lore.innerHTML = `<i class="ico mode-ico" aria-hidden="true">${iconSVG('story')}</i>` + '<span class="mode-tagline">The story</span><span class="mode-name">Lore</span>'
     + '<span class="mode-blurb">The tale of the First Boroughs, everyone who lives in them, and the places they are argued over in \u2014 each of them linked to the cards it is printed on.</span>'
     + `<span class="mode-stat">${counts.characters} character${counts.characters === 1 ? '' : 's'} \u00b7 ${counts.places} place${counts.places === 1 ? '' : 's'} \u00b7 ${counts.chapters} chapter${counts.chapters === 1 ? '' : 's'}</span>`;
   lore.addEventListener('click', openTheLore);
