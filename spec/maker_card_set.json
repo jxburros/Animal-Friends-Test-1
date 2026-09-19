@@ -1,5 +1,5 @@
 {
- "$comment": "Animal Friends TCG — the First Boroughs collection (AF-MAKER-01), and the only card set the game plays. 'characters' holds one entry per named character: name, species, studies, pronouns, backstory, voice, arc, plus 'wantedVerbs' (effects the story wanted that the engine cannot yet do) and 'wantedArt' (scenes still to be painted). 'cards' are the cards themselves; a 'token' card is a third thing again, declaring that a kind of token exists — one per species, one per study, one for Buildings — rather than being a card anybody draws, and the 'tokens' block below says what they are for. An 'obscured figure' is a fourth thing: a Character the borough never got a name for, carrying `anchor` so that any dearer Character of the same species — or in the same study — may be played over them, whatever their name, which is the ward record being corrected rather than a promotion. The world the writing draws on is docs/TOWN_BIBLE.md. 'rarity' and 'power' are computed by npm run stamp, never hand-written.",
+ "$comment": "Animal Friends TCG — the First Boroughs collection (AF-MAKER-01), and the only card set the game plays. 'characters' holds one entry per named character: name, species, studies, pronouns, backstory, voice, arc, plus 'wantedVerbs' (effects the story wanted that the engine cannot yet do) and 'wantedArt' (scenes still to be painted). 'cards' are the cards themselves; a 'token' card is a third thing again, declaring that a kind of token exists — one per species, one per study, one for Buildings — rather than being a card anybody draws, and the 'tokens' block below says what they are for. An 'obscured figure' is a fourth thing: a Character the borough never got a name for, carrying `anchor` so that any dearer Character of the same species — or in the same study — may be played over them, whatever their name, which is the ward record being corrected rather than a promotion. The world the writing draws on is docs/TOWN_BIBLE.md. 'rarity' and 'power' are computed by npm run stamp, never hand-written, and 'setNumber' and 'number' — the A1 collector number printed on each card — by npm run number.",
  "setId": "AF-MAKER-01",
  "name": "Maker Cards",
  "blurb": "The First Boroughs: ten species, eight studies, eighty-seven named animals — eighteen of whom the borough never got a name for — and the town they all argue in.",
@@ -3071,7 +3071,9 @@
     "score": 2.95,
     "power": 4.92,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 321
   },
   {
    "id": "mk_peanut_barista_1",
@@ -3103,7 +3105,9 @@
     "score": 3.6,
     "power": 6.63,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 59
   },
   {
    "id": "mk_peanut_accountant_2",
@@ -3137,7 +3141,9 @@
     "score": 5.69,
     "power": 12.25,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 576
   },
   {
    "id": "mk_peanut_cafe_manager_4",
@@ -3191,7 +3197,9 @@
     "score": 5.14,
     "power": 12.9,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 454
   },
   {
    "id": "mk_peanut_comptroller_5",
@@ -3226,7 +3234,9 @@
     "score": 5.08,
     "power": 13.25,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 56
   },
   {
    "id": "mk_peanuts_standing_round",
@@ -3263,7 +3273,9 @@
     "score": 1.56,
     "power": 2.6,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 123
   },
   {
    "id": "mk_oatmeal_ward_clerk_1",
@@ -3297,7 +3309,9 @@
     "score": 4.83,
     "power": 8.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 432
   },
   {
    "id": "mk_oatmeal_safety_inspector_2",
@@ -3334,7 +3348,9 @@
     "score": 4.58,
     "power": 9.85,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 296
   },
   {
    "id": "mk_oatmeal_jazz_singer_3",
@@ -3367,7 +3383,9 @@
     "score": 4.33,
     "power": 9.85,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 294
   },
   {
    "id": "mk_oatmeal_town_warden_4",
@@ -3401,7 +3419,9 @@
     "score": 4.84,
     "power": 12.15,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 291
   },
   {
    "id": "mk_oatmeal_alderman_5",
@@ -3446,7 +3466,9 @@
     "score": 5.59,
     "power": 14.58,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 301
   },
   {
    "id": "mk_barnaby_night_auditor_4",
@@ -3482,7 +3504,9 @@
     "score": 5.45,
     "power": 12.77,
     "opportunityCost": 8.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 624
   },
   {
    "id": "mk_barrow_stonecutter_5",
@@ -3524,7 +3548,9 @@
     "score": 6.6,
     "power": 16.17,
     "opportunityCost": 9.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 621
   },
   {
    "id": "mk_bean_espresso_1",
@@ -3561,7 +3587,9 @@
     "score": 4.4,
     "power": 8.1,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 495
   },
   {
    "id": "mk_bean_barista_3",
@@ -3599,7 +3627,9 @@
     "score": 4.74,
     "power": 10.79,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 344
   },
   {
    "id": "mk_bean_proprietor_5",
@@ -3637,7 +3667,9 @@
     "score": 6.4,
     "power": 16.71,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 502
   },
   {
    "id": "mk_beans_coffee_break",
@@ -3668,7 +3700,9 @@
     "score": 2.02,
     "power": 3,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 126
   },
   {
    "id": "mk_brett_counsel_5",
@@ -3708,7 +3742,9 @@
     "score": 5.81,
     "power": 14.25,
     "opportunityCost": 9.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 398
   },
   {
    "id": "mk_berry_tinker_0",
@@ -3742,7 +3778,9 @@
     "score": 3.77,
     "power": 6.3,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 557
   },
   {
    "id": "mk_berry_clockmaker_1",
@@ -3777,7 +3815,9 @@
     "score": 4.02,
     "power": 7.41,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 281
   },
   {
    "id": "mk_berry_committee_2",
@@ -3813,7 +3853,9 @@
     "score": 4.71,
     "power": 10.14,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 282
   },
   {
    "id": "mk_berry_engineer_3",
@@ -3850,7 +3892,9 @@
     "score": 4.42,
     "power": 10.05,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 283
   },
   {
    "id": "mk_berry_workshop_elder_4",
@@ -3887,7 +3931,9 @@
     "score": 4.63,
     "power": 11.63,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 284
   },
   {
    "id": "mk_berry_guild_warden_5",
@@ -3934,7 +3980,9 @@
     "score": 8.55,
     "power": 22.32,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 644
   },
   {
    "id": "mk_biff_beat_constable_2",
@@ -3968,7 +4016,9 @@
     "score": 5.16,
     "power": 11.11,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 558
   },
   {
    "id": "mk_biff_chief_constable_4",
@@ -4013,7 +4063,9 @@
     "score": 7.12,
     "power": 17.88,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 641
   },
   {
    "id": "mk_biff_cadet_constable_0",
@@ -4035,7 +4087,9 @@
     "score": 2.22,
     "power": 3.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 27
   },
   {
    "id": "mk_bob_gate_attendant_4",
@@ -4073,7 +4127,9 @@
     "score": 5.72,
     "power": 13.4,
     "opportunityCost": 8.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 620
   },
   {
    "id": "mk_brooke_dock_hand_1",
@@ -4111,7 +4167,9 @@
     "score": 3.69,
     "power": 6.8,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 46
   },
   {
    "id": "mk_brooke_ferry_hand_2",
@@ -4149,7 +4207,9 @@
     "score": 4.84,
     "power": 10.41,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 440
   },
   {
    "id": "mk_brooke_regatta_caller_3",
@@ -4179,7 +4239,9 @@
     "score": 4.95,
     "power": 11.25,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 449
   },
   {
    "id": "mk_brooke_balloonist_4",
@@ -4223,7 +4285,9 @@
     "score": 5.2,
     "power": 13.06,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 442
   },
   {
    "id": "mk_brooke_aeronaut_5",
@@ -4267,7 +4331,9 @@
     "score": 8.52,
     "power": 22.23,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 647
   },
   {
    "id": "mk_brooke_riverwright_5",
@@ -4307,7 +4373,9 @@
     "score": 6,
     "power": 15.65,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 445
   },
   {
    "id": "mk_brooke_mooring_hand_0",
@@ -4329,7 +4397,9 @@
     "score": 2.22,
     "power": 3.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 44
   },
   {
    "id": "mk_betty_barn_sweeper_0",
@@ -4367,7 +4437,9 @@
     "score": 3.08,
     "power": 5.14,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 431
   },
   {
    "id": "mk_betty_whittler_1",
@@ -4410,7 +4482,9 @@
     "score": 6.25,
     "power": 11.5,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 645
   },
   {
    "id": "mk_betty_stump_blaster_2",
@@ -4450,7 +4524,9 @@
     "score": 4.96,
     "power": 10.67,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 427
   },
   {
    "id": "mk_betty_firework_maker_3",
@@ -4483,7 +4559,9 @@
     "score": 4.28,
     "power": 9.73,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 286
   },
   {
    "id": "mk_betty_powder_chemist_4",
@@ -4519,7 +4597,9 @@
     "score": 5.29,
     "power": 13.28,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 429
   },
   {
    "id": "mk_betty_land_clearer_5",
@@ -4561,7 +4641,9 @@
     "score": 8.86,
     "power": 23.12,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 643
   },
   {
    "id": "mk_clover_seedling_helper_0",
@@ -4596,7 +4678,9 @@
     "score": 5.33,
     "power": 8.9,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 637
   },
   {
    "id": "mk_clover_market_gardener_2",
@@ -4634,7 +4718,9 @@
     "score": 5.17,
     "power": 11.13,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 545
   },
   {
    "id": "mk_clover_community_gardener_3",
@@ -4673,7 +4759,9 @@
     "score": 5.43,
     "power": 12.35,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 548
   },
   {
    "id": "mk_clover_rocket_botanist_4",
@@ -4712,7 +4800,9 @@
     "score": 5.26,
     "power": 13.2,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 412
   },
   {
    "id": "mk_clover_master_botanist_5",
@@ -4755,7 +4845,9 @@
     "score": 5.79,
     "power": 15.1,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 253
   },
   {
    "id": "mk_clover_plot_sharer_1",
@@ -4791,7 +4883,9 @@
     "score": 5.16,
     "power": 9.5,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 547
   },
   {
    "id": "mk_clovers_potato_experiment",
@@ -4836,7 +4930,9 @@
     "score": 4.61,
     "power": 7.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 608
   },
   {
    "id": "mk_clovers_seed_drive",
@@ -4877,7 +4973,9 @@
     "score": 2.29,
     "power": 3.4,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 118
   },
   {
    "id": "mk_comet_rocket_mechanic_1",
@@ -4917,7 +5015,9 @@
     "score": 3.71,
     "power": 6.83,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 339
   },
   {
    "id": "mk_comet_test_pilot_3",
@@ -4959,7 +5059,9 @@
     "score": 5.1,
     "power": 11.61,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 473
   },
   {
    "id": "mk_comet_astronaut_5",
@@ -5010,7 +5112,9 @@
     "score": 5.9,
     "power": 15.39,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 468
   },
   {
    "id": "mk_comet_bolt_sorter_0",
@@ -5032,7 +5136,9 @@
     "score": 2.22,
     "power": 3.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 67
   },
   {
    "id": "mk_one_small_step",
@@ -5073,7 +5179,9 @@
     "score": 3.89,
     "power": 6.5,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 607
   },
   {
    "id": "mk_comets_countdown",
@@ -5107,7 +5215,9 @@
     "score": 1.86,
     "power": 3,
     "opportunityCost": 3.3
-   }
+   },
+   "setNumber": "A1",
+   "number": 110
   },
   {
    "id": "mk_copper_penny_counter_0",
@@ -5142,7 +5252,9 @@
     "score": 3.53,
     "power": 5.9,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 471
   },
   {
    "id": "mk_copper_scale_polisher_1",
@@ -5180,7 +5292,9 @@
     "score": 4.83,
     "power": 8.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 475
   },
   {
    "id": "mk_copper_weights_inspector_2",
@@ -5215,7 +5329,9 @@
     "score": 4.3,
     "power": 9.25,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 333
   },
   {
    "id": "mk_copper_arcade_merchant_3",
@@ -5247,7 +5363,9 @@
     "score": 4.07,
     "power": 9.25,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 68
   },
   {
    "id": "mk_copper_market_steward_5",
@@ -5291,7 +5409,9 @@
     "score": 5.56,
     "power": 14.5,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 335
   },
   {
    "id": "mk_copper_cellar_keeper_4",
@@ -5313,7 +5433,9 @@
     "score": 4.42,
     "power": 11.1,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 70
   },
   {
    "id": "mk_dylan_river_otter_4",
@@ -5358,7 +5480,9 @@
     "score": 6.74,
     "power": 15.8,
     "opportunityCost": 8.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 622
   },
   {
    "id": "mk_rosabeth_herb_gatherer_0",
@@ -5398,7 +5522,9 @@
     "score": 3.08,
     "power": 5.14,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 424
   },
   {
    "id": "mk_rosabeth_tincture_maker_2",
@@ -5434,7 +5560,9 @@
     "score": 4.5,
     "power": 9.69,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 280
   },
   {
    "id": "mk_rosabeth_apothecary_3",
@@ -5469,7 +5597,9 @@
     "score": 4.77,
     "power": 10.85,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 423
   },
   {
    "id": "mk_rosabeth_herbalist_physician_5",
@@ -5517,7 +5647,9 @@
     "score": 5.62,
     "power": 14.65,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 278
   },
   {
    "id": "mk_rosabeth_garden_hand_1",
@@ -5539,7 +5671,9 @@
     "score": 4.29,
     "power": 7.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 272
   },
   {
    "id": "mk_bella_forager_0",
@@ -5587,7 +5721,9 @@
     "score": 4.13,
     "power": 6.9,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 550
   },
   {
    "id": "mk_bella_field_scientist_1",
@@ -5636,7 +5772,9 @@
     "score": 4.57,
     "power": 8.41,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 414
   },
   {
    "id": "mk_bella_field_recorder_2",
@@ -5671,7 +5809,9 @@
     "score": 4.76,
     "power": 10.25,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 417
   },
   {
    "id": "mk_bella_wildlife_warden_3",
@@ -5706,7 +5846,9 @@
     "score": 4.77,
     "power": 10.85,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 420
   },
   {
    "id": "mk_bella_ecologist_5",
@@ -5749,7 +5891,9 @@
     "score": 5.1,
     "power": 13.3,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 8
   },
   {
    "id": "mk_bella_science_hall_fellow_4",
@@ -5784,7 +5928,9 @@
     "score": 4.91,
     "power": 12.32,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 275
   },
   {
    "id": "mk_finn_auctioneers_boy_0",
@@ -5820,7 +5966,9 @@
     "score": 2.94,
     "power": 4.9,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 365
   },
   {
    "id": "mk_finn_peddler_1",
@@ -5864,7 +6012,9 @@
     "score": 5.11,
     "power": 9.4,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 591
   },
   {
    "id": "mk_finn_fair_warden_3",
@@ -5906,7 +6056,9 @@
     "score": 4.16,
     "power": 9.45,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 364
   },
   {
    "id": "mk_finn_trade_broker_4",
@@ -5951,7 +6103,9 @@
     "score": 4.45,
     "power": 11.19,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 360
   },
   {
    "id": "mk_hazel_barrow_hand_0",
@@ -5989,7 +6143,9 @@
     "score": 2.76,
     "power": 4.61,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 373
   },
   {
    "id": "mk_hazel_night_market_vendor_1",
@@ -6033,7 +6189,9 @@
     "score": 3.1,
     "power": 5.7,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 92
   },
   {
    "id": "mk_hazel_market_vendor_2",
@@ -6068,7 +6226,9 @@
     "score": 4.67,
     "power": 10.05,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 375
   },
   {
    "id": "mk_hazel_guildmaster_3",
@@ -6102,7 +6262,9 @@
     "score": 5.16,
     "power": 11.73,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 523
   },
   {
    "id": "mk_hazel_merchant_5",
@@ -6148,7 +6310,9 @@
     "score": 5.32,
     "power": 13.89,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 97
   },
   {
    "id": "mk_hazel_market_committee_chair_4",
@@ -6184,7 +6348,9 @@
     "score": 5.04,
     "power": 12.67,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 379
   },
   {
    "id": "mk_hazels_night_market",
@@ -6221,7 +6387,9 @@
     "score": 2.62,
     "power": 3.9,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 388
   },
   {
    "id": "mk_hoot_night_porter_2",
@@ -6258,7 +6426,9 @@
     "score": 4.02,
     "power": 8.45,
     "opportunityCost": 6.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 400
   },
   {
    "id": "mk_inkwell_bookmark_keeper_1",
@@ -6296,7 +6466,9 @@
     "score": 3.75,
     "power": 6.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 341
   },
   {
    "id": "mk_inkwell_storyteller_2",
@@ -6334,7 +6506,9 @@
     "score": 5.13,
     "power": 11.05,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 470
   },
   {
    "id": "mk_inkwell_night_librarian_3",
@@ -6368,7 +6542,9 @@
     "score": 5.69,
     "power": 12.93,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 582
   },
   {
    "id": "mk_inkwell_astronomer_4",
@@ -6421,7 +6597,9 @@
     "score": 5.21,
     "power": 13.08,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 466
   },
   {
    "id": "mk_inkwell_keeper_of_stories_5",
@@ -6472,7 +6650,9 @@
     "score": 5.17,
     "power": 13.5,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 63
   },
   {
    "id": "mk_inkwells_late_shift",
@@ -6509,7 +6689,9 @@
     "score": 2.42,
     "power": 3.6,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 390
   },
   {
    "id": "mk_inkwells_star_chart",
@@ -6546,7 +6728,9 @@
     "score": 1.92,
     "power": 2.85,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 134
   },
   {
    "id": "mk_juniper_messenger_1",
@@ -6581,7 +6765,9 @@
     "score": 4.94,
     "power": 9.1,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 593
   },
   {
    "id": "mk_juniper_courier_captain_2",
@@ -6615,7 +6801,9 @@
     "score": 4.58,
     "power": 9.85,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 354
   },
   {
    "id": "mk_juniper_ward_councillor_3",
@@ -6650,7 +6838,9 @@
     "score": 3.89,
     "power": 8.85,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 85
   },
   {
    "id": "mk_juniper_diplomat_4",
@@ -6682,7 +6872,9 @@
     "score": 5,
     "power": 12.55,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 356
   },
   {
    "id": "mk_juniper_stargazer_5",
@@ -6729,7 +6921,9 @@
     "score": 4.79,
     "power": 12.51,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 83
   },
   {
    "id": "mk_kevin_hired_hand_3",
@@ -6774,7 +6968,9 @@
     "score": 4.45,
     "power": 9.92,
     "opportunityCost": 7.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 401
   },
   {
    "id": "mk_lynnette_night_printer_0",
@@ -6825,7 +7021,9 @@
     "score": 3.41,
     "power": 5.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 413
   },
   {
    "id": "mk_lynnette_bookbinder_1",
@@ -6882,7 +7080,9 @@
     "score": 4.33,
     "power": 7.98,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 407
   },
   {
    "id": "mk_lynnette_lending_librarian_3",
@@ -6921,7 +7121,9 @@
     "score": 5.43,
     "power": 12.35,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 549
   },
   {
    "id": "mk_lynnette_master_printer_5",
@@ -6960,7 +7162,9 @@
     "score": 5.86,
     "power": 15.3,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 263
   },
   {
    "id": "mk_lynnette_press_feeder_2",
@@ -6982,7 +7186,9 @@
     "score": 3.39,
     "power": 7.3,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 6
   },
   {
    "id": "mk_bld_all_night_cafe",
@@ -7024,7 +7230,9 @@
     "score": 4.79,
     "power": 11.64,
     "opportunityCost": 9.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 163
   },
   {
    "id": "mk_bld_festival_green",
@@ -7061,7 +7269,9 @@
     "score": 5.51,
     "power": 15,
     "opportunityCost": 12.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 396
   },
   {
    "id": "mk_bld_hiring_hall",
@@ -7090,7 +7300,9 @@
     "score": 4.88,
     "power": 11.34,
     "opportunityCost": 8.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 164
   },
   {
    "id": "mk_bld_winter_stores",
@@ -7117,7 +7329,9 @@
     "score": 1.9,
     "power": 4.62,
     "opportunityCost": 9.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 154
   },
   {
    "id": "mk_fresh_batch",
@@ -7146,7 +7360,9 @@
     "score": 2.02,
     "power": 3,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 109
   },
   {
    "id": "mk_open_mic_night",
@@ -7175,7 +7391,9 @@
     "score": 2.02,
     "power": 3,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 130
   },
   {
    "id": "mk_hedge_apothecary",
@@ -7223,7 +7441,9 @@
     "score": 2.85,
     "power": 4.76,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 392
   },
   {
    "id": "mk_slack_water",
@@ -7260,7 +7480,9 @@
     "score": 2.28,
     "power": 3.8,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 116
   },
   {
    "id": "mk_fair_hearing",
@@ -7299,7 +7521,9 @@
     "score": 2.79,
     "power": 4.65,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 384
   },
   {
    "id": "mk_mkt_community_oven",
@@ -7335,7 +7559,9 @@
     "score": 3,
     "power": 4.9,
     "opportunityCost": 3.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 188
   },
   {
    "id": "mk_mkt_bandstand",
@@ -7375,7 +7601,9 @@
     "score": 2.99,
     "power": 5.4,
     "opportunityCost": 4.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 190
   },
   {
    "id": "mk_mkt_emergency_reserve",
@@ -7399,7 +7627,9 @@
     "score": 1.49,
     "power": 2.55,
     "opportunityCost": 3.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 182
   },
   {
    "id": "mk_dx_tax_assessors",
@@ -7418,7 +7648,9 @@
     "score": 2.73,
     "power": 3.6,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 403
   },
   {
    "id": "mk_dx_open_hiring",
@@ -7437,7 +7669,9 @@
     "score": 1.97,
     "power": 2.6,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 223
   },
   {
    "id": "mk_tb_allotment_strip",
@@ -7469,7 +7703,9 @@
     "score": 4.22,
     "power": 9.6,
     "opportunityCost": 7.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 394
   },
   {
    "id": "mk_tb_coppers_cellar",
@@ -7496,7 +7732,9 @@
     "score": 5.07,
     "power": 11.54,
     "opportunityCost": 7.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 531
   },
   {
    "id": "mk_tb_berrys_bench",
@@ -7523,7 +7761,9 @@
     "score": 3.77,
     "power": 9,
     "opportunityCost": 8.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 150
   },
   {
    "id": "mk_tb_rosabeths_gate",
@@ -7552,7 +7792,9 @@
     "score": 4.98,
     "power": 12,
     "opportunityCost": 9.02
-   }
+   },
+   "setNumber": "A1",
+   "number": 530
   },
   {
    "id": "mk_tb_open_mic_room",
@@ -7579,7 +7821,9 @@
     "score": 3.95,
     "power": 9,
     "opportunityCost": 7.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 147
   },
   {
    "id": "mk_tb_boat_shed",
@@ -7607,7 +7851,9 @@
     "power": 8.31,
     "opportunityCost": 8.82
    },
-   "upkeep": 0
+   "upkeep": 0,
+   "setNumber": "A1",
+   "number": 141
   },
   {
    "id": "mk_tb_gate_hut",
@@ -7645,7 +7891,9 @@
     "score": 5.57,
     "power": 12,
     "opportunityCost": 6.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 612
   },
   {
    "id": "mk_tok_rabbit",
@@ -7665,7 +7913,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 242
   },
   {
    "id": "mk_tok_mouse",
@@ -7685,7 +7935,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 243
   },
   {
    "id": "mk_tok_hedgehog",
@@ -7705,7 +7957,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 244
   },
   {
    "id": "mk_tok_badger",
@@ -7725,7 +7979,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 245
   },
   {
    "id": "mk_tok_otter",
@@ -7745,7 +8001,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 246
   },
   {
    "id": "mk_tok_squirrel",
@@ -7765,7 +8023,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 247
   },
   {
    "id": "mk_tok_cat",
@@ -7785,7 +8045,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 248
   },
   {
    "id": "mk_tok_owl",
@@ -7805,7 +8067,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 249
   },
   {
    "id": "mk_tok_fox",
@@ -7825,7 +8089,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 250
   },
   {
    "id": "mk_tok_raccoon",
@@ -7845,7 +8111,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 251
   },
   {
    "id": "mk_tok_agriculture",
@@ -7865,7 +8133,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 241
   },
   {
    "id": "mk_tok_civics",
@@ -7885,7 +8155,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 236
   },
   {
    "id": "mk_tok_commerce",
@@ -7905,7 +8177,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 237
   },
   {
    "id": "mk_tok_crafts",
@@ -7925,7 +8199,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 235
   },
   {
    "id": "mk_tok_lore",
@@ -7945,7 +8221,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 239
   },
   {
    "id": "mk_tok_science",
@@ -7965,7 +8243,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 240
   },
   {
    "id": "mk_tok_food",
@@ -7985,7 +8265,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 238
   },
   {
    "id": "mk_tok_entertainment",
@@ -8005,7 +8287,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 233
   },
   {
    "id": "mk_tok_building",
@@ -8023,7 +8307,9 @@
     "score": 0,
     "power": 0,
     "opportunityCost": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 234
   },
   {
    "id": "mk_barrows_measure",
@@ -8062,7 +8348,9 @@
     "score": 1.92,
     "power": 3.2,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 112
   },
   {
    "id": "mk_biffs_beat",
@@ -8095,7 +8383,9 @@
     "score": 1.84,
     "power": 2.74,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 122
   },
   {
    "id": "mk_rosabeths_rounds",
@@ -8132,7 +8422,9 @@
     "score": 3.41,
     "power": 5.07,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 524
   },
   {
    "id": "mk_oatmeals_benefit_night",
@@ -8172,7 +8464,9 @@
     "score": 2.64,
     "power": 4.4,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 383
   },
   {
    "id": "mk_coppers_stocktake",
@@ -8209,7 +8503,9 @@
     "score": 2.29,
     "power": 3.82,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 117
   },
   {
    "id": "mk_warren_muster",
@@ -8238,7 +8534,9 @@
     "score": 3.59,
     "power": 6,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 529
   },
   {
    "id": "mk_night_round",
@@ -8272,7 +8570,9 @@
     "score": 2.34,
     "power": 3.9,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 393
   },
   {
    "id": "mk_bins_at_dawn",
@@ -8304,7 +8604,9 @@
     "score": 2.38,
     "power": 3.54,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 391
   },
   {
    "id": "mk_guild_night",
@@ -8339,7 +8641,9 @@
     "score": 2.04,
     "power": 3.4,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 107
   },
   {
    "id": "mk_hall_lecture",
@@ -8376,7 +8680,9 @@
     "score": 2.76,
     "power": 4.6,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 387
   },
   {
    "id": "mk_ledger_day",
@@ -8410,7 +8716,9 @@
     "score": 3.29,
     "power": 5.5,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 528
   },
   {
    "id": "mk_tb_barrows_yard",
@@ -8440,7 +8748,9 @@
     "power": 7.2,
     "opportunityCost": 8.82
    },
-   "upkeep": 0
+   "upkeep": 0,
+   "setNumber": "A1",
+   "number": 144
   },
   {
    "id": "mk_tb_the_warren",
@@ -8467,7 +8777,9 @@
     "score": 3.95,
     "power": 9,
     "opportunityCost": 7.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 137
   },
   {
    "id": "mk_tb_observatory_steps",
@@ -8508,7 +8820,9 @@
     "score": 4.01,
     "power": 9.12,
     "opportunityCost": 7.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 152
   },
   {
    "id": "mk_tb_counting_house",
@@ -8540,7 +8854,9 @@
     "score": 3.97,
     "power": 9.97,
     "opportunityCost": 10.02
-   }
+   },
+   "setNumber": "A1",
+   "number": 143
   },
   {
    "id": "mk_tb_quill_wall",
@@ -8578,7 +8894,9 @@
     "score": 9.97,
     "power": 28.98,
     "opportunityCost": 14.42
-   }
+   },
+   "setNumber": "A1",
+   "number": 656
   },
   {
    "id": "mk_bld_guild_hall",
@@ -8616,7 +8934,9 @@
     "score": 4.79,
     "power": 11.64,
     "opportunityCost": 9.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 156
   },
   {
    "id": "mk_bld_long_room",
@@ -8654,7 +8974,9 @@
     "score": 3.93,
     "power": 9.12,
     "opportunityCost": 8.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 158
   },
   {
    "type": "character",
@@ -8692,7 +9014,9 @@
     "score": 3.64,
     "power": 6.7,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 14
   },
   {
    "type": "character",
@@ -8730,7 +9054,9 @@
     "score": 4.9,
     "power": 10.55,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 421
   },
   {
    "type": "character",
@@ -8769,7 +9095,9 @@
     "score": 4.16,
     "power": 9.45,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 268
   },
   {
    "type": "character",
@@ -8816,7 +9144,9 @@
     "score": 5.18,
     "power": 13,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 422
   },
   {
    "type": "character",
@@ -8848,7 +9178,9 @@
     "score": 5.23,
     "power": 13.65,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 11
   },
   {
    "id": "mk_maribel_seed_sorter_0",
@@ -8870,7 +9202,9 @@
     "score": 2.22,
     "power": 3.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 20
   },
   {
    "type": "character",
@@ -8908,7 +9242,9 @@
     "score": 3.04,
     "power": 5.59,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 98
   },
   {
    "type": "character",
@@ -8942,7 +9278,9 @@
     "score": 4.9,
     "power": 10.55,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 519
   },
   {
    "type": "character",
@@ -8976,7 +9314,9 @@
     "score": 5.34,
     "power": 12.14,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 598
   },
   {
    "type": "character",
@@ -9014,7 +9354,9 @@
     "score": 5.96,
     "power": 15.55,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 513
   },
   {
    "id": "mk_beck_candlelight_reader_4",
@@ -9048,7 +9390,9 @@
     "score": 4.78,
     "power": 12,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 376
   },
   {
    "id": "mk_beck_reads_by_candlelight",
@@ -9087,7 +9431,9 @@
     "score": 3.09,
     "power": 4.6,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 527
   },
   {
    "type": "character",
@@ -9128,7 +9474,9 @@
     "score": 3.69,
     "power": 6.16,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 479
   },
   {
    "type": "character",
@@ -9166,7 +9514,9 @@
     "score": 5.11,
     "power": 9.4,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 580
   },
   {
    "type": "character",
@@ -9213,7 +9563,9 @@
     "score": 4.99,
     "power": 10.75,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 478
   },
   {
    "type": "character",
@@ -9251,7 +9603,9 @@
     "score": 4.77,
     "power": 10.85,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 476
   },
   {
    "type": "character",
@@ -9294,7 +9648,9 @@
     "score": 5.92,
     "power": 15.45,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 474
   },
   {
    "id": "mk_marmalade_guild_baker_5",
@@ -9340,7 +9696,9 @@
     "score": 8.37,
     "power": 21.85,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 649
   },
   {
    "id": "mk_marmalade_oven_keeper_4",
@@ -9376,7 +9734,9 @@
     "score": 5.46,
     "power": 13.71,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 579
   },
   {
    "id": "mk_mittens_rooftop_cat_4",
@@ -9418,7 +9778,9 @@
     "score": 5.67,
     "power": 13.29,
     "opportunityCost": 8.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 623
   },
   {
    "type": "character",
@@ -9448,7 +9810,9 @@
     "score": 3.31,
     "power": 6.1,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 31
   },
   {
    "type": "character",
@@ -9484,7 +9848,9 @@
     "score": 5.19,
     "power": 11.81,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 436
   },
   {
    "type": "character",
@@ -9518,7 +9884,9 @@
     "score": 4.68,
     "power": 11.75,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 307
   },
   {
    "type": "character",
@@ -9554,7 +9922,9 @@
     "score": 4.71,
     "power": 12.3,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 40
   },
   {
    "id": "mk_morty_grain_miller_2",
@@ -9576,7 +9946,9 @@
     "score": 3.39,
     "power": 7.3,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 33
   },
   {
    "id": "mk_mortys_boiler_test",
@@ -9612,7 +9984,9 @@
     "score": 2.02,
     "power": 3,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 124
   },
   {
    "type": "character",
@@ -9646,7 +10020,9 @@
     "score": 3.31,
     "power": 6.1,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 37
   },
   {
    "type": "character",
@@ -9682,7 +10058,9 @@
     "score": 4.63,
     "power": 9.98,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 300
   },
   {
    "type": "character",
@@ -9718,7 +10096,9 @@
     "score": 5.19,
     "power": 11.81,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 433
   },
   {
    "type": "character",
@@ -9758,7 +10138,9 @@
     "score": 3.96,
     "power": 9.94,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 34
   },
   {
    "type": "character",
@@ -9790,7 +10172,9 @@
     "score": 5.48,
     "power": 14.3,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 289
   },
   {
    "id": "mk_moss_timber_hand_0",
@@ -9812,7 +10196,9 @@
     "score": 2.22,
     "power": 3.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 38
   },
   {
    "id": "mk_moss_rehiring_day",
@@ -9841,7 +10227,9 @@
     "score": 1.51,
     "power": 2.25,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 131
   },
   {
    "type": "character",
@@ -9879,7 +10267,9 @@
     "score": 2.18,
     "power": 3.63,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 13
   },
   {
    "type": "character",
@@ -9924,7 +10314,9 @@
     "score": 4.85,
     "power": 10.44,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 419
   },
   {
    "type": "character",
@@ -9962,7 +10354,9 @@
     "score": 4.77,
     "power": 10.85,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 416
   },
   {
    "type": "character",
@@ -10006,7 +10400,9 @@
     "score": 5.42,
     "power": 13.62,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 552
   },
   {
    "id": "mk_daniel_chart_copier_1",
@@ -10028,7 +10424,9 @@
     "score": 4.29,
     "power": 7.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 276
   },
   {
    "type": "character",
@@ -10067,7 +10465,9 @@
     "score": 4.96,
     "power": 9.12,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 574
   },
   {
    "type": "character",
@@ -10102,7 +10502,9 @@
     "score": 4.55,
     "power": 9.79,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 322
   },
   {
    "type": "character",
@@ -10148,7 +10550,9 @@
     "score": 5.21,
     "power": 13.08,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 458
   },
   {
    "type": "character",
@@ -10182,7 +10586,9 @@
     "score": 5.33,
     "power": 13.9,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 54
   },
   {
    "id": "mk_ned_ward_recorder_3",
@@ -10217,7 +10623,9 @@
     "score": 4.16,
     "power": 9.45,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 327
   },
   {
    "type": "character",
@@ -10256,7 +10664,9 @@
     "score": 2.95,
     "power": 4.92,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 325
   },
   {
    "type": "character",
@@ -10291,7 +10701,9 @@
     "score": 4.95,
     "power": 10.65,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 457
   },
   {
    "type": "character",
@@ -10330,7 +10742,9 @@
     "score": 4.44,
     "power": 10.1,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 319
   },
   {
    "type": "character",
@@ -10364,7 +10778,9 @@
     "score": 5.39,
     "power": 13.55,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 455
   },
   {
    "id": "mk_peter_hedge_cutter_0",
@@ -10386,7 +10802,9 @@
     "score": 2.22,
     "power": 3.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 3
   },
   {
    "id": "mk_peter_hedgelayer_3",
@@ -10408,7 +10826,9 @@
     "score": 4.05,
     "power": 9.2,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 1
   },
   {
    "id": "mk_osh_sharpener_s_boy_0",
@@ -10430,7 +10850,9 @@
     "score": 2.22,
     "power": 3.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 16
   },
   {
    "id": "mk_osh_edge_grinder_2",
@@ -10452,7 +10874,9 @@
     "score": 3.39,
     "power": 7.3,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 19
   },
   {
    "id": "mk_adam_road_mender_1",
@@ -10474,7 +10898,9 @@
     "score": 4.29,
     "power": 7.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 299
   },
   {
    "id": "mk_adam_surveyor_of_ways_4",
@@ -10496,7 +10922,9 @@
     "score": 4.42,
     "power": 11.1,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 32
   },
   {
    "id": "mk_adam_road_construction_5",
@@ -10546,7 +10974,9 @@
     "score": 8.57,
     "power": 22.37,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 646
   },
   {
    "id": "mk_cassadee_stage_hand_0",
@@ -10568,7 +10998,9 @@
     "score": 2.22,
     "power": 3.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 25
   },
   {
    "id": "mk_cassadee_hall_manager_3",
@@ -10590,7 +11022,9 @@
     "score": 4.05,
     "power": 9.2,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 24
   },
   {
    "id": "mk_annabelle_paper_sorter_0",
@@ -10612,7 +11046,9 @@
     "score": 2.22,
     "power": 3.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 96
   },
   {
    "id": "mk_annabelle_salvage_archivist_3",
@@ -10634,7 +11070,9 @@
     "score": 4.05,
     "power": 9.2,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 93
   },
   {
    "id": "mk_liz_scale_hand_1",
@@ -10656,7 +11094,9 @@
     "score": 4.29,
     "power": 7.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 358
   },
   {
    "id": "mk_liz_weighbridge_keeper_4",
@@ -10678,7 +11118,9 @@
     "score": 4.42,
     "power": 11.1,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 89
   },
   {
    "id": "mk_taco_cart_cook_1",
@@ -10700,7 +11142,9 @@
     "score": 4.29,
     "power": 7.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 318
   },
   {
    "id": "mk_taco_quayside_cook_3",
@@ -10722,7 +11166,9 @@
     "score": 4.05,
     "power": 9.2,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 45
   },
   {
    "id": "mk_cookie_biscuit_maker_0",
@@ -10744,7 +11190,9 @@
     "score": 2.22,
     "power": 3.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 52
   },
   {
    "id": "mk_cookie_winter_stores_cook_3",
@@ -10766,7 +11214,9 @@
     "score": 4.05,
     "power": 9.2,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 51
   },
   {
    "id": "mk_sota_lens_grinder_1",
@@ -10788,7 +11238,9 @@
     "score": 4.29,
     "power": 7.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 332
   },
   {
    "id": "mk_sota_telescope_fitter_3",
@@ -10810,7 +11262,9 @@
     "score": 4.05,
     "power": 9.2,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 71
   },
   {
    "id": "mk_andrew_night_copyist_0",
@@ -10832,7 +11286,9 @@
     "score": 3.89,
     "power": 6.5,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 588
   },
   {
    "id": "mk_andrew_keeper_of_the_late_desk_2",
@@ -10854,7 +11310,9 @@
     "score": 4.83,
     "power": 10.4,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 504
   },
   {
    "id": "mk_orien_tally_clerk_0",
@@ -10895,7 +11353,9 @@
     "score": 3.08,
     "power": 5.14,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 437
   },
   {
    "id": "mk_orien_rate_checker_2",
@@ -10933,7 +11393,9 @@
     "score": 4.53,
     "power": 9.75,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 302
   },
   {
    "id": "mk_orien_borough_actuary_3",
@@ -10970,7 +11432,9 @@
     "score": 4.42,
     "power": 10.05,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 292
   },
   {
    "id": "mk_orien_survey_computer_4",
@@ -11004,7 +11468,9 @@
     "score": 4.92,
     "power": 12.35,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 305
   },
   {
    "id": "mk_orien_town_planner_5",
@@ -11042,7 +11508,9 @@
     "score": 6.07,
     "power": 15.85,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 434
   },
   {
    "id": "mk_patch_junkyard_diver_0",
@@ -11082,7 +11550,9 @@
     "score": 3.25,
     "power": 5.43,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 514
   },
   {
    "id": "mk_patch_salvage_sorter_2",
@@ -11119,7 +11589,9 @@
     "score": 4.39,
     "power": 9.45,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 377
   },
   {
    "id": "mk_patch_valuer_3",
@@ -11153,7 +11625,9 @@
     "score": 5.16,
     "power": 11.73,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 518
   },
   {
    "id": "mk_patch_yard_foreman_4",
@@ -11190,7 +11664,9 @@
     "score": 4.97,
     "power": 12.49,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 378
   },
   {
    "id": "mk_patch_reclamation_merchant_5",
@@ -11235,7 +11711,9 @@
     "score": 6.8,
     "power": 17.74,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 604
   },
   {
    "id": "mk_patchs_second_opinion",
@@ -11262,7 +11740,9 @@
     "score": 1.37,
     "power": 2.04,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 129
   },
   {
    "id": "mk_pebble_crossing_hand_0",
@@ -11302,7 +11782,9 @@
     "score": 2.73,
     "power": 4.56,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 309
   },
   {
    "id": "mk_pebble_bridge_courier_1",
@@ -11351,7 +11833,9 @@
     "score": 3.86,
     "power": 7.1,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 314
   },
   {
    "id": "mk_pebble_ferry_master_3",
@@ -11396,7 +11880,9 @@
     "score": 5.47,
     "power": 12.45,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 571
   },
   {
    "id": "mk_pebble_harbour_warden_5",
@@ -11447,7 +11933,9 @@
     "score": 7.12,
     "power": 18.57,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 566
   },
   {
    "id": "mk_scott_story_collector_0",
@@ -11495,7 +11983,9 @@
     "score": 4.03,
     "power": 6.72,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 575
   },
   {
    "id": "mk_scott_pamphleteer_2",
@@ -11530,7 +12020,9 @@
     "score": 4.91,
     "power": 10.56,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 461
   },
   {
    "id": "mk_scott_town_chronicler_3",
@@ -11574,7 +12066,9 @@
     "score": 4.77,
     "power": 10.84,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 462
   },
   {
    "id": "mk_scott_natural_historian_4",
@@ -11619,7 +12113,9 @@
     "score": 5.59,
     "power": 14.05,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 577
   },
   {
    "id": "mk_scott_author_of_the_boroughs_5",
@@ -11662,7 +12158,9 @@
     "score": 6.75,
     "power": 17.61,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 578
   },
   {
    "id": "mk_scotts_reading_hour",
@@ -11705,7 +12203,9 @@
     "score": 2.36,
     "power": 3.8,
     "opportunityCost": 3.3
-   }
+   },
+   "setNumber": "A1",
+   "number": 389
   },
   {
    "id": "mk_lindsay_potting_helper_0",
@@ -11743,7 +12243,9 @@
     "score": 3.26,
     "power": 5.44,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 472
   },
   {
    "id": "mk_lindsay_glasshouse_hand_2",
@@ -11783,7 +12285,9 @@
     "score": 4.8,
     "power": 10.33,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 477
   },
   {
    "id": "mk_lindsay_herb_grower_3",
@@ -11818,7 +12322,9 @@
     "score": 4.33,
     "power": 9.85,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 342
   },
   {
    "id": "mk_lindsay_conservatory_keeper_4",
@@ -11855,7 +12361,9 @@
     "score": 5.04,
     "power": 12.67,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 343
   },
   {
    "id": "mk_lindsay_moon_gardener_5",
@@ -11890,7 +12398,9 @@
     "score": 5.79,
     "power": 15.1,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 340
   },
   {
    "id": "mk_pockets_kerbside_dealer_1",
@@ -11928,7 +12438,9 @@
     "score": 4.02,
     "power": 7.4,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 371
   },
   {
    "id": "mk_pockets_odd_lot_dealer_3",
@@ -11971,7 +12483,9 @@
     "score": 5.03,
     "power": 11.45,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 517
   },
   {
    "id": "mk_pockets_salvage_raccoon_4",
@@ -12005,7 +12519,9 @@
     "score": 5.16,
     "power": 12.08,
     "opportunityCost": 8.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 536
   },
   {
    "id": "mk_hibiscus_post_runner_1",
@@ -12043,7 +12559,9 @@
     "score": 3.69,
     "power": 6.8,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 5
   },
   {
    "id": "mk_hibiscus_night_mail_2",
@@ -12081,7 +12599,9 @@
     "score": 4.1,
     "power": 8.83,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 259
   },
   {
    "id": "mk_hibiscus_round_walker_3",
@@ -12122,7 +12642,9 @@
     "score": 4.25,
     "power": 9.67,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 265
   },
   {
    "id": "mk_hibiscus_mail_coach_driver_4",
@@ -12161,7 +12683,9 @@
     "score": 4.64,
     "power": 11.65,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 255
   },
   {
    "id": "mk_hibiscus_postmaster_5",
@@ -12200,7 +12724,9 @@
     "score": 5.4,
     "power": 14.08,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 254
   },
   {
    "id": "mk_hibiscuss_post_route",
@@ -12237,7 +12763,9 @@
     "score": 2.29,
     "power": 3.4,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 105
   },
   {
    "id": "mk_quill_orchard_hand_0",
@@ -12271,7 +12799,9 @@
     "score": 3.95,
     "power": 6.6,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 556
   },
   {
    "id": "mk_quill_orchard_keeper_2",
@@ -12308,7 +12838,9 @@
     "score": 4.8,
     "power": 10.33,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 430
   },
   {
    "id": "mk_quill_cider_maker_3",
@@ -12354,7 +12886,9 @@
     "score": 6.85,
     "power": 15.57,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 640
   },
   {
    "id": "mk_quill_orchard_scribe_4",
@@ -12400,7 +12934,9 @@
     "score": 5.63,
     "power": 14.15,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 554
   },
   {
    "id": "mk_quill_harvest_steward_5",
@@ -12448,7 +12984,9 @@
     "score": 8.44,
     "power": 22.03,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 642
   },
   {
    "id": "mk_quinn_meeting_scribe_1",
@@ -12487,7 +13025,9 @@
     "score": 3.9,
     "power": 7.17,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 274
   },
   {
    "id": "mk_quinn_town_scrivener_3",
@@ -12522,7 +13062,9 @@
     "score": 5.44,
     "power": 12.12,
     "opportunityCost": 7.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 618
   },
   {
    "id": "mk_quinn_keeper_of_the_record_5",
@@ -12558,7 +13100,9 @@
     "score": 5.69,
     "power": 14.85,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 279
   },
   {
    "id": "mk_roger_locksmith_1",
@@ -12593,7 +13137,9 @@
     "score": 3.31,
     "power": 6.1,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 87
   },
   {
    "id": "mk_roger_records_clerk_2",
@@ -12628,7 +13174,9 @@
     "score": 3.95,
     "power": 8.5,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 79
   },
   {
    "id": "mk_roger_circuit_judge_3",
@@ -12663,7 +13211,9 @@
     "score": 4.24,
     "power": 9.65,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 359
   },
   {
    "id": "mk_roger_fair_broker_4",
@@ -12705,7 +13255,9 @@
     "score": 4.32,
     "power": 10.85,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 86
   },
   {
    "id": "mk_roger_ombudsman_5",
@@ -12744,7 +13296,9 @@
     "score": 5.46,
     "power": 14.25,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 368
   },
   {
    "id": "mk_earl_tea_boy_0",
@@ -12795,7 +13349,9 @@
     "score": 3.41,
     "power": 5.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 505
   },
   {
    "id": "mk_earl_tea_trader_2",
@@ -12839,7 +13395,9 @@
     "score": 4.5,
     "power": 9.69,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 353
   },
   {
    "id": "mk_earl_coffee_roaster_3",
@@ -12887,7 +13445,9 @@
     "score": 4.55,
     "power": 10.35,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 367
   },
   {
    "id": "mk_earl_tea_house_keeper_4",
@@ -12928,7 +13488,9 @@
     "score": 5.55,
     "power": 13.95,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 590
   },
   {
    "type": "statue",
@@ -12973,7 +13535,9 @@
     "score": 2.83,
     "power": 11.33,
     "opportunityCost": 32.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 218
   },
   {
    "type": "statue",
@@ -13027,7 +13591,9 @@
     "score": 2.73,
     "power": 10.95,
     "opportunityCost": 32.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 210
   },
   {
    "type": "statue",
@@ -13074,7 +13640,9 @@
     "score": 2.57,
     "power": 10.31,
     "opportunityCost": 32.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 220
   },
   {
    "type": "statue",
@@ -13113,7 +13681,9 @@
     "score": 2.8,
     "power": 11.24,
     "opportunityCost": 32.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 209
   },
   {
    "type": "statue",
@@ -13166,7 +13736,9 @@
     "score": 2.58,
     "power": 10.35,
     "opportunityCost": 32.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 211
   },
   {
    "type": "statue",
@@ -13202,7 +13774,9 @@
     "score": 2.69,
     "power": 10.8,
     "opportunityCost": 32.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 215
   },
   {
    "type": "statue",
@@ -13244,7 +13818,9 @@
     "score": 2.65,
     "power": 10.64,
     "opportunityCost": 32.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 208
   },
   {
    "type": "statue",
@@ -13287,7 +13863,9 @@
     "score": 2.44,
     "power": 9.8,
     "opportunityCost": 32.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 207
   },
   {
    "type": "statue",
@@ -13335,7 +13913,9 @@
     "score": 2.64,
     "power": 10.6,
     "opportunityCost": 32.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 217
   },
   {
    "type": "statue",
@@ -13370,7 +13950,9 @@
     "score": 2.58,
     "power": 10.36,
     "opportunityCost": 32.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 216
   },
   {
    "type": "statue",
@@ -13418,7 +14000,9 @@
     "score": 2.85,
     "power": 11.43,
     "opportunityCost": 32.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 214
   },
   {
    "type": "statue",
@@ -13460,7 +14044,9 @@
     "score": 2.84,
     "power": 11.38,
     "opportunityCost": 32.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 212
   },
   {
    "type": "statue",
@@ -13499,7 +14085,9 @@
     "score": 2.55,
     "power": 10.24,
     "opportunityCost": 32.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 221
   },
   {
    "type": "statue",
@@ -13548,7 +14136,9 @@
     "score": 2.95,
     "power": 11.83,
     "opportunityCost": 32.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 219
   },
   {
    "type": "statue",
@@ -13593,7 +14183,9 @@
     "score": 2.9,
     "power": 11.65,
     "opportunityCost": 32.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 213
   },
   {
    "type": "market",
@@ -13635,7 +14227,9 @@
    "art": {
     "atlas": "monuments",
     "tile": 12
-   }
+   },
+   "setNumber": "A1",
+   "number": 195
   },
   {
    "type": "market",
@@ -13668,7 +14262,9 @@
    "art": {
     "atlas": "townlife",
     "tile": 12
-   }
+   },
+   "setNumber": "A1",
+   "number": 172
   },
   {
    "type": "market",
@@ -13696,7 +14292,9 @@
    "art": {
     "atlas": "capital",
     "tile": 9
-   }
+   },
+   "setNumber": "A1",
+   "number": 181
   },
   {
    "type": "market",
@@ -13724,7 +14322,9 @@
    "art": {
     "atlas": "townlife",
     "tile": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 167
   },
   {
    "type": "market",
@@ -13757,7 +14357,9 @@
    "art": {
     "atlas": "monuments",
     "tile": 9
-   }
+   },
+   "setNumber": "A1",
+   "number": 196
   },
   {
    "type": "market",
@@ -13790,7 +14392,9 @@
    "art": {
     "atlas": "capital",
     "tile": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 199
   },
   {
    "type": "market",
@@ -13823,7 +14427,9 @@
    "art": {
     "atlas": "monuments",
     "tile": 13
-   }
+   },
+   "setNumber": "A1",
+   "number": 184
   },
   {
    "type": "market",
@@ -13861,7 +14467,9 @@
    "art": {
     "atlas": "townlife",
     "tile": 6
-   }
+   },
+   "setNumber": "A1",
+   "number": 200
   },
   {
    "type": "market",
@@ -13895,7 +14503,9 @@
    "art": {
     "atlas": "monuments",
     "tile": 8
-   }
+   },
+   "setNumber": "A1",
+   "number": 170
   },
   {
    "type": "market",
@@ -13926,7 +14536,9 @@
    "art": {
     "atlas": "townlife",
     "tile": 15
-   }
+   },
+   "setNumber": "A1",
+   "number": 189
   },
   {
    "type": "market",
@@ -13958,7 +14570,9 @@
    "art": {
     "atlas": "townlife",
     "tile": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 191
   },
   {
    "type": "market",
@@ -13990,7 +14604,9 @@
    "art": {
     "atlas": "capital",
     "tile": 14
-   }
+   },
+   "setNumber": "A1",
+   "number": 204
   },
   {
    "type": "market",
@@ -14015,7 +14631,9 @@
    "art": {
     "atlas": "townlife",
     "tile": 3
-   }
+   },
+   "setNumber": "A1",
+   "number": 178
   },
   {
    "type": "market",
@@ -14038,7 +14656,9 @@
    "art": {
     "atlas": "townlife",
     "tile": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 203
   },
   {
    "type": "market",
@@ -14071,7 +14691,9 @@
    "art": {
     "atlas": "townlife",
     "tile": 8
-   }
+   },
+   "setNumber": "A1",
+   "number": 197
   },
   {
    "type": "market",
@@ -14103,7 +14725,9 @@
    "art": {
     "atlas": "nightskies",
     "tile": 4
-   }
+   },
+   "setNumber": "A1",
+   "number": 177
   },
   {
    "type": "market",
@@ -14137,7 +14761,9 @@
    "art": {
     "atlas": "monuments",
     "tile": 15
-   }
+   },
+   "setNumber": "A1",
+   "number": 169
   },
   {
    "type": "market",
@@ -14173,7 +14799,9 @@
    "art": {
     "atlas": "capital",
     "tile": 12
-   }
+   },
+   "setNumber": "A1",
+   "number": 180
   },
   {
    "type": "market",
@@ -14200,7 +14828,9 @@
    "art": {
     "atlas": "townlife",
     "tile": 9
-   }
+   },
+   "setNumber": "A1",
+   "number": 187
   },
   {
    "type": "market",
@@ -14232,7 +14862,9 @@
    "art": {
     "atlas": "townlife",
     "tile": 7
-   }
+   },
+   "setNumber": "A1",
+   "number": 186
   },
   {
    "type": "market",
@@ -14265,7 +14897,9 @@
    "art": {
     "atlas": "townlife",
     "tile": 14
-   }
+   },
+   "setNumber": "A1",
+   "number": 176
   },
   {
    "type": "market",
@@ -14304,7 +14938,9 @@
    "art": {
     "atlas": "townlife",
     "tile": 12
-   }
+   },
+   "setNumber": "A1",
+   "number": 171
   },
   {
    "type": "market",
@@ -14355,7 +14991,9 @@
    "art": {
     "atlas": "whiskerwood",
     "tile": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 183
   },
   {
    "type": "market",
@@ -14400,7 +15038,9 @@
    "art": {
     "atlas": "capital",
     "tile": 3
-   }
+   },
+   "setNumber": "A1",
+   "number": 194
   },
   {
    "type": "market",
@@ -14430,7 +15070,9 @@
    "art": {
     "atlas": "neighbors",
     "tile": 6
-   }
+   },
+   "setNumber": "A1",
+   "number": 174
   },
   {
    "type": "market",
@@ -14468,7 +15110,9 @@
    "art": {
     "atlas": "monuments",
     "tile": 13
-   }
+   },
+   "setNumber": "A1",
+   "number": 168
   },
   {
    "type": "market",
@@ -14503,7 +15147,9 @@
    "art": {
     "atlas": "monuments",
     "tile": 9
-   }
+   },
+   "setNumber": "A1",
+   "number": 179
   },
   {
    "type": "market",
@@ -14535,7 +15181,9 @@
    "art": {
     "atlas": "neighbors",
     "tile": 4
-   }
+   },
+   "setNumber": "A1",
+   "number": 173
   },
   {
    "type": "market",
@@ -14557,7 +15205,9 @@
    "art": {
     "atlas": "townlife",
     "tile": 3
-   }
+   },
+   "setNumber": "A1",
+   "number": 193
   },
   {
    "type": "market",
@@ -14591,7 +15241,9 @@
    "art": {
     "atlas": "monuments",
     "tile": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 185
   },
   {
    "id": "mk_dx_hard_winter",
@@ -14613,7 +15265,9 @@
     "score": 3.03,
     "power": 4,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 537
   },
   {
    "id": "mk_sage_night_assistant_0",
@@ -14648,7 +15302,9 @@
     "score": 4.43,
     "power": 7.4,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 587
   },
   {
    "id": "mk_sage_astronomer_3",
@@ -14692,7 +15348,9 @@
     "score": 5.01,
     "power": 11.39,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 498
   },
   {
    "id": "mk_sage_royal_astronomer_5",
@@ -14737,7 +15395,9 @@
     "score": 6.49,
     "power": 16.93,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 488
   },
   {
    "id": "mk_sages_star_party",
@@ -14779,7 +15439,9 @@
     "score": 2.76,
     "power": 4.6,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 386
   },
   {
    "id": "mk_eric_smallholder_1",
@@ -14817,7 +15479,9 @@
     "score": 4.83,
     "power": 8.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 406
   },
   {
    "id": "mk_eric_fair_steward_2",
@@ -14858,7 +15522,9 @@
     "score": 4.5,
     "power": 9.69,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 258
   },
   {
    "id": "mk_eric_row_farmer_3",
@@ -14904,7 +15570,9 @@
     "score": 4.75,
     "power": 10.8,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 405
   },
   {
    "id": "mk_eric_row_boss_4",
@@ -14938,7 +15606,9 @@
     "score": 4.76,
     "power": 11.95,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 256
   },
   {
    "id": "mk_eric_best_farmer_5",
@@ -14972,7 +15642,9 @@
     "score": 6.23,
     "power": 16.25,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 409
   },
   {
    "id": "mk_benjamin_wick_trimmer_0",
@@ -15010,7 +15682,9 @@
     "score": 3.06,
     "power": 5.1,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 448
   },
   {
    "id": "mk_benjamin_lantern_maker_2",
@@ -15044,7 +15718,9 @@
     "score": 4.76,
     "power": 10.25,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 447
   },
   {
    "id": "mk_benjamin_town_historian_3",
@@ -15086,7 +15762,9 @@
     "score": 5.83,
     "power": 13.25,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 569
   },
   {
    "id": "mk_benjamin_master_lantern_maker_4",
@@ -15132,7 +15810,9 @@
     "score": 6.03,
     "power": 15.14,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 570
   },
   {
    "id": "mk_benjamin_keeper_of_the_light_5",
@@ -15167,7 +15847,9 @@
     "score": 6.46,
     "power": 16.86,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 439
   },
   {
    "id": "mk_jessica_song_leader_0",
@@ -15205,7 +15887,9 @@
     "score": 3.07,
     "power": 5.13,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 501
   },
   {
    "id": "mk_jessica_infant_teacher_1",
@@ -15246,7 +15930,9 @@
     "score": 4.83,
     "power": 8.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 489
   },
   {
    "id": "mk_jessica_night_school_teacher_2",
@@ -15299,7 +15985,9 @@
     "score": 4.96,
     "power": 10.68,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 492
   },
   {
    "id": "mk_jessica_headmistress_4",
@@ -15340,7 +16028,9 @@
     "score": 5.26,
     "power": 13.2,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 491
   },
   {
    "id": "mk_jessica_teacher_of_the_boroughs_5",
@@ -15389,7 +16079,9 @@
     "score": 8.37,
     "power": 21.85,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 650
   },
   {
    "id": "mk_jessicas_night_class",
@@ -15423,7 +16115,9 @@
     "score": 1.77,
     "power": 2.85,
     "opportunityCost": 3.3
-   }
+   },
+   "setNumber": "A1",
+   "number": 108
   },
   {
    "id": "mk_jake_warren_runner_3",
@@ -15463,7 +16157,9 @@
     "score": 4.87,
     "power": 10.84,
     "opportunityCost": 7.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 533
   },
   {
    "id": "mk_faustus_bolt_boy_0",
@@ -15501,7 +16197,9 @@
     "score": 2.94,
     "power": 4.9,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 334
   },
   {
    "id": "mk_faustus_pressure_suit_tailor_1",
@@ -15538,7 +16236,9 @@
     "score": 3.31,
     "power": 6.1,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 64
   },
   {
    "id": "mk_faustus_costumier_2",
@@ -15571,7 +16271,9 @@
     "score": 4.67,
     "power": 10.05,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 330
   },
   {
    "id": "mk_faustus_sailmaker_3",
@@ -15606,7 +16308,9 @@
     "score": 3.65,
     "power": 8.3,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 65
   },
   {
    "id": "mk_faustus_threadmaster_5",
@@ -15644,7 +16348,9 @@
     "score": 6.08,
     "power": 14.9,
     "opportunityCost": 9.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 535
   },
   {
    "id": "mk_thistle_almanac_keeper_1",
@@ -15678,7 +16384,9 @@
     "score": 3.86,
     "power": 7.1,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 298
   },
   {
    "id": "mk_thistle_field_hand_2",
@@ -15715,7 +16423,9 @@
     "score": 4.12,
     "power": 8.87,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 303
   },
   {
    "id": "mk_thistle_grange_warden_3",
@@ -15750,7 +16460,9 @@
     "score": 4.16,
     "power": 9.45,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 297
   },
   {
    "id": "mk_thistle_field_surveyor_4",
@@ -15784,7 +16496,9 @@
     "score": 4.3,
     "power": 10.8,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 39
   },
   {
    "id": "mk_thistle_grange_elder_5",
@@ -15818,7 +16532,9 @@
     "score": 6.17,
     "power": 16.1,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 438
   },
   {
    "id": "mk_thistles_grange_supper",
@@ -15856,7 +16572,9 @@
     "score": 4.63,
     "power": 6.89,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 609
   },
   {
    "id": "mk_tuppence_curio_dealer_3",
@@ -15904,7 +16622,9 @@
     "score": 5.1,
     "power": 11.37,
     "opportunityCost": 7.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 534
   },
   {
    "id": "mk_velvet_counter_clerk_1",
@@ -15941,7 +16661,9 @@
     "score": 4.94,
     "power": 9.1,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 583
   },
   {
    "id": "mk_velvet_notary_2",
@@ -15976,7 +16698,9 @@
     "score": 3.55,
     "power": 7.65,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 61
   },
   {
    "id": "mk_velvet_neighborhood_registrar_3",
@@ -16013,7 +16737,9 @@
     "score": 4.74,
     "power": 10.77,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 338
   },
   {
    "id": "mk_velvet_surveyor_of_works_4",
@@ -16047,7 +16773,9 @@
     "score": 5.35,
     "power": 13.44,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 481
   },
   {
    "id": "mk_velvet_clerk_of_the_works_5",
@@ -16097,7 +16825,9 @@
     "score": 6.78,
     "power": 17.7,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 581
   },
   {
    "id": "mk_velvets_petition",
@@ -16137,7 +16867,9 @@
     "score": 2.35,
     "power": 3.5,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 385
   },
   {
    "id": "mk_mandee_night_courier_1",
@@ -16173,7 +16905,9 @@
     "score": 3.1,
     "power": 5.7,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 88
   },
   {
    "id": "mk_mandee_weather_watcher_2",
@@ -16212,7 +16946,9 @@
     "score": 4.86,
     "power": 9.68,
     "opportunityCost": 5.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 508
   },
   {
    "id": "mk_mandee_moonlight_trader_3",
@@ -16246,7 +16982,9 @@
     "score": 4.35,
     "power": 9.25,
     "opportunityCost": 6.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 363
   },
   {
    "id": "mk_mandee_keeper_of_tales_4",
@@ -16279,7 +17017,9 @@
     "score": 5.31,
     "power": 11.95,
     "opportunityCost": 7.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 509
   },
   {
    "id": "mk_mandees_forecast",
@@ -16316,7 +17056,9 @@
     "score": 2.15,
     "power": 3.2,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 102
   },
   {
    "id": "mk_willow_ferry_trader_1",
@@ -16354,7 +17096,9 @@
     "score": 3.69,
     "power": 6.8,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 42
   },
   {
    "id": "mk_willow_toll_keeper_2",
@@ -16391,7 +17135,9 @@
     "score": 4.77,
     "power": 10.27,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 443
   },
   {
    "id": "mk_willow_tide_reckoner_3",
@@ -16425,7 +17171,9 @@
     "score": 4.95,
     "power": 11.25,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 450
   },
   {
    "id": "mk_willow_harbourmaster_4",
@@ -16474,7 +17222,9 @@
     "score": 5.03,
     "power": 12.63,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 315
   },
   {
    "id": "mk_willow_harbour_admiral_5",
@@ -16533,7 +17283,9 @@
     "score": 6.12,
     "power": 15.96,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 444
   },
   {
    "id": "mk_masked_otter_counter_hand_1",
@@ -16562,7 +17314,9 @@
     "score": 3.42,
     "power": 6.3,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 47
   },
   {
    "id": "mk_mysterious_raccoon_beds_hand_2",
@@ -16591,7 +17345,9 @@
     "score": 3.23,
     "power": 6.95,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 90
   },
   {
    "id": "mk_hooded_rabbit_hatch_hand_0",
@@ -16620,7 +17376,9 @@
     "score": 2.94,
     "power": 4.9,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 257
   },
   {
    "id": "mk_unsigned_mouse_shelves_hand_1",
@@ -16649,7 +17407,9 @@
     "score": 3.42,
     "power": 6.3,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 21
   },
   {
    "id": "mk_shrouded_badger_bench_hand_2",
@@ -16678,7 +17438,9 @@
     "score": 3.23,
     "power": 6.95,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 36
   },
   {
    "id": "mk_muffled_hedgehog_stall_hand_0",
@@ -16707,7 +17469,9 @@
     "score": 2.94,
     "power": 4.9,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 288
   },
   {
    "id": "mk_shadowed_squirrel_hall_hand_1",
@@ -16736,7 +17500,9 @@
     "score": 3.42,
     "power": 6.3,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 53
   },
   {
    "id": "mk_nameless_cat_glass_hand_2",
@@ -16765,7 +17531,9 @@
     "score": 3.23,
     "power": 6.95,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 69
   },
   {
    "id": "mk_silhouetted_owl_scales_hand_0",
@@ -16794,7 +17562,9 @@
     "score": 2.94,
     "power": 4.9,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 348
   },
   {
    "id": "mk_cowled_fox_far_field_hand_1",
@@ -16823,7 +17593,9 @@
     "score": 3.42,
     "power": 6.3,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 81
   },
   {
    "id": "mk_unlisted_grower_2",
@@ -16852,7 +17624,9 @@
     "score": 3.37,
     "power": 7.25,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 49
   },
   {
    "id": "mk_faceless_clerk_0",
@@ -16881,7 +17655,9 @@
     "score": 3.12,
     "power": 5.2,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 459
   },
   {
    "id": "mk_cloaked_tradesman_1",
@@ -16910,7 +17686,9 @@
     "score": 3.58,
     "power": 6.6,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 18
   },
   {
    "id": "mk_veiled_wright_0",
@@ -16939,7 +17717,9 @@
     "score": 3.12,
     "power": 5.2,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 485
   },
   {
    "id": "mk_anonymous_scribe_2",
@@ -16968,7 +17748,9 @@
     "score": 3.37,
     "power": 7.25,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 35
   },
   {
    "id": "mk_obscured_observer_1",
@@ -16997,7 +17779,9 @@
     "score": 3.58,
     "power": 6.6,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 80
   },
   {
    "id": "mk_unknown_cook_0",
@@ -17026,7 +17810,9 @@
     "score": 3.12,
     "power": 5.2,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 522
   },
   {
    "id": "mk_curtained_performer_2",
@@ -17055,7 +17841,9 @@
     "score": 3.37,
     "power": 7.25,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 66
   },
   {
    "id": "mk_gwen_short_order_cook_1",
@@ -17093,7 +17881,9 @@
     "score": 3.56,
     "power": 6.55,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 17
   },
   {
    "id": "mk_gwen_diner_keeper_3",
@@ -17132,7 +17922,9 @@
     "score": 4.47,
     "power": 10.17,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 269
   },
   {
    "id": "mk_gwen_owner_of_the_diner_5",
@@ -17182,7 +17974,9 @@
     "score": 6.1,
     "power": 15.91,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 415
   },
   {
    "id": "mk_liza_floor_singer_0",
@@ -17208,7 +18002,9 @@
     "score": 2.22,
     "power": 3.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 2
   },
   {
    "id": "mk_liza_counter_singer_1",
@@ -17243,7 +18039,9 @@
     "score": 3.86,
     "power": 7.1,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 261
   },
   {
    "id": "mk_liza_top_of_the_bill_3",
@@ -17279,7 +18077,9 @@
     "score": 5.2,
     "power": 11.83,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 408
   },
   {
    "id": "mk_liza_headliner_5",
@@ -17318,7 +18118,9 @@
     "score": 5.79,
     "power": 15.1,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 264
   },
   {
    "id": "mk_harrison_piano_boy_0",
@@ -17353,7 +18155,9 @@
     "score": 2.46,
     "power": 4.1,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 362
   },
   {
    "id": "mk_harrison_house_pianist_2",
@@ -17389,7 +18193,9 @@
     "score": 5.32,
     "power": 11.45,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 592
   },
   {
    "id": "mk_harrison_band_leader_4",
@@ -17435,7 +18241,9 @@
     "score": 5.25,
     "power": 13.19,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 507
   },
   {
    "id": "mk_gabe_corner_show_0",
@@ -17479,7 +18287,9 @@
     "score": 2.58,
     "power": 4.3,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 370
   },
   {
    "id": "mk_gabe_puppet_maker_2",
@@ -17513,7 +18323,9 @@
     "score": 4.43,
     "power": 9.53,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 380
   },
   {
    "id": "mk_gabe_company_of_one_4",
@@ -17547,7 +18359,9 @@
     "score": 5.2,
     "power": 13.07,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 516
   },
   {
    "id": "mk_gabe_whole_cast_5",
@@ -17590,7 +18404,9 @@
     "score": 6.51,
     "power": 16.98,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 510
   },
   {
    "id": "mk_faustus_wardrobe_master_4",
@@ -17630,7 +18446,9 @@
     "score": 5.1,
     "power": 12.8,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 469
   },
   {
    "id": "mk_roger_fair_day_judge_0",
@@ -17672,7 +18490,9 @@
     "score": 2.97,
     "power": 4.95,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 355
   },
   {
    "id": "mk_kevin_counter_hand_2",
@@ -17700,7 +18520,9 @@
     "score": 3.51,
     "power": 7.55,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 82
   },
   {
    "id": "mk_kevin_construction_4",
@@ -17755,7 +18577,9 @@
     "score": 9.09,
     "power": 22.83,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 652
   },
   {
    "id": "mk_finn_griddle_hand_2",
@@ -17790,7 +18614,9 @@
     "score": 4.02,
     "power": 8.65,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 366
   },
   {
    "id": "mk_comet_hatch_hand_2",
@@ -17825,7 +18651,9 @@
     "score": 4.85,
     "power": 10.45,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 467
   },
   {
    "id": "mk_peter_washing_up_1",
@@ -17851,7 +18679,9 @@
     "score": 4.29,
     "power": 7.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 260
   },
   {
    "id": "mk_adam_road_gang_2",
@@ -17890,7 +18720,9 @@
     "score": 4.23,
     "power": 9.11,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 304
   },
   {
    "id": "mk_cookie_rusk_baker_1",
@@ -17930,7 +18762,9 @@
     "score": 3.24,
     "power": 5.96,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 55
   },
   {
    "id": "mk_osh_round_sharpener_1",
@@ -17981,7 +18815,9 @@
     "score": 3.77,
     "power": 6.95,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 270
   },
   {
    "id": "mk_liz_plate_clerk_0",
@@ -18021,7 +18857,9 @@
     "score": 2.73,
     "power": 4.56,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 369
   },
   {
    "id": "mk_tuppence_cart_boy_1",
@@ -18072,7 +18910,9 @@
     "score": 4.83,
     "power": 8.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 463
   },
   {
    "id": "mk_bean_two_pairs_of_paws_2",
@@ -18110,7 +18950,9 @@
     "score": 5.06,
     "power": 10.89,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 497
   },
   {
    "id": "mk_bob_the_morning_they_share_1",
@@ -18150,7 +18992,9 @@
     "score": 4.63,
     "power": 8.53,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 426
   },
   {
    "id": "mk_pockets_four_times_a_year_0",
@@ -18189,7 +19033,9 @@
     "score": 2.75,
     "power": 4.6,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 382
   },
   {
    "id": "mk_sota_the_same_bench_4",
@@ -18230,7 +19076,9 @@
     "score": 4.36,
     "power": 10.94,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 62
   },
   {
    "id": "mk_thistle_at_the_back_0",
@@ -18270,7 +19118,9 @@
     "score": 3.99,
     "power": 6.66,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 560
   },
   {
    "id": "mk_lindsay_the_other_bench_1",
@@ -18308,7 +19158,9 @@
     "score": 4.2,
     "power": 7.74,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 336
   },
   {
    "id": "mk_hibiscus_the_sorting_bench_0",
@@ -18349,7 +19201,9 @@
     "score": 2.79,
     "power": 4.65,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 262
   },
   {
    "id": "mk_osh_fair_fiddler_3",
@@ -18375,7 +19229,9 @@
     "score": 4.05,
     "power": 9.2,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 10
   },
   {
    "id": "mk_daisy_garland_cutter_1",
@@ -18401,7 +19257,9 @@
     "score": 4.29,
     "power": 7.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 320
   },
   {
    "id": "mk_sage_frost_watch_2",
@@ -18427,7 +19285,9 @@
     "score": 4.83,
     "power": 10.4,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 500
   },
   {
    "id": "mk_andrew_hand_copyist_3",
@@ -18453,7 +19313,9 @@
     "score": 4.73,
     "power": 10.75,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 347
   },
   {
    "id": "mk_oatmeal_sunday_table_0",
@@ -18479,7 +19341,9 @@
     "score": 2.22,
     "power": 3.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 30
   },
   {
    "id": "mk_bob_gate_tolls_2",
@@ -18505,7 +19369,9 @@
     "score": 3.39,
     "power": 7.3,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 28
   },
   {
    "id": "mk_patch_compost_yard_1",
@@ -18531,7 +19397,9 @@
     "score": 4.29,
     "power": 7.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 374
   },
   {
    "id": "mk_rosabeth_tincture_counter_4",
@@ -18557,7 +19425,9 @@
     "score": 4.42,
     "power": 11.1,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 22
   },
   {
    "id": "mk_pebble_towpath_warden_4",
@@ -18583,7 +19453,9 @@
     "score": 4.42,
     "power": 11.1,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 48
   },
   {
    "id": "mk_the_late_desk",
@@ -18623,7 +19495,9 @@
     "score": 2.14,
     "power": 3.58,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 125
   },
   {
    "id": "mk_the_harbour_office",
@@ -18678,7 +19552,9 @@
     "score": 2.04,
     "power": 3.4,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 121
   },
   {
    "id": "mk_the_cider_social",
@@ -18722,7 +19598,9 @@
     "score": 2.07,
     "power": 3.45,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 113
   },
   {
    "id": "mk_reading_lanterns",
@@ -18757,7 +19635,9 @@
     "score": 1.86,
     "power": 3,
     "opportunityCost": 3.3
-   }
+   },
+   "setNumber": "A1",
+   "number": 119
   },
   {
    "id": "mk_tool_lending_day",
@@ -18800,7 +19680,9 @@
     "score": 1.66,
     "power": 2.77,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 104
   },
   {
    "id": "mk_the_root_cellar",
@@ -18838,7 +19720,9 @@
     "score": 1.94,
     "power": 2.89,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 101
   },
   {
    "id": "mk_glut_of_squash",
@@ -18876,7 +19760,9 @@
     "score": 1.86,
     "power": 3.1,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 100
   },
   {
    "id": "mk_mkt_seed_bank_open_day",
@@ -18924,7 +19810,9 @@
     "score": 3.21,
     "power": 5.8,
     "opportunityCost": 4.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 175
   },
   {
    "id": "mk_mkt_town_clock",
@@ -18959,7 +19847,9 @@
     "score": 1.99,
     "power": 3.9,
     "opportunityCost": 5.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 192
   },
   {
    "id": "mk_mkt_market_committee",
@@ -19007,7 +19897,9 @@
     "score": 1.66,
     "power": 3,
     "opportunityCost": 4.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 205
   },
   {
    "id": "mk_mkt_the_fitting",
@@ -19041,7 +19933,9 @@
     "score": 1.84,
     "power": 3,
     "opportunityCost": 3.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 206
   },
   {
    "id": "mk_mkt_toll_gate",
@@ -19087,7 +19981,9 @@
     "score": 1.27,
     "power": 2.3,
     "opportunityCost": 4.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 202
   },
   {
    "id": "mk_mkt_owl_post",
@@ -19109,7 +20005,9 @@
     "score": 1.27,
     "power": 2.08,
     "opportunityCost": 3.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 201
   },
   {
    "id": "mk_bld_physic_garden",
@@ -19140,7 +20038,9 @@
     "score": 3.59,
     "power": 8.72,
     "opportunityCost": 9.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 159
   },
   {
    "id": "mk_bld_weighbridge",
@@ -19168,7 +20068,9 @@
     "score": 4.94,
     "power": 12,
     "opportunityCost": 9.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 155
   },
   {
    "id": "mk_bld_counting_house",
@@ -19196,7 +20098,9 @@
     "score": 3.28,
     "power": 8.31,
     "opportunityCost": 10.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 157
   },
   {
    "id": "mk_bld_town_workshop",
@@ -19228,7 +20132,9 @@
     "score": 3.72,
     "power": 8.2,
     "opportunityCost": 7.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 162
   },
   {
    "id": "mk_dx_six_weeks_shut",
@@ -19260,7 +20166,9 @@
     "score": 3.33,
     "power": 4.4,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 539
   },
   {
    "id": "mk_dx_bridge_goes",
@@ -19291,7 +20199,9 @@
     "score": 3.18,
     "power": 4.2,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 538
   },
   {
    "id": "mk_dx_solar_eclipse",
@@ -19322,7 +20232,9 @@
     "score": 2.84,
     "power": 3.75,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 402
   },
   {
    "id": "mk_dx_meteor_shower",
@@ -19354,7 +20266,9 @@
     "score": 1.71,
     "power": 2.25,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 226
   },
   {
    "id": "mk_dx_full_moon",
@@ -19386,7 +20300,9 @@
     "score": 1.67,
     "power": 2.2,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 224
   },
   {
    "id": "mk_dx_landslide",
@@ -19416,7 +20332,9 @@
     "score": 4.85,
     "power": 6.4,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 628
   },
   {
    "id": "mk_dx_midges",
@@ -19448,7 +20366,9 @@
     "score": 2.08,
     "power": 2.75,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 225
   },
   {
    "id": "mk_dx_lean_season",
@@ -19471,7 +20391,9 @@
     "score": 2.27,
     "power": 3,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 222
   },
   {
    "id": "mk_tb_chit_press",
@@ -19520,7 +20442,9 @@
     "score": 3.82,
     "power": 8.7,
     "opportunityCost": 7.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 145
   },
   {
    "id": "mk_tb_gwens_counter",
@@ -19575,7 +20499,9 @@
     "score": 3.33,
     "power": 7.17,
     "opportunityCost": 6.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 139
   },
   {
    "id": "mk_tb_puppet_booth",
@@ -19626,7 +20552,9 @@
     "score": 3.25,
     "power": 7.01,
     "opportunityCost": 6.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 140
   },
   {
    "id": "mk_ev_never_handed_back",
@@ -19671,7 +20599,9 @@
     "score": 2.02,
     "power": 3,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 114
   },
   {
    "id": "mk_ev_the_hat_goes_round",
@@ -19726,7 +20656,9 @@
     "score": 1.56,
     "power": 2.32,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 133
   },
   {
    "id": "mk_ev_the_marks_are_struck",
@@ -19767,7 +20699,9 @@
     "score": 1.62,
     "power": 2.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 120
   },
   {
    "id": "mk_gwen_anybodys_counter_2",
@@ -19807,7 +20741,9 @@
     "score": 4.91,
     "power": 10.58,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 418
   },
   {
    "id": "mk_gwen_apron_on_the_hook_4",
@@ -19843,7 +20779,9 @@
     "score": 7.34,
     "power": 18.44,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 639
   },
   {
    "id": "mk_oatmeals_awning",
@@ -19881,7 +20819,9 @@
     "score": 2.43,
     "power": 3.61,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 106
   },
   {
    "id": "mk_tb_the_long_awning",
@@ -19922,7 +20862,9 @@
     "score": 3.91,
     "power": 8.42,
     "opportunityCost": 6.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 151
   },
   {
    "id": "mk_willow_the_harbour_office_0",
@@ -19960,7 +20902,9 @@
     "score": 2.37,
     "power": 3.95,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 316
   },
   {
    "id": "mk_pockets_a_quiet_arrangement_5",
@@ -19999,7 +20943,9 @@
     "score": 4.02,
     "power": 10.5,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 91
   },
   {
    "id": "mk_liz_the_docket_3",
@@ -20039,7 +20985,9 @@
     "score": 3.61,
     "power": 8.21,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 84
   },
   {
    "id": "mk_liz_chief_assessor_5",
@@ -20082,7 +21030,9 @@
     "score": 5.48,
     "power": 14.3,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 361
   },
   {
    "id": "mk_ned_the_ward_roll_0",
@@ -20123,7 +21073,9 @@
     "score": 2.04,
     "power": 3.4,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 57
   },
   {
    "id": "mk_scott_the_index_1",
@@ -20164,7 +21116,9 @@
     "score": 3.09,
     "power": 5.68,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 58
   },
   {
    "id": "mk_sage_the_watch_list_4",
@@ -20200,7 +21154,9 @@
     "score": 5.1,
     "power": 12.8,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 503
   },
   {
    "id": "mk_andrew_the_late_desk_4",
@@ -20236,7 +21192,9 @@
     "score": 5.1,
     "power": 12.8,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 490
   },
   {
    "id": "mk_bean_the_early_shift_4",
@@ -20275,7 +21233,9 @@
     "score": 5,
     "power": 12.55,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 351
   },
   {
    "id": "mk_jessica_the_night_school_3",
@@ -20310,7 +21270,9 @@
     "score": 4.96,
     "power": 11.28,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 494
   },
   {
    "id": "mk_dx_the_short_week",
@@ -20333,7 +21295,9 @@
     "score": 2.27,
     "power": 3,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 227
   },
   {
    "id": "mk_dx_the_hiring_freeze",
@@ -20357,7 +21321,9 @@
     "score": 4.55,
     "power": 6,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 633
   },
   {
    "id": "mk_dx_the_yards_go_quiet",
@@ -20390,7 +21356,9 @@
     "score": 3.3,
     "power": 4.35,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 540
   },
   {
    "id": "mk_mkt_the_redundancy_notice",
@@ -20414,7 +21382,9 @@
     "score": 2.71,
     "power": 4.9,
     "opportunityCost": 4.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 198
   },
   {
    "id": "mk_mkt_the_last_round",
@@ -20446,7 +21416,9 @@
     "score": 2.94,
     "power": 4.8,
     "opportunityCost": 3.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 166
   },
   {
    "id": "mk_tuppence_sold_before_the_cart_4",
@@ -20483,7 +21455,9 @@
     "score": 4.16,
     "power": 10.45,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 60
   },
   {
    "id": "mk_a_word_beforehand",
@@ -20513,7 +21487,9 @@
     "score": 1.34,
     "power": 2,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 132
   },
   {
    "id": "mk_taco_the_four_oclock_cart_2",
@@ -20559,7 +21535,9 @@
     "score": 5.92,
     "power": 12.75,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 567
   },
   {
    "id": "mk_the_long_night_at_earls",
@@ -20598,7 +21576,9 @@
     "score": 2.02,
     "power": 3,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 135
   },
   {
    "id": "mk_annabelle_last_one_up_2",
@@ -20645,7 +21625,9 @@
     "score": 6.77,
     "power": 14.58,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 653
   },
   {
    "id": "mk_cassadee_the_only_one_at_the_back_1",
@@ -20683,7 +21665,9 @@
     "score": 3.66,
     "power": 6.73,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 23
   },
   {
    "id": "mk_morty_the_boiler_test_0",
@@ -20721,7 +21705,9 @@
     "score": 3.96,
     "power": 6.61,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 562
   },
   {
    "id": "mk_tb_the_builders_rest",
@@ -20764,7 +21750,9 @@
     "score": 5.27,
     "power": 12,
     "opportunityCost": 7.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 614
   },
   {
    "id": "mk_peter_the_winters_length_2",
@@ -20799,7 +21787,9 @@
     "score": 2.69,
     "power": 5.8,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 4
   },
   {
    "id": "mk_tb_the_muster_bell",
@@ -20831,7 +21821,9 @@
     "score": 3.43,
     "power": 7.38,
     "opportunityCost": 6.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 142
   },
   {
    "id": "mk_beck_the_relief_roll_0",
@@ -20866,7 +21858,9 @@
     "score": 2.19,
     "power": 3.65,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 94
   },
   {
    "id": "mk_ord_works_in_the_square",
@@ -20895,7 +21889,9 @@
     "score": 3.03,
     "power": 4,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 541
   },
   {
    "id": "mk_ord_the_quarry_road",
@@ -20924,7 +21920,9 @@
     "score": 3.03,
     "power": 4,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 542
   },
   {
    "id": "mk_ord_monument_tax",
@@ -20950,7 +21948,9 @@
     "score": 2.43,
     "power": 3.2,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 404
   },
   {
    "id": "mk_ord_the_masons_rate",
@@ -20976,7 +21976,9 @@
     "score": 1.82,
     "power": 2.4,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 230
   },
   {
    "id": "mk_ord_the_timber_levy",
@@ -21002,7 +22004,9 @@
     "score": 1.59,
     "power": 2.1,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 228
   },
   {
    "id": "mk_ord_the_building_grant",
@@ -21028,7 +22032,9 @@
     "score": 1.06,
     "power": 1.4,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 231
   },
   {
    "id": "mk_ord_the_sealed_bid",
@@ -21054,7 +22060,9 @@
     "score": 2.27,
     "power": 3,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 232
   },
   {
    "id": "mk_ord_a_word_with_the_steward",
@@ -21083,7 +22091,9 @@
     "score": 2.27,
     "power": 3,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 229
   },
   {
    "id": "mk_dx_the_great_frost",
@@ -21118,7 +22128,9 @@
     "score": 13.34,
     "power": 17.6,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 627
   },
   {
    "id": "mk_dx_the_year_it_stopped",
@@ -21153,7 +22165,9 @@
     "score": 13,
     "power": 17.15,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 636
   },
   {
    "id": "mk_dx_small_fair",
@@ -21176,7 +22190,9 @@
    "art": {
     "atlas": "boroughs",
     "tile": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 632
   },
   {
    "id": "mk_dx_county_fair",
@@ -21199,7 +22215,9 @@
    "art": {
     "atlas": "boroughs",
     "tile": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 629
   },
   {
    "id": "mk_dx_assessors_round",
@@ -21222,7 +22240,9 @@
     "score": 5.97,
     "power": 7.88,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 634
   },
   {
    "id": "mk_dx_the_reckoning",
@@ -21245,7 +22265,9 @@
     "score": 11.94,
     "power": 15.75,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 631
   },
   {
    "id": "mk_dx_midsummer_fair",
@@ -21268,7 +22290,9 @@
    "art": {
     "atlas": "boroughs",
     "tile": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 625
   },
   {
    "id": "mk_dx_lord_mayors_fair",
@@ -21291,7 +22315,9 @@
    "art": {
     "atlas": "boroughs",
     "tile": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 630
   },
   {
    "id": "mk_tabitha_festival_photographer_0",
@@ -21318,7 +22344,9 @@
    "art": {
     "atlas": "boroughs",
     "tile": 4
-   }
+   },
+   "setNumber": "A1",
+   "number": 26
   },
   {
    "id": "mk_tabitha_lens_apprentice_1",
@@ -21345,7 +22373,9 @@
    "art": {
     "atlas": "boroughs",
     "tile": 4
-   }
+   },
+   "setNumber": "A1",
+   "number": 285
   },
   {
    "id": "mk_tabitha_videographer_2",
@@ -21379,7 +22409,9 @@
    "art": {
     "atlas": "boroughs",
     "tile": 4
-   }
+   },
+   "setNumber": "A1",
+   "number": 559
   },
   {
    "id": "mk_tabitha_optics_scientist_4",
@@ -21422,7 +22454,9 @@
    "art": {
     "atlas": "boroughs",
     "tile": 4
-   }
+   },
+   "setNumber": "A1",
+   "number": 555
   },
   {
    "id": "mk_tabitha_camerawoman_5",
@@ -21457,7 +22491,9 @@
    "art": {
     "atlas": "boroughs",
     "tile": 4
-   }
+   },
+   "setNumber": "A1",
+   "number": 428
   },
   {
    "id": "mk_abigail_counter_girl_1",
@@ -21484,7 +22520,9 @@
    "art": {
     "atlas": "boroughs",
     "tile": 6
-   }
+   },
+   "setNumber": "A1",
+   "number": 308
   },
   {
    "id": "mk_abigail_five_minutes_2",
@@ -21511,7 +22549,9 @@
    "art": {
     "atlas": "boroughs",
     "tile": 6
-   }
+   },
+   "setNumber": "A1",
+   "number": 451
   },
   {
    "id": "mk_abigail_best_waitress_4",
@@ -21538,7 +22578,9 @@
    "art": {
     "atlas": "boroughs",
     "tile": 6
-   }
+   },
+   "setNumber": "A1",
+   "number": 43
   },
   {
    "id": "mk_abigail_standing_slot_5",
@@ -21565,7 +22607,9 @@
    "art": {
     "atlas": "boroughs",
     "tile": 6
-   }
+   },
+   "setNumber": "A1",
+   "number": 41
   },
   {
    "id": "mk_winter_segment_runner_0",
@@ -21592,7 +22636,9 @@
    "art": {
     "atlas": "nightskies",
     "tile": 0
-   }
+   },
+   "setNumber": "A1",
+   "number": 75
   },
   {
    "id": "mk_winter_turned_down_applicant_1",
@@ -21619,7 +22665,9 @@
    "art": {
     "atlas": "nightskies",
     "tile": 0
-   }
+   },
+   "setNumber": "A1",
+   "number": 77
   },
   {
    "id": "mk_winter_science_show_host_2",
@@ -21654,7 +22702,9 @@
    "art": {
     "atlas": "nightskies",
     "tile": 0
-   }
+   },
+   "setNumber": "A1",
+   "number": 345
   },
   {
    "id": "mk_winter_head_science_producer_4",
@@ -21690,7 +22740,9 @@
    "art": {
     "atlas": "nightskies",
     "tile": 0
-   }
+   },
+   "setNumber": "A1",
+   "number": 496
   },
   {
    "id": "mk_winter_tv_scientist_5",
@@ -21724,7 +22776,9 @@
    "art": {
     "atlas": "nightskies",
     "tile": 0
-   }
+   },
+   "setNumber": "A1",
+   "number": 74
   },
   {
    "id": "mk_fred_wandered_onto_stage_0",
@@ -21751,7 +22805,9 @@
    "art": {
     "atlas": "nightworkers",
     "tile": 0
-   }
+   },
+   "setNumber": "A1",
+   "number": 72
   },
   {
    "id": "mk_fred_held_the_ladder_wrong_2",
@@ -21793,7 +22849,9 @@
    "art": {
     "atlas": "nightworkers",
     "tile": 0
-   }
+   },
+   "setNumber": "A1",
+   "number": 350
   },
   {
    "id": "mk_fred_backstage_crew_3",
@@ -21820,7 +22878,9 @@
    "art": {
     "atlas": "nightworkers",
     "tile": 0
-   }
+   },
+   "setNumber": "A1",
+   "number": 73
   },
   {
    "id": "mk_fred_crew_doesnt_ask_5",
@@ -21871,7 +22931,9 @@
    "art": {
     "atlas": "nightworkers",
     "tile": 0
-   }
+   },
+   "setNumber": "A1",
+   "number": 78
   },
   {
    "id": "mk_yellow_open_mic_regular_1",
@@ -21905,7 +22967,9 @@
    "art": {
     "atlas": "boroughs",
     "tile": 7
-   }
+   },
+   "setNumber": "A1",
+   "number": 573
   },
   {
    "id": "mk_yellow_freshest_thing_4",
@@ -21933,7 +22997,9 @@
     "atlas": "boroughs",
     "tile": 7
    },
-   "immuneToUnemployment": true
+   "immuneToUnemployment": true,
+   "setNumber": "A1",
+   "number": 50
   },
   {
    "id": "mk_yellow_rapper_5",
@@ -21987,7 +23053,9 @@
     "score": 8.73,
     "power": 22.77,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 648
   },
   {
    "id": "mk_bunny_kit_0",
@@ -22014,7 +23082,9 @@
     "score": 2.3,
     "power": 3.83,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 252
   },
   {
    "id": "mk_baby_mouse_pup_0",
@@ -22041,7 +23111,9 @@
     "score": 2.66,
     "power": 4.43,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 277
   },
   {
    "id": "mk_badger_cub_cub_0",
@@ -22068,7 +23140,9 @@
     "score": 2.66,
     "power": 4.43,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 295
   },
   {
    "id": "mk_hoglet_hoglet_0",
@@ -22095,7 +23169,9 @@
     "score": 2.3,
     "power": 3.83,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 287
   },
   {
    "id": "mk_raccoon_kit_kit_0",
@@ -22122,7 +23198,9 @@
     "score": 2.66,
     "power": 4.43,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 372
   },
   {
    "id": "mk_fox_cub_cub_0",
@@ -22149,7 +23227,9 @@
     "score": 2.66,
     "power": 4.43,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 357
   },
   {
    "id": "mk_otter_pup_pup_0",
@@ -22176,7 +23256,9 @@
     "score": 2.3,
     "power": 3.83,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 317
   },
   {
    "id": "mk_squirrel_kit_kit_0",
@@ -22203,7 +23285,9 @@
     "score": 2.3,
     "power": 3.83,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 324
   },
   {
    "id": "mk_kitten_kitten_0",
@@ -22230,7 +23314,9 @@
     "score": 2.3,
     "power": 3.83,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 331
   },
   {
    "id": "mk_owlet_owlet_0",
@@ -22257,7 +23343,9 @@
     "score": 2.66,
     "power": 4.43,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 346
   },
   {
    "id": "mk_shay_sunday_painter_0",
@@ -22279,7 +23367,9 @@
     "score": 2.22,
     "power": 3.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 76
   },
   {
    "id": "mk_shay_ward_doctor_1",
@@ -22310,7 +23400,9 @@
     "score": 4.4,
     "power": 8.1,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 487
   },
   {
    "id": "mk_shay_borough_physician_2",
@@ -22351,7 +23443,9 @@
     "score": 4.39,
     "power": 9.45,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 352
   },
   {
    "id": "mk_shay_market_stall_painter_3",
@@ -22385,7 +23479,9 @@
     "score": 5,
     "power": 11.36,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 486
   },
   {
    "id": "mk_shay_chief_physician_5",
@@ -22430,7 +23526,9 @@
     "score": 5.4,
     "power": 14.1,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 349
   },
   {
    "id": "mk_jt_ward_nurse_0",
@@ -22462,7 +23560,9 @@
     "score": 3.4,
     "power": 5.68,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 441
   },
   {
    "id": "mk_jt_children_s_ward_nurse_2",
@@ -22496,7 +23596,9 @@
     "score": 5.32,
     "power": 11.45,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 568
   },
   {
    "id": "mk_jt_juice_list_3",
@@ -22526,7 +23628,9 @@
     "score": 4.95,
     "power": 11.25,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 446
   },
   {
    "id": "mk_jt_juice_sommelier_5",
@@ -22569,7 +23673,9 @@
     "score": 5.5,
     "power": 14.35,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 310
   },
   {
    "id": "mk_reese_crop_duster_1",
@@ -22599,7 +23705,9 @@
     "score": 4.99,
     "power": 9.18,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 602
   },
   {
    "id": "mk_reese_charter_pilot_3",
@@ -22639,7 +23747,9 @@
     "score": 5.21,
     "power": 11.85,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 521
   },
   {
    "id": "mk_reese_chief_pilot_5",
@@ -22678,7 +23788,9 @@
     "score": 6.51,
     "power": 16.98,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 512
   },
   {
    "id": "mk_dirt_classroom_assistant_0",
@@ -22715,7 +23827,9 @@
     "score": 3.53,
     "power": 5.9,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 452
   },
   {
    "id": "mk_dirt_schoolteacher_upper_room_2",
@@ -22752,7 +23866,9 @@
     "score": 4.85,
     "power": 10.45,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 453
   },
   {
    "id": "mk_dirt_figurine_painter_3",
@@ -22799,7 +23915,9 @@
     "score": 4.73,
     "power": 10.75,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 326
   },
   {
    "id": "mk_dirt_master_figuremaker_5",
@@ -22845,7 +23963,9 @@
     "score": 5.74,
     "power": 14.98,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 328
   },
   {
    "id": "mk_squirt_playground_monitor_1",
@@ -22882,7 +24002,9 @@
     "score": 3.96,
     "power": 7.3,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 329
   },
   {
    "id": "mk_squirt_schoolteacher_lower_room_2",
@@ -22919,7 +24041,9 @@
     "score": 4.85,
     "power": 10.45,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 460
   },
   {
    "id": "mk_squirt_borough_eleven_left_wing_4",
@@ -22970,7 +24094,9 @@
     "score": 5.15,
     "power": 12.94,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 456
   },
   {
    "id": "mk_squirt_club_captain_5",
@@ -23020,7 +24146,9 @@
     "score": 5.46,
     "power": 14.26,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 323
   },
   {
    "id": "mk_teresa_pepper_grower_0",
@@ -23042,7 +24170,9 @@
     "score": 2.22,
     "power": 3.7,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 7
   },
   {
    "id": "mk_teresa_touchline_coach_1",
@@ -23083,7 +24213,9 @@
     "score": 4.29,
     "power": 7.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 271
   },
   {
    "id": "mk_teresa_pepper_stall_2",
@@ -23114,7 +24246,9 @@
     "score": 4.02,
     "power": 8.65,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 273
   },
   {
    "id": "mk_teresa_head_coach_3",
@@ -23160,7 +24294,9 @@
     "score": 3.36,
     "power": 7.65,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 12
   },
   {
    "id": "mk_teresa_coach_of_the_borough_eleven_5",
@@ -23210,7 +24346,9 @@
     "score": 4.94,
     "power": 12.9,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 15
   },
   {
    "id": "mk_mimi_trolley_service_0",
@@ -23244,7 +24382,9 @@
     "score": 3.53,
     "power": 5.9,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 410
   },
   {
    "id": "mk_mimi_safety_demonstration_1",
@@ -23278,7 +24418,9 @@
     "score": 3.96,
     "power": 7.3,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 266
   },
   {
    "id": "mk_mimi_cabin_pressure_check_2",
@@ -23312,7 +24454,9 @@
     "score": 4.85,
     "power": 10.45,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 411
   },
   {
    "id": "mk_mimi_seat_1a_welcome_3",
@@ -23356,7 +24500,9 @@
     "score": 4.6,
     "power": 10.46,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 267
   },
   {
    "id": "mk_mimi_purser_5",
@@ -23407,7 +24553,9 @@
     "score": 6.76,
     "power": 17.63,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 544
   },
   {
    "id": "mk_mildred_counter_clerk_0",
@@ -23429,7 +24577,9 @@
     "score": 2.4,
     "power": 4,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 290
   },
   {
    "id": "mk_mildred_teller_2",
@@ -23458,7 +24608,9 @@
     "score": 3.88,
     "power": 8.35,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 29
   },
   {
    "id": "mk_mildred_chief_teller_3",
@@ -23487,7 +24639,9 @@
     "score": 4.51,
     "power": 10.25,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 306
   },
   {
    "id": "mk_mildred_branch_manager_5",
@@ -23524,7 +24678,9 @@
     "score": 6.89,
     "power": 17.98,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 565
   },
   {
    "id": "mk_hoot_night_kitchen_1",
@@ -23558,7 +24714,9 @@
     "score": 4.4,
     "power": 8.1,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 484
   },
   {
    "id": "mk_hoot_breakfast_bell_3",
@@ -23589,7 +24747,9 @@
     "score": 5.08,
     "power": 11.55,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 493
   },
   {
    "id": "mk_hoot_head_of_the_night_kitchen_5",
@@ -23629,7 +24789,9 @@
     "score": 6.28,
     "power": 16.4,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 483
   },
   {
    "id": "mk_sota_touchline_assistant_0",
@@ -23665,7 +24827,9 @@
     "score": 2.9,
     "power": 4.84,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 337
   },
   {
    "id": "mk_sota_assistant_coach_2",
@@ -23696,7 +24860,9 @@
     "score": 4.85,
     "power": 10.45,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 465
   },
   {
    "id": "mk_tb_farmers_market",
@@ -23725,7 +24891,9 @@
     "score": 5.02,
     "power": 12,
     "opportunityCost": 8.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 395
   },
   {
    "id": "mk_bld_bookstore",
@@ -23761,7 +24929,9 @@
    },
    "build": {
     "animals": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 146
   },
   {
    "id": "mk_bld_owlery",
@@ -23793,7 +24963,9 @@
     "score": 6.13,
     "power": 16.13,
     "opportunityCost": 11.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 532
   },
   {
    "id": "mk_bld_bank",
@@ -23822,7 +24994,9 @@
     "score": 5.21,
     "power": 13.2,
     "opportunityCost": 10.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 161
   },
   {
    "id": "mk_bld_game_store",
@@ -23854,7 +25028,9 @@
    },
    "build": {
     "animals": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 610
   },
   {
    "id": "mk_bld_fast_food_joint",
@@ -23904,7 +25080,9 @@
     "score": 5.03,
     "power": 12.75,
     "opportunityCost": 10.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 165
   },
   {
    "id": "mk_bld_cheese_store",
@@ -23948,7 +25126,9 @@
    },
    "build": {
     "animals": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 613
   },
   {
    "id": "mk_bld_juice_store",
@@ -23994,7 +25174,9 @@
    },
    "build": {
     "animals": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 611
   },
   {
    "id": "mk_bld_gas_station",
@@ -24021,7 +25203,9 @@
    },
    "build": {
     "animals": 1
-   }
+   },
+   "setNumber": "A1",
+   "number": 149
   },
   {
    "id": "mk_bld_car_dealership",
@@ -24062,7 +25246,9 @@
     "score": 2.56,
     "power": 6.48,
     "opportunityCost": 10.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 153
   },
   {
    "id": "mk_bld_airport",
@@ -24088,7 +25274,9 @@
     "score": 5.13,
     "power": 13.5,
     "opportunityCost": 11.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 160
   },
   {
    "id": "mk_car_show",
@@ -24115,7 +25303,9 @@
     "score": 3.35,
     "power": 5.6,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 526
   },
   {
    "id": "mk_passing_comets",
@@ -24139,7 +25329,9 @@
     "score": 2.15,
     "power": 3.2,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 127
   },
   {
    "id": "mk_community_bonfire",
@@ -24177,7 +25369,9 @@
     "score": 2.12,
     "power": 3.15,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 111
   },
   {
    "id": "mk_cheese_festival",
@@ -24213,7 +25407,9 @@
     "score": 3.35,
     "power": 5.6,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 525
   },
   {
    "id": "mk_cindy_court_clerk_1",
@@ -24246,7 +25442,9 @@
     "score": 4.81,
     "power": 8.86,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 506
   },
   {
    "id": "mk_cindy_magistrate_2",
@@ -24277,7 +25475,9 @@
     "score": 5.16,
     "power": 11.11,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 596
   },
   {
    "id": "mk_cindy_circuit_judge_4",
@@ -24320,7 +25520,9 @@
     "score": 6.05,
     "power": 15.19,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 595
   },
   {
    "id": "mk_cindy_justice_of_the_boroughs_5",
@@ -24378,7 +25580,9 @@
     "score": 7.57,
     "power": 19.75,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 594
   },
   {
    "id": "mk_elvira_tea_leaf_reader_0",
@@ -24416,7 +25620,9 @@
     "score": 3.06,
     "power": 5.1,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 464
   },
   {
    "id": "mk_elvira_fairground_booth_2",
@@ -24454,7 +25660,9 @@
     "score": 4.75,
     "power": 10.23,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 480
   },
   {
    "id": "mk_elvira_fortune_teller_3",
@@ -24494,7 +25702,9 @@
     "score": 4.9,
     "power": 11.15,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 482
   },
   {
    "id": "mk_elvira_reader_of_long_odds_4",
@@ -24540,7 +25750,9 @@
     "score": 6.02,
     "power": 15.13,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 584
   },
   {
    "id": "mk_jim_gadget_blogger_0",
@@ -24575,7 +25787,9 @@
     "score": 3.59,
     "power": 6,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 515
   },
   {
    "id": "mk_jim_hobby_programmer_2",
@@ -24610,7 +25824,9 @@
     "score": 5.97,
     "power": 12.85,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 597
   },
   {
    "id": "mk_jim_early_adopter_4",
@@ -24646,7 +25862,9 @@
     "score": 6.55,
     "power": 16.46,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 600
   },
   {
    "id": "mk_jim_futuretech_fanboy_5",
@@ -24692,7 +25910,9 @@
     "score": 6.73,
     "power": 17.57,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 603
   },
   {
    "id": "mk_robbie_cub_reporter_0",
@@ -24726,7 +25946,9 @@
     "score": 2.6,
     "power": 4.34,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 293
   },
   {
    "id": "mk_robbie_columnist_1",
@@ -24758,7 +25980,9 @@
     "score": 4.68,
     "power": 8.62,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 435
   },
   {
    "id": "mk_robbie_features_writer_2",
@@ -24790,7 +26014,9 @@
     "score": 5.32,
     "power": 11.45,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 561
   },
   {
    "id": "mk_robbie_editor_3",
@@ -24829,7 +26055,9 @@
     "score": 5.42,
     "power": 12.33,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 564
   },
   {
    "id": "mk_robbie_editor_in_chief_5",
@@ -24870,7 +26098,9 @@
     "score": 7.38,
     "power": 19.27,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 563
   },
   {
    "id": "mk_cornelius_futuretech_ceo_5",
@@ -24917,7 +26147,9 @@
     "score": 8.41,
     "power": 20.6,
     "opportunityCost": 9.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 619
   },
   {
    "id": "mk_bld_futuretech_hq",
@@ -24941,7 +26173,9 @@
     "score": 8.82,
     "power": 24,
     "opportunityCost": 12.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 617
   },
   {
    "id": "mk_bld_hospital",
@@ -24966,7 +26200,9 @@
     "score": 5.77,
     "power": 14.04,
     "opportunityCost": 9.22
-   }
+   },
+   "setNumber": "A1",
+   "number": 397
   },
   {
    "id": "mk_tb_futuretech_store",
@@ -24995,7 +26231,9 @@
     "score": 3.45,
     "power": 9,
     "opportunityCost": 11.02
-   }
+   },
+   "setNumber": "A1",
+   "number": 138
   },
   {
    "id": "mk_tb_starfish_coffee",
@@ -25022,7 +26260,9 @@
     "score": 3.95,
     "power": 9,
     "opportunityCost": 7.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 148
   },
   {
    "id": "mk_tb_ice_cream_shop",
@@ -25050,7 +26290,9 @@
     "score": 3.43,
     "power": 7.8,
     "opportunityCost": 7.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 136
   },
   {
    "id": "mk_tb_clinic",
@@ -25082,7 +26324,9 @@
     "score": 5.27,
     "power": 12,
     "opportunityCost": 7.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 616
   },
   {
    "id": "mk_tax_day",
@@ -25108,7 +26352,9 @@
     "score": 2.02,
     "power": 3,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 128
   },
   {
    "id": "mk_futuretech_release_day",
@@ -25139,7 +26385,9 @@
     "score": 1.58,
     "power": 2.35,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 115
   },
   {
    "id": "mk_otter_time",
@@ -25183,7 +26431,9 @@
     "score": 3.84,
     "power": 5.71,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 606
   },
   {
    "id": "mk_henrietta_front_desk_clerk_0",
@@ -25222,7 +26472,9 @@
     "score": 4.47,
     "power": 7.46,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 546
   },
   {
    "id": "mk_henrietta_placement_officer_2",
@@ -25261,7 +26513,9 @@
     "score": 8.07,
     "power": 17.37,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 638
   },
   {
    "id": "mk_henrietta_head_of_rabbit_recruitment_4",
@@ -25299,7 +26553,9 @@
     "score": 6.48,
     "power": 16.27,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 543
   },
   {
    "id": "mk_dx_casino_fundraiser",
@@ -25327,7 +26583,9 @@
     "score": 14.66,
     "power": 19.35,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 635
   },
   {
    "id": "mk_balto_bench_owl_0",
@@ -25377,7 +26635,9 @@
     "score": 3.65,
     "power": 6.1,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 499
   },
   {
    "id": "mk_balto_cabinetmaker_1",
@@ -25427,7 +26687,9 @@
     "score": 5.38,
     "power": 9.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 589
   },
   {
    "id": "mk_balto_shopkeeper_2",
@@ -25461,7 +26723,9 @@
     "score": 5.17,
     "power": 11.13,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 586
   },
   {
    "id": "mk_balto_furniture_craftsman_3",
@@ -25511,7 +26775,9 @@
     "score": 5.47,
     "power": 12.45,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 585
   },
   {
    "id": "mk_balto_guild_furniture_broker_5",
@@ -25565,7 +26831,9 @@
     "score": 10.57,
     "power": 27.58,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 651
   },
   {
    "id": "mk_fingers_rooftop_runner_0",
@@ -25596,7 +26864,9 @@
     "score": 3.12,
     "power": 5.2,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 511
   },
   {
    "id": "mk_fingers_chimney_sweep_1",
@@ -25627,7 +26897,9 @@
     "score": 3.2,
     "power": 5.9,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 95
   },
   {
    "id": "mk_fingers_root_cellar_diver_2",
@@ -25657,7 +26929,9 @@
     "score": 5.73,
     "power": 12.33,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 601
   },
   {
    "id": "mk_fingers_master_locksmith_3",
@@ -25694,7 +26968,9 @@
     "score": 4.68,
     "power": 10.65,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 381
   },
   {
    "id": "mk_fingers_the_one_who_gets_in_4",
@@ -25728,7 +27004,9 @@
     "score": 5.86,
     "power": 14.72,
     "opportunityCost": 10
-   }
+   },
+   "setNumber": "A1",
+   "number": 599
   },
   {
    "id": "mk_raccoon_family_reunion",
@@ -25773,7 +27051,9 @@
     "score": 1.25,
     "power": 1.86,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 103
   },
   {
    "id": "mk_edwina_cheese_counter_girl_0",
@@ -25804,7 +27084,9 @@
     "score": 3.53,
     "power": 5.9,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 425
   },
   {
    "id": "mk_edwina_cheese_stall_keeper_1",
@@ -25835,7 +27117,9 @@
     "score": 3.37,
     "power": 6.2,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 9
   },
   {
    "id": "mk_edwina_cheese_cellar_keeper_2",
@@ -25880,7 +27164,9 @@
     "score": 5.32,
     "power": 11.46,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 551
   },
   {
    "id": "mk_edwina_cheese_merchant_3",
@@ -25925,7 +27211,9 @@
     "score": 5.74,
     "power": 13.06,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 553
   },
   {
    "id": "mk_friendship_festival",
@@ -25993,7 +27281,9 @@
     "score": 7.32,
     "power": 12.23,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 654
   },
   {
    "id": "mk_eustace_socialite_3",
@@ -26027,7 +27317,9 @@
     "score": 4.11,
     "power": 9.15,
     "opportunityCost": 7.4
-   }
+   },
+   "setNumber": "A1",
+   "number": 399
   },
   {
    "id": "mk_eustaces_ball",
@@ -26072,7 +27364,9 @@
     "score": 2.02,
     "power": 3,
     "opportunityCost": 2.7
-   }
+   },
+   "setNumber": "A1",
+   "number": 99
   },
   {
    "id": "mk_cynthia_junior_lab_assistant_0",
@@ -26108,7 +27402,9 @@
     "score": 2.73,
     "power": 4.56,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 312
   },
   {
    "id": "mk_cynthia_paint_drying_researcher_1",
@@ -26144,7 +27440,9 @@
     "score": 3.71,
     "power": 6.83,
     "opportunityCost": 4.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 313
   },
   {
    "id": "mk_cynthia_combustion_theorist_3",
@@ -26181,7 +27479,9 @@
     "score": 4.64,
     "power": 10.55,
     "opportunityCost": 7.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 311
   },
   {
    "id": "mk_cynthia_head_of_the_absorption_wing_5",
@@ -26227,7 +27527,9 @@
     "score": 6.92,
     "power": 18.06,
     "opportunityCost": 11
-   }
+   },
+   "setNumber": "A1",
+   "number": 572
   },
   {
    "id": "mk_tb_science_lab",
@@ -26259,7 +27561,9 @@
     "score": 10.96,
     "power": 24.96,
     "opportunityCost": 7.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 655
   },
   {
    "id": "mk_tb_grocery_store",
@@ -26286,7 +27590,9 @@
     "score": 5.57,
     "power": 12,
     "opportunityCost": 6.82
-   }
+   },
+   "setNumber": "A1",
+   "number": 615
   },
   {
    "id": "mk_nancy_temp_agency_runner_0",
@@ -26318,7 +27624,9 @@
     "score": 3.08,
     "power": 5.14,
     "opportunityCost": 3.6
-   }
+   },
+   "setNumber": "A1",
+   "number": 520
   },
   {
    "id": "mk_nancy_temp_agency_manager_2",
@@ -26350,7 +27658,9 @@
     "score": 5.59,
     "power": 12.03,
     "opportunityCost": 6.8
-   }
+   },
+   "setNumber": "A1",
+   "number": 605
   },
   {
    "id": "mk_dx_mayors_conference",
@@ -26384,7 +27694,9 @@
     "score": 5.15,
     "power": 6.8,
     "opportunityCost": 2
-   }
+   },
+   "setNumber": "A1",
+   "number": 626
   }
  ],
  "newStudies": [

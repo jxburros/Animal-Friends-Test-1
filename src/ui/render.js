@@ -16,6 +16,7 @@ import { fullArtFor, fullArtFrameSVG, FULL_ART_CARDS } from './full-art.js';
 import { resolveVersionKey, version as versionOf } from './versions.js';
 import { resolveFoil, applyFoil, FOIL_LABELS } from './foil.js';
 import { costBand } from '../engine/power.js';
+import { collectorNumber } from '../engine/collector.js';
 import * as fx from './fx.js';
 import * as choreo from './choreo.js';
 
@@ -400,10 +401,20 @@ export function buildCardFace(def, { large = false, interactive = true, foilInte
   if (def.flavor) body.appendChild(h('div', { class: 'flavor' }, def.flavor));
   face.appendChild(body);
   if (foil && !fullArt) face.appendChild(h('div', { class: 'foil-tag', title: FOIL_LABELS[foil.mode], 'aria-label': FOIL_LABELS[foil.mode], html: iconSVG('foil') }));
-  // The footer is the collector's line: what kind of card this is on the left, and on the right the
-  // two marks that say which copy you are holding — the rarity gem and the printing.
+  // The footer is the collector's line: what kind of card this is on the left, its number in the
+  // middle, and on the right the two marks that say which copy you are holding — the rarity gem and
+  // the printing.
   const footerText = fullArt ? `${typeLabel(def)} · ${fullArt.number}/${Object.keys(FULL_ART_CARDS).length}` : typeLabel(def);
   const footer = h('div', { class: 'card-footer' }, [h('span', { class: 'card-kind' }, footerText)]);
+  // The collector's number: the set this card belongs to, and the number this printing of it is
+  // known by — 22 the ordinary card, 22f the foil of the very same card.
+  const number = collectorNumber(def, ver.key);
+  if (number) {
+    footer.appendChild(h('span', {
+      class: 'card-number',
+      title: `${def.setNumber || 'A1'} ${number} — ${ver.name} printing, card ${def.number} of the set`,
+    }, `${def.setNumber || 'A1'} ${number}`));
+  }
   const marks = h('div', { class: 'card-marks' });
   if (def.rarity) {
     const p = def.power || {};

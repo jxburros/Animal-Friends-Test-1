@@ -116,6 +116,8 @@ A card uses the schema described in the `$comment` at the top of `spec/maker_car
 
 - **`id`** is `mk_<character>_<job>_<cost>` and must be unique across the set.
 - **`rarity` and `power` are not hand-written.** `npm run stamp` computes them (§5).
+- **`number` and `setNumber` are not hand-written either.** `npm run number` hands out the A1
+  collector numbers, in rarity → card type → species order, so run it after `npm run stamp`.
 - **`art`**: point at an atlas tile that depicts this job. If the version you are replacing had one
   that still fits, keep it; otherwise leave `art` off and add a line to the character entry's
   `wantedArt` so it can be commissioned later. Never point at a tile that depicts a different job.
@@ -330,6 +332,7 @@ sentence self-contained, since that is what a player reads at a glance.
 ```
 npm test                          # card schema, effect vocabulary, set integrity
 npm run stamp                     # compute rarity + power for the new cards
+npm run number                    # hand out the A1 collector numbers (rarity first, so after stamp)
 npm run identity -- --check       # species still play differently; no power creep
 npm run characters                # regenerate docs/characters.csv + docs/character_versions.csv
 ```
@@ -367,6 +370,8 @@ are — and the batch now rates 2.95 / 3.60 / 5.69 / 5.14 / 5.08. No creep, and 
 
 - **Do not change `src/engine/`** in a writing batch. New verbs are separate, approved work.
 - **Do not hand-write `rarity` or `power`.** `npm run stamp` owns them.
+- **Do not hand-write `number` or `setNumber`.** `npm run number` owns them, and adding cards will
+  renumber their neighbours — that is the numbering working, not a mistake.
 - **Do not reuse a card id**, and do not leave a character whose every version costs the same —
   nothing there upgrades anything. A cost used twice is guidance (§4), not a do-not.
 - **Do not leave a Character card without a `characters` entry** — the Book has nothing to show for it.
