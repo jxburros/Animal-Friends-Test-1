@@ -212,20 +212,33 @@
     </div>
   </div>
 
+  <!--
+    How to play is a spread: the contents page on the left — the title, the three chapters and the
+    door to the tutorial — and the chapter being read on the right, which scrolls inside its own paper.
+  -->
   <div class="overlay" id="howToPlayOverlay" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
     <div class="box help-box">
-      <h2 id="helpTitle">How to Play</h2>
-      <div class="help-tabs" role="tablist" aria-label="How to play">
-        <button type="button" class="help-tab on" id="helpTab-quick" role="tab" aria-selected="true" aria-controls="help-quick">Quick start</button>
-        <button type="button" class="help-tab" id="helpTab-rules" role="tab" aria-selected="false" aria-controls="help-rules">The rules</button>
-        <button type="button" class="help-tab" id="helpTab-faq" role="tab" aria-selected="false" aria-controls="help-faq">Questions &amp; answers</button>
+      <div class="help-contents">
+        <div class="cover-orn" aria-hidden="true">❦</div>
+        <h2 id="helpTitle">How to Play</h2>
+        <p class="help-lead">Three chapters: the game on one page, the rules in full, and the questions new Mayors ask.</p>
+        <div class="help-tabs" role="tablist" aria-label="How to play">
+          <button type="button" class="help-tab on" id="helpTab-quick" role="tab" aria-selected="true" aria-controls="help-quick"><span class="help-tab-name">Quick start</span><span class="help-tab-sub">The whole game on one page</span></button>
+          <button type="button" class="help-tab" id="helpTab-rules" role="tab" aria-selected="false" aria-controls="help-rules"><span class="help-tab-name">The rules</span><span class="help-tab-sub">Every rule, in the order you meet it</span></button>
+          <button type="button" class="help-tab" id="helpTab-faq" role="tab" aria-selected="false" aria-controls="help-faq"><span class="help-tab-name">Questions &amp; answers</span><span class="help-tab-sub">What new Mayors ask most</span></button>
+        </div>
+        <div class="help-contents-foot">
+          <button type="button" id="helpTutorialBtn" title="A short match with the moves laid out for you and a coach explaining each one">Play the tutorial</button>
+        </div>
+        <div class="help-vignette" aria-hidden="true"></div>
       </div>
-      <div class="help" id="help-quick" role="tabpanel"></div>
-      <div class="help" id="help-rules" role="tabpanel" hidden></div>
-      <div class="help" id="help-faq" role="tabpanel" hidden></div>
-      <div class="help-actions">
-        <button type="button" id="helpTutorialBtn">Play the tutorial</button>
-        <button type="button" class="primary" id="closeHowToPlay">Got it!</button>
+      <div class="help-page">
+        <div class="help" id="help-quick" role="tabpanel"></div>
+        <div class="help" id="help-rules" role="tabpanel" hidden></div>
+        <div class="help" id="help-faq" role="tabpanel" hidden></div>
+        <div class="help-actions">
+          <button type="button" class="primary" id="closeHowToPlay">Got it!</button>
+        </div>
       </div>
     </div>
   </div>

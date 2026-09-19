@@ -257,13 +257,16 @@
 /* ---------- small screens ---------- */
 @media (max-width: 760px) {
   #screen-lore.active { padding: 6px; align-items: flex-start; overflow: auto; }
+  /* A phone cannot hold the painted book — half a painted page is too narrow to read either half
+     on — so the Directory is dealt on a sheet of the card's own stock instead, and the two pages
+     fold back into one scrolling column inside it. */
   .lore {
-    width: 100%; height: calc(100dvh - 12px); aspect-ratio: auto; border-radius: 12px;
-    background-size: auto 100%; background-position: 25% center;
+    width: 100%; height: calc(100dvh - 12px); aspect-ratio: auto;
+    border: 3px double var(--ui-card-edge, #9d7d46); border-radius: var(--ui-card-radius, 12px 8px 12px 8px);
+    background: var(--ui-card-paper, #efe2c6);
+    box-shadow: var(--ui-card-frame, none), 0 18px 50px rgba(0, 0, 0, .5);
   }
-  /* One page at a time on a phone: the two rectangles fold back into a single scrolling column
-     inside the paper, because half a painted page is too narrow to read either half on. */
-  .lore-spread { position: absolute; inset: 12% 8% 10%; display: block; overflow: auto; }
+  .lore-spread { position: absolute; inset: 0; display: block; overflow: auto; padding: 12px 12px 20px; scrollbar-width: thin; }
   .lore-page {
     position: static; width: auto; height: auto;
     -webkit-mask-image: none; mask-image: none;

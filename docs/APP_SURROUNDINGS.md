@@ -61,11 +61,46 @@ afterwards), and doors into everything it is tied to — the character's entry i
 every chapter or place that prints this card, and the other cards those name. Each door opens the
 next entry in the same reader, so a Mayor can walk the collection without going back to the shelf.
 
+## The finishing pass
+
+**How to play is a spread.** The rules used to flow across both painted pages, so every line crossed
+the spine. Now the left page is a contents page — the title, the three chapters as a numbered list
+with a line about each, the door to the tutorial, and the Capital City at blue hour filling what paper
+is left — and the right page is the chapter being read, scrolling inside its own paper with *Got it* at
+the foot. It is laid out on the same `--page-*` rectangles as the Welcome and the Lore Directory, so
+nothing prints on the spine, the gilt corners or the table.
+
+**Phones get a sheet, not a book.** At phone widths the painted book does not fit: the title printed on
+the leather and the last lines on the wood. Below 700px (760px for the Directory) the Welcome, How to
+play and the Lore Directory are dealt on a sheet of the card's own stock instead — paper, a doubled
+gold edge, the card's corners — with the chapter list pinned at the head, the text scrolling inside,
+and the buttons pinned at the foot.
+
+**The table under a full town.** A pick dialog drew its cards at the collection's size inside boxes cut
+to a smaller number, so the cards spilled over each other; the boxes are now cut to the card. The note
+that a town is full was squeezed into the heading column beside the shelf and pushed the whole table
+off the screen; it is a line under the shelf now. *Your Move* and *The Card in Hand* fill the height of
+the rival's half between them instead of being cut off at a share of the window with the card's feet
+missing. An empty shelf says so in the middle of itself, on a faint dashed outline. On a phone the
+sticky top bar is one line rather than three.
+
+**The details.** Text fields and the pace lists are cut from the card stock like the buttons beside
+them. Selections are inked in gold; scrollbars on paper are thin and gold. The cover's edition line
+sits between two gold hairlines, the three doors carry their marks in the corner where a card carries
+its gem, and the Mayors' shelf and the Post Office open under the same painted band as the Workshop.
+
 ## Validation
-- 423 existing tests passed.
-- Full-game smoke run completed: winner at turn 67.
-- Chromium at 1440, 768 and 390 px: menu, deck workshop and game inspected; no document overflow, HTTP failures or page errors.
-- Keyboard deck selection, opening-hand confirmation, Supply choice, and card-reader Escape dismissal passed at all three sizes.
+- 484 existing tests passed (`npm test`).
+- Full-game smoke run completed (`npm run smoke`).
+- Chromium at 1920 × 1080, 1440 × 900, 1366 × 768, 1024 × 700 and 390 × 844: the welcome, the Mayors'
+  shelf, the cover, How to play (all three chapters), the Book and its card entry, the Lore Directory
+  (story, characters, settings), the Post Office, the Deck Workshop, the opening hand, a game played
+  ten turns on, the action popover, a pick dialog, the folded Chronicle, the win overlay and the
+  tutorial's coach were all screenshotted before and after; no page errors, no failed requests and no
+  horizontal overflow at any size.
+- The finishing pass fixed what those screenshots showed: the rules crossing the spine, the phone
+  overlays printing on the leather and the wood, a pick dialog's cards spilling over each other, the
+  town-full note pushing the table off the screen, and the preview rail cutting its card off.
 - Native screen-reader testing was not run.
 
 ![Menu](screenshots/surroundings-menu.webp)
