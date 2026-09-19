@@ -24,6 +24,7 @@ import { openCharacterModal, openPlaceModal, openStoryModal } from './lore.js';
 import { characterOf } from '../engine/characters.js';
 import { ownedCopies, ownsPrinting, collectionSize } from '../engine/profile.js';
 import { RARITIES } from '../engine/power.js';
+import { collectorNumber, collectorRank } from '../engine/collector.js';
 
 // The painting's own pixel size. Everything inside the book is laid out against these numbers and
 // scaled once, at the end, so the pages and the cards on them can never drift apart.
@@ -40,7 +41,7 @@ const FOOT_ROOM = 58;
 let host = null;
 let ctx = null; // { rules, set, cards, shelf, profile, onClose, onLore }
 let filter = { type: 'all', species: null, study: null, rarity: null, version: 'any', text: '' };
-let sort = 'type'; // 'type' | 'rarity' | 'name' | 'cost'
+let sort = 'number'; // 'number' | 'type' | 'rarity' | 'name' | 'cost'
 let pageIndex = 0; // the leftmost page on show
 let filtersOpen = false;
 let layout = { cols: 3, rows: 2, pagesPerView: 2, faceScale: 1.7 };
@@ -78,6 +79,7 @@ function ownsThisPrinting(cardId, key) {
 }
 
 const SORTS = [
+  ['number', 'Collector number', 'sortNumber'],
   ['type', 'Type', 'sortType'],
   ['rarity', 'Rarity', 'sortRarity'],
   ['name', 'Name', 'sortName'],
@@ -168,8 +170,17 @@ function rarityRank(card) {
   return RARITIES.indexOf(card.rarity || 'Common');
 }
 
+/** The collector's mark for one printing of one card: `A1 22f`, or null before it is stamped. */
+function collectorCodeOf(card, versionKey) {
+  const number = collectorNumber(card, versionKey);
+  return number ? `${card.setNumber || 'A1'} ${number}` : null;
+}
+
 function results() {
   return allCards().filter(matches).sort((a, b) => {
+    // Collector order is the order the numbers were handed out in, so sorting by number is the same
+    // as sorting by rarity, then type, then species — which is why the Book opens on it.
+    if (sort === 'number') return collectorRank(a) - collectorRank(b) || a.name.localeCompare(b.name);
     if (sort === 'rarity') return rarityRank(a) - rarityRank(b) || a.name.localeCompare(b.name);
     if (sort === 'name') return a.name.localeCompare(b.name) || (a.cost || 0) - (b.cost || 0);
     if (sort === 'cost') return (a.cost || 0) - (b.cost || 0) || a.name.localeCompare(b.name);
@@ -286,6 +297,8 @@ function openBookCardModal(card, version = printingFor(card)) {
   let shown = version;
   const printingName = (key) => (VERSIONS.find((entry) => entry.key === key) || {}).name || key;
   const printingCell = h('dd', {}, printingName(shown));
+  // The number moves with the printing: turning the card over to its foil turns 22 into 22f.
+  const numberCell = h('dd', { class: 'book-card-number' }, collectorCodeOf(card, shown) || '—');
   const facts = [
     ['Cost', card.cost], ['Species', card.species], ['Study', card.study],
     ['Rarity', card.rarity || 'Common'],
@@ -293,6 +306,7 @@ function openBookCardModal(card, version = printingFor(card)) {
   const list = h('dl', { class: 'book-card-facts' });
   for (const [label, value] of facts) list.append(h('div', {}, [h('dt', {}, label), h('dd', {}, String(value))]));
   list.append(h('div', {}, [h('dt', {}, 'Printing'), printingCell]));
+  list.append(h('div', {}, [h('dt', {}, 'Number'), numberCell]));
   details.appendChild(list);
 
   // Every printing this card was painted in, turned over in the reader's hand: the face on the left
@@ -305,6 +319,7 @@ function openBookCardModal(card, version = printingFor(card)) {
       shown = key;
       chosenVersion.set(card.id, key);
       printingCell.textContent = printingName(key);
+      numberCell.textContent = collectorCodeOf(card, key) || '—';
       visual.replaceChildren(buildCardFace(card, { large: true, interactive: false, foilInteractive: true, version: key }));
       for (const [chipKey, chip] of chips) {
         chip.classList.toggle('on', chipKey === key);
@@ -313,7 +328,10 @@ function openBookCardModal(card, version = printingFor(card)) {
     };
     for (const v of printings) {
       const held = ownsThisPrinting(card.id, v.key);
-      const chip = iconButton(v.key, held ? `${v.name} — ${v.blurb}` : `${v.name}: printed, but not in your collection`,
+      const mark = collectorCodeOf(card, v.key);
+      const chip = iconButton(v.key, held
+        ? `${v.name}${mark ? ` (${mark})` : ''} — ${v.blurb}`
+        : `${v.name}${mark ? ` (${mark})` : ''}: printed, but not in your collection`,
         () => show(v.key), {
           cls: `version-chip${held ? '' : ' dim'}`,
           pressed: shown === v.key,
@@ -400,8 +418,9 @@ function buildEntry(card) {
   } else {
     // Nothing of the card itself: a darkened space with a question mark on it, which is the thing
     // still worth opening a pack for.
-    slot.setAttribute('title', 'Not in your collection yet');
-    slot.setAttribute('aria-label', `A card you do not own yet — ${card.rarity || 'Common'}`);
+    const mark = collectorCodeOf(card, 'regular');
+    slot.setAttribute('title', mark ? `${mark} — not in your collection yet` : 'Not in your collection yet');
+    slot.setAttribute('aria-label', `A card you do not own yet — ${card.rarity || 'Common'}${mark ? `, ${mark}` : ''}`);
     slot.appendChild(h('span', { class: 'book-unknown', 'aria-hidden': 'true' }, '?'));
   }
   fig.appendChild(slot);
@@ -413,9 +432,10 @@ function buildEntry(card) {
     const row = h('div', { class: 'version-row' });
     for (const v of versionsOf(card)) {
       const held = ownsThisPrinting(card.id, v.key);
+      const mark = collectorCodeOf(card, v.key);
       const label = held
-        ? `${v.name} — ${v.blurb}`
-        : `${v.name}: printed, but not in your collection`;
+        ? `${v.name}${mark ? ` (${mark})` : ''} — ${v.blurb}`
+        : `${v.name}${mark ? ` (${mark})` : ''}: printed, but not in your collection`;
       row.appendChild(iconButton(v.key, label, () => { chosenVersion.set(card.id, v.key); render(); }, {
         cls: `version-chip${held ? '' : ' dim'}`,
         pressed: chosen === v.key,
@@ -724,7 +744,7 @@ export function openBook(hostEl, opts) {
   };
   setPreviewContext(opts.rules, opts.set);
   filter = { type: 'all', species: null, study: null, rarity: null, version: 'any', text: '' };
-  sort = 'type';
+  sort = 'number';
   pageIndex = 0;
   filtersOpen = false;
   chosenVersion.clear();

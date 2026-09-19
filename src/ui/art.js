@@ -1507,6 +1507,7 @@ const ICONS = {
   firstPage: () => `${line('M14 4 8 10l6 6M6 4v12', 2)}`,
   lastPage: () => `${line('m6 4 6 6-6 6M14 4v12', 2)}`,
   search: () => `${line('M12.8 12.8 17 17', 2)} <circle cx="8.6" cy="8.6" r="5" fill="none" stroke="currentColor" stroke-width="1.8"/>`,
+  sortNumber: () => `${line('M4.4 6.4h11.2M4.4 13.6h11.2M8.2 3.4 6.6 16.6M13.4 3.4l-1.6 13.2', 1.5)}`,
   sortType: () => `${line('M4 4.5h5v5H4ZM11 4.5h5v5h-5ZM4 11.5h5v5H4ZM11 11.5h5v5h-5Z', 1.4)}`,
   sortRarity: () => `${line('M10 3 16 10l-6 7-6-7Z')} ${line('M7 10h6M10 3v14', 1.1)}`,
   sortName: () => `${line('M4 15.5 7.2 5h.6L11 15.5M5.2 12h4.6M13 15.5V5M13 5l3 3M13 5l-3 3', 1.6)}`,

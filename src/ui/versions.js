@@ -21,6 +21,7 @@
 // that lives somewhere else. A `#tile=0..15` fragment selects a row-major tile from a 4 × 4 atlas.
 // A printing with no art of its own (plain `foil`) only ever needs `true`.
 import { fullArtFor } from './full-art.js';
+import { VERSION_LETTERS } from '../engine/collector.js';
 
 /**
  * The six printings, in collection order.
@@ -28,30 +29,32 @@ import { fullArtFor } from './full-art.js';
  * `art`   which painting the printing uses: null = the card's ordinary art.
  * `shape` how that painting sits: 'scene' fills the art window, 'full' fills the whole card.
  * `foil`  the finish: null, 'plain', or 'creative' (a foil with its own etched pattern).
+ * `letter` the letter this printing adds to the card's collector number: 22 regular, 22f foil. The
+ *          letters themselves live in ../engine/collector.js, which is what stamps the numbers.
  */
 export const VERSIONS = Object.freeze([
   Object.freeze({
-    key: 'regular', name: 'Regular', short: 'Regular', art: null, shape: null, foil: null, fullArt: false,
+    key: 'regular', letter: VERSION_LETTERS.regular, name: 'Regular', short: 'Regular', art: null, shape: null, foil: null, fullArt: false,
     blurb: 'The ordinary printing. Every card has one.',
   }),
   Object.freeze({
-    key: 'alternateArt', name: 'Alternate Art', short: 'Alt Art', art: 'alternateArt', shape: 'scene', foil: null, fullArt: false,
+    key: 'alternateArt', letter: VERSION_LETTERS.alternateArt, name: 'Alternate Art', short: 'Alt Art', art: 'alternateArt', shape: 'scene', foil: null, fullArt: false,
     blurb: 'The same card, painted a second time. A different scene in the same frame.',
   }),
   Object.freeze({
-    key: 'foil', name: 'Foil', short: 'Foil', art: null, shape: null, foil: 'plain', fullArt: false,
+    key: 'foil', letter: VERSION_LETTERS.foil, name: 'Foil', short: 'Foil', art: null, shape: null, foil: 'plain', fullArt: false,
     blurb: 'The ordinary art with a foil finish: full-card, artwork, details, reverse or hexagons.',
   }),
   Object.freeze({
-    key: 'alternateArtFoil', name: 'Alternate Art Foil', short: 'Alt Foil', art: 'alternateArt', shape: 'scene', foil: 'plain', fullArt: false,
+    key: 'alternateArtFoil', letter: VERSION_LETTERS.alternateArtFoil, name: 'Alternate Art Foil', short: 'Alt Foil', art: 'alternateArt', shape: 'scene', foil: 'plain', fullArt: false,
     blurb: 'The second painting, on foil.',
   }),
   Object.freeze({
-    key: 'creativeFoil', name: 'Creative Foil', short: 'Creative', art: 'creativeFoil', shape: 'scene', foil: 'creative', fullArt: false,
+    key: 'creativeFoil', letter: VERSION_LETTERS.creativeFoil, name: 'Creative Foil', short: 'Creative', art: 'creativeFoil', shape: 'scene', foil: 'creative', fullArt: false,
     blurb: 'A foil etched with a treatment of its own — the pattern is part of the printing.',
   }),
   Object.freeze({
-    key: 'fullCardArt', name: 'Full Card Art', short: 'Full Art', art: 'fullCardArt', shape: 'full', foil: 'plain', fullArt: true,
+    key: 'fullCardArt', letter: VERSION_LETTERS.fullCardArt, name: 'Full Card Art', short: 'Full Art', art: 'fullCardArt', shape: 'full', foil: 'plain', fullArt: true,
     blurb: 'The painting fills the card, edge to edge, and the frame is drawn over it.',
   }),
 ]);

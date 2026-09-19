@@ -36,7 +36,8 @@ Then read, in this order:
 - A character with more than one version needs at least two different costs, or nothing there
   upgrades anything. Sharing a cost is **guidance**, not a rule: fill the empty costs first, and
   do not double up inside one study — across studies a repeated cost is a fork in the career.
-- **Never hand-write `rarity` or `power`** — `npm run stamp` computes them.
+- **Never hand-write `rarity`, `power`, `number` or `setNumber`** — `npm run stamp` computes the
+  first two and `npm run number` the last two.
 - Every card's `flavor` references the backstory and could not belong to any other character.
 
 ## Before you commit
@@ -44,6 +45,7 @@ Then read, in this order:
 ```
 npm test                      # schema, effect vocabulary, set integrity
 npm run stamp                 # compute rarity + power
+npm run number                # hand out the A1 collector numbers (after stamp: it sorts by rarity)
 npm run identity -- --check   # species identity and power creep
 npm run characters            # regenerate the character spreadsheet
 ```

@@ -202,6 +202,8 @@ npm run power                             # every card by power/cost, with its r
 npm run power -- --type character         # ...or --rarity Legendary, --cost 3, --csv
 npm run stamp                             # restamp rarity/rating across the set
 npm run stamp -- --check                  # ...or fail if anything printed is stale
+npm run number                            # restamp the A1 collector numbers across the set
+npm run number -- --check                 # ...or fail if any number is stale or missing
 npm run identity                          # species/study profiles and the power-creep gate
 npm run identity -- --check               # ...or fail if two species stop playing differently
 npm run decks                             # rebuild decks and Capital Cities from current ratings
@@ -240,7 +242,29 @@ cards, which is the reason the flavour and the mechanics agree as often as they 
 - [ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md](docs/ANIMAL_FRIENDS_TCG_DESIGN_REFERENCE.md) — the
   design source of truth
 
-After editing the set, run `npm run stamp`, `npm run identity -- --check` and `npm test`.
+After editing the set, run `npm run stamp`, then `npm run number`, then
+`npm run identity -- --check` and `npm test`. Rarity has to be stamped before the numbers, because
+the numbers are handed out in rarity order.
+
+#### Collector numbers
+
+Every card is an **A1** card — Alpha 1, the first set — and carries a number of its own, printed on
+the footer of its face and used by the Book as its opening sort order. The numbers are handed out by
+`npm run number`: the collection is put in order by rarity, then by card type, then (for Characters,
+City Hires and Tokens) by species, and the cards inside each of those smallest groups are shuffled
+before being numbered, off a seed taken from the group's own name — so the same set of cards always
+gets the same numbers, and editing one group never renumbers another.
+
+A printing adds a letter to the number, so `22` and `22f` are one card and two things to own:
+
+| Printing | Mark |
+| --- | --- |
+| Regular | `22` |
+| Foil | `22f` |
+| Alternate Art | `22a` |
+| Alternate Art Foil | `22s` |
+| Creative Foil | `22c` |
+| Full Card Art | `22x` |
 
 ### Publishing
 

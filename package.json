@@ -13,6 +13,7 @@
     "power": "node scripts/power.mjs",
     "stamp": "node scripts/stamp.mjs",
     "stamp:maker": "node scripts/stamp.mjs --maker",
+    "number": "node scripts/number.mjs",
     "playtest": "node scripts/playtest.mjs",
     "identity": "node scripts/identity.mjs",
     "decks": "node scripts/build-decks.mjs",

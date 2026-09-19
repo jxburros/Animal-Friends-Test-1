@@ -306,6 +306,7 @@
 .book-card-facts div { padding: 8px 9px; border: 1px solid rgba(132,97,43,.38); border-radius: 8px 5px 8px 5px; background: rgba(255,250,232,.55); }
 .book-card-facts dt { color: #786547; font: 700 10px/1.2 var(--sans); letter-spacing: .08em; text-transform: uppercase; }
 .book-card-facts dd { margin: 2px 0 0; font: 600 13px/1.25 var(--sans); }
+.book-card-facts dd.book-card-number { font-variant-numeric: tabular-nums; letter-spacing: .06em; }
 .book-card-rules { padding: 12px 14px; border-left: 4px solid #4f7556; background: rgba(255,250,232,.58); font: 500 14px/1.5 var(--sans); }
 .book-card-flavor { color: #5d4b35; font-style: italic; line-height: 1.55; }
 .book-card-links { display: flex; flex-wrap: wrap; gap: 7px; }
