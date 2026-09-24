@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Build the town decks and the Capital Cities from the current card set.
 //
-//   node scripts/build-decks.mjs [--check] [--only <deck-id>,<deck-id>] [--markets-only]
+//   node scripts/build-decks.mjs [--check] [--only <deck-id>,<deck-id>] [--markets-only] [--set <file>]
 //
 // `--only` rebuilds just the named town decks and leaves every other list exactly as it is, which is
 // how an expansion adds its own decks without retuning the ones already playtested. `--markets-only`
@@ -25,9 +25,15 @@
 // printed deck had ever held one, because this script only ever looked at Characters and Events.
 
 import fs from 'node:fs';
+import path from 'node:path';
 import { deckProblems, deckRules, maxCopiesOf } from '../src/engine/deckbuilding.js';
 
-const setUrl = new URL('../spec/maker_card_set.json', import.meta.url);
+// `--set <file>` builds from, and writes back to, another set file instead — scripts/split-sets.mjs
+// uses it to build each release's decks out of that release's cards alone. A seed that release does
+// not print is skipped rather than fatal, because a release is a subset of the collection.
+const setArg = process.argv.indexOf('--set');
+const SET_PATH = setArg >= 0 ? process.argv[setArg + 1] : null;
+const setUrl = SET_PATH ? new URL(`file://${path.resolve(SET_PATH)}`) : new URL('../spec/maker_card_set.json', import.meta.url);
 const set = JSON.parse(fs.readFileSync(setUrl, 'utf8'));
 const rules = JSON.parse(fs.readFileSync(new URL('../spec/game.json', import.meta.url), 'utf8'));
 // The species charters: what each species is the centre of gravity for. A town deck leans on its
@@ -338,6 +344,7 @@ function build(ident) {
   // copy caps, the Legendary cap and the curve all read them like any other card in the list.
   for (const id of ident.seeds || []) {
     const seed = cards.find((c) => c.id === id);
+    if (!seed && SET_PATH) continue;
     if (!seed) throw new Error(`${ident.id}: no card ${id} to seed`);
     take(seed, 1);
   }

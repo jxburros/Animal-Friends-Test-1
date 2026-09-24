@@ -17,6 +17,7 @@
     "playtest": "node scripts/playtest.mjs",
     "identity": "node scripts/identity.mjs",
     "decks": "node scripts/build-decks.mjs",
+    "sets": "node scripts/split-sets.mjs",
     "characters": "node scripts/characters.mjs",
     "needsart": "node scripts/needsart.mjs",
     "characters:xlsx": "node scripts/characters.mjs && python3 scripts/characters_xlsx.py"

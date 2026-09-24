@@ -1,0 +1,657 @@
+release,product,type,species,study,name,title,cost,rarity,set_number,number,id,in_starter_decks
+Set 1,Statues (market decks),Statue,,,Statue of Community,,5,Common,A1,208,mk_st_community,
+Set 1,Statues (market decks),Statue,,,Statue of Courage,,3,Common,A1,220,mk_st_courage,
+Set 1,Statues (market decks),Statue,,,Statue of Curiosity,,2,Common,A1,210,mk_st_curiosity,
+Set 1,Statues (market decks),Statue,,,Statue of Diligence,,3,Common,A1,216,mk_st_diligence,
+Set 1,Statues (market decks),Statue,,,Statue of Generosity,,4,Common,A1,211,mk_st_generosity,
+Set 1,Statues (market decks),Statue,,,Statue of Ingenuity,,4,Common,A1,215,mk_st_ingenuity,
+Set 1,Statues (market decks),Statue,,,Statue of Joy,,5,Common,A1,217,mk_st_joy,
+Set 1,Statues (market decks),Statue,,,Statue of Kindness,,2,Common,A1,218,mk_st_kindness,
+Set 1,Statues (market decks),Statue,,,Statue of Patience,,3,Common,A1,209,mk_st_patience,
+Set 1,Statues (market decks),Statue,,,Statue of Vigilance,,4,Common,A1,212,mk_st_vigilance,
+Set 1,Tokens,Token,,Agriculture,Agriculture Token,Token,0,Common,A1,241,mk_tok_agriculture,
+Set 1,Tokens,Token,,,Building Token,Token,0,Common,A1,234,mk_tok_building,
+Set 1,Tokens,Token,,Civics,Civics Token,Token,0,Common,A1,236,mk_tok_civics,
+Set 1,Tokens,Token,,Commerce,Commerce Token,Token,0,Common,A1,237,mk_tok_commerce,
+Set 1,Tokens,Token,,Crafts,Crafts Token,Token,0,Common,A1,235,mk_tok_crafts,
+Set 1,Tokens,Token,,Entertainment,Entertainment Token,Token,0,Common,A1,233,mk_tok_entertainment,
+Set 1,Tokens,Token,,Food,Food Token,Token,0,Common,A1,238,mk_tok_food,
+Set 1,Tokens,Token,,Lore,Lore Token,Token,0,Common,A1,239,mk_tok_lore,
+Set 1,Tokens,Token,,Science,Science Token,Token,0,Common,A1,240,mk_tok_science,
+Set 1,Tokens,Token,Badger,,Badger Token,Token,0,Common,A1,245,mk_tok_badger,
+Set 1,Tokens,Token,Mouse,,Mouse Token,Token,0,Common,A1,243,mk_tok_mouse,
+Set 1,Tokens,Token,Owl,,Owl Token,Token,0,Common,A1,249,mk_tok_owl,
+Set 1,Tokens,Token,Squirrel,,Squirrel Token,Token,0,Common,A1,247,mk_tok_squirrel,
+Set 1,Badger & Owl pack,Character,Badger,Civics,Adam,Road Mender,1,Uncommon,A1,299,mk_adam_road_mender_1,Bench & Bylaw ×2
+Set 1,Badger & Owl pack,Character,Badger,Civics,Adam,Road Gang,2,Uncommon,A1,304,mk_adam_road_gang_2,Bench & Bylaw ×1
+Set 1,Badger & Owl pack,Character,Badger,Civics,Adam,Surveyor of Ways,4,Common,A1,32,mk_adam_surveyor_of_ways_4,Bench & Bylaw ×1; Cache & Kitchen ×1; Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Badger,Civics,Adam,Road Construction,5,Legendary,A1,646,mk_adam_road_construction_5,Bench & Bylaw ×1
+Set 1,Badger & Owl pack,Character,Badger,Crafts,Badger Cub,Cub,0,Uncommon,A1,295,mk_badger_cub_cub_0,Bench & Bylaw ×1
+Set 1,Badger & Owl pack,Character,Badger,Crafts,Moss,Timber Hand,0,Common,A1,38,mk_moss_timber_hand_0,
+Set 1,Badger & Owl pack,Character,Badger,Agriculture,Moss,Ploughwright,1,Common,A1,37,mk_moss_ploughwright_1,Bench & Bylaw ×1
+Set 1,Badger & Owl pack,Character,Badger,Crafts,Moss,Toolsmith,2,Uncommon,A1,300,mk_moss_toolsmith_2,Bench & Bylaw ×2
+Set 1,Badger & Owl pack,Character,Badger,Crafts,Moss,Guild Architect,3,Rare,A1,433,mk_moss_guild_architect_3,Bench & Bylaw ×1
+Set 1,Badger & Owl pack,Character,Badger,Crafts,Moss,Rocketwright,4,Common,A1,34,mk_moss_rocketwright_4,Bench & Bylaw ×2
+Set 1,Badger & Owl pack,Character,Badger,Crafts,Moss,Bridgewright,5,Uncommon,A1,289,mk_moss_bridgewright_5,
+Set 1,Badger & Owl pack,Character,Badger,Food,Oatmeal,Sunday Table,0,Common,A1,30,mk_oatmeal_sunday_table_0,
+Set 1,Badger & Owl pack,Character,Badger,Civics,Oatmeal,Ward Clerk,1,Rare,A1,432,mk_oatmeal_ward_clerk_1,Bench & Bylaw ×1
+Set 1,Badger & Owl pack,Character,Badger,Civics,Oatmeal,Safety Inspector,2,Uncommon,A1,296,mk_oatmeal_safety_inspector_2,Bench & Bylaw ×2
+Set 1,Badger & Owl pack,Character,Badger,Entertainment,Oatmeal,Jazz Singer,3,Uncommon,A1,294,mk_oatmeal_jazz_singer_3,Bench & Bylaw ×2
+Set 1,Badger & Owl pack,Character,Badger,Civics,Oatmeal,Town Warden,4,Uncommon,A1,291,mk_oatmeal_town_warden_4,Bench & Bylaw ×2
+Set 1,Badger & Owl pack,Character,Badger,Civics,Oatmeal,Borough Alderman,5,Uncommon,A1,301,mk_oatmeal_alderman_5,Bench & Bylaw ×1
+Set 1,Badger & Owl pack,Character,Badger,Science,Orien,Tally Clerk,0,Rare,A1,437,mk_orien_tally_clerk_0,Bench & Bylaw ×1
+Set 1,Badger & Owl pack,Character,Badger,Commerce,Orien,Rate Checker,2,Uncommon,A1,302,mk_orien_rate_checker_2,Bench & Bylaw ×1
+Set 1,Badger & Owl pack,Character,Badger,Civics,Orien,Borough Actuary,3,Uncommon,A1,292,mk_orien_borough_actuary_3,Bench & Bylaw ×2
+Set 1,Badger & Owl pack,Character,Badger,Science,Orien,Survey Computer,4,Uncommon,A1,305,mk_orien_survey_computer_4,
+Set 1,Badger & Owl pack,Character,Badger,Civics,Orien,Town Planner,5,Rare,A1,434,mk_orien_town_planner_5,Bench & Bylaw ×1
+Set 1,Badger & Owl pack,Character,Badger,Lore,Robbie,Cub Reporter,0,Uncommon,A1,293,mk_robbie_cub_reporter_0,Bench & Bylaw ×1
+Set 1,Badger & Owl pack,Character,Badger,Civics,Robbie,Columnist,1,Rare,A1,435,mk_robbie_columnist_1,Bench & Bylaw ×1
+Set 1,Badger & Owl pack,Character,Badger,Lore,Robbie,Features Writer,2,Super Rare,A1,561,mk_robbie_features_writer_2,
+Set 1,Badger & Owl pack,Character,Badger,Civics,Robbie,Editor,3,Super Rare,A1,564,mk_robbie_editor_3,Bench & Bylaw ×1; Cache & Kitchen ×1
+Set 1,Badger & Owl pack,Character,Badger,Lore,Robbie,Editor-in-Chief,5,Super Rare,A1,563,mk_robbie_editor_in_chief_5,
+Set 1,Badger & Owl pack,Character,Badger,Crafts,The Shrouded Badger,Hand at the Bench,2,Common,A1,36,mk_shrouded_badger_bench_hand_2,
+Set 1,Badger & Owl pack,Character,Owl,Crafts,Balto,Bench Owl,0,Rare,A1,499,mk_balto_bench_owl_0,
+Set 1,Badger & Owl pack,Character,Owl,Crafts,Balto,Cabinetmaker,1,Super Rare,A1,589,mk_balto_cabinetmaker_1,
+Set 1,Badger & Owl pack,Character,Owl,Commerce,Balto,Shopkeeper,2,Super Rare,A1,586,mk_balto_shopkeeper_2,
+Set 1,Badger & Owl pack,Character,Owl,Crafts,Balto,Furniture Craftsman,3,Super Rare,A1,585,mk_balto_furniture_craftsman_3,Bench & Bylaw ×1; Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Commerce,Balto,Guild Furniture Broker,5,Legendary,A1,651,mk_balto_guild_furniture_broker_5,
+Set 1,Badger & Owl pack,Character,Owl,Food,Bean,Espresso Puller,1,Rare,A1,495,mk_bean_espresso_1,Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Food,Bean,Two Pairs of Paws,2,Rare,A1,497,mk_bean_two_pairs_of_paws_2,
+Set 1,Badger & Owl pack,Character,Owl,Food,Bean,Barista,3,Uncommon,A1,344,mk_bean_barista_3,Dome & Dusk ×2
+Set 1,Badger & Owl pack,Character,Owl,Food,Bean,The Early Shift,4,Uncommon,A1,351,mk_bean_the_early_shift_4,
+Set 1,Badger & Owl pack,Character,Owl,Food,Bean,Café Proprietor,5,Rare,A1,502,mk_bean_proprietor_5,Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Food,Hoot,Night Kitchen,1,Rare,A1,484,mk_hoot_night_kitchen_1,Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Food,Hoot,Breakfast Bell,3,Rare,A1,493,mk_hoot_breakfast_bell_3,Cache & Kitchen ×1; Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Food,Hoot,Head of the Night Kitchen,5,Rare,A1,483,mk_hoot_head_of_the_night_kitchen_5,
+Set 1,Badger & Owl pack,Character,Owl,Entertainment,Jessica,Song and Game Leader,0,Rare,A1,501,mk_jessica_song_leader_0,Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Civics,Jessica,Infant Teacher,1,Rare,A1,489,mk_jessica_infant_teacher_1,Bench & Bylaw ×1
+Set 1,Badger & Owl pack,Character,Owl,Lore,Jessica,Night School Teacher,2,Rare,A1,492,mk_jessica_night_school_teacher_2,Margin & Pantry ×1; Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Civics,Jessica,The Night School,3,Rare,A1,494,mk_jessica_the_night_school_3,Cache & Kitchen ×1
+Set 1,Badger & Owl pack,Character,Owl,Lore,Jessica,Headmistress,4,Rare,A1,491,mk_jessica_headmistress_4,Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Lore,Jessica,Teacher of the Boroughs,5,Legendary,A1,650,mk_jessica_teacher_of_the_boroughs_5,Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Lore,Owlet,Owlet,0,Uncommon,A1,346,mk_owlet_owlet_0,
+Set 1,Badger & Owl pack,Character,Owl,Science,Sage,Night Assistant,0,Super Rare,A1,587,mk_sage_night_assistant_0,Margin & Pantry ×1; Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Agriculture,Sage,Frost Watch,2,Rare,A1,500,mk_sage_frost_watch_2,Margin & Pantry ×1; Bench & Bylaw ×1; Cache & Kitchen ×1; Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Science,Sage,Astronomer,3,Rare,A1,498,mk_sage_astronomer_3,Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Science,Sage,The Watch List,4,Rare,A1,503,mk_sage_the_watch_list_4,Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Science,Sage,Royal Astronomer,5,Rare,A1,488,mk_sage_royal_astronomer_5,Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Entertainment,Shay,Sunday Painter,0,Common,A1,76,mk_shay_sunday_painter_0,
+Set 1,Badger & Owl pack,Character,Owl,Science,Shay,Ward Doctor,1,Rare,A1,487,mk_shay_ward_doctor_1,Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Science,Shay,Borough Physician,2,Uncommon,A1,352,mk_shay_borough_physician_2,Dome & Dusk ×2
+Set 1,Badger & Owl pack,Character,Owl,Entertainment,Shay,Market-Stall Painter,3,Rare,A1,486,mk_shay_market_stall_painter_3,Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Science,Shay,Chief Physician,5,Uncommon,A1,349,mk_shay_chief_physician_5,
+Set 1,Badger & Owl pack,Character,Owl,Commerce,The Silhouetted Owl,Hand at the Scales,0,Uncommon,A1,348,mk_silhouetted_owl_scales_hand_0,
+Set 1,Badger & Owl pack,Character,Owl,Entertainment,Winter,Segment Runner,0,Common,A1,75,mk_winter_segment_runner_0,
+Set 1,Badger & Owl pack,Character,Owl,Science,Winter,Turned-Down Applicant,1,Common,A1,77,mk_winter_turned_down_applicant_1,Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Entertainment,Winter,Science Show Host,2,Uncommon,A1,345,mk_winter_science_show_host_2,Dome & Dusk ×2
+Set 1,Badger & Owl pack,Character,Owl,Science,Winter,Head Science Producer,4,Rare,A1,496,mk_winter_head_science_producer_4,Dome & Dusk ×1
+Set 1,Badger & Owl pack,Character,Owl,Entertainment,Winter,Everyone's Favorite TV Scientist,5,Common,A1,74,mk_winter_tv_scientist_5,
+Set 1,Badger & Owl pack,Event,,,A Lecture at the Hall,,0,Uncommon,A1,387,mk_hall_lecture,Dome & Dusk ×2
+Set 1,Badger & Owl pack,Event,,,Barrow's Measure,,0,Common,A1,112,mk_barrows_measure,
+Set 1,Badger & Owl pack,Event,,,Bean’s Coffee Break,,0,Common,A1,126,mk_beans_coffee_break,
+Set 1,Badger & Owl pack,Event,,,FutureTech Release Day,,0,Common,A1,115,mk_futuretech_release_day,Dome & Dusk ×2
+Set 1,Badger & Owl pack,Event,,,Guild Night,,0,Common,A1,107,mk_guild_night,
+Set 1,Badger & Owl pack,Event,,,Jessica’s Night Class,,0,Common,A1,108,mk_jessicas_night_class,
+Set 1,Badger & Owl pack,Event,,,Moss's Rehiring Day,,0,Common,A1,131,mk_moss_rehiring_day,Bench & Bylaw ×2
+Set 1,Badger & Owl pack,Event,,,Oatmeal's Awning,,1,Common,A1,106,mk_oatmeals_awning,Bench & Bylaw ×2
+Set 1,Badger & Owl pack,Event,,,Oatmeal's Benefit Night,,0,Uncommon,A1,383,mk_oatmeals_benefit_night,
+Set 1,Badger & Owl pack,Event,,,Sage’s Star Party,,0,Uncommon,A1,386,mk_sages_star_party,Dome & Dusk ×2
+Set 1,Badger & Owl pack,Event,,,The Marks Are Struck,,1,Common,A1,120,mk_ev_the_marks_are_struck,Bench & Bylaw ×2
+Set 1,Badger & Owl pack,Event,,,The Night Round,,0,Uncommon,A1,393,mk_night_round,Dome & Dusk ×2
+Set 1,Badger & Owl pack,Town Building,,,Barrow's Yard,Town Building,4,Common,A1,144,mk_tb_barrows_yard,
+Set 1,Badger & Owl pack,Town Building,,,The FutureTech Store,Town Building,4,Common,A1,138,mk_tb_futuretech_store,Bench & Bylaw ×1
+Set 1,Badger & Owl pack,Town Building,,,The Juice Store,Town Building,3,Super Rare,A1,611,mk_bld_juice_store,Bench & Bylaw ×1
+Set 1,Badger & Owl pack,Town Building,,,The Observatory Steps,Town Building,3,Common,A1,152,mk_tb_observatory_steps,Cache & Kitchen ×1; Dome & Dusk ×1
+Set 1,Badger & Owl pack,Town Building,,,The Puppet Booth,Town Building,2,Common,A1,140,mk_tb_puppet_booth,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Character,Mouse,Lore,Baby Mouse,Pup,0,Uncommon,A1,277,mk_baby_mouse_pup_0,
+Set 1,Mouse & Squirrel pack,Character,Mouse,Agriculture,Bella,Forager,0,Super Rare,A1,550,mk_bella_forager_0,
+Set 1,Mouse & Squirrel pack,Character,Mouse,Science,Bella,Field Scientist,1,Rare,A1,414,mk_bella_field_scientist_1,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Character,Mouse,Lore,Bella,Field Recorder,2,Rare,A1,417,mk_bella_field_recorder_2,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Character,Mouse,Agriculture,Bella,Wildlife Warden,3,Rare,A1,420,mk_bella_wildlife_warden_3,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Character,Mouse,Science,Bella,Science Hall Fellow,4,Uncommon,A1,275,mk_bella_science_hall_fellow_4,
+Set 1,Mouse & Squirrel pack,Character,Mouse,Agriculture,Bella,Ecologist,5,Common,A1,8,mk_bella_ecologist_5,
+Set 1,Mouse & Squirrel pack,Character,Mouse,Lore,Daniel,Ink Mixer,0,Common,A1,13,mk_daniel_ink_mixer_0,Margin & Pantry ×2
+Set 1,Mouse & Squirrel pack,Character,Mouse,Lore,Daniel,Chart Copier,1,Uncommon,A1,276,mk_daniel_chart_copier_1,Margin & Pantry ×2
+Set 1,Mouse & Squirrel pack,Character,Mouse,Lore,Daniel,Canal Cartographer,2,Rare,A1,419,mk_daniel_canal_cartographer_2,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Character,Mouse,Science,Daniel,Star Charter,3,Rare,A1,416,mk_daniel_star_charter_3,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Character,Mouse,Lore,Daniel,Master Cartographer,4,Super Rare,A1,552,mk_daniel_master_cartographer_4,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Character,Mouse,Food,Gwen,Short-Order Cook,1,Common,A1,17,mk_gwen_short_order_cook_1,
+Set 1,Mouse & Squirrel pack,Character,Mouse,Food,Gwen,Anybody's Counter,2,Rare,A1,418,mk_gwen_anybodys_counter_2,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Character,Mouse,Food,Gwen,Diner Keeper,3,Uncommon,A1,269,mk_gwen_diner_keeper_3,Margin & Pantry ×2
+Set 1,Mouse & Squirrel pack,Character,Mouse,Food,Gwen,The Apron on the Hook,4,Legendary,A1,639,mk_gwen_apron_on_the_hook_4,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Character,Mouse,Food,Gwen,Owner of the Diner,5,Rare,A1,415,mk_gwen_owner_of_the_diner_5,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Character,Mouse,Agriculture,Maribel,Seed Sorter,0,Common,A1,20,mk_maribel_seed_sorter_0,
+Set 1,Mouse & Squirrel pack,Character,Mouse,Agriculture,Maribel,Seed Keeper,1,Common,A1,14,mk_maribel_seed_keeper_1,
+Set 1,Mouse & Squirrel pack,Character,Mouse,Agriculture,Maribel,Seed Bank Clerk,2,Rare,A1,421,mk_maribel_seed_bank_clerk_2,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Character,Mouse,Science,Maribel,Seed Vault Scientist,3,Uncommon,A1,268,mk_maribel_seed_vault_scientist_3,Margin & Pantry ×2
+Set 1,Mouse & Squirrel pack,Character,Mouse,Agriculture,Maribel,Horticulturist,4,Rare,A1,422,mk_maribel_horticulturist_4,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Character,Mouse,Civics,Maribel,Seed Bank Director,5,Common,A1,11,mk_maribel_seed_bank_director_5,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Character,Mouse,Civics,Quinn,Meeting Scribe,1,Uncommon,A1,274,mk_quinn_meeting_scribe_1,
+Set 1,Mouse & Squirrel pack,Character,Mouse,Lore,Quinn,Keeper of the Record,5,Uncommon,A1,279,mk_quinn_keeper_of_the_record_5,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Character,Mouse,Agriculture,Rosabeth,Herb Gatherer,0,Rare,A1,424,mk_rosabeth_herb_gatherer_0,
+Set 1,Mouse & Squirrel pack,Character,Mouse,Agriculture,Rosabeth,Garden Hand,1,Uncommon,A1,272,mk_rosabeth_garden_hand_1,Margin & Pantry ×2
+Set 1,Mouse & Squirrel pack,Character,Mouse,Science,Rosabeth,Tincture Maker,2,Uncommon,A1,280,mk_rosabeth_tincture_maker_2,
+Set 1,Mouse & Squirrel pack,Character,Mouse,Civics,Rosabeth,Apothecary,3,Rare,A1,423,mk_rosabeth_apothecary_3,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Character,Mouse,Commerce,Rosabeth,Tincture Counter,4,Common,A1,22,mk_rosabeth_tincture_counter_4,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Character,Mouse,Lore,Rosabeth,Herbalist Physician,5,Uncommon,A1,278,mk_rosabeth_herbalist_physician_5,
+Set 1,Mouse & Squirrel pack,Character,Mouse,Lore,The Unsigned Mouse,Hand at the Shelves,1,Common,A1,21,mk_unsigned_mouse_shelves_hand_1,
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Civics,Ned,The Ward Roll,0,Common,A1,57,mk_ned_the_ward_roll_0,
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Lore,Ned,Page Runner,1,Super Rare,A1,574,mk_ned_page_runner_1,Cache & Kitchen ×1
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Lore,Ned,Night Archivist,2,Uncommon,A1,322,mk_ned_night_archivist_2,Cache & Kitchen ×2
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Civics,Ned,Ward Recorder,3,Uncommon,A1,327,mk_ned_ward_recorder_3,Cache & Kitchen ×2
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Lore,Ned,Reference Librarian,4,Rare,A1,458,mk_ned_reference_librarian_4,Cache & Kitchen ×1
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Civics,Ned,Chancellor of Records,5,Common,A1,54,mk_ned_chancellor_of_records_5,
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Commerce,Peanut,Ledger Apprentice,0,Uncommon,A1,321,mk_peanut_ledger_0,Cache & Kitchen ×1
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Food,Peanut,Barista,1,Common,A1,59,mk_peanut_barista_1,Cache & Kitchen ×2
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Commerce,Peanut,Accountant,2,Super Rare,A1,576,mk_peanut_accountant_2,Cache & Kitchen ×1
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Food,Peanut,Café Manager,4,Rare,A1,454,mk_peanut_cafe_manager_4,Cache & Kitchen ×1
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Commerce,Peanut,Town Comptroller,5,Common,A1,56,mk_peanut_comptroller_5,Cache & Kitchen ×1
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Lore,Scott,Story Collector,0,Super Rare,A1,575,mk_scott_story_collector_0,Cache & Kitchen ×1
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Lore,Scott,The Index,1,Common,A1,58,mk_scott_the_index_1,
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Commerce,Scott,Pamphleteer,2,Rare,A1,461,mk_scott_pamphleteer_2,Cache & Kitchen ×1
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Lore,Scott,Town Chronicler,3,Rare,A1,462,mk_scott_town_chronicler_3,Cache & Kitchen ×1
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Science,Scott,Natural Historian,4,Super Rare,A1,577,mk_scott_natural_historian_4,Cache & Kitchen ×1
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Lore,Scott,Author of the Boroughs,5,Super Rare,A1,578,mk_scott_author_of_the_boroughs_5,Cache & Kitchen ×1
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Science,Squirrel Kit,Kit,0,Uncommon,A1,324,mk_squirrel_kit_kit_0,
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Civics,Squirt,Playground Monitor,1,Uncommon,A1,329,mk_squirt_playground_monitor_1,
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Civics,Squirt,"Schoolteacher, Lower Room",2,Rare,A1,460,mk_squirt_schoolteacher_lower_room_2,Cache & Kitchen ×1
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Civics,Squirt,"Borough Eleven, Left Wing",4,Rare,A1,456,mk_squirt_borough_eleven_left_wing_4,
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Civics,Squirt,Club Captain,5,Uncommon,A1,323,mk_squirt_club_captain_5,
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Entertainment,The Shadowed Squirrel,Hand at the Back of the Hall,1,Common,A1,53,mk_shadowed_squirrel_hall_hand_1,
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Entertainment,Yellow,Open Mic Regular,1,Super Rare,A1,573,mk_yellow_open_mic_regular_1,Cache & Kitchen ×1
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Entertainment,Yellow,Freshest Thing in a Small Town,4,Common,A1,50,mk_yellow_freshest_thing_4,
+Set 1,Mouse & Squirrel pack,Character,Squirrel,Entertainment,Yellow,Rapper,5,Legendary,A1,648,mk_yellow_rapper_5,Cache & Kitchen ×1
+Set 1,Mouse & Squirrel pack,Event,,,Fresh Batch,,0,Common,A1,109,mk_fresh_batch,Margin & Pantry ×2; Cache & Kitchen ×2; Dome & Dusk ×2
+Set 1,Mouse & Squirrel pack,Event,,,Peanut's Standing Round,,0,Common,A1,123,mk_peanuts_standing_round,Cache & Kitchen ×2
+Set 1,Mouse & Squirrel pack,Event,,,Reading Lanterns,,0,Common,A1,119,mk_reading_lanterns,Margin & Pantry ×2; Cache & Kitchen ×2
+Set 1,Mouse & Squirrel pack,Event,,,Rosabeth's Rounds,,0,Rare,A1,524,mk_rosabeths_rounds,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Event,,,Scott's Reading Hour,,0,Uncommon,A1,389,mk_scotts_reading_hour,Cache & Kitchen ×2
+Set 1,Mouse & Squirrel pack,Event,,,The Community Bonfire,,0,Common,A1,111,mk_community_bonfire,Margin & Pantry ×2; Cache & Kitchen ×2
+Set 1,Mouse & Squirrel pack,Event,,,The Long Night at Earl's,,1,Common,A1,135,mk_the_long_night_at_earls,Margin & Pantry ×2; Cache & Kitchen ×2; Dome & Dusk ×2
+Set 1,Mouse & Squirrel pack,Town Building,,,Farmer's Market,Town Building,4,Uncommon,A1,395,mk_tb_farmers_market,Cache & Kitchen ×2
+Set 1,Mouse & Squirrel pack,Town Building,,,Gwen's Counter,Town Building,2,Common,A1,139,mk_tb_gwens_counter,
+Set 1,Mouse & Squirrel pack,Town Building,,,Rosabeth's Gate,Town Building,2,Rare,A1,530,mk_tb_rosabeths_gate,Margin & Pantry ×1
+Set 1,Mouse & Squirrel pack,Town Building,,,The Bookstore,Town Building,2,Common,A1,146,mk_bld_bookstore,Dome & Dusk ×2
+Set 1,Mouse & Squirrel pack,Town Building,,,The Grocery Store,Town Building,2,Super Rare,A1,615,mk_tb_grocery_store,Bench & Bylaw ×1
+Set 1,Mouse & Squirrel pack,Town Building,,,The Open Mic Room,Town Building,3,Common,A1,147,mk_tb_open_mic_room,Margin & Pantry ×1
+Set 1,The Open Hiring,Capital City Building,,,FutureTech HQ,Capital City Building,10,Super Rare,A1,617,mk_bld_futuretech_hq,
+Set 1,The Open Hiring,Capital City Building,,,The All-Night Café,Capital City Building,7,Common,A1,163,mk_bld_all_night_cafe,
+Set 1,The Open Hiring,Capital City Building,,,The Guild Hall,Capital City Building,7,Common,A1,156,mk_bld_guild_hall,
+Set 1,The Open Hiring,Capital City Building,,,The Long Room,Capital City Building,6,Common,A1,158,mk_bld_long_room,
+Set 1,The Open Hiring,Capital City Building,,,The Owlery,Capital City Building,9,Rare,A1,532,mk_bld_owlery,
+Set 1,The Open Hiring,Capital City Building,,,The Town Workshop,Capital City Building,5,Common,A1,162,mk_bld_town_workshop,
+Set 1,The Open Hiring,Capital City Building,,,The Weighbridge,Capital City Building,7,Common,A1,155,mk_bld_weighbridge,
+Set 1,The Open Hiring,Disruption,,,Open Hiring Fair,,0,Common,A1,223,mk_dx_open_hiring,
+Set 1,The Open Hiring,Disruption,,,Six Weeks Shut,,0,Rare,A1,539,mk_dx_six_weeks_shut,
+Set 1,The Open Hiring,Disruption,,,The Eclipse,,0,Uncommon,A1,402,mk_dx_solar_eclipse,
+Set 1,The Open Hiring,Disruption,,,The Mayor's Conference,,0,Super Rare,A1,626,mk_dx_mayors_conference,
+Set 1,The Open Hiring,Disruption,,,The Meteor Shower,,0,Common,A1,226,mk_dx_meteor_shower,
+Set 1,The Open Hiring,Market Character,Badger,Crafts,Barrow,Stonecutter,5,Super Rare,A1,621,mk_barrow_stonecutter_5,
+Set 1,The Open Hiring,Market Character,Badger,Civics,Brett,Retained Counsel,5,Uncommon,A1,398,mk_brett_counsel_5,
+Set 1,The Open Hiring,Market Character,Mouse,Commerce,Cornelius,FutureTech CEO,5,Super Rare,A1,619,mk_cornelius_futuretech_ceo_5,
+Set 1,The Open Hiring,Market Character,Mouse,Lore,Quinn,Town Scrivener,3,Super Rare,A1,618,mk_quinn_town_scrivener_3,
+Set 1,The Open Hiring,Market Character,Owl,Commerce,Barnaby,Night Auditor,4,Super Rare,A1,624,mk_barnaby_night_auditor_4,
+Set 1,The Open Hiring,Market Character,Owl,Civics,Hoot,Night Porter,2,Uncommon,A1,400,mk_hoot_night_porter_2,
+Set 1,The Open Hiring,Market Character,Squirrel,Commerce,Tuppence,Curio Dealer,3,Rare,A1,534,mk_tuppence_curio_dealer_3,
+Set 1,The Open Hiring,Ordinance,,,The Building Grant,Capital City Ordinance,0,Common,A1,231,mk_ord_the_building_grant,
+Set 1,The Open Hiring,Ordinance,,,The Masons' Rate,Capital City Ordinance,0,Common,A1,230,mk_ord_the_masons_rate,
+Set 1,Guild Row,Disruption,,,A Plague of Midges,,0,Common,A1,225,mk_dx_midges,
+Set 1,Guild Row,Disruption,,,The Bridge Goes,,0,Rare,A1,538,mk_dx_bridge_goes,
+Set 1,Guild Row,Disruption,,,The Full Moon,,0,Common,A1,224,mk_dx_full_moon,
+Set 1,Guild Row,Disruption,,,The Small Fair,,0,Super Rare,A1,632,mk_dx_small_fair,
+Set 1,Guild Row,Disruption,,,The Tax Assessors,,0,Uncommon,A1,403,mk_dx_tax_assessors,
+Set 1,Guild Row,Market card,,,Apprentice Fair,,3,Common,A1,181,mk_mkt_apprentice_fair,
+Set 1,Guild Row,Market card,,,Community Oven,,2,Common,A1,188,mk_mkt_community_oven,
+Set 1,Guild Row,Market card,,,Emergency Reserve,,2,Common,A1,182,mk_mkt_emergency_reserve,
+Set 1,Guild Row,Market card,,,Guild Intake,,3,Common,A1,167,mk_mkt_guild_intake,
+Set 1,Guild Row,Market card,,,Harvest Fair,,3,Common,A1,200,mk_mkt_harvest_fair,
+Set 1,Guild Row,Market card,,,Second Founding,,5,Common,A1,195,mk_mkt_second_founding,
+Set 1,Guild Row,Market card,,,Telescope Hire,,2,Common,A1,177,mk_mkt_telescope_hire,
+Set 1,Guild Row,Market card,,,The Bandstand,,3,Common,A1,190,mk_mkt_bandstand,
+Set 1,Guild Row,Market card,,,The Chit Tin,,2,Common,A1,176,mk_mkt_chit_tin,
+Set 1,Guild Row,Market card,,,The Ovens' Account,,2,Common,A1,183,mk_mkt_ovens_account,
+Set 1,Guild Row,Market card,,,The Owl Post,,2,Common,A1,201,mk_mkt_owl_post,
+Set 1,Guild Row,Market card,,,The Penny Jar,,1,Common,A1,186,mk_mkt_penny_jar,
+Set 1,Guild Row,Market card,,,The Surveyor's Table,,3,Common,A1,171,mk_mkt_surveyors_table,
+Set 1,Guild Row,Market card,,,The Town Bell,,1,Common,A1,187,mk_mkt_town_bell,
+Set 1,Guild Row,Market card,,,The Understudy's Shelf,,2,Common,A1,179,mk_mkt_understudys_shelf,
+Set 1,Guild Row,Market card,,,The Watermill,,3,Common,A1,170,mk_mkt_watermill,
+Set 1,Guild Row,Ordinance,,,The Sealed Bid,Capital City Ordinance,0,Common,A1,232,mk_ord_the_sealed_bid,
+Set 2,Statues (market decks),Statue,,,Statue of Harmony,,5,Common,A1,207,mk_st_harmony,
+Set 2,Statues (market decks),Statue,,,Statue of Hospitality,,2,Common,A1,214,mk_st_hospitality,
+Set 2,Statues (market decks),Statue,,,Statue of Thrift,,4,Common,A1,219,mk_st_thrift,
+Set 2,Tokens,Token,Fox,,Fox Token,Token,0,Common,A1,250,mk_tok_fox,
+Set 2,Tokens,Token,Otter,,Otter Token,Token,0,Common,A1,246,mk_tok_otter,
+Set 2,Tokens,Token,Rabbit,,Rabbit Token,Token,0,Common,A1,242,mk_tok_rabbit,
+Set 2,Tokens,Token,Raccoon,,Raccoon Token,Token,0,Common,A1,251,mk_tok_raccoon,
+Set 2,Fox & Rabbit pack,Character,Fox,Civics,Cindy,Clerk of the Court,1,Rare,A1,506,mk_cindy_court_clerk_1,Gavel & Greasepaint ×1
+Set 2,Fox & Rabbit pack,Character,Fox,Civics,Cindy,Magistrate,2,Super Rare,A1,596,mk_cindy_magistrate_2,Gavel & Greasepaint ×1
+Set 2,Fox & Rabbit pack,Character,Fox,Civics,Cindy,Circuit Judge,4,Super Rare,A1,595,mk_cindy_circuit_judge_4,
+Set 2,Fox & Rabbit pack,Character,Fox,Civics,Cindy,Justice of the Boroughs,5,Super Rare,A1,594,mk_cindy_justice_of_the_boroughs_5,Gavel & Greasepaint ×1
+Set 2,Fox & Rabbit pack,Character,Fox,Food,Earl,Tea Boy,0,Rare,A1,505,mk_earl_tea_boy_0,
+Set 2,Fox & Rabbit pack,Character,Fox,Commerce,Earl,Tea Trader,2,Uncommon,A1,353,mk_earl_tea_trader_2,Gavel & Greasepaint ×2
+Set 2,Fox & Rabbit pack,Character,Fox,Food,Earl,Coffee Roaster,3,Uncommon,A1,367,mk_earl_coffee_roaster_3,Gavel & Greasepaint ×2
+Set 2,Fox & Rabbit pack,Character,Fox,Civics,Earl,Tea House Keeper,4,Super Rare,A1,590,mk_earl_tea_house_keeper_4,
+Set 2,Fox & Rabbit pack,Character,Fox,Commerce,Finn,Auctioneer's Boy,0,Uncommon,A1,365,mk_finn_auctioneers_boy_0,Gavel & Greasepaint ×2
+Set 2,Fox & Rabbit pack,Character,Fox,Commerce,Finn,Peddler,1,Super Rare,A1,591,mk_finn_peddler_1,Gavel & Greasepaint ×1
+Set 2,Fox & Rabbit pack,Character,Fox,Food,Finn,Griddle Hand,2,Uncommon,A1,366,mk_finn_griddle_hand_2,Gavel & Greasepaint ×2
+Set 2,Fox & Rabbit pack,Character,Fox,Civics,Finn,Fair Warden,3,Uncommon,A1,364,mk_finn_fair_warden_3,Gavel & Greasepaint ×2
+Set 2,Fox & Rabbit pack,Character,Fox,Commerce,Finn,Trade Broker,4,Uncommon,A1,360,mk_finn_trade_broker_4,Gavel & Greasepaint ×2
+Set 2,Fox & Rabbit pack,Character,Fox,Entertainment,Fox Cub,Cub,0,Uncommon,A1,357,mk_fox_cub_cub_0,
+Set 2,Fox & Rabbit pack,Character,Fox,Entertainment,Harrison,Piano Boy,0,Uncommon,A1,362,mk_harrison_piano_boy_0,Gavel & Greasepaint ×1
+Set 2,Fox & Rabbit pack,Character,Fox,Entertainment,Harrison,House Pianist,2,Super Rare,A1,592,mk_harrison_house_pianist_2,Gavel & Greasepaint ×1
+Set 2,Fox & Rabbit pack,Character,Fox,Entertainment,Harrison,Band Leader,4,Rare,A1,507,mk_harrison_band_leader_4,Gavel & Greasepaint ×1
+Set 2,Fox & Rabbit pack,Character,Fox,Commerce,Liz,Plate Clerk,0,Uncommon,A1,369,mk_liz_plate_clerk_0,
+Set 2,Fox & Rabbit pack,Character,Fox,Commerce,Liz,Scale Hand,1,Uncommon,A1,358,mk_liz_scale_hand_1,Gavel & Greasepaint ×2
+Set 2,Fox & Rabbit pack,Character,Fox,Commerce,Liz,The Docket,3,Common,A1,84,mk_liz_the_docket_3,Gavel & Greasepaint ×1
+Set 2,Fox & Rabbit pack,Character,Fox,Commerce,Liz,Weighbridge Keeper,4,Common,A1,89,mk_liz_weighbridge_keeper_4,Bin & Barter ×2; Gavel & Greasepaint ×1
+Set 2,Fox & Rabbit pack,Character,Fox,Commerce,Liz,Chief Assessor,5,Uncommon,A1,361,mk_liz_chief_assessor_5,Gavel & Greasepaint ×2
+Set 2,Fox & Rabbit pack,Character,Fox,Agriculture,The Cowled Fox,Hand in the Far Field,1,Common,A1,81,mk_cowled_fox_far_field_hand_1,
+Set 2,Fox & Rabbit pack,Character,Rabbit,Agriculture,Bunny,Kit,0,Uncommon,A1,252,mk_bunny_kit_0,
+Set 2,Fox & Rabbit pack,Character,Rabbit,Agriculture,Clover,Seedling Helper,0,Legendary,A1,637,mk_clover_seedling_helper_0,Furrow & Warren ×1
+Set 2,Fox & Rabbit pack,Character,Rabbit,Agriculture,Clover,Plot Sharer,1,Super Rare,A1,547,mk_clover_plot_sharer_1,Furrow & Warren ×1
+Set 2,Fox & Rabbit pack,Character,Rabbit,Commerce,Clover,Market Gardener,2,Super Rare,A1,545,mk_clover_market_gardener_2,Furrow & Warren ×1; Current & Counter ×1
+Set 2,Fox & Rabbit pack,Character,Rabbit,Agriculture,Clover,Community Gardener,3,Super Rare,A1,548,mk_clover_community_gardener_3,Furrow & Warren ×1
+Set 2,Fox & Rabbit pack,Character,Rabbit,Science,Clover,Rocket Botanist,4,Rare,A1,412,mk_clover_rocket_botanist_4,Furrow & Warren ×1
+Set 2,Fox & Rabbit pack,Character,Rabbit,Agriculture,Clover,Master Botanist,5,Uncommon,A1,253,mk_clover_master_botanist_5,Furrow & Warren ×2
+Set 2,Fox & Rabbit pack,Character,Rabbit,Agriculture,Eric,Smallholder,1,Rare,A1,406,mk_eric_smallholder_1,Furrow & Warren ×1
+Set 2,Fox & Rabbit pack,Character,Rabbit,Civics,Eric,Fair Steward,2,Uncommon,A1,258,mk_eric_fair_steward_2,Furrow & Warren ×2
+Set 2,Fox & Rabbit pack,Character,Rabbit,Agriculture,Eric,Row Farmer,3,Rare,A1,405,mk_eric_row_farmer_3,Furrow & Warren ×1
+Set 2,Fox & Rabbit pack,Character,Rabbit,Agriculture,Eric,Row Boss,4,Uncommon,A1,256,mk_eric_row_boss_4,Furrow & Warren ×2
+Set 2,Fox & Rabbit pack,Character,Rabbit,Agriculture,Eric,Best Farmer There Ever Was,5,Rare,A1,409,mk_eric_best_farmer_5,Furrow & Warren ×1
+Set 2,Fox & Rabbit pack,Character,Rabbit,Civics,Henrietta,Front Desk Clerk,0,Super Rare,A1,546,mk_henrietta_front_desk_clerk_0,Furrow & Warren ×1
+Set 2,Fox & Rabbit pack,Character,Rabbit,Civics,Henrietta,Placement Officer,2,Legendary,A1,638,mk_henrietta_placement_officer_2,Furrow & Warren ×1
+Set 2,Fox & Rabbit pack,Character,Rabbit,Civics,Henrietta,Head of Rabbit Recruitment,4,Super Rare,A1,543,mk_henrietta_head_of_rabbit_recruitment_4,Furrow & Warren ×1
+Set 2,Fox & Rabbit pack,Character,Rabbit,Civics,Hibiscus,The Sorting Bench,0,Uncommon,A1,262,mk_hibiscus_the_sorting_bench_0,Furrow & Warren ×1
+Set 2,Fox & Rabbit pack,Character,Rabbit,Civics,Hibiscus,Post Runner,1,Common,A1,5,mk_hibiscus_post_runner_1,
+Set 2,Fox & Rabbit pack,Character,Rabbit,Civics,Hibiscus,Night Mail,2,Uncommon,A1,259,mk_hibiscus_night_mail_2,
+Set 2,Fox & Rabbit pack,Character,Rabbit,Civics,Hibiscus,Round Walker,3,Uncommon,A1,265,mk_hibiscus_round_walker_3,Furrow & Warren ×2
+Set 2,Fox & Rabbit pack,Character,Rabbit,Commerce,Hibiscus,Mail Coach Driver,4,Uncommon,A1,255,mk_hibiscus_mail_coach_driver_4,
+Set 2,Fox & Rabbit pack,Character,Rabbit,Civics,Hibiscus,Postmaster,5,Uncommon,A1,254,mk_hibiscus_postmaster_5,
+Set 2,Fox & Rabbit pack,Character,Rabbit,Agriculture,Peter,Hedge Cutter,0,Common,A1,3,mk_peter_hedge_cutter_0,
+Set 2,Fox & Rabbit pack,Character,Rabbit,Food,Peter,Washing Up,1,Uncommon,A1,260,mk_peter_washing_up_1,Furrow & Warren ×2
+Set 2,Fox & Rabbit pack,Character,Rabbit,Agriculture,Peter,The Winter's Length,2,Common,A1,4,mk_peter_the_winters_length_2,Furrow & Warren ×2
+Set 2,Fox & Rabbit pack,Character,Rabbit,Agriculture,Peter,Hedgelayer,3,Common,A1,1,mk_peter_hedgelayer_3,Furrow & Warren ×2
+Set 2,Fox & Rabbit pack,Character,Rabbit,Food,The Hooded Rabbit,Hand at the Hatch,0,Uncommon,A1,257,mk_hooded_rabbit_hatch_hand_0,
+Set 2,Fox & Rabbit pack,Event,,,A Word Beforehand,,2,Common,A1,132,mk_a_word_beforehand,Bin & Barter ×1; Gavel & Greasepaint ×2; Current & Counter ×2
+Set 2,Fox & Rabbit pack,Event,,,Clover’s Potato Experiment,,0,Super Rare,A1,608,mk_clovers_potato_experiment,Furrow & Warren ×1
+Set 2,Fox & Rabbit pack,Event,,,Clover's Seed Drive,,0,Common,A1,118,mk_clovers_seed_drive,Furrow & Warren ×2
+Set 2,Fox & Rabbit pack,Event,,,Hibiscus's Post Route,,0,Common,A1,105,mk_hibiscuss_post_route,Furrow & Warren ×2
+Set 2,Fox & Rabbit pack,Event,,,The Car Show,,0,Rare,A1,526,mk_car_show,Gavel & Greasepaint ×1
+Set 2,Fox & Rabbit pack,Event,,,The Root Cellar,,0,Common,A1,101,mk_the_root_cellar,Furrow & Warren ×2
+Set 2,Fox & Rabbit pack,Event,,,Warren Muster,,0,Rare,A1,529,mk_warren_muster,Furrow & Warren ×1
+Set 2,Fox & Rabbit pack,Town Building,,,Starfish Coffee,Town Building,3,Common,A1,148,mk_tb_starfish_coffee,Furrow & Warren ×1
+Set 2,Fox & Rabbit pack,Town Building,,,The Allotment Strip,Town Building,3,Uncommon,A1,394,mk_tb_allotment_strip,Gavel & Greasepaint ×2
+Set 2,Fox & Rabbit pack,Town Building,,,The Gas Station,Town Building,2,Common,A1,149,mk_bld_gas_station,Current & Counter ×1
+Set 2,Fox & Rabbit pack,Town Building,,,The Warren,Town Building,3,Common,A1,137,mk_tb_the_warren,Bin & Barter ×1
+Set 2,Otter & Raccoon pack,Character,Otter,Lore,Benjamin,Wick Trimmer,0,Rare,A1,448,mk_benjamin_wick_trimmer_0,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Character,Otter,Crafts,Benjamin,Lantern Maker,2,Rare,A1,447,mk_benjamin_lantern_maker_2,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Character,Otter,Civics,Benjamin,Town Historian,3,Super Rare,A1,569,mk_benjamin_town_historian_3,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Character,Otter,Crafts,Benjamin,Master Lantern Maker,4,Super Rare,A1,570,mk_benjamin_master_lantern_maker_4,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Character,Otter,Lore,Benjamin,Keeper of the Light,5,Rare,A1,439,mk_benjamin_keeper_of_the_light_5,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Character,Otter,Commerce,Brooke,Mooring Hand,0,Common,A1,44,mk_brooke_mooring_hand_0,
+Set 2,Otter & Raccoon pack,Character,Otter,Commerce,Brooke,Dock Hand,1,Common,A1,46,mk_brooke_dock_hand_1,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Character,Otter,Lore,Brooke,Ferry Hand,2,Rare,A1,440,mk_brooke_ferry_hand_2,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Character,Otter,Entertainment,Brooke,Regatta Caller,3,Rare,A1,449,mk_brooke_regatta_caller_3,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Character,Otter,Science,Brooke,Balloonist,4,Rare,A1,442,mk_brooke_balloonist_4,
+Set 2,Otter & Raccoon pack,Character,Otter,Science,Brooke,Aeronaut,5,Legendary,A1,647,mk_brooke_aeronaut_5,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Character,Otter,Crafts,Brooke,Riverwright,5,Rare,A1,445,mk_brooke_riverwright_5,
+Set 2,Otter & Raccoon pack,Character,Otter,Food,Otter Pup,Pup,0,Uncommon,A1,317,mk_otter_pup_pup_0,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Character,Otter,Food,Taco,Cart Cook,1,Uncommon,A1,318,mk_taco_cart_cook_1,Current & Counter ×2
+Set 2,Otter & Raccoon pack,Character,Otter,Food,Taco,The Four O’Clock Cart,2,Super Rare,A1,567,mk_taco_the_four_oclock_cart_2,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Character,Otter,Food,Taco,Quayside Cook,3,Common,A1,45,mk_taco_quayside_cook_3,Current & Counter ×2
+Set 2,Otter & Raccoon pack,Character,Otter,Commerce,The Masked Otter,Hand at the Counter,1,Common,A1,47,mk_masked_otter_counter_hand_1,
+Set 2,Otter & Raccoon pack,Character,Otter,Commerce,Willow,The Harbour Office,0,Uncommon,A1,316,mk_willow_the_harbour_office_0,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Character,Otter,Commerce,Willow,Ferry Trader,1,Common,A1,42,mk_willow_ferry_trader_1,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Character,Otter,Commerce,Willow,Toll Keeper,2,Rare,A1,443,mk_willow_toll_keeper_2,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Character,Otter,Science,Willow,Tide Reckoner,3,Rare,A1,450,mk_willow_tide_reckoner_3,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Character,Otter,Commerce,Willow,Harbourmaster,4,Uncommon,A1,315,mk_willow_harbourmaster_4,Current & Counter ×2
+Set 2,Otter & Raccoon pack,Character,Otter,Civics,Willow,Harbour Admiral,5,Rare,A1,444,mk_willow_harbour_admiral_5,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Character,Raccoon,Civics,Beck,The Relief Roll,0,Common,A1,94,mk_beck_the_relief_roll_0,
+Set 2,Otter & Raccoon pack,Character,Raccoon,Lore,Beck,Bylaw Reader,1,Common,A1,98,mk_beck_bylaw_reader_1,
+Set 2,Otter & Raccoon pack,Character,Raccoon,Civics,Beck,Ward Clerk,2,Rare,A1,519,mk_beck_ward_clerk_2,Bin & Barter ×1
+Set 2,Otter & Raccoon pack,Character,Raccoon,Civics,Beck,Lamplighter’s Clerk,3,Super Rare,A1,598,mk_beck_lamplighters_clerk_3,Bin & Barter ×1
+Set 2,Otter & Raccoon pack,Character,Raccoon,Lore,Beck,Candlelight Reader,4,Uncommon,A1,376,mk_beck_candlelight_reader_4,
+Set 2,Otter & Raccoon pack,Character,Raccoon,Civics,Beck,Keeper of the Ward Book,5,Rare,A1,513,mk_beck_keeper_of_the_ward_book_5,
+Set 2,Otter & Raccoon pack,Character,Raccoon,Commerce,Hazel,Barrow Hand,0,Uncommon,A1,373,mk_hazel_barrow_hand_0,Bin & Barter ×1
+Set 2,Otter & Raccoon pack,Character,Raccoon,Commerce,Hazel,Night Market Vendor,1,Common,A1,92,mk_hazel_night_market_vendor_1,Bin & Barter ×2
+Set 2,Otter & Raccoon pack,Character,Raccoon,Commerce,Hazel,Market Vendor,2,Uncommon,A1,375,mk_hazel_market_vendor_2,Bin & Barter ×2
+Set 2,Otter & Raccoon pack,Character,Raccoon,Crafts,Hazel,Guildmaster,3,Rare,A1,523,mk_hazel_guildmaster_3,Bin & Barter ×1
+Set 2,Otter & Raccoon pack,Character,Raccoon,Commerce,Hazel,Market Committee Chair,4,Uncommon,A1,379,mk_hazel_market_committee_chair_4,Bin & Barter ×2
+Set 2,Otter & Raccoon pack,Character,Raccoon,Commerce,Hazel,Merchant,5,Common,A1,97,mk_hazel_merchant_5,Bin & Barter ×2
+Set 2,Otter & Raccoon pack,Character,Raccoon,Lore,Jim,Gadget Blogger,0,Rare,A1,515,mk_jim_gadget_blogger_0,Bin & Barter ×1
+Set 2,Otter & Raccoon pack,Character,Raccoon,Science,Jim,Hobby Programmer,2,Super Rare,A1,597,mk_jim_hobby_programmer_2,Bin & Barter ×1
+Set 2,Otter & Raccoon pack,Character,Raccoon,Commerce,Jim,Early Adopter,4,Super Rare,A1,600,mk_jim_early_adopter_4,Bin & Barter ×1
+Set 2,Otter & Raccoon pack,Character,Raccoon,Science,Jim,FutureTech Fanboy,5,Super Rare,A1,603,mk_jim_futuretech_fanboy_5,Bin & Barter ×1
+Set 2,Otter & Raccoon pack,Character,Raccoon,Commerce,Patch,Junkyard Diver,0,Rare,A1,514,mk_patch_junkyard_diver_0,
+Set 2,Otter & Raccoon pack,Character,Raccoon,Agriculture,Patch,Compost Yard,1,Uncommon,A1,374,mk_patch_compost_yard_1,Bin & Barter ×1
+Set 2,Otter & Raccoon pack,Character,Raccoon,Science,Patch,Salvage Sorter,2,Uncommon,A1,377,mk_patch_salvage_sorter_2,
+Set 2,Otter & Raccoon pack,Character,Raccoon,Civics,Patch,Valuer,3,Rare,A1,518,mk_patch_valuer_3,Bin & Barter ×1
+Set 2,Otter & Raccoon pack,Character,Raccoon,Crafts,Patch,Yard Foreman,4,Uncommon,A1,378,mk_patch_yard_foreman_4,
+Set 2,Otter & Raccoon pack,Character,Raccoon,Commerce,Patch,Reclamation Merchant,5,Super Rare,A1,604,mk_patch_reclamation_merchant_5,
+Set 2,Otter & Raccoon pack,Character,Raccoon,Commerce,Pockets,Four Times a Year,0,Uncommon,A1,382,mk_pockets_four_times_a_year_0,
+Set 2,Otter & Raccoon pack,Character,Raccoon,Commerce,Pockets,Kerbside Dealer,1,Uncommon,A1,371,mk_pockets_kerbside_dealer_1,Bin & Barter ×2
+Set 2,Otter & Raccoon pack,Character,Raccoon,Commerce,Pockets,Odd-Lot Dealer,3,Rare,A1,517,mk_pockets_odd_lot_dealer_3,Bin & Barter ×1
+Set 2,Otter & Raccoon pack,Character,Raccoon,Commerce,Pockets,A Quiet Arrangement,5,Common,A1,91,mk_pockets_a_quiet_arrangement_5,
+Set 2,Otter & Raccoon pack,Character,Raccoon,Commerce,Raccoon Kit,Kit,0,Uncommon,A1,372,mk_raccoon_kit_kit_0,
+Set 2,Otter & Raccoon pack,Character,Raccoon,Science,Reese,Crop Duster,1,Super Rare,A1,602,mk_reese_crop_duster_1,
+Set 2,Otter & Raccoon pack,Character,Raccoon,Science,Reese,Charter Pilot,3,Rare,A1,521,mk_reese_charter_pilot_3,Bin & Barter ×1
+Set 2,Otter & Raccoon pack,Character,Raccoon,Science,Reese,Chief Pilot,5,Rare,A1,512,mk_reese_chief_pilot_5,
+Set 2,Otter & Raccoon pack,Character,Raccoon,Agriculture,The Mysterious Raccoon,Hand on the Beds,2,Common,A1,90,mk_mysterious_raccoon_beds_hand_2,
+Set 2,Otter & Raccoon pack,Event,,,Beck Reads by Candlelight,,0,Rare,A1,527,mk_beck_reads_by_candlelight,Bin & Barter ×1
+Set 2,Otter & Raccoon pack,Event,,,Hazel's Night Market,,0,Uncommon,A1,388,mk_hazels_night_market,Bin & Barter ×2
+Set 2,Otter & Raccoon pack,Event,,,Ledger Day,,0,Rare,A1,528,mk_ledger_day,Bin & Barter ×1; Gavel & Greasepaint ×1
+Set 2,Otter & Raccoon pack,Event,,,Never Handed Back,,0,Common,A1,114,mk_ev_never_handed_back,Current & Counter ×2
+Set 2,Otter & Raccoon pack,Event,,,Otter Time!,,0,Super Rare,A1,606,mk_otter_time,Current & Counter ×1
+Set 2,Otter & Raccoon pack,Event,,,Patch's Second Opinion,,0,Common,A1,129,mk_patchs_second_opinion,
+Set 2,Otter & Raccoon pack,Event,,,Raccoon Family Reunion,,0,Common,A1,103,mk_raccoon_family_reunion,
+Set 2,Otter & Raccoon pack,Event,,,The Bins at Dawn,,0,Uncommon,A1,391,mk_bins_at_dawn,Bin & Barter ×2
+Set 2,Otter & Raccoon pack,Event,,,The Harbour Office,,0,Common,A1,121,mk_the_harbour_office,
+Set 2,Otter & Raccoon pack,Town Building,,,The Boat Shed,Town Building,4,Common,A1,141,mk_tb_boat_shed,Current & Counter ×2
+Set 2,Otter & Raccoon pack,Town Building,,,The Chit Press,Town Building,3,Common,A1,145,mk_tb_chit_press,Bin & Barter ×1
+Set 2,Otter & Raccoon pack,Town Building,,,The Counting House,Town Building,3,Common,A1,143,mk_tb_counting_house,Gavel & Greasepaint ×1
+Set 2,Otter & Raccoon pack,Town Building,,,The Game Store,Town Building,3,Super Rare,A1,610,mk_bld_game_store,Bin & Barter ×1
+Set 2,All Eight pack,Character,Badger,Commerce,Mildred,Counter Clerk,0,Uncommon,A1,290,mk_mildred_counter_clerk_0,
+Set 2,All Eight pack,Character,Badger,Commerce,Mildred,Teller,2,Common,A1,29,mk_mildred_teller_2,
+Set 2,All Eight pack,Character,Badger,Commerce,Mildred,Chief Teller,3,Uncommon,A1,306,mk_mildred_chief_teller_3,Current & Counter ×1
+Set 2,All Eight pack,Character,Badger,Commerce,Mildred,Branch Manager,5,Super Rare,A1,565,mk_mildred_branch_manager_5,
+Set 2,All Eight pack,Character,Fox,Food,Kevin,Counter Hand,2,Common,A1,82,mk_kevin_counter_hand_2,Bin & Barter ×1; Gavel & Greasepaint ×1; Current & Counter ×1
+Set 2,All Eight pack,Character,Fox,Crafts,Kevin,Construction,4,Legendary,A1,652,mk_kevin_construction_4,Gavel & Greasepaint ×1
+Set 2,All Eight pack,Character,Fox,Lore,Mandee,Night Courier,1,Common,A1,88,mk_mandee_night_courier_1,Gavel & Greasepaint ×2
+Set 2,All Eight pack,Character,Fox,Science,Mandee,Weather Watcher,2,Rare,A1,508,mk_mandee_weather_watcher_2,
+Set 2,All Eight pack,Character,Fox,Commerce,Mandee,Moonlight Trader,3,Uncommon,A1,363,mk_mandee_moonlight_trader_3,Gavel & Greasepaint ×2
+Set 2,All Eight pack,Character,Fox,Lore,Mandee,Keeper of Tales,4,Rare,A1,509,mk_mandee_keeper_of_tales_4,
+Set 2,All Eight pack,Character,Mouse,Food,Edwina,Cheese Counter Girl,0,Rare,A1,425,mk_edwina_cheese_counter_girl_0,
+Set 2,All Eight pack,Character,Mouse,Commerce,Edwina,Cheese Stall Keeper,1,Common,A1,9,mk_edwina_cheese_stall_keeper_1,
+Set 2,All Eight pack,Character,Mouse,Food,Edwina,Cheese Cellar Keeper,2,Super Rare,A1,551,mk_edwina_cheese_cellar_keeper_2,Current & Counter ×1
+Set 2,All Eight pack,Character,Mouse,Commerce,Edwina,Cheese Merchant,3,Super Rare,A1,553,mk_edwina_cheese_merchant_3,Current & Counter ×1
+Set 2,All Eight pack,Character,Otter,Food,Abigail,Counter Girl,1,Uncommon,A1,308,mk_abigail_counter_girl_1,Current & Counter ×2
+Set 2,All Eight pack,Character,Otter,Entertainment,Abigail,Five Minutes on a Slow Night,2,Rare,A1,451,mk_abigail_five_minutes_2,Furrow & Warren ×1; Current & Counter ×1
+Set 2,All Eight pack,Character,Otter,Food,Abigail,Gwen's Best Waitress,4,Common,A1,43,mk_abigail_best_waitress_4,Current & Counter ×2
+Set 2,All Eight pack,Character,Otter,Entertainment,Abigail,The Standing Slot,5,Common,A1,41,mk_abigail_standing_slot_5,
+Set 2,All Eight pack,Character,Owl,Lore,Andrew,Night Copyist,0,Super Rare,A1,588,mk_andrew_night_copyist_0,Bin & Barter ×1
+Set 2,All Eight pack,Character,Owl,Lore,Andrew,Keeper of the Late Desk,2,Rare,A1,504,mk_andrew_keeper_of_the_late_desk_2,Bin & Barter ×1
+Set 2,All Eight pack,Character,Owl,Crafts,Andrew,Hand Copyist,3,Uncommon,A1,347,mk_andrew_hand_copyist_3,Furrow & Warren ×1; Bin & Barter ×2
+Set 2,All Eight pack,Character,Owl,Lore,Andrew,The Late Desk,4,Rare,A1,490,mk_andrew_the_late_desk_4,
+Set 2,All Eight pack,Character,Rabbit,Food,Mimi,Trolley Service,0,Rare,A1,410,mk_mimi_trolley_service_0,
+Set 2,All Eight pack,Character,Rabbit,Civics,Mimi,Safety Demonstration,1,Uncommon,A1,266,mk_mimi_safety_demonstration_1,Furrow & Warren ×1
+Set 2,All Eight pack,Character,Rabbit,Science,Mimi,Cabin Pressure Check,2,Rare,A1,411,mk_mimi_cabin_pressure_check_2,
+Set 2,All Eight pack,Character,Rabbit,Entertainment,Mimi,Seat 1A Welcome,3,Uncommon,A1,267,mk_mimi_seat_1a_welcome_3,
+Set 2,All Eight pack,Character,Rabbit,Commerce,Mimi,Purser,5,Super Rare,A1,544,mk_mimi_purser_5,
+Set 2,All Eight pack,Character,Raccoon,Lore,Annabelle,Paper Sorter,0,Common,A1,96,mk_annabelle_paper_sorter_0,
+Set 2,All Eight pack,Character,Raccoon,Lore,Annabelle,Last One Up,2,Legendary,A1,653,mk_annabelle_last_one_up_2,Bin & Barter ×1
+Set 2,All Eight pack,Character,Raccoon,Lore,Annabelle,Salvage Archivist,3,Common,A1,93,mk_annabelle_salvage_archivist_3,
+Set 2,All Eight pack,Character,Raccoon,Civics,Nancy,Temp Agency Runner,0,Rare,A1,520,mk_nancy_temp_agency_runner_0,
+Set 2,All Eight pack,Character,Raccoon,Civics,Nancy,Temp Agency Manager,2,Super Rare,A1,605,mk_nancy_temp_agency_manager_2,
+Set 2,All Eight pack,Character,Squirrel,Agriculture,Daisy,Petal Sweeper,0,Uncommon,A1,325,mk_daisy_petal_sweeper_0,
+Set 2,All Eight pack,Character,Squirrel,Crafts,Daisy,Garland Cutter,1,Uncommon,A1,320,mk_daisy_garland_cutter_1,
+Set 2,All Eight pack,Character,Squirrel,Agriculture,Daisy,Bouquet Weaver,2,Rare,A1,457,mk_daisy_bouquet_weaver_2,
+Set 2,All Eight pack,Character,Squirrel,Agriculture,Daisy,Night-Bloom Florist,3,Uncommon,A1,319,mk_daisy_night_bloom_florist_3,
+Set 2,All Eight pack,Character,Squirrel,Commerce,Daisy,Festival Florist,4,Rare,A1,455,mk_daisy_festival_florist_4,
+Set 2,All Eight pack,Character,Squirrel,Commerce,Tuppence,Cart Boy,1,Rare,A1,463,mk_tuppence_cart_boy_1,
+Set 2,All Eight pack,Character,Squirrel,Commerce,Tuppence,Sold Before the Cart,4,Common,A1,60,mk_tuppence_sold_before_the_cart_4,
+Set 2,All Eight pack,Event,,,Cheese Festival,,0,Rare,A1,525,mk_cheese_festival,
+Set 2,All Eight pack,Event,,,Mandee's Forecast,,0,Common,A1,102,mk_mandees_forecast,Gavel & Greasepaint ×2
+Set 2,All Eight pack,Event,,,Open Mic Night,,0,Common,A1,130,mk_open_mic_night,
+Set 2,All Eight pack,Event,,,Slack Water,,0,Common,A1,116,mk_slack_water,
+Set 2,All Eight pack,Event,,,The Late Desk,,0,Common,A1,125,mk_the_late_desk,
+Set 2,All Eight pack,Town Building,,,The Builders' Rest,Town Building,3,Super Rare,A1,614,mk_tb_the_builders_rest,Furrow & Warren ×1
+Set 2,All Eight pack,Town Building,,,The Cheese Store,Town Building,4,Super Rare,A1,613,mk_bld_cheese_store,Furrow & Warren ×1
+Set 2,The Hard Frost,Capital City Building,,,The Car Dealership,Capital City Building,8,Common,A1,153,mk_bld_car_dealership,
+Set 2,The Hard Frost,Capital City Building,,,The Physic Garden,Capital City Building,7,Common,A1,159,mk_bld_physic_garden,
+Set 2,The Hard Frost,Capital City Building,,,Winter Stores,Capital City Building,7,Common,A1,154,mk_bld_winter_stores,
+Set 2,The Hard Frost,Disruption,,,A Hard Winter,,0,Rare,A1,537,mk_dx_hard_winter,
+Set 2,The Hard Frost,Disruption,,,A Lean Season,,0,Common,A1,222,mk_dx_lean_season,
+Set 2,The Hard Frost,Disruption,,,The Great Frost,,0,Super Rare,A1,627,mk_dx_the_great_frost,
+Set 2,The Hard Frost,Disruption,,,The Hiring Freeze,,0,Super Rare,A1,633,mk_dx_the_hiring_freeze,
+Set 2,The Hard Frost,Disruption,,,The Reckoning,,0,Super Rare,A1,631,mk_dx_the_reckoning,
+Set 2,The Hard Frost,Disruption,,,The Short Week,,0,Common,A1,227,mk_dx_the_short_week,
+Set 2,The Hard Frost,Market card,,,Old Friends' Reunion,,4,Common,A1,184,mk_mkt_old_friends_reunion,
+Set 2,The Hard Frost,Market card,,,Second Chances,,3,Common,A1,199,mk_mkt_second_chances,
+Set 2,The Hard Frost,Market card,,,The Ironwood Palisade,,5,Common,A1,180,mk_mkt_ironwood_palisade,
+Set 2,The Hard Frost,Market card,,,The Last Round,,2,Common,A1,166,mk_mkt_the_last_round,
+Set 2,The Hard Frost,Market card,,,The Long Table,,3,Common,A1,168,mk_mkt_long_table,
+Set 2,The Hard Frost,Market card,,,The Redundancy Notice,,3,Common,A1,198,mk_mkt_the_redundancy_notice,
+Set 2,The Hard Frost,Market card,,,The Salvage Yard,,4,Common,A1,178,mk_mkt_scrap_yard,
+Set 2,The Hard Frost,Market card,,,The Toll Gate,,3,Common,A1,202,mk_mkt_toll_gate,
+Set 2,The Hard Frost,Ordinance,,,Monument Tax,Capital City Ordinance,0,Uncommon,A1,404,mk_ord_monument_tax,
+Set 2,The Hard Frost,Ordinance,,,The Timber Levy,Capital City Ordinance,0,Common,A1,228,mk_ord_the_timber_levy,
+Set 2,The Hard Frost,Ordinance,,,Works in the Square,Capital City Ordinance,0,Rare,A1,541,mk_ord_works_in_the_square,
+Set 2,Market 2B (to be named),Capital City Building,,,Hiring Hall,Capital City Building,6,Common,A1,164,mk_bld_hiring_hall,
+Set 2,Market 2B (to be named),Capital City Building,,,The Bank,Capital City Building,8,Common,A1,161,mk_bld_bank,
+Set 2,Market 2B (to be named),Capital City Building,,,The Counting House,Capital City Building,8,Common,A1,157,mk_bld_counting_house,
+Set 2,Market 2B (to be named),Disruption,,,The Assessor's Round,,0,Super Rare,A1,634,mk_dx_assessors_round,
+Set 2,Market 2B (to be named),Disruption,,,The County Fair,,0,Super Rare,A1,629,mk_dx_county_fair,
+Set 2,Market 2B (to be named),Disruption,,,The Yards Go Quiet,,0,Rare,A1,540,mk_dx_the_yards_go_quiet,
+Set 2,Market 2B (to be named),Market card,,,Bin Round,,3,Common,A1,173,mk_mkt_bin_round,
+Set 2,Market 2B (to be named),Market card,,,Ledger Audit,,4,Common,A1,189,mk_mkt_ledger_audit,
+Set 2,Market 2B (to be named),Market card,,,The Fitting,,2,Common,A1,206,mk_mkt_the_fitting,
+Set 2,Market 2B (to be named),Market card,,,The Late Ferry,,2,Common,A1,185,mk_mkt_late_ferry,
+Set 2,Market 2B (to be named),Market card,,,The Market Committee,,3,Common,A1,205,mk_mkt_market_committee,
+Set 2,Market 2B (to be named),Market card,,,The Night Market,,3,Common,A1,197,mk_mkt_night_market,
+Set 2,Market 2B (to be named),Market card,,,The Seed Bank's Open Day,,3,Common,A1,175,mk_mkt_seed_bank_open_day,
+Set 2,Market 2B (to be named),Market card,,,Warren Muster,,3,Common,A1,194,mk_mkt_warren_muster,
+Set 2,Market 2B (to be named),Market Character,Fox,Civics,Kevin,Hired Hand,3,Uncommon,A1,401,mk_kevin_hired_hand_3,
+Set 2,Market 2B (to be named),Market Character,Otter,Commerce,Dylan,River Otter,4,Super Rare,A1,622,mk_dylan_river_otter_4,
+Set 2,Market 2B (to be named),Market Character,Rabbit,Agriculture,Jake,Warren Runner,3,Rare,A1,533,mk_jake_warren_runner_3,
+Set 2,Market 2B (to be named),Market Character,Raccoon,Commerce,Pockets,Salvage Raccoon,4,Rare,A1,536,mk_pockets_salvage_raccoon_4,
+Set 3,Statues (market decks),Statue,,,Statue of Mercy,,5,Common,A1,213,mk_st_mercy,
+Set 3,Statues (market decks),Statue,,,Statue of Wonder,,2,Common,A1,221,mk_st_wonder,
+Set 3,Tokens,Token,Cat,,Cat Token,Token,0,Common,A1,248,mk_tok_cat,
+Set 3,Tokens,Token,Hedgehog,,Hedgehog Token,Token,0,Common,A1,244,mk_tok_hedgehog,
+Set 3,Cat pack,Character,Cat,Crafts,Comet,Bolt Sorter,0,Common,A1,67,mk_comet_bolt_sorter_0,
+Set 3,Cat pack,Character,Cat,Crafts,Comet,Rocket Mechanic,1,Uncommon,A1,339,mk_comet_rocket_mechanic_1,
+Set 3,Cat pack,Character,Cat,Food,Comet,Hatch Hand,2,Rare,A1,467,mk_comet_hatch_hand_2,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Science,Comet,Test Pilot,3,Rare,A1,473,mk_comet_test_pilot_3,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Science,Comet,Astronaut,5,Rare,A1,468,mk_comet_astronaut_5,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Commerce,Copper,Penny Counter,0,Rare,A1,471,mk_copper_penny_counter_0,
+Set 3,Cat pack,Character,Cat,Commerce,Copper,Scale Polisher,1,Rare,A1,475,mk_copper_scale_polisher_1,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Civics,Copper,Weights Inspector,2,Uncommon,A1,333,mk_copper_weights_inspector_2,
+Set 3,Cat pack,Character,Cat,Commerce,Copper,Arcade Merchant,3,Common,A1,68,mk_copper_arcade_merchant_3,
+Set 3,Cat pack,Character,Cat,Commerce,Copper,Cellar Keeper,4,Common,A1,70,mk_copper_cellar_keeper_4,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Commerce,Copper,Market Steward,5,Uncommon,A1,335,mk_copper_market_steward_5,
+Set 3,Cat pack,Character,Cat,Lore,Elvira,Tea-Leaf Reader,0,Rare,A1,464,mk_elvira_tea_leaf_reader_0,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Commerce,Elvira,Fairground Booth,2,Rare,A1,480,mk_elvira_fairground_booth_2,
+Set 3,Cat pack,Character,Cat,Lore,Elvira,Fortune Teller,3,Rare,A1,482,mk_elvira_fortune_teller_3,
+Set 3,Cat pack,Character,Cat,Commerce,Elvira,Reader of the Long Odds,4,Super Rare,A1,584,mk_elvira_reader_of_long_odds_4,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Crafts,Faustus,Bolt Boy,0,Uncommon,A1,334,mk_faustus_bolt_boy_0,
+Set 3,Cat pack,Character,Cat,Science,Faustus,Pressure-Suit Tailor,1,Common,A1,64,mk_faustus_pressure_suit_tailor_1,
+Set 3,Cat pack,Character,Cat,Crafts,Faustus,Costumier,2,Uncommon,A1,330,mk_faustus_costumier_2,Lens & Lathe ×2
+Set 3,Cat pack,Character,Cat,Commerce,Faustus,Sailmaker,3,Common,A1,65,mk_faustus_sailmaker_3,
+Set 3,Cat pack,Character,Cat,Entertainment,Faustus,Wardrobe Master,4,Rare,A1,469,mk_faustus_wardrobe_master_4,
+Set 3,Cat pack,Character,Cat,Lore,Inkwell,Bookmark Keeper,1,Uncommon,A1,341,mk_inkwell_bookmark_keeper_1,
+Set 3,Cat pack,Character,Cat,Lore,Inkwell,Storyteller,2,Rare,A1,470,mk_inkwell_storyteller_2,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Lore,Inkwell,Night Librarian,3,Super Rare,A1,582,mk_inkwell_night_librarian_3,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Science,Inkwell,Astronomer,4,Rare,A1,466,mk_inkwell_astronomer_4,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Lore,Inkwell,Keeper of Stories,5,Common,A1,63,mk_inkwell_keeper_of_stories_5,
+Set 3,Cat pack,Character,Cat,Entertainment,Kitten,Kitten,0,Uncommon,A1,331,mk_kitten_kitten_0,
+Set 3,Cat pack,Character,Cat,Food,Marmalade,Night Baker,0,Rare,A1,479,mk_marmalade_night_baker_0,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Food,Marmalade,Dough Kneader,1,Super Rare,A1,580,mk_marmalade_dough_kneader_1,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Commerce,Marmalade,Market Baker,2,Rare,A1,478,mk_marmalade_market_baker_2,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Food,Marmalade,Neighborhood Baker,3,Rare,A1,476,mk_marmalade_neighborhood_baker_3,
+Set 3,Cat pack,Character,Cat,Food,Marmalade,Oven Keeper,4,Super Rare,A1,579,mk_marmalade_oven_keeper_4,
+Set 3,Cat pack,Character,Cat,Food,Marmalade,Harvest Head Baker,5,Rare,A1,474,mk_marmalade_harvest_head_baker_5,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Commerce,Marmalade,Baker to the Guilds,5,Legendary,A1,649,mk_marmalade_guild_baker_5,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Civics,Sota,Touchline Assistant,0,Uncommon,A1,337,mk_sota_touchline_assistant_0,
+Set 3,Cat pack,Character,Cat,Science,Sota,Lens Grinder,1,Uncommon,A1,332,mk_sota_lens_grinder_1,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Civics,Sota,Assistant Coach,2,Rare,A1,465,mk_sota_assistant_coach_2,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Science,Sota,Telescope Fitter,3,Common,A1,71,mk_sota_telescope_fitter_3,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Science,Sota,The Same Bench,4,Common,A1,62,mk_sota_the_same_bench_4,
+Set 3,Cat pack,Character,Cat,Science,The Nameless Cat,Hand at the Glass,2,Common,A1,69,mk_nameless_cat_glass_hand_2,
+Set 3,Cat pack,Character,Cat,Civics,Velvet,Counter Clerk,1,Super Rare,A1,583,mk_velvet_counter_clerk_1,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Lore,Velvet,Notary,2,Common,A1,61,mk_velvet_notary_2,
+Set 3,Cat pack,Character,Cat,Civics,Velvet,Neighborhood Registrar,3,Uncommon,A1,338,mk_velvet_neighborhood_registrar_3,Lens & Lathe ×2
+Set 3,Cat pack,Character,Cat,Science,Velvet,Surveyor of Works,4,Rare,A1,481,mk_velvet_surveyor_of_works_4,Lens & Lathe ×1
+Set 3,Cat pack,Character,Cat,Civics,Velvet,Clerk of the Works,5,Super Rare,A1,581,mk_velvet_clerk_of_the_works_5,Hedge & Holiday ×1
+Set 3,Cat pack,Event,,,Comet’s Countdown,,0,Common,A1,110,mk_comets_countdown,Lens & Lathe ×2
+Set 3,Cat pack,Event,,,Copper's Stocktake,,0,Common,A1,117,mk_coppers_stocktake,
+Set 3,Cat pack,Event,,,Inkwell's Late Shift,,0,Uncommon,A1,390,mk_inkwells_late_shift,Lens & Lathe ×2
+Set 3,Cat pack,Event,,,Inkwell's Star Chart,,0,Common,A1,134,mk_inkwells_star_chart,Lens & Lathe ×1
+Set 3,Cat pack,Event,,,One Small Step,,0,Super Rare,A1,607,mk_one_small_step,Lens & Lathe ×1
+Set 3,Cat pack,Event,,,Passing Comets,,0,Common,A1,127,mk_passing_comets,Hedge & Holiday ×2; Lens & Lathe ×2
+Set 3,Cat pack,Event,,,Velvet's Petition,,0,Uncommon,A1,385,mk_velvets_petition,Lens & Lathe ×2
+Set 3,Cat pack,Town Building,,,Copper's Cellar,Town Building,3,Rare,A1,531,mk_tb_coppers_cellar,
+Set 3,Cat pack,Town Building,,,The Ice Cream Shop,Town Building,3,Common,A1,136,mk_tb_ice_cream_shop,Lens & Lathe ×1
+Set 3,Cat pack,Town Building,,,The Science Lab,Town Building,3,Legendary,A1,655,mk_tb_science_lab,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Fox,Entertainment,Roger,Fair Day Judge,0,Uncommon,A1,355,mk_roger_fair_day_judge_0,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Fox,Crafts,Roger,Locksmith,1,Common,A1,87,mk_roger_locksmith_1,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Fox,Commerce,Roger,Records Clerk,2,Common,A1,79,mk_roger_records_clerk_2,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Fox,Civics,Roger,Circuit Judge,3,Uncommon,A1,359,mk_roger_circuit_judge_3,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Fox,Commerce,Roger,Fair Broker,4,Common,A1,86,mk_roger_fair_broker_4,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Fox,Civics,Roger,Ombudsman,5,Uncommon,A1,368,mk_roger_ombudsman_5,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Crafts,Berry,Retired Tinker,0,Super Rare,A1,557,mk_berry_tinker_0,Hedge & Holiday ×1
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Science,Berry,Clockmaker,1,Uncommon,A1,281,mk_berry_clockmaker_1,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Civics,Berry,Committee Volunteer,2,Uncommon,A1,282,mk_berry_committee_2,Hedge & Holiday ×2
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Science,Berry,Consulting Engineer,3,Uncommon,A1,283,mk_berry_engineer_3,Hedge & Holiday ×2
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Crafts,Berry,Workshop Elder,4,Uncommon,A1,284,mk_berry_workshop_elder_4,Hedge & Holiday ×2
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Civics,Berry,Guild Warden,5,Legendary,A1,644,mk_berry_guild_warden_5,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Agriculture,Betty,Barn Sweeper,0,Rare,A1,431,mk_betty_barn_sweeper_0,Hedge & Holiday ×1
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Crafts,Betty,Whittler,1,Legendary,A1,645,mk_betty_whittler_1,Hedge & Holiday ×1
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Agriculture,Betty,Stump Blaster,2,Rare,A1,427,mk_betty_stump_blaster_2,Hedge & Holiday ×1
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Crafts,Betty,Firework Maker,3,Uncommon,A1,286,mk_betty_firework_maker_3,Hedge & Holiday ×2
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Science,Betty,Powder Chemist,4,Rare,A1,429,mk_betty_powder_chemist_4,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Agriculture,Betty,Land Clearer,5,Legendary,A1,643,mk_betty_land_clearer_5,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Civics,Biff,Cadet Constable,0,Common,A1,27,mk_biff_cadet_constable_0,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Civics,Biff,Beat Constable,2,Super Rare,A1,558,mk_biff_beat_constable_2,Hedge & Holiday ×1
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Civics,Biff,Chief Constable,4,Legendary,A1,641,mk_biff_chief_constable_4,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Civics,Bob,Off the Gate,1,Rare,A1,426,mk_bob_the_morning_they_share_1,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Commerce,Bob,Gate Tolls,2,Common,A1,28,mk_bob_gate_tolls_2,Hedge & Holiday ×1
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Entertainment,Cassadee,Stage Hand,0,Common,A1,25,mk_cassadee_stage_hand_0,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Entertainment,Cassadee,The Only One at the Back,1,Common,A1,23,mk_cassadee_the_only_one_at_the_back_1,Hedge & Holiday ×2
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Entertainment,Cassadee,Hall Manager,3,Common,A1,24,mk_cassadee_hall_manager_3,Hedge & Holiday ×2
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Civics,Hoglet,Hoglet,0,Uncommon,A1,287,mk_hoglet_hoglet_0,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Agriculture,Quill,Orchard Hand,0,Super Rare,A1,556,mk_quill_orchard_hand_0,Hedge & Holiday ×1
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Agriculture,Quill,Orchard Keeper,2,Rare,A1,430,mk_quill_orchard_keeper_2,Hedge & Holiday ×1
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Food,Quill,Cider Maker,3,Legendary,A1,640,mk_quill_cider_maker_3,Hedge & Holiday ×1
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Lore,Quill,Orchard Scribe,4,Super Rare,A1,554,mk_quill_orchard_scribe_4,Hedge & Holiday ×1
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Agriculture,Quill,Harvest Steward,5,Legendary,A1,642,mk_quill_harvest_steward_5,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Entertainment,Tabitha,Festival Photographer,0,Common,A1,26,mk_tabitha_festival_photographer_0,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Science,Tabitha,Lens Apprentice,1,Uncommon,A1,285,mk_tabitha_lens_apprentice_1,Hedge & Holiday ×2
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Entertainment,Tabitha,Videographer,2,Super Rare,A1,559,mk_tabitha_videographer_2,Hedge & Holiday ×1
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Science,Tabitha,Optics Scientist,4,Super Rare,A1,555,mk_tabitha_optics_scientist_4,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Entertainment,Tabitha,Camerawoman,5,Rare,A1,428,mk_tabitha_camerawoman_5,Hedge & Holiday ×1
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Hedgehog,Commerce,The Muffled Hedgehog,Hand at the Stall,0,Uncommon,A1,288,mk_muffled_hedgehog_stall_hand_0,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Mouse,Crafts,Osh,Sharpener's Boy,0,Common,A1,16,mk_osh_sharpener_s_boy_0,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Mouse,Crafts,Osh,Round Sharpener,1,Uncommon,A1,270,mk_osh_round_sharpener_1,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Mouse,Crafts,Osh,Edge Grinder,2,Common,A1,19,mk_osh_edge_grinder_2,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Mouse,Entertainment,Osh,Fair Fiddler,3,Common,A1,10,mk_osh_fair_fiddler_3,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Mouse,Food,Teresa,Pepper Grower,0,Common,A1,7,mk_teresa_pepper_grower_0,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Mouse,Civics,Teresa,Touchline Coach,1,Uncommon,A1,271,mk_teresa_touchline_coach_1,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Mouse,Food,Teresa,Pepper Stall,2,Uncommon,A1,273,mk_teresa_pepper_stall_2,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Mouse,Civics,Teresa,Head Coach,3,Common,A1,12,mk_teresa_head_coach_3,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Mouse,Civics,Teresa,Coach of the Borough Eleven,5,Common,A1,15,mk_teresa_coach_of_the_borough_eleven_5,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Squirrel,Food,Cookie,Biscuit Maker,0,Common,A1,52,mk_cookie_biscuit_maker_0,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Squirrel,Food,Cookie,Rusk Baker,1,Common,A1,55,mk_cookie_rusk_baker_1,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Character,Squirrel,Food,Cookie,Winter Stores Cook,3,Common,A1,51,mk_cookie_winter_stores_cook_3,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Event,,,Biff's Beat,,0,Common,A1,122,mk_biffs_beat,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Event,,,Hedge Apothecary,,0,Uncommon,A1,392,mk_hedge_apothecary,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Event,,,The Cider Social,,0,Common,A1,113,mk_the_cider_social,Hedge & Holiday ×2
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Event,,,The Hat Goes Round,,1,Common,A1,133,mk_ev_the_hat_goes_round,Hedge & Holiday ×2
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Event,,,Tool Lending Day,,0,Common,A1,104,mk_tool_lending_day,Hedge & Holiday ×2
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Town Building,,,Berry's Bench,Town Building,4,Common,A1,150,mk_tb_berrys_bench,
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Town Building,,,The Clinic,Town Building,3,Super Rare,A1,616,mk_tb_clinic,Hedge & Holiday ×1
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Town Building,,,The Long Awning,Town Building,2,Common,A1,151,mk_tb_the_long_awning,Hedge & Holiday ×1
+Set 3,"Squirrel, Mouse, Hedgehog & Fox pack",Town Building,,,The Quill Wall,Town Building,3,Legendary,A1,656,mk_tb_quill_wall,Lens & Lathe ×1
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Badger,Entertainment,Thistle,At the Back by the Door,0,Super Rare,A1,560,mk_thistle_at_the_back_0,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Badger,Lore,Thistle,Almanac Keeper,1,Uncommon,A1,298,mk_thistle_almanac_keeper_1,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Badger,Agriculture,Thistle,Field Hand,2,Uncommon,A1,303,mk_thistle_field_hand_2,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Badger,Agriculture,Thistle,Grange Warden,3,Uncommon,A1,297,mk_thistle_grange_warden_3,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Badger,Civics,Thistle,Field Surveyor,4,Common,A1,39,mk_thistle_field_surveyor_4,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Badger,Agriculture,Thistle,Grange Elder,5,Rare,A1,438,mk_thistle_grange_elder_5,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Otter,Science,Cynthia,Junior Lab Assistant,0,Uncommon,A1,312,mk_cynthia_junior_lab_assistant_0,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Otter,Science,Cynthia,Paint-Drying Researcher,1,Uncommon,A1,313,mk_cynthia_paint_drying_researcher_1,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Otter,Science,Cynthia,Combustion Theorist,3,Uncommon,A1,311,mk_cynthia_combustion_theorist_3,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Otter,Science,Cynthia,Head of the Absorption Wing,5,Super Rare,A1,572,mk_cynthia_head_of_the_absorption_wing_5,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Otter,Commerce,Pebble,Crossing Hand,0,Uncommon,A1,309,mk_pebble_crossing_hand_0,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Otter,Civics,Pebble,Bridge Courier,1,Uncommon,A1,314,mk_pebble_bridge_courier_1,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Otter,Commerce,Pebble,Ferry Master,3,Super Rare,A1,571,mk_pebble_ferry_master_3,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Otter,Agriculture,Pebble,Towpath Warden,4,Common,A1,48,mk_pebble_towpath_warden_4,Hedge & Holiday ×1
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Otter,Civics,Pebble,Harbour Warden,5,Super Rare,A1,566,mk_pebble_harbour_warden_5,Hedge & Holiday ×1
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Owl,Entertainment,Fred,Wandered Onto the Stage,0,Common,A1,72,mk_fred_wandered_onto_stage_0,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Owl,Crafts,Fred,Held the Ladder Wrong,2,Uncommon,A1,350,mk_fred_held_the_ladder_wrong_2,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Owl,Entertainment,Fred,Backstage Crew (Nobody Asked),3,Common,A1,73,mk_fred_backstage_crew_3,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Owl,Crafts,Fred,The Crew Doesn't Ask Anymore,5,Common,A1,78,mk_fred_crew_doesnt_ask_5,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Rabbit,Entertainment,Liza,Floor Singer,0,Common,A1,2,mk_liza_floor_singer_0,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Rabbit,Food,Liza,Counter Singer,1,Uncommon,A1,261,mk_liza_counter_singer_1,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Rabbit,Entertainment,Liza,Top of the Bill,3,Rare,A1,408,mk_liza_top_of_the_bill_3,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Rabbit,Entertainment,Liza,Headliner,5,Uncommon,A1,264,mk_liza_headliner_5,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Rabbit,Crafts,Lynnette,Night Printer,0,Rare,A1,413,mk_lynnette_night_printer_0,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Rabbit,Crafts,Lynnette,Bookbinder,1,Rare,A1,407,mk_lynnette_bookbinder_1,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Rabbit,Crafts,Lynnette,Press Feeder,2,Common,A1,6,mk_lynnette_press_feeder_2,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Rabbit,Lore,Lynnette,Lending Librarian,3,Super Rare,A1,549,mk_lynnette_lending_librarian_3,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Rabbit,Crafts,Lynnette,Master Printer,5,Uncommon,A1,263,mk_lynnette_master_printer_5,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Raccoon,Civics,Fingers,Rooftop Runner,0,Rare,A1,511,mk_fingers_rooftop_runner_0,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Raccoon,Crafts,Fingers,Chimney Sweep,1,Common,A1,95,mk_fingers_chimney_sweep_1,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Raccoon,Agriculture,Fingers,Root-Cellar Diver,2,Super Rare,A1,601,mk_fingers_root_cellar_diver_2,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Raccoon,Civics,Fingers,Master Locksmith,3,Uncommon,A1,381,mk_fingers_master_locksmith_3,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Raccoon,Crafts,Fingers,The One Who Gets In,4,Super Rare,A1,599,mk_fingers_the_one_who_gets_in_4,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Raccoon,Entertainment,Gabe,Corner Show,0,Uncommon,A1,370,mk_gabe_corner_show_0,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Raccoon,Crafts,Gabe,Puppet Maker,2,Uncommon,A1,380,mk_gabe_puppet_maker_2,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Raccoon,Entertainment,Gabe,Company of One,4,Rare,A1,516,mk_gabe_company_of_one_4,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Character,Raccoon,Entertainment,Gabe,The Whole Cast,5,Rare,A1,510,mk_gabe_whole_cast_5,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Event,,,A Glut of Squash,,0,Common,A1,100,mk_glut_of_squash,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Event,,,Fair Hearing,,0,Uncommon,A1,384,mk_fair_hearing,
+Set 3,"Badger, Owl, Raccoon, Otter & Rabbit pack",Event,,,Thistle's Grange Supper,,0,Super Rare,A1,609,mk_thistles_grange_supper,
+Set 3,Anything Goes pack,Character,Badger,Crafts,Morty,The Boiler Test,0,Super Rare,A1,562,mk_morty_the_boiler_test_0,
+Set 3,Anything Goes pack,Character,Badger,Food,Morty,Mill Kitchen Cook,1,Common,A1,31,mk_morty_mill_kitchen_cook_1,
+Set 3,Anything Goes pack,Character,Badger,Agriculture,Morty,Grain Miller,2,Common,A1,33,mk_morty_grain_miller_2,
+Set 3,Anything Goes pack,Character,Badger,Crafts,Morty,Watermill Mechanic,3,Rare,A1,436,mk_morty_watermill_mechanic_3,
+Set 3,Anything Goes pack,Character,Badger,Science,Morty,Steam Engineer,4,Uncommon,A1,307,mk_morty_steam_engineer_4,
+Set 3,Anything Goes pack,Character,Badger,Crafts,Morty,Master Millwright,5,Common,A1,40,mk_morty_master_millwright_5,
+Set 3,Anything Goes pack,Character,Badger,Lore,The Anonymous Scribe,Anonymous Scribe,2,Common,A1,35,mk_anonymous_scribe_2,
+Set 3,Anything Goes pack,Character,Cat,Agriculture,Lindsay,Potting Helper,0,Rare,A1,472,mk_lindsay_potting_helper_0,
+Set 3,Anything Goes pack,Character,Cat,Agriculture,Lindsay,The Other Bench,1,Uncommon,A1,336,mk_lindsay_the_other_bench_1,
+Set 3,Anything Goes pack,Character,Cat,Agriculture,Lindsay,Glasshouse Hand,2,Rare,A1,477,mk_lindsay_glasshouse_hand_2,
+Set 3,Anything Goes pack,Character,Cat,Agriculture,Lindsay,Herb Grower,3,Uncommon,A1,342,mk_lindsay_herb_grower_3,Lens & Lathe ×1
+Set 3,Anything Goes pack,Character,Cat,Agriculture,Lindsay,Conservatory Keeper,4,Uncommon,A1,343,mk_lindsay_conservatory_keeper_4,
+Set 3,Anything Goes pack,Character,Cat,Science,Lindsay,Moon Gardener,5,Uncommon,A1,340,mk_lindsay_moon_gardener_5,
+Set 3,Anything Goes pack,Character,Cat,Entertainment,The Curtained Performer,Curtained Performer,2,Common,A1,66,mk_curtained_performer_2,
+Set 3,Anything Goes pack,Character,Fox,Civics,Juniper,Messenger,1,Super Rare,A1,593,mk_juniper_messenger_1,
+Set 3,Anything Goes pack,Character,Fox,Civics,Juniper,Courier Captain,2,Uncommon,A1,354,mk_juniper_courier_captain_2,
+Set 3,Anything Goes pack,Character,Fox,Civics,Juniper,Ward Councillor,3,Common,A1,85,mk_juniper_ward_councillor_3,
+Set 3,Anything Goes pack,Character,Fox,Civics,Juniper,Diplomat,4,Uncommon,A1,356,mk_juniper_diplomat_4,
+Set 3,Anything Goes pack,Character,Fox,Science,Juniper,Stargazer,5,Common,A1,83,mk_juniper_stargazer_5,
+Set 3,Anything Goes pack,Character,Fox,Science,The Obscured Observer,Obscured Observer,1,Common,A1,80,mk_obscured_observer_1,
+Set 3,Anything Goes pack,Character,Mouse,Commerce,The Cloaked Tradesman,Cloaked Tradesman,1,Common,A1,18,mk_cloaked_tradesman_1,
+Set 3,Anything Goes pack,Character,Otter,Science,JT,Ward Nurse,0,Rare,A1,441,mk_jt_ward_nurse_0,
+Set 3,Anything Goes pack,Character,Otter,Science,JT,Children's Ward Nurse,2,Super Rare,A1,568,mk_jt_children_s_ward_nurse_2,
+Set 3,Anything Goes pack,Character,Otter,Food,JT,Juice List,3,Rare,A1,446,mk_jt_juice_list_3,
+Set 3,Anything Goes pack,Character,Otter,Food,JT,Juice Sommelier,5,Uncommon,A1,310,mk_jt_juice_sommelier_5,
+Set 3,Anything Goes pack,Character,Otter,Agriculture,The Unlisted Grower,Unlisted Grower,2,Common,A1,49,mk_unlisted_grower_2,
+Set 3,Anything Goes pack,Character,Owl,Crafts,The Veiled Wright,Veiled Wright,0,Rare,A1,485,mk_veiled_wright_0,
+Set 3,Anything Goes pack,Character,Raccoon,Food,The Unknown Cook,Unknown Cook,0,Rare,A1,522,mk_unknown_cook_0,
+Set 3,Anything Goes pack,Character,Squirrel,Civics,Dirt,Classroom Assistant,0,Rare,A1,452,mk_dirt_classroom_assistant_0,
+Set 3,Anything Goes pack,Character,Squirrel,Civics,Dirt,"Schoolteacher, Upper Room",2,Rare,A1,453,mk_dirt_schoolteacher_upper_room_2,
+Set 3,Anything Goes pack,Character,Squirrel,Crafts,Dirt,Figurine Painter,3,Uncommon,A1,326,mk_dirt_figurine_painter_3,
+Set 3,Anything Goes pack,Character,Squirrel,Crafts,Dirt,Master Figuremaker,5,Uncommon,A1,328,mk_dirt_master_figuremaker_5,
+Set 3,Anything Goes pack,Character,Squirrel,Civics,The Faceless Clerk,Faceless Clerk,0,Rare,A1,459,mk_faceless_clerk_0,
+Set 3,Anything Goes pack,Event,,,Eustace's Ball,,0,Common,A1,99,mk_eustaces_ball,
+Set 3,Anything Goes pack,Event,,,Friendship Festival,,0,Legendary,A1,654,mk_friendship_festival,
+Set 3,Anything Goes pack,Event,,,Morty’s Boiler Test,,0,Common,A1,124,mk_mortys_boiler_test,
+Set 3,Anything Goes pack,Event,,,Tax Day,,0,Common,A1,128,mk_tax_day,Lens & Lathe ×2
+Set 3,Anything Goes pack,Town Building,,,The Gate Hut,Town Building,2,Super Rare,A1,612,mk_tb_gate_hut,Hedge & Holiday ×1; Lens & Lathe ×1
+Set 3,Anything Goes pack,Town Building,,,The Muster Bell,Town Building,2,Common,A1,142,mk_tb_the_muster_bell,
+Set 3,The Grand Exchange,Capital City Building,,,The Airport,Capital City Building,9,Common,A1,160,mk_bld_airport,
+Set 3,The Grand Exchange,Capital City Building,,,The Fast Food Joint,Capital City Building,8,Common,A1,165,mk_bld_fast_food_joint,
+Set 3,The Grand Exchange,Capital City Building,,,The Festival Green,Capital City Building,10,Uncommon,A1,396,mk_bld_festival_green,
+Set 3,The Grand Exchange,Capital City Building,,,The Hospital,Capital City Building,7,Uncommon,A1,397,mk_bld_hospital,
+Set 3,The Grand Exchange,Disruption,,,The Casino Fundraiser,,0,Super Rare,A1,635,mk_dx_casino_fundraiser,
+Set 3,The Grand Exchange,Disruption,,,The Cutting Comes Down,,0,Super Rare,A1,628,mk_dx_landslide,
+Set 3,The Grand Exchange,Disruption,,,The Lord Mayor's Fair,,0,Super Rare,A1,630,mk_dx_lord_mayors_fair,
+Set 3,The Grand Exchange,Disruption,,,The Midsummer Fair,,0,Super Rare,A1,625,mk_dx_midsummer_fair,
+Set 3,The Grand Exchange,Disruption,,,The Year It Stopped,,0,Super Rare,A1,636,mk_dx_the_year_it_stopped,
+Set 3,The Grand Exchange,Market card,,,Founder's Grant,,4,Common,A1,172,mk_mkt_founders_grant,
+Set 3,The Grand Exchange,Market card,,,Roger's Ha'penny,,2,Common,A1,174,mk_mkt_hapenny,
+Set 3,The Grand Exchange,Market card,,,The Courier Network,,3,Common,A1,203,mk_mkt_courier_network,
+Set 3,The Grand Exchange,Market card,,,The Double Shift Horn,,4,Common,A1,169,mk_mkt_double_shift_horn,
+Set 3,The Grand Exchange,Market card,,,The Lucky Horseshoe,,3,Common,A1,204,mk_mkt_lucky_horseshoe,
+Set 3,The Grand Exchange,Market card,,,The Mended Mangle,,3,Common,A1,193,mk_mkt_mended_mangle,
+Set 3,The Grand Exchange,Market card,,,The Spare Room,,3,Common,A1,196,mk_mkt_spare_room,
+Set 3,The Grand Exchange,Market card,,,The Town Archives,,5,Common,A1,191,mk_mkt_town_archives,
+Set 3,The Grand Exchange,Market card,,,The Town Clock,,4,Common,A1,192,mk_mkt_town_clock,
+Set 3,The Grand Exchange,Market Character,Cat,Crafts,Faustus,Threadmaster,5,Rare,A1,535,mk_faustus_threadmaster_5,
+Set 3,The Grand Exchange,Market Character,Cat,Lore,Mittens,Rooftop Cat,4,Super Rare,A1,623,mk_mittens_rooftop_cat_4,
+Set 3,The Grand Exchange,Market Character,Hedgehog,Civics,Bob,Gate Attendant,4,Super Rare,A1,620,mk_bob_gate_attendant_4,
+Set 3,The Grand Exchange,Market Character,Squirrel,Commerce,Eustace,Socialite,3,Uncommon,A1,399,mk_eustace_socialite_3,
+Set 3,The Grand Exchange,Ordinance,,,A Word With the Steward,Capital City Ordinance,0,Common,A1,229,mk_ord_a_word_with_the_steward,
+Set 3,The Grand Exchange,Ordinance,,,The Quarry Road Is Out,Capital City Ordinance,0,Rare,A1,542,mk_ord_the_quarry_road,
