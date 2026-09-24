@@ -299,7 +299,7 @@ function faqEntries(rules) {
     },
     {
       q: 'How do upgrades work?',
-      a: 'Many animals are printed in several versions at rising costs. Play a dearer version from your hand onto the cheaper one you already control: you pay only the difference, the animal keeps its orientation, and its new talent fires. A version may also be played onto that animal while it is out of work, bringing it straight back upright in one action.',
+      a: 'Many animals are printed in several versions at rising costs, and every one of them can be recruited on its own at its full printed cost, like any other animal. An upgrade is the cheaper way in: play a dearer version from your hand onto the cheaper one you already control and you pay only the difference, the animal keeps its orientation, and its new talent fires. A version may also be played onto that animal while it is out of work, bringing it straight back upright in one action.',
     },
     {
       q: 'What is Works in the Square, and why can\'t I buy a Statue?',

@@ -4,7 +4,7 @@
 
 The 656 cards split into three releases. Every card is printed in exactly one release, with one exception: each market deck needs nine Statues to play on its own, so later market decks reprint earlier Statues. Starter decks aren’t a separate card pool. Each deck is a fixed 40-card list built from the cards in its release’s packs, so every deck card is also a pack card.
 
-**How characters move.** All versions of an animal stay together (Apprentice to Master) because an upgrade can only be played over an earlier version of the same animal. Holding back only a Master would leave it with nothing to upgrade over. An Event that needs a named animal goes wherever that animal goes.
+**How characters move.** All versions of an animal stay together (Apprentice to Master). Any version can be recruited on its own at its full printed cost, so this isn’t needed for a card to be playable. It keeps upgrades useful: the discount only applies when a cheaper version of the same animal is in play, so a pack holding the whole ladder lets you buy its Masters cheaply. Splitting an animal’s versions across releases (a new Master arriving later, say) is allowed if you want it. An Event that needs a named animal goes wherever that animal goes.
 
 ## At a glance
 

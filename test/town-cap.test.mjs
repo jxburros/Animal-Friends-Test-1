@@ -115,6 +115,51 @@ describe('laying off', () => {
   });
 });
 
+describe('any version may be recruited on its own', () => {
+  // A card printed "Upgrades <Name>." is a discount when there is a cheaper <Name> to play it over,
+  // never a requirement: with no earlier version anywhere, it is simply a new animal at full price.
+  test('a dearer version with nothing to upgrade is offered as a fresh recruit at its printed cost', async () => {
+    const state = newGame();
+    const p = state.players[0];
+    p.town = [];
+    p.unemployment = [];
+    p.hand = [];
+    const { high } = upgradePair();
+    assert.match(high.text, /^Upgrades /, 'the pair\'s dearer card is printed as an upgrade');
+    const card = addToHand(state, 0, high.id);
+    setSupply(state, 0, 40);
+    begin(state, 0);
+
+    const acts = legalActions(state, 0).filter((a) => a.type === 'recruit' && a.cardUid === card.uid);
+    assert.equal(acts.length, 1, 'with no earlier version around, the only way to play it is fresh');
+    assert.equal(acts[0].upgrade, undefined, 'and that way is not an upgrade');
+    assert.equal(acts[0].cost, high.cost, 'at the full printed cost');
+    await applyAction(state, 0, acts[0]);
+    assert.ok(p.town.some((s) => topCard(state, s).id === high.id && s.cards.length === 1), 'a new animal of their own');
+  });
+
+  test('with an earlier version in town, both the fresh recruit and the cheaper upgrade are offered', () => {
+    const state = newGame();
+    const p = state.players[0];
+    p.town = [];
+    p.unemployment = [];
+    p.hand = [];
+    const { low, high } = upgradePair();
+    const inTown = addStack(state, 0, low.id, UPRIGHT);
+    const card = addToHand(state, 0, high.id);
+    setSupply(state, 0, 40);
+    begin(state, 0);
+
+    const acts = legalActions(state, 0).filter((a) => a.type === 'recruit' && a.cardUid === card.uid);
+    const fresh = acts.find((a) => !a.upgrade);
+    const upgrade = acts.find((a) => a.upgrade && a.targetUid === inTown.uid);
+    assert.ok(fresh, 'a second, separate animal may still be recruited');
+    assert.equal(fresh.cost, high.cost, 'at full price');
+    assert.ok(upgrade, 'or the one already here may be upgraded');
+    assert.equal(upgrade.cost, high.cost - low.cost, 'for only the difference');
+  });
+});
+
 describe('promoting out of Unemployment', () => {
   test('an upgrade pays the plain printed difference and returns the animal upright', async () => {
     const state = newGame();
